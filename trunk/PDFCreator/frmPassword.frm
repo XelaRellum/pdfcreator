@@ -39,20 +39,22 @@ Begin VB.Form frmPassword
          Width           =   3015
       End
       Begin VB.Label lblOwnerPassRepeat 
+         AutoSize        =   -1  'True
          Caption         =   "Repeat:"
-         Height          =   255
+         Height          =   195
          Left            =   120
          TabIndex        =   12
          Top             =   720
-         Width           =   1095
+         Width           =   570
       End
       Begin VB.Label lblOwnerPass 
+         AutoSize        =   -1  'True
          Caption         =   "Password:"
-         Height          =   255
+         Height          =   195
          Left            =   120
          TabIndex        =   11
          Top             =   360
-         Width           =   1095
+         Width           =   735
       End
    End
    Begin VB.Frame fraUserPass 
@@ -81,20 +83,22 @@ Begin VB.Form frmPassword
          Width           =   3015
       End
       Begin VB.Label lblUserPassRepeat 
+         AutoSize        =   -1  'True
          Caption         =   "Repeat:"
-         Height          =   255
+         Height          =   195
          Left            =   120
          TabIndex        =   9
          Top             =   720
-         Width           =   1095
+         Width           =   570
       End
       Begin VB.Label lblUserPass 
+         AutoSize        =   -1  'True
          Caption         =   "Password:"
-         Height          =   255
+         Height          =   195
          Left            =   120
          TabIndex        =   8
          Top             =   360
-         Width           =   1095
+         Width           =   735
       End
    End
    Begin VB.CommandButton CancelButton 
@@ -132,76 +136,128 @@ Option Explicit
 Public bSuccess As Boolean, bFinished As Boolean, iPasswords As Integer
 
 Private Sub CancelButton_Click()
- bSuccess = False
- bFinished = True: Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  bSuccess = False
+50020  bFinished = True: Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "CancelButton_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
- If KeyCode = vbKeyF1 Then
-  KeyCode = 0
-  Call HTMLHelp_ShowTopic("html\pdfsecurity.htm")
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If KeyCode = vbKeyF1 Then
+50020   KeyCode = 0
+50030   Call HTMLHelp_ShowTopic("html\pdfsecurity.htm")
+50040  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "Form_KeyDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
- Me.KeyPreview = True
- With LanguageStrings
-  Caption = .OptionsPDFEnterPasswords
-  fraUserPass.Caption = .OptionsUserPass
-  fraOwnerPass.Caption = .OptionsOwnerPass
-  lblUserPass.Caption = .OptionsPDFSetPassword
-  lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
-  lblOwnerPass.Caption = .OptionsPDFSetPassword
-  lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
-  OKButton.Caption = .OptionsPassOK
-  CancelButton.Caption = .OptionsPassCancel
-  chkSavePasswords.Caption = .OptionsSavePasswords
- End With
- With Options
-  fraUserPass.Enabled = .PDFUserPass
-  fraOwnerPass.Enabled = .PDFOwnerPass
- End With
- bSuccess = False
- bFinished = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Me.KeyPreview = True
+50020  With LanguageStrings
+50030   Caption = .OptionsPDFEnterPasswords
+50040   fraUserPass.Caption = .OptionsUserPass
+50050   fraOwnerPass.Caption = .OptionsOwnerPass
+50060   lblUserPass.Caption = .OptionsPDFSetPassword
+50070   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
+50080   lblOwnerPass.Caption = .OptionsPDFSetPassword
+50090   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
+50100   OKButton.Caption = .OptionsPassOK
+50110   CancelButton.Caption = .OptionsPassCancel
+50120   chkSavePasswords.Caption = .OptionsSavePasswords
+50130  End With
+50140  With Options
+50150   fraUserPass.Enabled = .PDFUserPass
+50160   fraOwnerPass.Enabled = .PDFOwnerPass
+50170  End With
+50180  bSuccess = False
+50190  bFinished = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub OKButton_Click()
- Dim aw As Long
- If txtUserPass.Text <> txtUserPassRepeat.Text Then
-  MsgBox LanguageStrings.MessagesMsg21, vbCritical
-  Exit Sub
- End If
-
- If txtOwnerPass.Text <> txtOwnerPassRepeat.Text Then
-  MsgBox LanguageStrings.MessagesMsg22, vbCritical
-  Exit Sub
- End If
-
- If Len(txtUserPass.Text) = 0 And fraUserPass.Enabled = True Then
-  aw = MsgBox(LanguageStrings.MessagesMsg24, vbQuestion + vbYesNo)
-  If aw = vbNo Then
-   Exit Sub
-  End If
- End If
-
- If Len(txtOwnerPass.Text) = 0 And fraOwnerPass.Enabled = True Then
-  aw = MsgBox(LanguageStrings.MessagesMsg25, vbQuestion + vbYesNo)
-  If aw = vbNo Then
-   Exit Sub
-  End If
- End If
-
- If chkSavePasswords.Value = 1 Then
-   SavePasswordsForThisSession = True
-  Else
-   SavePasswordsForThisSession = False
- End If
-
- If Len(txtOwnerPass.Text) = 0 And Len(txtUserPass.Text) = 0 Then
-  SavePasswordsForThisSession = False
- End If
- OwnerPassword = txtOwnerPass.Text: UserPassword = txtUserPass.Text
- bSuccess = True
- bFinished = True: Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim aw As Long
+50020  If txtUserPass.Text <> txtUserPassRepeat.Text Then
+50030   MsgBox LanguageStrings.MessagesMsg21, vbCritical
+50040   Exit Sub
+50050  End If
+50060
+50070  If txtOwnerPass.Text <> txtOwnerPassRepeat.Text Then
+50080   MsgBox LanguageStrings.MessagesMsg22, vbCritical
+50090   Exit Sub
+50100  End If
+50110
+50120  If Len(txtUserPass.Text) = 0 And fraUserPass.Enabled = True Then
+50130   aw = MsgBox(LanguageStrings.MessagesMsg24, vbQuestion + vbYesNo)
+50140   If aw = vbNo Then
+50150    Exit Sub
+50160   End If
+50170  End If
+50180
+50190  If Len(txtOwnerPass.Text) = 0 And fraOwnerPass.Enabled = True Then
+50200   aw = MsgBox(LanguageStrings.MessagesMsg25, vbQuestion + vbYesNo)
+50210   If aw = vbNo Then
+50220    Exit Sub
+50230   End If
+50240  End If
+50250
+50260  If chkSavePasswords.Value = 1 Then
+50270    SavePasswordsForThisSession = True
+50280   Else
+50290    SavePasswordsForThisSession = False
+50300  End If
+50310
+50320  If Len(txtOwnerPass.Text) = 0 And Len(txtUserPass.Text) = 0 Then
+50330   SavePasswordsForThisSession = False
+50340  End If
+50350  OwnerPassword = txtOwnerPass.Text: UserPassword = txtUserPass.Text
+50360  bSuccess = True
+50370  bFinished = True: Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "OKButton_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 

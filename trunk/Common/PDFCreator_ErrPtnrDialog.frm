@@ -464,7 +464,7 @@ Public Function OnError%(AktModul$, AktProc$, Optional ContBits% = 255)
 '.------------------------------------------------------------------------------
 
 ' fill the dialog's label captions
-lblError(0) = Err.Number & " (" & Err.Description & ")"
+lblError(0) = Err.number & " (" & Err.Description & ")"
 lblError(1) = AktModul$
 lblError(2) = AktProc$
 lblError(3) = Erl
@@ -533,7 +533,7 @@ e& = GetVersionEx&(v)
 'Case VER_PLATFORM_WIN32s: a$ = a$ + "Win32s" + vbCrLf
 'End Select
 
-a$ = a$ + WinVersionText + vbCrLf
+'a$ = a$ + WinVersionText + vbCrLf
 
 a$ = a$ + r$ + "Version:" + vbTab & v.dwMajorVersion & "." & v.dwMinorVersion & vbCrLf
 a$ = a$ + r$ + "Build:" + vbTab & (v.dwBuildNumber And &HFFFF&) & "   " & LPSTRToVBString$(v.szCSDVersion) & vbCrLf

@@ -48,50 +48,115 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdClear_Click()
- ClearLogfile
- With txtLog
-  .Text = ReadLogfile
-  .SelStart = 0
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ClearLogfile
+50020  With txtLog
+50030   .Text = ReadLogfile
+50040   .SelStart = 0
+50050  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "cmdClear_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdClose_Click()
- Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "cmdClose_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
- If KeyCode = vbKeyF1 Then
-  KeyCode = 0
-  Call HTMLHelp_ShowTopic("html\welcome.htm")
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If KeyCode = vbKeyF1 Then
+50020   KeyCode = 0
+50030   Call HTMLHelp_ShowTopic("html\welcome.htm")
+50040  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "Form_KeyDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
- Me.KeyPreview = True
- With Options
-  SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
- End With
- With LanguageStrings
-  Me.Caption = .LoggingLogfile
-  cmdClose.Caption = .LoggingClose
-  cmdClear.Caption = .LoggingClear
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Me.KeyPreview = True
+50020  With Options
+50030   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50040  End With
+50050  With LanguageStrings
+50060   Me.Caption = .LoggingLogfile
+50070   cmdClose.Caption = .LoggingClose
+50080   cmdClear.Caption = .LoggingClear
+50090  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Resize()
- If Me.ScaleHeight < 200 Or Me.ScaleWidth < 320 Then
-  Me.Height = 200: Me.Width = 320
-  Exit Sub
- End If
- With txtLog
-  .Top = Me.ScaleTop
-  .Left = Me.ScaleLeft
-  .Width = Me.ScaleWidth
-  .Height = Me.ScaleHeight - cmdClose.Height - 170
- End With
- cmdClear.Top = txtLog.Top + txtLog.Height + 150
- cmdClear.Left = txtLog.Left + 100
- cmdClose.Top = txtLog.Top + txtLog.Height + 150
- cmdClose.Left = txtLog.Left + txtLog.Width - cmdClose.Width - 100
- txtLog.Text = ReadLogfile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Me.ScaleHeight < 200 Or Me.ScaleWidth < 320 Then
+50020   Me.Height = 200: Me.Width = 320
+50030   Exit Sub
+50040  End If
+50050  With txtLog
+50060   .Top = Me.ScaleTop
+50070   .Left = Me.ScaleLeft
+50080   .Width = Me.ScaleWidth
+50090   .Height = Me.ScaleHeight - cmdClose.Height - 170
+50100  End With
+50110  cmdClear.Top = txtLog.Top + txtLog.Height + 150
+50120  cmdClear.Left = txtLog.Left + 100
+50130  cmdClose.Top = txtLog.Top + txtLog.Height + 150
+50140  cmdClose.Left = txtLog.Left + txtLog.Width - cmdClose.Width - 100
+50150  txtLog.Text = ReadLogfile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "Form_Resize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub

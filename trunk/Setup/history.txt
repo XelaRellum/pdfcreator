@@ -5,6 +5,23 @@ Homepage: http://www.pdfcreator.de.vu/
           http://www.sourceforge.net/projects/pdfcreator/
 
 
+Version 0.8.1 (November 4, 2004)
+-------------------------------------------------------------------------------
+Improvements:
+- Using GPL-Ghostscipt 8.15 
+
+Bug Fixes:
+- Missing msmapi32.ocx is included.
+- Improve email support.
+- Terminalserver should work
+- Using a modifies ghostpdf.ppd
+- fixed english.ini 
+- Fixed some minor bugs.
+
+Kwown issues:
+- no hyperlinks possible
+
+
 Version 0.8.0 (April 2, 2004)
 -------------------------------------------------------------------------------
 Improvements:

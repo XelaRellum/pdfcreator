@@ -93,34 +93,73 @@ Public GSRevision As tGhostscriptRevision
 'These are only required if you use gsapi_set_stdio
 
 Public Function gsdll_stdin(ByVal intGSInstanceHandle As Long, ByVal strz As Long, ByVal intBytes As Long) As Long
-    ' We don't have a console, so just return EOF
-    gsdll_stdin = 0
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     ' We don't have a console, so just return EOF
+50020     gsdll_stdin = 0
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGsApi", "gsdll_stdin")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function gsdll_stdout(ByVal intGSInstanceHandle As Long, ByVal strz As Long, ByVal intBytes As Long) As Long
-    ' If you can think of a more efficient method, please tell me!
-    ' We need to convert from a byte buffer to a string
-    ' First we create a byte array of the appropriate size
-      Dim aByte() As Byte
-      ReDim aByte(intBytes)
-      ' Then we get the address of the byte array
-      Dim ptrByte As Long
-      ptrByte = VarPtr(aByte(0))
-      ' Then we copy the buffer to the byte array
-      CopyMemory ptrByte, strz, intBytes
-      ' Then we copy the byte array to a string, character by character
-      Dim tStr As String
-      Dim i As Long
-      For i = 0 To intBytes - 1
-          tStr = tStr + Chr(aByte(i))
-      Next
-      ' Finally we output the message
-      ReturnValue tStr
-      gsdll_stdout = intBytes
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     ' If you can think of a more efficient method, please tell me!
+50020     ' We need to convert from a byte buffer to a string
+50030     ' First we create a byte array of the appropriate size
+50040       Dim aByte() As Byte
+50050       ReDim aByte(intBytes)
+50060       ' Then we get the address of the byte array
+50070       Dim ptrByte As Long
+50080       ptrByte = VarPtr(aByte(0))
+50090       ' Then we copy the buffer to the byte array
+50100       CopyMemory ptrByte, strz, intBytes
+50110       ' Then we copy the byte array to a string, character by character
+50120       Dim tStr As String
+50130       Dim i As Long
+50140       For i = 0 To intBytes - 1
+50150           tStr = tStr + Chr(aByte(i))
+50160       Next
+50170       ' Finally we output the message
+50180       ReturnValue tStr
+50190       gsdll_stdout = intBytes
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGsApi", "gsdll_stdout")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function gsdll_stderr(ByVal intGSInstanceHandle As Long, ByVal strz As Long, ByVal intBytes As Long) As Long
-    gsdll_stderr = gsdll_stdout(intGSInstanceHandle, strz, intBytes)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     gsdll_stderr = gsdll_stdout(intGSInstanceHandle, strz, intBytes)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGsApi", "gsdll_stderr")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 '------------------------------------------------
 'Callback Functions End
@@ -131,112 +170,164 @@ End Function
 'User Defined Functions Start
 '------------------------------------------------
 Public Function AnsiZtoString(ByVal strz As Long) As String
-    Rem We need to convert from a byte buffer to a string
-    Dim byteCh(1) As Byte
-    Dim bOK As Boolean
-    bOK = True
-    Dim ptrByte As Long
-    ptrByte = VarPtr(byteCh(0))
-    Dim j As Long
-    j = 0
-    Dim str As String
-    While bOK
-        ' This is how to do pointer arithmetic!
-        CopyMemory ptrByte, strz + j, 1
-        If byteCh(0) = 0 Then
-            bOK = False
-        Else
-            str = str + Chr(byteCh(0))
-        End If
-        j = j + 1
-    Wend
-    AnsiZtoString = str
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     Rem We need to convert from a byte buffer to a string
+50020     Dim byteCh(1) As Byte
+50030     Dim bOK As Boolean
+50040     bOK = True
+50050     Dim ptrByte As Long
+50060     ptrByte = VarPtr(byteCh(0))
+50070     Dim j As Long
+50080     j = 0
+50090     Dim str As String
+50100     While bOK
+50110         ' This is how to do pointer arithmetic!
+50120         CopyMemory ptrByte, strz + j, 1
+50130         If byteCh(0) = 0 Then
+50140             bOK = False
+50150         Else
+50160             str = str + Chr(byteCh(0))
+50170         End If
+50180         j = j + 1
+50190     Wend
+50200     AnsiZtoString = str
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGsApi", "AnsiZtoString")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function CheckRevision(ByVal intRevision As Long) As Boolean
-    ' Check revision number of Ghostscript
-    Dim intReturn As Long
-    Dim udtGSRevInfo As GS_Revision
-    intReturn = gsapi_revision(VarPtr(udtGSRevInfo), 16)
-    Dim str As String
-    str = "Revision=" & udtGSRevInfo.intRevision
-    str = str & "  RevisionDate=" & udtGSRevInfo.intRevisionDate
-    str = str & "  Product=" & AnsiZtoString(udtGSRevInfo.strProduct)
-    str = str & "  Copyright = " & AnsiZtoString(udtGSRevInfo.strCopyright)
-    ReturnValue str
-    'MsgBox (str)
-
-    If udtGSRevInfo.intRevision = intRevision Then
-        CheckRevision = True
-    Else
-        CheckRevision = False
-    End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     ' Check revision number of Ghostscript
+50020     Dim intReturn As Long
+50030     Dim udtGSRevInfo As GS_Revision
+50040     intReturn = gsapi_revision(VarPtr(udtGSRevInfo), 16)
+50050     Dim str As String
+50060     str = "Revision=" & udtGSRevInfo.intRevision
+50070     str = str & "  RevisionDate=" & udtGSRevInfo.intRevisionDate
+50080     str = str & "  Product=" & AnsiZtoString(udtGSRevInfo.strProduct)
+50090     str = str & "  Copyright = " & AnsiZtoString(udtGSRevInfo.strCopyright)
+50100     ReturnValue str
+50110     'MsgBox (str)
+50120
+50130     If udtGSRevInfo.intRevision = intRevision Then
+50140         CheckRevision = True
+50150     Else
+50160         CheckRevision = False
+50170     End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGsApi", "CheckRevision")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function CallGS(ByRef astrGSArgs() As String) As Boolean
-    Dim intReturn As Long
-    Dim intGSInstanceHandle As Long
-    Dim aAnsiArgs() As String
-    Dim aPtrArgs() As Long
-    Dim intCounter As Long
-    Dim intElementCount As Long
-    Dim iTemp As Long
-    Dim callerHandle As Long
-    Dim ptrArgs As Long
-
-    ' Print out the revision details.
-    ' If we want to insist on a particular version of Ghostscript
-    ' we should check the return value of CheckRevision().
-    'CheckRevision (705)
-
-    ' Load Ghostscript and get the instance handle
-    intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)
-    If (intReturn < 0) Then
-        CallGS = False
-        Return
-    End If
-
-    ' Capture stdio
-    intReturn = gsapi_set_stdio(intGSInstanceHandle, AddressOf gsdll_stdin, AddressOf gsdll_stdout, AddressOf gsdll_stderr)
-
-    If (intReturn >= 0) Then
-        ' Convert the Unicode strings to null terminated ANSI byte arrays
-        ' then get pointers to the byte arrays.
-        intElementCount = UBound(astrGSArgs)
-        ReDim aAnsiArgs(intElementCount)
-        ReDim aPtrArgs(intElementCount)
-
-        For intCounter = 0 To intElementCount
-            aAnsiArgs(intCounter) = StrConv(astrGSArgs(intCounter), vbFromUnicode)
-            aPtrArgs(intCounter) = StrPtr(aAnsiArgs(intCounter))
-        Next
-        ptrArgs = VarPtr(aPtrArgs(0))
-
-        intReturn = gsapi_init_with_args(intGSInstanceHandle, intElementCount + 1, ptrArgs)
-
-        ' Stop the Ghostscript interpreter
-        gsapi_exit (intGSInstanceHandle)
-    End If
-
-    ' release the Ghostscript instance handle
-    gsapi_delete_instance (intGSInstanceHandle)
-
-    If (intReturn >= 0) Then
-        CallGS = True
-    Else
-        CallGS = False
-    End If
-
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     Dim intReturn As Long
+50020     Dim intGSInstanceHandle As Long
+50030     Dim aAnsiArgs() As String
+50040     Dim aPtrArgs() As Long
+50050     Dim intCounter As Long
+50060     Dim intElementCount As Long
+50070     Dim iTemp As Long
+50080     Dim callerHandle As Long
+50090     Dim ptrArgs As Long
+50100
+50110     ' Print out the revision details.
+50120     ' If we want to insist on a particular version of Ghostscript
+50130     ' we should check the return value of CheckRevision().
+50140     'CheckRevision (705)
+50150
+50160     ' Load Ghostscript and get the instance handle
+50170     intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)
+50180     If (intReturn < 0) Then
+50190         CallGS = False
+50200         Return
+50210     End If
+50220
+50230     ' Capture stdio
+50240     intReturn = gsapi_set_stdio(intGSInstanceHandle, AddressOf gsdll_stdin, AddressOf gsdll_stdout, AddressOf gsdll_stderr)
+50250
+50260     If (intReturn >= 0) Then
+50270         ' Convert the Unicode strings to null terminated ANSI byte arrays
+50280         ' then get pointers to the byte arrays.
+50290         intElementCount = UBound(astrGSArgs)
+50300         ReDim aAnsiArgs(intElementCount)
+50310         ReDim aPtrArgs(intElementCount)
+50320
+50330         For intCounter = 0 To intElementCount
+50340             aAnsiArgs(intCounter) = StrConv(astrGSArgs(intCounter), vbFromUnicode)
+50350             aPtrArgs(intCounter) = StrPtr(aAnsiArgs(intCounter))
+50360         Next
+50370         ptrArgs = VarPtr(aPtrArgs(0))
+50380
+50390         intReturn = gsapi_init_with_args(intGSInstanceHandle, intElementCount + 1, ptrArgs)
+50400
+50410         ' Stop the Ghostscript interpreter
+50420         gsapi_exit (intGSInstanceHandle)
+50430     End If
+50440
+50450     ' release the Ghostscript instance handle
+50460     gsapi_delete_instance (intGSInstanceHandle)
+50470
+50480     If (intReturn >= 0) Then
+50490         CallGS = True
+50500     Else
+50510         CallGS = False
+50520     End If
+50530
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGsApi", "CallGS")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function GetGhostscriptRevision() As tGhostscriptRevision
- Dim intReturn As Long, udtGSRevInfo As GS_Revision
- intReturn = gsapi_revision(VarPtr(udtGSRevInfo), 16)
- With GetGhostscriptRevision
-  .intRevision = udtGSRevInfo.intRevision
-  .intRevisionDate = udtGSRevInfo.intRevisionDate
-  .strCopyright = AnsiZtoString(udtGSRevInfo.strCopyright)
-  .strProduct = AnsiZtoString(udtGSRevInfo.strProduct)
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim intReturn As Long, udtGSRevInfo As GS_Revision
+50020  intReturn = gsapi_revision(VarPtr(udtGSRevInfo), 16)
+50030  With GetGhostscriptRevision
+50040   .intRevision = udtGSRevInfo.intRevision
+50050   .intRevisionDate = udtGSRevInfo.intRevisionDate
+50060   .strCopyright = AnsiZtoString(udtGSRevInfo.strCopyright)
+50070   .strProduct = AnsiZtoString(udtGSRevInfo.strProduct)
+50080  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGsApi", "GetGhostscriptRevision")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 

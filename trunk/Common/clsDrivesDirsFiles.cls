@@ -60,22 +60,74 @@ Private iCurrentDirectory As String
 Private iFilePattern As String
 
 Public Property Let FilePattern(ByVal Pattern As String)
- iFilePattern = Pattern
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  iFilePattern = Pattern
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsDrivesDirsFiles", "FilePattern [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get FilePattern() As String
- FilePattern = iFilePattern
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  FilePattern = iFilePattern
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsDrivesDirsFiles", "FilePattern [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Let CurrentDirectory(ByVal Directory As String)
- iCurrentDirectory = Trim$(Directory)
- If Right$(iCurrentDirectory, 1) <> "\" Then
-  iCurrentDirectory = iCurrentDirectory & "\"
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  iCurrentDirectory = Trim$(Directory)
+50020  If Right$(iCurrentDirectory, 1) <> "\" Then
+50030   iCurrentDirectory = iCurrentDirectory & "\"
+50040  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsDrivesDirsFiles", "CurrentDirectory [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get CurrentDirectory() As String
- CurrentDirectory = iCurrentDirectory
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  CurrentDirectory = iCurrentDirectory
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsDrivesDirsFiles", "CurrentDirectory [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Function GetFiles(Optional Directory As String, Optional IncludeHidden As Boolean = False) As Collection
@@ -191,44 +243,83 @@ ErrorHandler:
 End Function
 
 Public Function GetDrives(Optional NoRemovableVolume As Boolean = False) As Collection
- Dim L As Long, Buffer As String, res As Long, drives As String, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim L As Long, Buffer As String, res As Long, drives As String, _
   drv() As String, label As String, dTyp As Long, i As Long
- L = 64: Buffer = Space(L)
- res = GetLogicalDriveStrings(L, Buffer)
- drives = Left$(Buffer, res)
- Set GetDrives = New Collection
- If Len(drives) > 0 Then
-  If InStr(drives, Chr$(0)) > 0 Then
-    drv = Split(drives, Chr$(0))
-    For i = LBound(drv) To UBound(drv)
-     If Trim$(drv(i)) <> "" Then
-      dTyp = GetDriveType(drv(i))
-      If dTyp <> 2 And dTyp <> 5 Then
-        label = Dir(drv(i), vbVolume)
-       Else
-        If NoRemovableVolume = False Then
-         label = Dir(drv(i), vbVolume)
-        End If
-      End If
-
-      GetDrives.Add drv(i) & Chr$(0) & label & Chr$(0) & dTyp
-     End If
-     Next i
-    Else
-     GetDrives.Add drives
-   End If
-  End If
+50030  L = 64: Buffer = Space(L)
+50040  res = GetLogicalDriveStrings(L, Buffer)
+50050  drives = Left$(Buffer, res)
+50060  Set GetDrives = New Collection
+50070  If Len(drives) > 0 Then
+50080   If InStr(drives, Chr$(0)) > 0 Then
+50090     drv = Split(drives, Chr$(0))
+50100     For i = LBound(drv) To UBound(drv)
+50110      If Trim$(drv(i)) <> "" Then
+50120       dTyp = GetDriveType(drv(i))
+50130       If dTyp <> 2 And dTyp <> 5 Then
+50140         label = Dir(drv(i), vbVolume)
+50150        Else
+50160         If NoRemovableVolume = False Then
+50170          label = Dir(drv(i), vbVolume)
+50180         End If
+50190       End If
+50200
+50210       GetDrives.Add drv(i) & Chr$(0) & label & Chr$(0) & dTyp
+50220      End If
+50230      Next i
+50240     Else
+50250      GetDrives.Add drives
+50260    End If
+50270   End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsDrivesDirsFiles", "GetDrives")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Private Sub Class_Initialize()
- CurrentDirectory = "C:\"
- FilePattern = "*.*"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  CurrentDirectory = "C:\"
+50020  FilePattern = "*.*"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsDrivesDirsFiles", "Class_Initialize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Function StripNulls(OriginalStr As String) As String
- If (InStr(OriginalStr, Chr(0)) > 0) Then
-  OriginalStr = Left(OriginalStr, InStr(OriginalStr, Chr(0)) - 1)
- End If
- StripNulls = OriginalStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If (InStr(OriginalStr, Chr(0)) > 0) Then
+50020   OriginalStr = Left(OriginalStr, InStr(OriginalStr, Chr(0)) - 1)
+50030  End If
+50040  StripNulls = OriginalStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsDrivesDirsFiles", "StripNulls")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 

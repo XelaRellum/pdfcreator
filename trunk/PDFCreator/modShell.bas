@@ -67,67 +67,80 @@ Public Function ShellAndWait(ByVal Operation As String, _
                              Optional WaitFor As WaitConstants = 0, _
                              Optional Milliseconds As Long = -1, _
                              Optional CloseProcess As Boolean = False) As String
-
-   Dim RetVal As Long
-   Dim ShExInfo As SHELLEXECUTEINFO
-
-   '//////////////////////////////////////////////////////////////////////////////
-   ' Initialisierung
-   '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-   If WorkingFolder = "" Then WorkingFolder = FilePath
-
-   With ShExInfo
-      .cbSize = Len(ShExInfo)
-      .fMask = SEE_MASK_NOCLOSEPROCESS
-      .hwnd = 0
-      .lpVerb = Operation
-      .lpFile = FilePath
-      .lpParameters = Parameter
-      .lpDirectory = WorkingFolder
-      .nShow = WindowSize
-   End With
-
-   '/////////////////////////////////////////////////////////////////////////////
-   ' Anwendung ausführen
-   '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-   RetVal = ShellExecuteEx(ShExInfo)
-
-   If RetVal = 0 Then
-       'Ein Fehler ist aufgetreten
-'       ShellAndWait = ShellExecError(ShExInfo.hInstApp)
-       Exit Function
-   End If
-
-   '/////////////////////////////////////////////////////////////////////////////
-   ' Warten auf Prozess
-   '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-   If WaitFor <> wcNone Then
-
-      If WaitFor = wcInitialisiert Then
-         ' Warten bis die Anwendung initialisiert ist
-         RetVal = WaitForInputIdle(ShExInfo.hProcess, Milliseconds)
-
-      Else
-         ' Warten bis die Anwendung beendet
-         RetVal = WaitForSingleObject(ShExInfo.hProcess, Milliseconds)
-
-      End If
-
-      If RetVal = WAIT_FAILED Then ShellAndWait = "Warten auf Prozess fehlgeschlagen."
-
-   End If
-
-   '/////////////////////////////////////////////////////////////////////////////
-   ' SCHLIEßEN DES PROZESSES
-   '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-   If CloseProcess = True Then
-      RetVal = TerminateProcess(ShExInfo.hProcess, 1)
-      If RetVal <> 0 Then ShellAndWait = "Schließen der Anwendung fehlgeschlagen."
-   End If
-
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010
+50020    Dim RetVal As Long
+50030    Dim ShExInfo As SHELLEXECUTEINFO
+50040
+50050    '//////////////////////////////////////////////////////////////////////////////
+50060    ' Initialisierung
+50070    '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+50080
+50090    If WorkingFolder = "" Then WorkingFolder = FilePath
+50100
+50110    With ShExInfo
+50120       .cbSize = Len(ShExInfo)
+50130       .fMask = SEE_MASK_NOCLOSEPROCESS
+50140       .hwnd = 0
+50150       .lpVerb = Operation
+50160       .lpFile = FilePath
+50170       .lpParameters = Parameter
+50180       .lpDirectory = WorkingFolder
+50190       .nShow = WindowSize
+50200    End With
+50210
+50220    '/////////////////////////////////////////////////////////////////////////////
+50230    ' Anwendung ausführen
+50240    '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+50250
+50260    RetVal = ShellExecuteEx(ShExInfo)
+50270
+50280    If RetVal = 0 Then
+50290        'Ein Fehler ist aufgetreten
+50300 '       ShellAndWait = ShellExecError(ShExInfo.hInstApp)
+50310        Exit Function
+50320    End If
+50330
+50340    '/////////////////////////////////////////////////////////////////////////////
+50350    ' Warten auf Prozess
+50360    '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+50370
+50380    If WaitFor <> wcNone Then
+50390
+50400       If WaitFor = wcInitialisiert Then
+50410          ' Warten bis die Anwendung initialisiert ist
+50420          RetVal = WaitForInputIdle(ShExInfo.hProcess, Milliseconds)
+50430
+50440       Else
+50450          ' Warten bis die Anwendung beendet
+50460          RetVal = WaitForSingleObject(ShExInfo.hProcess, Milliseconds)
+50470
+50480       End If
+50490
+50500       If RetVal = WAIT_FAILED Then ShellAndWait = "Warten auf Prozess fehlgeschlagen."
+50510
+50520    End If
+50530
+50540    '/////////////////////////////////////////////////////////////////////////////
+50550    ' SCHLIEßEN DES PROZESSES
+50560    '\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+50570    If CloseProcess = True Then
+50580       RetVal = TerminateProcess(ShExInfo.hProcess, 1)
+50590       If RetVal <> 0 Then ShellAndWait = "Schließen der Anwendung fehlgeschlagen."
+50600    End If
+50610
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modShell", "ShellAndWait")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 'Private Function ShellExecError(ByVal ErrorCode As Integer) As String
