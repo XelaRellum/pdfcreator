@@ -1,0 +1,14 @@
+frmMain = 23, 32, 670, 556, C, 22, 22, 561, 334, C
+frmOption = 132, 132, 671, 470, C, 110, 110, 649, 448, C
+frmLanguage = 154, 154, 693, 492, C, 110, 110, 649, 448, C
+clsINI = 154, 154, 760, 518, C
+frmText = 22, 22, 561, 360, C, 0, 0, 539, 338, C
+ErrPtnr = 44, 44, 605, 331, C, 110, 110, 649, 480, C
+modGeneral = 132, 132, 667, 505, C
+modVersionInfo = 0, 0, 0, 0, C
+clsRegistry = 0, 0, 0, 0, C
+modOptions = 110, 110, 669, 397, C
+modPDFCreator = 0, 0, 0, 0, C
+modLanguage = 0, 0, 0, 0, C
+clsHash = 0, 0, 0, 0, C
+modINIFastRead = 0, 0, 0, 0, C
