@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Versteckte Einstellungen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td class="title">PDFCreator Hilfe</td>
+  </tr>
+  <tr> 
+    <td background="../images/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td class="main"><p class="header">Versteckte Einstellungen</p>
+      <p>PDFCreator hat einige Einstellungen, die f&uuml;r Testzwecke gedacht 
+        sind. Diese k&ouml;nnen in der PDFCreator.ini Datei gefunden werden.</p>
+      <p><strong>OnePagePerFile:</strong> Die Einstellung erlaubt Benutzern eine 
+        neue Datei f&uuml;r jede Seite des Originals zu erstellen. Aufgrund von 
+        Einschr&auml;nkungen in Ghostscript funktioniert das nicht mit PDF und 
+        EPS Dateien.<br>
+        <em>Eigenschaften: </em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein</p>
+      <p><strong>RunProgramAfterSaving:</strong> Diese Einstellung legt fest, 
+        ob das unter RunProgramAfterSavingProgramname angegebene Programm ausgef&uuml;hrt 
+        wird, wenn PDFCreator das Dokument gespeichert hat.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein</p>
+      <p><strong>RunProgramAfterSavingProgramname:</strong> Hier wird der Pfad 
+        zu dem auszuf&uuml;hrenden Programm festgelegt.<br>
+        <em>Beispiel:</em> RunProgramAfterSavingProgramname=&quot;C:\Programme\Mein 
+        Programm\Mein Programm.exe&quot;</p>
+      <p><strong>RunProgramAfterSavingWaitUntilReady:</strong> Diese Einstellung 
+        legt fest, ob PDFCreator wartet, bis das Programm die Verarbeitung des Dokumentes
+        abgeschlossen hat.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein</p>
+      <p><strong>RunProgramAfterSavingWindowstyle:</strong> Diese Einstellung legt 
+        die Erscheinung des Fensters des Programmes fest, das nach dem Speichern 
+        ausgef&uuml;hrt wird.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Das Programm wird versteckt ausgef&uuml;hrt.<br>
+        1 - Das Programm wird normal ausgef&uuml;hrt und aktiviert.<br>
+        2 - Das Programm wird minimiert ausgef&uuml;hrt und aktiviert.<br>
+        3 - Das Programm wird maximiert ausgef&uuml;hrt und aktiviert.<br>
+        4 - Das Programm wird normal ausgef&uuml;hrt und nicht aktiviert.<br>
+        6 - Das Programm wird minimiert ausgef&uuml;hrt und nicht aktiviert.</p>
+      <p><strong>RunProgramAfterSavingProgramParameters:</strong> Diese Einstellung 
+        wird in Verbindung mit RunProgramAfterSaving benutzt. Sie gibt die Parameter 
+        an, mit denen das Programm aufgerufen wird.</p>
+      <p><strong>PDFOwnerPasswordString:</strong> Diese Einstellung kann in Verbindung 
+        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
+        &uuml;bernimmt das Passwort automatisch als Besitzerpasswort. <em><strong>ACHTUNG:</strong></em> 
+        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
+        diese Option auf eigene Gefahr.</p>
+      <p><strong>PDFUserPasswordString:</strong> Diese Einstellung kann in Verbindung 
+        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
+        &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em> 
+        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
+        diese Option auf eigene Gefahr.</p>
+      <p><strong>StandardCreationdate:</strong> Diese Einstellung erlaubt dem 
+        Benutzer, ein Standarderstellungsdatum f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardDateformat:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        das Format f&uuml;r das Erstellungs- und &Auml;nderungsdatum festzulegen.</p>
+      <p><strong>StandardKeywords:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        Schl&uuml;sselw&ouml;rter f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardModifydate:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        ein Standarddatum der letzten &Auml;nderung f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardSubject:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        einen Standardbetreff f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardTitle:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        ein Standardtitel f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StampString:</strong> Wenn diese Einstellung gesetzt ist, legt 
+        PDFCreator einen Stempel &uuml;ber das Dokument. Sie k&ouml;nnen die Schriftart, 
+        Farbe, Gr&ouml;&szlig;e und Umrandung des Stempels mit den folgenden Einstellungen 
+        festlegen. Diese Einstellung ist noch sehr experimentell. Bitte kontrollieren Sie
+        die erstellten Dokumente.</p>
+      <p><strong>StampFontColor:</strong> Legt die Farbe f&uuml;r den Stempeltext 
+        fest. Verwenden Sie daf&uuml;r HTML-Farben.<br>
+        <em>Beispiel f&uuml;r Rot:</em> StampFontColor=#FF0000 
+      </p>
+      <p><strong>StampFontname:</strong> Legt die Schriftart f&uuml;r den Stempeltext 
+        fest. </p>
+      <p><strong>StampFontsize:</strong> Legt die Schriftgr&ouml;&szlig;e f&uuml;r 
+        den Stempeltext fest. </p>
+      <p><strong>StampUseOutlineFont:</strong> Diese Einstellung legt fest, ob 
+        eine Umrandung f&uuml;r den Stempeltext benutzt wird.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein</p>
+      <p><strong>StampOutlineFontthickness:</strong> Legt die Breite der Umrandung 
+        f&uuml;r den Stempeltext fest. </p>
+      </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,47 +1,6 @@
 Attribute VB_Name = "modNetuser"
 Option Explicit
 
-Const NERR_Success = 0
-Private Const NERR_BASE = 2100
-Private Const NERR_InvalidComputer = (NERR_BASE + 251)
-Private Const NERR_UseNotFound = (NERR_BASE + 150)
-Const CP_ACP = 0
-Private Type USER_INFO_3
-    usri3_name As Long
-    usri3_password As Long
-    usri3_password_age As Long
-    usri3_priv As Long
-    usri3_home_dir As Long
-    usri3_comment As Long
-    usri3_flags As Long
-    usri3_script_path As Long
-    usri3_auth_flags As Long
-    usri3_full_name As Long
-    usri3_usr_comment As Long
-    usri3_parms As Long
-    usri3_workstations As Long
-    usri3_last_logon As Long
-    usri3_last_logoff As Long
-    usri3_acct_expires As Long
-    usri3_max_storage As Long
-    usri3_units_per_week As Long
-    usri3_logon_hours As Byte
-    usri3_bad_pw_count As Long
-    usri3_num_logons As Long
-    usri3_logon_server As String
-    usri3_country_code As Long
-    usri3_code_page As Long
-    usri3_user_id As Long
-    usri3_primary_group_id As Long
-    usri3_profile As Long
-    usri3_home_dir_drive As Long
-    usri3_password_expired As Long
-End Type
-Private Declare Function NetUserGetInfo Lib "netapi32" (lpServer As Any, UserName As Byte, ByVal Level As Long, lpBuffer As Long) As Long
-Private Declare Function NetApiBufferFree Lib "netapi32" (ByVal Buffer As Long) As Long
-Private Declare Sub MoveMemory Lib "Kernel32" Alias "RtlMoveMemory" (pDest As Any, pSource As Any, ByVal dwLength As Long)
-Private Declare Function lstrlenW Lib "Kernel32" (lpString As Any) As Long
-Private Declare Function WideCharToMultiByte Lib "Kernel32" (ByVal codepage As Long, ByVal dwFlags As Long, lpWideCharStr As Any, ByVal cchWideChar As Long, lpMultiByteStr As Any, ByVal cchMultiByte As Long, ByVal lpDefaultChar As String, ByVal lpUsedDefaultChar As Long) As Long
 ' Returns an ANSI string from a pointer to a Unicode string.
 Public Function GetStrFromPtrW(lpszW As Long) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

@@ -1,12 +1,6 @@
 Attribute VB_Name = "modPerformance"
 Option Explicit
 
-Private Declare Function QueryPerformanceFrequency Lib _
-      "Kernel32" (ByRef Frequency As Currency) As Long
-
-Private Declare Function QueryPerformanceCounter Lib _
-      "Kernel32" (ByRef TimerValue As Currency) As Long
-
 Private Const i_Frequency As Currency = 100
 
 Public Sub Init_ExactTimer()

@@ -13,6 +13,72 @@ Begin VB.Form frmLanguage
    ScaleHeight     =   3765
    ScaleWidth      =   7095
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.CommandButton cmdEngClp 
+      Height          =   285
+      Index           =   1
+      Left            =   6645
+      Picture         =   "frmLanguage.frx":0E42
+      Style           =   1  'Grafisch
+      TabIndex        =   15
+      ToolTipText     =   "Copy from clipboard"
+      Top             =   1890
+      Width           =   330
+   End
+   Begin VB.CommandButton cmdEngClp 
+      Height          =   285
+      Index           =   0
+      Left            =   6195
+      Picture         =   "frmLanguage.frx":11CC
+      Style           =   1  'Grafisch
+      TabIndex        =   14
+      ToolTipText     =   "Copy to clipboard"
+      Top             =   1890
+      Width           =   330
+   End
+   Begin VB.CommandButton cmdGerClp 
+      Height          =   285
+      Index           =   1
+      Left            =   6645
+      Picture         =   "frmLanguage.frx":1556
+      Style           =   1  'Grafisch
+      TabIndex        =   13
+      ToolTipText     =   "Copy from clipboard"
+      Top             =   2625
+      Width           =   330
+   End
+   Begin VB.CommandButton cmdGerClp 
+      Height          =   285
+      Index           =   0
+      Left            =   6195
+      Picture         =   "frmLanguage.frx":18E0
+      Style           =   1  'Grafisch
+      TabIndex        =   12
+      ToolTipText     =   "Copy to clipboard"
+      Top             =   2625
+      Width           =   330
+   End
+   Begin VB.CommandButton cmdKeyClp 
+      Height          =   285
+      Index           =   1
+      Left            =   6645
+      Picture         =   "frmLanguage.frx":1C6A
+      Style           =   1  'Grafisch
+      TabIndex        =   11
+      ToolTipText     =   "Copy from clipboard"
+      Top             =   1200
+      Width           =   330
+   End
+   Begin VB.CommandButton cmdKeyClp 
+      Height          =   285
+      Index           =   0
+      Left            =   6195
+      Picture         =   "frmLanguage.frx":1FF4
+      Style           =   1  'Grafisch
+      TabIndex        =   10
+      ToolTipText     =   "Copy to clipboard"
+      Top             =   1200
+      Width           =   330
+   End
    Begin VB.ComboBox cmbSection 
       Height          =   315
       Left            =   120
@@ -44,7 +110,7 @@ Begin VB.Form frmLanguage
       Left            =   120
       TabIndex        =   6
       Top             =   2640
-      Width           =   6855
+      Width           =   5940
    End
    Begin VB.TextBox txt 
       Height          =   285
@@ -52,7 +118,7 @@ Begin VB.Form frmLanguage
       Left            =   120
       TabIndex        =   5
       Top             =   1920
-      Width           =   6855
+      Width           =   5940
    End
    Begin VB.TextBox txt 
       Height          =   285
@@ -60,7 +126,7 @@ Begin VB.Form frmLanguage
       Left            =   120
       TabIndex        =   4
       Top             =   1200
-      Width           =   6855
+      Width           =   5940
    End
    Begin VB.Label lbl 
       Caption         =   "German"
@@ -107,74 +173,121 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmd_Click(Index As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim item As ListItem, Str1 As String, Str2 As String, Str3 As String, _
+ Dim item As ListItem, Str1 As String, Str2 As String, Str3 As String, _
   Str4 As String, aw As Long
-50030  Select Case Index
+ Select Case Index
   Case 0:
-50050    cmbSection.Text = Trim$(cmbSection.Text)
-50060    If cmbSection.Text = "" Then
-50070     MsgBox "Empty Section is not allowed!", vbExclamation
-50080     cmbSection.SetFocus
-50090     Exit Sub
-50100    End If
-50110    txt(0).Text = Trim$(txt(0).Text)
-50120    If txt(0).Text = "" Then
-50130     MsgBox "Empty key is not allowed!", vbExclamation
-50140     txt(0).SetFocus
-50150     Exit Sub
-50160    End If
-50170    txt(1).Text = Trim$(txt(1).Text)
-50180    If txt(1).Text = "" Then
-50190     aw = MsgBox("The english text is empty. Is this correct?", vbQuestion Or vbYesNo)
-50200     If aw = vbNo Then
-50210      txt(1).SetFocus
-50220      Exit Sub
-50230     End If
-50240    End If
-50250    txt(2).Text = Trim$(txt(2).Text)
-50260    If txt(2).Text = "" Then
-50270     aw = MsgBox("The german text is empty. Is this correct?", vbQuestion Or vbYesNo)
-50280     If aw = vbNo Then
-50290      txt(2).SetFocus
-50300      Exit Sub
-50310     End If
-50320    End If
-50330
-50340    Str1 = cmbSection.Text
-50350    Str2 = txt(0).Text
-50360
-50370    If Len(txt(1).Text) = 0 Then
-50380      Str3 = " "
-50390     Else
-50400      Str3 = txt(1).Text
-50410    End If
-50420
-50430    txt(2).Text = Trim$(txt(2).Text)
-50440    If Len(txt(2).Text) = 0 Then
-50450      Str4 = " "
-50460     Else
-50470      Str4 = txt(2).Text
-50480    End If
-50490
-50500    If frmMain.AddLanguagesItem(Str1, Str2, Str3, Str4) = True Then
-50510     Unload Me
-50520    End If
-50530   Case 1:
-50540    Unload Me
-50550  End Select
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmLanguage", "cmd_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+   cmbSection.Text = Trim$(cmbSection.Text)
+   If cmbSection.Text = "" Then
+    MsgBox "Empty Section is not allowed!", vbExclamation
+    cmbSection.SetFocus
+    Exit Sub
+   End If
+   txt(0).Text = Trim$(txt(0).Text)
+   If txt(0).Text = "" Then
+    MsgBox "Empty key is not allowed!", vbExclamation
+    txt(0).SetFocus
+    Exit Sub
+   End If
+   txt(1).Text = Trim$(txt(1).Text)
+   If txt(1).Text = "" Then
+    aw = MsgBox("The english text is empty. Is this correct?", vbQuestion Or vbYesNo)
+    If aw = vbNo Then
+     txt(1).SetFocus
+     Exit Sub
+    End If
+   End If
+   txt(2).Text = Trim$(txt(2).Text)
+   If txt(2).Text = "" Then
+    aw = MsgBox("The german text is empty. Is this correct?", vbQuestion Or vbYesNo)
+    If aw = vbNo Then
+     txt(2).SetFocus
+     Exit Sub
+    End If
+   End If
+
+   Str1 = cmbSection.Text
+   Str2 = txt(0).Text
+
+   If Len(txt(1).Text) = 0 Then
+     Str3 = " "
+    Else
+     Str3 = txt(1).Text
+   End If
+
+   txt(2).Text = Trim$(txt(2).Text)
+   If Len(txt(2).Text) = 0 Then
+     Str4 = " "
+    Else
+     Str4 = txt(2).Text
+   End If
+
+   If frmMain.AddLanguagesItem(Str1, Str2, Str3, Str4) = True Then
+    Unload Me
+   End If
+  Case 1:
+   Unload Me
+ End Select
 End Sub
 
+Private Sub cmdEngClp_Click(Index As Integer)
+ With txt(1)
+  Select Case Index
+   Case 0:
+    If Len(.Text) > 0 Then
+     Clipboard.Clear
+     Clipboard.SetText .Text, vbCFText
+    End If
+   Case 1:
+    If Len(Clipboard.GetText) > 0 Then
+     .Text = Clipboard.GetText
+    End If
+  End Select
+ End With
+End Sub
 
+Private Sub cmdGerClp_Click(Index As Integer)
+ With txt(2)
+  Select Case Index
+   Case 0:
+    If Len(.Text) > 0 Then
+     Clipboard.Clear
+     Clipboard.SetText .Text, vbCFText
+    End If
+   Case 1:
+    If Len(Clipboard.GetText) > 0 Then
+     .Text = Clipboard.GetText
+    End If
+  End Select
+ End With
+End Sub
+
+Private Sub cmdKeyClp_Click(Index As Integer)
+ With txt(0)
+  Select Case Index
+   Case 0:
+    If Len(.Text) > 0 Then
+     Clipboard.Clear
+     Clipboard.SetText .Text, vbCFText
+    End If
+   Case 1:
+    If Len(Clipboard.GetText) > 0 Then
+     .Text = Clipboard.GetText
+    End If
+  End Select
+ End With
+End Sub
+
+Private Sub txt_GotFocus(Index As Integer)
+ With txt(Index)
+  If LenB(.Text) > 0 Then
+   If .Tag = "0" Then
+    .SelStart = 0
+    .SelLength = LenB(.Text)
+    .Tag = "1"
+    Else
+    .Tag = "0"
+   End If
+  End If
+ End With
+End Sub

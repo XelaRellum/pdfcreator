@@ -1,40 +1,11 @@
 Attribute VB_Name = "modGetSpecialFolder"
 Option Explicit
 
-Private Type SHFILEINFO
-  hIcon         As Long
-  iIcon         As Long
-  dwAttributes  As Long
-  szDisplayName As String * MAX_PATH
-  szTypeName    As String * 80
-End Type
-
-Private Declare Function SHGetFileInfo Lib "shell32.dll" _
-        Alias "SHGetFileInfoA" ( _
-        ByRef pszPath As Any, _
-        ByVal dwFileAttributes As Long, _
-        ByRef psfi As SHFILEINFO, _
-        ByVal cbFileInfo As Long, _
-        ByVal uFlags As Long _
-              ) As Long
-
-Private Const SHGFI_DISPLAYNAME As Long = &H200
-
-Public Enum ShellNamespaceName
- DESKTOP_CLSID = 0
- INTERNET_CLSID = 1
- MYCOMPUTER_CLSID = 2
- MYFILES_CLSID = 3
- NETHOOD_CLSID = 4
- PRINTERS_CLSID = 5
- RECYCLEBIN_CLSID = 6
-End Enum
-
 Public Function GetShellNamespaceName(ByVal Namespace As ShellNamespaceName) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim lSHFI As SHFILEINFO, lRet As Long, CLSID(6) As String
+50010  Dim lSHFI As ShellFileInfoType, lRet As Long, CLSID(6) As String
 50020  Namespace = MYFILES_CLSID
 50030  CLSID(0) = "{00021400-0000-0000-C000-000000000046}" ' DESKTOP_CLSID
 50040  CLSID(0) = "{5984FFE0-28D4-11CF-AE66-08002B2E1262}" ' DESKTOP_CLSID
@@ -50,10 +21,10 @@ On Error GoTo ErrPtnr_OnError
 50140  If CBool(lRet) Then
 50150   GetShellNamespaceName = Left$(lSHFI.szDisplayName, InStr(1, lSHFI.szDisplayName, vbNullChar) - 1)
 50160  End If
-50170  If Namespace = MYFILES_CLSID And GetShellNamespaceName = "" Then
+50170  If Namespace = MYFILES_CLSID And GetShellNamespaceName = vbNullString Then
 50180   GetShellNamespaceName = GetStringRessource("shell32.dll", 9227)
 50190  End If
-50200  If Namespace = MYFILES_CLSID And GetShellNamespaceName = "" Then
+50200  If Namespace = MYFILES_CLSID And GetShellNamespaceName = vbNullString Then
 50210   GetShellNamespaceName = GetStringRessource("shell32.dll", 9100)
 50220  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

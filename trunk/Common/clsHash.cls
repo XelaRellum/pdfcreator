@@ -71,45 +71,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function Retrieve(Key As String, Optional Default As Variant = 0) As Variant
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, thisKey As String, found As Boolean
-50020
-50030  If Upper > 0 Then
-50040   For i = 0 To Upper - 1
-50050    thisKey = aKey(i)
-50060    If StrComp(thisKey, Key) = 0 Then
-50070     found = True
-50080     Exit For
-50090    End If
-50100   Next i
-50110
-50120   If found Then
-50130    Retrieve = aVal(i)
-50140    Last = i
-50150    Exit Function
-50160   End If
-50170  End If
-50180
-50190  If Default = 0 Then
-50200    Retrieve = -1
-50210   Else
-50220    Retrieve = Default
-50230  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsHash", "Retrieve")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 Public Sub Delete(Key As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -150,7 +111,31 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function Keys() As String()
+Public Function Every() As Variant()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim KeyVal() As Variant
+50020  ReDim KeyVal(0 To 1)
+50030
+50040  Last = Last + 1
+50050  If Last > Upper - 1 Then Last = 0
+50060  KeyVal(0) = aKey(Last)
+50070  KeyVal(1) = aVal(Last)
+50080  Every = KeyVal
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsHash", "Every")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function keys() As String()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -161,11 +146,50 @@ On Error GoTo ErrPtnr_OnError
 50050   Key(i) = aKey(i)
 50060  Next i
 50070
-50080  Keys = Key
+50080  keys = Key
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsHash", "Keys")
+Select Case ErrPtnr.OnError("clsHash", "keys")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function Retrieve(Key As String, Optional Default As Variant = 0) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, thisKey As String, found As Boolean
+50020
+50030  If Upper > 0 Then
+50040   For i = 0 To Upper - 1
+50050    thisKey = aKey(i)
+50060    If StrComp(thisKey, Key) = 0 Then
+50070     found = True
+50080     Exit For
+50090    End If
+50100   Next i
+50110
+50120   If found Then
+50130    Retrieve = aVal(i)
+50140    Last = i
+50150    Exit Function
+50160   End If
+50170  End If
+50180
+50190  If Default = 0 Then
+50200    Retrieve = -1
+50210   Else
+50220    Retrieve = Default
+50230  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsHash", "Retrieve")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -198,26 +222,3 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function Every() As Variant()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim KeyVal() As Variant
-50020  ReDim KeyVal(0 To 1)
-50030
-50040  Last = Last + 1
-50050  If Last > Upper - 1 Then Last = 0
-50060  KeyVal(0) = aKey(Last)
-50070  KeyVal(1) = aVal(Last)
-50080  Every = KeyVal
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsHash", "Every")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function

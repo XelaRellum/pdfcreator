@@ -8,78 +8,54 @@ Private Enum eInstall
  UnInstall = 1
 End Enum
 
-Private Const FORMAT_MESSAGE_FROM_SYSTEM = &H1000
-Private Const FORMAT_MESSAGE_IGNORE_INSERTS = &H200
-
-Private Const STANDARD_RIGHTS_REQUIRED = &HF0000
-Private Const PRINTER_ACCESS_ADMINISTER = &H4
-Private Const PRINTER_ACCESS_USE = &H8
-Private Const PRINTER_ALL_ACCESS = (STANDARD_RIGHTS_REQUIRED Or PRINTER_ACCESS_ADMINISTER Or PRINTER_ACCESS_USE)
-
-Private Type PRINTER_DEFAULTS
- pDatatype As Long
- pDevMode As Long
- DesiredAccess As Long
-End Type
-
-Private Type PRINTER_INFO_2
- pServerName As String
- pPrinterName As String
- pShareName As String
- pPortName As String
- pDriverName As String
- pComment As String
- pLocation As String
- pDevMode As Long
- pSepFile As String
- pPrintProcessor As String
- pDatatype As String
- pParameters As String
- pSecurityDescriptor As Long
- Attributes As Long
- Priority As Long
- DefaultPriority As Long
- StartTime As Long
- UntilTime As Long
- Status As Long
- cJobs As Long
- AveragePPM As Long
-End Type
-
-Private Type DRIVER_INFO_3
-  cVersion As Long
-  pName As String
-  pEnvironment As String
-  pDriverPath As String
-  pDataFile As String
-  pConfigFile As String
-  pHelpFile As String
-  pDependentFiles As String
-  pMonitorName As String
-  pDefaultDataType As String
-End Type
-
-    
-Private Type MONITOR_INFO_2
- pName As String
- pEnvironment As String
- pDLLName As String
-End Type
-
-
-Private Declare Function AddMonitor Lib "winspool.drv" Alias "AddMonitorA" (ByVal pName As String, ByVal Level As Long, pMonitors As Any) As Long
-Private Declare Function AddPrinter Lib "winspool.drv" Alias "AddPrinterA" (ByVal pName As String, ByVal Level As Long, pPrinter As Any) As Long
-Private Declare Function AddPrinterDriver Lib "winspool.drv" Alias "AddPrinterDriverA" (ByVal pName As String, ByVal Level As Long, pDriverInfo As Any) As Long
-Private Declare Function ClosePrinter Lib "winspool.drv" (ByVal hPrinter As Long) As Long
-Private Declare Function DeleteMonitor Lib "winspool.drv" Alias "DeleteMonitorA" (ByVal pName As String, ByVal pEnviroment As String, ByVal pMonitorName As String) As Long
-Private Declare Function DeletePort Lib "winspool.drv" Alias "DeletePortA" (ByVal pName As String, ByVal hwnd As Long, ByVal pPortName As String) As Long
-Private Declare Function DeletePrinter Lib "winspool.drv" (ByVal hPrinter As Long) As Long
-Private Declare Function DeletePrinterDriver Lib "winspool.drv" Alias "DeletePrinterDriverA" (ByVal pName As String, ByVal pEnviroment As String, ByVal pDriverName As String) As Long
-Private Declare Function GetPrinterDriverDirectory Lib "winspool.drv" Alias "GetPrinterDriverDirectoryA" (ByVal pName As String, ByVal pEnvironment As String, ByVal Level As Long, pDriverDirectory As Any, ByVal cdBuf As Long, pcbNeeded As Long) As Long
-Private Declare Function OpenPrinter Lib "winspool.drv" Alias "OpenPrinterA" (ByVal pPrinterName As String, phPrinter As Long, pDefault As PRINTER_DEFAULTS) As Long
-
-Private Declare Function lstrcpy Lib "kernel32.dll" Alias "lstrcpyA" (lpString1 As Any, lpString2 As Any) As Long
-Private Declare Function FormatMessage Lib "Kernel32" Alias "FormatMessageA" (ByVal dwFlags As Long, lpSource As Any, ByVal dwMessageId As Long, ByVal dwLanguageId As Long, ByVal lpBuffer As String, ByVal nSize As Long, Arguments As Long) As Long
+'Private Const FORMAT_MESSAGE_FROM_SYSTEM = &H1000
+'Private Const FORMAT_MESSAGE_IGNORE_INSERTS = &H200
+'
+'Private Const STANDARD_RIGHTS_REQUIRED = &HF0000
+'Private Const PRINTER_ACCESS_ADMINISTER = &H4
+'Private Const PRINTER_ACCESS_USE = &H8
+'Private Const PRINTER_ALL_ACCESS = (STANDARD_RIGHTS_REQUIRED Or PRINTER_ACCESS_ADMINISTER Or PRINTER_ACCESS_USE)
+'
+'Private Type PRINTER_DEFAULTS
+' pDatatype As Long
+' pDevMode As Long
+' DesiredAccess As Long
+'End Type
+'
+'Private Type DRIVER_INFO_3
+'  cVersion As Long
+'  pName As String
+'  pEnvironment As String
+'  pDriverPath As String
+'  pDataFile As String
+'  pConfigFile As String
+'  pHelpFile As String
+'  pDependentFiles As String
+'  pMonitorName As String
+'  pDefaultDataType As String
+'End Type
+'
+'
+'Private Type MONITOR_INFO_2
+' pName As String
+' pEnvironment As String
+' pDLLName As String
+'End Type
+'
+'
+'Private Declare Function AddMonitor Lib "winspool.drv" Alias "AddMonitorA" (ByVal pName As String, ByVal Level As Long, pMonitors As Any) As Long
+'Private Declare Function AddPrinter Lib "winspool.drv" Alias "AddPrinterA" (ByVal pName As String, ByVal Level As Long, pPrinter As Any) As Long
+'Private Declare Function AddPrinterDriver Lib "winspool.drv" Alias "AddPrinterDriverA" (ByVal pName As String, ByVal Level As Long, pDriverInfo As Any) As Long
+'Private Declare Function ClosePrinter Lib "winspool.drv" (ByVal hPrinter As Long) As Long
+'Private Declare Function DeleteMonitor Lib "winspool.drv" Alias "DeleteMonitorA" (ByVal pName As String, ByVal pEnviroment As String, ByVal pMonitorName As String) As Long
+'Private Declare Function DeletePort Lib "winspool.drv" Alias "DeletePortA" (ByVal pName As String, ByVal hwnd As Long, ByVal pPortName As String) As Long
+'Private Declare Function DeletePrinter Lib "winspool.drv" (ByVal hPrinter As Long) As Long
+'Private Declare Function DeletePrinterDriver Lib "winspool.drv" Alias "DeletePrinterDriverA" (ByVal pName As String, ByVal pEnviroment As String, ByVal pDriverName As String) As Long
+'Private Declare Function GetPrinterDriverDirectory Lib "winspool.drv" Alias "GetPrinterDriverDirectoryA" (ByVal pName As String, ByVal pEnvironment As String, ByVal Level As Long, pDriverDirectory As Any, ByVal cdBuf As Long, pcbNeeded As Long) As Long
+'Private Declare Function OpenPrinter Lib "winspool.drv" Alias "OpenPrinterA" (ByVal pPrinterName As String, phPrinter As Long, pDefault As PRINTER_DEFAULTS) As Long
+'
+'Private Declare Function lstrcpy Lib "kernel32.dll" Alias "lstrcpyA" (lpString1 As Any, lpString2 As Any) As Long
+'Private Declare Function FormatMessage Lib "kernel32" Alias "FormatMessageA" (ByVal dwFlags As Long, lpSource As Any, ByVal dwMessageId As Long, ByVal dwLanguageId As Long, ByVal lpBuffer As String, ByVal nSize As Long, Arguments As Long) As Long
 
 Public Sub InstallCompletePrinter()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -266,7 +242,7 @@ On Error GoTo ErrPtnr_OnError
 50160      lngWin32apiResultCode = lstrcpy(ByVal strDriverDirectory, bytDriverDirectoryBuffer(0))
 50170
 50180      Driverpath = Left(strDriverDirectory, InStr(strDriverDirectory, vbNullChar) - 1)
-50190      If Right(Driverpath, 1) <> "\" Then Driverpath = Driverpath & "\"
+50190      Driverpath = CompletePath(Driverpath)
 50200
 50210      With DI3
 50220       .pName = DriverName & vbNullString
@@ -361,7 +337,7 @@ On Error GoTo ErrPtnr_OnError
 50320      End If
 50330      If IsWin9xMe = True Then
 50340       Set ini = New clsINI
-50350       ini.Filename = GetWindowsDirectory & "\win.ini"
+50350       ini.Filename = CompletePath(GetWindowsDirectory) & "win.ini"
 50360       ini.Key = "PDFCreator"
 50370       ini.Section = "Devices"
 50380       ini.SaveKey "PSCRIPT,PDFCreator:"
@@ -528,6 +504,36 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modPrinter", "RaiseAPIError")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetPDFCreatorPrintername() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Printers As Collection, reg As clsRegistry, SubKeys As Collection, _
+  i As Long, j As Long
+50030  GetPDFCreatorPrintername = ""
+50040  Set Printers = GetAvailablePrinters2
+50050  Set reg = New clsRegistry
+50060  Set SubKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
+50070  For i = 1 To Printers.Count
+50080   For j = 1 To SubKeys.Count
+50090    If SubKeys(j) = Printers(i)(1) Then
+50100     GetPDFCreatorPrintername = Printers(i)(0)
+50110     Exit Function
+50120    End If
+50130   Next j
+50140  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPrinter", "GetPDFCreatorPrintername")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

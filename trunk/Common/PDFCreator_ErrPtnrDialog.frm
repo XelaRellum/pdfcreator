@@ -12,7 +12,6 @@ Begin VB.Form ErrPtnr
    MinButton       =   0   'False
    ScaleHeight     =   5775
    ScaleWidth      =   7230
-   ShowInTaskbar   =   0   'False
    Begin VB.Frame framComment 
       BackColor       =   &H00FF0000&
       BorderStyle     =   0  'Kein
@@ -524,9 +523,11 @@ Next
 ' system information
 a$ = a$ + t$
 a$ = a$ + "SYSTEMINFO:" + vbCrLf
-a$ = a$ + r$ + "Platform:" + vbTab
-v.dwOSVersionInfoSize = 148
-e& = GetVersionEx&(v)
+a$ = a$ + " " + _
+ Replace$(GetWinVersionStr, " [", vbCrLf + "  [", 1, 1, vbTextCompare) + vbCrLf
+'a$ = a$ + r$ + "Platform:" + vbTab
+'v.dwOSVersionInfoSize = 148
+'e& = GetVersionEx&(v)
 'Select Case v.dwPlatformId
 'Case VER_PLATFORM_WIN32_NT: a$ = a$ + "Windows NT" + vbCrLf
 'Case VER_PLATFORM_WIN32_WINDOWS: a$ = a$ + "Windows 95" + vbCrLf
@@ -535,8 +536,8 @@ e& = GetVersionEx&(v)
 
 'a$ = a$ + WinVersionText + vbCrLf
 
-a$ = a$ + r$ + "Version:" + vbTab & v.dwMajorVersion & "." & v.dwMinorVersion & vbCrLf
-a$ = a$ + r$ + "Build:" + vbTab & (v.dwBuildNumber And &HFFFF&) & "   " & LPSTRToVBString$(v.szCSDVersion) & vbCrLf
+'a$ = a$ + r$ + "Version:" + vbTab & v.dwMajorVersion & "." & v.dwMinorVersion & vbCrLf
+'a$ = a$ + r$ + "Build:" + vbTab & (v.dwBuildNumber And &HFFFF&) & "   " & LPSTRToVBString$(v.szCSDVersion) & vbCrLf
 ' Ende
 a$ = a$ + t$
 
@@ -711,3 +712,6 @@ For Each a In CallStackCollection
 Next
 End Sub
 
+Private Sub Form_Load()
+ Me.Icon = frmMain.Icon
+End Sub

@@ -1,6 +1,6 @@
 'Optionname|OptionControlvalue|Type|Standard|LeftLimit|RightLimit
 
-' <Colors Bitmap>
+' <Bitmap Colors>
 BitmapResolution|txtBitmapResolution.Text|Long|150|1|<
 BMPColorscount|cmbBMPColors.Listindex|Long|1|0|6
 JPEGColorscount|cmbJPEGColors.Listindex|Long|0|0|1
@@ -9,14 +9,14 @@ PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
 PNGColorscount|cmbPNGColors.Listindex|Long|0|0|4
 TIFFColorscount|cmbTIFFColors.Listindex|Long|0|0|7
 
-' <ColorsPDF>
+' <PDF Colors>
 PDFColorsCMYKToRGB|chkPDFCMYKtoRGB.Value|Boolean|1||
 PDFColorsColorModel|cmbPDFColorModel.Listindex|Long|1|0|2
 PDFColorsPreserveHalftone|chkPDFPreserveHalftone.Value|Boolean|0||
 PDFColorsPreserveOverprint|chkPDFPreserveOverprint.Value|Boolean|1||
 PDFColorsPreserveTransfer|chkPDFPreserveTransfer.Value|Boolean|1||
 
-' <CompressionPDF>
+' <PDF Compression>
 PDFCompressionColorCompression|chkPDFColorComp.Value|Boolean|1||
 PDFCompressionColorCompressionChoice|cmbPDFColorComp.Listindex|Long|0|0|7
 PDFCompressionColorResample|chkPDFColorResample.Value|Boolean|0||
@@ -34,12 +34,12 @@ PDFCompressionMonoResampleChoice|cmbPDFMonoResample.Listindex|Long|0|0|2
 PDFCompressionMonoResolution|txtPDFMonoRes.Text|Long|1200|0|<
 PDFCompressionTextCompression|chkPDFTextComp.Value|Boolean|1||
 
-' <FontsPDF>
+' <PDF Fonts>
 PDFFontsEmbedAll|chkPDFEmbedAll.Value|Boolean|1||
 PDFFontsSubSetFonts|chkPDFSubSetFonts.Value|Boolean|1||
 PDFFontsSubSetFontsPercent|txtPDFSubSetPerc.Text|Long|100|0|<
 
-' <GeneralPDF>
+' <PDF General>
 PDFGeneralASCII85|chkPDFASCII85.Value|Boolean|0||
 PDFGeneralAutorotate|cmbPDFRotate.Listindex|Long|2|0|2
 PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|1|0|2
@@ -59,8 +59,13 @@ PDFEncryptor|cmbPDFEncryptor.Itemdata(Frm.cmbPDFEncryptor.Listindex)|Long|0|0|1
 PDFHighEncryption|optEncHigh.Value|Boolean|0||
 PDFLowEncryption|optEncLow.Value|Boolean|1||
 PDFOwnerPass|chkOwnerPass.Value|Boolean|0||
+PDFOwnerPasswordString||String|||
 PDFUserPass|chkUserPass.Value|Boolean|0||
+PDFUserPasswordString||String|||
 PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
+
+' <Printing>
+OnePagePerFile||Boolean|0|0|1
 
 ' <Program>
 AutosaveDirectory|txtAutosaveDirectory.Text|String|||
@@ -69,6 +74,7 @@ AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|5
 DirectoryGhostscriptBinaries|txtGSbin.text|String|||
 DirectoryGhostscriptFonts|txtGSfonts.text|String|||
 DirectoryGhostscriptLibraries|txtGSlib.text|String|||
+DirectoryGhostscriptResource|txtGSResource.text|String|||
 FilenameSubstitutions||String|Microsoft Word - \.doc||
 FilenameSubstitutionsOnlyInTitle|chkFilenameSubst.Value|Boolean|1||
 Language|Language|String|english||
@@ -83,15 +89,33 @@ PrinterTemppath|txtTemppath.text|String|||
 ProcessPriority|sldProcessPriority.value|Long|1|0|3
 ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
-ProgramFontSize|txtProgramFontSize.text|Long|8|1|72
+ProgramFontSize|cmbProgramFontSize.text|Long|8|1|72
 RemoveSpaces|chkSpaces.Value|Boolean|1||
+RunProgramAfterSaving||Boolean|0|0|1
+RunProgramAfterSavingProgramname||String|||
+RunProgramAfterSavingProgramParameters||String|||
+RunProgramAfterSavingWaitUntilReady||Boolean|1|0|1
+RunProgramAfterSavingWindowstyle||Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
+StampFontColor||String|#FF0000||
+StampFontname||String|Arial||
+StampFontsize||Long|48|1|<
+StampOutlineFontthickness||Long|0|0|<
+StampString||String|||
+StampUseOutlineFont||Boolean|1||
 StandardAuthor|txtStandardAuthor.Text|String|||
+StandardCreationdate||String|||
+StandardDateformat||String|YYYYMMDDHHNNSS||
+StandardKeywords||String|||
+StandardModifydate||String|||
+StandardSubject||String|||
+StandardTitle||String|||
 StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
 UseAutosave|chkUseAutosave.Value|Boolean|0||
 UseAutosaveDirectory|chkUseAutosaveDirectory.Value|Boolean|1||
 UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||
 UseStandardAuthor|chkUseStandardAuthor.Value|Boolean|0||
+ShowAnimation||Boolean|1||
 
 ' <PS LanguageLevel>
 EPSLanguageLevel|cmbEPSLanguageLevel.Listindex|Long|2|0|3

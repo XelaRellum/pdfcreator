@@ -1,31 +1,56 @@
 VERSION 5.00
 Begin VB.Form frmLog 
    Caption         =   "Form1"
-   ClientHeight    =   5160
+   ClientHeight    =   6405
    ClientLeft      =   60
    ClientTop       =   345
-   ClientWidth     =   8100
+   ClientWidth     =   9600
    Icon            =   "frmLog.frx":0000
    LinkTopic       =   "Form1"
    MinButton       =   0   'False
-   ScaleHeight     =   5160
-   ScaleWidth      =   8100
+   ScaleHeight     =   6405
+   ScaleWidth      =   9600
    ShowInTaskbar   =   0   'False
-   StartUpPosition =   3  'Windows-Standard
+   StartUpPosition =   2  'Bildschirmmitte
+   Visible         =   0   'False
+   Begin VB.CheckBox chkLogging 
+      Caption         =   "Logging"
+      Height          =   225
+      Left            =   105
+      TabIndex        =   4
+      Top             =   105
+      Visible         =   0   'False
+      Width           =   2220
+   End
+   Begin VB.CommandButton cmdSave 
+      Caption         =   "Save"
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   2
+      Top             =   2955
+      Width           =   1335
+   End
+   Begin VB.Timer Timer1 
+      Enabled         =   0   'False
+      Interval        =   100
+      Left            =   360
+      Top             =   675
+   End
    Begin VB.CommandButton cmdClear 
       Caption         =   "Clear"
       Height          =   495
       Left            =   120
-      TabIndex        =   1
-      Top             =   2640
+      TabIndex        =   3
+      Top             =   2955
       Width           =   1335
    End
    Begin VB.CommandButton cmdClose 
+      Cancel          =   -1  'True
       Caption         =   "Close"
       Height          =   495
       Left            =   3240
-      TabIndex        =   0
-      Top             =   2640
+      TabIndex        =   1
+      Top             =   2955
       Width           =   1335
    End
    Begin VB.TextBox txtLog 
@@ -35,8 +60,8 @@ Begin VB.Form frmLog
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Beides
-      TabIndex        =   2
-      Top             =   120
+      TabIndex        =   0
+      Top             =   435
       Width           =   4455
    End
 End
@@ -47,6 +72,13 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private Declare Function SendMessage Lib "user32" Alias _
+        "SendMessageA" (ByVal hwnd As Long, ByVal wMsg _
+        As Long, ByVal wParam As Long, ByVal lParam As _
+        Any) As Long
+
+Private Const WM_SETTEXT = &HC
+
 Private Sub cmdClear_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -56,6 +88,9 @@ On Error GoTo ErrPtnr_OnError
 50030   .Text = ReadLogfile
 50040   .SelStart = 0
 50050  End With
+50060  cmdSave.Enabled = False
+50070  cmdClear.Enabled = False
+50080  cmdClose.SetFocus
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -72,11 +107,42 @@ Private Sub cmdClose_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Unload Me
+50010  If ShowOnlyLogfile Then
+50020   If chkLogging.Value <> Options.Logging Then
+50030    Options.Logging = chkLogging.Value
+50040    SaveOptions Options
+50050   End If
+50060  End If
+50070  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmLog", "cmdClose_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmdSave_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim cFiles As Collection, Cancel As Boolean
+50020  Set cFiles = GetFilename("PDFCreator", GetMyFiles, 0, _
+  LanguageStrings.DialogPrinterLogfiles & " (*.log)|*.log", SaveFile, Cancel, Me)
+50040  If Cancel = True Then
+50050   Exit Sub
+50060  End If
+50070  If cFiles.Count > 0 And FileExists(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) = True Then
+50080   FileCopy CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile, cFiles.item(1)
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "cmdSave_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -109,15 +175,39 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Me.KeyPreview = True
-50020  With Options
-50030   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50040  End With
-50050  With LanguageStrings
-50060   Me.Caption = .LoggingLogfile
-50070   cmdClose.Caption = .LoggingClose
-50080   cmdClear.Caption = .LoggingClear
-50090  End With
+50010  KeyPreview = True
+50020  Icon = frmMain.Icon
+50030  With Options
+50040   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50050  End With
+50060  With LanguageStrings
+50070   Caption = .LoggingLogfile
+50080   cmdClose.Caption = .LoggingClose
+50090   cmdClear.Caption = .LoggingClear
+50100   cmdSave.Caption = .PrintingSave
+50110  End With
+50120  chkLogging.Caption = LanguageStrings.DialogPrinterLogging
+50130  If Options.Logging = 1 Then
+50140    chkLogging.Value = 1
+50150   Else
+50160    chkLogging.Value = 0
+50170  End If
+50180  chkLogging.Visible = ShowOnlyLogfile
+50190 ' txtLog.Text = ReadLogfile
+50200  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
+50210  If Len(txtLog.Text) = 0 Then
+50220    cmdSave.Enabled = False
+50230    cmdClear.Enabled = False
+50240   Else
+50250    If InStr(txtLog.Text, vbCrLf) > 0 Then
+50260     txtLog.SelStart = Len(txtLog.Text) - InStrRev(txtLog.Text, vbCrLf)
+50270    End If
+50280  End If
+50290  If ShowOnlyLogfile = True Then
+50300   FormInTaskbar Me, True, True
+50310   Caption = "PDFCreator - " & Caption
+50320  End If
+50330  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -134,21 +224,30 @@ Private Sub Form_Resize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If Me.ScaleHeight < 200 Or Me.ScaleWidth < 320 Then
-50020   Me.Height = 200: Me.Width = 320
-50030   Exit Sub
-50040  End If
-50050  With txtLog
-50060   .Top = Me.ScaleTop
-50070   .Left = Me.ScaleLeft
-50080   .Width = Me.ScaleWidth
-50090   .Height = Me.ScaleHeight - cmdClose.Height - 170
-50100  End With
-50110  cmdClear.Top = txtLog.Top + txtLog.Height + 150
-50120  cmdClear.Left = txtLog.Left + 100
-50130  cmdClose.Top = txtLog.Top + txtLog.Height + 150
-50140  cmdClose.Left = txtLog.Left + txtLog.Width - cmdClose.Width - 100
-50150  txtLog.Text = ReadLogfile
+50010  Dim minHeight As Long, minWidth As Long
+50020  minWidth = 320 * Screen.TwipsPerPixelX
+50030  minHeight = 200 * Screen.TwipsPerPixelY
+50040  If Me.Height < minHeight Or Me.Width < minWidth Then
+50050   Me.Height = minHeight: Me.Width = minWidth
+50060   Exit Sub
+50070  End If
+50080  With chkLogging
+50090   .Left = 0
+50100   .Top = 100
+50110   .Width = Me.Width - 100
+50120  End With
+50130  With txtLog
+50140   .Top = Abs(CLng(ShowOnlyLogfile)) * (chkLogging.Top + chkLogging.Height + 100)
+50150   .Left = 0
+50160   .Width = Me.Width - 100
+50170   .Height = Me.Height - cmdClose.Height - 600 - .Top
+50180  End With
+50190  cmdClear.Top = txtLog.Top + txtLog.Height + 100
+50200  cmdClear.Left = txtLog.Left + 50
+50210  cmdClose.Top = cmdClear.Top
+50220  cmdClose.Left = txtLog.Left + txtLog.Width - cmdClose.Width - 50
+50230  cmdSave.Top = cmdClear.Top
+50240  cmdSave.Left = txtLog.Left + (txtLog.Width - cmdClose.Width) / 2 - 100
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -159,4 +258,41 @@ Case 2: Exit Sub
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub SetCursorOnTheBeginningOfTheLastLine(txtBox As Control)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tStrf() As String
+50020  If Len(txtBox.Text) > 0 Then
+50030   If InStr(1, txtBox.Text, vbCrLf) > 0 Then
+50040     txtBox.SelStart = InStrRev(txtBox.Text, vbCrLf) + Len(vbCrLf)
+50050    Else
+50060     txtBox.SelStart = 0
+50070   End If
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "SetCursorOnTheBeginningOfTheLastLine")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Timer1_Timer()
+ On Error Resume Next
+ Timer1.Enabled = False
+ With Screen
+  Height = 0.75 * .Height
+  Width = 0.75 * .Width
+  Move (.Width - Width) / 2, (.Height - Height) / 2
+ End With
+ SetCursorOnTheBeginningOfTheLastLine txtLog
+ txtLog.SetFocus
+ cmdClose.SetFocus
 End Sub

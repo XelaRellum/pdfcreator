@@ -181,7 +181,7 @@ On Error GoTo ErrPtnr_OnError
 50060  cReg.KeyRoot = "Software\Pegasus Mail\BaseDir"
 50070  PegasusBaseDir = cReg.GetRegistryValue("")
 50080  WsendToPath = CompletePath(PegasusBaseDir) & "wsendto.exe"
-50090  If Dir(WsendToPath) <> "" Then
+50090  If Dir(WsendToPath) <> vbNullString Then
 50100    Shell """" & WsendToPath & """ """ & Filename & """"
 50110   Else
 50120    MsgBox LanguageStrings.MessagesMsg20
@@ -210,7 +210,7 @@ On Error GoTo ErrPtnr_OnError
 50050  cReg.hkey = HKEY_CURRENT_USER
 50060  cReg.KeyRoot = "Software\Rit\The Bat!"
 50070  ExePath = cReg.GetRegistryValue("EXE path")
-50080  If Dir(ExePath) <> "" Then
+50080  If Dir(ExePath) <> vbNullString Then
 50090    Shell """" & ExePath & """ """ & Filename & """"
 50100   Else
 50110    MsgBox LanguageStrings.MessagesMsg20
@@ -239,7 +239,7 @@ On Error GoTo ErrPtnr_OnError
 50050  cReg.hkey = HKEY_LOCAL_MACHINE
 50060  cReg.KeyRoot = "Software\Aerofox\Foxmail"
 50070  ExePath = cReg.GetRegistryValue("Executable")
-50080  If Dir(ExePath) <> "" Then
+50080  If Dir(ExePath) <> vbNullString Then
 50090    Shell """" & ExePath & """ /min """ & Filename & """"
 50100   Else
 50110    MsgBox LanguageStrings.MessagesMsg20
@@ -269,7 +269,7 @@ On Error GoTo ErrPtnr_OnError
 50060  cReg.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sylpheed-Claws_is1"
 50070  ExePath = cReg.GetRegistryValue("Inno Setup: App Path")
 50080  ExePath = CompletePath(ExePath) & "bin\sylpheed.exe"
-50090  If Dir(ExePath) <> "" Then
+50090  If Dir(ExePath) <> vbNullString Then
 50100    Shell """" & ExePath & """ --attach """ & Filename & """"
 50110   Else
 50120    MsgBox LanguageStrings.MessagesMsg20

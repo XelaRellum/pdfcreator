@@ -1,0 +1,29 @@
+%!PS
+/stampstring ([STAMPSTRING]) def
+/fontname /[FONTNAME] def
+/fontsize [FONTSIZE] def
+/fontcolor {[FONTCOLOR]} def
+/*showpage /showpage load def
+/showpage {
+ initgraphics
+ clippath pathbbox
+ /ury exch def /urx exch def
+ /lly exch def /llx exch def
+ /h ury lly sub def
+ /w urx llx sub def
+ currentscreen exch pop h w atan dup
+ rotate 45 sub exch setscreen
+ /len h dup mul w dup mul add sqrt def
+ /x 0 def
+ /y fontsize 0.7 mul -2 div def
+ newpath
+ fontname findfont 48 scalefont setfont
+ [STAMPOUTLINEFONTTHICKNESS] setlinewidth
+ len stampstring stringwidth pop sub 2 div
+ fontcolor setrgbcolor 
+ /x exch def
+ x y moveto stampstring 
+ [USEOUTLINEFONT]
+ *showpage
+} bind def
+

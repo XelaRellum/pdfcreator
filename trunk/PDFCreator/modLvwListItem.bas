@@ -1,31 +1,29 @@
 Attribute VB_Name = "modLvwListItem"
 Option Explicit
 
-Private Declare Function LockWindowUpdate Lib "user32" (ByVal hwndLock As Long) As Long
-
 Public Type ListSubItemStore
-    Bold As String
-    ForeColor As Long
-    Key As String
-    ReportIcon As Variant
-    Tag As Variant
-    Text As String
-    ToolTipText As String
+ Bold As String
+ ForeColor As Long
+ Key As String
+ ReportIcon As Variant
+ Tag As Variant
+ Text As String
+ ToolTipText As String
 End Type
 
 Public Type ListItemStore
-    Bold As Boolean
-    Checked As Boolean
-    ForeColor As Long
-    Ghosted As Boolean
-    Icon As Variant
-    Key As String
-    ListSubItems() As ListSubItemStore
-    Selected As Boolean
-    SmallIcon As Variant
-    Tag As Variant
-    Text As String
-    ToolTipText As String
+ Bold As Boolean
+ Checked As Boolean
+ ForeColor As Long
+ Ghosted As Boolean
+ Icon As Variant
+ Key As String
+ ListSubItems() As ListSubItemStore
+ Selected As Boolean
+ SmallIcon As Variant
+ Tag As Variant
+ Text As String
+ ToolTipText As String
 End Type
 
 Public Function LvwGetCountSelectedItems(ListView As ListView, Optional ByVal LockUpdate As Boolean) As Long
@@ -142,7 +140,7 @@ On Error GoTo ErrPtnr_OnError
 50100             Set nListItem = zGetListItem(ListView, KeyIndexListItem)
 50110             If Not (nListItem Is Nothing) Then
 50120                 nIndex = nListItem.Index
-50130                 If nIndex > 1 Then
+50130                 If nIndex > 0 Then
 50140                     nIndex = nIndex - Steps
 50150                     If nIndex < 1 Then
 50160                         nIndex = 1
@@ -182,7 +180,7 @@ On Error GoTo ErrPtnr_OnError
 50080    Set nListItem = zGetListItem(ListView, KeyIndexListItem)
 50090    If Not (nListItem Is Nothing) Then
 50100     nIndex = nListItem.Index
-50110     If nIndex < .Count Then
+50110     If nIndex < .Count + 1 Then
 50120      nIndex = nIndex + Steps
 50130      LvwGetListItemStore nListItemStore, ListView, nListItem, True
 50140      If nIndex > .Count Then

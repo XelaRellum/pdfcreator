@@ -1,45 +1,18 @@
 Attribute VB_Name = "modPDFCreator"
 Option Explicit
 
-Public Const Uninstall_GUID = "{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D}"
-Public Const PDFCreator_GUID = "{A7332D94-E8FE-40B2-937F-8515FC0FF52F}"
-Public Const TransTool_GUID = "{B7BCA0D2-7305-4318-BA7A-01B028D910EB}"
-Public Const PDFSpooler_GUID = "{C387A397-047A-4354-AE89-F75B1B550257}"
-Public Const UnInst_GUID = "{D95872D0-0DE7-4C01-859C-1BAE47FB1C6B}"
-Public Const Paypal = "https://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR"
-Public Const Homepage = "http://www.pdfcreator.de.vu"
-Public Const Sourceforge = "http://www.sourceforge.net/projects/pdfcreator"
-Public Const UpdateURL = "http://www.pdfcreator.de.vu/update.txt"
-Public Const PDFCreatorLogfile = "PDFCreator.log"
-Public Const CompatibleLanguageVersion = "0.8.0"
-
-
-Public PDFCreatorINIFile As String, _
-       PrinterStop As Boolean, _
-       Printing As Boolean, _
-       PDFCreatorLogfilePath As String, _
-       SavePasswordsForThisSession As Boolean, _
-       OwnerPassword As String, _
-       UserPassword As String, _
-       ChangeDefaultprinter As Boolean, _
-       SecurityIsPossible As Boolean, _
-       Restart As Boolean, _
-       SaveOpenCancel As Boolean, _
-       SaveOpenFilename As Collection, _
-       SaveOpenFilterindex As Long
-
 Public Function ReadLogfile() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, bufStr As String, tStr As String
 50020
-50030  If LenB(Dir(PDFCreatorLogfilePath & PDFCreatorLogfile)) = 0 Then
+50030  If FileExists(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) = False Then
 50040   Exit Function
 50050  End If
 50060
 50070  fn = FreeFile
-50080  Open PDFCreatorLogfilePath & PDFCreatorLogfile For Input As #fn
+50080  Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Input As #fn
 50090  bufStr = vbNullString
 50100  While Not EOF(fn)
 50110   If Len(bufStr) = 0 Then
@@ -70,11 +43,11 @@ Public Sub ClearLogfile()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long
-50020  If LenB(Dir(PDFCreatorLogfilePath & PDFCreatorLogfile)) = 0 Then
+50020  If FileExists(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) = False Then
 50030   Exit Sub
 50040  End If
 50050  fn = FreeFile
-50060  Open PDFCreatorLogfilePath & PDFCreatorLogfile For Output As #fn
+50060  Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
 50070  Close #fn
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -96,7 +69,7 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  bufStr = ReadLogfile
 50040
-50050  If LenB(Dir(PDFCreatorLogfilePath, vbDirectory)) = 0 Then
+50050  If DirExists(PDFCreatorLogfilePath) = False Then
 50060    tB = MakePath(PDFCreatorLogfilePath)
 50070   Else
 50080    tB = True
@@ -104,7 +77,7 @@ On Error GoTo ErrPtnr_OnError
 50100
 50110  If tB = True Then
 50120   fn = FreeFile
-50130   Open PDFCreatorLogfilePath & PDFCreatorLogfile For Output As #fn
+50130   Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
 50140
 50150   If Len(bufStr) > 0 Then
 50160     s = Split(bufStr, vbCrLf)
@@ -130,58 +103,46 @@ End Select
 End Sub
 
 Public Sub IfLoggingWriteLogfile(Logtext As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, i As Long, bufStr As String, s() As String, _
+ Dim fn As Long, i As Long, bufStr As String, s() As String, _
   tStr As String, tB As Boolean
-50030
-50040  If Options.Logging = 0 Then
-50050   Exit Sub
-50060  End If
-50070
-50080  If LenB(Dir(PDFCreatorLogfilePath, vbDirectory)) = 0 Then
-50090    tB = MakePath(PDFCreatorLogfilePath)
-50100   Else
-50110    tB = True
-50120  End If
-50130
-50140  If tB = True Then
-50150
-50160   bufStr = ReadLogfile
-50170
-50180   fn = FreeFile
-50190   Open PDFCreatorLogfilePath & PDFCreatorLogfile For Output As #fn
-50200
-50210   If Len(bufStr) > 0 Then
-50220     s = Split(bufStr, vbCrLf)
-50230     Print #fn, Now & ": " & Logtext
-50240     If Options.LogLines < UBound(s) - 1 Then
-50250       For i = 2 To Options.LogLines
-50260        tStr = s(i - 2)
-50270        Print #fn, s(i - 2)
-50280       Next i
-50290      Else
-50300       For i = LBound(s) To UBound(s)
-50310        tStr = s(i)
-50320        Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
-50330       Next i
-50340     End If
-50350    Else
-50360     Print #fn, Now & ": " & Logtext
-50370   End If
-50380   Close #fn
-50390  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDFCreator", "IfLoggingWriteLogfile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+
+ If Options.Logging = 0 Then
+  Exit Sub
+ End If
+
+ If DirExists(PDFCreatorLogfilePath) = False Then
+   tB = MakePath(PDFCreatorLogfilePath)
+  Else
+   tB = True
+ End If
+
+ If tB = True Then
+
+  bufStr = ReadLogfile
+
+  fn = FreeFile
+  Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
+
+  If Len(bufStr) > 0 Then
+    s = Split(bufStr, vbCrLf)
+    If Options.LogLines < UBound(s) - 1 Then
+      For i = UBound(s) - Options.LogLines + 2 To UBound(s)
+       tStr = s(i - 2)
+       Print #fn, s(i - 2)
+      Next i
+     Else
+      For i = LBound(s) + 1 To UBound(s)
+       tStr = s(i)
+       Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
+      Next i
+    End If
+    Print #fn, Now & ": " & Logtext
+   Else
+    Print #fn, "Windowsversion: " & GetWinVersionStr
+    Print #fn, Now & ": " & Logtext
+  End If
+  Close #fn
+ End If
 End Sub
 
 Public Sub IfLoggingShowLogfile(Optional frmLog As Form, Optional frmMain As Form)
@@ -234,23 +195,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function GetPDFCreatorTempfolder() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetPDFCreatorTempfolder = Options.PrinterTemppath
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDFCreator", "GetPDFCreatorTempfolder")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
- 
 Public Sub PsAssociate()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -275,7 +219,7 @@ On Error GoTo ErrPtnr_OnError
 50180   .KeyRoot = "Postscript"
 50190   .CreateKey "DefaultIcon"
 50200   .KeyRoot = "PostScript\DefaultIcon"
-50210   .SetRegistryValue "", App.Path & "\" & App.EXEName & ".exe,13", REG_SZ
+50210   .SetRegistryValue "", App.Path & "\" & App.EXEName & ".exe,0", REG_SZ
 50220  End With
 50230  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -304,7 +248,7 @@ On Error GoTo ErrPtnr_OnError
 50080    reg.KeyRoot = "Postscript"
 50090    If reg.KeyExists = True Then
 50100     reg.KeyRoot = "Postscript\DefaultIcon"
-50110     If UCase$(reg.GetRegistryValue("")) = UCase$(App.Path & "\" & App.EXEName & ".exe,13") Then
+50110     If UCase$(reg.GetRegistryValue("")) = UCase$(App.Path & "\" & App.EXEName & ".exe,0") Then
 50120      reg.KeyRoot = "Postscript\Shell\Open\Command"
 50130      If UCase$(reg.GetRegistryValue("")) = UCase$("""" & App.Path & "\" & App.EXEName & ".exe"" -IF""%1""") Then
 50140       IsPsAssociate = True
@@ -364,16 +308,20 @@ On Error GoTo ErrPtnr_OnError
 50040   .hkey = HKEY_LOCAL_MACHINE
 50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 50060   Release = .GetRegistryValue("ApplicationVersion")
-50070   If WithBeta = True Then
-50080    If Len(Trim$(.GetRegistryValue("BetaVersion"))) > 0 Then
-50090      Release = Release & "." & .GetRegistryValue("BetaVersion")
-50100     Else
-50110      Release = Release & ".0"
-50120    End If
-50130   End If
-50140  End With
-50150  Set reg = Nothing
-50160  GetProgramRelease = Release
+50070   If LenB(Trim$(Release)) = 0 Then
+50080     Release = App.Major & "." & App.Minor & "." & App.Revision
+50090    Else
+50100     If WithBeta = True Then
+50110      If Len(Trim$(.GetRegistryValue("BetaVersion"))) > 0 Then
+50120        Release = Release & "." & .GetRegistryValue("BetaVersion")
+50130       Else
+50140        Release = Release & ".0"
+50150      End If
+50160     End If
+50170   End If
+50180  End With
+50190  Set reg = Nothing
+50200  GetProgramRelease = Release
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -388,8 +336,18 @@ End Function
 
 Public Sub ClearCache()
  On Error Resume Next
- If Dir(GetPDFCreatorTempfolder, vbDirectory) <> "" Then
-  RmDir GetPDFCreatorTempfolder
+ Dim cFiles As Collection, tStr As String, i As Long, tStrf() As String
+ tStr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
+ If DirExists(tStr) = True Then
+  Call FindFiles(tStr, cFiles, "~P*.tmp", , True)
+  For i = 1 To cFiles.Count
+   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
+    tStrf = Split(cFiles(i), "|")
+    If UBound(tStrf) >= 1 Then
+     Kill tStrf(1)
+    End If
+   End If
+  Next i
  End If
 End Sub
 
@@ -464,22 +422,67 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetPDFCreatorApplicationPath() As String
+Public Sub RunProgramAfterSaving(Docname As String, Parameters As String, Windowstyle As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry
-50020  Set reg = New clsRegistry
-50030  With reg
-50040   .hkey = HKEY_LOCAL_MACHINE
-50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-50060   GetPDFCreatorApplicationPath = .GetRegistryValue("Inno Setup: App Path")
-50070  End With
-50080  Set reg = Nothing
+50010  Dim tStr As String
+50020  If FileExists(Docname) = True And FileExists(Options.RunProgramAfterSavingProgramname) = True Then
+50030   tStr = "Autosavemodus: Run program after saving: Program:" & Options.RunProgramAfterSavingProgramname & _
+   "   Parameters:" & Parameters & Docname & "   WaitUntilReady:" & Options.RunProgramAfterSavingWaitUntilReady
+50050   IfLoggingWriteLogfile tStr
+50060   WriteToSpecialLogfile tStr
+50070   If Options.RunProgramAfterSavingWaitUntilReady = 1 Then
+50080     ShellAndWait "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , , WCTermination
+50090    Else
+50100     ShellAndWait "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , , WCNone
+50110   End If
+50120  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDFCreator", "RunProgramAfterSaving")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function EnterPasswords(ByRef UserPass As String, ByRef OwnerPass As String, f As Form) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Options.PDFUserPass <> 0 Or Options.PDFOwnerPass <> 0 Then
+50020    With f
+50030     .Visible = False
+50040     .fraUserPass.Enabled = Options.PDFUserPass
+50050     .lblUserPass.Enabled = Options.PDFUserPass
+50060     .lblUserPassRepeat.Enabled = Options.PDFUserPass
+50070     .fraOwnerPass.Enabled = Options.PDFOwnerPass
+50080     .lblOwnerPass.Enabled = Options.PDFOwnerPass
+50090     .lblOwnerPassRepeat.Enabled = Options.PDFOwnerPass
+50100     .iPasswords = Abs(Options.PDFUserPass) + Abs(Options.PDFOwnerPass * 2)
+50110     .Show vbModal
+50120     Do
+50130      Sleep 100
+50140      DoEvents
+50150     Loop While .bFinished = False
+50160    End With
+50170    EnterPasswords = f.bSuccess
+50180    UserPass = f.txtUserPass.Text
+50190    OwnerPass = f.txtOwnerPass.Text
+50200    Unload f
+50210   Else
+50220    EnterPasswords = False
+50230    UserPass = ""
+50240    OwnerPass = ""
+50250  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDFCreator", "GetPDFCreatorApplicationPath")
+Select Case ErrPtnr.OnError("modPDFCreator", "EnterPasswords")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -487,3 +490,119 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function GetRunProgramAfterSavingProgramParameters() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tStr As String
+50020  tStr = LTrim$(Options.RunProgramAfterSavingProgramParameters)
+50030  If Len(tStr) > 0 Then
+50040   If Mid$(tStr, 1, 1) = """" Then
+50050    tStr = Mid$(tStr, 2)
+50060   End If
+50070  End If
+50080  If Len(tStr) > 0 Then
+50090   If Mid$(tStr, Len(tStr), 1) = """" Then
+50100    tStr = Mid$(tStr, 1, Len(tStr) - 1)
+50110   End If
+50120  End If
+50130  GetRunProgramAfterSavingProgramParameters = tStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDFCreator", "GetRunProgramAfterSavingProgramParameters")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+
+Public Sub AddExplorerIntegration()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, keys As Collection, i As Long, sKey As String, Path As String
+50020  Set reg = New clsRegistry
+50030  reg.hkey = HKEY_CLASSES_ROOT
+50040  Set keys = reg.EnumRegistryKeys(HKEY_CLASSES_ROOT, "")
+50050  For i = 1 To keys.Count
+50060   If Mid(keys(i), 1, 1) = "." Then
+50070    reg.KeyRoot = keys(i)
+50080    reg.Subkey = ""
+50090    sKey = reg.GetRegistryValue("")
+50100    If LenB(sKey) > 0 Then
+50110     reg.KeyRoot = sKey
+50120     If reg.KeyExists = True Then
+50130      reg.Subkey = "shell\print\command"
+50140      If reg.KeyExists = True Then
+50150       If LenB(Trim$(reg.GetRegistryValue(""))) > 0 Then
+50160        reg.KeyRoot = sKey & "\shell\" & Uninstall_GUID
+50170        reg.Subkey = ""
+50180        If reg.KeyExists = False Then
+50190         Path = CompletePath(GetPDFCreatorApplicationPath)
+50200         If Len(Path) > 1 Then
+50210          reg.CreateKey
+50220          reg.SetRegistryValue "", LanguageStrings.OptionsShellIntegrationCaption, REG_SZ
+50230          reg.CreateKey "command"
+50240          reg.KeyRoot = sKey & "\shell\" & Uninstall_GUID & "\command"
+50250          reg.SetRegistryValue "", Path & "pdfcreator.exe -NOSTART -PF""%1""", REG_SZ
+50260         End If
+50270        End If
+50280       End If
+50290      End If
+50300     End If
+50310    End If
+50320   End If
+50330  Next i
+50340  Set keys = Nothing
+50350  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDFCreator", "AddExplorerIntegration")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub RemoveExplorerIntegration()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, keys As Collection, i As Long
+50020  Set reg = New clsRegistry
+50030  reg.hkey = HKEY_CLASSES_ROOT
+50040  Set keys = reg.EnumRegistryKeys(HKEY_CLASSES_ROOT, "")
+50050  For i = 1 To keys.Count
+50060   reg.KeyRoot = keys(i) & "\shell"
+50070   reg.Subkey = Uninstall_GUID & "\command"
+50080   If reg.KeyExists Then
+50090    reg.DeleteKey reg.Subkey
+50100   End If
+50110   reg.Subkey = Uninstall_GUID
+50120   If reg.KeyExists Then
+50130    reg.DeleteKey reg.Subkey
+50140   End If
+50150  Next i
+50160  Set keys = Nothing
+50170  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDFCreator", "RemoveExplorerIntegration")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+

@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -13,31 +13,136 @@ Begin VB.Form frmMain
    ScaleWidth      =   12930
    StartUpPosition =   3  'Windows-Standard
    Begin VB.Frame fra 
-      Caption         =   "Printer Registry Data Settings"
-      Height          =   1935
+      Caption         =   "Inc file"
+      Height          =   1755
+      Index           =   4
+      Left            =   3570
+      TabIndex        =   36
+      Top             =   2415
+      Width           =   3315
+      Begin VB.CommandButton cmdIncFile 
+         Caption         =   "Convert direct"
+         Height          =   495
+         Index           =   2
+         Left            =   1680
+         TabIndex        =   40
+         Top             =   735
+         Width           =   1575
+      End
+      Begin VB.CommandButton cmdIncFile 
+         Caption         =   "Save inc file"
+         Enabled         =   0   'False
+         Height          =   495
+         Index           =   1
+         Left            =   105
+         TabIndex        =   38
+         Top             =   1050
+         Width           =   1575
+      End
+      Begin VB.CommandButton cmdIncFile 
+         Caption         =   "Load language file"
+         Height          =   495
+         Index           =   0
+         Left            =   120
+         TabIndex        =   37
+         Top             =   735
+         Width           =   1575
+      End
+      Begin VB.TextBox txtIncFile 
+         BackColor       =   &H00C0FFFF&
+         Height          =   495
+         Left            =   120
+         MultiLine       =   -1  'True
+         ScrollBars      =   3  'Beides
+         TabIndex        =   39
+         Top             =   240
+         Width           =   3105
+      End
+   End
+   Begin VB.Frame fra 
+      Caption         =   "Stamppage"
+      Height          =   1860
       Index           =   3
-      Left            =   240
+      Left            =   210
+      TabIndex        =   30
+      Top             =   2415
+      Width           =   3315
+      Begin VB.CommandButton cmdStamppage 
+         Caption         =   "Show with GSView"
+         Enabled         =   0   'False
+         Height          =   495
+         Index           =   2
+         Left            =   105
+         TabIndex        =   32
+         Top             =   1365
+         Width           =   1575
+      End
+      Begin VB.CommandButton cmdStamppage 
+         Caption         =   "Save Stamppage"
+         Enabled         =   0   'False
+         Height          =   495
+         Index           =   1
+         Left            =   105
+         TabIndex        =   33
+         Top             =   1050
+         Width           =   1575
+      End
+      Begin VB.TextBox txtStamppage 
+         BackColor       =   &H00C0FFFF&
+         Height          =   495
+         Left            =   120
+         MultiLine       =   -1  'True
+         ScrollBars      =   3  'Beides
+         TabIndex        =   35
+         Top             =   240
+         Width           =   3105
+      End
+      Begin VB.CommandButton cmdStamppage 
+         Caption         =   "Load Stamppage"
+         Height          =   495
+         Index           =   0
+         Left            =   120
+         TabIndex        =   34
+         Top             =   735
+         Width           =   1575
+      End
+      Begin VB.CommandButton cmdStamppage 
+         Caption         =   "Copy Stamppage to Clipboard"
+         Enabled         =   0   'False
+         Height          =   495
+         Index           =   3
+         Left            =   1680
+         TabIndex        =   31
+         Top             =   735
+         Width           =   1575
+      End
+   End
+   Begin VB.Frame fra 
+      Caption         =   "Printer Registry Data Settings"
+      Height          =   1755
+      Index           =   5
+      Left            =   6930
       TabIndex        =   24
-      Top             =   3720
-      Width           =   4095
+      Top             =   2415
+      Width           =   3360
       Begin VB.CommandButton cmdPrintRegData 
          Caption         =   "Save WinNT Setup-Includefile"
          Enabled         =   0   'False
          Height          =   495
          Index           =   3
-         Left            =   2280
+         Left            =   1680
          TabIndex        =   28
-         Top             =   1320
-         Width           =   1695
+         Top             =   1155
+         Width           =   1575
       End
       Begin VB.CommandButton cmdPrintRegData 
          Caption         =   "Load WinNT Regfile and convert"
          Height          =   495
          Index           =   2
-         Left            =   2280
+         Left            =   1680
          TabIndex        =   29
-         Top             =   960
-         Width           =   1695
+         Top             =   735
+         Width           =   1575
       End
       Begin VB.CommandButton cmdPrintRegData 
          Caption         =   "Save Win9x Setup-Includefile"
@@ -46,27 +151,27 @@ Begin VB.Form frmMain
          Index           =   1
          Left            =   120
          TabIndex        =   27
-         Top             =   1320
-         Width           =   1695
+         Top             =   1155
+         Width           =   1575
       End
       Begin VB.CommandButton cmdPrintRegData 
          Caption         =   "Load Win9x Regfile and convert"
          Height          =   495
          Index           =   0
-         Left            =   120
+         Left            =   105
          TabIndex        =   26
-         Top             =   960
-         Width           =   1695
+         Top             =   735
+         Width           =   1575
       End
       Begin VB.TextBox txtPrintRegData 
          BackColor       =   &H00C0FFFF&
-         Height          =   615
+         Height          =   495
          Left            =   120
          MultiLine       =   -1  'True
          ScrollBars      =   3  'Beides
          TabIndex        =   25
          Top             =   240
-         Width           =   2055
+         Width           =   3105
       End
    End
    Begin MSComctlLib.StatusBar stb 
@@ -86,39 +191,39 @@ Begin VB.Form frmMain
       EndProperty
    End
    Begin MSComDlg.CommonDialog cdlg 
-      Left            =   8760
-      Top             =   5040
+      Left            =   210
+      Top             =   5775
       _ExtentX        =   847
       _ExtentY        =   847
       _Version        =   393216
    End
    Begin VB.Frame fra 
       Caption         =   "Testpage"
-      Height          =   3015
+      Height          =   1965
       Index           =   2
-      Left            =   7560
+      Left            =   6930
       TabIndex        =   7
-      Top             =   600
-      Width           =   3735
+      Top             =   420
+      Width           =   3315
       Begin VB.CommandButton cmdTestpage 
          Caption         =   "Copy Testpage to Clipboard"
          Enabled         =   0   'False
          Height          =   495
          Index           =   3
-         Left            =   1920
+         Left            =   1680
          TabIndex        =   14
-         Top             =   1560
-         Width           =   1695
+         Top             =   630
+         Width           =   1575
       End
       Begin VB.CommandButton cmdTestpage 
          Caption         =   "Show with GSView"
          Enabled         =   0   'False
          Height          =   495
          Index           =   2
-         Left            =   120
+         Left            =   105
          TabIndex        =   13
-         Top             =   2280
-         Width           =   1695
+         Top             =   1470
+         Width           =   1575
       End
       Begin VB.CommandButton cmdTestpage 
          Caption         =   "Save Testpage"
@@ -127,8 +232,8 @@ Begin VB.Form frmMain
          Index           =   1
          Left            =   120
          TabIndex        =   12
-         Top             =   1920
-         Width           =   1695
+         Top             =   1050
+         Width           =   1575
       End
       Begin VB.CommandButton cmdTestpage 
          Caption         =   "Load Testpage"
@@ -136,34 +241,34 @@ Begin VB.Form frmMain
          Index           =   0
          Left            =   120
          TabIndex        =   11
-         Top             =   1560
-         Width           =   1695
+         Top             =   615
+         Width           =   1575
       End
       Begin VB.TextBox txtTestpage 
          BackColor       =   &H00C0FFFF&
-         Height          =   1215
-         Left            =   120
+         Height          =   375
+         Left            =   105
          MultiLine       =   -1  'True
          TabIndex        =   10
          Top             =   240
-         Width           =   2055
+         Width           =   3105
       End
    End
    Begin VB.Frame fra 
       Caption         =   "Languages"
-      Height          =   3015
+      Height          =   1965
       Index           =   1
-      Left            =   3960
+      Left            =   3570
       TabIndex        =   6
-      Top             =   600
-      Width           =   3495
+      Top             =   420
+      Width           =   3285
       Begin VB.CommandButton cmdLanguages 
          Caption         =   "Load"
          Height          =   495
          Index           =   4
-         Left            =   1800
+         Left            =   1695
          TabIndex        =   20
-         Top             =   2280
+         Top             =   1440
          Width           =   1575
       End
       Begin VB.CommandButton cmdLanguages 
@@ -171,9 +276,9 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Index           =   5
-         Left            =   1800
+         Left            =   1695
          TabIndex        =   22
-         Top             =   1920
+         Top             =   1080
          Width           =   1575
       End
       Begin VB.CommandButton cmdLanguages 
@@ -183,7 +288,7 @@ Begin VB.Form frmMain
          Index           =   3
          Left            =   120
          TabIndex        =   19
-         Top             =   2280
+         Top             =   1440
          Width           =   1575
       End
       Begin VB.CommandButton cmdLanguages 
@@ -191,9 +296,9 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Index           =   2
-         Left            =   1800
+         Left            =   1695
          TabIndex        =   18
-         Top             =   1560
+         Top             =   720
          Width           =   1575
       End
       Begin VB.CommandButton cmdLanguages 
@@ -203,26 +308,26 @@ Begin VB.Form frmMain
          Index           =   1
          Left            =   120
          TabIndex        =   17
-         Top             =   1920
+         Top             =   1080
          Width           =   1575
       End
       Begin VB.CommandButton cmdLanguages 
          Caption         =   "Add"
          Height          =   495
          Index           =   0
-         Left            =   120
+         Left            =   105
          TabIndex        =   16
-         Top             =   1560
+         Top             =   735
          Width           =   1575
       End
       Begin MSComctlLib.ListView lsvLanguages 
-         Height          =   1215
-         Left            =   120
+         Height          =   450
+         Left            =   105
          TabIndex        =   15
          Top             =   240
-         Width           =   2175
-         _ExtentX        =   3836
-         _ExtentY        =   2143
+         Width           =   3120
+         _ExtentX        =   5503
+         _ExtentY        =   794
          View            =   3
          LabelEdit       =   1
          LabelWrap       =   -1  'True
@@ -239,19 +344,19 @@ Begin VB.Form frmMain
    End
    Begin VB.Frame fra 
       Caption         =   "Options"
-      Height          =   3015
+      Height          =   1950
       Index           =   0
       Left            =   240
       TabIndex        =   1
-      Top             =   600
-      Width           =   3495
+      Top             =   420
+      Width           =   3285
       Begin VB.CommandButton cmdOptions 
          Caption         =   "Load"
          Height          =   495
          Index           =   4
-         Left            =   1800
+         Left            =   1635
          TabIndex        =   9
-         Top             =   2280
+         Top             =   1410
          Width           =   1575
       End
       Begin VB.CommandButton cmdOptions 
@@ -259,9 +364,9 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Index           =   5
-         Left            =   1800
+         Left            =   1635
          TabIndex        =   21
-         Top             =   1920
+         Top             =   1050
          Width           =   1575
       End
       Begin VB.CommandButton cmdOptions 
@@ -269,9 +374,9 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Index           =   3
-         Left            =   120
+         Left            =   60
          TabIndex        =   8
-         Top             =   2280
+         Top             =   1410
          Width           =   1575
       End
       Begin VB.CommandButton cmdOptions 
@@ -279,9 +384,9 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Index           =   2
-         Left            =   1800
+         Left            =   1635
          TabIndex        =   5
-         Top             =   1560
+         Top             =   690
          Width           =   1575
       End
       Begin VB.CommandButton cmdOptions 
@@ -289,28 +394,28 @@ Begin VB.Form frmMain
          Enabled         =   0   'False
          Height          =   495
          Index           =   1
-         Left            =   120
+         Left            =   60
          TabIndex        =   4
-         Top             =   1920
+         Top             =   1050
          Width           =   1575
       End
       Begin VB.CommandButton cmdOptions 
          Caption         =   "Add"
          Height          =   495
          Index           =   0
-         Left            =   120
+         Left            =   60
          TabIndex        =   3
-         Top             =   1560
+         Top             =   690
          Width           =   1575
       End
       Begin MSComctlLib.ListView lsvOptions 
-         Height          =   1215
-         Left            =   480
+         Height          =   465
+         Left            =   30
          TabIndex        =   2
-         Top             =   240
-         Width           =   2175
-         _ExtentX        =   3836
-         _ExtentY        =   2143
+         Top             =   225
+         Width           =   3150
+         _ExtentX        =   5556
+         _ExtentY        =   820
          View            =   3
          LabelEdit       =   1
          LabelWrap       =   -1  'True
@@ -329,13 +434,13 @@ Begin VB.Form frmMain
       Height          =   5655
       Left            =   120
       TabIndex        =   0
-      Top             =   120
+      Top             =   90
       Width           =   12735
       _ExtentX        =   22463
       _ExtentY        =   9975
       _Version        =   393216
       BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
-         NumTabs         =   4
+         NumTabs         =   6
          BeginProperty Tab1 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
             Caption         =   "Options"
             Key             =   "Options"
@@ -352,6 +457,16 @@ Begin VB.Form frmMain
             ImageVarType    =   2
          EndProperty
          BeginProperty Tab4 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
+            Caption         =   "Stamppage"
+            Key             =   "Stamppage"
+            ImageVarType    =   2
+         EndProperty
+         BeginProperty Tab5 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
+            Caption         =   "Create inc files for setup"
+            Key             =   "inc"
+            ImageVarType    =   2
+         EndProperty
+         BeginProperty Tab6 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
             Caption         =   "Printer Registry Data Settings"
             Key             =   "WinPrintRegData"
             ImageVarType    =   2
@@ -384,7 +499,8 @@ Private Enum eOSTyp
 End Enum
 
 Private EditItem As Boolean, TempFile1 As String, _
- ChangeOptions As Boolean, ChangeLanguages As Boolean, ChangeTestpage As Boolean
+ ChangeOptions As Boolean, ChangeLanguages As Boolean, ChangeTestpage As Boolean, _
+ ChangeStamppage As Boolean, LastIncFile As String
 
 Public Function AddLanguagesItem(Str1 As String, Str2 As String, Str3 As String, Str4 As String) As Boolean
  Dim item As ListItem, i As Long
@@ -392,7 +508,7 @@ Public Function AddLanguagesItem(Str1 As String, Str2 As String, Str3 As String,
 
  If EditItem = False Then
    For i = 1 To lsvLanguages.ListItems.Count
-    If UCase$(Str2) = UCase$(lsvLanguages.ListItems(i).SubItems(1)) Then
+    If UCase$(Str2) = UCase$(lsvLanguages.ListItems(i).SubItems(1)) And UCase$(Str1) = UCase$(lsvLanguages.ListItems(i).Text) Then
      MsgBox "The key '" & Str2 & "' already exists in the section '" & Str1 & "'!", vbExclamation
      AddLanguagesItem = False
      Exit Function
@@ -429,7 +545,7 @@ Public Function AddOptionsItem(Str1 As String, Str2 As String, Str3 As String, S
     End If
    Next i
    For i = 1 To lsvOptions.ListItems.Count
-    If UCase$(Str2) = UCase$(lsvOptions.ListItems(i).SubItems(2)) Then
+    If Len(Str2) > 0 And UCase$(Str2) = UCase$(lsvOptions.ListItems(i).SubItems(2)) Then
      MsgBox "The objectname of the option '" & Str2 & "' already exists!", vbExclamation
      AddOptionsItem = False
      Exit Function
@@ -481,6 +597,56 @@ Private Function CheckType(TypeStr As String) As Boolean
  End If
 End Function
 
+Private Sub cmdIncFile_Click(Index As Integer)
+ Dim fn As Long, GSViewPath As String
+ 
+ On Error GoTo ErrorHandler
+ Select Case Index
+  Case 0 ' Load
+   With cdlg
+    .CancelError = True
+    .Filename = ""
+    .Filter = "Languages files (*.ini)|*.ini"
+    .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
+    .InitDir = App.Path & "\..\PDFCreator\Languages"
+    .ShowOpen
+    txtIncFile.Text = GetKeysAndValuesFromInifile("Setup", .Filename)
+    If Len(txtIncFile.Text) > 0 Then
+     cmdIncFile(1).Enabled = True
+    End If
+   End With
+  Case 1 ' Save
+   With cdlg
+    .Filename = LastIncFile & ".inc"
+    .Filter = "Setup inc files (*.inc)|*.inc"
+    .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
+    .InitDir = App.Path & "\..\Setup"
+    .ShowSave
+    SaveFile .Filename, txtIncFile.Text
+   End With
+  Case 2 ' Convert direct
+   With cdlg
+    .CancelError = True
+    .Filename = ""
+    .Filter = "Languages files (*.ini)|*.ini"
+    .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
+    .InitDir = App.Path & "\..\PDFCreator\Languages"
+    .ShowOpen
+    txtIncFile.Text = GetKeysAndValuesFromInifile("Setup", .Filename)
+    If Len(txtIncFile.Text) > 0 Then
+     cmdIncFile(1).Enabled = True
+    End If
+   End With
+   SaveFile App.Path & "\..\Setup\" & LastIncFile & ".inc", txtIncFile.Text
+ End Select
+ Exit Sub
+ErrorHandler:
+ If Err.Number = 32755 Then
+  Exit Sub
+ End If
+ MsgBox Err.Number & " " & Err.Description
+End Sub
+
 Private Sub cmdLanguages_Click(Index As Integer)
  Dim aw As Long, tStr As String, i As Long
  Select Case Index
@@ -522,7 +688,9 @@ Private Sub cmdLanguages_Click(Index As Integer)
   Case 4: 'Load
    cmdLanguages(4).Enabled = False
    Screen.MousePointer = vbHourglass
+   lsvLanguages.Enabled = False
    ReadTemplate
+   lsvLanguages.Enabled = True
    Screen.MousePointer = vbNormal
    cmdLanguages(4).Enabled = True
   Case 5: 'Create
@@ -576,15 +744,21 @@ Private Sub cmdOptions_Click(Index As Integer)
     End If
     .Show vbModal, Me
    End With
+   stb.Panels("EngCount").Text = EngCount & " english entries"
+   stb.Panels("GerCount").Text = GerCount & " german entries"
   Case 1: 'Edit
    EditItem = True
    ShowOption
+   stb.Panels("EngCount").Text = EngCount & " english entries"
+   stb.Panels("GerCount").Text = GerCount & " german entries"
   Case 2: 'Delete
    aw = MsgBox("Delete this option?", vbQuestion Or vbYesNo)
    If aw = vbYes Then
     lsvOptions.ListItems.Remove lsvOptions.SelectedItem.Index
     ChangeOptions = True
    End If
+   stb.Panels("EngCount").Text = EngCount & " english entries"
+   stb.Panels("GerCount").Text = GerCount & " german entries"
   Case 3: 'Save
    With cdlg
     .Filename = "Options.txt"
@@ -596,6 +770,7 @@ Private Sub cmdOptions_Click(Index As Integer)
     ChangeOptions = False
    End With
   Case 4: 'Load
+   lsvOptions.Enabled = False
    With cdlg
     .CancelError = True
     .Filename = "Options.txt"
@@ -605,8 +780,11 @@ Private Sub cmdOptions_Click(Index As Integer)
     .ShowOpen
     LoadOptions .Filename
    End With
+   lsvOptions.Enabled = True
   Case 5: 'Create
+   lsvOptions.Enabled = False
    CreateModOptions
+   lsvOptions.Enabled = True
  End Select
  If lsvOptions.ListItems.Count = 0 Then
    cmdOptions(1).Enabled = False
@@ -631,9 +809,58 @@ Private Sub cmdOptions_Click(Index As Integer)
  End With
  Exit Sub
 ErrorHandler:
+ lsvOptions.Enabled = True
  If Err.Number <> 32755 Then
   MsgBox Err.Number & ": " & Err.Description
  End If
+End Sub
+
+Private Sub cmdStamppage_Click(Index As Integer)
+ Dim fn As Long, GSViewPath As String
+ 
+ On Error GoTo ErrorHandler
+ Select Case Index
+  Case 0 ' Load
+   With cdlg
+    .CancelError = True
+    .Filename = "Stamppage.ps"
+    .Filter = "Postscript Files (*.ps)|*.ps|(*.txt)|*.txt"
+    .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
+    .InitDir = App.Path & "\Stamppage"
+    .ShowOpen
+    LoadFileInTextbox .Filename, txtStamppage
+    cmdStamppage(1).Enabled = True
+   End With
+  Case 1 ' Save
+   With cdlg
+    .Filename = "Stamppage.ps"
+    .Filter = "Postscript Files (*.ps)|*.ps|(*.txt)|*.txt"
+    .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
+    .InitDir = App.Path & "\Stamppage"
+    .ShowSave
+    SaveFile .Filename, txtStamppage.Text
+   End With
+  Case 2 ' Show
+   fn = FreeFile
+   Open TempFile1 For Output As #fn
+   Print #fn, txtStamppage.Text
+   Close #fn
+   GSViewPath = "c:\programme\ghostgum\gsview\gsview32.exe"
+   If Dir(GSViewPath) <> "" Then
+     Shell GSViewPath & " """ & TempFile1 & """"
+    Else
+     MsgBox "'gsview32.exe' cannot found. Please change this source in module 'cmdTestpage' in frmMain!", vbExclamation
+   End If
+  Case 3 ' Clipboard
+   'Replace 0A0D with 0D and copy testpage to clipboard
+   Clipboard.SetText Replace$(txtStamppage.Text, Chr$(&HD), ""), vbCFText
+ End Select
+ Exit Sub
+ErrorHandler:
+ If Err.Number = 32755 Then
+  Exit Sub
+ End If
+ MsgBox Err.Number & " " & Err.Description
 End Sub
 
 Private Sub cmdTestpage_Click(Index As Integer)
@@ -649,7 +876,7 @@ Private Sub cmdTestpage_Click(Index As Integer)
     .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
     .InitDir = App.Path & "\Testpage"
     .ShowOpen
-    LoadPostscriptFile .Filename
+    LoadFileInTextbox .Filename, txtTestpage
     cmdTestpage(1).Enabled = True
    End With
   Case 1 ' Save
@@ -659,7 +886,7 @@ Private Sub cmdTestpage_Click(Index As Integer)
     .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
     .InitDir = App.Path & "\Testpage"
     .ShowSave
-    SavePostscriptFile .Filename
+    SaveFile .Filename, txtTestpage.Text
    End With
   Case 2 ' Show
    fn = FreeFile
@@ -719,7 +946,7 @@ Private Function ConvertType(TypeStr As String, convTypeTo As vType)
 End Function
 
 Private Sub CreateModLanguages()
- Dim fn As Long, ini As New clsINI, Secs As Collection, Keys As Collection, _
+ Dim fn As Long, ini As New clsINI, Secs As Collection, keys As Collection, _
   i As Long, j As Long, tStr As String, Filename As String
 
  fn = FreeFile
@@ -731,7 +958,7 @@ Private Sub CreateModLanguages()
  Print #fn, "Option Explicit"
  Print #fn, ""
  Print #fn, "' Module automatically generated with LanguagesTool from Frank Heindörfer"
- Print #fn, "' 2003"
+ Print #fn, "' 2004"
  Print #fn, "' Email: thesmilyface@users.sourceforge.net"
  Print #fn, ""
  Print #fn, "Public Type tLanguageStrings"
@@ -740,12 +967,14 @@ Private Sub CreateModLanguages()
  Set Secs = ini.GetAllSectionsFromInifile(, True)
  For i = 1 To Secs.Count
   ini.Section = Secs.item(i)
-  Set Keys = ini.GetAllKeysFromSection(, , , True)
-  For j = 1 To Keys.Count
-   Print #1, " " & Secs.item(i) & Keys.item(j)(0) & " As String"
-  Next j
-  If i < Secs.Count Then
-   Print #fn, ""
+  If UCase$(Secs(i)) <> "SETUP" Then
+   Set keys = ini.GetAllKeysFromSection(, , , True)
+   For j = 1 To keys.Count
+    Print #1, " " & Secs.item(i) & keys.item(j)(0) & " As String"
+   Next j
+   If i < Secs.Count Then
+    Print #fn, ""
+   End If
   End If
  Next i
  Print #fn, "End Type"
@@ -756,40 +985,46 @@ Private Sub CreateModLanguages()
  Print #fn, "Public Sub LoadLanguage(ByVal Languagefile As String)"
  Print #fn, " InitLanguagesStrings"
  For i = 1 To Secs.Count
-  Print #fn, " Load" & Secs.item(i) & "Strings Languagefile"
+  If UCase$(Secs(i)) <> "SETUP" Then
+   Print #fn, " Load" & Secs.item(i) & "Strings Languagefile"
+  End If
  Next i
  Print #fn, "End Sub"
  Print #fn, ""
  For i = 1 To Secs.Count
-  Print #fn, "Private Sub Load" & Secs.item(i) & "Strings(ByVal Languagefile As String)"
-  Print #fn, " Dim hLang As New clsHash"
+  If UCase$(Secs(i)) <> "SETUP" Then
+   Print #fn, "Private Sub Load" & Secs.item(i) & "Strings(ByVal Languagefile As String)"
+   Print #fn, " Dim hLang As New clsHash"
 
-  Print #fn, " ReadINISection Languagefile, """ & Secs.item(i) & """, hLang"
-  Print #fn, " With LanguageStrings"
+   Print #fn, " ReadINISection Languagefile, """ & Secs.item(i) & """, hLang"
+   Print #fn, " With LanguageStrings"
 
-  ini.Section = Secs.item(i)
-  Set Keys = ini.GetAllKeysFromSection(, , , True)
-  For j = 1 To Keys.Count
-   Print #fn, "  ." & Secs.item(i) & Keys.item(j)(0) & " = Replace$(hLang.Retrieve(""" & Keys.item(j)(0) & """, ." & Secs.item(i) & Keys.item(j)(0) & "),""/n"",vbCrLf)"
-  Next j
-  Print #fn, " End With"
+   ini.Section = Secs.item(i)
+   Set keys = ini.GetAllKeysFromSection(, , , True)
+   For j = 1 To keys.Count
+    Print #fn, "  ." & Secs.item(i) & keys.item(j)(0) & " = Replace$(hLang.Retrieve(""" & keys.item(j)(0) & """, ." & Secs.item(i) & keys.item(j)(0) & "),""/n"",vbCrLf)"
+   Next j
+   Print #fn, " End With"
 
-  Print #fn, " Set hLang = Nothing"
-  Print #fn, "End Sub"
-  Print #fn, ""
+   Print #fn, " Set hLang = Nothing"
+   Print #fn, "End Sub"
+   Print #fn, ""
+  End If
  Next i
 
  ' InitLanguagesStrings
  Print #fn, "Private Sub InitLanguagesStrings()"
  Print #fn, " With LanguageStrings"
  For i = 1 To Secs.Count
-  ini.Section = Secs.item(i)
-  Set Keys = ini.GetAllKeysFromSection(, , , True)
-  For j = 1 To Keys.Count
-   Print #fn, "  ." & Secs.item(i) & Keys.item(j)(0) & " = """ & Keys.item(j)(1) & """"
-  Next j
-  If i < Secs.Count Then
-   Print #fn, ""
+  If UCase$(Secs(i)) <> "SETUP" Then
+   ini.Section = Secs.item(i)
+   Set keys = ini.GetAllKeysFromSection(, , , True)
+   For j = 1 To keys.Count
+    Print #fn, "  ." & Secs.item(i) & keys.item(j)(0) & " = """ & keys.item(j)(1) & """"
+   Next j
+   If i < Secs.Count Then
+    Print #fn, ""
+   End If
   End If
  Next i
  Print #fn, " End With"
@@ -872,6 +1107,12 @@ Private Sub CreateModOptions()
     Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryFonts""))"
     Print #fn, "  Set reg = Nothing"
+   Case UCase$("DirectoryGhostscriptResource")
+    Print #fn, "  Set reg = New clsRegistry"
+    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
+    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
+    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryResource""))"
+    Print #fn, "  Set reg = Nothing"
    Case UCase$("DirectoryJava")
     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(GetSpecialFolder(ssfSYSTEM))"
    Case UCase$("Printertemppath")
@@ -937,11 +1178,7 @@ Private Sub CreateModOptions()
    Select Case UCase$(lsvOptions.ListItems(i).SubItems(1))
     Case UCase$("AutoSaveDirectory")
      Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, GetMyFiles)"
-     Print #fn, "  If DirExists(tStr) = True Then"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
-     Print #fn, "   Else"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = GetMyFiles"
-     Print #fn, "  End If"
+     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
     Case UCase$("LastSaveDirectory")
      Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, GetMyFiles)"
      Print #fn, "  If DirExists(tStr) = True Then"
@@ -1023,12 +1260,7 @@ Private Sub CreateModOptions()
  Print #fn, " Dim i as Long, tList() as String, tStrA() As String, lsv As ListView"
  Print #fn, " With sOptions"
  For i = 1 To lsvOptions.ListItems.Count
-  If Not (UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase("PrinterStop") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("LastSaveDirectory") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Language") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Logging") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("LogLines") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StartStandardProgram")) Then
+  If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
    If UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase("Programfont") Then
      Print #fn, "  For i=0 to frm.cmbFonts.Listcount - 1"
      Print #fn, "    If Ucase$(frm.cmbFonts.List(i)) = Ucase$(." & lsvOptions.ListItems(i).SubItems(1) & ") Then"
@@ -1072,12 +1304,7 @@ Private Sub CreateModOptions()
  Print #fn, " Dim i as Long, tStr as String, lsv As ListView"
  Print #fn, " With sOptions"
  For i = 1 To lsvOptions.ListItems.Count
-  If Not (UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase("PrinterStop") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("LastSaveDirectory") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Language") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Logging") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("LogLines") Or _
-   UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StartStandardProgram")) Then
+  If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
     If UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions") Then
       Print #fn, " tStr="""""
       Print #fn, " Set lsv = Frm.lsvFilenameSubst"
@@ -1223,16 +1450,19 @@ Private Sub Form_Load()
  ChangeOptions = False
  ChangeLanguages = False
  ChangeTestpage = False
+ ChangeStamppage = False
 End Sub
 
 Private Sub Form_Resize()
- With tbstr
-  .Top = Me.ScaleTop + 50
-  .Left = Me.ScaleLeft + 50
-  .Width = Me.ScaleWidth - 100
-  .Height = Me.ScaleHeight - 100 - stb.Height
- End With
- ShowFrame
+ If WindowState <> 1 Then
+  With tbstr
+   .Top = Me.ScaleTop + 50
+   .Left = Me.ScaleLeft + 50
+   .Width = Me.ScaleWidth - 100
+   .Height = Me.ScaleHeight - 100 - stb.Height
+  End With
+  ShowFrame
+ End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -1253,6 +1483,13 @@ Private Sub Form_Unload(Cancel As Integer)
  End If
  If ChangeTestpage = True Then
   aw = MsgBox("You have change the testpage! Cancel the program without saving?", vbQuestion Or vbYesNo)
+  If aw = vbNo Then
+   Cancel = True
+   Exit Sub
+  End If
+ End If
+ If ChangeStamppage = True Then
+  aw = MsgBox("You have change the stamppage! Cancel the program without saving?", vbQuestion Or vbYesNo)
   If aw = vbNo Then
    Cancel = True
    Exit Sub
@@ -1359,17 +1596,24 @@ Private Sub LoadOptions(Filename As String)
  End With
 End Sub
 
-Private Sub LoadPostscriptFile(Filename As String)
+Private Sub LoadFileInTextbox(Filename As String, txt As TextBox)
  Dim fn As Long
  fn = FreeFile
  Open Filename For Input As #fn
- txtTestpage.Text = Input(LOF(fn), #fn)
+ txt.Text = Input(LOF(fn), #fn)
  Close #fn
 End Sub
 
 Private Sub lsvLanguages_DblClick()
  EditItem = True
  ShowLanguage
+End Sub
+
+Private Sub lsvLanguages_KeyPress(KeyAscii As Integer)
+ If KeyAscii = vbKeyReturn Then
+  EditItem = True
+  ShowLanguage
+ End If
 End Sub
 
 Private Sub lsvOptions_DblClick()
@@ -1390,7 +1634,7 @@ Private Sub mnExit_Click()
 End Sub
 
 Private Sub ReadTemplate()
- Dim ini As clsINI, Secs As Collection, Keys As Collection, _
+ Dim ini As clsINI, Secs As Collection, keys As Collection, _
   i As Long, j As Long, k As Long, c As Long, item As ListItem
  Set ini = New clsINI
  ini.Filename = App.Path & "\..\PDFCreator\Languages\english.ini"
@@ -1413,25 +1657,25 @@ Private Sub ReadTemplate()
 
  lsvLanguages.ListItems.Clear
  For i = 1 To Secs.Count
-  Set Keys = ini.GetAllKeysFromSection(Secs.item(i), , , True)
-  For j = 1 To Keys.Count - 1
+  Set keys = ini.GetAllKeysFromSection(Secs.item(i), , , True)
+  For j = 1 To keys.Count - 1
    c = 1
-   For k = j + 1 To Keys.Count
-    If CStr(Keys.item(j)(0)) = CStr(Keys.item(k)(0)) Then
+   For k = j + 1 To keys.Count
+    If CStr(keys.item(j)(0)) = CStr(keys.item(k)(0)) Then
      c = c + 1
     End If
    Next k
    If c > 1 Then
-    MsgBox "Error: There are " & c & " Keys '" & Keys.item(j)(0) & "' in section '" & Secs.item(i) & "'!", vbExclamation
+    MsgBox "Error: There are " & c & " Keys '" & keys.item(j)(0) & "' in section '" & Secs.item(i) & "'!", vbExclamation
    End If
   Next j
-  For j = 1 To Keys.Count
+  For j = 1 To keys.Count
    Set item = lsvLanguages.ListItems.Add(, , Secs.item(i))
-   item.SubItems(1) = Keys.item(j)(0)
-   item.SubItems(2) = Keys.item(j)(1)
+   item.SubItems(1) = keys.item(j)(0)
+   item.SubItems(2) = keys.item(j)(1)
   Next j
  Next i
- ini.Filename = App.Path & "\..\PDFCreator\Languages\deutsch.ini"
+ ini.Filename = App.Path & "\..\PDFCreator\Languages\german.ini"
  For i = 1 To lsvLanguages.ListItems.Count
   ini.Section = lsvLanguages.ListItems(i).Text
   ini.Key = lsvLanguages.ListItems(i).SubItems(1)
@@ -1503,29 +1747,69 @@ Private Sub RefreshFrame()
    With txtTestpage
     .Top = 200
     .Left = 100
-    .Width = fra(2).Width - 200
-    .Height = fra(2).Height - 900
+    .Width = fra(tbstr.SelectedItem.Index - 1).Width - 200
+    .Height = fra(tbstr.SelectedItem.Index - 1).Height - 900
    End With
-   cmdTestpage(0).Top = txtTestpage.Top + txtTestpage.Height + 50
-   cmdTestpage(0).Left = txtTestpage.Left
-   cmdTestpage(1).Top = cmdTestpage(0).Top
-   cmdTestpage(1).Left = cmdTestpage(0).Left + cmdTestpage(0).Width + 150
-   cmdTestpage(2).Top = cmdTestpage(0).Top
-   cmdTestpage(2).Left = cmdTestpage(1).Left + cmdTestpage(1).Width + 150
-   cmdTestpage(3).Top = cmdTestpage(0).Top
-   cmdTestpage(3).Left = cmdTestpage(2).Left + cmdTestpage(2).Width + 150
+   With cmdTestpage
+    .item(0).Top = txtTestpage.Top + txtTestpage.Height + 50
+    .item(0).Left = txtTestpage.Left
+    .item(1).Top = .item(0).Top
+    .item(1).Left = .item(0).Left + .item(0).Width + 150
+    .item(2).Top = .item(0).Top
+    .item(2).Left = .item(1).Left + .item(1).Width + 150
+    .item(3).Top = .item(0).Top
+    .item(3).Left = .item(2).Left + .item(2).Width + 150
+   End With
    With stb
     .Panels.Clear
    End With
   Case 3:
+   With txtStamppage
+    .Top = 200
+    .Left = 100
+    .Width = fra(tbstr.SelectedItem.Index - 1).Width - 200
+    .Height = fra(tbstr.SelectedItem.Index - 1).Height - 900
+   End With
+   With cmdStamppage
+    .item(0).Top = txtStamppage.Top + txtStamppage.Height + 50
+    .item(0).Left = txtStamppage.Left
+    .item(1).Top = .item(0).Top
+    .item(1).Left = .item(0).Left + .item(0).Width + 150
+    .item(2).Top = .item(0).Top
+    .item(2).Left = .item(1).Left + .item(1).Width + 150
+    .item(3).Top = .item(0).Top
+    .item(3).Left = .item(2).Left + .item(2).Width + 150
+   End With
+   With stb
+    .Panels.Clear
+   End With
+  Case 4:
+   With txtIncFile
+    .Top = 200
+    .Left = 100
+    .Width = fra(tbstr.SelectedItem.Index - 1).Width - 200
+    .Height = fra(tbstr.SelectedItem.Index - 1).Height - 900
+   End With
+   With cmdIncFile
+    .item(0).Top = txtIncFile.Top + txtIncFile.Height + 50
+    .item(0).Left = txtIncFile.Left
+    .item(1).Top = .item(0).Top
+    .item(1).Left = .item(0).Left + .item(0).Width + 150
+    .item(2).Top = .item(1).Top
+    .item(2).Left = .item(1).Left + .item(1).Width + 150
+   End With
+   With stb
+    .Panels.Clear
+   End With
+  Case 5:
    With stb
     .Panels.Clear
    End With
    With txtPrintRegData
     .Top = 200
     .Left = 100
-    .Width = fra(3).Width - 200
-    .Height = fra(3).Height - 900
+    .Width = fra(tbstr.SelectedItem.Index - 1).Width - 200
+    .Height = fra(tbstr.SelectedItem.Index - 1).Height - 900
    End With
    cmdPrintRegData(0).Top = txtPrintRegData.Top + txtPrintRegData.Height + 50
    cmdPrintRegData(0).Left = txtPrintRegData.Left
@@ -1583,11 +1867,11 @@ Private Sub SaveOptions(Filename As String)
  Close fn
 End Sub
 
-Private Sub SavePostscriptFile(Filename As String)
+Private Sub SaveFile(Filename As String, txtStr As String)
  Dim fn As Long
  fn = FreeFile
  Open Filename For Output As #fn
- Print #fn, txtTestpage.Text
+ Print #fn, txtStr
  Close #fn
 End Sub
 
@@ -1607,7 +1891,7 @@ Private Sub SaveTemplate()
   Next i
  End With
 
- ini.Filename = App.Path & "\..\PDFCreator\Languages\deutsch.ini"
+ ini.Filename = App.Path & "\..\PDFCreator\Languages\german.ini"
  ini.CreateIniFile
  With lsvLanguages
   For i = 1 To .ListItems.Count
@@ -1617,7 +1901,7 @@ Private Sub SaveTemplate()
  End With
  Set ini = Nothing
  FileCopy App.Path & "\..\PDFCreator\Languages\english.ini", App.Path & "\..\TransTool\english.ini"
- FileCopy App.Path & "\..\PDFCreator\Languages\deutsch.ini", App.Path & "\..\TransTool\deutsch.ini"
+ FileCopy App.Path & "\..\PDFCreator\Languages\german.ini", App.Path & "\..\TransTool\german.ini"
 End Sub
 
 Private Sub ShowOption()
@@ -1683,6 +1967,26 @@ Private Sub ShowLanguage()
  End With
 End Sub
 
+Private Sub txtIncFile_Change()
+ If Len(txtIncFile.Text) = 0 Then
+   cmdIncFile(1).Enabled = False
+  Else
+   cmdIncFile(1).Enabled = True
+ End If
+End Sub
+
+Private Sub txtStamppage_Change()
+ If Len(txtStamppage.Text) = 0 Then
+   cmdStamppage(1).Enabled = False
+   cmdStamppage(2).Enabled = False
+   cmdStamppage(3).Enabled = False
+  Else
+   cmdStamppage(1).Enabled = True
+   cmdStamppage(2).Enabled = True
+   cmdStamppage(3).Enabled = True
+ End If
+End Sub
+
 Private Sub txtTestpage_Change()
  If Len(txtTestpage.Text) = 0 Then
    cmdTestpage(1).Enabled = False
@@ -1698,7 +2002,7 @@ End Sub
 Private Function LoadAndConvert(RegFilename As String, os As eOSTyp) As Boolean
  Dim fn As Long, found As Boolean, resStr As String, tStr As String, sa() As String, _
   i As Long, j As Long, regStr As String
- 
+
  LoadAndConvert = True
  Select Case os
   Case eOSTyp.Win9x
@@ -1769,3 +2073,92 @@ Private Function GetHStr(NumberStr As String) As String
  GetHStr = "#" + tStr
 End Function
 
+Private Function IsSpecialString(specialString As String) As Boolean
+ Dim ss As Collection, i As Long
+ Set ss = New Collection
+ With ss
+  .Add "PrinterStop"
+  .Add "LastSaveDirectory"
+  .Add "Language"
+  .Add "Logging"
+  .Add "LogLines"
+  .Add "GetOptions"
+  .Add "OnePagePerFile"
+  .Add "RunProgramAfterSaving"
+  .Add "RunProgramAfterSavingProgramname"
+  .Add "RunProgramAfterSavingProgramParameters"
+  .Add "RunProgramAfterSavingWaitUntilReady"
+  .Add "RunProgramAfterSavingWindowstyle"
+  .Add "PDFOwnerPasswordString"
+  .Add "PDFUserPasswordString"
+  .Add "StandardKeywords"
+  .Add "StandardDateformat"
+  .Add "StandardCreationdate"
+  .Add "StandardModifydate"
+  .Add "StandardSubject"
+  .Add "StandardTitle"
+  .Add "StampFontColor"
+  .Add "StampFontname"
+  .Add "StampFontsize"
+  .Add "StampOutlineFontthickness"
+  .Add "StampString"
+  .Add "StampUseOutlineFont"
+  .Add "StartStandardProgram"
+  .Add "ShowAnimation"
+ End With
+ IsSpecialString = False
+ For i = 1 To ss.Count
+  If UCase$(ss(i)) = UCase$(specialString) Then
+   IsSpecialString = True
+   Exit For
+  End If
+ Next i
+ Set ss = Nothing
+End Function
+
+Private Function GetKeysAndValuesFromInifile(Section As String, Filename As String) As String
+ Dim ini As New clsINI, keys As Collection, _
+  i As Long, tStr As String, File As String
+ ini.Filename = Filename
+ SplitPath Filename, , , , File
+ Set keys = ini.GetAllKeysFromSection(Section)
+ For i = 1 To keys.Count
+  If Len(tStr) = 0 Then
+    tStr = LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
+   Else
+    tStr = tStr & vbCrLf & LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
+  End If
+ Next i
+ Set ini = Nothing
+ LastIncFile = File
+ If Len(tStr) > 0 Then
+  GetKeysAndValuesFromInifile = GetSortedText(tStr)
+ End If
+End Function
+
+Private Function GetSortedText(txt As String) As String
+ Dim tStrf() As String, coll As Collection, i As Long, j As Long, tStr As String
+ GetSortedText = txt
+ If InStr(1, txt, vbCrLf, vbTextCompare) Then
+  tStrf = Split(txt, vbCrLf)
+  Set coll = New Collection
+  coll.Add tStrf(0)
+  For i = 1 To UBound(tStrf)
+   For j = 1 To coll.Count
+    If tStrf(i) < coll(j) Then
+     coll.Add tStrf(i), , j
+     Exit For
+    End If
+   Next j
+   If j > coll.Count Then
+    coll.Add tStrf(i)
+   End If
+  Next i
+  tStr = coll(1)
+  For j = 2 To coll.Count
+   tStr = tStr & vbCrLf & coll(j)
+  Next j
+  Set coll = Nothing
+  GetSortedText = tStr
+ End If
+End Function

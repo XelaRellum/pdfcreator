@@ -48,8 +48,6 @@ Option Explicit
 'GhostScript API
 Public Const GsDll = "gsdll32.dll"
 
-Public Declare Sub CopyMemory Lib "Kernel32" Alias "RtlMoveMemory" (ByVal Dest As Long, ByVal Source As Long, ByVal bytes As Long)
-
 Private Declare Function gsapi_revision Lib "gsdll32.dll" (ByVal pGSRevisionInfo As Long, ByVal intLen As Long) As Long
 Private Declare Function gsapi_new_instance Lib "gsdll32.dll" (ByRef lngGSInstance As Long, ByVal lngCallerHandle As Long) As Long
 Private Declare Function gsapi_set_stdio Lib "gsdll32.dll" (ByVal lngGSInstance As Long, ByVal gsdll_stdin As Long, ByVal gsdll_stdout As Long, ByVal gsdll_stderr As Long) As Long
@@ -78,14 +76,11 @@ Public Type tGhostscriptRevision
  intRevision As Long
  intRevisionDate As Long
 End Type
-
-Public GSRevision As tGhostscriptRevision
-
 '------------------------------------------------
 'UDTs End
 '------------------------------------------------
 
-
+Public GSRevision As tGhostscriptRevision
 
 '------------------------------------------------
 'Callback Functions Start
@@ -123,7 +118,7 @@ On Error GoTo ErrPtnr_OnError
 50070       Dim ptrByte As Long
 50080       ptrByte = VarPtr(aByte(0))
 50090       ' Then we copy the buffer to the byte array
-50100       CopyMemory ptrByte, strz, intBytes
+50100       MoveMemoryLong ptrByte, strz, intBytes
 50110       ' Then we copy the byte array to a string, character by character
 50120       Dim tStr As String
 50130       Dim i As Long
@@ -184,7 +179,7 @@ On Error GoTo ErrPtnr_OnError
 50090     Dim str As String
 50100     While bOK
 50110         ' This is how to do pointer arithmetic!
-50120         CopyMemory ptrByte, strz + j, 1
+50120         MoveMemoryLong ptrByte, strz + j, 1
 50130         If byteCh(0) = 0 Then
 50140             bOK = False
 50150         Else

@@ -15,17 +15,6 @@ Attribute VB_Ext_KEY = "SavedWithClassBuilder6" ,"Yes"
 Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 Option Explicit
 
-Private Declare Function GetPrivateProfileSection Lib "Kernel32" Alias _
- "GetPrivateProfileSectionA" (ByVal Section As String, ByVal Buffer As String, ByVal Size As Long, ByVal Filename As String) As Long
-Private Declare Function GetPrivateProfileSectionNames Lib "Kernel32" Alias _
- "GetPrivateProfileSectionNamesA" (ByVal lpszReturnBuffer As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
-Private Declare Function GetPrivateProfileString Lib "Kernel32" Alias _
- "GetPrivateProfileStringA" (ByVal Section As String, ByVal Key As String, ByVal Default As String, ByVal Buffer As String, ByVal Size As Long, ByVal Filename As String) As Long
-Private Declare Function WritePrivateProfileSection Lib "Kernel32" Alias _
- "WritePrivateProfileSectionA" (ByVal Section As String, ByVal Key As String, ByVal Filename As String) As Long
-Private Declare Function WritePrivateProfileString Lib "Kernel32" Alias _
- "WritePrivateProfileStringA" (ByVal Section As String, ByVal Key As String, ByVal Setting As String, ByVal Filename As String) As Long
-
 Private iFilename As String, iSection As String, iKey As String, _
  iErrCode As Long, iErrVar(1 To 2) As String
 
@@ -142,7 +131,7 @@ On Error GoTo ErrPtnr_OnError
 50040  If Len(tFilename) = 0 Then
 50050   Exit Function
 50060  End If
-50070  If Len(Dir(tFilename)) = 0 Then
+50070  If LenB(Dir(tFilename)) = 0 Then
 50080   Exit Function
 50090  End If
 50100  CheckIniFile = True
@@ -187,7 +176,7 @@ On Error GoTo ErrPtnr_OnError
 50230    Next i
 50240   End If
 50250   For i = 0 To UBound(nItems)
-50260    If Trim$(nItems(i)) <> "" Then
+50260    If Trim$(nItems(i)) <> vbNullString Then
 50270     GetAllSectionsFromInifile.Add nItems(i)
 50280    End If
 50290   Next i
@@ -374,7 +363,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tFilename As String
 50020  tFilename = GetFilename(Filename)
-50030  If Dir(tFilename) <> "" Then
+50030  If Dir(tFilename) <> vbNullString Then
 50040   Kill tFilename
 50050  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

@@ -1,8 +1,6 @@
 Attribute VB_Name = "modTopMost"
 Option Explicit
 
-Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal Order As Long, ByVal X As Long, ByVal Y As Long, ByVal cX As Long, ByVal cY As Long, ByVal Flags As Long) As Long
-
 Public Function SetTopMost(AnyForm As Form, Optional ByVal State As Boolean = True, Optional ByVal Activate As Boolean = True) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError

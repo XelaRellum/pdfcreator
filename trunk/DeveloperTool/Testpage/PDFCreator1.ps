@@ -1,13 +1,14 @@
-%!PS-Adobe-3.0
+%!PS-Adobe-1.0
 %%Creator: Frank Heindörfer
 %%Title: Testpage PDFCreator
-%%CreationDate: Mo, 26.03.2003
+%%CreationDate: 3/1/2004 17:4:12
 %%For: PDFCreator
 %%DocumentMedia: A4 595 842 0 () ()
 %%Orientation: Portrait
 %%Pages: (atend)
 %%DocumentFonts: Arial
 %%EndComments
+
 /Reencsmalldict 12 dict def
 /ReEncodeSmall
 { Reencsmalldict begin
@@ -59,67 +60,6 @@
 %%EndProlog
 
 %%Page: 1 1
-.9 .75 0 setrgbcolor
-/angle
-  360
-  5 sqrt 1 add 2 div
-  dup mul div
-  def
-
-% COMPARE WITH ONE OF THESE:
-% /angle 137.3 def
-% /angle 137.5 def
-% /angle 137.6 def
-
-/iter 10 def
-/c 2 def
-
-
-gsave
- 450 550 translate
- .1 setlinewidth
-  iter -1 0 {
-    angle rotate
-    0 0 moveto
-    dup sqrt c mul c lineto
-    c c neg rlineto
-    c neg dup rlineto
-    closepath
-    gsave
-      1 exch iter div 40 mul sin 0 setrgbcolor
-      fill
-    grestore
-    stroke
-  } for
-grestore
-
-/flower {
-0 10 360 {
-  gsave
-   rotate
-   (PDFCreator) show
-   stroke
-  grestore
-} for
-} def
-
-/flowerB {
- /Arial findfont
- 8 scalefont
- setfont
- flower
- .9 .9 0 setrgbcolor
- /Arial findfont
- 3 scalefont
- setfont
- flower
-} def
-
-0 0 1 setrgbcolor
-490 105 moveto
-%%flowerB
-
-0 0 0 setrgbcolor
 newpath
  150  50 moveto
  395   0 rlineto
@@ -136,7 +76,7 @@ newpath
 -250   0 rlineto
 closepath
 5 setlinewidth
-255 0 0 setrgbcolor
+1 0 0 setrgbcolor
 fill
 
 newpath
@@ -148,14 +88,6 @@ closepath
 5 setlinewidth
 0 0 0 setrgbcolor
 stroke
-
-255 255 255 setrgbcolor
-/Arial findfont
-  120 scalefont
-setfont
-  30 490 moveto
-(PDF) show
-
 
 
 32 dict begin
@@ -250,132 +182,94 @@ setfont
 175 620 moveto
 
 (PDFCreator) false charpath
-reversed { reversepath } if
-{ mv } { ln } { cr } { cl } pathforall
+reversed {reversepath} if
+{mv} {ln} {cr} {cl} pathforall
 
 0 0 1 setrgbcolor
 175 620 moveto
 (PDFCreator) true charpath fill
+
+1 1 1 setrgbcolor
+/Arial findfont 120 scalefont setfont
+30 490 moveto
+(PDF) false charpath
+reversed {reversepath} if
+{mv} {ln} {cr} {cl} pathforall
+
+1 1 1 setrgbcolor
+/Arial findfont 120 scalefont setfont
+30 490 moveto
+(PDF) show
 end
 
-0 .5 0 setrgbcolor
+
+0 .7 0 setrgbcolor
+/Arial findfont
+  48 scalefont
+setfont
+ 210 420 moveto
+(Programmed) show
+
+ 320 360 moveto
+(by) show
+
+ 200 300 moveto
+(Philip Chinery) show
+
+ 305 240 moveto
+(and) show
+
+ 255 120 moveto
+((c) 2004) show
+
+
 /Arial
 /Arial-German
 GermanVec ReEncodeSmall
 
 /Arial-German findfont
-  12 scalefont
+  48 scalefont
 setfont
-
- 160 150 moveto
-([PDFCREATORVERSION]) show
- 160 135 moveto
-(Programmed) show
- 160 120 moveto
-(by) show
- 160 105 moveto
-(Philip Chinery) show
- 160 90 moveto
-(and) show
- 160 75 moveto
+ 165 180 moveto
 (Frank Heind\224rfer) show
 
- 160 60 moveto
-((c) 2004) show
+1 0 0 setrgbcolor
+/Arial findfont
+  12 scalefont
+setfont
+ 155 70 moveto
+([PDFCREATORVERSION]) show
 
-/branchLength 75 def
-/branchWidth 5 def
-/y1 branchLength 3 div def
-/y2 y1 2 mul def
+1 0 0 setrgbcolor
+/Arial findfont
+  12 scalefont
+setfont
+ 155 56 moveto
+([DATE]) show
 
-/maxDepth 3 def
-/depth 0 def
-/descendSizeFactor .75 def
-/angle 35 def
-/-angle angle neg def
-/leafRadius branchLength 2 div def
-/leafWidth .5 def
-/leafGreen .875 def
-/leafRB .125 def
+0 0 1 setrgbcolor
+/Arial findfont
+  12 scalefont
+setfont
+ 390 56 moveto
+(http://www.pdfcreator.de.vu) show
 
-/dLength 25 def
-/dWidth 1.25 def
-/dAngle 5 def
-/dLeafRadius leafRadius .25 mul def
-/dLeafWidth .1 def
-/dLeafColor .125 def
-/dXY 7 def
+%!PS-Adobe-3.0 EPSF-3.0
+[ /Border [0 0 0]
+  /Rect [25 475 275 595]
+  /Action << /Subtype /URI /URI (http://www.pdfcreator.de.vu) >>
+  /Subtype /Link
+/ANN pdfmark
+[ /Border [0 0 0]
+  /Rect [390 54 536 66]
+  /Action << /Subtype /URI /URI (http://www.pdfcreator.de.vu) >>
+  /Subtype /Link
+/ANN pdfmark
 
-/maxInt 2147483647 def
-
-/randomFloat	% --- => n
-{ rand //maxInt div } bind def
-
-/ApplyVariation		% baseVal dVal => newVal
-{
-	dup 2 mul randomFloat mul
-	sub add
-} bind def
-
-
-/DrawLeaf
-{
-	//leafWidth //dLeafWidth ApplyVariation 1 scale
-	0 //leafRadius //dLeafRadius ApplyVariation dup 0 360 arc
-	.333 dLeafColor
-	.85 .15 ApplyVariation
-	.75 .25 ApplyVariation
-	sethsbcolor
-	//leafRB //dLeafColor ApplyVariation
-	//leafGreen //dLeafColor ApplyVariation
-	//leafRB //dLeafColor ApplyVariation
-	setrgbcolor fill
-} bind def
-
-
-/Branch
-{
-	/depth depth 1 add store
-	0 0 moveto
-	0 dXY ApplyVariation y1 dXY ApplyVariation				% 1st control point
-	0 dXY ApplyVariation y2 dXY ApplyVariation				% 2nd control point
-	0 dXY ApplyVariation branchLength dXY ApplyVariation	% Far endpoint
-	curveto
-	currentpoint translate
-	branchWidth dWidth ApplyVariation setlinewidth
-	stroke
-	depth maxDepth lt
-	{
-		gsave
-			descendSizeFactor dup scale
-			gsave
-				angle dAngle ApplyVariation rotate Branch
-			grestore
-			gsave
-				-angle dAngle ApplyVariation rotate Branch
-			grestore
-			0 dAngle ApplyVariation rotate
-			1 .7 .3 ApplyVariation dup scale
-			Branch
-		grestore
-	}
-	{
-		gsave
-			descendSizeFactor dup scale
-			0 dAngle ApplyVariation rotate
-			DrawLeaf
-		grestore
-	}
-	ifelse
-
-	/depth depth 1 sub store
-} bind def
-
-0 0 0 setrgbcolor
-2 setlinecap
-350 180 translate
-0 dAngle ApplyVariation rotate
-Branch
+showpage
 
 %%Trailer
 %%Pages: 1
+
+%%EOF
+

@@ -60,24 +60,6 @@ Const ERROR_MORE_DATA = 234
 Const ERROR_NO_MORE_ITEMS = &H103
 Const ERROR_KEY_NOT_FOUND = &H2
 
-Enum DataType
- REG_SZ = &H1
- REG_EXPAND_SZ = &H2
- REG_BINARY = &H3
- REG_DWORD = &H4
- REG_MULTI_SZ = &H7
-End Enum
-
-Enum hkey
- HKEY_CLASSES_ROOT = &H80000000
- HKEY_CURRENT_USER = &H80000001
- HKEY_LOCAL_MACHINE = &H80000002
- HKEY_USERS = &H80000003
- HKEY_PERFORMANCE_DATA = &H80000004
- HKEY_CURRENT_CONFIG = &H80000005
- HKEY_DYN_DATA = &H80000006
-End Enum
-
 Dim mvarhKeySet As Long
 Dim mvarKeyRoot As String
 Dim mvarSubKey As String
@@ -234,7 +216,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim handle As Long, disp As Long, RetVal As Long, tStr As String
 50020  Keyname = IIf(IsMissing(Keyname), mvarSubKey, CStr(Keyname))
-50030  If mvarKeyRoot = "" Then
+50030  If mvarKeyRoot = vbNullString Then
 50040    tStr = Keyname
 50050   Else
 50060    tStr = mvarKeyRoot & "\" & Keyname
@@ -404,7 +386,7 @@ On Error GoTo ErrPtnr_OnError
 50550                 If Length <> 0 Then
 50560                     resString = Space$(Length - 1)
 50570                     CopyMemory ByVal resString, resBinary(0), Length - 1
-50580                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString))
+50580                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString) + 2)
 50590                     valueInfo(1) = TrimNull(resString)
 50600                 Else
 50610                     valueInfo(1) = vbNullString
@@ -500,7 +482,7 @@ On Error GoTo ErrPtnr_OnError
 50460                     resString = Space$(Length - 1)
 50470                     CopyMemory ByVal resString, resBinary(0), Length - 1
 50480
-50490                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString))
+50490                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString) + 2)
 50500                     GetRegistryValue = Left$(resString, Length)
 50510
 50520                 End If
@@ -660,7 +642,7 @@ On Error GoTo ErrPtnr_OnError
 50550                     resString = Space$(Length - 1)
 50560                     CopyMemory ByVal resString, resBinary(0), Length - 1
 50570
-50580                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString))
+50580                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString) + 2)
 50590                     ReadRemoteRegistryValue = Left$(resString, Length)
 50600
 50610                 End If
