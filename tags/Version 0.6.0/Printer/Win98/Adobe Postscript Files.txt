@@ -1,0 +1,8 @@
+Please put in this directory the following Adobe Postscriptfiles.
+
+http://www.adobe.com/support/downloads/product.jsp?product=44&platform=Windows
+
+$00379C1.WPX       7.772 Bytes
+AD59A730.MFD          64 Bytes
+FONTSDIR.MFD     679.109 Bytes
+MSIMGSIZ.DAT      16.384 Bytes

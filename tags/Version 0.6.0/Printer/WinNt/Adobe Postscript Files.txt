@@ -1,0 +1,10 @@
+Please put in this directory the following Adobe Postscriptfiles and the Adobe PPD Files for WinNT.
+
+http://www.adobe.com/support/downloads/product.jsp?product=44&platform=Windows
+
+ADIST5.PPD          17.172 Bytes
+ADOBEPS5.DLL       457.600 Bytes     Version 0.2.522.15
+ADOBEPS5.NTF       792.644 Bytes
+ADOBEPSU.DLL       135.680 Bytes     Version 0.2.522.15
+ADOBEPSU.HLP        18.451 Bytes
+DEFPRTR2.PPD        13.492 Bytes
