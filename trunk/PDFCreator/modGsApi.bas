@@ -1,4 +1,4 @@
-Attribute VB_Name = "gsapi_vb6"
+Attribute VB_Name = "modGsApi"
 ' Copyright (c) 2002 Dan Mount and Ghostgum Software Pty Ltd
 '
 ' Permission is hereby granted, free of charge, to any person obtaining
