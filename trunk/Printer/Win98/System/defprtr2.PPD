@@ -1,25 +1,15 @@
 *PPD-Adobe: "4.3"
-*% Adobe Systems PostScript(R) Printer Description File
-*% Copyright 1987-1998 Adobe Systems Incorporated. 
-*% All Rights Reserved. 
-*% Permission is granted for redistribution of this file as
-*% long as this copyright notice is intact and the contents
-*% of the file is not altered in any way from its original form.
-*% End of Copyright statement
-*% PPD file last updated 5 December 2000
-
 *FormatVersion: "4.3"
 *FileVersion: "1.0"
 *LanguageEncoding: ISOLatin1
 *LanguageVersion: English
-*PCFileName: "ADIST5.PPD"
-*Manufacturer: "Adobe"
-*Product: "(Acrobat Distiller)"
+*PCFileName: "defprtr2.PPD"
+*Manufacturer: "PDFCreator"
+*Product: "(PDFCreator)"
 *PSVersion: "(3011.104) 0"
-*ModelName: "Acrobat Distiller"
-*ShortNickName: "Acrobat Distiller"
-*NickName: "Acrobat Distiller 3011.104"
-*% PPD for Acrobat Distiller 5, Roman
+*ModelName: "PDFCreator"
+*ShortNickName: "PDFCreator"
+*NickName: "PDFCreator"
 
 *% === Options and Constraints =========
 
@@ -529,4 +519,4 @@ restore
 *Font Symbol: Special "(001.008)" Special ROM
 *Font ZapfDingbats: Special "(002.000)" Special ROM
 
-*% End of PPD file for Acrobat Distiller 
+*% End of PPD file

@@ -367,7 +367,7 @@ Option Explicit
 Const ErrPtnr_LogFile% = 1
 Const ErrPtnr_EMail$ = "thesmilyface@users.sourceforge.net"
 Const ErrPtnr_WWW$ = "www.sourceforge.net/projects/pdfcreator"
-Const ErrPtnr_Comment$ = "An error has been occured. Look for technical support in the forums (WWW). " + vbCrLf + "Further advices and updates you can find also in the internet (WWW)."
+Const ErrPtnr_Comment$ = "An error has occured. Look for technical support in the forums (WWW). " + vbCrLf + "Further advices and updates you can find also in the internet (WWW)."
 Const ErrPtnr_cmd_End% = 1
 Const ErrPtnr_cmd_Exit% = 1
 Const ErrPtnr_cmd_Next% = 1

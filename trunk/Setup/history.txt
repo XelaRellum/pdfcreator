@@ -4,6 +4,13 @@ Copyright (C)2002-2003 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfcreator.de.vu/
           http://www.sourceforge.net/projects/pdfcreator/
 
+Version 0.7.1 (July 22, 2003)
+-------------------------------------------------------------------
+Bug Fixes:
+- Fixed up a problem using email function
+- Fixed up a problem using non-conform postscriptfiles
+- Commandline parameter: -CLEARCACHE to clear the temp. cache
+
 Version 0.7.0 (July 17, 2003)
 -------------------------------------------------------------------
 

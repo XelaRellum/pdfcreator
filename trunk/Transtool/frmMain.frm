@@ -120,7 +120,7 @@ Option Explicit
 Private TSWidth As Long, mutex As clsMutex
 
 Private Sub cmbCharset_Change()
- On Local Error GoTo ErrorHandler
+ On Error GoTo ErrorHandler
  lsv.Font.Charset = cmbCharset.Text
  Exit Sub
 ErrorHandler:
@@ -131,180 +131,336 @@ ErrorHandler:
 End Sub
 
 Private Sub cmbCharset_Click()
- With cmbCharset
-  .Text = .ItemData(.ListIndex)
- End With
- lsv.Font.Charset = cmbCharset.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With cmbCharset
+50020   .Text = .ItemData(.ListIndex)
+50030  End With
+50040  lsv.Font.Charset = cmbCharset.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "cmbCharset_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbCharset_KeyPress(KeyAscii As Integer)
- Dim allow As String, tStr As String
- allow = "0123456789" & Chr$(8) & Chr$(13)
- tStr = Chr$(KeyAscii)
- If InStr(1, allow, tStr) = 0 Then
-   KeyAscii = 0
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim allow As String, tStr As String
+50020  allow = "0123456789" & Chr$(8) & Chr$(13)
+50030  tStr = Chr$(KeyAscii)
+50040  If InStr(1, allow, tStr) = 0 Then
+50050    KeyAscii = 0
+50060  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "cmbCharset_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbFonts_Click()
- lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "cmbFonts_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
- Set mutex = New clsMutex
- InitForm
- ReadTemplate
- RefreshStb
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set mutex = New clsMutex
+50020  InitForm
+50030  ReadTemplate
+50040  RefreshStb
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Resize()
- If frmMain.WindowState = vbMinimized Then
-  Exit Sub
- End If
- lsv.Height = Me.ScaleHeight - stb.Height
- lsv.Width = Me.ScaleWidth
- If Me.Width < 6000 Then
-  Me.Width = 6000
- End If
- lsv.ColumnHeaders("TemplateKey").Width = (lsv.Width - TSWidth) / 3 - 120
- lsv.ColumnHeaders("EnglishString").Width = (lsv.Width - TSWidth) / 3 - 120
- lsv.ColumnHeaders("TranslatedString").Width = (lsv.Width - TSWidth) / 3 - 120
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If frmMain.WindowState = vbMinimized Then
+50020   Exit Sub
+50030  End If
+50040  lsv.Height = Me.ScaleHeight - stb.Height
+50050  lsv.Width = Me.ScaleWidth
+50060  If Me.Width < 6000 Then
+50070   Me.Width = 6000
+50080  End If
+50090  lsv.ColumnHeaders("TemplateKey").Width = (lsv.Width - TSWidth) / 3 - 120
+50100  lsv.ColumnHeaders("EnglishString").Width = (lsv.Width - TSWidth) / 3 - 120
+50110  lsv.ColumnHeaders("TranslatedString").Width = (lsv.Width - TSWidth) / 3 - 120
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "Form_Resize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub InitForm()
- Dim cSystem As clsSystem, SMF As Collection, fi As Long, i As Long, tStr As String
- Set cSystem = New clsSystem: Set SMF = cSystem.GetSystemFont(Me, Menu)
- TSWidth = 1000
- With lsv.ColumnHeaders
-  .Clear
-  .Add , "TranslatedString", "Translated Text", (lsv.Width - TSWidth) / 3
-  .Add , "TemplateSection", "Section", TSWidth
-  .Add , "TemplateKey", "Key", (lsv.Width - TSWidth) / 3
-  .Add , "EnglishString", "English Text", (lsv.Width - TSWidth) / 3
- End With
- lsv.ColumnHeaders("TranslatedString").Position = 4
- With stb.Panels
-  .Clear
-  .Add , "Keys", "Keys:"
-  .Add , "EmptyKeys", "Empty Keys: "
-  .Add , "Fonts", ""
-  .Add , "Charset", ""
-  .Add , "Fontsize", ""
- End With
- With stb
-  .Panels("Keys").Width = 2000
-  .Panels("EmptyKeys").Width = 2000
-  .Panels("Fonts").Width = 4000
-  .Panels("Charset").Width = 2000
-  .Panels("Fontsize").Width = 1000
- End With
- SetPanelControl cmbFonts, stb, "Fonts", True
- SetPanelControl cmbCharset, stb, "Charset", True
- SetPanelControl txtProgramFontsize, stb, "Fontsize", True
- With cmbFonts
-  .Clear
-  For i = 1 To Screen.FontCount
-   tStr = Trim$(Screen.Fonts(i))
-   If Len(tStr) > 0 Then
-    cmbFonts.AddItem tStr
-   End If
-  Next i
-  If .ListCount > 0 Then
-    For i = 0 To cmbFonts.ListCount - 1
-     If SMF.Count > 0 Then
-      If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
-       fi = i
-      End If
-     End If
-    Next i
-   Else
-   .ListIndex = 0
-  End If
- End With
- With cmbCharset
-  .Clear
-  .AddItem "0, Western": .ItemData(.NewIndex) = 0
-  .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
-  .AddItem "77, Mac": .ItemData(.NewIndex) = 77
-  .AddItem "161, Greek": .ItemData(.NewIndex) = 161
-  .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
-  .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
-  .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
-  .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
-  .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
-  .AddItem "238, Central European": .ItemData(.NewIndex) = 238
-  .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
-  .Text = 0
- End With
- If fi >= 0 Then
-  cmbFonts.ListIndex = fi
-  cmbCharset.Text = SMF(1)(2)
-  lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
-  lsv.Font.Charset = cmbCharset.Text
-  txtProgramFontsize.Text = SMF(1)(1)
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim cSystem As clsSystem, SMF As Collection, fi As Long, i As Long, tStr As String
+50020  Set cSystem = New clsSystem: Set SMF = cSystem.GetSystemFont(Me, Menu)
+50030  TSWidth = 1000
+50040  With lsv.ColumnHeaders
+50050   .Clear
+50060   .Add , "TranslatedString", "Translated Text", (lsv.Width - TSWidth) / 3
+50070   .Add , "TemplateSection", "Section", TSWidth
+50080   .Add , "TemplateKey", "Key", (lsv.Width - TSWidth) / 3
+50090   .Add , "EnglishString", "English Text", (lsv.Width - TSWidth) / 3
+50100  End With
+50110  lsv.ColumnHeaders("TranslatedString").Position = 4
+50120  With stb.Panels
+50130   .Clear
+50140   .Add , "Keys", "Keys:"
+50150   .Add , "EmptyKeys", "Empty Keys: "
+50160   .Add , "Fonts", ""
+50170   .Add , "Charset", ""
+50180   .Add , "Fontsize", ""
+50190  End With
+50200  With stb
+50210   .Panels("Keys").Width = 2000
+50220   .Panels("EmptyKeys").Width = 2000
+50230   .Panels("Fonts").Width = 4000
+50240   .Panels("Charset").Width = 2000
+50250   .Panels("Fontsize").Width = 1000
+50260  End With
+50270  SetPanelControl cmbFonts, stb, "Fonts", True
+50280  SetPanelControl cmbCharset, stb, "Charset", True
+50290  SetPanelControl txtProgramFontsize, stb, "Fontsize", True
+50300  With cmbFonts
+50310   .Clear
+50320   For i = 1 To Screen.FontCount
+50330    tStr = Trim$(Screen.Fonts(i))
+50340    If Len(tStr) > 0 Then
+50350     cmbFonts.AddItem tStr
+50360    End If
+50370   Next i
+50380   If .ListCount > 0 Then
+50390     For i = 0 To cmbFonts.ListCount - 1
+50400      If SMF.Count > 0 Then
+50410       If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
+50420        fi = i
+50430       End If
+50440      End If
+50450     Next i
+50460    Else
+50470    .ListIndex = 0
+50480   End If
+50490  End With
+50500  With cmbCharset
+50510   .Clear
+50520   .AddItem "0, Western": .ItemData(.NewIndex) = 0
+50530   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
+50540   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
+50550   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
+50560   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
+50570   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
+50580   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
+50590   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
+50600   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
+50610   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
+50620   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
+50630   .Text = 0
+50640  End With
+50650  If fi >= 0 Then
+50660   cmbFonts.ListIndex = fi
+50670   cmbCharset.Text = SMF(1)(2)
+50680   lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
+50690   lsv.Font.Charset = cmbCharset.Text
+50700   txtProgramFontsize.Text = SMF(1)(1)
+50710  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "InitForm")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub ReadTemplate()
- Dim ini As clsINI, templateInifilename As String, secs As Collection, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim ini As clsINI, templateInifilename As String, secs As Collection, _
   Keys As Collection, i As Long, j As Long, lsvItem As ListItem
- templateInifilename = App.Path & "\english.ini"
- Set ini = New clsINI
- ini.FileName = App.Path & "\english.ini"
- If ini.CheckIniFile = False Then
-  MsgBox "File 'english.ini' not found! Program exit!"
-  End
- End If
- Set secs = ini.GetAllSectionsFromInifile(, True)
- For i = 1 To secs.Count
-  Set Keys = ini.GetAllKeysFromSection(secs.item(i), , , True)
-  For j = 1 To Keys.Count
-   Set lsvItem = lsv.ListItems.Add(, , "")
-   lsvItem.SubItems(1) = secs.item(i)
-   lsvItem.SubItems(2) = Keys.item(j)(0)
-   lsvItem.SubItems(3) = Keys.item(j)(1)
-  Next j
- Next i
+50030  templateInifilename = App.Path & "\english.ini"
+50040  Set ini = New clsINI
+50050  ini.FileName = App.Path & "\english.ini"
+50060  If ini.CheckIniFile = False Then
+50070   MsgBox "File 'english.ini' not found! Program exit!"
+50080   End
+50090  End If
+50100  Set secs = ini.GetAllSectionsFromInifile(, True)
+50110  For i = 1 To secs.Count
+50120   Set Keys = ini.GetAllKeysFromSection(secs.item(i), , , True)
+50130   For j = 1 To Keys.Count
+50140    Set lsvItem = lsv.ListItems.Add(, , "")
+50150    lsvItem.SubItems(1) = secs.item(i)
+50160    lsvItem.SubItems(2) = Keys.item(j)(0)
+50170    lsvItem.SubItems(3) = Keys.item(j)(1)
+50180   Next j
+50190  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "ReadTemplate")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
- RemovePanelControl txtProgramFontsize
- RemovePanelControl cmbCharset
- RemovePanelControl cmbFonts
- mutex.CloseMutex
- Set mutex = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  RemovePanelControl txtProgramFontsize
+50020  RemovePanelControl cmbCharset
+50030  RemovePanelControl cmbFonts
+50040  mutex.CloseMutex
+50050  Set mutex = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "Form_Unload")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub lsv_AfterLabelEdit(Cancel As Integer, NewString As String)
- NewString = Trim$(NewString)
- If Len(NewString) > 0 And Len(lsv.SelectedItem.Text) > 0 Then
-  RefreshStb
- End If
- If Len(NewString) > 0 And Len(lsv.SelectedItem.Text) = 0 Then
-  RefreshStb -1
- End If
- If Len(NewString) = 0 And Len(lsv.SelectedItem.Text) > 0 Then
-  RefreshStb 1
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  NewString = Trim$(NewString)
+50020  If Len(NewString) > 0 And Len(lsv.SelectedItem.Text) > 0 Then
+50030   RefreshStb
+50040  End If
+50050  If Len(NewString) > 0 And Len(lsv.SelectedItem.Text) = 0 Then
+50060   RefreshStb -1
+50070  End If
+50080  If Len(NewString) = 0 And Len(lsv.SelectedItem.Text) > 0 Then
+50090   RefreshStb 1
+50100  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "lsv_AfterLabelEdit")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub lsv_Click()
- lsv.StartLabelEdit
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lsv.StartLabelEdit
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "lsv_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub lsv_KeyPress(KeyAscii As Integer)
- If KeyAscii = 13 Then
-  lsv.StartLabelEdit
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If KeyAscii = 13 Then
+50020   lsv.StartLabelEdit
+50030  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "lsv_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub mnExit_Click(Index As Integer)
- Unload Me
- End
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Unload Me
+50020  End
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "mnExit_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub mnFile_Click(Index As Integer)
- On Local Error GoTo ErrorHandler
+ On Error GoTo ErrorHandler
  Select Case Index
   Case 0:
    With cdlg
@@ -345,89 +501,180 @@ ErrorHandler:
 End Sub
 
 Private Sub ShowLanguageIniFile(LanguageIniFilename As String)
- Dim ini As clsINI, secs As Collection, Keys As Collection, i As Long, j As Long, L As Long
- Me.MousePointer = vbHourglass
- Set ini = New clsINI
- ini.FileName = LanguageIniFilename
- Set secs = ini.GetAllSectionsFromInifile(, True)
- For i = 1 To secs.Count
-  Set Keys = ini.GetAllKeysFromSection(secs.item(i), , , True)
-  For j = 1 To Keys.Count
-   For L = 1 To lsv.ListItems.Count
-    If UCase$(lsv.ListItems(L).SubItems(1)) = UCase$(secs.item(i)) And _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim ini As clsINI, secs As Collection, Keys As Collection, i As Long, j As Long, L As Long
+50020  Me.MousePointer = vbHourglass
+50030  Set ini = New clsINI
+50040  ini.FileName = LanguageIniFilename
+50050  Set secs = ini.GetAllSectionsFromInifile(, True)
+50060  For i = 1 To secs.Count
+50070   Set Keys = ini.GetAllKeysFromSection(secs.item(i), , , True)
+50080   For j = 1 To Keys.Count
+50090    For L = 1 To lsv.ListItems.Count
+50100     If UCase$(lsv.ListItems(L).SubItems(1)) = UCase$(secs.item(i)) And _
      UCase$(lsv.ListItems(L).SubItems(2)) = UCase$(Keys.item(j)(0)) Then
-      lsv.ListItems(L).Text = Keys.item(j)(1)
-      Exit For
-    End If
-   Next L
-  Next j
- Next i
- Me.MousePointer = vbNormal
+50120       lsv.ListItems(L).Text = Keys.item(j)(1)
+50130       Exit For
+50140     End If
+50150    Next L
+50160   Next j
+50170  Next i
+50180  Me.MousePointer = vbNormal
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "ShowLanguageIniFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub SaveLanguageIniFile(LanguageIniFilename As String)
- Dim ini As clsINI, i As Long
- Set ini = New clsINI
- ini.FileName = LanguageIniFilename
- ini.CreateIniFile
- For i = 1 To lsv.ListItems.Count
-  With lsv.ListItems(i)
-   ini.SaveKey .Text, .SubItems(2), .SubItems(1)
-  End With
- Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim ini As clsINI, i As Long
+50020  Set ini = New clsINI
+50030  ini.FileName = LanguageIniFilename
+50040  ini.CreateIniFile
+50050  For i = 1 To lsv.ListItems.Count
+50060   With lsv.ListItems(i)
+50070    ini.SaveKey .Text, .SubItems(2), .SubItems(1)
+50080   End With
+50090  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "SaveLanguageIniFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Function GetCountEmptyValues()
- Dim i As Long, c As Long
- c = 0
- For i = 1 To lsv.ListItems.Count
-  If lsv.ListItems(i).Text = "" Then
-   c = c + 1
-  End If
- Next i
- GetCountEmptyValues = c
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, c As Long
+50020  c = 0
+50030  For i = 1 To lsv.ListItems.Count
+50040   If lsv.ListItems(i).Text = "" Then
+50050    c = c + 1
+50060   End If
+50070  Next i
+50080  GetCountEmptyValues = c
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "GetCountEmptyValues")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Private Sub RefreshStb(Optional AddNumber As Long = 0)
- With stb
-  .Panels("Keys").Text = "Keys:" & lsv.ListItems.Count
-  .Panels("EmptyKeys").Text = "Empty Keys:" & GetCountEmptyValues + AddNumber
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With stb
+50020   .Panels("Keys").Text = "Keys:" & lsv.ListItems.Count
+50030   .Panels("EmptyKeys").Text = "Empty Keys:" & GetCountEmptyValues + AddNumber
+50040  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "RefreshStb")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Timer1_Timer()
- ' Create a mutex if possible
- If mutex.CheckMutex(TransTool_GUID) = False Then
-  mutex.CreateMutex TransTool_GUID
- End If
- DoEvents
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ' Create a mutex if possible
+50020  If mutex.CheckMutex(TransTool_GUID) = False Then
+50030   mutex.CreateMutex TransTool_GUID
+50040  End If
+50050  DoEvents
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "Timer1_Timer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub txtProgramFontSize_Change()
- Dim tL As Long
- If Trim$(txtProgramFontsize.Text) = "" Then
-  txtProgramFontsize.Text = 8
- End If
- tL = CLng(txtProgramFontsize.Text)
- If tL <= 0 Then
-  tL = 1
- End If
- If tL > 72 Then
-  tL = 72
- End If
- txtProgramFontsize.Text = tL
- lsv.Font.Size = tL
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tL As Long
+50020  If Trim$(txtProgramFontsize.Text) = "" Then
+50030   txtProgramFontsize.Text = 8
+50040  End If
+50050  tL = CLng(txtProgramFontsize.Text)
+50060  If tL <= 0 Then
+50070   tL = 1
+50080  End If
+50090  If tL > 72 Then
+50100   tL = 72
+50110  End If
+50120  txtProgramFontsize.Text = tL
+50130  lsv.Font.Size = tL
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "txtProgramFontSize_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub txtProgramFontSize_KeyPress(KeyAscii As Integer)
- Dim allow As String, tStr As String
-
- allow = "0123456789" & Chr$(8) & Chr$(13)
-
- tStr = Chr$(KeyAscii)
-
- If InStr(1, allow, tStr) = 0 Then
-   KeyAscii = 0
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim allow As String, tStr As String
+50020
+50030  allow = "0123456789" & Chr$(8) & Chr$(13)
+50040
+50050  tStr = Chr$(KeyAscii)
+50060
+50070  If InStr(1, allow, tStr) = 0 Then
+50080    KeyAscii = 0
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "txtProgramFontSize_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 

@@ -70,27 +70,40 @@ End Enum
 
 Public Function GetSpecialFolder(ByVal Folder As ShellSpecialFolderConstants, _
                         Optional ByVal ForceCreate As Boolean) As String
-  Dim tIIDL   As ITEMIDLIST
-  Dim strPath As String
-  Dim hMod    As Long
-
-  If (ForceCreate) Then
-    Folder = Folder Or CSIDL_FLAG_CREATE
-  End If
-
-  If SHGetSpecialFolderLocation(0, Folder, tIIDL) = S_OK Then
-    strPath = Space$(MAX_PATH)
-    If SHGetPathFromIDList(tIIDL.mkid.cb, strPath) <> 0 Then
-      GetSpecialFolder = Left$(strPath, InStr(1, strPath, vbNullChar) - 1)
-    End If
-  Else
-    strPath = Space$(MAX_PATH)
-    hMod = LoadLibrary("shfolder")
-    If (hMod <> 0) Then
-      If SHGetFolderPath(0, Folder, 0, 0, strPath) = S_OK Then
-        GetSpecialFolder = Left$(strPath, InStr(1, strPath, vbNullChar) - 1)
-      End If
-      FreeLibrary hMod
-    End If
-  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010   Dim tIIDL   As ITEMIDLIST
+50020   Dim strPath As String
+50030   Dim hMod    As Long
+50040
+50050   If (ForceCreate) Then
+50060     Folder = Folder Or CSIDL_FLAG_CREATE
+50070   End If
+50080
+50090   If SHGetSpecialFolderLocation(0, Folder, tIIDL) = S_OK Then
+50100     strPath = Space$(MAX_PATH)
+50110     If SHGetPathFromIDList(tIIDL.mkid.cb, strPath) <> 0 Then
+50120       GetSpecialFolder = Left$(strPath, InStr(1, strPath, vbNullChar) - 1)
+50130     End If
+50140   Else
+50150     strPath = Space$(MAX_PATH)
+50160     hMod = LoadLibrary("shfolder")
+50170     If (hMod <> 0) Then
+50180       If SHGetFolderPath(0, Folder, 0, 0, strPath) = S_OK Then
+50190         GetSpecialFolder = Left$(strPath, InStr(1, strPath, vbNullChar) - 1)
+50200       End If
+50210       FreeLibrary hMod
+50220     End If
+50230   End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGetSpecialFolder", "GetSpecialFolder")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function

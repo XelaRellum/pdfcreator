@@ -1,9 +1,12 @@
-Please put in this directory the following Adobe Postscriptfiles.
+Download the Adobe PostScript printer drivers for Windows.
 
 http://www.adobe.com/support/downloads/product.jsp?product=44&platform=Windows
+
+Install these drivers on a Win9x/Me.
+
+Please put in this directory the following Adobe Postscriptfiles.
 
 ADFONTS.MFM        575.573 Bytes
 ADOBEPS4.DRV     1.295.840 Bytes     Version 4.53.0.7
 ADOBEPS4.HLP       196.460 Bytes
-DEFPRTR2.PPD        13.492 Bytes
 PSMON.DLL           57.344 Bytes     Version 4.10.0.1998

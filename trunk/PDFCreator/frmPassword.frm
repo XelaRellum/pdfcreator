@@ -126,37 +126,76 @@ Public bFinished As Boolean
 Public iPasswords As Integer
 
 Private Sub CancelButton_Click()
-bSuccess = False
-bFinished = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 bSuccess = False
+50020 bFinished = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "CancelButton_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
-Me.Caption = LanguageStrings.OptionsPDFEnterPasswords
-fraUserPass.Caption = LanguageStrings.OptionsUserPass
-fraOwnerPass.Caption = LanguageStrings.OptionsOwnerPass
-lblUserPass.Caption = LanguageStrings.OptionsPDFSetPassword
-lblUserPassRepeat.Caption = LanguageStrings.OptionsPDFRepeatPassword
-lblOwnerPass.Caption = LanguageStrings.OptionsPDFSetPassword
-lblOwnerPassRepeat.Caption = LanguageStrings.OptionsPDFRepeatPassword
-OKButton.Caption = LanguageStrings.OptionsPassOK
-CancelButton.Caption = LanguageStrings.OptionsPassCancel
-fraUserPass.Enabled = Options.PDFUserPass
-fraOwnerPass.Enabled = Options.PDFOwnerPass
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 Me.Caption = LanguageStrings.OptionsPDFEnterPasswords
+50020 fraUserPass.Caption = LanguageStrings.OptionsUserPass
+50030 fraOwnerPass.Caption = LanguageStrings.OptionsOwnerPass
+50040 lblUserPass.Caption = LanguageStrings.OptionsPDFSetPassword
+50050 lblUserPassRepeat.Caption = LanguageStrings.OptionsPDFRepeatPassword
+50060 lblOwnerPass.Caption = LanguageStrings.OptionsPDFSetPassword
+50070 lblOwnerPassRepeat.Caption = LanguageStrings.OptionsPDFRepeatPassword
+50080 OKButton.Caption = LanguageStrings.OptionsPassOK
+50090 CancelButton.Caption = LanguageStrings.OptionsPassCancel
+50100 fraUserPass.Enabled = Options.PDFUserPass
+50110 fraOwnerPass.Enabled = Options.PDFOwnerPass
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub OKButton_Click()
-If txtUserPass.Text <> txtUserPassRepeat.Text Then
-  MsgBox "User Passes do not match", vbCritical
-  Exit Sub
-End If
-
-If txtOwnerPass.Text <> txtOwnerPassRepeat.Text Then
-  MsgBox "Owner Passes do not match", vbCritical
-  Exit Sub
-End If
-
-bSuccess = True
-bFinished = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 If txtUserPass.Text <> txtUserPassRepeat.Text Then
+50020   MsgBox "User Passes do not match", vbCritical
+50030   Exit Sub
+50040 End If
+50050
+50060 If txtOwnerPass.Text <> txtOwnerPassRepeat.Text Then
+50070   MsgBox "Owner Passes do not match", vbCritical
+50080   Exit Sub
+50090 End If
+50100
+50110 bSuccess = True
+50120 bFinished = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "OKButton_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 
