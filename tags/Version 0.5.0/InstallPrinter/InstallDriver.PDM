@@ -1,0 +1,81 @@
+[Root]
+Most Recent Package=Standardm‰ﬂiges Setup-Paket 1
+
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=D:\tesst
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Configure DAO ISAMs]
+Applicable=No
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Files Found]
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Files Released]
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Missing Dependency Information]
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Out-of-Date Dependency Information]
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Files Added]
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Files Removed]
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Files In Project]
+D:\Eigene Dateien\Visual Basic\GhostScript\Source\InstallPrinter\InstallDriver.exe=Yes
+C:\WINNT\system32\msvbvm60.dll=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\WINNT\system32\VB6DE.DLL=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\WINNT\system32\VB6STKIT.DLL=Yes
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Configure Registry Files]
+Applicable=No
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Configure Remote Servers]
+Applicable=No
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Install Locations]
+D:\Eigene Dateien\Visual Basic\GhostScript\Source\InstallPrinter\InstallDriver.exe=$(AppPath)
+C:\WINNT\system32\msvbvm60.dll=$(WinSysPathSysFile)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\WINNT\system32\VB6DE.DLL=$(WinSysPath)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINNT\system32\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Programme\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Configure Shared Files]
+Applicable=Yes
+D:\Eigene Dateien\Visual Basic\GhostScript\Source\InstallPrinter\InstallDriver.exe=No
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Distribution]
+Type=multi
+Size=1.44 MB
+Title=InstallDriver
+
+[Package|Standardm‰ﬂiges Setup-Paket 1|Package]
+PackageFolder=D:\tesst
+ProjectFolder=D:\Eigene Dateien\Visual Basic\GhostScript\Source\InstallPrinter
+ServerSideCab=
+File1=D:\tesst\setup.exe
+File2=D:\tesst\Setup.Lst
+File3=D:\tesst\Instal1.CAB
+File4=D:\tesst\Instal2.CAB
+Handler1=PDWizard.FloppyDplySubWiz
+Handler2=PDWizard.FolderDplySubWiz
+Handler3=PDWizard.WebPostDplySubWiz
