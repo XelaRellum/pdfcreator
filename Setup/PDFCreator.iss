@@ -3,13 +3,13 @@
 ; Installation from Frank Heindörfer, Philip Chinery
 
 ;#define Test
-;#define CompileHelp
+#define CompileHelp
 #define SetupLZMACompressionMode "ultra"
 ;#define SetupLZMACompressionMode "fast"
 
-#define ProgramLicense "GNU"
-
 #define IncludeGhostscript
+
+#define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
 
 #Ifdef IncludeGhostscript
@@ -270,8 +270,7 @@ Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; St
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: {userdocs}; Components: program
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: {userdocs}; Components: program
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: DirectoryJava; String: {sys}; Components: program
-Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: Language; String: english; Components: program; Languages: English
-Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: Language; String: deutsch; Components: program; Languages: German
+Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: Language; String: {code:GetActiveLanguage}
 
 #Ifdef GhostscriptVersion
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptBinaries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: program
@@ -349,6 +348,9 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup: SetupType; Valuedata: {code:GetWizardSetupType}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup: SetupLanguage; Valuedata: {code:GetActiveLanguage}; Flags: uninsdeletevalue
 
+;CustomMessages for uninstall. InnoSetop 5.0.4 Beta doesn't support custom messages for uninstalling.
+Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueName: UninstallOptions; Valuedata: {cm:UninstallOptions}; Flags: uninsdeletevalue
+
 [Run]
 #IFNDEF Test
 ;Uninstall old printer
@@ -367,12 +369,16 @@ Name: {%tmp}\{#Appname}; Type: filesandordirs
 Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: -IPFALSE -ULTRUE -NSTRUE; Flags: runminimized
 
 [Languages]
+Name: Czech; MessagesFile: compiler:Languages\Czech.isl
 Name: English; MessagesFile: compiler:Default.isl
 Name: German; MessagesFile: compiler:Languages\German.isl
+Name: Italian; MessagesFile: Italian-3-4.2.1.isl
 
 [CustomMessages]
+#include "czech.inc"
 #include "english.inc"
 #include "german.inc"
+#include "italian.inc"
 
 [Types]
 Name: full; Description: {cm:FullInstallation}; Check: CanPrinterInstall()
@@ -381,7 +387,7 @@ Name: custom; Description: {cm:CustomInstallation}; Flags: iscustom
 
 [Components]
 Name: program; Description: {cm:Programfiles}; Types: full compact custom; Flags: fixed
-Name: printer; Description: Printer; Types: full custom; Check: CanPrinterInstall(); Flags: restart
+Name: printer; Description: {cm:Printer}; Types: full custom; Check: CanPrinterInstall(); Flags: restart
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
@@ -1398,19 +1404,19 @@ end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
- tStr :String;i:LongInt; saveoptions, silent, verysilent:boolean;
+ tStr,engStr :String; i:LongInt; saveoptions, silent, verysilent:boolean;
 begin
   case CurUninstallStep of
     usUninstall:
       begin
        tStr:=ExpandConstant('{app}')+'\Unload.tmp';
-       if fileexists(tStr)=true then
+       if fileexists(tStr)=false then
         SaveStringToFile(tStr, '', True);
-       case LowerCase(ActiveLanguage) of
-         'german': tStr:='Sollen alle Programmeinstellungen gelöscht werden?';
-        else
-                   tStr:='Delete all program settings?';
-       end;
+       tStr:='';engStr:='Delete all program settings?';
+       if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}\CustomMessages', 'UninstallOptions', tStr)=false then
+        tStr:=engStr;
+       if length(tStr)=0 then
+        tStr:=engStr;
        saveoptions:=false; silent:=false; verysilent:=false;
        for i:=1 to paramcount do begin
         if lowercase(ParamStr(i))='/saveoptions' then
