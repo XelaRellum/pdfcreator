@@ -1,102 +1,6 @@
 Attribute VB_Name = "modPrinterEnums"
 Option Explicit
 
-Private Const PRINTER_ATTRIBUTE_DEFAULT = &H4
-Private Const PRINTER_ATTRIBUTE_DIRECT = &H2
-Private Const PRINTER_ATTRIBUTE_ENABLE_BIDI = &H800&
-Private Const PRINTER_ATTRIBUTE_LOCAL = &H40
-Private Const PRINTER_ATTRIBUTE_NETWORK = &H10
-Private Const PRINTER_ATTRIBUTE_QUEUED = &H1
-Private Const PRINTER_ATTRIBUTE_SHARED = &H8
-Private Const PRINTER_ATTRIBUTE_WORK_OFFLINE = &H400
-Private Const PRINTER_ENUM_CONNECTIONS = &H4
-Private Const PRINTER_ENUM_CONTAINER = &H8000&
-Private Const PRINTER_ENUM_DEFAULT = &H1
-Private Const PRINTER_ENUM_EXPAND = &H4000
-Private Const PRINTER_ENUM_LOCAL = &H2
-Private Const PRINTER_ENUM_ICON1 = &H10000
-Private Const PRINTER_ENUM_ICON2 = &H20000
-Private Const PRINTER_ENUM_ICON3 = &H40000
-Private Const PRINTER_ENUM_ICON4 = &H80000
-Private Const PRINTER_ENUM_ICON5 = &H100000
-Private Const PRINTER_ENUM_ICON6 = &H200000
-Private Const PRINTER_ENUM_ICON7 = &H400000
-Private Const PRINTER_ENUM_ICON8 = &H800000
-Private Const PRINTER_ENUM_NAME = &H8
-Private Const PRINTER_ENUM_NETWORK = &H40
-Private Const PRINTER_ENUM_REMOTE = &H10
-Private Const PRINTER_ENUM_SHARED = &H20
-Private Const PRINTER_LEVEL1 = &H1
-Private Const PRINTER_LEVEL4 = &H4
-Private Const SIZEOFMONITOR_INFO_1 = 4
-Private Const SIZEOFPORT_INFO_2 = 20
-Private Const SIZEOFPRINTER_INFO_1 = 16
-Private Const SIZEOFPRINTER_INFO_4 = 12
-
-Private Type DRIVER_INFO_1
- pName As Long
-End Type
-
-Private Type DRIVER_INFO_3
- cVersion As Long
- pName As String
- pEnvironment As String
- pDriverPath As String
- pDataFile As String
- pConfigFile As String
- pHelpFile As String
- pDependentFiles As String
- pMonitorName As String
- pDefaultDataType As String
-End Type
-
-Private Type MONITOR_INFO_1
- pName As Long
-End Type
-
-Private Type MONITOR_INFO_2
- pName As Long
- pEnvironment As Long
- pDLLName As Long
-End Type
-
-Private Type PORT_INFO_2
- pPortName    As Long
- pMonitorName As Long
- pDescription As Long
- fPortType    As Long
- Reserved     As Long
-End Type
-
-Private Enum PortTypes
- PORT_TYPE_WRITE = &H1
- PORT_TYPE_READ = &H2
- PORT_TYPE_REDIRECTED = &H4
- PORT_TYPE_NET_ATTACHED = &H8
-End Enum
-
-Public Type PRINTER_INFO_1
- Flags As Long
- prescription As Long
- Pane As Long
- Comment As Long
-End Type
-
-Public Type PRINTER_INFO_4
- pPrinterName As Long
- pServerName As Long
- Attributes As Long
-End Type
-
-Private Declare Function EnumMonitors Lib "winspool.drv" Alias "EnumMonitorsA" (ByVal pName As String, ByVal Level As Long, pMonitors As Any, ByVal cdBuf As Long, pcbNeeded As Long, pcReturned As Long) As Long
-Private Declare Function EnumPorts Lib "winspool.drv" Alias "EnumPortsA" (ByVal pName As String, ByVal nLevel As Long, lpbPorts As Any, ByVal cbBuf As Long, pcbNeeded As Long, pcReturned As Long) As Long
-Private Declare Function EnumPrinters Lib "winspool.drv" Alias "EnumPrintersA" (ByVal Flags As Long, ByVal Name As String, ByVal Level As Long, pPrinterEnum As Any, ByVal cdBuf As Long, pcbNeeded As Long, pcReturned As Long) As Long
-Private Declare Function EnumPrinterDrivers Lib "winspool.drv" Alias "EnumPrinterDriversA" (ByVal pName As String, ByVal pEnvironment As String, ByVal Level As Long, pDriverInfo As Any, ByVal cdBuf As Long, pcbNeeded As Long, pcRetruned As Long) As Long
-
-Private Declare Function lstrlen Lib "Kernel32" Alias "lstrlenA" (lpString As Any) As Long
-Private Declare Function lstrcpy Lib "kernel32.dll" Alias "lstrcpyA" (lpString1 As Any, lpString2 As Any) As Long
-Private Declare Sub MoveMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
-
 Public Function GetAvailableMonitors() As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -289,16 +193,31 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetStrFromPtrA(lpszA As Long) As String
+Public Function GetAvailablePrinters2() As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetStrFromPtrA = String$(lstrlen(ByVal lpszA), 0)
-50020  Call lstrcpy(ByVal GetStrFromPtrA, ByVal lpszA)
+50010  Dim Success As Boolean, cbRequired As Long, cbBuffer As Long, nEntries As Long, _
+  pntr() As PRINTER_INFO_2, c As Long, tColl As Collection, dArr(1) As String
+50030
+50040  Set tColl = New Collection
+50050
+50060  Call EnumPrinters(PRINTER_ENUM_LOCAL, vbNullString, PRINTER_LEVEL2, 0, 0, cbRequired, nEntries)
+50070  ReDim pntr((cbRequired \ SIZEOFPRINTER_INFO_2))
+50080  cbBuffer = cbRequired
+50090  If EnumPrinters(PRINTER_ENUM_LOCAL, vbNullString, _
+  PRINTER_LEVEL2, pntr(0), cbBuffer, cbRequired, nEntries) Then
+50110   For c = 0 To nEntries - 1
+50120    dArr(0) = GetStrFromPtrA(pntr(c).pPrinterName)
+50130    dArr(1) = GetStrFromPtrA(pntr(c).pPortName)
+50140    tColl.Add dArr
+50150   Next c
+50160  End If
+50170  Set GetAvailablePrinters2 = tColl
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPrinterEnums", "GetStrFromPtrA")
+Select Case ErrPtnr.OnError("modPrinterEnums", "GetAvailablePrinters2")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

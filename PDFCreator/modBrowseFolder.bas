@@ -12,25 +12,6 @@ Attribute VB_Name = "modBrowseFolder"
 
 Option Explicit
 
-Public Type BrowseInfo
- hWndOwner As Long
- pIDLRoot As Long
- pszDisplayName As Long
- lpszTitle As Long
- ulFlags As Long
- lpfnCallback As Long
- lParam As Long
- iImage As Long
-End Type
-
-Public Const BIF_RETURNONLYFSDIRS = 1
-Public Const MAX_PATH = 260
-
-Public Declare Sub CoTaskMemFree Lib "ole32.dll" (ByVal hMem As Long)
-Public Declare Function lstrcat Lib "Kernel32" Alias "lstrcatA" (ByVal lpString1 As String, ByVal lpString2 As String) As Long
-Public Declare Function SHBrowseForFolder Lib "shell32" (lpbi As BrowseInfo) As Long
-Public Declare Function SHGetPathFromIDList Lib "shell32" (ByVal pidList As Long, ByVal lpBuffer As String) As Long
-
 Public Function BrowseForFolder(hWndOwner As Long, sPrompt As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError

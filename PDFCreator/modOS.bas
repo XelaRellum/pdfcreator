@@ -19,24 +19,24 @@ Private Declare Function GetWindowsDirectory Lib "Kernel32" Alias _
  "GetWindowsDirectoryA" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
 
 Public Function GetWinDir() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim nBuffer As String, res As Long
-50020
-50030  nBuffer = Space(255)
-50040  res = GetWindowsDirectory(nBuffer, 255)
-50050  If res > 0 Then
-50060   GetWinDir = Left(nBuffer, res)
-50070  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim nBuffer As String, res As Long
+50050
+50060  nBuffer = Space(255)
+50070  res = GetWindowsDirectory(nBuffer, 255)
+50080  If res > 0 Then
+50090   GetWinDir = Left(nBuffer, res)
+50100  End If
+50110 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50120 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modOS", "GetWinDir")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50141 Select Case ErrPtnr.OnError("modOS", "GetWinDir")
+      Case 0: Resume
+50160 Case 1: Resume Next
+50170 Case 2: Exit Function
+50180 Case 3: End
+50190 End Select
+50200 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function

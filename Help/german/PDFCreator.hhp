@@ -1,0 +1,63 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=PDFCreator.chm
+Contents file=toc.hhc
+Default Window=Main
+Default topic=html\welcome.htm
+Display compile progress=Yes
+Error log file=buildlog.txt
+Full-text search=Yes
+Index file=index.hhk
+Language=0x407 Deutsch (Deutschland)
+Title=PDFCreator Hilfe
+
+[WINDOWS]
+Main="PDFCreator Hilfe","toc.hhc","index.hhk","html\welcome.htm","html\welcome.htm",,,,,0x23520,,0x3006,[239,185,788,634],,,,,,,0
+
+
+[FILES]
+html\acknowledgements.htm
+html\afpl.htm
+html\autosave.htm
+html\bmpsettings.htm
+html\changelang.htm
+html\combine.htm
+html\commandline.htm
+html\createlang.htm
+html\createpdf.htm
+html\directories.htm
+html\docproperties.htm
+html\emailpdf.htm
+html\epssettings.htm
+html\faq.htm
+html\features.htm
+html\fontsettings.htm
+html\generalsettings.htm
+html\ghostscriptsettings.htm
+html\gpl.htm
+html\hiddensettings.htm
+html\installationtypes.htm
+html\installlang.htm
+html\introduction.htm
+html\jpegsettings.htm
+html\online.htm
+html\pcxsettings.htm
+html\pdfcolors.htm
+html\pdfcompression.htm
+html\pdffonts.htm
+html\pdfgeneral.htm
+html\pdfsecurity.htm
+html\pngsettings.htm
+html\pssettings.htm
+html\savesettings.htm
+html\support.htm
+html\tiffsettings.htm
+html\transtool.htm
+html\update.htm
+html\welcome.htm
+html\whatis.htm
+html\whatislang.htm
+html\whatsnew.htm
+
+[INFOTYPES]
+

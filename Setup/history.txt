@@ -11,12 +11,14 @@ Improvements:
 - Using GPL-Ghostscipt 8.15 
 
 Bug Fixes:
-- Missing msmapi32.ocx is included.
-- Improve email support.
+- Missing msmapi32.ocx is included
+- Improve email support
 - Terminalserver should work
 - Using a modifies ghostpdf.ppd
-- fixed english.ini 
-- Fixed some minor bugs.
+- Should work with other shells than explorer (e.g. geoshell, litestep)
+- Fixed english.ini
+- Fixed some minor bugs
+
 
 Kwown issues:
 - no hyperlinks possible

@@ -16,23 +16,6 @@ Option Explicit
 Private Declare Function InternetCrackUrl Lib "wininet.dll" Alias "InternetCrackUrlA" (ByVal lpszURL As String, ByVal dwUrlLength As Long, ByVal dwFlags As Long, lpUrlComponents As URL_COMPONENTS) As Long
 Private Declare Function InternetCanonicalizeUrl Lib "wininet.dll" Alias "InternetCanonicalizeUrlA" (ByVal lpszURL As String, ByVal lpszBuffer As String, lpdwBufferLength As Long, ByVal dwFlags As Long) As Long
 
-' Enumerated internet schemes
-Public Enum InetSchemes
-   InternetSchemePartial = -2
-   InternetSchemeUnknown = -1
-   InternetSchemeDefault = 0
-   InternetSchemeFtp
-   InternetSchemeGopher
-   InternetSchemeHttp
-   InternetSchemeHttps
-   InternetSchemeFile
-   InternetSchemeNews
-   InternetSchemeMailto
-   InternetSchemeSocks
-   InternetSchemeFirst = InternetSchemeFtp
-   InternetSchemeLast = InternetSchemeSocks
-End Enum
-
 Private Type URL_COMPONENTS       'typedef struct {
    StructSize As Long            '    DWORD dwStructSize;
    Scheme As String              '    LPSTR lpszScheme;

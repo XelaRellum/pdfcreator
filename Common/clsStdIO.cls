@@ -15,46 +15,40 @@ Attribute VB_Ext_KEY = "SavedWithClassBuilder6" ,"Yes"
 Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 Option Explicit
 
-Private Declare Function GetStdHandle Lib "Kernel32" (ByVal nStdHandle As Long) As Long
-Private Declare Function ReadFile Lib "Kernel32" (ByVal hFile As Long, lpBuffer As Any, ByVal nNumberOfBytesToRead As Long, lpNumberOfBytesRead As Long, lpOverlapped As Any) As Long
-Private Declare Function WriteFile Lib "Kernel32" (ByVal hFile As Long, ByVal lpBuffer As String, ByVal nNumberOfBytesToWrite As Long, lpNumberOfBytesWritten As Long, lpOverlapped As Any) As Long
-
-Private Const STD_INPUT_HANDLE = -10&
-Private Const STD_OUTPUT_HANDLE = -11&
-Private Const STD_ERROR_HANDLE = -12&
-
 Public Function StdIn(TempDir As String, SpooltimeSeconds As Double) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim sBuffer As String, lBytesRead As Long, lStdInHandle As Long
-50020  Dim fn As Long, Tempfile As String, tTime1 As Date
+50010  Dim sBuffer As String, lBytesRead As Long, lStdInHandle As Long, _
+  fn As Long, Tempfile As String, tTime1 As Date, Path As String
 50030  Const iBufLen As Long = 1048576
 50040 ' Const iBufLen As Long = 2048
 50050
 50060  lStdInHandle = GetStdHandle(STD_INPUT_HANDLE)
 50070  StdIn = vbNullString
-50080
-50090  Tempfile = GetTempFile(TempDir, "~PS")
-50100  fn = FreeFile
-50110  Open Tempfile For Output As #fn
-50120  tTime1 = Now
-50130  sBuffer = String(iBufLen, 0)
-50140  Do
-50150   If ReadFile(lStdInHandle, ByVal sBuffer, iBufLen, lBytesRead, ByVal 0&) <> 0 Then
-50160 '    MsgBox DateDiff("s", tTime1, Now): Exit Do
-50170     DoEvents
-50180     If Len(Left$(sBuffer, lBytesRead)) > 0 Then
-50190      Print #fn, Left$(sBuffer, lBytesRead);
-50200     End If
-50210    Else
-50220     Exit Do
-50230   End If
-50240 '  DoEvents
-50250  Loop
-50260  SpooltimeSeconds = DateDiff("s", tTime1, Now)
-50270  Close #fn: DoEvents
-50280  StdIn = Tempfile
+50080  Path = CompletePath(TempDir) & PDFCreatorSpoolDirectory & "\" & Environ$("REDMON_USER") & "\"
+50090
+50100  If DirExists(Path) = False Then
+50110   MakePath Path
+50120  End If
+50130  Tempfile = GetTempFile(Path, "~PS")
+50140  fn = FreeFile
+50150  Open Tempfile For Output As #fn
+50160  tTime1 = Now
+50170  sBuffer = String(iBufLen, 0)
+50180  Do
+50190   If ReadFile(lStdInHandle, ByVal sBuffer, iBufLen, lBytesRead, ByVal 0&) <> 0 Then
+50200     DoEvents
+50210     If Len(Left$(sBuffer, lBytesRead)) > 0 Then
+50220      Print #fn, Left$(sBuffer, lBytesRead);
+50230     End If
+50240    Else
+50250     Exit Do
+50260   End If
+50270  Loop
+50280  SpooltimeSeconds = DateDiff("s", tTime1, Now)
+50290  Close #fn: DoEvents
+50300  StdIn = Tempfile
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

@@ -1,0 +1,7 @@
+#include "czech.inc"
+#include "english.inc"
+#include "german.inc"
+#include "slovak.inc"
+#include "dutch.inc"
+#include "italian.inc"
+#include "hungarian.inc"

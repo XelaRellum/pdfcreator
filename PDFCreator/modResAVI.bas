@@ -8,21 +8,6 @@ Attribute VB_Name = "modResAVI"
 '// ---------------------------------------------------------------------------
 Option Explicit
 
-Private Const WM_USER = &H400
-Private Const ACM_OPEN = (WM_USER + 100)
-Private Const ACM_PLAY = (WM_USER + 101)
-Private Const ACM_STOP = (WM_USER + 102)
-
-Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
-
-Public Enum ResAnimateConstants
-  ranOpen = 1
-  ranPlay = 2
-  ranSeek = 3
-  ranStop = 4
-  ranClose = 5
-End Enum
-
 '// ---------------------------------------------------------------------------
 '// Funktion:     ResAnimate
 '//               AVI Animationen aus Ressourcen abspielen

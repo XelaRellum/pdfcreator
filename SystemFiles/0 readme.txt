@@ -13,3 +13,4 @@ MSVBVM60.DLL     6.0.96.90         1.394.688 Bytes
 OLEAUT32.DLL     2.40.4275.1         598.288 Bytes
 OLEPRO32.DLL     5.0.4275.1          164.112 Bytes
 STDOLE2.TLB      2.40.4275.1          17.920 Bytes
+PSAPI.DLL        4.0.1371.1           18.192 Bytes

@@ -9,27 +9,11 @@ Begin VB.Form frmInfo
    ClientWidth     =   6000
    Icon            =   "frmInfo.frx":0000
    LinkTopic       =   "Form1"
-   Picture         =   "frmInfo.frx":0C42
+   Picture         =   "frmInfo.frx":548A
    ScaleHeight     =   6015
    ScaleWidth      =   6000
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
-   Begin VB.PictureBox picTitle 
-      Appearance      =   0  '2D
-      AutoRedraw      =   -1  'True
-      BackColor       =   &H80000005&
-      BorderStyle     =   0  'Kein
-      ForeColor       =   &H80000008&
-      Height          =   690
-      Left            =   2160
-      Picture         =   "frmInfo.frx":75F84
-      ScaleHeight     =   46
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   155
-      TabIndex        =   1
-      Top             =   120
-      Width           =   2325
-   End
    Begin VB.PictureBox picPDF 
       Appearance      =   0  '2D
       BackColor       =   &H80000005&
@@ -37,7 +21,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   1035
       Left            =   345
-      Picture         =   "frmInfo.frx":7B3DE
+      Picture         =   "frmInfo.frx":7A7CC
       ScaleHeight     =   1035
       ScaleWidth      =   2085
       TabIndex        =   2
@@ -50,7 +34,7 @@ Begin VB.Form frmInfo
       BorderStyle     =   0  'Kein
       ForeColor       =   &H80000008&
       Height          =   4575
-      Left            =   1500
+      Left            =   1470
       ScaleHeight     =   4575
       ScaleWidth      =   4350
       TabIndex        =   3
@@ -61,7 +45,7 @@ Begin VB.Form frmInfo
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":82554
+         Picture         =   "frmInfo.frx":81942
          Style           =   1  'Grafisch
          TabIndex        =   4
          Top             =   4080
@@ -70,7 +54,7 @@ Begin VB.Form frmInfo
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":828B9
+         Picture         =   "frmInfo.frx":81CA7
          Top             =   4020
          Width           =   4380
       End
@@ -81,20 +65,36 @@ Begin VB.Form frmInfo
       BorderStyle     =   0  'Kein
       ForeColor       =   &H80000008&
       Height          =   16000
-      Left            =   -945
-      Picture         =   "frmInfo.frx":8A797
+      Left            =   1470
+      Picture         =   "frmInfo.frx":89B85
       ScaleHeight     =   16005
       ScaleWidth      =   4350
       TabIndex        =   0
-      Top             =   -10710
+      Top             =   1260
       Visible         =   0   'False
       Width           =   4350
    End
+   Begin VB.PictureBox picTitle 
+      Appearance      =   0  '2D
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'Kein
+      ForeColor       =   &H80000008&
+      Height          =   375
+      Left            =   2310
+      Picture         =   "frmInfo.frx":12E34F
+      ScaleHeight     =   25
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   127
+      TabIndex        =   1
+      Top             =   210
+      Width           =   1905
+   End
    Begin VB.Image imgClose 
       Height          =   600
-      Left            =   1455
-      Picture         =   "frmInfo.frx":12EF61
-      Top             =   105
+      Left            =   1575
+      Picture         =   "frmInfo.frx":130791
+      Top             =   210
       Width           =   600
    End
 End
@@ -193,6 +193,9 @@ On Error GoTo ErrPtnr_OnError
 50020   KeyCode = 0
 50030   Call HTMLHelp_ShowTopic("html\welcome.htm")
 50040  End If
+50050  If KeyCode = vbKeyEscape Then
+50060   Unload Me
+50070  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -209,26 +212,27 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim rctPicRect As RECT, Version As String
+50010  Dim rctPicRect As Rect, Version As String
 50020  Me.KeyPreview = True
-50030  Me.Width = Me.ScaleX(Me.Picture.Width, vbHimetric, vbTwips)
-50040  Me.Height = Me.ScaleY(Me.Picture.Height, vbHimetric, vbTwips)
-50050  MakeFormTransparent Me, vbMagenta
-50060
-50070  picCredits.ScaleMode = vbPixels
-50080  picCredits.AutoRedraw = True
-50090
-50100  picForeground.ScaleMode = vbPixels
-50110  picForeground.AutoRedraw = True
-50120
-50130  Version = GetProgramReleaseStr
-50140
-50150  With picTitle
-50160   .ForeColor = RGB(7, 16, 127)
-50170   .CurrentX = 15
-50180   .CurrentY = 35
-50190   picTitle.Print Version
-50200  End With
+50030  Me.Icon = frmMain.Icon
+50040  Me.Width = Me.ScaleX(Me.Picture.Width, vbHimetric, vbTwips)
+50050  Me.Height = Me.ScaleY(Me.Picture.Height, vbHimetric, vbTwips)
+50060  MakeFormTransparent Me, vbMagenta
+50070
+50080  picCredits.ScaleMode = vbPixels
+50090  picCredits.AutoRedraw = True
+50100
+50110  picForeground.ScaleMode = vbPixels
+50120  picForeground.AutoRedraw = True
+50130
+50140  Version = GetProgramReleaseStr
+50150
+50160  With picTitle
+50170   .ForeColor = RGB(7, 16, 127)
+50180   .CurrentX = 15
+50190   .CurrentY = 35
+50200   picTitle.Print Version
+50210  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

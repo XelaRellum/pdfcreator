@@ -15,13 +15,6 @@ Attribute VB_Ext_KEY = "SavedWithClassBuilder6" ,"Yes"
 Attribute VB_Ext_KEY = "Top_Level" ,"Yes"
 Option Explicit
 
-Private Declare Function CreateMutexA Lib "Kernel32" _
- (ByVal lpMutexAttributes As Long, ByVal bInitialOwner As Long, ByVal lpName As String) As Long
-Private Declare Function CloseHandle Lib "Kernel32" _
- (ByVal hObject As Long) As Long
-
-Private Const ERROR_ALREADY_EXISTS = 183&
-
 Private hMutex As Long
 
 Public Function CheckMutex(ByVal Mutexname As String) As Boolean

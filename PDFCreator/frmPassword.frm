@@ -178,24 +178,25 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Me.KeyPreview = True
-50020  With LanguageStrings
-50030   Caption = .OptionsPDFEnterPasswords
-50040   fraUserPass.Caption = .OptionsUserPass
-50050   fraOwnerPass.Caption = .OptionsOwnerPass
-50060   lblUserPass.Caption = .OptionsPDFSetPassword
-50070   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
-50080   lblOwnerPass.Caption = .OptionsPDFSetPassword
-50090   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
-50100   OKButton.Caption = .OptionsPassOK
-50110   CancelButton.Caption = .OptionsPassCancel
-50120   chkSavePasswords.Caption = .OptionsSavePasswords
-50130  End With
-50140  With Options
-50150   fraUserPass.Enabled = .PDFUserPass
-50160   fraOwnerPass.Enabled = .PDFOwnerPass
-50170  End With
-50180  bSuccess = False
-50190  bFinished = False
+50020  Me.Icon = frmMain.Icon
+50030  With LanguageStrings
+50040   Caption = .OptionsPDFEnterPasswords
+50050   fraUserPass.Caption = .OptionsUserPass
+50060   fraOwnerPass.Caption = .OptionsOwnerPass
+50070   lblUserPass.Caption = .OptionsPDFSetPassword
+50080   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
+50090   lblOwnerPass.Caption = .OptionsPDFSetPassword
+50100   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
+50110   OKButton.Caption = .OptionsPassOK
+50120   CancelButton.Caption = .OptionsPassCancel
+50130   chkSavePasswords.Caption = .OptionsSavePasswords
+50140  End With
+50150  With Options
+50160   fraUserPass.Enabled = .PDFUserPass
+50170   fraOwnerPass.Enabled = .PDFOwnerPass
+50180  End With
+50190  bSuccess = False
+50200  bFinished = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

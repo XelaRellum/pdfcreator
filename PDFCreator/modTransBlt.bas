@@ -22,64 +22,6 @@ Attribute VB_Name = "modTransBlt"
 
 Option Explicit
 
-Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As _
-        Long, ByVal X As Long, ByVal Y As Long, ByVal nWidth _
-        As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, _
-        ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop _
-        As Long) As Long
-        
-Private Declare Function SetBkColor Lib "gdi32" (ByVal hDC _
-        As Long, ByVal crColor As Long) As Long
-        
-Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal _
-        hDC As Long) As Long
-        
-Private Declare Function DeleteDC Lib "gdi32" (ByVal hDC As _
-        Long) As Long
-        
-Private Declare Function CreateBitmap Lib "gdi32" (ByVal nWidth _
-        As Long, ByVal nHeight As Long, ByVal nPlanes As Long, _
-        ByVal nBitCount As Long, lpBits As Any) As Long
-        
-Private Declare Function CreateCompatibleBitmap Lib "gdi32" _
-        (ByVal hDC As Long, ByVal nWidth As Long, ByVal nHeight _
-        As Long) As Long
-        
-Private Declare Function GetObj Lib "gdi32" Alias "GetObjectA" _
-        (ByVal hObject As Long, ByVal nCount As Long, lpObject _
-        As Any) As Long
-        
-Private Declare Function SelectObject Lib "gdi32" (ByVal hDC _
-        As Long, ByVal hObject As Long) As Long
-        
-Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject _
-        As Long) As Long
-        
-Private Declare Function GetDeviceCaps Lib "gdi32" (ByVal hDC _
-        As Long, ByVal nIndex As Long) As Long
-        
-Private Declare Function SetBkMode Lib "gdi32" (ByVal hDC As Long, _
-        ByVal nBkMode As Long) As Long
-        
-Private Declare Function GetDC Lib "user32" (ByVal hwnd As Long) _
-        As Long
-        
-Private Declare Function ReleaseDC Lib "user32" (ByVal hwnd As _
-        Long, ByVal hDC As Long) As Long
-
-'Constants used by new transparent support in NT.
-Private Const CAPS1 = 94             'Other caps.
-Private Const C1_TRANSPARENT = &H1   'New raster cap.
-Private Const NEWTRANSPARENT = 3     'Use with SetBkMode().
-Private Const OBJ_BITMAP = 7         'Used to retrieve HBITMAP from hDC.
-
-'Ternary raster operations.
-Private Const SRCCOPY = &HCC0020     '(DWORD) dest = source
-Private Const SRCPAINT = &HEE0086    '(DWORD) dest = source OR dest
-Private Const SRCAND = &H8800C6      '(DWORD) dest = source AND dest
-Private Const NOTSRCCOPY = &H330008  '(DWORD) dest = (NOT source)
-
-
 ' 32-Bit Transparent BitBlt Function.
 '
 ' Parameters

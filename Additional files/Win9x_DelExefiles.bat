@@ -3,9 +3,7 @@ Echo j | Del  ..\PDFCreator\*.obj
 Echo j | Del  ..\PDFSpooler\*.exe
 Echo j | Del  ..\PDFSpooler\*.obj
 Echo j | Del  ..\Transtool\*.exe
-Echo j | Del  ..\Transtool\*.obj
-Echo j | Del  ..\UnInst\*.exe
-Echo j | Del  ..\UnInst\*.obj
+Echo j | Del  ..\Transtool\*.
 Echo j | Del  ..\DeveloperTool\*.exe
 Echo j | Del  ..\DeveloperTool\*.obj
-Echo j | Del  ..\Setup\Installation\*.exe
+Echo j | Del  ..\Setup\Installation\PDFCreator*.exe

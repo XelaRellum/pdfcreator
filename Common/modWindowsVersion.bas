@@ -3,66 +3,7 @@ Attribute VB_Name = "modWindowsVersion"
 ' Copyright ©1996-2004 VBnet, Randy Birch. All Rights Reserved Worldwide.
 '        Terms of use http://vbnet.mvps.org/terms/pages/terms.htm
 '-----------------------------------------------------------------------------------------
-
-'dwPlatformId
-Private Const VER_PLATFORM_WIN32s = 0
-Private Const VER_PLATFORM_WIN32_WINDOWS = 1
-Private Const VER_PLATFORM_WIN32_NT = 2
-
-'os product type values
-Private Const VER_NT_WORKSTATION = &H1
-Private Const VER_NT_DOMAIN_CONTROLLER = &H2
-Private Const VER_NT_SERVER = &H3
-
-'product types
-Private Const VER_SERVER_NT = &H80000000
-Private Const VER_WORKSTATION_NT = &H40000000
-
-Private Const VER_SUITE_SMALLBUSINESS = &H1
-Private Const VER_SUITE_ENTERPRISE = &H2
-Private Const VER_SUITE_BACKOFFICE = &H4
-Private Const VER_SUITE_COMMUNICATIONS = &H8
-Private Const VER_SUITE_TERMINAL = &H10
-Private Const VER_SUITE_SMALLBUSINESS_RESTRICTED = &H20
-Private Const VER_SUITE_EMBEDDEDNT = &H40
-Private Const VER_SUITE_DATACENTER = &H80
-Private Const VER_SUITE_SINGLEUSERTS = &H100
-Private Const VER_SUITE_PERSONAL = &H200
-Private Const VER_SUITE_BLADE = &H400
-
-Private Const OSV_LENGTH As Long = 148
-Private Const OSVEX_LENGTH As Long = 156
-
-Private Type OSVERSIONINFO
- OSVSize         As Long         'size, in bytes, of this data structure
- dwVerMajor      As Long         'ie NT 3.51, dwVerMajor = 3; NT 4.0, dwVerMajor = 4.
- dwVerMinor      As Long         'ie NT 3.51, dwVerMinor = 51; NT 4.0, dwVerMinor= 0.
- dwBuildNumber   As Long         'NT: build number of the OS
-                                 'Win9x: build number of the OS in low-order word.
-                                 '       High-order word contains major & minor ver nos.
- PlatformID      As Long         'Identifies the operating system platform.
- szCSDVersion    As String * 128 'NT: string, such as "Service Pack 3"
-                                 'Win9x: string providing arbitrary additional information
-End Type
-
-Private Type OSVERSIONINFOEX
- OSVSize            As Long
- dwVerMajor        As Long
- dwVerMinor         As Long
- dwBuildNumber      As Long
- PlatformID         As Long
- szCSDVersion       As String * 128
- wServicePackMajor  As Integer
- wServicePackMinor  As Integer
- wSuiteMask         As Integer
- wProductType       As Byte
- wReserved          As Byte
-End Type
-
-'defined As Any to support OSVERSIONINFO and OSVERSIONINFOEX
-Private Declare Function GetVersionEx Lib "Kernel32" Alias "GetVersionExA" _
- (lpVersionInformation As Any) As Long
-
+' modified by Frank Heindörfer 2004
 
 Public Function IsBackOfficeServer() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -329,14 +270,18 @@ Public Function IsWin95() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  'returns True if running Win95
-50020  Dim osv As OSVERSIONINFO
-50030  osv.OSVSize = Len(osv)
-50040  If GetVersionEx(osv) = 1 Then
-50050   IsWin95 = (osv.PlatformID = VER_PLATFORM_WIN32_WINDOWS) And _
+50010  Dim osv As OSVERSIONINFO, BuildNumber As Long
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   If (osv.dwBuildNumber And &HFFFF&) > &H7FFF Then
+50050     BuildNumber = (osv.dwBuildNumber And &HFFFF&) - &H10000
+50060    Else
+50070     BuildNumber = osv.dwBuildNumber And &HFFFF&
+50080   End If
+50090   IsWin95 = (osv.PlatformID = VER_PLATFORM_WIN32_WINDOWS) And _
             (osv.dwVerMajor = 4 And osv.dwVerMinor = 0) And _
-            (osv.dwBuildNumber = 950)
-50080  End If
+            (BuildNumber = 950)
+50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -353,14 +298,18 @@ Public Function IsWin95OSR2() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  'returns True if running Win95
-50020  Dim osv As OSVERSIONINFO
-50030  osv.OSVSize = Len(osv)
-50040  If GetVersionEx(osv) = 1 Then
-50050   IsWin95OSR2 = (osv.PlatformID = VER_PLATFORM_WIN32_WINDOWS) And _
+50010  Dim osv As OSVERSIONINFO, BuildNumber As Long
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   If (osv.dwBuildNumber And &HFFFF&) > &H7FFF Then
+50050     BuildNumber = (osv.dwBuildNumber And &HFFFF&) - &H10000
+50060    Else
+50070     BuildNumber = osv.dwBuildNumber And &HFFFF&
+50080   End If
+50090   IsWin95OSR2 = (osv.PlatformID = VER_PLATFORM_WIN32_WINDOWS) And _
                 (osv.dwVerMajor = 4 And osv.dwVerMinor = 0) And _
-                (osv.dwBuildNumber = 1111)
-50080  End If
+                (BuildNumber = 1111)
+50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -735,13 +684,158 @@ Public Function IsWin9xMe() As Boolean
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  'returns True if running Win95, Win98 or WinMe
-50020  If IsWin95 = True Or IsWin98 = True Or IsWinME = True Then
+50020  If IsWin95 = True Or IsWin95OSR2 = True Or IsWin98 = True Or IsWinME = True Then
 50030   IsWin9xMe = True
 50040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modWindowsVersion", "IsWin9xMe")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetWinVersionStr() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tStr As String, win As RGB_WINVER
+50020
+50030  If IsBackOfficeServer Then
+50040   tStr = tStr & " BackOfficeServer"
+50050  End If
+50060  If IsBladeServer Then
+50070   tStr = tStr & " BladeServer"
+50080  End If
+50090  If IsDomainController Then
+50100   tStr = tStr & " DomainController"
+50110  End If
+50120  If IsEnterpriseServer Then
+50130   tStr = tStr & " EnterpriseServer"
+50140  End If
+50150  If IsSmallBusinessRestrictedServer Then
+50160   tStr = tStr & " SmallBusinessRestrictedServer"
+50170  End If
+50180  If IsSmallBusinessServer Then
+50190   tStr = tStr & " SmallBusinessServer"
+50200  End If
+50210  If IsTerminalServer Then
+50220   tStr = tStr & " TerminalServer"
+50230  End If
+50240  If IsWin2000 Then
+50250   tStr = tStr & " Win2000"
+50260  End If
+50270  If IsWin2000AdvancedServer Then
+50280   tStr = tStr & " Win2000AdvancedServer"
+50290  End If
+50300  If IsWin2000Server Then
+50310   tStr = tStr & " Win2000Server"
+50320  End If
+50330  If IsWin2000Workstation Then
+50340   tStr = tStr & " Win2000Workstation"
+50350  End If
+50360  If IsWin2003Server Then
+50370   tStr = tStr & " Win2003Server"
+50380  End If
+50390  If IsWin95 Then
+50400   tStr = tStr & " Win95"
+50410  End If
+50420  If IsWin95OSR2 Then
+50430   tStr = tStr & " Win95OSR2"
+50440  End If
+50450  If IsWin98 Then
+50460   tStr = tStr & " Win98"
+50470  End If
+50480  If IsWinME Then
+50490   tStr = tStr & " WinME"
+50500  End If
+50510  If IsWinNT4 Then
+50520   tStr = tStr & " WinNT4"
+50530  End If
+50540  If IsWinNT4Server Then
+50550   tStr = tStr & " WinNT4Server"
+50560  End If
+50570  If IsWinNT4Workstation Then
+50580   tStr = tStr & " WinNT4Workstation"
+50590  End If
+50600  If IsWinXP Then
+50610   tStr = tStr & " WinXP"
+50620  End If
+50630  If IsWinXPHomeEdition Then
+50640   tStr = tStr & " WinXPHomeEdition"
+50650  End If
+50660  If IsWinXPProEdition Then
+50670   tStr = tStr & " WinXPProEdition"
+50680  End If
+50690  If IsWinXPSP2 Then
+50700   tStr = tStr & " WinXPSP2"
+50710  End If
+50720
+50730  tStr = Trim$(tStr)
+50740  If Len(tStr) > 0 Then
+50750   tStr = " [" & tStr & "]"
+50760  End If
+50770  Call GetWinVersion(win)
+50780  GetWinVersionStr = win.VersionName & " " & win.VersionNo & " Build " & _
+  win.BuildNo & " (" & win.ServicePack & ")" & tStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "GetWinVersionStr")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function GetWinVersion(win As RGB_WINVER) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO, pos As Integer, sVer As String, sBuild As String
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   win.PlatformID = osv.PlatformID
+50051   Select Case osv.PlatformID
+         Case VER_PLATFORM_WIN32s:   win.VersionName = "Win32s"
+50070    Case VER_PLATFORM_WIN32_NT: win.VersionName = "Windows NT"
+50081    Select Case osv.dwVerMajor
+          Case 4:  win.VersionName = "Windows NT"
+50100     Case 5:
+50111      Select Case osv.dwVerMinor
+            Case 0:  win.VersionName = "Windows 2000"
+50130       Case 1:  win.VersionName = "Windows XP"
+50140      End Select
+50150    End Select
+50160    Case VER_PLATFORM_WIN32_WINDOWS:
+50171     Select Case osv.dwVerMinor
+           Case 0:    win.VersionName = "Windows 95"
+50190      Case 90:   win.VersionName = "Windows ME"
+50200      Case Else: win.VersionName = "Windows 98"
+50210     End Select
+50220   End Select
+50230   'Get the version number
+50240   win.VersionNo = osv.dwVerMajor & "." & osv.dwVerMinor
+50250   'Get the build
+50260   win.BuildNo = (osv.dwBuildNumber And &HFFFF&)
+50270   'Any additional info. In Win9x, this can be
+50280   '"any arbitrary string" provided by the
+50290   'manufacturer. In NT, this is the service pack.
+50300   pos = InStr(osv.szCSDVersion, Chr$(0))
+50310   If pos Then
+50320    win.ServicePack = Left$(osv.szCSDVersion, pos - 1)
+50330   End If
+50340  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "GetWinVersion")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

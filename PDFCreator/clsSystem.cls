@@ -81,15 +81,6 @@ Private Type LOGFONT
   lfFaceName(LF_FACESIZE) As Byte
 End Type
 
-Public Enum Systemfont
- Caption = 0
- SMCaption = 1
- Menu = 2
- Status = 3
- message = 4
- Icon = 5
-End Enum
-
 Public Function GetSystemFont(Frm As Form, Font As Systemfont) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
