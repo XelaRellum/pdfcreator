@@ -7,18 +7,19 @@ Begin VB.Form frmPrinting
    ClientHeight    =   3465
    ClientLeft      =   45
    ClientTop       =   330
-   ClientWidth     =   5445
+   ClientWidth     =   5490
    Icon            =   "frmPrinting.frx":0000
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   3465
-   ScaleWidth      =   5445
+   ScaleWidth      =   5490
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
    Begin MSComCtl2.Animation anmProcess 
       Height          =   825
       Left            =   120
-      TabIndex        =   5
+      TabIndex        =   10
       Top             =   120
       Visible         =   0   'False
       Width           =   4245
@@ -33,37 +34,37 @@ Begin VB.Form frmPrinting
       Caption         =   "Options"
       Height          =   495
       Left            =   1440
-      TabIndex        =   13
+      TabIndex        =   7
       Top             =   2880
       Width           =   1095
    End
    Begin VB.CommandButton cmdNow 
       Caption         =   "Now"
       Height          =   255
-      Left            =   4560
-      TabIndex        =   12
+      Left            =   4680
+      TabIndex        =   3
       Top             =   1080
       Width           =   735
    End
    Begin VB.TextBox txtCreateFor 
       Height          =   285
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   4
       Top             =   1800
-      Width           =   5175
+      Width           =   5295
    End
    Begin VB.TextBox txtCreationDate 
       Height          =   285
       Left            =   120
-      TabIndex        =   8
+      TabIndex        =   2
       Top             =   1080
       Width           =   4335
    End
    Begin VB.CheckBox chkStartStandardProgram 
       Caption         =   "After saving open the document with the standardprogram."
-      Height          =   495
+      Height          =   615
       Left            =   120
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   2160
       Width           =   5175
    End
@@ -81,7 +82,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   120
       MaskColor       =   &H00D9E5E9&
-      TabIndex        =   4
+      TabIndex        =   6
       Top             =   2880
       Width           =   1095
    End
@@ -89,7 +90,7 @@ Begin VB.Form frmPrinting
       Caption         =   "eMail"
       Height          =   495
       Left            =   2760
-      TabIndex        =   2
+      TabIndex        =   8
       Top             =   2880
       Width           =   1215
    End
@@ -98,7 +99,7 @@ Begin VB.Form frmPrinting
       Left            =   120
       TabIndex        =   1
       Top             =   360
-      Width           =   5175
+      Width           =   5295
    End
    Begin VB.CommandButton cmdSave 
       Appearance      =   0  '2D
@@ -115,7 +116,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Author:"
       Height          =   255
       Left            =   120
-      TabIndex        =   11
+      TabIndex        =   13
       Top             =   1560
       Width           =   2895
    End
@@ -123,7 +124,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Creation Date:"
       Height          =   255
       Left            =   120
-      TabIndex        =   9
+      TabIndex        =   12
       Top             =   840
       Width           =   2895
    End
@@ -131,7 +132,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Document Title:"
       Height          =   255
       Left            =   120
-      TabIndex        =   3
+      TabIndex        =   9
       Top             =   120
       Width           =   2895
    End
@@ -140,7 +141,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Creating file..."
       Height          =   255
       Left            =   480
-      TabIndex        =   6
+      TabIndex        =   11
       Top             =   11080
       Visible         =   0   'False
       Width           =   4095
@@ -168,16 +169,25 @@ End Sub
 
 Private Sub cmdEMail_Click()
  Dim mail As clsPDFCreatorMail, PDFFile As String
+
+ If GsDllLoaded = 0 Then
+  MsgBox LanguageStrings.MessagesMsg08
+  SetPrinterStop True
+  frmMain.Visible = True
+  Unload Me
+  Exit Sub
+ End If
+
  Set mail = New clsPDFCreatorMail
  ShowAnimation True
- 
+
  PDFFile = Trim$(Create_eDoc)
  If Dir(PDFFile) <> "" And Len(Trim$(PDFFile)) > 0 Then
   If mail.Send(Trim$(PDFFile)) <> 0 Then
    MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
   End If
  End If
- 
+
  Me.Visible = False
  ShowAnimation False
  Set mail = Nothing
@@ -193,6 +203,13 @@ Private Sub cmdOptions_Click()
 End Sub
 
 Private Sub cmdSave_Click()
+ If GsDllLoaded = 0 Then
+  MsgBox LanguageStrings.MessagesMsg08
+  SetPrinterStop True
+  frmMain.Visible = True
+  Unload Me
+  Exit Sub
+ End If
  Create_eDoc
  Unload Me
 End Sub
@@ -209,14 +226,14 @@ Private Function Create_eDoc() As String
  On Local Error GoTo ErrorHandler
  Dim OutputFile As String, Path As String, tStr As String, _
   tErrNumber As Long, FileName As String, FilterIndex As Long
- 
+
  FileName = GetFilename(FilterIndex)
  If SaveCancel = True Then
   Exit Function
  End If
- 
+
  Me.MousePointer = vbHourglass
- 
+
  DoEvents
  Options.StartStandardProgram = chkStartStandardProgram.Value
  OutputFile = Trim$(SaveFilename)
@@ -245,6 +262,10 @@ Private Function Create_eDoc() As String
    CallGScript PDFSpoolfile, OutputFile, Options, PCXWriter
   Case 6:
    CallGScript PDFSpoolfile, OutputFile, Options, TIFFWriter
+  Case 7:
+   CallGScript PDFSpoolfile, OutputFile, Options, PSWriter
+  Case 8:
+   CallGScript PDFSpoolfile, OutputFile, Options, EPSWriter
  End Select
  If chkStartStandardProgram.Value = 1 Then
   OpenDocument OutputFile
@@ -281,16 +302,16 @@ Private Sub ShowAnimation(Show As Boolean)
  txtTitle.Visible = Not Show
  txtCreationDate.Visible = Not Show
  txtCreateFor.Visible = Not Show
- 
+
  cmdWaiting.Visible = Not Show
  cmdEMail.Visible = Not Show
  cmdSave.Visible = Not Show
  chkStartStandardProgram.Visible = Not Show
  cmdNow.Visible = Not Show
- 
+
  anmProcess.Visible = Show
  lblStatus.Visible = Show
- 
+
  If Show = True Then
    Me.Height = 1760
    Me.Width = 4530
@@ -312,8 +333,9 @@ End Sub
 Private Sub Form_Load()
  Printing = True
  RemoveX Me
-' SetTopMost Me, True, True
-' SetTopMost Me, False, False
+ If frmMain.Visible = False Then
+  FormInTaskbar Me, True, True
+ End If
  With LanguageStrings
   lblTitle.Caption = .PrintingDocumentTitle
   lblStatus.Caption = .PrintingStatus
@@ -334,7 +356,8 @@ Private Sub Form_Load()
 ' txtTitle.Text = GetPDFTitle(PDFSpoolfile)
  PSHeader = GetPSHeader(PDFSpoolfile)
  With PSHeader
-  txtTitle.Text = Trim$(.Title.Comment)
+'  txtTitle.Text = Trim$(.Title.Comment)
+  txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename)
   If Options.UseStandardAuthor = 1 Then
     txtCreateFor.Text = Options.StandardAuthor
    Else

@@ -99,13 +99,12 @@ End Enum
 
 
 Public Function GetSpecialFolder(ByVal Folder As ShellSpecialFolderConstants, Optional ByVal ForceCreate As Boolean) As String
- On Error Resume Next
  Dim tIIDL As ITEMIDLIST, strPath As String, hMod As Long
 
  If (ForceCreate) Then
   Folder = Folder Or CSIDL_FLAG_CREATE
  End If
-  
+
  If SHGetSpecialFolderLocation(0, Folder, tIIDL) = S_OK Then
    strPath = Space$(MAX_PATH)
    If SHGetPathFromIDList(tIIDL.mkid.cb, strPath) <> 0 Then
@@ -134,7 +133,7 @@ Public Function GetShellNamespaceName(ByVal Namespace As ShellNamespaceName) As 
  CLSID(4) = "{208D2C60-3AEA-1069-A2D7-08002B30309D}" ' NETHOOD_CLSID
  CLSID(5) = "{2227A280-3AEA-1069-A2DE-08002B30309D}" ' PRINTERS_CLSID
  CLSID(6) = "{645FF040-5081-101B-9F08-00AA002F954E}" ' RECYCLEBIN_CLSID
- 
+
  lRet = SHGetFileInfo(ByVal "::" & CLSID(Namespace), 0, lSHFI, Len(lSHFI), SHGFI_DISPLAYNAME)
 
  If CBool(lRet) Then

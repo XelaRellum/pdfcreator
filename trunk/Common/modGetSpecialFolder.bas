@@ -18,8 +18,8 @@ Private Type ITEMIDLIST
 End Type
 
 Private Declare Function SHGetFolderPath Lib "shfolder" Alias "SHGetFolderPathA" (ByVal hwndOwner As Long, ByVal nFolder As Long, ByVal hToken As Long, ByVal dwFlags As Long, ByVal pszPath As String) As Long
-Private Declare Function SHGetSpecialFolderLocation Lib "Shell32" (ByVal hwndOwner As Long, ByVal nFolder As Long, ByRef ppidl As ITEMIDLIST) As Long
-Private Declare Function SHGetPathFromIDList Lib "Shell32" (ByVal pidList As Long, ByVal lpBuffer As String) As Long
+Private Declare Function SHGetSpecialFolderLocation Lib "shell32" (ByVal hwndOwner As Long, ByVal nFolder As Long, ByRef ppidl As ITEMIDLIST) As Long
+Private Declare Function SHGetPathFromIDList Lib "shell32" (ByVal pidList As Long, ByVal lpBuffer As String) As Long
 
 Private Declare Function LoadLibrary Lib "kernel32" Alias "LoadLibraryA" (ByVal lpLibFileName As String) As Long
 Private Declare Function FreeLibrary Lib "kernel32" (ByVal hLibModule As Long) As Long
@@ -77,7 +77,7 @@ Public Function GetSpecialFolder(ByVal Folder As ShellSpecialFolderConstants, _
   If (ForceCreate) Then
     Folder = Folder Or CSIDL_FLAG_CREATE
   End If
-  
+
   If SHGetSpecialFolderLocation(0, Folder, tIIDL) = S_OK Then
     strPath = Space$(MAX_PATH)
     If SHGetPathFromIDList(tIIDL.mkid.cb, strPath) <> 0 Then

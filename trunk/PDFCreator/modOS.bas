@@ -1,9 +1,9 @@
 Attribute VB_Name = "modOS"
 Option Explicit
 
-Private Const Ver_Platform_Win32_Windows As Long = &H1
+Private Const VER_PLATFORM_WIN32_WINDOWS As Long = &H1
 
-Private Type OSVersionInfo
+Private Type OSVERSIONINFO
  dwOSVersionInfoSize As Long
  dwMajorVersion As Long
  dwMinorVersion As Long
@@ -19,10 +19,10 @@ Private Declare Function GetWindowsDirectory Lib "kernel32" Alias _
  "GetWindowsDirectoryA" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
 
 Public Function IsWin9xMe() As Boolean
- Dim os As OSVersionInfo, res As Long
+ Dim os As OSVERSIONINFO, res As Long
  os.dwOSVersionInfoSize = Len(os)
  res = GetVersionEx(os)
- If os.dwPlatformId = Ver_Platform_Win32_Windows Then
+ If os.dwPlatformId = VER_PLATFORM_WIN32_WINDOWS Then
    IsWin9xMe = True
   Else
    IsWin9xMe = False

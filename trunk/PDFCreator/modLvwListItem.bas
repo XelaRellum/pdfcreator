@@ -31,7 +31,7 @@ End Type
 Public Function LvwGetCountSelectedItems(ListView As ListView, Optional ByVal LockUpdate As Boolean) As Long
  Dim i As Long, c As Long
  c = 0
- 
+
  With ListView
   If LockUpdate = True Then
    LockWindowUpdate .hWnd
@@ -67,7 +67,7 @@ End Function
 
 Public Sub LvwListItemToTop(ListView As ListView, Optional KeyIndexListItem As Variant, Optional ByVal LockUpdate As Boolean)
  Dim nListItemStore As ListItemStore, nListItem As ListItem
-    
+
  With ListView
   If LockUpdate Then
             LockWindowUpdate .hWnd
@@ -75,7 +75,7 @@ Public Sub LvwListItemToTop(ListView As ListView, Optional KeyIndexListItem As V
         With .ListItems
             Set nListItem = zGetListItem(ListView, KeyIndexListItem)
             If Not (nListItem Is Nothing) Then
-                If nListItem.index > 1 Then
+                If nListItem.Index > 1 Then
                     LvwGetListItemStore nListItemStore, ListView, nListItem, True
                     LvwInsertListItemStore ListView, nListItemStore, , 1
                 End If
@@ -91,7 +91,7 @@ Public Sub LvwListItemDown(ListView As ListView, Optional KeyIndexListItem As Va
     Dim nListItemStore As ListItemStore
     Dim nListItem As ListItem
     Dim nIndex As Long
-    
+
     With ListView
         If LockUpdate Then
             LockWindowUpdate .hWnd
@@ -99,7 +99,7 @@ Public Sub LvwListItemDown(ListView As ListView, Optional KeyIndexListItem As Va
         With .ListItems
             Set nListItem = zGetListItem(ListView, KeyIndexListItem)
             If Not (nListItem Is Nothing) Then
-                nIndex = nListItem.index
+                nIndex = nListItem.Index
                 If nIndex > 1 Then
                     nIndex = nIndex - Steps
                     If nIndex < 1 Then
@@ -118,7 +118,7 @@ End Sub
 
 Public Sub LvwListItemUp(ListView As ListView, Optional KeyIndexListItem As Variant, Optional Steps As Long = 1, Optional ByVal LockUpdate As Boolean)
  Dim nListItemStore As ListItemStore, nListItem As ListItem, nIndex As Long
-    
+
  With ListView
   If LockUpdate Then
    LockWindowUpdate .hWnd
@@ -126,7 +126,7 @@ Public Sub LvwListItemUp(ListView As ListView, Optional KeyIndexListItem As Vari
   With .ListItems
    Set nListItem = zGetListItem(ListView, KeyIndexListItem)
    If Not (nListItem Is Nothing) Then
-    nIndex = nListItem.index
+    nIndex = nListItem.Index
     If nIndex < .Count Then
      nIndex = nIndex + Steps
      LvwGetListItemStore nListItemStore, ListView, nListItem, True
@@ -146,7 +146,7 @@ End Sub
 
 Public Sub LvwListItemToBottom(ListView As ListView, Optional KeyIndexListItem As Variant, Optional ByVal LockUpdate As Boolean)
  Dim nListItemStore As ListItemStore, nListItem As ListItem
-    
+
  With ListView
   If LockUpdate Then
    LockWindowUpdate .hWnd
@@ -154,7 +154,7 @@ Public Sub LvwListItemToBottom(ListView As ListView, Optional KeyIndexListItem A
   With .ListItems
    Set nListItem = zGetListItem(ListView, KeyIndexListItem)
    If Not (nListItem Is Nothing) Then
-    If nListItem.index < .Count Then
+    If nListItem.Index < .Count Then
      LvwGetListItemStore nListItemStore, ListView, nListItem, True
      LvwInsertListItemStore ListView, nListItemStore
     End If
@@ -171,7 +171,7 @@ Public Sub LvwGetListItemStore(ListItemStore As ListItemStore, ListView As ListV
     Dim nKeyIsListItem As Boolean
     Dim nListSubItem As ListSubItem
     Dim i As Integer
-    
+
     With ListView
         If LockUpdate Then
             LockWindowUpdate .hWnd
@@ -217,7 +217,7 @@ Public Sub LvwGetListItemStore(ListItemStore As ListItemStore, ListView As ListV
                     End If
                 End With
                 If Remove Then
-                    .Remove nListItem.index
+                    .Remove nListItem.Index
                 End If
             End If
         End With
@@ -236,9 +236,7 @@ Private Function zGetListItem(ListView As ListView, Optional KeyIndexListItem As
       Set zGetListItem = KeyIndexListItem
      End If
     Else
-     On Error Resume Next
      Set zGetListItem = .ListItems.item(KeyIndexListItem)
-     On Error GoTo 0
   End If
  End With
 End Function
@@ -248,18 +246,18 @@ Public Sub LvwInsertListItemStore(ListView As ListView, ListItemStore As ListIte
     Dim nListItem As ListItem
     Dim nListSubItem As ListSubItem
     Dim i As Integer
-    
+
     With ListView
         If Not IsMissing(BeforeSelectedItem) Then
             If Not (.SelectedItem Is Nothing) Then
                 If CBool(BeforeSelectedItem) Then
-                    nIndex = .SelectedItem.index
+                    nIndex = .SelectedItem.Index
                 End If
             End If
         ElseIf Not IsMissing(AfterSelectedItem) Then
             If Not (.SelectedItem Is Nothing) Then
                 If CBool(AfterSelectedItem) Then
-                    nIndex = .SelectedItem.index + 1
+                    nIndex = .SelectedItem.Index + 1
                 End If
             End If
         ElseIf Not IsMissing(Before) Then

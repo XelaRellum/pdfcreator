@@ -10,12 +10,13 @@ Begin VB.Form frmLog
    MinButton       =   0   'False
    ScaleHeight     =   5160
    ScaleWidth      =   8100
+   ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
    Begin VB.CommandButton cmdClear 
       Caption         =   "Clear"
       Height          =   495
       Left            =   120
-      TabIndex        =   2
+      TabIndex        =   1
       Top             =   2640
       Width           =   1335
    End
@@ -23,7 +24,7 @@ Begin VB.Form frmLog
       Caption         =   "Close"
       Height          =   495
       Left            =   3240
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   2640
       Width           =   1335
    End
@@ -34,7 +35,7 @@ Begin VB.Form frmLog
       Locked          =   -1  'True
       MultiLine       =   -1  'True
       ScrollBars      =   3  'Beides
-      TabIndex        =   0
+      TabIndex        =   2
       Top             =   120
       Width           =   4455
    End

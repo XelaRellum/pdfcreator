@@ -100,10 +100,10 @@ Private Declare Sub MoveMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destina
 Public Function GetAvailableMonitors() As Collection
  Dim pcbNeeded As Long, pcReturned As Long, mi1() As MONITOR_INFO_1, _
   i As Integer, sPortType As String, tColl As Collection
-   
+
  Set tColl = New Collection
  EnumMonitors vbNullString, 1, 0, 0, pcbNeeded, pcReturned
- 
+
  If pcbNeeded Then
   ReDim mi1((pcbNeeded / SIZEOFMONITOR_INFO_1))
   If EnumMonitors(vbNullString, 1, mi1(0), pcbNeeded, pcbNeeded, pcReturned) Then
@@ -112,14 +112,14 @@ Public Function GetAvailableMonitors() As Collection
    Next i
   End If
  End If
- 
+
  Set GetAvailableMonitors = tColl
 End Function
 
 Public Function GetAvailablePorts() As Collection
  Dim pcbNeeded As Long, pcReturned As Long, pi2() As PORT_INFO_2, _
   i As Integer, sPortType As String, tColl As Collection
-   
+
  Set tColl = New Collection
  Call EnumPorts(vbNullString, 2, 0, 0, pcbNeeded, pcReturned)
  If pcbNeeded Then
@@ -130,7 +130,7 @@ Public Function GetAvailablePorts() As Collection
    Next i
   End If
  End If
- 
+
  Set GetAvailablePorts = tColl
 End Function
 
@@ -140,7 +140,7 @@ Public Function GetAvailablePrinterdrivers() As Collection
   udtDriverInfo1() As DRIVER_INFO_1, lngDriverInfo1Count As Long, _
   strDriverInfo1Name As String * 128, lngWin32apiResultCode As Long, _
   tColl As Collection
- 
+
  Set tColl = New Collection
  lngDriverInfo1Level = 1
  lngWin32apiResultCode = EnumPrinterDrivers(vbNullString, vbNullString, _
@@ -172,12 +172,12 @@ End Function
 Private Function EnumPrintersWinNT() As Collection
  Dim Success As Boolean, cbRequired As Long, cbBuffer As Long, nEntries As Long, _
   pntr() As PRINTER_INFO_4, c As Long, tColl As Collection
- 
+
  Set tColl = New Collection
-   
+
  Call EnumPrinters(PRINTER_ENUM_CONNECTIONS Or PRINTER_ENUM_LOCAL, vbNullString, _
   PRINTER_LEVEL4, 0, 0, cbRequired, nEntries)
-            
+
  ReDim pntr((cbRequired \ SIZEOFPRINTER_INFO_4))
  cbBuffer = cbRequired
  If EnumPrinters(PRINTER_ENUM_CONNECTIONS Or PRINTER_ENUM_LOCAL, vbNullString, _
@@ -192,18 +192,18 @@ End Function
 Public Function EnumPrintersWin9x() As Collection
  Dim cbRequired As Long, cbBuffer As Long, pntr() As PRINTER_INFO_1, nEntries As Long, _
   c As Long, sFlags As String, tColl As Collection
-   
+
  Set tColl = New Collection
-   
+
  Call EnumPrinters(PRINTER_ENUM_CONNECTIONS Or PRINTER_ENUM_LOCAL, vbNullString, _
   PRINTER_LEVEL1, 0, 0, cbRequired, nEntries)
-                     
+
  ReDim pntr((cbRequired \ SIZEOFPRINTER_INFO_1))
  cbBuffer = cbRequired
-    
+
  If EnumPrinters(PRINTER_ENUM_CONNECTIONS Or PRINTER_ENUM_LOCAL, vbNullString, _
   PRINTER_LEVEL1, pntr(0), cbBuffer, cbRequired, nEntries) Then
- 
+
   For c = 0 To nEntries - 1
    tColl.Add GetStrFromPtrA(pntr(c).Pane)
   Next c

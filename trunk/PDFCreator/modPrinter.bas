@@ -96,7 +96,6 @@ Public Sub UnInstallCompletePrinter()
 End Sub
 
 Private Sub PrinterMonitor(InstallTyp As eInstall)
- On Local Error Resume Next
  Dim res As Long, Monitor2 As MONITOR_INFO_2, tStr As String
  Select Case InstallTyp
   Case 0: ' Install
@@ -151,7 +150,7 @@ Private Sub PrinterPort(InstallTyp As eInstall)
      reg.SetRegistryValue "Description", "Redirected Port", REG_SZ
      i = 0
      reg.SetRegistryValue "LogFileDebug", i, REG_DWORD
-     reg.SetRegistryValue "LogFileName", "", REG_SZ
+     reg.SetRegistryValue "LogFileName", vbNullString, REG_SZ
      reg.SetRegistryValue "LogFileUse", i, REG_DWORD
      reg.SetRegistryValue "Output", i, REG_DWORD
      reg.SetRegistryValue "Printer", "PDFCreator", REG_SZ
@@ -159,7 +158,7 @@ Private Sub PrinterPort(InstallTyp As eInstall)
      reg.SetRegistryValue "RunUser", i, REG_DWORD
      i = 0
      reg.SetRegistryValue "ShowWindow", i, REG_DWORD
-     reg.KeyRoot = ""
+     reg.KeyRoot = vbNullString
      reg.CreateKey "System\CurrentControlSet\Control\Print\Ports\" & Portname
     Else
      WriteLogfile "PrinterPort [" & tStr & "]: Printerport is already installed."
@@ -187,7 +186,6 @@ Private Sub PrinterPort(InstallTyp As eInstall)
 End Sub
 
 Private Sub PrinterDriver(InstallTyp As eInstall)
- On Local Error Resume Next
  Dim DI3 As DRIVER_INFO_3, Driverpath As String, res As Long
  Dim lngDriverDirectoryLevel    As Long
  Dim lngDriverDirectoryNeeded   As Long
@@ -204,10 +202,10 @@ Private Sub PrinterDriver(InstallTyp As eInstall)
      ReDim bytDriverDirectoryBuffer(lngDriverDirectoryNeeded - 1)
      lngWin32apiResultCode = GetPrinterDriverDirectory(vbNullString, vbNullString, lngDriverDirectoryLevel, bytDriverDirectoryBuffer(0), lngDriverDirectoryNeeded, lngDriverDirectoryNeeded)
      lngWin32apiResultCode = lstrcpy(ByVal strDriverDirectory, bytDriverDirectoryBuffer(0))
- 
+
      Driverpath = Left(strDriverDirectory, InStr(strDriverDirectory, vbNullChar) - 1)
      If Right(Driverpath, 1) <> "\" Then Driverpath = Driverpath & "\"
- 
+
      With DI3
       .pName = Drivername & vbNullString
       If IsWin9xMe = True Then
@@ -227,11 +225,11 @@ Private Sub PrinterDriver(InstallTyp As eInstall)
         .pEnvironment = vbNullString
         .pHelpFile = Driverpath & "PSCRIPT.HLP" & vbNullString
         .pDependentFiles = Driverpath & "PSCRIPT.DLL" & vbNullString & vbNullString
-        .pMonitorName = "" & vbNullString
+        .pMonitorName = vbNullString
       End If
       .pDefaultDataType = "RAW" & vbNullString
      End With
- 
+
      res = AddPrinterDriver(vbNullString, 3, DI3)
     Else
      WriteLogfile "PrinterDriver [" & tStr & "]: Printerdriver is already installed."
@@ -254,7 +252,6 @@ Private Sub PrinterDriver(InstallTyp As eInstall)
 End Sub
 
 Private Sub WindowsPrinter(InstallTyp As eInstall)
- On Local Error Resume Next
  Dim res As Long, PI As PRINTER_INFO_2, pHandle As Long, _
   pd As PRINTER_DEFAULTS, tStr As String, ini As clsINI
  Select Case InstallTyp
@@ -274,7 +271,7 @@ Private Sub WindowsPrinter(InstallTyp As eInstall)
       .AveragePPM = 0
       .cJobs = 0
       .pDevMode = 0
-      .pLocation = "" & vbNullString
+      .pLocation = vbNullString
       .pParameters = 0
       .pSecurityDescriptor = 0
       .pShareName = PrinterName & vbNullString
@@ -282,14 +279,14 @@ Private Sub WindowsPrinter(InstallTyp As eInstall)
       .Status = 0
       .UntilTime = 0
      End With
-    
+
      res = AddPrinter(vbNullString, 2, PI)
      If res <> 0 Then
       ClosePrinter res
      End If
      If IsWin9xMe = True Then
       Set ini = New clsINI
-      ini.Filename = GetWindowsDirectory & "\win.ini"
+      ini.FileName = GetWindowsDirectory & "\win.ini"
       ini.Key = "PDFCreator"
       ini.Section = "Devices"
       ini.SaveKey "PSCRIPT,PDFCreator:"
@@ -309,11 +306,14 @@ Private Sub WindowsPrinter(InstallTyp As eInstall)
       .pDevMode = 0
       .DesiredAccess = PRINTER_ALL_ACCESS
      End With
- 
+
      res = OpenPrinter(PrinterName, pHandle, pd)
- 
+
      If res <> 0 Then
       res = DeletePrinter(pHandle)
+     End If
+     If res <> 0 Then
+      res = ClosePrinter(pHandle)
      End If
     Else
      WriteLogfile "Printer [" & tStr & "]: Printer is not installed."
@@ -376,7 +376,6 @@ Private Function IsPrinterInstalled(PrinterName As String) As Boolean
 End Function
 
 Public Function RaiseAPIError() As String
- On Local Error Resume Next
  Dim ErrorMsg As String, ErrNum As Long
  ErrNum = Err.LastDllError
  ErrorMsg = String(256, 0)

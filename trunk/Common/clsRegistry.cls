@@ -127,7 +127,12 @@ End Function
 Public Function CreateKey(Optional Keyname As Variant) As String
  Dim handle As Long, disp As Long, RetVal As Long, tStr As String
  Keyname = IIf(IsMissing(Keyname), mvarSubKey, CStr(Keyname))
- RetVal = RegCreateKeyEx(mvarhKeySet, mvarKeyRoot & "\" & Keyname, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, Security, handle, disp)
+ If mvarKeyRoot = "" Then
+   tStr = Keyname
+  Else
+   tStr = mvarKeyRoot & "\" & Keyname
+ End If
+ RetVal = RegCreateKeyEx(mvarhKeySet, tStr, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, Security, handle, disp)
  tStr = String(64, Chr$(0))
  mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
  If RetVal Then Exit Function
@@ -163,12 +168,12 @@ Public Function EnumRegistryKeys(ByVal hkey As hkey, ByVal Keyname As String) As
  Dim handle As Long, Length As Long, Index As Long, subkeyName As String, _
   fFiletime As FILETIME
  Set EnumRegistryKeys = New Collection
-         
+
  If Len(Keyname) Then
   If RegOpenKeyEx(hkey, Keyname, 0, KEY_READ, handle) Then Exit Function
   hkey = handle
  End If
- 
+
  Do
   Length = 260
   subkeyName = Space$(Length)
@@ -177,7 +182,7 @@ Public Function EnumRegistryKeys(ByVal hkey As hkey, ByVal Keyname As String) As
   EnumRegistryKeys.Add subkeyName, subkeyName
   Index = Index + 1
  Loop
-        
+
  If handle Then RegCloseKey handle
 End Function
 
@@ -195,47 +200,47 @@ Function EnumRegistryValues(ByVal hkey As hkey, ByVal Keyname As String) As _
     Dim RetVal As Long
     Dim i As Integer
     Dim vTemp As Variant
-    
+
     Set EnumRegistryValues = New Collection
-    
+
     If Len(Keyname) Then
         If RegOpenKeyEx(hkey, Keyname, 0, KEY_READ, handle) Then Exit Function
         hkey = handle
     End If
-    
+
     Do
         nameLen = 260
         Name = Space$(nameLen)
         Length = 4096
         ReDim resBinary(0 To Length - 1) As Byte
-        
+
         RetVal = RegEnumValue(hkey, Index, Name, nameLen, ByVal 0&, valueType, _
             resBinary(0), Length)
-        
+
         If RetVal = ERROR_MORE_DATA Then
             ReDim resBinary(0 To Length - 1) As Byte
             RetVal = RegEnumValue(hkey, Index, Name, nameLen, ByVal 0&, _
                 valueType, resBinary(0), Length)
         End If
         If RetVal Then Exit Do
-        
+
         valueInfo(0) = Left$(Name, nameLen)
-        
+
         Select Case valueType
             
             Case REG_DWORD
                 CopyMemory resLong, resBinary(0), 4
                 valueInfo(1) = resLong
-            
+
             Case REG_SZ
                 If Length <> 0 Then
                     resString = Space$(Length - 1)
                     CopyMemory ByVal resString, resBinary(0), Length - 1
                     valueInfo(1) = resString
                 Else
-                    valueInfo(1) = ""
+                    valueInfo(1) = vbNullString
                 End If
-                
+
             Case REG_EXPAND_SZ
                 If Length <> 0 Then
                     resString = Space$(Length - 1)
@@ -243,7 +248,7 @@ Function EnumRegistryValues(ByVal hkey As hkey, ByVal Keyname As String) As _
                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString))
                     valueInfo(1) = TrimNull(resString)
                 Else
-                    valueInfo(1) = ""
+                    valueInfo(1) = vbNullString
                 End If
 
             Case REG_BINARY
@@ -254,24 +259,24 @@ Function EnumRegistryValues(ByVal hkey As hkey, ByVal Keyname As String) As _
                          resString = resString & " " & Format(Trim(Hex(resBinary(i))), "0#")
                     Next i
                     valueInfo(1) = LTrim(resString) 'Get rid of leading space
-            
+
             Case REG_MULTI_SZ
                 resString = Space$(Length - 2)
                 CopyMemory ByVal resString, resBinary(0), Length - 2
-                
+
                 resString = Replace(resString, vbNullChar, ",", , , vbBinaryCompare)
                 valueInfo(1) = resString
-            
+
             Case Else
         End Select
-        
+
         EnumRegistryValues.Add valueInfo, valueInfo(0)
-        
+
         Index = Index + 1
     Loop
-   
+
     If handle Then RegCloseKey handle
-        
+
 End Function
 
 Public Function GetRegistryValue(ByVal ValueName As String, Optional DefaultValue As Variant) As Variant
@@ -283,16 +288,16 @@ Public Function GetRegistryValue(ByVal ValueName As String, Optional DefaultValu
     Dim Length As Long
     Dim RetVal As Long
     Dim valueType As Long
-    
+
         GetRegistryValue = IIf(IsMissing(DefaultValue), Empty, DefaultValue)
-        
+
         If RegOpenKeyEx(mvarhKeySet, mvarKeyRoot & "\" & mvarSubKey, REG_OPTION_NON_VOLATILE, KEY_READ, handle) Then
            Exit Function
         End If
-        
+
         Length = 1024
         ReDim resBinary(0 To Length - 1) As Byte
-        
+
         RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
             Length)
         If RetVal = ERROR_MORE_DATA Then
@@ -300,51 +305,51 @@ Public Function GetRegistryValue(ByVal ValueName As String, Optional DefaultValu
             RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
                 Length)
         End If
-        
+
         If RetVal = ERROR_KEY_NOT_FOUND Then
                  RegCloseKey (handle)
                  Exit Function
         End If
-        
+
         Select Case valueType
             Case REG_DWORD
                 CopyMemory resLong, resBinary(0), 4
                 GetRegistryValue = resLong
-            
+
             Case REG_SZ
                 If Length <> 0 Then
                     resString = Space$(Length - 1)
                     CopyMemory ByVal resString, resBinary(0), Length - 1
                     GetRegistryValue = resString
                 End If
-            
+
             Case REG_EXPAND_SZ
                 If Length <> 0 Then
                     resString = Space$(Length - 1)
                     CopyMemory ByVal resString, resBinary(0), Length - 1
-                    
+
                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString))
                     GetRegistryValue = Left$(resString, Length)
-                    
+
                 End If
-            
+
             Case REG_BINARY
                 If Length <> UBound(resBinary) + 1 Then
                     ReDim Preserve resBinary(0 To Length - 1) As Byte
                 End If
                 GetRegistryValue = resBinary()
-            
+
             Case REG_MULTI_SZ
                 resString = Space$(Length - 2)
                 CopyMemory ByVal resString, resBinary(0), Length - 2
                 TestString = resString
                 If Len(TrimNull(TestString)) > 0 Then GetRegistryValue = resString
-                
+
             Case Else
         End Select
-        
+
      RegCloseKey (handle)
-   
+
 End Function
 
 Public Function SetRegistryValue(ByVal ValueName As String, Value As Variant, DType As DataType) As Boolean
@@ -354,7 +359,7 @@ Public Function SetRegistryValue(ByVal ValueName As String, Value As Variant, DT
     Dim binValue() As Byte
     Dim Length As Long
     Dim RetVal As Long, tStr As String
-    
+
     If RegOpenKeyEx(hkey, mvarKeyRoot & "\" & mvarSubKey, REG_OPTION_NON_VOLATILE, KEY_WRITE, handle) Then
        SetRegistryValue = False 'CVar("Error!")
        Exit Function
@@ -393,14 +398,14 @@ Public Function SetRegistryValue(ByVal ValueName As String, Value As Variant, DT
             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
         Case Else
     End Select
-    
+
      RegCloseKey (handle)
     SetRegistryValue = (RetVal = 0)
-    
+
 End Function
 
 Public Function ReadRemoteRegistryValue(ByVal sRemoteComputer As String, ByVal hkey As hkey, ByVal ValueName As String, Optional KeyPath As String) As Variant
-    
+
     Dim handle As Long
     Dim lReturnCode, lHive, lhRemoteRegistry As Long
     Dim valueType As Long
@@ -411,22 +416,22 @@ Public Function ReadRemoteRegistryValue(ByVal sRemoteComputer As String, ByVal h
     Dim Length As Long
     Dim RetVal As Long
     Dim RegPath As String, tStr As String
-    
-    
+
+
         RegPath = IIf(IsMissing(KeyPath), mvarKeyRoot & "\" & mvarSubKey, KeyPath)
-                
+
         If RegConnectRegistry(sRemoteComputer, hkey, lhRemoteRegistry) Then
             ReadRemoteRegistryValue = CVar("Error!")
             Exit Function
         End If
         lReturnCode = RegOpenKeyEx(lhRemoteRegistry, RegPath, 0, KEY_ALL_ACCESS, handle)
-        
+
         Length = 1024
         ReDim resBinary(0 To Length - 1) As Byte
-        
+
         RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
             Length)
-        
+
         If RetVal = ERROR_MORE_DATA Then
             ReDim resBinary(0 To Length - 1) As Byte
             RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
@@ -434,49 +439,49 @@ Public Function ReadRemoteRegistryValue(ByVal sRemoteComputer As String, ByVal h
             tStr = String(64, Chr$(0))
             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
         End If
-        
+
         If RetVal = ERROR_KEY_NOT_FOUND Then
             RegCloseKey (handle)
             Exit Function
         End If
-        
+
         Select Case valueType
             Case REG_DWORD
                 CopyMemory resLong, resBinary(0), 4
                 ReadRemoteRegistryValue = resLong
-            
+
             Case REG_SZ
                 If Length <> 0 Then
                     resString = Space$(Length - 1)
                     CopyMemory ByVal resString, resBinary(0), Length - 1
                     ReadRemoteRegistryValue = resString
                 End If
-            
+
             Case REG_EXPAND_SZ
                 If Length <> 0 Then
                     resString = Space$(Length - 1)
                     CopyMemory ByVal resString, resBinary(0), Length - 1
-                    
+
                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString))
                     ReadRemoteRegistryValue = Left$(resString, Length)
-                    
+
                 End If
-            
+
             Case REG_BINARY
                 If Length <> UBound(resBinary) + 1 Then
                     ReDim Preserve resBinary(0 To Length - 1) As Byte
                 End If
                 ReadRemoteRegistryValue = resBinary()
-            
+
             Case REG_MULTI_SZ
                 resString = Space$(Length - 2)
                 CopyMemory ByVal resString, resBinary(0), Length - 2
                 TestString = resString
                 If Len(TrimNull(TestString)) > 0 Then ReadRemoteRegistryValue = resString
-                
+
             Case Else
         End Select
-        
+
         RegCloseKey (handle)
 
 End Function
@@ -491,16 +496,16 @@ Public Function WriteRemoteRegistryValue(ByVal sRemoteComputer As String, ByVal 
     Dim RegPath As String
     Dim lhRemoteRegistry As Long
     Dim lReturnCode     As Long, tStr As String
-    
-            
+
+
         RegPath = IIf(IsMissing(KeyPath), mvarKeyRoot & "\" & mvarSubKey, KeyPath)
-                
+
         If RegConnectRegistry(sRemoteComputer, hkey, lhRemoteRegistry) Then
             WriteRemoteRegistryValue = CVar("Error!")
             Exit Function
         End If
         lReturnCode = RegOpenKeyEx(lhRemoteRegistry, RegPath, 0, KEY_ALL_ACCESS, handle)
-        
+
     Select Case DType
         Case REG_DWORD
             lngValue = Value
@@ -534,7 +539,7 @@ Public Function WriteRemoteRegistryValue(ByVal sRemoteComputer As String, ByVal 
             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
         Case Else
     End Select
-    
+
      RegCloseKey (handle)
     WriteRemoteRegistryValue = (RetVal = 0)
 End Function

@@ -46,7 +46,7 @@ Option Explicit
 '------------------------------------------------
 'Win32 API
 'GhostScript API
-Public Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByVal dest As Long, ByVal source As Long, ByVal bytes As Long)
+Public Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (ByVal dest As Long, ByVal Source As Long, ByVal bytes As Long)
 
 Private Declare Function gsapi_revision Lib "gsdll32.dll" (ByVal pGSRevisionInfo As Long, ByVal intLen As Long) As Long
 Private Declare Function gsapi_new_instance Lib "gsdll32.dll" (ByRef lngGSInstance As Long, ByVal lngCallerHandle As Long) As Long
@@ -89,7 +89,7 @@ Public Function gsdll_stdout(ByVal intGSInstanceHandle As Long, ByVal strz As Lo
     ' If you can think of a more efficient method, please tell me!
     ' We need to convert from a byte buffer to a string
     ' First we create a byte array of the appropriate size
-    
+
 '    If frmMain.chkDebug.Value = True Then
       Dim aByte() As Byte
       ReDim aByte(intBytes)
@@ -197,13 +197,13 @@ Public Function CallGS(ByRef astrGSArgs() As String) As Boolean
         intElementCount = UBound(astrGSArgs)
         ReDim aAnsiArgs(intElementCount)
         ReDim aPtrArgs(intElementCount)
-       
+
         For intCounter = 0 To intElementCount
             aAnsiArgs(intCounter) = StrConv(astrGSArgs(intCounter), vbFromUnicode)
             aPtrArgs(intCounter) = StrPtr(aAnsiArgs(intCounter))
         Next
         ptrArgs = VarPtr(aPtrArgs(0))
-      
+
         intReturn = gsapi_init_with_args(intGSInstanceHandle, intElementCount + 1, ptrArgs)
 
         ' Stop the Ghostscript interpreter

@@ -13,7 +13,7 @@ Private Const ACM_OPEN = (WM_USER + 100)
 Private Const ACM_PLAY = (WM_USER + 101)
 Private Const ACM_STOP = (WM_USER + 102)
 
-Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 
 Public Enum ResAnimateConstants
   ranOpen = 1
@@ -41,37 +41,37 @@ End Enum
 '//                  ranClose-> Schließt die Animation, löscht die Anzeige.
 '// ---------------------------------------------------------------------------
 Public Function ResAnimate(ByRef Animation As Animation, _
-                           ByVal Cmd As ResAnimateConstants, _
+                           ByVal cmd As ResAnimateConstants, _
                   Optional ByVal ID As Long, _
                   Optional ByVal StartFrame As Integer = 0, _
                   Optional ByVal EndFrame As Integer = -1, _
                   Optional ByVal Repeat As Long = -1) As Boolean
   Dim lngRet As Long
 
-  Select Case Cmd
+  Select Case cmd
     Case ranOpen
       '// Animation laden:
-      lngRet = SendMessage(Animation.hwnd, ACM_OPEN, App.hInstance, ByVal ID)
+      lngRet = SendMessage(Animation.hWnd, ACM_OPEN, App.hInstance, ByVal ID)
     Case ranPlay
       '// Animation abspielen:
-      lngRet = SendMessage(Animation.hwnd, ACM_PLAY, Repeat, _
+      lngRet = SendMessage(Animation.hWnd, ACM_PLAY, Repeat, _
                            ByVal CLng(EndFrame * &H10000 + StartFrame))
     Case ranSeek
       '// Bestimmtes Frame (StartFrame) abspielen:
-      lngRet = SendMessage(Animation.hwnd, ACM_PLAY, 1, _
+      lngRet = SendMessage(Animation.hWnd, ACM_PLAY, 1, _
                            ByVal CLng(StartFrame * &H10000 + StartFrame))
     Case ranStop
       '// Animation anhalten:
-      lngRet = SendMessage(Animation.hwnd, ACM_STOP, 0&, ByVal 0&)
+      lngRet = SendMessage(Animation.hWnd, ACM_STOP, 0&, ByVal 0&)
     Case ranClose
       '// Animation schließen:
-      lngRet = SendMessage(Animation.hwnd, ACM_OPEN, App.hInstance, _
+      lngRet = SendMessage(Animation.hWnd, ACM_OPEN, App.hInstance, _
                            ByVal vbNullString)
       '// Anzeige durch aus- und wiedereinblenden löschen:
       Animation.Visible = False
       Animation.Visible = True
   End Select
-  
+
   ResAnimate = (lngRet <> 0)
-  
+
 End Function

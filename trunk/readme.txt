@@ -1,16 +1,20 @@
-Title: PDFCreator Version 0.6.6
+Title: PDFCreator Version 0.7.0
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: 20.05.2003
+Releasedate: 10.06.2003
 
 Look at the readme.txt-Files in 'Setup', 'Printer', 'Printer\Redmon' and 'Setup\Upx'.
 
 Necessary additional files:
 
+IPDK:
+	Install the IPDK files to use error messages in your native language.
+	http://msdn.microsoft.com/vbasic/downloads/tools/ipdk.aspx
+
 Systemfiles: 
 	Run Win9x_CopySystemfiles.bat or WinNt_CopySystemfiles.bat from 'Additional files\Systemfiles' to copy the Systemfiles for the setup.
 
 Ghostscript Files:
-	Download Ghostscript 8.0
+	Download Ghostscript 8.00
 	Install Ghostscript in the standarddirectory c:\gs
 	Run Win9x_CopyGhost.bat or WinNt_CopyGhost.bat from 'Additional files\Ghostscript' to copy the necessary Gohstscript-files
 	You can delete this files with Win9x_DelGhost.bat or WinNt_DelGhost.bat

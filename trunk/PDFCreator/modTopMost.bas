@@ -1,12 +1,12 @@
 Attribute VB_Name = "modTopMost"
 Option Explicit
 
-Private Declare Function SetWindowPos Lib "User32" (ByVal hWnd As Long, ByVal Order As Long, ByVal X As Long, ByVal Y As Long, ByVal cX As Long, ByVal cY As Long, ByVal Flags As Long) As Long
+Private Declare Function SetWindowPos Lib "user32" (ByVal hWnd As Long, ByVal Order As Long, ByVal x As Long, ByVal y As Long, ByVal cX As Long, ByVal cY As Long, ByVal Flags As Long) As Long
 
 Public Function SetTopMost(AnyForm As Form, Optional ByVal State As Boolean = True, Optional ByVal Activate As Boolean = True) As Boolean
     Dim nFlags As Long
     Dim nTopMode As Long
-    
+
     Const SWP_NOMOVE = 2
     Const SWP_NOSIZE = 1
     Const HWND_TOPMOST = -1

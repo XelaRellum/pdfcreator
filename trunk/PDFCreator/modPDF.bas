@@ -19,20 +19,19 @@ Public Type tPSHeader
  EndComment As tPSComment
 End Type
 
-Public Function GetPDFTitle(Filename As String) As String
- On Local Error Resume Next
+Public Function GetPDFTitle(FileName As String) As String
  Const Buffer = 5000
  Dim fn As Long, bufStr As String, pTitleStart As String, pTitleEnd As String
 
- If Dir(Filename) = "" Then
-  GetPDFTitle = ""
+ If Len(Dir(FileName)) = 0 Then
+  GetPDFTitle = vbNullString
   Exit Function
  End If
- 
+
  fn = FreeFile
- Open Filename For Input As #fn
- If FileLen(Filename) < Buffer Then
-   bufStr = Input(FileLen(Filename), #fn)
+ Open FileName For Input As #fn
+ If FileLen(FileName) < Buffer Then
+   bufStr = Input(FileLen(FileName), #fn)
   Else
    bufStr = Input(Buffer, #fn)
  End If
@@ -40,30 +39,29 @@ Public Function GetPDFTitle(Filename As String) As String
 
  pTitleStart = InStr(1, bufStr, "%%Title:", vbTextCompare)
  pTitleEnd = InStr(pTitleStart, bufStr, vbLf, vbTextCompare)
- 
+
  If Mid$(bufStr, pTitleEnd - 1, 1) = vbCr Then
   pTitleEnd = pTitleEnd - 1
  End If
- 
+
  If pTitleStart = 0 Then
-  GetPDFTitle = ""
+  GetPDFTitle = vbNullString
   Exit Function
  End If
  GetPDFTitle = Trim$(Mid$(bufStr, pTitleStart + 8, pTitleEnd - pTitleStart - 8))
 End Function
 
-Public Sub SavePDFTitle(Filename As String, Title As String)
- On Local Error Resume Next
+Public Sub SavePDFTitle(FileName As String, Title As String)
  Const Buffer = 5000
  Dim fn As Long, bufStr As String, pTitleStart As String, pTitleEnd As String, _
   oldTitle As String
 
- If Dir(Filename) = "" Then
+ If Dir(FileName) = "" Then
   Exit Sub
  End If
- 
+
  fn = FreeFile
- Open Filename For Input As #fn
+ Open FileName For Input As #fn
  If LOF(fn) > 0 Then
   bufStr = Input(LOF(fn) - 1, #fn)
  End If
@@ -71,39 +69,38 @@ Public Sub SavePDFTitle(Filename As String, Title As String)
 
  pTitleStart = InStr(1, bufStr, "%%Title:", vbTextCompare)
  pTitleEnd = InStr(pTitleStart, bufStr, vbLf, vbTextCompare)
- 
+
  If Mid$(bufStr, pTitleEnd - 1, 1) = vbCr Then
   pTitleEnd = pTitleEnd - 1
  End If
- 
+
  If pTitleStart = 0 Then
   Exit Sub
  End If
  oldTitle = Trim$(Mid$(bufStr, pTitleStart + 8, pTitleEnd - pTitleStart - 8))
  Replace$ bufStr, oldTitle, Title
- Open Filename For Output As #fn
+ Open FileName For Output As #fn
   Print #fn, bufStr
  Close #fn
 End Sub
 
-Public Function GetPSHeader(Filename As String) As tPSHeader
- Dim fn As Long, bufStr As String, PSHeader As tPSHeader, tPSC As tPSComment, _
-  Buffer As Long
+Public Function GetPSHeader(FileName As String) As tPSHeader
+ Dim fn As Long, bufStr As String, PSHeader As tPSHeader, Buffer As Long
  DoEvents
  fn = FreeFile
- If FileLen(Filename) = 0 Then
+ If FileLen(FileName) = 0 Then
   Exit Function
  End If
  Buffer = 5000
- If FileLen(Filename) < Buffer Then
-  Buffer = FileLen(Filename)
+ If FileLen(FileName) < Buffer Then
+  Buffer = FileLen(FileName)
  End If
- 
- Open Filename For Binary Access Read As fn
+
+ Open FileName For Binary Access Read As fn
  bufStr = Space$(Buffer)
  Get #fn, 1, bufStr
  Close #fn
- 
+
  With PSHeader
   .StartComment = GetPSComment(bufStr, "%!")
   .CreateFor = GetPSComment(bufStr, "%%For:")
@@ -116,34 +113,34 @@ Public Function GetPSHeader(Filename As String) As tPSHeader
  DoEvents
 End Function
 
-Public Sub PutPSHeader(Filename As String, PSHeader As tPSHeader)
+Public Sub PutPSHeader(FileName As String, PSHeader As tPSHeader)
  Dim fn As Long, bufStr As String
  fn = FreeFile
- Open Filename For Binary Access Read As fn
+ Open FileName For Binary Access Read As fn
  bufStr = Space$(LOF(fn))
  Get #fn, 1, bufStr
  Close #fn
  If PSHeader.StartComment.StartByte = -1 And PSHeader.EndComment.StartByte = -1 Then
   bufStr = GetPSHeaderString(PSHeader) & Chr(&HA) & bufStr
   fn = FreeFile
-  Open Filename For Output As #fn
+  Open FileName For Output As #fn
   Print #fn, bufStr
   Close #fn
   Exit Sub
  End If
  If PSHeader.StartComment.StartByte >= 0 And PSHeader.EndComment.StartByte >= 0 Then
-  bufStr = Mid(bufStr, 1, PSHeader.StartComment.StartByte - 1) & _
-   GetPSHeaderString(PSHeader) & Mid(bufStr, PSHeader.EndComment.EndByte + 1)
+  bufStr = Mid$(bufStr, 1, PSHeader.StartComment.StartByte - 1) & _
+   GetPSHeaderString(PSHeader) & Mid$(bufStr, PSHeader.EndComment.EndByte + 1)
   fn = FreeFile
-  Open Filename For Output As #fn
+  Open FileName For Output As #fn
   Print #fn, bufStr
   Close #fn
   Exit Sub
  End If
  If PSHeader.StartComment.StartByte >= 0 And PSHeader.EndComment.StartByte = -1 Then
-  bufStr = GetPSHeaderString(PSHeader) & Mid(bufStr, PSHeader.StartComment.EndByte + 1)
+  bufStr = GetPSHeaderString(PSHeader) & Mid$(bufStr, PSHeader.StartComment.EndByte + 1)
   fn = FreeFile
-  Open Filename For Output As #fn
+  Open FileName For Output As #fn
   Print #fn, bufStr
   Close #fn
   Exit Sub
@@ -151,7 +148,7 @@ Public Sub PutPSHeader(Filename As String, PSHeader As tPSHeader)
  If PSHeader.StartComment.StartByte = -1 And PSHeader.EndComment.StartByte >= 0 Then
   bufStr = GetPSHeaderString(PSHeader) & bufStr
   fn = FreeFile
-  Open Filename For Output As #fn
+  Open FileName For Output As #fn
   Print #fn, bufStr
   Close #fn
   Exit Sub
@@ -181,75 +178,115 @@ Private Function GetPSHeaderString(PSHeader As tPSHeader) As String
   Else
    tStr = "%!" & PSHeader.StartComment.Comment & Chr$(&HA)
  End If
-   
+
  tStr = tStr & "%%For:" & PSHeader.CreateFor.Comment & Chr$(&HA)
  tStr = tStr & "%%CreationDate:" & PSHeader.CreationDate.Comment & Chr$(&HA)
  tStr = tStr & "%%Creator:" & PSHeader.Creator.Comment & Chr$(&HA)
  tStr = tStr & "%%Title:" & PSHeader.Title.Comment & Chr$(&HA)
- 
+
  tStr = tStr & "%%EndComments" & Chr$(&HA)
  GetPSHeaderString = tStr
 End Function
 
 Public Function GetAutosaveFilename(Postscriptfile As String) As String
- On Local Error Resume Next
- Dim PSHeader As tPSHeader, Author As String, _
-  Title As String, Username As String, Computername As String, _
-  DateTime As String, tTime As Date, tStr As String, Filename As String, _
-  Pathname As String
- 
- tTime = Now
- DateTime = Year(tTime) & Month(tTime) & Day(tTime) & Hour(tTime) & Minute(tTime) & Second(tTime)
- 
-' Options = ReadOptions
- 
+ Dim FileName As String, Pathname As String
+
  If Options.UseAutosaveDirectory = 1 Then
    Pathname = Trim$(Options.AutosaveDirectory)
   Else
    Pathname = Trim$(Options.LastSaveDirectory)
  End If
- If Right(Pathname, 1) <> "\" Then
+ If Right$(Pathname, 1) <> "\" Then
   Pathname = Pathname & "\"
  End If
- 
+
+ FileName = GetSubstFilename(Postscriptfile, Options.AutosaveFilename)
+
+ Select Case Options.AutosaveFormat
+  Case 0: 'PDF
+   FileName = FileName & ".pdf"
+  Case 1: 'PNG
+   FileName = FileName & ".png"
+  Case 2: 'JPEG
+   FileName = FileName & ".jpg"
+  Case 3: 'BMP
+   FileName = FileName & ".bmp"
+  Case 4: 'PCX
+   FileName = FileName & ".pcx"
+  Case 5: 'TIFF
+   FileName = FileName & ".tif"
+  Case 6: 'PS
+   FileName = FileName & ".ps"
+  Case 7: 'EPS
+   FileName = FileName & ".eps"
+ End Select
+ GetAutosaveFilename = Pathname & ReplaceForbiddenChars(FileName)
+End Function
+
+Public Function GetSubstFilename(Postscriptfile As String, TokenFilename As String) As String
+ Dim PSHeader As tPSHeader, Author As String, _
+  Title As String, Username As String, Computername As String, i As Long, _
+  DateTime As String, FileName As String, tStr As String, tList() As String, _
+  Subst() As String
+
+ DateTime = Format$(Now, "yyyymmddhhMMss")
  PSHeader = GetPSHeader(Postscriptfile)
  If Options.UseStandardAuthor = 1 Then
    Author = Options.StandardAuthor
   Else
    Author = PSHeader.CreateFor.Comment
  End If
- Title = PSHeader.Title.Comment
+
+ If Options.FilenameSubstitutionsOnlyInTitle = 1 Then
+  tList = Split(Options.FilenameSubstitutions, "\")
+  Title = PSHeader.Title.Comment
+  If UBound(tList) >= 0 Then
+   For i = 0 To UBound(tList)
+    Subst = Split(tList(i), "|")
+    If UBound(Subst) = 0 Then
+      tStr = ""
+     Else
+      tStr = Subst(1)
+    End If
+    Title = Replace(Title, Subst(0), tStr, , , vbTextCompare)
+   Next i
+  End If
+ End If
+
  Username = GetUsername
  Computername = GetComputerName
- 
- 
- Filename = Options.AutosaveFilename
- Filename = Replace(Filename, "<DateTime>", DateTime, , , vbTextCompare)
- Filename = Replace(Filename, "<Computername>", Computername, , , vbTextCompare)
- Filename = Replace(Filename, "<Username>", Username, , , vbTextCompare)
- Filename = Replace(Filename, "<Title>", Title, , , vbTextCompare)
- Filename = Replace(Filename, "<Author>", Author, , , vbTextCompare)
- Select Case Options.AutosaveFormat
-  Case 0: 'PDF
-   Filename = Filename & ".pdf"
-  Case 1: 'PNG
-   Filename = Filename & ".png"
-  Case 2: 'JPEG
-   Filename = Filename & ".jpg"
-  Case 3: 'BMP
-   Filename = Filename & ".bmp"
-  Case 4: 'PCX
-   Filename = Filename & ".pcx"
-  Case 5: 'TIFF
-   Filename = Filename & ".tif"
- End Select
- GetAutosaveFilename = Pathname & ReplaceForbiddenChars(Filename)
+
+ FileName = TokenFilename
+ FileName = Replace(FileName, "<DateTime>", DateTime, , , vbTextCompare)
+ FileName = Replace(FileName, "<Computername>", Computername, , , vbTextCompare)
+ FileName = Replace(FileName, "<Username>", Username, , , vbTextCompare)
+ FileName = Replace(FileName, "<Title>", Title, , , vbTextCompare)
+ FileName = Replace(FileName, "<Author>", Author, , , vbTextCompare)
+
+ If Options.FilenameSubstitutionsOnlyInTitle = 0 Then
+  tList = Split(Options.FilenameSubstitutions, "\")
+  If UBound(tList) >= 0 Then
+   For i = 0 To UBound(tList)
+    Subst = Split(tList(i), "|")
+    If UBound(Subst) = 0 Then
+      tStr = ""
+     Else
+      tStr = Subst(1)
+    End If
+    FileName = Replace(FileName, Subst(0), tStr, , , vbTextCompare)
+   Next i
+  End If
+ End If
+ If Options.RemoveSpaces = 1 Then
+  FileName = Trim$(FileName)
+ End If
+ GetSubstFilename = FileName
 End Function
 
-Public Function CheckIfPSFile(ByVal Filename As String) As Boolean
+Public Function CheckIfPSFile(ByVal FileName As String) As Boolean
  Dim lHeader As tPSHeader
  CheckIfPSFile = False
- lHeader = GetPSHeader(Filename)
+ lHeader = GetPSHeader(FileName)
  If InStr(1, lHeader.StartComment.Comment, "PS", vbTextCompare) > 0 Then
   CheckIfPSFile = True
  End If

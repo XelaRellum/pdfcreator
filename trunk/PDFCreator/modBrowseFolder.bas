@@ -13,14 +13,14 @@ Attribute VB_Name = "modBrowseFolder"
 Option Explicit
 
 Public Type BrowseInfo
-     hwndOwner As Long
-     pIDLRoot As Long
-     pszDisplayName As Long
-     lpszTitle As Long
-     ulFlags As Long
-     lpfnCallback As Long
-     lParam As Long
-     iImage As Long
+ hwndOwner As Long
+ pIDLRoot As Long
+ pszDisplayName As Long
+ lpszTitle As Long
+ ulFlags As Long
+ lpfnCallback As Long
+ lParam As Long
+ iImage As Long
 End Type
 
 Public Const BIF_RETURNONLYFSDIRS = 1
@@ -32,34 +32,29 @@ Public Declare Function SHBrowseForFolder Lib "shell32" (lpbi As BrowseInfo) As 
 Public Declare Function SHGetPathFromIDList Lib "shell32" (ByVal pidList As Long, ByVal lpBuffer As String) As Long
 
 Public Function BrowseForFolder(hwndOwner As Long, sPrompt As String) As String
-     
-    'declare variables to be used
-     Dim iNull As Integer
-     Dim lpIDList As Long
-     Dim lResult As Long
-     Dim sPath As String
-     Dim udtBI As BrowseInfo
+ 'declare variables to be used
+ Dim iNull As Integer, lpIDList As Long, lResult As Long, sPath As String, _
+  udtBI As BrowseInfo
 
-    'initialise variables
-     With udtBI
-        .hwndOwner = hwndOwner
-        .lpszTitle = lstrcat(sPrompt, "")
-        .ulFlags = BIF_RETURNONLYFSDIRS
-     End With
+ 'initialise variables
+ With udtBI
+  .hwndOwner = hwndOwner
+  .lpszTitle = lstrcat(sPrompt, "")
+  .ulFlags = BIF_RETURNONLYFSDIRS
+ End With
 
-    'Call the browse for folder API
-     lpIDList = SHBrowseForFolder(udtBI)
-     
-    'get the resulting string path
-     If lpIDList Then
-        sPath = String$(MAX_PATH, 0)
-        lResult = SHGetPathFromIDList(lpIDList, sPath)
-        Call CoTaskMemFree(lpIDList)
-        iNull = InStr(sPath, vbNullChar)
-        If iNull Then sPath = Left$(sPath, iNull - 1)
-     End If
+ 'Call the browse for folder API
+ lpIDList = SHBrowseForFolder(udtBI)
 
-    'If cancel was pressed, sPath = ""
-     BrowseForFolder = sPath
+ 'get the resulting string path
+ If lpIDList Then
+  sPath = String$(MAX_PATH, 0)
+  lResult = SHGetPathFromIDList(lpIDList, sPath)
+  Call CoTaskMemFree(lpIDList)
+  iNull = InStr(sPath, vbNullChar)
+  If iNull Then sPath = Left$(sPath, iNull - 1)
+ End If
 
+ 'If cancel was pressed, sPath = ""
+ BrowseForFolder = sPath
 End Function
