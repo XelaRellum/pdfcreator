@@ -3,7 +3,7 @@ Option Explicit
 Option Base 0     ' Important assumption for this code
 
  'Fixed at this size for comfort. Could be bigger or made dynamic.
-Private Const ANYSIZE_ARRAY As Long = 100
+Private Const ANYSIZE_ARRAY As Long = 1000
 
  ' Security APIs
 Private Const TokenUser = 1
@@ -108,70 +108,83 @@ Private Declare Function CloseHandle Lib "Kernel32" (ByVal hObject As Long) As _
 ' Example:
 '   MsgBox "Current user is the Administrator: " & IsAdmin
 Public Function IsAdmin() As Boolean
-    Dim hProcessToken       As Long
-    Dim BufferSize          As Long
-    Dim psidAdmin           As Long
-    Dim lResult             As Long
-    Dim X                   As Integer
-    Dim tpTokens            As TOKEN_GROUPS
-    Dim tpSidAuth           As SID_IDENTIFIER_AUTHORITY
-    Dim llRetVal            As Long
-    Dim InfoBuffer()        As Long
-    Dim sids()              As SID_AND_ATTRIBUTES
-    Dim llCount             As Long
-    Dim llIdx               As Long
-    Dim llMax               As Long
-    IsAdmin = False
-    tpSidAuth.Value(5) = SECURITY_NT_AUTHORITY
-
-     ' Obtain current process token
-    If Not OpenThreadToken(GetCurrentThread(), TOKEN_QUERY, True, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     Dim hProcessToken       As Long
+50020     Dim BufferSize          As Long
+50030     Dim psidAdmin           As Long
+50040     Dim lResult             As Long
+50050     Dim X                   As Integer
+50060     Dim tpTokens            As TOKEN_GROUPS
+50070     Dim tpSidAuth           As SID_IDENTIFIER_AUTHORITY
+50080     Dim llRetVal            As Long
+50090     Dim InfoBuffer()        As Long
+50100     Dim sids()              As SID_AND_ATTRIBUTES
+50110     Dim llCount             As Long
+50120     Dim llIdx               As Long
+50130     Dim llMax               As Long
+50140     IsAdmin = False
+50150     tpSidAuth.Value(5) = SECURITY_NT_AUTHORITY
+50160
+50170      ' Obtain current process token
+50180     If Not OpenThreadToken(GetCurrentThread(), TOKEN_QUERY, True, _
         hProcessToken) Then
-        Call OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, hProcessToken)
-    End If
-    If hProcessToken Then
-
-         ' Deternine the buffer size required
-        llRetVal = GetTokenInformation(hProcessToken, ByVal TokenGroups, 0, 0, _
+50200         Call OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, hProcessToken)
+50210     End If
+50220     If hProcessToken Then
+50230
+50240          ' Deternine the buffer size required
+50250         llRetVal = GetTokenInformation(hProcessToken, ByVal TokenGroups, 0, 0, _
             BufferSize) ' Determine required buffer size
-        If BufferSize Then
-
-            ReDim InfoBuffer((BufferSize \ 4) - 1) As Long
-            ReDim sids(0 To tpTokens.GroupCount) As SID_AND_ATTRIBUTES
-             ' Retrieve your token information
-            lResult = GetTokenInformation(hProcessToken, ByVal TokenGroups, _
+50270         If BufferSize Then
+50280
+50290             ReDim InfoBuffer((BufferSize \ 4) - 1) As Long
+50300             ReDim sids(0 To tpTokens.GroupCount) As SID_AND_ATTRIBUTES
+50310              ' Retrieve your token information
+50320             lResult = GetTokenInformation(hProcessToken, ByVal TokenGroups, _
                 InfoBuffer(0), BufferSize, BufferSize)
-
-            If lResult <> 1 Then Exit Function
-
-             ' Move it from memory into the token structure
-            Call RtlMoveMemory(tpTokens, InfoBuffer(0), LenB(tpTokens))
-
-             ' Retreive the admins sid pointer
-            lResult = AllocateAndInitializeSid(tpSidAuth, 2, _
+50340
+50350             If lResult <> 1 Then Exit Function
+50360
+50370              ' Move it from memory into the token structure
+50380             Call RtlMoveMemory(tpTokens, InfoBuffer(0), LenB(tpTokens))
+50390
+50400              ' Retreive the admins sid pointer
+50410             lResult = AllocateAndInitializeSid(tpSidAuth, 2, _
                 SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, _
                 0, 0, 0, psidAdmin)
-            If lResult <> 1 Then Exit Function
-            If IsValidSid(psidAdmin) Then
-                For X = 0 To tpTokens.GroupCount
-
-                     ' Run through your token sid pointers
-                    If IsValidSid(tpTokens.Groups(X).Sid) Then
-
-                         ' Test for a match between the admin sid equalling
-                         ' your Sid 's
-                        If EqualSid(ByVal tpTokens.Groups(X).Sid, _
+50440             If lResult <> 1 Then Exit Function
+50450             If IsValidSid(psidAdmin) Then
+50460                 For X = 0 To tpTokens.GroupCount
+50470
+50480                      ' Run through your token sid pointers
+50490                     If IsValidSid(tpTokens.Groups(X).Sid) Then
+50500
+50510                          ' Test for a match between the admin sid equalling
+50520                          ' your Sid 's
+50530                         If EqualSid(ByVal tpTokens.Groups(X).Sid, _
                             ByVal psidAdmin) Then
-                            IsAdmin = True
-                            Exit For
-                        End If
-                    End If
-                Next
-            End If
-            If psidAdmin Then Call FreeSid(psidAdmin)
-        End If
-        Call CloseHandle(hProcessToken)
-    End If
+50550                             IsAdmin = True
+50560                             Exit For
+50570                         End If
+50580                     End If
+50590                 Next
+50600             End If
+50610             If psidAdmin Then Call FreeSid(psidAdmin)
+50620         End If
+50630         Call CloseHandle(hProcessToken)
+50640     End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modIsAdmin", "IsAdmin")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 '##################################

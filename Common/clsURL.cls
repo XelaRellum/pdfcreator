@@ -84,79 +84,196 @@ Private mvarURLPath As String
 Private mvarURLExtraInfo As String
 
 Public Property Get URLExtraInfo() As String
-URLExtraInfo = mvarURLExtraInfo
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 URLExtraInfo = mvarURLExtraInfo
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "URLExtraInfo [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get URLPath() As String
-URLPath = mvarURLPath
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 URLPath = mvarURLPath
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "URLPath [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get Password() As String
-Password = mvarPassword
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 Password = mvarPassword
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "Password [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get UserName() As String
-UserName = mvarUserName
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 UserName = mvarUserName
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "UserName [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get Port() As Long
-Port = mvarPort
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 Port = mvarPort
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "Port [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get HostName() As String
-HostName = mvarHostName
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 HostName = mvarHostName
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "HostName [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get Scheme() As String
-Scheme = mvarScheme
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 Scheme = mvarScheme
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "Scheme [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Property Get lScheme() As InetSchemes
-lScheme = mvarlScheme
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 lScheme = mvarlScheme
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "lScheme [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
 Public Function GetURL(ByVal URL As String) As Boolean
-Dim COMPONENTS As URL_COMPONENTS
-Dim Buffer As String
-Dim BufLen As Long
-Const BufSize = 1024
-
-GetURL = False
-
-Buffer = Space$(BufSize)
-BufLen = Len(Buffer)
-If InternetCanonicalizeUrl(URL, Buffer, BufLen, ICU_BROWSER_MODE) Then
-    URL = Left(Buffer, BufLen)
-    With COMPONENTS
-        .StructSize = Len(COMPONENTS)
-        .Scheme = Space$(INTERNET_MAX_SCHEME_LENGTH)
-        .SchemeLength = INTERNET_MAX_SCHEME_LENGTH
-        .nScheme = InternetSchemeUnknown
-        .HostName = Space$(INTERNET_MAX_HOST_NAME_LENGTH)
-        .HostNameLength = INTERNET_MAX_HOST_NAME_LENGTH
-        .nPort = 0
-        .UserName = Space$(INTERNET_MAX_USER_NAME_LENGTH)
-        .UserNameLength = INTERNET_MAX_USER_NAME_LENGTH
-        .Password = Space$(INTERNET_MAX_PASSWORD_LENGTH)
-        .PasswordLength = INTERNET_MAX_PASSWORD_LENGTH
-        .URLPath = Space$(INTERNET_MAX_PATH_LENGTH)
-        .UrlPathLength = INTERNET_MAX_PATH_LENGTH
-        .ExtraInfo = Space$(BufSize)
-        .ExtraInfoLength = BufSize
-    End With
-
-    GetURL = CBool(InternetCrackUrl(URL, Len(URL), ICU_ESCAPE, COMPONENTS))
-    With COMPONENTS
-        mvarScheme = Left$(.Scheme, .SchemeLength)
-        mvarlScheme = .nScheme
-        mvarHostName = Left$(.HostName, .HostNameLength)
-        mvarUserName = Left$(.UserName, .UserNameLength)
-        mvarPassword = Left$(.Password, .PasswordLength)
-        mvarURLPath = Left$(.URLPath, .UrlPathLength)
-        mvarURLExtraInfo = Left$(.ExtraInfo, .ExtraInfoLength)
-        mvarPort = .nPort
-    End With
-
-End If
-
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 Dim COMPONENTS As URL_COMPONENTS
+50020 Dim Buffer As String
+50030 Dim BufLen As Long
+50040 Const BufSize = 1024
+50050
+50060 GetURL = False
+50070
+50080 Buffer = Space$(BufSize)
+50090 BufLen = Len(Buffer)
+50100 If InternetCanonicalizeUrl(URL, Buffer, BufLen, ICU_BROWSER_MODE) Then
+50110     URL = Left(Buffer, BufLen)
+50120     With COMPONENTS
+50130         .StructSize = Len(COMPONENTS)
+50140         .Scheme = Space$(INTERNET_MAX_SCHEME_LENGTH)
+50150         .SchemeLength = INTERNET_MAX_SCHEME_LENGTH
+50160         .nScheme = InternetSchemeUnknown
+50170         .HostName = Space$(INTERNET_MAX_HOST_NAME_LENGTH)
+50180         .HostNameLength = INTERNET_MAX_HOST_NAME_LENGTH
+50190         .nPort = 0
+50200         .UserName = Space$(INTERNET_MAX_USER_NAME_LENGTH)
+50210         .UserNameLength = INTERNET_MAX_USER_NAME_LENGTH
+50220         .Password = Space$(INTERNET_MAX_PASSWORD_LENGTH)
+50230         .PasswordLength = INTERNET_MAX_PASSWORD_LENGTH
+50240         .URLPath = Space$(INTERNET_MAX_PATH_LENGTH)
+50250         .UrlPathLength = INTERNET_MAX_PATH_LENGTH
+50260         .ExtraInfo = Space$(BufSize)
+50270         .ExtraInfoLength = BufSize
+50280     End With
+50290
+50300     GetURL = CBool(InternetCrackUrl(URL, Len(URL), ICU_ESCAPE, COMPONENTS))
+50310     With COMPONENTS
+50320         mvarScheme = Left$(.Scheme, .SchemeLength)
+50330         mvarlScheme = .nScheme
+50340         mvarHostName = Left$(.HostName, .HostNameLength)
+50350         mvarUserName = Left$(.UserName, .UserNameLength)
+50360         mvarPassword = Left$(.Password, .PasswordLength)
+50370         mvarURLPath = Left$(.URLPath, .UrlPathLength)
+50380         mvarURLExtraInfo = Left$(.ExtraInfo, .ExtraInfoLength)
+50390         mvarPort = .nPort
+50400     End With
+50410
+50420 End If
+50430
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsURL", "GetURL")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function

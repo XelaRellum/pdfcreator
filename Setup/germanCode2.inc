@@ -1,1 +1,0 @@
-'Erzeuge &PDF mit PDFCreator'

@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -875,7 +875,7 @@ Private Sub CreateModOptions()
    Case UCase$("DirectoryJava")
     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(GetSpecialFolder(ssfSYSTEM))"
    Case UCase$("Printertemppath")
-    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath & ""PDFCreator\"""
+    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath "
    Case Else
     If Len(lsvOptions.ListItems(i).SubItems(4)) = 0 Then
       Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = vbNullString"
@@ -971,11 +971,11 @@ Private Sub CreateModOptions()
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = """""
      Print #fn, "  End If"
     Case UCase$("Printertemppath")
-     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, GetTempPath & ""PDFCreator\"")"
+     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, GetTempPath)"
      Print #fn, "  If DirExists(tStr) = True Then"
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
      Print #fn, "   Else"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath & ""PDFCreator\"""
+     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath"
      Print #fn, "  End If"
     Case Else
      If Len(lsvOptions.ListItems(i).SubItems(4)) > 0 Then

@@ -40,12 +40,14 @@ Begin VB.Form frmSwitchDefaultprinter
       Width           =   4455
    End
    Begin VB.Label lblSwitchDefaultprinter 
+      AutoSize        =   -1  'True
       Caption         =   "It is necessary to temporarily set PDFCreator as defaultprinter."
-      Height          =   495
+      Height          =   195
       Left            =   120
       TabIndex        =   0
       Top             =   120
-      Width           =   4455
+      Width           =   4545
+      WordWrap        =   -1  'True
    End
 End
 Attribute VB_Name = "frmSwitchDefaultprinter"
@@ -56,22 +58,48 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmd_Click(Index As Integer)
- Select Case Index
-  Case 0:
-   ChangeDefaultprinter = True
-   Options.NoConfirmMessageSwitchingDefaultprinter = chkAskAgain.Value
-   SaveOptions Options
-  Case 1:
- End Select
- Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case Index
+        Case 0:
+50030    ChangeDefaultprinter = True
+50040    Options.NoConfirmMessageSwitchingDefaultprinter = chkAskAgain.Value
+50050    SaveOptions Options
+50060   Case 1:
+50070  End Select
+50080  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmSwitchDefaultprinter", "cmd_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
- Caption = App.EXEName
- ChangeDefaultprinter = False
- With LanguageStrings
-  lblSwitchDefaultprinter.Caption = .MessagesMsg35
-  chkAskAgain.Caption = .MessagesMsg36
- End With
- chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Caption = App.EXEName
+50020  ChangeDefaultprinter = False
+50030  With LanguageStrings
+50040   lblSwitchDefaultprinter.Caption = .MessagesMsg35
+50050   chkAskAgain.Caption = .MessagesMsg36
+50060  End With
+50070  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmSwitchDefaultprinter", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub

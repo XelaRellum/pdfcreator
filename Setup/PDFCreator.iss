@@ -1,26 +1,21 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup 4.2.0, ISPP 1.2.0.277 and ISTool 4.1.8
+; Setup created with Inno Setup 5.0.4 Beta, ISPP 1.3.0.305 and ISTool 4.2.7
 ; Installation from Frank Heindörfer, Philip Chinery
 
 ;#define Test
-
+;#define CompileHelp
 #define SetupLZMACompressionMode "ultra"
 ;#define SetupLZMACompressionMode "fast"
 
-#define ProgLicense "GNU"
+#define ProgramLicense "GNU"
 
-;#define License ""
-#define License "AFPL"
-;#define License "GNU"
+#define IncludeGhostscript
+#define GhostscriptLicense "GPL"
 
-#Ifdef License
-#If (License=="AFPL")
- #define GhostscriptVersion "8.14"
- #define GhostscriptSetupString "AFPLGhostscript"
-#ENDIF
-#If (License=="GNU")
- #define GhostscriptVersion "7.06"
- #define GhostscriptSetupString "GNUGhostscript"
+#Ifdef IncludeGhostscript
+#If (GhostscriptLicense=="GPL")
+ #define GhostscriptVersion "8.15"
+ #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 #ENDIF
 
@@ -38,7 +33,6 @@
 #define SetupAppVersion      GetFileVersionVBExeLine("..\PDFCreator\PDFCreator.exe")
 #define PDFSpoolerVersion    GetFileVersionVBExe("..\PDFSpooler\PDFSpooler.exe")
 #define TransToolVersion     GetFileVersionVBExe("..\Transtool\Transtool.exe")
-#define UnInstVersion        GetFileVersionVBExe("..\UnInst\UnInst.exe")
 
 #define BetaVersion          ""
 
@@ -51,6 +45,7 @@
 #ENDIF
 
 #define AppID                "{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D}"
+#define AppIDStr             "{" + AppID
 #define AppIDreg             "{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D%7d"
 #define PDFCreatorExeID      "{A7332D94-E8FE-40B2-937F-8515FC0FF52F}"
 #define PDFCreatorExeIDstr   "{" + PDFCreatorExeID
@@ -58,8 +53,6 @@
 #define TransToolExeIDStr    "{" + TransToolExeID
 #define PDFSpoolerExeID      "{C387A397-047A-4354-AE89-F75B1B550257}"
 #define PDFSpoolerExeIDStr   "{" + PDFSpoolerExeID
-#define UnInstExeID          "{D95872D0-0DE7-4C01-859C-1BAE47FB1C6B}"
-#define UnInstExeIDStr       "{" + UnInstExeID
 #define UninstallID          AppID
 #define UninstallIDreg       AppIDreg
 #define UninstallIDStr       "{"+ UninstallID
@@ -79,29 +72,25 @@
 ;Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   -d
 ;Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe -d
 ;Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe -d
-;Name: .\upx\upx.exe; Parameters: ..\UnInst\UnInst.exe         -d
 
-;Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   --best --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe --best --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe --best --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\UnInst\UnInst.exe         --best --compress-icons=0 --crp-ms=999999
+Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   --best --compress-icons=0 --crp-ms=999999
+Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe --best --compress-icons=0 --crp-ms=999999
+Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe --best --compress-icons=0 --crp-ms=999999
 
 ;Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   -3 --compress-icons=0 --crp-ms=999999
 ;Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe -3 --compress-icons=0 --crp-ms=999999
 ;Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe -3 --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\UnInst\UnInst.exe         -3 --compress-icons=0 --crp-ms=999999
-
-Name: C:\Program Files\HTML Help Workshop\HHC.EXE; Parameters: ..\Help\PDFCreator.hhp
 #Endif
 
-[_ISTool]
-OutputExeFilename=C:\Dokumente und Einstellungen\HeindörferF\Eigene Dateien\VBasic\0 Projekte\PDFCreator\Setup\Installation\PDFCreator-0_8_0_AFPLGhostscript.exe
+#Ifdef CompileHelp
+Name: C:\Program Files\HTML Help Workshop\HHC.EXE; Parameters: ..\Help\PDFCreator.hhp
+#Endif
 
 [Setup]
 AllowNoIcons=false
 AlwaysRestart=false
 AppCopyright=© 2002 - 2004 Philip Chinery, Frank Heindörfer
-AppID={#AppID}
+AppID={#AppIDStr}
 AppName={#AppName}
 AppVerName={#AppName} {#AppVersionStr}
 AppPublisher=Philip Chinery, Frank Heindörfer
@@ -117,7 +106,7 @@ DisableDirPage=false
 DisableStartupPrompt=true
 InternalCompressLevel={#SetupLZMACompressionMode}
 LicenseFile=.\License\GNU Readme.rtf
-#Ifdef GhostscriptSetupString
+#Ifdef IncludeGhostscript
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_{#GhostscriptSetupString}
 #ELSE
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_WithoutGhostscript
@@ -128,10 +117,10 @@ ShowTasksTreeLines=false
 SolidCompression=true
 UsePreviousAppDir=true
 
-VersionInfoVersion=0.8.0
+VersionInfoVersion=0.8.1
 VersionInfoCompany=Frank Heindörfer, Philip Chinery
 VersionInfoDescription=PDFCreator is the easy way of creating PDFs.
-VersionInfoTextVersion=0.8.0
+VersionInfoTextVersion=0.8.1
 
 WizardImageFile=..\Pictures\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\PDFCreator.bmp
@@ -190,13 +179,13 @@ Source: ..\Printer\Redmon\redmon95.dll; DestDir: {sys}; Components: printer; Min
 
 Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: sharedfile regserver
 Source: ..\SystemFiles\MSCOMCTL.OCX; DestDir: {sys}; Components: program; Flags: sharedfile regserver
+Source: ..\SystemFiles\MSMAPI32.OCX; DestDir: {sys}; Components: program; Flags: sharedfile regserver promptifolder
 
 Source: ..\SystemFiles\STDOLE2.TLB; DestDir: {sys}; Components: program; Flags: sharedfile restartreplace uninsneveruninstall regtypelib
 
 ;Program files
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Components: program; Flags: comparetimestamp
-Source: ..\UnInst\UnInst.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
 Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {sys}; Components: printer; Flags: comparetimestamp
 
 ;ShFolder for older systems
@@ -209,7 +198,7 @@ Source: pdfenc\pdfenc.exe; DestDir: {app}; Flags: ignoreversion
 ;Help file
 Source: ..\Help\PDFCreator.chm; DestDir: {app}; Flags: ignoreversion
 
-;#If (License=="AFPL")
+;#If (GhostscriptLicense=="AFPL")
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 ;#ENDIF
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
@@ -255,18 +244,17 @@ Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {ap
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; IconIndex: 0; Flags: createonlyiffileexists
-;#If (License=="AFPL")
+;#If (GhostscriptLicense=="AFPL")
 Name: {group}\AFPL License; Filename: {app}\AFPL License.txt
 ;#ENDIF
-;#If (License=="GNU")
+;#If (GhostscriptLicense=="GNU")
 Name: {group}\GPL License; Filename: {app}\GNU License.txt
 ;#ENDIF
-Name: {group}\History; Filename: {app}\History.txt; IconIndex: 0; Flags: createonlyiffileexists
+Name: {group}\{cm:History}; Filename: {app}\History.txt; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; IconIndex: 0; Flags: createonlyiffileexists
-Name: {group}\Uninstall {#Appname}; Filename: {uninstallexe}; IconIndex: 0; Flags: createonlyiffileexists
-Name: {group}\PDFCreator Homepage; Filename: {app}\PDFCreator.url
-Name: {group}\PDFCreator Help; Filename: {app}\PDFCreator.chm; Languages: English
-Name: {group}\PDFCreator Hilfe; Filename: {app}\PDFCreator.chm; Languages: German
+Name: {group}\{cm:UninstallProgram,{#Appname}}; Filename: {uninstallexe}; IconIndex: 0; Flags: createonlyiffileexists
+Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url
+Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator.chm
 
 Name: {commondesktop}\PDFCreator; Filename: {app}\pdfcreator.exe; Tasks: desktopicon\common
 Name: {userdesktop}\PDFCreator; Filename: {app}\pdfcreator.exe; Tasks: desktopicon\user
@@ -276,10 +264,8 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\PDFCreator; Filenam
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: URL; String: http://www.pdfcreator.de.vu/; Components: program
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program
 
-Filename: {app}\Donate PDFCreator.url; Section: InternetShortcut; Key: URL; String: https://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program; Languages: English
-Filename: {app}\Donate PDFCreator.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program; Languages: English
-Filename: {app}\Unterstütze PDFCreator.url; Section: InternetShortcut; Key: URL; String: https://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program; Languages: German
-Filename: {app}\Unterstütze PDFCreator.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program; Languages: German
+Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: https://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program
+Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program
 
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: {userdocs}; Components: program
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: {userdocs}; Components: program
@@ -321,10 +307,8 @@ Root: HKCR; SubKey: .ps; ValueType: string; ValueData: PostScript; Flags: uninsd
 Root: HKCR; SubKey: PostScript; ValueType: string; ValueData: PostScript; Flags: uninsdeletekey; Tasks: fileassoc
 Root: HKCR; SubKey: PostScript\Shell\Open\Command; ValueType: string; ValueData: """{app}\PDFCreator.exe"" -IF""%1"""; Flags: uninsdeletevalue; Tasks: fileassoc
 Root: HKCR; Subkey: PostScript\DefaultIcon; ValueType: string; ValueData: {app}\PDFCreator.exe,0; Flags: uninsdeletevalue; Tasks: fileassoc
-Root: HKU; Subkey: .DEFAULT\Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: Create PDF and Bitmap Files with {#Appname}; Tasks: fileassoc; Languages: English; Check: IsAdmin()
-Root: HKU; Subkey: .DEFAULT\Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: Erzeuge PDF and Bilddateien mit {#Appname}; Tasks: fileassoc; Languages: German; Check: IsAdmin()
-Root: HKCU; Subkey: Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: Create PDF and Bitmap Files with {#Appname}; Tasks: fileassoc; Languages: English; Check: IsAdmin()
-Root: HKCU; Subkey: Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: Erzeuge PDF and Bilddateien mit {#Appname}; Tasks: fileassoc; Languages: German; Check: IsAdmin()
+Root: HKU; Subkey: .DEFAULT\Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: {cm:WinexplorerEntryCreate,{#Appname}}; Tasks: fileassoc; Check: IsAdminLoggedOn()
+Root: HKCU; Subkey: Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: {cm:WinexplorerEntryCreate,{#Appname}}; Tasks: fileassoc; Check: IsAdminLoggedOn()
 
 ;Windows Explorer popup-menu
 ;Root: HKCR; SubKey: *\shell\{#UninstallIDStr}; ValueType: string; ValueData: Create &PDF with PDFCreator; Flags: uninsdeletekey; Tasks: winexplorer; Languages: English
@@ -341,7 +325,7 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFSpooler
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: TranstoolVersion; Valuedata: {#TranstoolVersion}; Flags: uninsdeletevalue
 
 #Ifdef GhostscriptVersion
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptCopyright; Valuedata: {#License}; Flags: uninsdeletevalue; Tasks: ghostscript
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptCopyright; Valuedata: {#GhostscriptLicense}; Flags: uninsdeletevalue; Tasks: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptVersion; Valuedata: {#GhostscriptVersion}; Flags: uninsdeletevalue; Tasks: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Flags: uninsdeletevalue; Tasks: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Flags: uninsdeletevalue; Tasks: ghostscript
@@ -350,7 +334,6 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Ghostscrip
 
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: HelpLink; Valuedata: {#Homepage}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UninstallString; Valuedata: {app}\unins000.exe; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UnInstVersion; Valuedata: {#UnInstVersion}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Publisher; Valuedata: Frank Heindörfer, Philip Chinery; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printername; Valuedata: {code:GetPrintername|PDFCreator}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printerdrivername; Valuedata: {code:GetPrinterdrivername|PDFCreator}; Flags: uninsdeletevalue
@@ -368,44 +351,48 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup
 
 [Run]
 #IFNDEF Test
+;Uninstall old printer
 Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: -IPFALSE -NSTRUE; Flags: runminimized
-Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: -NSTRUE; Description: Install printerdriver; StatusMsg: Install PDFCreator printer; Flags: runminimized; Components: printer; Check: InstallCompletePrinter(); Languages: English
-Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: -NSTRUE; Description: Installiere Druckertreiber; StatusMsg: Installiere PDFCreator Drucker; Flags: runminimized; Components: printer; Check: InstallCompletePrinter(); Languages: German
+;Install new printer
+Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: -NSTRUE; Description: {cm:InstallPrinterdriver}; StatusMsg: {cm:InstallPrinter,{#AppName}}; Flags: runminimized; Components: printer; Check: InstallCompletePrinter()
 Filename: {app}\ShFolder.Exe; WorkingDir: {app}; Parameters: /Q:A; Flags: runminimized; Components: program; MinVersion: 4.0.950,4.0.1381; OnlyBelowVersion: 4.1.2222,5.0.2195
 #ENDIF
 
 [UninstallDelete]
 Name: {app}; Type: filesandordirs
+;User temp directory
 Name: {%tmp}\{#Appname}; Type: filesandordirs
 
 [UninstallRun]
 Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: -IPFALSE -ULTRUE -NSTRUE; Flags: runminimized
-Filename: {app}\UnInst.exe; WorkingDir: {app}; Parameters: -UITRUE; Components: program; Check: IsFullInstallation()
 
 [Languages]
 Name: English; MessagesFile: compiler:Default.isl
-Name: German; MessagesFile: German-2-4.1.8.isl
+Name: German; MessagesFile: compiler:Languages\German.isl
+
+[CustomMessages]
+#include "english.inc"
+#include "german.inc"
 
 [Types]
-Name: full; Description: Full installation; Check: CanPrinterInstall(); Languages: English
-Name: full; Description: Komplette Installation; Check: CanPrinterInstall(); Languages: German
-
-Name: compact; Description: Compact installation; Check: CanPrinterInstall(); Languages: English
-Name: compact; Description: Minimale Installation; Check: CanPrinterInstall(); Languages: German
-
-Name: custom; Description: Custom installation; Languages: English; Flags: iscustom
-Name: custom; Description: Benutzerdefinierte Installation; Languages: German; Flags: iscustom
+Name: full; Description: {cm:FullInstallation}; Check: CanPrinterInstall()
+Name: compact; Description: {cm:CompactInstallation}; Check: CanPrinterInstall()
+Name: custom; Description: {cm:CustomInstallation}; Flags: iscustom
 
 [Components]
-Name: program; Description: Program Files; Types: full compact custom; Flags: fixed; Languages: English
-Name: program; Description: Programm Dateien; Types: full compact custom; Flags: fixed; Languages: German
-
-Name: printer; Description: Printer; Types: full custom; Check: CanPrinterInstall(); Flags: restart; Languages: English
-Name: printer; Description: Drucker; Types: full custom; Check: CanPrinterInstall(); Flags: restart; Languages: German
+Name: program; Description: {cm:Programfiles}; Types: full compact custom; Flags: fixed
+Name: printer; Description: Printer; Types: full custom; Check: CanPrinterInstall(); Flags: restart
 
 [Tasks]
-#include "englishTasks.inc"
-#include "germanTasks.inc"
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
+Name: desktopicon\common; Description: {cm:ForAllUser}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive
+Name: desktopicon\user; Description: {cm:ForTheCurrentUserOnly}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive unchecked
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; Check: IExplorerVersionGreater3
+#Ifdef GhostscriptVersion
+Name: ghostscript; Description: {cm:InstallGhostscript,{#GhostscriptLicense},{#GhostscriptVersion}}; GroupDescription: {cm:OtherTasks}; Flags: exclusive
+#ENDIF
+Name: fileassoc; Description: {cm:AssocFileExtension,PDFCreator,.ps}; GroupDescription: {cm:OtherTasks}; Flags: unchecked
+Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:OtherTasks}
 
 [Code]
 type
@@ -506,7 +493,7 @@ function EnumPrinters(flags:LongInt; pName:String; Level:LongInt; lpbPrinters:St
 
 var progTitel, progHandle: TArrayOfString;
     msg : TAStr; FullInstallation : boolean;
-    Printername, Printerdrivername, Printerportname, Printermonitorname : String;
+    Printername, Printerdrivername, Printerportname, Printermonitorname, LogFile, PrintSystem : String;
 
 function Shortname(Default:String):String;
 begin
@@ -554,22 +541,11 @@ begin
  Result:=ActiveLanguage();
 end;
 
-function IsAdmin(Default:String):Boolean;
-begin
- Result:=IsAdminLoggedOn();
-end;
-
 procedure IntegrateWinexplorer;
  var res: Boolean; keys: TArrayofString;i,c :LongInt;s1,s2,s3:String;
 begin
- If ActiveLanguage()='English' then begin
-  s3:=
-  #include "englishCode2.inc"
- end;
- If ActiveLanguage()='German' then begin
-  s3:=
-  #include "germanCode2.inc"
- end;
+ s3:=ExpandConstant('{cm:WinexplorerEntryCreate}');
+ StringChange(s3,'%1',ExpandConstant('{#Appname}'));
  res:=RegGetSubkeyNames(HKEY_CLASSES_ROOT,'',keys);
  If res=true then begin
   c:=GetArrayLength(keys);
@@ -799,13 +775,12 @@ end;
 
 function PrinterDriverDirectory(Default:String):String;
 var sb: LongInt;
-	PrDrvDir : String; LogFile: String;
+	PrDrvDir : String;
 	res: Integer;
 begin
  res:=GetPrinterDriverDirectory(chr(0),chr(0), 1,chr(0), 0, sb);
  PrDrvDir := StringOfChar(' ', sb+1 );
  If Default='Log' then begin
-  LogFile:=ExpandConstant('{app}')+'\SetupLog.txt';
   SaveStringToFile(Logfile, 'Printerdriver-Directory:'+#13#10, True)
  end;
  res:=GetPrinterDriverDirectory(chr(0),chr(0), 1, PrDrvDir, sb, sb) ;
@@ -880,8 +855,52 @@ begin
  end;
 end;
 
+procedure SaveInstallInformations;
+begin
+ SaveStringToFile(LogFile, '--------------------------------------'#13#10#13#10, True);
+ SaveStringToFile(LogFile, 'Windowsversion: '+GetWindowsVersionString+#13#10, True);
+ SaveStringToFile(LogFile, 'WinDir: '+GetWinDir+#13#10, True);
+ SaveStringToFile(LogFile, 'SystemDir: '+GetSystemDir+#13#10, True);
+ SaveStringToFile(LogFile, 'TempDir: '+GetTempDir+#13#10, True);
+ SaveStringToFile(LogFile, 'CurrentDir: '+GetCurrentDir+#13#10, True);
+ SaveStringToFile(LogFile, 'Computername: '+GetComputernameString+#13#10, True);
+ SaveStringToFile(LogFile, 'Username: '+GetUsernameString+#13#10, True);
+ SaveStringToFile(LogFile, 'UILanguage: '+IntToStr(GetUILanguage)+#13#10, True);
+ SaveStringToFile(LogFile, 'Internet Explorer version: '+GetIExplorerVersion+#13#10, True);
+ SaveStringToFile(LogFile, 'Path: '+Getenv('Path')+#13#10, True);
+end;
+
+procedure SavePrinterInformations;
+var
+ i,c:Longint; pi:Array of String;
+begin
+ c:=GetPorts(pi);
+ SaveStringToFile(LogFile, 'Printerports ['+IntToStr(c)+']:'#13#10, True);
+ for i:=1 to c do
+  SaveStringToFile(LogFile,' '+pi[i-1]+#13#10, True);
+ SaveStringToFile(LogFile, #13#10, True);
+
+ c:=GetMonitors(pi);
+ SaveStringToFile(LogFile, 'Printermonitors ['+IntToStr(c)+']:'#13#10, True);
+ for i:=1 to c do
+  SaveStringToFile(LogFile,' '+pi[i-1]+#13#10, True);
+ SaveStringToFile(LogFile, #13#10, True);
+
+ c:=GetPrinterdrivers(pi);
+ SaveStringToFile(LogFile, 'Printerdrivers ['+IntToStr(c)+']:'#13#10, True);
+ for i:=1 to c do
+  SaveStringToFile(LogFile,' '+pi[i-1]+#13#10, True);
+ SaveStringToFile(LogFile, #13#10, True);
+
+ c:=GetPrinters(pi);
+ SaveStringToFile(LogFile, 'Printers ['+IntToStr(c)+']:'#13#10, True);
+ for i:=1 to c do
+  SaveStringToFile(LogFile,' '+pi[i-1]+#13#10, True);
+ SaveStringToFile(LogFile, #13#10, True);
+end;
+
 procedure InstallMonitor;
-var M2:TMonitorInfo2; res:LongInt; LogFile: String;
+var M2:TMonitorInfo2; res:LongInt;
 begin
  M2.pName:=GetPrintermonitorname('PDFCreator');
  If UsingWinNT=True then Begin
@@ -892,7 +911,6 @@ begin
    M2.pDLLName:='pdfcmn95.dll'
  end;
 
- LogFile:=ExpandConstant('{app}') + '\SetupLog.txt';
  SaveStringToFile(LogFile, 'InstallMonitor:' + #13#10, True)
  SaveStringToFile(LogFile, ' Monitorname : ' + M2.pName  + #13#10, True)
 
@@ -901,6 +919,8 @@ begin
    SaveStringToFile(LogFile, ' Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
   else
    SaveStringToFile(LogFile, ' Result: Success' + #13#10#13#10, True);
+ If UsingWinNT=false then
+  SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
 end;
 
 procedure InstallPort;
@@ -920,10 +940,12 @@ begin
  res:=RegWriteDWordValue(HKLM,SubKeyName,'Printerror',0);
  res:=RegWriteDWordValue(HKLM,SubKeyName,'Runuser',0);
  res:=RegWriteDWordValue(HKLM,SubKeyName,'ShowWindow',0);
+ If UsingWinNT=false then
+  SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
 end;
 
 procedure InstallDriver;
-var DI3:TDriverInfo3; res:LongInt; PrDrDir:String; LogFile: String;
+var DI3:TDriverInfo3; res:LongInt; PrDrDir:String;
 begin
  PrDrDir:=PrinterDriverDirectory(ExpandConstant('{sys}') + '\spool\drivers\w32x86') + '\';
  DI3.pName :=GetPrinterdrivername('PDFCreator');
@@ -963,7 +985,6 @@ begin
  DI3.pDefaultDataType :='RAW';
  DI3.pMonitorName :='';
 
- LogFile:=ExpandConstant('{app}') + '\SetupLog.txt';
  SaveStringToFile(LogFile, 'InstallDriver:' + #13#10, True)
  SaveStringToFile(LogFile, ' Drivername : ' + DI3.pName  + #13#10, True)
 
@@ -973,11 +994,13 @@ begin
    SaveStringToFile(LogFile, ' Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
   else
    SaveStringToFile(LogFile, ' Result: Success' + #13#10#13#10, True);
+ If UsingWinNT=false then
+  SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
 end;
 
 procedure InstallPrinter;
 var
- P2: TPrinterInfo2; res: LongInt; LogFile: String; Printers : Array of String; cPrinters:LongInt;
+ P2: TPrinterInfo2; res: LongInt; Printers : Array of String; cPrinters:LongInt;
 begin
  P2.pPrinterName := GetPrintername('PDFCreator');
  P2.pDriverName := GetPrinterdrivername('PDFCreator');
@@ -996,7 +1019,6 @@ begin
   else
    P2.Attributes :=0;
 
- LogFile:=ExpandConstant('{app}') + '\SetupLog.txt';
  SaveStringToFile(LogFile, 'InstallPrinter:' + #13#10, True)
  SaveStringToFile(LogFile, ' Printername: ' + P2.pPrintername + #13#10, True)
  SaveStringToFile(LogFile, ' Drivername : ' + P2.pDrivername  + #13#10, True)
@@ -1013,9 +1035,11 @@ begin
    end
   end else
    SaveStringToFile(LogFile, ' Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10, True);
+ If UsingWinNT=false then
+  SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
 end;
 
-function CanPrinterInstall(Default: string): boolean;
+function CanPrinterInstall(): boolean;
 begin
  If IsAdminLoggedOn=False then
    Result:=False
@@ -1026,74 +1050,59 @@ begin
      Result:=true;
 end;
 
-function InstallCompletePrinter(Default: string): boolean;
-var s:String; Ports, Monitors, Drivers, Printers : Array of String;
+function InstallCompletePrinter(): boolean;
+var s : String; Ports, Monitors, Drivers, Printers : Array of String;
 begin
- s:='windows';
+ PrintSystem:='windows';
 #IFNDEF Test
+ SaveStringToFile(LogFile, 'Printerstatus before installing:' + #13#10, True)
+ SavePrinterInformations
  PrinterDriverDirectory('Log');
  GetPorts(Ports);
 
  InstallMonitor;
- If UsingWinNT=false then
-  SendMessage(65535, 26, 0, CastStringToInteger(s)); // Ini-Refresh !!! Important for Win9x/Me
+
  GetMonitors(Monitors);
 
  InstallPort;
- If UsingWinNT=false then
-  SendMessage(65535, 26, 0, CastStringToInteger(s)); // Ini-Refresh !!! Important for Win9x/Me
+
  GetMonitors(Monitors);
  GetPorts(Ports);
-
  InstallDriver;
- If UsingWinNT=false then
-  SendMessage(65535, 26, 0, CastStringToInteger(s)); // Ini-Refresh !!! Important for Win9x/Me
+
  GetPrinterdrivers(Drivers);
 
  InstallPrinter;
- If UsingWinNT=false then
-  SendMessage(65535, 26, 0, CastStringToInteger(s)); // Ini-Refresh !!! Important for Win9x/Me
- If UsingWinNT=false then begin
-   s:='SYSTEM\CurrentControlSet\Control\Print\Printers\'+GetPrintername('PDFCreator');
-   If RegKeyExists(HKLM,s)=true then;
-    RegWriteBinaryValue(HKLM,s,'Default DevMode',
-     #include "Win9xPrinterRegData.inc"
-    )
-  end else begin
-   s:='SYSTEM\CurrentControlSet\Control\Print\Printers\'+GetPrintername('PDFCreator')+'\PrinterDriverData';
-   If RegKeyExists(HKLM,s)=true then begin
+
+ If UsingWinNT=true then begin
+  s:='SYSTEM\CurrentControlSet\Control\Print\Printers\'+GetPrintername('PDFCreator')+'\PrinterDriverData';
+  If RegKeyExists(HKLM,s)=true then
     RegWriteDWordValue(HKLM,s,'FreeMem',32767);
-    RegWriteDWordValue(HKLM,s,'Protocol',16);
-    RegWriteBinaryValue(HKLM,s,'Printerdata',
-     #include "WinNTPrinterRegData.inc"
-     )
-   end;
  end;
  GetPrinters(Printers);
+
+ SaveStringToFile(LogFile, #13#10+'Printerstatus after installing:' + #13#10, True)
+ SavePrinterInformations
+
  s:=LowerCase(WizardSelectedTasks(false));
  if Pos('winexplorer',s)>0 then
   IntegrateWinexplorer;
+
 #ENDIF
  Result:=True;
 end;
 
-function ScriptDlgPages(CurPage: Integer; BackClicked: Boolean): Boolean;
-begin
- if (not BackClicked and (CurPage = wpReady)) or (BackClicked and (CurPage = wpFinished)) then begin
-  GetActivePDFLoaders;
-  KillActivePDFLoaders;
- end;
- Result := True;
-end;
-
 function NextButtonClick(CurPage: Integer): Boolean;
 begin
- Result := ScriptDlgPages(CurPage, False);
-end;
-
-function BackButtonClick(CurPage: Integer): Boolean;
-begin
- Result := ScriptDlgPages(CurPage, True);
+// MsgBox(IntToStr(CurPage),mbInformation,MB_OK)
+ if CurPage=wpReady then begin
+  GetActivePDFLoaders;
+  KillActivePDFLoaders;
+  LogFile:=ExpandConstant('{app}')+'\SetupLog.txt';
+ end;
+ if CurPage=wpFinished then
+  SaveInstallInformations;
+ Result := True;
 end;
 
 function GetInstalledVersion(): String;
@@ -1124,14 +1133,44 @@ begin
 end;
 
 procedure InitMessages();
+var
+ tmsg:String;
 begin
- setArraylength(msg,12);
- If ActiveLanguage()='English' then begin
-  #include "englishCode1.inc"
- end;
- If ActiveLanguage()='German' then begin
-  #include "germanCode1.inc"
- end;
+ setArraylength(msg,11);
+ Msg[0]:=ExpandConstant('{cm:NoAdmin}');
+
+ tmsg:=ExpandConstant('{cm:OldVersion}');
+ StringChange(tmsg,'%1',GetInstalledVersion);
+ StringChange(tmsg,'%2',ExpandConstant('{#AppVersionStr}'));
+ Msg[1]:=tmsg;
+
+ Msg[2]:=ExpandConstant('{cm:NoNoAdmin}');
+ Msg[3]:=ExpandConstant('{cm:Update}');
+ Msg[4]:=ExpandConstant('{cm:AlreadyInstalled}');
+
+ tmsg:=ExpandConstant('{cm:NewerVersion}');
+ StringChange(tmsg,'%1',GetInstalledVersion);
+ StringChange(tmsg,'%2',ExpandConstant('{#AppVersionStr}'));
+ Msg[5]:=tmsg;
+
+ Msg[6]:=ExpandConstant('{cm:AlreadyInstalledNoUpdate}');
+
+ tmsg:=ExpandConstant('{cm:ProgramIsRunning}');
+ StringChange(tmsg,'%1','PDFCreator.exe');
+ Msg[7]:=tmsg;
+
+ tmsg:=ExpandConstant('{cm:ProgramIsRunning}');
+ StringChange(tmsg,'%1','Transtool.exe');
+ Msg[8]:=tmsg;
+
+ tmsg:=ExpandConstant('{cm:ProgramIsRunning}');
+ StringChange(tmsg,'%1','PDFSpooler.exe');
+ Msg[9]:=tmsg;
+
+ tmsg:=ExpandConstant('{cm:NoUpdate}');
+ StringChange(tmsg,'%1',GetInstalledVersionBeta);
+ StringChange(tmsg,'%2',ExpandConstant('{#AppVersionStr}'));
+ Msg[10]:=tmsg;
 end;
 
 procedure DecodeVBVersion( verstr: String; var verint: TAInt);
@@ -1219,7 +1258,7 @@ begin
       Result:=1;
 end;
 
-function IsFullInstallation(Default:String): Boolean;
+function IsFullInstallation(): Boolean;
 begin
  result:=FullInstallation;
 end;
@@ -1227,13 +1266,12 @@ end;
 function InitializeSetup(): Boolean;
 var
 #ifdef UpdateIsPossible
- cv,a:Longint; tmsg:String; verySilent:boolean;
+ cv,a:Longint;  verySilent:boolean;
 #else
  a:Longint; verySilent:boolean;
 #endif
 begin
  InitMessages;
-
  verySilent:=false;
  if CheckForMutexes(ExpandConstant('{#PDFCreatorExeIDStr}'))=true then begin
   Repeat
@@ -1251,12 +1289,6 @@ begin
   Repeat
    a:=msgbox(msg[9],mbInformation, MB_OKCancel);
   until (a=IDCancel) or (CheckForMutexes(ExpandConstant('{#PDFSpoolerExeIDStr}'))=false);
-  if a=IDCancel then exit;
- end;
- if CheckForMutexes(ExpandConstant('{#UnInstExeIDStr}'))=true then begin
-  Repeat
-   a:=msgbox(msg[10],mbInformation, MB_OKCancel);
-  until (a=IDCancel) or (CheckForMutexes(ExpandConstant('{#UnInstExeIDStr}'))=false);
   if a=IDCancel then exit;
  end;
  for a:=1 to Paramcount do begin
@@ -1335,7 +1367,64 @@ begin
 #endif
 end;
 
+#Ifdef IncludeGhostscript
 procedure InitializeWizard();
 begin
- WizardForm.TASKSLIST.Height := WizardForm.TASKSLIST.Height + 3;
+ WizardForm.TASKSLIST.Height := WizardForm.TASKSLIST.Height + 6;
+end;
+#endif
+
+procedure RemoveProgramSettings();
+var
+ iniPath:String;
+begin
+ iniPath:=ExpandConstant('{userappdata}')+'\PDFCreator';
+ DelTree(iniPath,true,true,true);
+end;
+
+procedure RemoveExplorerIntegretation();
+var
+ keys: TArrayOfString; i :LongInt;tStr:String;
+begin
+ if RegGetSubkeyNames(HKEY_CLASSES_ROOT, '', keys) then begin
+  for i:=0 to GetArrayLength(keys)-1 do begin
+   tStr:=keys[i]+'\shell\'+ExpandConstant('{#UninstallIDStr}');
+   if RegKeyExists(HKEY_CLASSES_ROOT,tStr) then begin
+    RegDeleteKeyIncludingSubkeys(HKEY_CLASSES_ROOT,tStr);
+   end;
+  end;
+ end;
+end;
+
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+ tStr :String;i:LongInt; saveoptions, silent, verysilent:boolean;
+begin
+  case CurUninstallStep of
+    usUninstall:
+      begin
+       tStr:=ExpandConstant('{app}')+'\Unload.tmp';
+       if fileexists(tStr)=true then
+        SaveStringToFile(tStr, '', True);
+       case LowerCase(ActiveLanguage) of
+         'german': tStr:='Sollen alle Programmeinstellungen gelöscht werden?';
+        else
+                   tStr:='Delete all program settings?';
+       end;
+       saveoptions:=false; silent:=false; verysilent:=false;
+       for i:=1 to paramcount do begin
+        if lowercase(ParamStr(i))='/saveoptions' then
+         saveoptions:=true;
+        if lowercase(ParamStr(i))='/silent' then
+         silent:=true;
+        if lowercase(ParamStr(i))='/verysilent' then
+         verysilent:=true;
+       end;
+       if saveoptions=false then
+        if (silent=false) and (verysilent=false) then
+         if MsgBox(tStr, mbConfirmation, MB_YESNO) = IDYES then
+          RemoveProgramSettings;
+       RemoveExplorerIntegretation;
+      end;
+  end;
 end;

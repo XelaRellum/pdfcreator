@@ -56,6 +56,11 @@
 		<param name="Local" value="html\whatsnew.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Command Prompt">
+		<param name="Name" value="Create a PDF">
+		<param name="Local" value="html\createpdf.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Compression">
 		<param name="Name" value="PDF Settings: Compression">
 		<param name="Local" value="html\pdfcompression.htm">
@@ -221,9 +226,30 @@
 		<param name="Local" value="html\pdfsecurity.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Shell">
+		<param name="Name" value="Create a PDF">
+		<param name="Local" value="html\createpdf.htm">
+		<param name="Name" value="General Settings">
+		<param name="Local" value="html\generalsettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="TIFF">
 		<param name="Name" value="TIFF Settings">
 		<param name="Local" value="html\tiffsettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Translation Tool">
+		<param name="Name" value="What is a Language File">
+		<param name="Local" value="html\whatislang.htm">
+		<param name="Name" value="Create a Language File">
+		<param name="Local" value="html\createlang.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Transtool">
+		<param name="Name" value="What is a Language File">
+		<param name="Local" value="html\whatislang.htm">
+		<param name="Name" value="Create a Language File">
+		<param name="Local" value="html\createlang.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Web Site">

@@ -73,6 +73,10 @@
 				<param name="Local" value="html\generalsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Ghostscipt Settings">
+				<param name="Local" value="html\ghostscriptsettings.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Document Properties">
 				<param name="Local" value="html\docproperties.htm">
 				</OBJECT>
@@ -157,6 +161,10 @@
 		<param name="Name" value="The Translation Tool">
 		</OBJECT>
 	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Introduction">
+			<param name="Local" value="html\transtool.html">
+			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="What is a Language File?">
 			<param name="Local" value="html\whatislang.htm">
