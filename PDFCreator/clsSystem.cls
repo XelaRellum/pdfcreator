@@ -90,12 +90,12 @@ Public Enum Systemfont
  Icon = 5
 End Enum
 
-Public Function GetSystemFont(frm As Form, Font As Systemfont) As Collection
+Public Function GetSystemFont(Frm As Form, Font As Systemfont) As Collection
  Dim NCM As NONCLIENTMETRICS, ITLF As LOGFONT, res As Long, FName As String, _
  sFont(2) As String, FSize As Long, tNMLF As NMLOGFONT
- 
+
  Set GetSystemFont = New Collection
- 
+
  NCM.cbSize = 340
  res = SystemParametersInfo(SPI_GETNONCLIENTMETRICS, 0, NCM, 0)
  If res <> 0 Then
@@ -105,7 +105,7 @@ Public Function GetSystemFont(frm As Form, Font As Systemfont) As Collection
    FName = Left$(FName, InStr(1, FName, Chr$(0)) - 1)
    FSize = ITLF.lfHeight
    If FSize < 1 Then
-    FSize = Abs((72 / GetDeviceCaps(frm.hDC, LOGPIXELSY)) * FSize)
+    FSize = Abs((72 / GetDeviceCaps(Frm.hDC, LOGPIXELSY)) * FSize)
    End If
    sFont(0) = FName: sFont(1) = FSize: sFont(2) = ITLF.lfCharSet
    GetSystemFont.Add sFont
@@ -127,7 +127,7 @@ Public Function GetSystemFont(frm As Form, Font As Systemfont) As Collection
   FName = Left$(FName, InStr(1, FName, Chr$(0)) - 1)
   FSize = tNMLF.lfHeight
   If FSize < 1 Then
-   FSize = Abs((72 / GetDeviceCaps(frm.hDC, LOGPIXELSY)) * FSize)
+   FSize = Abs((72 / GetDeviceCaps(Frm.hDC, LOGPIXELSY)) * FSize)
   End If
   sFont(0) = FName: sFont(1) = FSize: sFont(2) = tNMLF.lfCharSet
   GetSystemFont.Add sFont

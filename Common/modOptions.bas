@@ -1,7 +1,7 @@
 Attribute VB_Name = "modOptions"
 Option Explicit
 
-' Module automatically generated with LanguagesTool from Frank Heindörfer, Philip Chinery
+' Module automatically generated with LanguagesTool from Frank Heindörfer
 ' 2003
 ' Email: thesmilyface@users.sourceforge.net
 
@@ -13,6 +13,12 @@ Public Type tOptions
  AutosaveFormat As Long
  BitmapResolution As Long
  BMPColorscount As Long
+ DirectoryGhostscriptBinaries As String
+ DirectoryGhostscriptFonts As String
+ DirectoryGhostscriptLibraries As String
+ EPSLanguageLevel As Long
+ FilenameSubstitutions As String
+ FilenameSubstitutionsOnlyInTitle As Long
  JPEGColorscount As Long
  JPEGQuality As Long
  Language As String
@@ -20,6 +26,14 @@ Public Type tOptions
  Logging As Long
  LogLines As Long
  PCXColorscount As Long
+ PDFAllowAssembly As Long
+ PDFAllowCopy As Long
+ PDFAllowDegradedPrinting As Long
+ PDFAllowFillIn As Long
+ PDFAllowModifyAnnotations As Long
+ PDFAllowModifyContents As Long
+ PDFAllowPrinting As Long
+ PDFAllowScreenReaders As Long
  PDFColorsCMYKToRGB As Long
  PDFColorsColorModel As Long
  PDFColorsPreserveHalftone As Long
@@ -49,11 +63,21 @@ Public Type tOptions
  PDFGeneralCompatibility As Long
  PDFGeneralOverprint As Long
  PDFGeneralResolution As Long
+ PDFHighEncryption As Long
+ PDFLowEncryption As Long
+ PDFOwnerPass As Long
+ PDFUserPass As Long
+ PDFUseSecurity As Long
  PNGColorscount As Long
  PrinterStop As Long
+ PrinterTemppath As String
+ ProcessPriority As Long
  ProgramFont As String
  ProgramFontCharset As Long
  ProgramFontSize As Long
+ PSLanguageLevel As Long
+ RemoveSpaces As Long
+ SaveFilename As String
  StandardAuthor As String
  StartStandardProgram As Long
  TIFFColorscount As Long
@@ -66,11 +90,17 @@ End Type
 Public Function StandardOptions() As tOptions
  Dim myOptions As tOptions
  With myOptions
-  .AutosaveDirectory = ""
+  .AutosaveDirectory = vbNullString
   .AutosaveFilename = "<DateTime>"
   .AutosaveFormat = "0"
   .BitmapResolution = "150"
-  .BMPColorscount = "0"
+  .BMPColorscount = "1"
+  .DirectoryGhostscriptBinaries = App.Path & "\"
+  .DirectoryGhostscriptFonts = App.Path & "\fonts\"
+  .DirectoryGhostscriptLibraries = App.Path & "\lib\"
+  .EPSLanguageLevel = "2"
+  .FilenameSubstitutions = " Microsoft Word - \.doc"
+  .FilenameSubstitutionsOnlyInTitle = "1"
   .JPEGColorscount = "0"
   .JPEGQuality = "75"
   .Language = "english"
@@ -78,6 +108,14 @@ Public Function StandardOptions() As tOptions
   .Logging = "0"
   .LogLines = "100"
   .PCXColorscount = "0"
+  .PDFAllowAssembly = "0"
+  .PDFAllowCopy = "0"
+  .PDFAllowDegradedPrinting = "0"
+  .PDFAllowFillIn = "0"
+  .PDFAllowModifyAnnotations = "0"
+  .PDFAllowModifyContents = "0"
+  .PDFAllowPrinting = "0"
+  .PDFAllowScreenReaders = "0"
   .PDFColorsCMYKToRGB = "1"
   .PDFColorsColorModel = "1"
   .PDFColorsPreserveHalftone = "0"
@@ -107,12 +145,22 @@ Public Function StandardOptions() As tOptions
   .PDFGeneralCompatibility = "1"
   .PDFGeneralOverprint = "0"
   .PDFGeneralResolution = "600"
+  .PDFHighEncryption = "0"
+  .PDFLowEncryption = "1"
+  .PDFOwnerPass = "0"
+  .PDFUserPass = "0"
+  .PDFUseSecurity = "0"
   .PNGColorscount = "0"
   .PrinterStop = "0"
+  .PrinterTemppath = GetPDFCreatorTempfolder
+  .ProcessPriority = "1"
   .ProgramFont = "MS Sans Serif"
   .ProgramFontCharset = "0"
   .ProgramFontSize = "8"
-  .StandardAuthor = ""
+  .PSLanguageLevel = "2"
+  .RemoveSpaces = "1"
+  .SaveFilename = "<Title>"
+  .StandardAuthor = vbNullString
   .StartStandardProgram = "1"
   .TIFFColorscount = "0"
   .UseAutosave = "0"
@@ -124,7 +172,6 @@ Public Function StandardOptions() As tOptions
 End Function
 
 Public Function ReadOptions() As tOptions
- On Error Resume Next
  Dim ini As clsINI, myOptions As tOptions, tStr As String, hOpt As New clsHash
  Set ini = New clsINI
  ini.FileName = PDFCreatorINIFile
@@ -135,18 +182,14 @@ Public Function ReadOptions() As tOptions
  End If
  ReadINISection PDFCreatorINIFile, "Options", hOpt
  With myOptions
-  tStr = hOpt.Retrieve("AutosaveDirectory")
-  If Len(tStr) > 0 Then
-    .AutosaveDirectory = tStr
+  tStr = hOpt.Retrieve("AutosaveDirectory", GetMyFiles)
+  If Len(Dir(tStr, vbDirectory)) > 0 And Len(tStr) > 0 Then
+    .AutosaveDirectory = CompletePath(tStr)
    Else
-    .AutosaveDirectory = GetSpecialFolder(ssfPERSONAL)
+    .AutosaveDirectory = GetMyFiles
   End If
-  tStr = hOpt.Retrieve("AutosaveFilename")
-  If Len(tStr) > 0 Then
-    .AutosaveFilename = tStr
-   Else
-    .AutosaveFilename = "<DateTime>"
-  End If
+  tStr = hOpt.Retrieve("AutosaveFilename", "<DateTime>")
+  .AutosaveFilename = tStr
   tStr = hOpt.Retrieve("AutosaveFormat")
   If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
     .AutosaveFormat = CLng(tStr)
@@ -163,7 +206,39 @@ Public Function ReadOptions() As tOptions
   If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
     .BMPColorscount = CLng(tStr)
    Else
-    .BMPColorscount = 0
+    .BMPColorscount = 1
+  End If
+  tStr = hOpt.Retrieve("DirectoryGhostscriptBinaries", App.Path)
+  If Len(Dir(tStr, vbDirectory)) > 0 And Len(tStr) > 0 Then
+    .DirectoryGhostscriptBinaries = CompletePath(tStr)
+   Else
+    .DirectoryGhostscriptBinaries = App.Path & "\"
+  End If
+  tStr = hOpt.Retrieve("DirectoryGhostscriptFonts", App.Path & "\fonts")
+  If Len(Dir(tStr, vbDirectory)) > 0 And Len(tStr) > 0 Then
+    .DirectoryGhostscriptFonts = CompletePath(tStr)
+   Else
+    .DirectoryGhostscriptFonts = App.Path & "\fonts\"
+  End If
+  tStr = hOpt.Retrieve("DirectoryGhostscriptLibraries", App.Path & "\lib")
+  If Len(Dir(tStr, vbDirectory)) > 0 And Len(tStr) > 0 Then
+    .DirectoryGhostscriptLibraries = CompletePath(tStr)
+   Else
+    .DirectoryGhostscriptLibraries = App.Path & "\lib\"
+  End If
+  tStr = hOpt.Retrieve("EPSLanguageLevel")
+  If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+    .EPSLanguageLevel = CLng(tStr)
+   Else
+    .EPSLanguageLevel = 2
+  End If
+  tStr = hOpt.Retrieve("FilenameSubstitutions", " Microsoft Word - \.doc")
+  .FilenameSubstitutions = tStr
+  tStr = hOpt.Retrieve("FilenameSubstitutionsOnlyInTitle")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .FilenameSubstitutionsOnlyInTitle = CLng(tStr)
+   Else
+    .FilenameSubstitutionsOnlyInTitle = 1
   End If
   tStr = hOpt.Retrieve("JPEGColorscount")
   If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
@@ -177,21 +252,13 @@ Public Function ReadOptions() As tOptions
    Else
     .JPEGQuality = 75
   End If
-  tStr = hOpt.Retrieve("Language")
-  If Len(tStr) > 0 Then
-    .Language = tStr
+  tStr = hOpt.Retrieve("Language", "english")
+  .Language = tStr
+  tStr = hOpt.Retrieve("LastSaveDirectory", GetMyFiles)
+  If Len(Dir(tStr, vbDirectory)) > 0 And Len(tStr) > 0 Then
+    .LastSaveDirectory = CompletePath(tStr)
    Else
-    .Language = "english"
-  End If
-  tStr = hOpt.Retrieve("LastSaveDirectory")
-  If Len(tStr) > 0 Then
-    If Dir(tStr, vbDirectory) <> "" Then
-      .LastSaveDirectory = tStr
-     Else
-      .LastSaveDirectory = GetSpecialFolder(ssfPERSONAL)
-    End If
-   Else
-    .LastSaveDirectory = GetSpecialFolder(ssfPERSONAL)
+    .LastSaveDirectory = GetMyFiles
   End If
   tStr = hOpt.Retrieve("Logging")
   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
@@ -210,6 +277,54 @@ Public Function ReadOptions() As tOptions
     .PCXColorscount = CLng(tStr)
    Else
     .PCXColorscount = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowAssembly")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowAssembly = CLng(tStr)
+   Else
+    .PDFAllowAssembly = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowCopy")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowCopy = CLng(tStr)
+   Else
+    .PDFAllowCopy = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowDegradedPrinting")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowDegradedPrinting = CLng(tStr)
+   Else
+    .PDFAllowDegradedPrinting = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowFillIn")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowFillIn = CLng(tStr)
+   Else
+    .PDFAllowFillIn = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowModifyAnnotations")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowModifyAnnotations = CLng(tStr)
+   Else
+    .PDFAllowModifyAnnotations = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowModifyContents")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowModifyContents = CLng(tStr)
+   Else
+    .PDFAllowModifyContents = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowPrinting")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowPrinting = CLng(tStr)
+   Else
+    .PDFAllowPrinting = 0
+  End If
+  tStr = hOpt.Retrieve("PDFAllowScreenReaders")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFAllowScreenReaders = CLng(tStr)
+   Else
+    .PDFAllowScreenReaders = 0
   End If
   tStr = hOpt.Retrieve("PDFColorsCMYKToRGB")
   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
@@ -385,6 +500,36 @@ Public Function ReadOptions() As tOptions
    Else
     .PDFGeneralResolution = 600
   End If
+  tStr = hOpt.Retrieve("PDFHighEncryption")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFHighEncryption = CLng(tStr)
+   Else
+    .PDFHighEncryption = 0
+  End If
+  tStr = hOpt.Retrieve("PDFLowEncryption")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFLowEncryption = CLng(tStr)
+   Else
+    .PDFLowEncryption = 1
+  End If
+  tStr = hOpt.Retrieve("PDFOwnerPass")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFOwnerPass = CLng(tStr)
+   Else
+    .PDFOwnerPass = 0
+  End If
+  tStr = hOpt.Retrieve("PDFUserPass")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFUserPass = CLng(tStr)
+   Else
+    .PDFUserPass = 0
+  End If
+  tStr = hOpt.Retrieve("PDFUseSecurity")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .PDFUseSecurity = CLng(tStr)
+   Else
+    .PDFUseSecurity = 0
+  End If
   tStr = hOpt.Retrieve("PNGColorscount")
   If CLng(tStr) >= 0 And CLng(tStr) <= 4 Then
     .PNGColorscount = CLng(tStr)
@@ -397,12 +542,20 @@ Public Function ReadOptions() As tOptions
    Else
     .PrinterStop = 0
   End If
-  tStr = hOpt.Retrieve("ProgramFont")
-  If Len(tStr) > 0 Then
-    .ProgramFont = tStr
+  tStr = hOpt.Retrieve("PrinterTemppath", GetPDFCreatorTempfolder)
+  If Len(Dir(tStr, vbDirectory)) > 0 And Len(tStr) > 0 Then
+    .PrinterTemppath = CompletePath(tStr)
    Else
-    .ProgramFont = "MS Sans Serif"
+    .PrinterTemppath = GetPDFCreatorTempfolder
   End If
+  tStr = hOpt.Retrieve("ProcessPriority")
+  If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+    .ProcessPriority = CLng(tStr)
+   Else
+    .ProcessPriority = 1
+  End If
+  tStr = hOpt.Retrieve("ProgramFont", "MS Sans Serif")
+  .ProgramFont = tStr
   tStr = hOpt.Retrieve("ProgramFontCharset")
   If CLng(tStr) >= 0 Then
     .ProgramFontCharset = CLng(tStr)
@@ -415,12 +568,22 @@ Public Function ReadOptions() As tOptions
    Else
     .ProgramFontSize = 8
   End If
-  tStr = hOpt.Retrieve("StandardAuthor")
-  If Len(tStr) > 0 Then
-    .StandardAuthor = tStr
+  tStr = hOpt.Retrieve("PSLanguageLevel")
+  If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+    .PSLanguageLevel = CLng(tStr)
    Else
-    .StandardAuthor = ""
+    .PSLanguageLevel = 2
   End If
+  tStr = hOpt.Retrieve("RemoveSpaces")
+  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+    .RemoveSpaces = CLng(tStr)
+   Else
+    .RemoveSpaces = 1
+  End If
+  tStr = hOpt.Retrieve("SaveFilename", "<Title>")
+  .SaveFilename = tStr
+  tStr = hOpt.Retrieve("StandardAuthor", "")
+  .StandardAuthor = tStr
   tStr = hOpt.Retrieve("StartStandardProgram")
   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
     .StartStandardProgram = CLng(tStr)
@@ -476,6 +639,12 @@ Public Sub SaveOptions(sOptions As tOptions)
   ini.SaveKey CStr(.AutosaveFormat), "AutosaveFormat"
   ini.SaveKey CStr(.BitmapResolution), "BitmapResolution"
   ini.SaveKey CStr(.BMPColorscount), "BMPColorscount"
+  ini.SaveKey CStr(.DirectoryGhostscriptBinaries), "DirectoryGhostscriptBinaries"
+  ini.SaveKey CStr(.DirectoryGhostscriptFonts), "DirectoryGhostscriptFonts"
+  ini.SaveKey CStr(.DirectoryGhostscriptLibraries), "DirectoryGhostscriptLibraries"
+  ini.SaveKey CStr(.EPSLanguageLevel), "EPSLanguageLevel"
+  ini.SaveKey CStr(.FilenameSubstitutions), "FilenameSubstitutions"
+  ini.SaveKey CStr(.FilenameSubstitutionsOnlyInTitle), "FilenameSubstitutionsOnlyInTitle"
   ini.SaveKey CStr(.JPEGColorscount), "JPEGColorscount"
   ini.SaveKey CStr(.JPEGQuality), "JPEGQuality"
   ini.SaveKey CStr(.Language), "Language"
@@ -483,6 +652,14 @@ Public Sub SaveOptions(sOptions As tOptions)
   ini.SaveKey CStr(.Logging), "Logging"
   ini.SaveKey CStr(.LogLines), "LogLines"
   ini.SaveKey CStr(.PCXColorscount), "PCXColorscount"
+  ini.SaveKey CStr(.PDFAllowAssembly), "PDFAllowAssembly"
+  ini.SaveKey CStr(.PDFAllowCopy), "PDFAllowCopy"
+  ini.SaveKey CStr(.PDFAllowDegradedPrinting), "PDFAllowDegradedPrinting"
+  ini.SaveKey CStr(.PDFAllowFillIn), "PDFAllowFillIn"
+  ini.SaveKey CStr(.PDFAllowModifyAnnotations), "PDFAllowModifyAnnotations"
+  ini.SaveKey CStr(.PDFAllowModifyContents), "PDFAllowModifyContents"
+  ini.SaveKey CStr(.PDFAllowPrinting), "PDFAllowPrinting"
+  ini.SaveKey CStr(.PDFAllowScreenReaders), "PDFAllowScreenReaders"
   ini.SaveKey CStr(.PDFColorsCMYKToRGB), "PDFColorsCMYKToRGB"
   ini.SaveKey CStr(.PDFColorsColorModel), "PDFColorsColorModel"
   ini.SaveKey CStr(.PDFColorsPreserveHalftone), "PDFColorsPreserveHalftone"
@@ -512,11 +689,21 @@ Public Sub SaveOptions(sOptions As tOptions)
   ini.SaveKey CStr(.PDFGeneralCompatibility), "PDFGeneralCompatibility"
   ini.SaveKey CStr(.PDFGeneralOverprint), "PDFGeneralOverprint"
   ini.SaveKey CStr(.PDFGeneralResolution), "PDFGeneralResolution"
+  ini.SaveKey CStr(.PDFHighEncryption), "PDFHighEncryption"
+  ini.SaveKey CStr(.PDFLowEncryption), "PDFLowEncryption"
+  ini.SaveKey CStr(.PDFOwnerPass), "PDFOwnerPass"
+  ini.SaveKey CStr(.PDFUserPass), "PDFUserPass"
+  ini.SaveKey CStr(.PDFUseSecurity), "PDFUseSecurity"
   ini.SaveKey CStr(.PNGColorscount), "PNGColorscount"
   ini.SaveKey CStr(.PrinterStop), "PrinterStop"
+  ini.SaveKey CStr(.PrinterTemppath), "PrinterTemppath"
+  ini.SaveKey CStr(.ProcessPriority), "ProcessPriority"
   ini.SaveKey CStr(.ProgramFont), "ProgramFont"
   ini.SaveKey CStr(.ProgramFontCharset), "ProgramFontCharset"
   ini.SaveKey CStr(.ProgramFontSize), "ProgramFontSize"
+  ini.SaveKey CStr(.PSLanguageLevel), "PSLanguageLevel"
+  ini.SaveKey CStr(.RemoveSpaces), "RemoveSpaces"
+  ini.SaveKey CStr(.SaveFilename), "SaveFilename"
   ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
   ini.SaveKey CStr(.StartStandardProgram), "StartStandardProgram"
   ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
@@ -529,17 +716,49 @@ Public Sub SaveOptions(sOptions As tOptions)
 End Sub
 
 Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
- On Local Error Resume Next
- Dim i As Long
+' On Local Error Resume Next
+ Dim i As Long, tList() As String, tStrA() As String, lsv As ListView
  With sOptions
   Frm.txtAutosaveDirectory.Text = .AutosaveDirectory
   Frm.txtAutosaveFilename.Text = .AutosaveFilename
   Frm.cmbAutosaveFormat.ListIndex = .AutosaveFormat
   Frm.txtBitmapResolution.Text = .BitmapResolution
   Frm.cmbBMPColors.ListIndex = .BMPColorscount
+  Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
+  Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
+  Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
+  Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
+  Set lsv = Frm.lsvFilenameSubst
+  tList = Split(.FilenameSubstitutions, "\")
+  For i = 0 To UBound(tList)
+   If InStr(tList(i), "|") <= 0 Then
+    tList(i) = tList(i) & "|"
+   End If
+   If UBound(Split(tList(i), "|")) = 1 Then
+    tStrA = Split(tList(i), "|")
+    lsv.ListItems.Add , , tStrA(0)
+    lsv.ListItems(lsv.ListItems.Count).SubItems(1) = tStrA(1)
+   End If
+  Next i
+  If lsv.ListItems.Count > 0 Then
+   lsv.ListItems(1).Selected = True
+   Frm.txtFilenameSubst(0).Text = lsv.ListItems(1).Text
+   Frm.txtFilenameSubst(0).ToolTipText = Frm.txtFilenameSubst(0).Text
+   Frm.txtFilenameSubst(1).Text = lsv.ListItems(1).SubItems(1)
+   Frm.txtFilenameSubst(1).ToolTipText = Frm.txtFilenameSubst(1).Text
+  End If
+  Frm.chkFilenameSubst.Value = .FilenameSubstitutionsOnlyInTitle
   Frm.cmbJPEGColors.ListIndex = .JPEGColorscount
   Frm.txtJPEGQuality.Text = .JPEGQuality
   Frm.cmbPCXColors.ListIndex = .PCXColorscount
+  Frm.chkAllowAssembly.Value = .PDFAllowAssembly
+  Frm.chkAllowCopy.Value = .PDFAllowCopy
+  Frm.chkAllowDegradedPrinting.Value = .PDFAllowDegradedPrinting
+  Frm.chkAllowFillIn.Value = .PDFAllowFillIn
+  Frm.chkAllowModifyAnnotations.Value = .PDFAllowModifyAnnotations
+  Frm.chkAllowModifyContents.Value = .PDFAllowModifyContents
+  Frm.chkAllowPrinting.Value = .PDFAllowPrinting
+  Frm.chkAllowScreenReaders.Value = .PDFAllowScreenReaders
   Frm.chkPDFCMYKtoRGB.Value = .PDFColorsCMYKToRGB
   Frm.cmbPDFColorModel.ListIndex = .PDFColorsColorModel
   Frm.chkPDFPreserveHalftone.Value = .PDFColorsPreserveHalftone
@@ -569,7 +788,14 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.cmbPDFCompat.ListIndex = .PDFGeneralCompatibility
   Frm.cmbPDFOverprint.ListIndex = .PDFGeneralOverprint
   Frm.txtPDFRes.Text = .PDFGeneralResolution
+  Frm.optEncHigh.Value = .PDFHighEncryption
+  Frm.optEncLow.Value = .PDFLowEncryption
+  Frm.chkOwnerPass.Value = .PDFOwnerPass
+  Frm.chkUserPass.Value = .PDFUserPass
+  Frm.chkUseSecurity.Value = .PDFUseSecurity
   Frm.cmbPNGColors.ListIndex = .PNGColorscount
+  Frm.txtTemppath.Text = .PrinterTemppath
+  Frm.sldProcessPriority.Value = .ProcessPriority
   For i = 0 To Frm.cmbFonts.ListCount - 1
     If UCase$(Frm.cmbFonts.List(i)) = UCase$(.ProgramFont) Then
      Frm.cmbFonts.ListIndex = i
@@ -577,7 +803,10 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.txtProgramFontSize.Text = .ProgramFontSize
+  Frm.txtProgramFontsize.Text = .ProgramFontSize
+  Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
+  Frm.chkSpaces.Value = .RemoveSpaces
+  Frm.txtSaveFilename.Text = .SaveFilename
   Frm.txtStandardAuthor.Text = .StandardAuthor
   Frm.cmbTIFFColors.ListIndex = .TIFFColorscount
   Frm.chkUseAutosave.Value = .UseAutosave
@@ -588,15 +817,39 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
 End Sub
 
 Public Sub GetOptions(Frm As Form, sOptions As tOptions)
+ Dim i As Long, tStr As String, lsv As ListView
  With sOptions
   .AutosaveDirectory = Frm.txtAutosaveDirectory.Text
   .AutosaveFilename = Frm.txtAutosaveFilename.Text
   .AutosaveFormat = Frm.cmbAutosaveFormat.ListIndex
   .BitmapResolution = Frm.txtBitmapResolution.Text
   .BMPColorscount = Frm.cmbBMPColors.ListIndex
+  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
+  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
+  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
+  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
+  tStr = ""
+  Set lsv = Frm.lsvFilenameSubst
+  For i = 1 To lsv.ListItems.Count
+   If i < lsv.ListItems.Count Then
+     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1) & "\"
+    Else
+     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1)
+   End If
+  Next i
+  .FilenameSubstitutions = tStr
+  .FilenameSubstitutionsOnlyInTitle = Frm.chkFilenameSubst.Value
   .JPEGColorscount = Frm.cmbJPEGColors.ListIndex
   .JPEGQuality = Frm.txtJPEGQuality.Text
   .PCXColorscount = Frm.cmbPCXColors.ListIndex
+  .PDFAllowAssembly = Frm.chkAllowAssembly.Value
+  .PDFAllowCopy = Frm.chkAllowCopy.Value
+  .PDFAllowDegradedPrinting = Frm.chkAllowDegradedPrinting.Value
+  .PDFAllowFillIn = Frm.chkAllowFillIn.Value
+  .PDFAllowModifyAnnotations = Frm.chkAllowModifyAnnotations.Value
+  .PDFAllowModifyContents = Frm.chkAllowModifyContents.Value
+  .PDFAllowPrinting = Frm.chkAllowPrinting.Value
+  .PDFAllowScreenReaders = Frm.chkAllowScreenReaders.Value
   .PDFColorsCMYKToRGB = Frm.chkPDFCMYKtoRGB.Value
   .PDFColorsColorModel = Frm.cmbPDFColorModel.ListIndex
   .PDFColorsPreserveHalftone = Frm.chkPDFPreserveHalftone.Value
@@ -626,10 +879,20 @@ Public Sub GetOptions(Frm As Form, sOptions As tOptions)
   .PDFGeneralCompatibility = Frm.cmbPDFCompat.ListIndex
   .PDFGeneralOverprint = Frm.cmbPDFOverprint.ListIndex
   .PDFGeneralResolution = Frm.txtPDFRes.Text
+  .PDFHighEncryption = Frm.optEncHigh.Value
+  .PDFLowEncryption = Frm.optEncLow.Value
+  .PDFOwnerPass = Frm.chkOwnerPass.Value
+  .PDFUserPass = Frm.chkUserPass.Value
+  .PDFUseSecurity = Frm.chkUseSecurity.Value
   .PNGColorscount = Frm.cmbPNGColors.ListIndex
+  .PrinterTemppath = Frm.txtTemppath.Text
+  .ProcessPriority = Frm.sldProcessPriority.Value
   .ProgramFont = Frm.cmbFonts.List(Frm.cmbFonts.ListIndex)
   .ProgramFontCharset = Frm.cmbCharset.Text
-  .ProgramFontSize = Frm.txtProgramFontSize.Text
+  .ProgramFontSize = Frm.txtProgramFontsize.Text
+  .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
+  .RemoveSpaces = Frm.chkSpaces.Value
+  .SaveFilename = Frm.txtSaveFilename.Text
   .StandardAuthor = Frm.txtStandardAuthor.Text
   .TIFFColorscount = Frm.cmbTIFFColors.ListIndex
   .UseAutosave = Frm.chkUseAutosave.Value
@@ -663,3 +926,4 @@ Public Sub SetLanguage(Language As String)
  Options.Language = Language
  SaveOptions Options
 End Sub
+

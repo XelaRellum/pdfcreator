@@ -15,6 +15,7 @@ Begin VB.Form frmInfo
    StartUpPosition =   3  'Windows-Standard
    Begin VB.PictureBox picTitle 
       Appearance      =   0  '2D
+      AutoRedraw      =   -1  'True
       BackColor       =   &H80000005&
       BorderStyle     =   0  'Kein
       ForeColor       =   &H80000008&
@@ -24,8 +25,8 @@ Begin VB.Form frmInfo
       ScaleHeight     =   46
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   155
-      TabIndex        =   3
-      Top             =   150
+      TabIndex        =   1
+      Top             =   120
       Width           =   2325
    End
    Begin VB.PictureBox picPDF 
@@ -51,7 +52,7 @@ Begin VB.Form frmInfo
       Left            =   1500
       ScaleHeight     =   4575
       ScaleWidth      =   4350
-      TabIndex        =   1
+      TabIndex        =   3
       Top             =   1260
       Width           =   4350
    End
@@ -73,7 +74,7 @@ Begin VB.Form frmInfo
    Begin VB.Image imgClose 
       Height          =   600
       Left            =   1455
-      Picture         =   "frmInfo.frx":14929C
+      Picture         =   "frmInfo.frx":1260DC
       Top             =   105
       Width           =   600
    End
@@ -93,7 +94,7 @@ Private m_blnUnloading As Boolean
 
 Private Sub AnimateScroller()
  Dim lngSecondCurrX As Long, lngCurrentX As Long, intCounter As Integer
- 
+
  While Not m_blnUnloading
   lngCurrentX = lngCurrentX + 1
   If intCounter = 40 Then intCounter = -1
@@ -104,14 +105,14 @@ Private Sub AnimateScroller()
    Else
     lngSecondCurrX = picCredits.ScaleHeight
   End If
-   
+
   Call TransBlt(picCredits.hDC, 0, 0, picForeground.ScaleWidth, lngSecondCurrX, picForeground.hDC, 0, lngCurrentX, vbBlack)
-      
+
   If lngSecondCurrX < picCredits.ScaleHeight Then
    Call TransBlt(picCredits.hDC, 0, lngSecondCurrX, picForeground.ScaleWidth, picCredits.ScaleHeight - lngSecondCurrX, picForeground.hDC, 0, 0, vbBlack)
    'DoEvents
   End If
-      
+
   If lngSecondCurrX = 0 Then lngCurrentX = 0
   DoEvents
  Wend
@@ -123,17 +124,26 @@ Private Sub Form_Activate()
 End Sub
 
 Private Sub Form_Load()
- Dim rctPicRect As RECT
+ Dim rctPicRect As RECT, Version As String
 
  Me.Width = Me.ScaleX(Me.Picture.Width, vbHimetric, vbTwips)
  Me.Height = Me.ScaleY(Me.Picture.Height, vbHimetric, vbTwips)
  MakeFormTransparent Me, vbMagenta
-    
+
  picCredits.ScaleMode = vbPixels
  picCredits.AutoRedraw = True
-    
+
  picForeground.ScaleMode = vbPixels
  picForeground.AutoRedraw = True
+
+ Version = GetProgramRelease
+
+ With picTitle
+  .ForeColor = RGB(7, 16, 127)
+  .CurrentX = 15
+  .CurrentY = 35
+  picTitle.Print Version
+ End With
 End Sub
 
 Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)

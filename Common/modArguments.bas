@@ -26,7 +26,6 @@ End Property
 
 Public Property Get CommandArgument(ByVal Index As Long, Optional ByVal ReducedQuotes As Boolean) As String
  zInitArguments
- On Error Resume Next
  If ReducedQuotes Then
    CommandArgument = ReduceQuotes(mArguments(Index))
   Else
@@ -36,7 +35,7 @@ End Property
 
 Public Property Get CommandSwitch(Switch As String, Optional ByVal ReducedQuotes As Boolean) As Variant
  Dim i As Integer, nArgument As String, nCommandSwitch As String
-    
+
  zInitArguments
  For i = 1 To mArguments.Count
   nArgument = mArguments(i)

@@ -19,7 +19,7 @@ Public Function SetPanelControl(Control As Control, StatusBar As StatusBar, Pane
     Dim nControl As Control
     Dim nOldParentWnd As Long
     Dim nPanel As Panel
-    
+
     With Control
         If TypeOf .Parent Is MDIForm Then
             Set nParent = .Container
@@ -30,18 +30,11 @@ Public Function SetPanelControl(Control As Control, StatusBar As StatusBar, Pane
     If IsObject(PanelKey) Then
         If TypeOf PanelKey Is Panel Then
             Set nPanel = PanelKey
-        Else
-            Err.Raise pcErrInvalidPanelObject, "SetPanelControl"
         End If
     End If
-    On Error Resume Next
     If nPanel Is Nothing Then
         Set nPanel = StatusBar.Panels(PanelKey)
-        If Err.Number Then
-            Err.Raise pcErrInvalidPanelIndexKey, "SetPanelControl"
-        End If
     End If
-    On Error GoTo 0
     With Control
         nOldParentWnd = SetParent(.hWnd, StatusBar.hWnd)
         If GetWindowLong(.hWnd, GWL_USERDATA) = 0 Then
@@ -67,21 +60,14 @@ End Sub
 Public Sub AdjustControlToPanel(Control As Control, StatusBar As StatusBar, PanelKey As Variant, Optional ByVal AdjustStatusBarToControl As Boolean)
     Dim nParent As Object
     Dim nPanel As Panel
-    
+
     If IsObject(PanelKey) Then
         If TypeOf PanelKey Is Panel Then
             Set nPanel = PanelKey
-        Else
-            Err.Raise pcErrInvalidPanelObject, "AdjustControlToPanel"
         End If
     End If
     If nPanel Is Nothing Then
-        On Error Resume Next
         Set nPanel = StatusBar.Panels(PanelKey)
-        If Err.Number Then
-            Err.Raise pcErrInvalidPanelIndexKey, "AdjustControlToPanel"
-        End If
-        On Error GoTo 0
     End If
     With Control
         If TypeOf .Parent Is MDIForm Then

@@ -177,32 +177,49 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+' "On Local Error" Functions, Subs
+'  clsPDFCreatorMail: MSOutlookEmail,VBMapiEmail
+'  clsMutex: IDERunning
+'  modGeneral: CheckPath,IsGoodDrive,makePath
+'  frmPrinting: Create_eDoc
+'  frmOptions: cmbCharset_Change
+
 Const TimerIntervall = 500
 
 Private LanguagePath As String, Languagefile As String, mutex As clsMutex, _
  Printjobs As Collection
 
 Private Sub Form_Load()
- Dim fn As Long, stdio As clsStdIO, cinStr As String, Tempfile As String
-
+ Dim fn As Long, stdio As clsStdIO, cinStr As String, Tempfile As String, _
+  InFile As String, OutFile As String, Ext As String
 '##############################################
 'Performance Tools
- Dim LastStop As Currency, ct As Integer
+ Dim LastStop As Currency
  LastStop = ExactTimer_Value()
 '##############################################
 
- PDFCreatorINIFile = App.Path & "\PDFCreator.ini"
+ If CheckPath(GetMyAppData) = True Then
+   If Len(Dir(GetMyAppData & "PDFcreator", vbDirectory)) = 0 Then
+    MakePath GetMyAppData & "PDFcreator"
+   End If
+   PDFCreatorINIFile = GetMyAppData & "PDFcreator\PDFCreator.ini"
+  Else
+   PDFCreatorINIFile = App.Path & "\PDFCreator.ini"
+ End If
+
  Options = ReadOptions
+
  IfLoggingWriteLogfile "PDFCreator Program Start"
- 
+
  ' The program has commandswitches
  ' -IPTRUE : Install Printer
  ' -IPFALSE: UnInstall Printer
  ' -NSTRUE: No Start
  ' -ULTRUE: Unload all PDFCreator programs
  ' -PPDFCREATORPRINTER: The printer call the program
- 
- 
+ ' -IF: Inputfile
+ ' -OF: Outputfile
+
  ' Check Installprinter
  Select Case UCase$(CommandSwitch("IP", True))
   Case "TRUE":
@@ -212,49 +229,115 @@ Private Sub Form_Load()
    Monitorname = "PDFCreator": Portname = "PDFCreator:": Drivername = "PDFCreator": PrinterName = "PDFCreator"
    UnInstallCompletePrinter
  End Select
- 
+
  ' Initialize unload running program
  If UCase$(CommandSwitch("UL", True)) = "TRUE" Then
   fn = FreeFile
   Open App.Path & "\Unload.tmp" For Output As #fn
   Close #fn
  End If
- 
+
  ' NS: If NS=True Then end the program here
  ' It is necessary for uninstall.
  If UCase$(CommandSwitch("NS", True)) = "TRUE" Then
   End
  End If
- 
+
  CreatePDFCreatorTempfolder
- 
- Set stdio = New clsStdIO
- cinStr = stdio.StdIn
- If Len(cinStr) > 0 Then
-  Tempfile = GetTempFile(GetTempPath & "PDFCreator\", "~PD")
-  fn = FreeFile
-  Open Tempfile For Output As #fn
-  Print #fn, cinStr
-  Close #fn
+
+ If IsWin9xMe = False Then
+  Select Case Options.ProcessPriority
+   Case 0: 'Idle
+    SetProcessPriority Idle
+   Case 1: 'Normal
+    SetProcessPriority Normal
+   Case 2: 'High
+    SetProcessPriority High
+   Case 3: 'Realtime
+    SetProcessPriority RealTime
+  End Select
  End If
- Set stdio = Nothing
- 
+
+ LanguagePath = App.Path & "\Languages\"
+ ReadAllLanguages LanguagePath
+ Languagefile = LanguagePath & Options.Language & ".ini"
+ LoadLanguage Languagefile
+
+ GsDllLoaded = LoadDLL(Options.DirectoryGhostscriptBinaries & "\gsdll32.dll")
+
+ If GsDllLoaded = 0 Then
+  MsgBox LanguageStrings.MessagesMsg08
+ End If
+
+ InFile = UCase$(CommandSwitch("IF", True))
+ If Len(InFile) > 0 Then
+  If Len(UCase$(CommandSwitch("OF", True))) > 0 Then
+    If CheckIfPSFile(InFile) = True Then
+     If GsDllLoaded = 0 Then
+      End
+     End If
+     OutFile = CommandSwitch("OF", True)
+     SplitPath OutFile, , , , , Ext
+     MsgBox OutFile
+     Select Case UCase$(Ext)
+      Case "PDF"
+       CallGScript InFile, OutFile, Options, PDFWriter
+      Case "PNG"
+       CallGScript PDFSpoolfile, OutFile, Options, PNGWriter
+      Case "JPG"
+       CallGScript PDFSpoolfile, OutFile, Options, JPEGWriter
+      Case "BMP"
+       CallGScript PDFSpoolfile, OutFile, Options, BMPWriter
+      Case "PCX"
+       CallGScript PDFSpoolfile, OutFile, Options, PCXWriter
+      Case "TIF"
+       CallGScript PDFSpoolfile, OutFile, Options, TIFFWriter
+      Case "PS"
+       CallGScript PDFSpoolfile, OutFile, Options, PSWriter
+      Case "EPS"
+       CallGScript PDFSpoolfile, OutFile, Options, EPSWriter
+     End Select
+    End If
+    End
+   Else
+    If CheckIfPSFile(CommandSwitch("IF", True)) Then
+     Tempfile = GetTempFile(GetPDFCreatorTempfolder, "~PD")
+     FileCopy CommandSwitch("IF", True), Tempfile
+    End If
+    DoEvents
+  End If
+ End If
+
  ' Printer has started the program
  If UCase$(CommandSwitch("P", True)) = "PDFCREATORPRINTER" Then
   CheckAutosaveAndPrint
  End If
+
+ ' Create a mutex; if mutex exists then exit
+ Set mutex = New clsMutex
+ If mutex.CheckMutex(PDFCreator_GUID) = False Then
+   mutex.CreateMutex PDFCreator_GUID
+  Else
+   End
+ End If
+
  InitProgram
- 
- If UCase$(CommandSwitch("P", True)) = "PDFCREATORPRINTER" Then
+
+ If UCase$(CommandSwitch("P", True)) = "PDFCREATORPRINTER" Or Len(CommandSwitch("IF", True)) > 0 Then
   If lsv.ListItems.Count <= 1 Then
    Me.Visible = False
   End If
  End If
+
 '##############################################
 'MsgBox "Programmstart: " & ExactTimer_Value() - LastStop & " Sekunden"
 'LastStop = ExactTimer_Value()
 '##############################################
  'IfLoggingWriteLogfile "PDFCreator started in " & ExactTimer_Value() - LastStop & " seconds"
+
+ ' Only for the first time set Interval to 10 ms
+ Timer1.Interval = 10
+ Timer1.Enabled = True
 End Sub
 
 Private Sub Form_Resize()
@@ -283,32 +366,25 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub InitProgram()
- Dim Filename As String, Tempfile As String, res As Long
- 
+ Dim FileName As String, Tempfile As String
+
  Printing = False
- Filename = CommandSwitch("F", True)
- 
- If Dir(Filename) <> "" And Len(Trim$(Filename)) > 0 Then
-  If FileLen(Filename) > 0 Then
-   Tempfile = GetTempFile(GetTempPath & "PDFCreator\", "~PD")
-   FileCopy Filename, Tempfile
+ FileName = CommandSwitch("F", True)
+
+ If Len(Dir(FileName)) > 0 And Len(Trim$(FileName)) > 0 Then
+  If FileLen(FileName) > 0 Then
+   Tempfile = GetTempFile(GetPDFCreatorTempfolder, "~PD")
+   FileCopy FileName, Tempfile
   End If
  End If
- 
+
  Set Printjobs = New Collection
- Set mutex = New clsMutex
- 
- If mutex.CheckMutex(PDFCreator_GUID) = False Then
-   res = mutex.CreateMutex(PDFCreator_GUID)
-  Else
-   End
- End If
- 
+
  stb.Panels.Clear
  stb.Panels.Add , "Status", ""
  stb.Panels.Add , "Percent", ""
  stb.Panels("Percent").Width = 1000
- 
+
  With lsv
   .View = lvwReport
   .FullRowSelect = True
@@ -320,30 +396,21 @@ Private Sub InitProgram()
   .ColumnHeaders.Add , "Size", "Size", 1500, lvwColumnRight
   .ColumnHeaders.Add , "Filename", "Filename", lsv.Width - 3500
  End With
- 
- LanguagePath = App.Path & "\Languages\"
- ReadAllLanguages LanguagePath
+
 
  With Options
   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
  End With
- 
- Languagefile = LanguagePath & Options.Language & ".ini"
- 
- LoadLanguage Languagefile
+
  SetLanguageMenu
  If Options.Logging = 1 Then
    mnPrinter(4).Checked = True
   Else
    mnPrinter(4).Checked = False
  End If
- 
+
  CheckPrintJobs
  DoEvents
-
- ' Only for the first time set Interval to 10 ms
- Timer1.Interval = 10
- Timer1.Enabled = True
 End Sub
 
 Private Sub TerminateProgram()
@@ -352,13 +419,14 @@ Private Sub TerminateProgram()
  mutex.CloseMutex
  Set mutex = Nothing
  IfLoggingWriteLogfile "PDFCreator Program End"
+ UnLoadDLL GsDllLoaded
 End Sub
 
 Private Function GetAllLanguagesFiles(LanguagePath As String) As Collection
  Dim Languagefile As String
  Set GetAllLanguagesFiles = New Collection
  Languagefile = Dir(LanguagePath & "*.ini")
- Do While Languagefile <> ""
+ Do While Len(Languagefile) > 0
    GetAllLanguagesFiles.Add LanguagePath & Languagefile
    Languagefile = Dir()
   DoEvents
@@ -368,14 +436,14 @@ End Function
 Private Sub ReadAllLanguages(LanguagePath As String)
  Dim Languagename As String, ini As clsINI, LangFiles As Collection, i As Long
  mnLanguage(0).Caption = "No languages available."
-  
+
  Set LangFiles = GetAllLanguagesFiles(LanguagePath)
  Set ini = New clsINI
  For i = 1 To LangFiles.Count
-  ini.Filename = LangFiles.item(i)
+  ini.FileName = LangFiles.item(i)
   ini.Section = "Common"
   Languagename = ini.GetKeyFromSection("Languagename")
-  If Languagename = "" Then
+  If Len(Languagename) = 0 Then
    Languagename = "No name available."
   End If
   Load mnLanguage(mnLanguage.Count)
@@ -383,7 +451,7 @@ Private Sub ReadAllLanguages(LanguagePath As String)
   mnLanguage(mnLanguage.Count - 1).Tag = LangFiles.item(i)
   DoEvents
  Next i
- 
+
  If mnLanguage.Count > 1 Then
   mnLanguage(0).Caption = "No languages available."
   mnLanguage(0).Visible = False
@@ -392,8 +460,8 @@ Private Sub ReadAllLanguages(LanguagePath As String)
 End Sub
 
 Private Sub SetLanguageMenu()
- Dim i As Long
- 
+ Dim i As Long, Version As String, reg As clsRegistry
+
  For i = mnLanguage.LBound To mnLanguage.UBound
   If UCase$(Languagefile) = UCase$(mnLanguage.item(i).Tag) Then
     mnLanguage.item(i).Checked = True
@@ -401,18 +469,24 @@ Private Sub SetLanguageMenu()
     mnLanguage.item(i).Checked = False
   End If
  Next i
- 
+
  With LanguageStrings
-  Caption = App.Title & " " & App.Major & "." & App.Minor & "." & App.Revision & _
-   " " & .CommonTitle
-  
+  Set reg = New clsRegistry
+  With reg
+   .hkey = HKEY_LOCAL_MACHINE
+   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+   Version = .GetRegistryValue("ApplicationVersion")
+  End With
+  Set reg = Nothing
+  Caption = App.Title & " " & GetProgramRelease & " " & .CommonTitle
+
   mnPrinterMain.Caption = .DialogPrinter
   mnPrinter(0).Caption = .DialogPrinterPrinterStop
   mnPrinter(2).Caption = .DialogPrinterOptions
   mnPrinter(4).Caption = .DialogPrinterLogging
   mnPrinter(5).Caption = .DialogPrinterLogfile
   mnPrinter(7).Caption = .DialogPrinterClose
-  
+
   mnDocumentMain.Caption = .DialogDocument
   mnDocument(0).Caption = .DialogDocumentPrint
   mnDocument(2).Caption = .DialogDocumentAdd
@@ -422,14 +496,14 @@ Private Sub SetLanguageMenu()
   mnDocument(7).Caption = .DialogDocumentDown
   mnDocument(8).Caption = .DialogDocumentBottom
   mnDocument(10).Caption = .DialogDocumentCombine
-  
+
   mnViewMain.Caption = .DialogView
   mnView(0).Caption = .DialogViewStatusbar
-  
+
   mnLanguageMain.Caption = .DialogLanguage
-  
+
   mnHelp(0).Caption = .DialogInfo
-  
+
   lsv.ColumnHeaders("Date").Text = .ListDate
   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
   lsv.ColumnHeaders("Filename").Text = .ListFilename
@@ -460,38 +534,36 @@ End Sub
 
 Private Sub lsv_OLEDragDrop(data As MSComctlLib.DataObject, Effect As Long, Button As Integer, Shift As Integer, x As Single, y As Single)
  Dim tFilename As String, i As Long, aLen As Double, tLen As Double
-  
-If data.GetFormat(vbCFFiles) Then
-     If data.Files.Count = 1 Then
-       If CheckIfPSFile(data.Files.item(1)) Then
-        tFilename = GetTempFile(GetTempPath & "PDFCreator\", "~PA")
-        FileCopy data.Files.item(1), tFilename
-       End If
-       DoEvents
-      Else
-       aLen = 0
-       For i = 1 To data.Files.Count
-        aLen = aLen + FileLen(data.Files.item(i))
-       Next i
-       For i = 1 To data.Files.Count
-        If CheckIfPSFile(data.Files.item(i)) Then
-         tFilename = GetTempFile(GetTempPath & "PDFCreator\", "~PA")
-         DoEvents
-         FileCopy data.Files.item(i), tFilename
-        End If
-         tLen = tLen + FileLen(data.Files.item(i))
-         stb.Panels("Percent").Text = Format$(tLen / aLen, " 0.0%")
-         DoEvents
-       Next i
+
+ If data.GetFormat(vbCFFiles) Then
+  If data.Files.Count = 1 Then
+    If CheckIfPSFile(data.Files.item(1)) Then
+     tFilename = GetTempFile(GetPDFCreatorTempfolder, "~PD")
+     FileCopy data.Files.item(1), tFilename
+    End If
+    DoEvents
+   Else
+    aLen = 0
+    For i = 1 To data.Files.Count
+     aLen = aLen + FileLen(data.Files.item(i))
+    Next i
+    For i = 1 To data.Files.Count
+     If CheckIfPSFile(data.Files.item(i)) Then
+      tFilename = GetTempFile(GetPDFCreatorTempfolder, "~PD")
+      DoEvents
+      FileCopy data.Files.item(i), tFilename
      End If
-End If
+     tLen = tLen + FileLen(data.Files.item(i))
+     stb.Panels("Percent").Text = Format$(tLen / aLen, " 0.0%")
+     DoEvents
+    Next i
+  End If
+ End If
 End Sub
 
 Private Sub mnDocument_Click(Index As Integer)
- On Local Error Resume Next
  Dim tFilename As String, cFiles As Collection, sFiles() As String, _
-  i As Long, j As Long, aLen As Double, tLen As Double, _
-  aw As Long
+  i As Long, j As Long, aLen As Double, tLen As Double, aw As Long
  Timer1.Enabled = False
  Screen.MousePointer = vbHourglass
  DoEvents
@@ -516,13 +588,13 @@ Private Sub mnDocument_Click(Index As Integer)
     .Flags = cdlOFNFileMustExist Or cdlOFNAllowMultiselect Or cdlOFNExplorer Or cdlOFNLongNames
     .DialogTitle = LanguageStrings.ListAddPostscriptFile
     .Filter = LanguageStrings.ListPostscriptFiles & " (*.ps)|*.ps|"
-    .Filename = ""
+    .FileName = vbNullString
     .ShowOpen
-    If .Filename <> "" Then
-     sFiles = Split(.Filename, Chr$(0))
+    If Len(.FileName) > 0 Then
+     sFiles = Split(.FileName, Chr$(0))
      If UBound(sFiles) = 0 Then
        If CheckIfPSFile(sFiles(0)) Then
-         tFilename = GetTempFile(GetTempPath & "PDFCreator\", "~PA")
+         tFilename = GetTempFile(GetPDFCreatorTempfolder, "~PD")
          Kill tFilename
          FileCopy sFiles(0), tFilename
         Else
@@ -536,7 +608,7 @@ Private Sub mnDocument_Click(Index As Integer)
        Next i
        For i = 1 To UBound(sFiles)
         If CheckIfPSFile(sFiles(0)) Then
-          tFilename = GetTempFile(GetTempPath & "PDFCreator\", "~PA")
+          tFilename = GetTempFile(GetPDFCreatorTempfolder, "~PA")
           Kill tFilename
           DoEvents
           FileCopy sFiles(i), tFilename
@@ -554,7 +626,7 @@ Private Sub mnDocument_Click(Index As Integer)
      End If
     End If
    End With
-   stb.Panels("Percent").Text = ""
+   stb.Panels("Percent").Text = vbNullString
   Case 3: ' Delete
    For i = 1 To lsv.ListItems.Count
     If lsv.ListItems(i).Selected = True Then
@@ -592,7 +664,7 @@ Private Sub mnDocument_Click(Index As Integer)
      cFiles.Add lsv.ListItems(i).SubItems(4)
     End If
    Next i
-   tFilename = GetTempFile(GetTempPath & "PDFCreator\", "~PC")
+   tFilename = GetTempFile(GetPDFCreatorTempfolder, "~PC")
    Kill tFilename
    If cFiles.Count > 1 Then
     CombineFiles tFilename, cFiles, stb
@@ -665,7 +737,7 @@ End Sub
 Private Sub Timer1_Timer()
  Timer1.Enabled = False
  DoEvents
- If Dir(App.Path & "\Unload.tmp") <> "" Then
+ If Len(Dir(App.Path & "\Unload.tmp")) > 0 Then
   End
  End If
  CheckPrintJobs
@@ -706,13 +778,12 @@ Private Sub CheckForPrinting()
 End Sub
 
 Private Sub CheckPrintJobs()
- On Local Error Resume Next
  Dim Temppath As String, LItem As ListItem, tColl As Collection, _
   tFile() As String, i As Long, j As Long, kB As Long, MB As Long, GB As Long
  kB = 1024: MB = kB * 1024: GB = MB * 1024
  Set tColl = New Collection
- Temppath = GetTempPath
- Set tColl = GetFiles(Temppath & "PDFCreator\", "~P*.tmp")
+ Temppath = GetPDFCreatorTempfolder
+ Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PD*.tmp")
  If tColl.Count = 0 And lsv.ListItems.Count > 0 Then
   lsv.ListItems.Clear
  End If
@@ -819,14 +890,14 @@ Private Sub SetDocumentMenu()
 End Sub
 
 Private Sub CheckAutosaveAndPrint()
- On Local Error Resume Next
  Dim tColl As Collection, i As Long, tFile() As String, Pathname As String
+
  If Options.UseAutosave = 1 Then
-  Set tColl = GetFiles(GetTempPath & "PDFCreator\", "~P*.tmp")
+  Set tColl = GetFiles(GetPDFCreatorTempfolder, "~P*.tmp")
   For i = 1 To tColl.Count
    tFile = Split(tColl.item(i), "|")
    SplitPath GetAutosaveFilename(tFile(1)), , Pathname
-   If Dir(Pathname, vbDirectory) = "" Then
+   If Len(Dir(Pathname, vbDirectory)) = 0 Then
      If Options.UseAutosaveDirectory = 1 Then
        IfLoggingWriteLogfile "Error: AutoSaveDirectory not found."
       Else

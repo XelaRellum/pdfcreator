@@ -97,6 +97,106 @@ Private Const FILE_ATTRIBUTE_NORMAL = &H80
 Private Const FILE_ATTRIBUTE_READONLY = &H1
 Private Const FILE_ATTRIBUTE_SYSTEM = &H4
 
+Private Const TOKEN_QUERY = (&H8)
+Private Declare Function GetCurrentProcess Lib "kernel32" () As Long
+Private Declare Function OpenProcessToken Lib "advapi32" (ByVal ProcessHandle As Long, ByVal DesiredAccess As Long, TokenHandle As Long) As Long
+Private Declare Function GetUserProfileDirectory Lib "userenv.dll" Alias "GetUserProfileDirectoryA" (ByVal hToken As Long, ByVal lpProfileDir As String, lpcchSize As Long) As Boolean
+
+Public Type PROFILEINFO
+ dwSize As Long
+ dwFlags As Long
+ lpUserName As String
+ lpProfilePath As String
+ lpDefaultPath As String
+ lpServerName As String
+ lpPolicyPath As String
+ hProfile As Long
+End Type
+
+Private Declare Function LoadUserProfile Lib "userenv.dll" (ByVal hToken As Long, ByRef lpProfileInfo As PROFILEINFO) As Long
+
+Private Declare Function LoadLibrary Lib "kernel32" Alias "LoadLibraryA" (ByVal lpLibFileName As String) As Long
+Private Declare Function GetProcAddress Lib "kernel32" (ByVal hModule As Long, ByVal lpProcName As String) As Long
+Private Declare Function FreeLibrary Lib "kernel32" (ByVal hLibModule As Long) As Long
+
+Private Declare Function GetLogicalDriveStrings Lib "kernel32" Alias "GetLogicalDriveStringsA" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
+
+'** Begin Decalrations for RunProgramWait
+Private Const SW_HIDE = 0
+Private Const SW_SHOW = 5
+Private Const STARTF_USESHOWWINDOW = &H1
+
+Private Type STARTUPINFO
+   cb As Long
+   lpReserved As String
+   lpDesktop As String
+   lpTitle As String
+   dwX As Long
+   dwY As Long
+   dwXSize As Long
+   dwYSize As Long
+   dwXCountChars As Long
+   dwYCountChars As Long
+   dwFillAttribute As Long
+   dwFlags As Long
+   wShowWindow As Integer
+   cbReserved2 As Integer
+   lpReserved2 As Long
+   hStdInput As Long
+   hStdOutput As Long
+   hStdError As Long
+End Type
+
+Private Type PROCESS_INFORMATION
+   hProcess As Long
+   hThread As Long
+   dwProcessId As Long
+   dwThreadID As Long
+End Type
+
+Private Type SECURITY_ATTRIBUTES
+        nLength As Long
+        lpSecurityDescriptor As Long
+        bInheritHandle As Long
+End Type
+
+Private Declare Function GetExitCodeProcess Lib "kernel32" (ByVal hProcess As Long, lpExitCode As Long) As Long
+Private Declare Function CreateProcessA Lib "kernel32" (ByVal _
+   lpApplicationName As Long, ByVal lpCommandLine As String, ByVal _
+   lpProcessAttributes As Long, ByVal lpThreadAttributes As Long, _
+   ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, _
+   ByVal lpEnvironment As Long, ByVal lpCurrentDirectory As Long, _
+   lpStartupInfo As STARTUPINFO, lpProcessInformation As _
+   PROCESS_INFORMATION) As Long
+Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+Private Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
+
+Const NORMAL_PRIORITY_CLASS = &H20&
+Const STILL_ACTIVE = &H103
+'** End Decalrations for RunProgramWait
+
+Public Const SHCNE_ASSOCCHANGED = &H8000000
+Public Const SHCNF_IDLIST = &H0&
+
+Public Declare Sub SHChangeNotify Lib "shell32.dll" _
+(ByVal wEventId As Long, ByVal uFlags As Long, dwItem1 As Any, dwItem2 As Any)
+
+
+' API's for IsValidPath
+Private Declare Function InStrNullChar Lib "kernel32.dll" Alias "lstrlenA" (ByVal lpString As Any) As Long
+Private Declare Function PathFileExists Lib "shlwapi.dll" Alias "PathFileExistsA" (ByVal pszPath As String) As Long
+Private Declare Function PathIsUNC Lib "shlwapi.dll" Alias "PathIsUNCA" (ByVal pszPath As String) As Long
+Private Declare Function PathIsUNCServer Lib "shlwapi.dll" Alias "PathIsUNCServerA" (ByVal pszPath As String) As Long
+Private Declare Function PathRemoveFileSpec Lib "shlwapi.dll" Alias "PathRemoveFileSpecA" (ByVal pszPath As String) As Long
+Private Declare Function PathStripToRoot Lib "shlwapi.dll" Alias "PathStripToRootA" (ByVal pszPath As String) As Long
+Private Declare Sub PathUnquoteSpaces Lib "shlwapi.dll" Alias "PathUnquoteSpacesA" (ByVal lpsz As String)
+
+'API's for FormInTaskbar
+'Private Declare Function GetDesktopWindow Lib "user32" () As Long
+Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long) As Long
+Private Declare Function LockWindowUpdate Lib "user32" (ByVal hwndLock As Long) As Long
+Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
+
 Public Function LoadIcon(ByVal lngSize As IconSize, ByVal strPath As String, Icon As IPictureDisp) As Long
  Dim iuUnkown As IUnknown, itIcon As IconType, CLSID As CLSIdType, _
   sfiShellInfo As ShellFileInfoType
@@ -117,30 +217,50 @@ Public Function LoadIcon(ByVal lngSize As IconSize, ByVal strPath As String, Ico
  End If
 End Function
 
-Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional Filename As String, Optional File As String, Optional Extension As String)
+Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional FileName As String, Optional File As String, Optional Extension As String)
  Dim nPos As Integer
  nPos = InStrRev(FullPath, "\")
  If nPos > 0 Then
    If Left$(FullPath, 2) = "\\" Then
     If nPos = 2 Then
-     Drive = FullPath: Path = "": Filename = "": File = ""
-     Extension = ""
+     Drive = FullPath: Path = vbNullString: FileName = vbNullString: File = vbNullString
+     Extension = vbNullString
      Exit Sub
     End If
    End If
    Path = Left$(FullPath, nPos - 1)
-   Filename = Mid$(FullPath, nPos + 1)
-   nPos = InStrRev(Filename, ".")
+   FileName = Mid$(FullPath, nPos + 1)
+   nPos = InStrRev(FileName, ".")
    If nPos > 0 Then
-     File = Left$(Filename, nPos - 1)
-     Extension = Mid$(Filename, nPos + 1)
+     File = Left$(FileName, nPos - 1)
+     Extension = Mid$(FileName, nPos + 1)
     Else
-     File = Filename
-     Extension = ""
+     File = FileName
+     Extension = vbNullString
    End If
   Else
-   Path = FullPath: Filename = ""
-   File = "": Extension = ""
+   nPos = InStrRev(FullPath, ":")
+   If nPos > 0 Then
+     Path = Mid(FullPath, 1, nPos - 1): FileName = Mid(FullPath, nPos + 1)
+     nPos = InStrRev(FileName, ".")
+     If nPos > 0 Then
+       File = Left$(FileName, nPos - 1)
+       Extension = Mid$(FileName, nPos + 1)
+      Else
+       File = FileName
+       Extension = vbNullString
+     End If
+    Else
+     Path = vbNullString: FileName = FullPath
+     nPos = InStrRev(FileName, ".")
+     If nPos > 0 Then
+       File = Left$(FileName, nPos - 1)
+       Extension = Mid$(FileName, nPos + 1)
+      Else
+       File = FileName
+       Extension = vbNullString
+     End If
+   End If
  End If
  If Left$(Path, 2) = "\\" Then
    nPos = InStr(3, Path, "\")
@@ -162,7 +282,6 @@ Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path
 End Sub
 
 Public Function GetWindowsDirectory() As String
- On Local Error Resume Next
  Dim res As Long, Windir As String
  Windir = Space$(MAX_PATH)
  res = GetWindowsDirectoryA(MAX_PATH, Windir)
@@ -174,39 +293,52 @@ Public Function GetWindowsDirectory() As String
 End Function
 
 Public Function GetTempPath() As String
- On Local Error Resume Next
  Dim res As Long, Tempdir As String, r As clsRegistry
- 
+
  Set r = New clsRegistry
  r.hkey = HKEY_CURRENT_USER
  r.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
  Tempdir = Trim$(r.GetRegistryValue("Local Settings"))
- If Right$(Tempdir, 1) = "\" Then
-   GetTempPath = Tempdir & "Temp\"
+ If Tempdir <> "" Then
+   If Right$(Tempdir, 1) = "\" Then
+     Tempdir = Tempdir & "Temp\"
+    Else
+     Tempdir = Tempdir & "\Temp\"
+   End If
+   If Len(Dir(Tempdir, vbDirectory)) = 0 Then
+    MakePath Tempdir
+   End If
+   If Dir(Tempdir, vbDirectory) = "" Then
+    'Can't create tempdir
+    Tempdir = Space$(MAX_PATH)
+    res = GetTempPathA(MAX_PATH, Tempdir)
+    If res > 0 Then
+      GetTempPath = Left$(Tempdir, res)
+     Else
+      GetTempPath = "C:\"
+    End If
+   End If
+   GetTempPath = Tempdir
   Else
-   GetTempPath = Tempdir & "\Temp\"
+   Tempdir = Space$(MAX_PATH)
+   res = GetTempPathA(MAX_PATH, Tempdir)
+   If res > 0 Then
+     GetTempPath = Left$(Tempdir, res)
+    Else
+     GetTempPath = "C:\"
+   End If
  End If
  Set r = Nothing
- If Tempdir = "" Then
-  Tempdir = Space$(MAX_PATH)
-  res = GetTempPathA(MAX_PATH, Tempdir)
-  If res > 0 Then
-    GetTempPath = Left$(Tempdir, res)
-   Else
-    GetTempPath = "C:\"
-  End If
- End If
 End Function
 
 Public Function GetTempFile(Optional ByVal Path As String, Optional Prefix As String) As String
- On Local Error Resume Next
  Dim res As Long, Tempfile As String, tPath As String
  Tempfile = Space$(MAX_PATH)
  tPath = Trim$(Path)
  If Dir(tPath, vbDirectory) = "" Then
   tPath = GetTempPath
  End If
- 
+
  res = GetTempFileNameA(tPath, Prefix, 0, Tempfile)
  If res <> 0 Then
    GetTempFile = Left$(Tempfile, InStr(Tempfile, Chr$(0)) - 1)
@@ -217,7 +349,7 @@ End Function
 
 Public Sub OpenDocument(sFilename As String)
  Dim sDirectory As String, res As Long, handle As Long
-  
+
  handle = GetDesktopWindow()
  res = ShellExecute(handle, "open", sFilename, _
     vbNullString, vbNullString, vbNormalFocus)
@@ -250,17 +382,15 @@ Public Function GetFiles(ByVal Path As String, Optional Searchmask As String = "
  Set tColl = Nothing
 End Function
 
-
-Public Sub CombineFiles(ByVal Filename As String, Files As Collection, stb As StatusBar)
- On Local Error GoTo ErrorHandler
+Public Sub CombineFiles(ByVal FileName As String, Files As Collection, stb As StatusBar)
  Dim i As Long, fnSource As Long, fnDest As Long, sBuffer As String, _
   aLen As Double, tLen As Double
- 
- Filename = Trim$(Filename)
- If Filename = "" Or Files.Count = 0 Or Right$(Filename, 1) = "\" Then
+
+ FileName = Trim$(FileName)
+ If FileName = vbNullString Or Files.Count = 0 Or Right$(FileName, 1) = "\" Then
   Exit Sub
  End If
- If Dir(Filename) <> "" Then
+ If Len(Dir(FileName)) > 0 Then
   Exit Sub
  End If
  If Files.Count = 1 Then
@@ -271,7 +401,7 @@ Public Sub CombineFiles(ByVal Filename As String, Files As Collection, stb As St
  For i = 1 To Files.Count
   aLen = aLen + FileLen(Files.item(i))
  Next i
- Open Filename For Binary As #fnDest
+ Open FileName For Binary As #fnDest
  For i = 1 To Files.Count
   DoEvents
   If FileLen(Files.item(i)) > 0 Then
@@ -288,15 +418,12 @@ Public Sub CombineFiles(ByVal Filename As String, Files As Collection, stb As St
   DoEvents
  Next i
  Close #fnDest
- stb.Panels("Percent").Text = ""
- Exit Sub
-ErrorHandler:
-' MsgBox Err.Description
+ stb.Panels("Percent").Text = vbNullString
 End Sub
 
 Public Sub SetFont(Frm As Form, ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
  Dim ctl As Control
- 
+
  For Each ctl In Frm.Controls
   If TypeOf ctl Is Label Or _
      TypeOf ctl Is Form Or _
@@ -320,7 +447,7 @@ End Sub
 
 Public Function ReplaceForbiddenChars(chkStr As String, Optional ReplaceChar As String = "_") As String
  Dim tStr As String, i As Long, Forbiddenchars As String
- Forbiddenchars = "\/:*?<>|" & Chr$(34)
+ Forbiddenchars = "\/:*?<>|"""
  tStr = chkStr
  For i = 1 To Len(Forbiddenchars)
   tStr = Replace$(tStr, Mid$(Forbiddenchars, i, 1), ReplaceChar)
@@ -331,7 +458,7 @@ End Function
 Public Function IsForbiddenChars(chkStr As String) As Boolean
  Dim i As Long, Forbiddenchars As String
  IsForbiddenChars = False
- Forbiddenchars = "\/:*?<>|" & Chr$(34)
+ Forbiddenchars = "\/:*?<>|"""
  For i = 1 To Len(Forbiddenchars)
   If InStr(chkStr, Mid$(Forbiddenchars, i, 1)) > 0 Then
    IsForbiddenChars = True
@@ -379,9 +506,8 @@ Public Function IsFormLoaded(Form As Form) As Boolean
 End Function
 
 Public Function GetDesktop() As String
- On Local Error Resume Next
  Dim TempDesktop As String, r As clsRegistry
- 
+
  Set r = New clsRegistry
  r.hkey = HKEY_CURRENT_USER
  r.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
@@ -399,9 +525,8 @@ Public Function GetDesktop() As String
 End Function
 
 Public Function GetMyFiles() As String
- On Local Error Resume Next
  Dim TempMyfiles As String, r As clsRegistry
- 
+
  Set r = New clsRegistry
  r.hkey = HKEY_CURRENT_USER
  r.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
@@ -418,9 +543,28 @@ Public Function GetMyFiles() As String
  End If
 End Function
 
-Public Function GetFileAttributesStr(Filename As String) As String
+Public Function GetMyAppData() As String
+ Dim TempMyAppData As String, r As clsRegistry
+
+ Set r = New clsRegistry
+ r.hkey = HKEY_CURRENT_USER
+ r.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
+ TempMyAppData = Trim$(r.GetRegistryValue("AppData"))
+ If Right$(TempMyAppData, 1) <> "\" Then
+  GetMyAppData = TempMyAppData & "\"
+ End If
+ Set r = Nothing
+ If TempMyAppData = "" Then
+  GetMyAppData = GetSpecialFolder(ssfAPPDATA)
+  If Trim$(GetMyAppData) = "" Then
+   GetMyAppData = "C:\"
+  End If
+ End If
+End Function
+
+Public Function GetFileAttributesStr(FileName As String) As String
  Dim hFind As Long, wFD As WIN32_FIND_DATA, Attr As Long, AA As String
- hFind = FindFirstFile(Filename, wFD)
+ hFind = FindFirstFile(FileName, wFD)
  Attr = wFD.dwFileAttributes
  If Attr And FILE_ATTRIBUTE_ARCHIVE Then AA = AA & "A"
  If Attr And FILE_ATTRIBUTE_COMPRESSED Then AA = AA & "C"
@@ -431,3 +575,227 @@ Public Function GetFileAttributesStr(Filename As String) As String
  If Attr And FILE_ATTRIBUTE_SYSTEM Then AA = AA & "S"
  GetFileAttributesStr = AA
 End Function
+
+Public Function CheckPath(PathOrFile As String) As Boolean
+ On Local Error GoTo ErrorHandler
+ CheckPath = True
+ Dir PathOrFile
+ Exit Function
+ErrorHandler:
+ CheckPath = False
+End Function
+
+Public Function LoadDLL(DLLPath As String) As Long
+ LoadDLL = LoadLibrary(DLLPath)
+End Function
+
+Public Sub UnLoadDLL(DllHandle As Long)
+ If DllHandle <> 0 Then
+  FreeLibrary DllHandle
+ End If
+End Sub
+
+Public Function MakePath(ByVal Verz As String) As Boolean
+ Dim Success As Boolean, dummy As String, Entry As String
+
+ Err = 0: Success = True: dummy = "": Entry = Verz
+ On Local Error Resume Next
+ While Len(Entry) > 0 And Success = True
+  If Left$(Entry, 1) = "\" Then
+    dummy = dummy + "\"
+    Entry = Mid$(Entry, 2)
+   ElseIf Mid$(Entry, 2, 2) = ":\" Then
+    dummy = dummy + Left$(Entry, 3)
+    Entry = Mid$(Entry, 4)
+  End If
+  While Left$(Entry, 1) <> "\" And Len(Entry) > 0
+   dummy = dummy + Left$(Entry, 1)
+   Entry = Mid$(Entry, 2)
+  Wend
+  Err = 0
+  MkDir dummy
+  If Err <> 75 And Err <> 0 Then Success = False
+ Wend
+ On Local Error GoTo 0
+
+ MakePath = Success
+End Function
+
+Public Function GetDrives() As Collection
+ Dim L As Long, Buffer As String, res As Long, drives As String, drv() As String, _
+  i As Long
+ L = 64: Buffer = Space(L)
+ res = GetLogicalDriveStrings(L, Buffer)
+ drives = Left$(Buffer, res)
+ Set GetDrives = New Collection
+ If Len(drives) > 0 Then
+  If InStr(drives, Chr$(0)) > 0 Then
+    drv = Split(drives, Chr$(0))
+    For i = LBound(drv) To UBound(drv)
+     If Trim$(drv(i)) <> "" Then
+      GetDrives.Add drv(i)
+     End If
+    Next i
+   Else
+    GetDrives.Add drives
+  End If
+ End If
+End Function
+
+Public Function CompletePath(Path As String) As String
+ Path = Trim$(Path)
+ If Right$(Path, 1) = "\" Then
+   CompletePath = Path
+  Else
+   CompletePath = Path & "\"
+ End If
+End Function
+
+Public Function RunProgramWait(strCmdLine As String, Optional showWindow As Boolean = True) As Long
+ Dim lngRetCode As Long, proc As PROCESS_INFORMATION, start As STARTUPINFO, _
+  secAttr As SECURITY_ATTRIBUTES, lngRet As Long, lngExit As Long
+
+ start.cb = Len(start)
+ If showWindow = False Then
+  start.dwFlags = STARTF_USESHOWWINDOW
+  start.wShowWindow = SW_HIDE
+ End If
+
+ lngRet = CreateProcessA(0&, strCmdLine, _
+  0&, 0&, 1&, NORMAL_PRIORITY_CLASS, 0&, 0&, start, proc)
+
+ GetExitCodeProcess proc.hProcess, lngExit
+
+ Do While lngExit = STILL_ACTIVE
+  DoEvents
+  Sleep 100
+  GetExitCodeProcess proc.hProcess, lngExit
+ Loop
+ lngRet = CloseHandle(proc.hProcess)
+
+ RunProgramWait = lngExit
+End Function
+
+Public Function EnterPasswords(ByRef UserPass As String, ByRef OwnerPass As String, f As Form) As Boolean
+ If Options.PDFUserPass = True Or Options.PDFOwnerPass = True Then
+   With f
+    .Visible = False
+    .fraUserPass.Enabled = Options.PDFUserPass
+    .lblUserPass.Enabled = Options.PDFUserPass
+    .lblUserPassRepeat.Enabled = Options.PDFUserPass
+    .fraOwnerPass.Enabled = Options.PDFOwnerPass
+    .lblOwnerPass.Enabled = Options.PDFUserPass
+    .lblOwnerPassRepeat.Enabled = Options.PDFUserPass
+    .iPasswords = Abs(Options.PDFUserPass) + Abs(Options.PDFOwnerPass * 2)
+    If Options.PDFUserPass = False Then
+     .txtOwnerPass.SetFocus
+    End If
+    .Show
+    Do
+     Sleep 100
+     DoEvents
+    Loop While .bFinished = False
+   End With
+   EnterPasswords = f.bSuccess
+   UserPass = f.txtUserPass.Text
+   OwnerPass = f.txtOwnerPass.Text
+   Unload f
+  Else
+   EnterPasswords = False
+   UserPass = ""
+   OwnerPass = ""
+ End If
+End Function
+
+Public Function IsGoodDrive(tDrive As String) As Boolean
+ On Local Error GoTo ErrorHandler:
+ Dim tStr As String
+ IsGoodDrive = False
+ tStr = Dir(Mid$(tDrive, 1, 2) & "\", vbDirectory)
+ IsGoodDrive = True
+ Exit Function
+ErrorHandler:
+ Err.Clear
+End Function
+
+Public Function IsValidPath(Path As String, Optional ByVal TestUNCPaths As Boolean = True) As Boolean
+ Dim i As Long, c As Long, nBytes() As Byte, nChar As String, nOK As Boolean, _
+  nParentPath As String, nPos As Long, nRoot As String, nPath As String, _
+  nPathParts() As String, nStart As Long
+
+ Const kCharAsterisk = 42, kCharBackSlash = 92, kCharColon = 58, _
+  kCharGreaterThan = 62, kCharLowerThan = 60, kCharPipe = 124, _
+  kCharQuestion = 63, kCharQuote = 34, kCharSlash = 47
+
+ nPath = Path
+ PathUnquoteSpaces nPath
+ nPath = Left$(nPath, InStrNullChar(nPath))
+ If Not CBool(PathIsUNC(nPath) And Not TestUNCPaths) Then
+  If CBool(PathFileExists(nPath)) Then
+   IsValidPath = True
+   Exit Function
+  End If
+ End If
+ nRoot = nPath
+ If PathStripToRoot(nRoot) Then
+  nRoot = Left$(nRoot, InStrNullChar(nRoot))
+  If PathIsUNC(nRoot) Then
+    nPos = InStrRev(nRoot, "\")
+    nRoot = Left$(nRoot, nPos - 1)
+    If PathIsUNCServer(nRoot) Then
+     nPath = Mid$(nPath, Len(nRoot) + 1)
+    End If
+   Else
+    nPath = Mid$(nPath, Len(nRoot) + 1)
+  End If
+  If Len(nPath) Then
+   nPathParts = Split(nPath, "\")
+   If Len(nPathParts(0)) Then
+     nStart = 0
+    Else
+     nStart = 1
+   End If
+   For i = nStart To UBound(nPathParts)
+    nBytes = StrConv(nPathParts(i), vbFromUnicode)
+    For c = 0 To UBound(nBytes)
+     Select Case nBytes(c)
+      Case Is < 32, Is > 255, kCharAsterisk, kCharBackSlash, kCharColon, kCharGreaterThan, kCharLowerThan, kCharPipe, kCharQuestion, kCharQuote, kCharSlash
+       nOK = False
+       Exit For
+      Case Else
+       nOK = True
+     End Select
+    Next c
+    If Not nOK Then
+     Exit For
+    End If
+   Next i
+   IsValidPath = nOK
+  End If
+ End If
+End Function
+
+Public Sub FormInTaskbar(Form As Form, ByVal ShowInTaskBar As Boolean, Optional ByVal NoFlicker As Boolean)
+ Dim nStyle As Long, nVisible As Boolean
+ Const GWL_EXSTYLE = (-20), WS_EX_APPWINDOW = &H40000
+ With Form
+  nVisible = .Visible
+  If NoFlicker And nVisible Then
+   LockWindowUpdate GetDesktopWindow()
+  End If
+  .Visible = False
+  nStyle = GetWindowLong(.hWnd, GWL_EXSTYLE)
+  Select Case ShowInTaskBar
+   Case True
+    nStyle = nStyle Or WS_EX_APPWINDOW
+   Case False
+    nStyle = nStyle And Not WS_EX_APPWINDOW
+  End Select
+  SetWindowLong .hWnd, GWL_EXSTYLE, nStyle
+  .Refresh
+  .Visible = nVisible
+  If NoFlicker And nVisible Then
+   LockWindowUpdate 0&
+  End If
+ End With
+End Sub

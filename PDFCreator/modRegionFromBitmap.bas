@@ -44,7 +44,7 @@ Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hDC As Long) As L
 Private Declare Function CreateDIBSection Lib "gdi32" (ByVal hDC As Long, pBitmapInfo As BITMAPINFO, ByVal un As Long, ByVal lplpVoid As Long, ByVal handle As Long, ByVal dw As Long) As Long
 Private Declare Function SelectObject Lib "gdi32" (ByVal hDC As Long, ByVal hObject As Long) As Long
 Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
-Private Declare Function GetDIBits Lib "gdi32" (ByVal aHDC As Long, ByVal hBitmap As Long, ByVal nStartScan As Long, ByVal nNumScans As Long, lpBits As Any, lpBI As BITMAPINFO, ByVal wUsage As Long) As Long
+Private Declare Function GetDIBits Lib "gdi32" (ByVal aHDC As Long, ByVal hBitmap As Long, ByVal nStartScan As Long, ByVal nNumScans As Long, lpBits As Any, lpbi As BITMAPINFO, ByVal wUsage As Long) As Long
 Private Declare Function DeleteDC Lib "gdi32" (ByVal hDC As Long) As Long
 Private Const BI_RGB = 0&
 Private Const DIB_RGB_COLORS = 0
@@ -61,10 +61,10 @@ Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVa
 Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
 Private Declare Function SetLayeredWindowAttributes Lib "user32" (ByVal hWnd As Long, ByVal crKey As Long, ByVal bAlpha As Byte, ByVal dwFlags As Long) As Long
 
-Public Function MakeFormTransparent(frm As Form, ByVal lngTransColor As Long)
+Public Function MakeFormTransparent(Frm As Form, ByVal lngTransColor As Long)
     Dim hRegion As Long
     Dim WinStyle As Long
-    
+
     'Systemfarben ggf. in RGB-Werte übersetzen
     If lngTransColor < 0 Then OleTranslateColor lngTransColor, 0&, lngTransColor
 
@@ -73,14 +73,14 @@ Public Function MakeFormTransparent(frm As Form, ByVal lngTransColor As Long)
     'SetLayeredWindowAttributes unter diesem Betriebsystem unterstützt wird.
     If IsFunctionExported("SetLayeredWindowAttributes", "user32") Then
         'Den Fenster-Stil auf "Layered" setzen
-        WinStyle = GetWindowLong(frm.hWnd, GWL_EXSTYLE)
+        WinStyle = GetWindowLong(Frm.hWnd, GWL_EXSTYLE)
         WinStyle = WinStyle Or WS_EX_LAYERED
-        SetWindowLong frm.hWnd, GWL_EXSTYLE, WinStyle
-        SetLayeredWindowAttributes frm.hWnd, lngTransColor, 0&, LWA_COLORKEY
-        
+        SetWindowLong Frm.hWnd, GWL_EXSTYLE, WinStyle
+        SetLayeredWindowAttributes Frm.hWnd, lngTransColor, 0&, LWA_COLORKEY
+
     Else 'Manuell die Region erstellen und übernehmen
-        hRegion = RegionFromBitmap(frm, lngTransColor)
-        SetWindowRgn frm.hWnd, hRegion, True
+        hRegion = RegionFromBitmap(Frm, lngTransColor)
+        SetWindowRgn Frm.hWnd, hRegion, True
         DeleteObject hRegion
     End If
 End Function
@@ -91,7 +91,7 @@ Private Function RegionFromBitmap(picSource As Object, ByVal lngTransColor As Lo
     Dim lngStart As Long
     Dim x As Long, y As Long
     Dim hDC As Long
-    
+
     Dim bi24BitInfo As BITMAPINFO
     Dim iBitmap As Long
     Dim BWidth As Long
@@ -100,10 +100,10 @@ Private Function RegionFromBitmap(picSource As Object, ByVal lngTransColor As Lo
     Dim PicBits() As Byte
     Dim Col As Long
     Dim OldScaleMode As ScaleModeConstants
-    
+
     OldScaleMode = picSource.ScaleMode
     picSource.ScaleMode = vbPixels
-    
+
     hDC = picSource.hDC
     lngWidth = picSource.ScaleWidth '- 1
     lngHeight = picSource.ScaleHeight - 1
@@ -122,7 +122,7 @@ Private Function RegionFromBitmap(picSource As Object, ByVal lngTransColor As Lo
     End With
     'ByteArrays in der erforderlichen Größe anlegen
     ReDim PicBits(0 To bi24BitInfo.bmiHeader.biWidth * 3 - 1, 0 To bi24BitInfo.bmiHeader.biHeight - 1)
-    
+
     iDC = CreateCompatibleDC(hDC)
     'Gerätekontextunabhängige Bitmap (DIB) erzeugen
     iBitmap = CreateDIBSection(iDC, bi24BitInfo, DIB_RGB_COLORS, ByVal 0&, ByVal 0&, ByVal 0&)
@@ -132,9 +132,9 @@ Private Function RegionFromBitmap(picSource As Object, ByVal lngTransColor As Lo
     Call BitBlt(iDC, 0, 0, bi24BitInfo.bmiHeader.biWidth, bi24BitInfo.bmiHeader.biHeight, hDC, 0, 0, vbSrcCopy)
     'Gerätekontextunabhängige Bitmap in ByteArrays kopieren
     Call GetDIBits(hDC, iBitmap, 0, bi24BitInfo.bmiHeader.biHeight, PicBits(0, 0), bi24BitInfo, DIB_RGB_COLORS)
-    
+
     'Wir brauchen nur den Array, also können wir die Bitmap direkt wieder löschen.
-    
+
     'DIB-DC
     Call DeleteDC(iDC)
     'Bitmap
@@ -149,7 +149,7 @@ Private Function RegionFromBitmap(picSource As Object, ByVal lngTransColor As Lo
                     PicBits(x * 3 + 1, lngHeight - y + 1), _
                     PicBits(x * 3, lngHeight - y + 1) _
                     ) = lngTransColor
-                
+
                 x = x + 1
             Loop
             If x <= lngWidth Then
@@ -177,19 +177,19 @@ End Function
 'Diese Funktion überprüft, ob die angegebene Function von einer DLL exportiert wird.
 Private Function IsFunctionExported(ByVal sFunction As String, ByVal sModule As String) As Boolean
     Dim hMod As Long, lpFunc As Long, bLibLoaded As Boolean
-    
+
     'Handle der DLL erhalten
     hMod = GetModuleHandle(sModule)
     If hMod = 0 Then 'Falls DLL nicht registriert ...
         hMod = LoadLibrary(sModule) 'DLL in den Speicher laden.
         If hMod Then bLibLoaded = True
     End If
-    
+
     If hMod Then
         If GetProcAddress(hMod, sFunction) Then IsFunctionExported = True
     End If
-    
+
     If bLibLoaded Then Call FreeLibrary(hMod)
-    
+
 End Function
 
