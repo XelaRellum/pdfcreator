@@ -1,10 +1,28 @@
 ; PDFCreator-Patch Installation
-; Setup created with Inno Setup 5.0.5 Beta (ISPack with included ISPP) and ISTool 4.2.7
+; Setup created with Inno Setup QuickStart Pack 5.0.7 (with ISPP) and ISTool 5.0.6.1
 ; Installation from Frank Heindörfer, Philip Chinery
 
-;#define Test
-#define SetupLZMACompressionMode "ultra"
-;#define SetupLZMACompressionMode "fast"
+;#define FastCompilation
+;#define CompileHelp
+;#define UseUPX
+
+#ifdef FastCompilation
+ #define CompressionMode="none"
+ #define SetupLZMACompressionMode "none"
+#else
+ #define CompressionMode="lzma"
+ #define SetupLZMACompressionMode "ultra"
+#endif
+
+;remove the german localization
+#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
+#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
+#expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+
+#ifdef CompileHelp
+ #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
+ #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
+#endif
 
 #define ProgramLicense "GNU"
 
@@ -49,21 +67,6 @@
 ;#define UpdateIsPossible
 #define UpdateIsPossibleMinVersion "0.8.1"
 
-[_ISToolPreCompile]
-#If (SetupLZMACompressionMode=="ultra")
-;Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   -d
-;Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe -d
-;Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe -d
-
-Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   --best --compress-icons=0 --crp-ms=999999
-Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe --best --compress-icons=0 --crp-ms=999999
-Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe --best --compress-icons=0 --crp-ms=999999
-
-;Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   -3 --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe -3 --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe -3 --compress-icons=0 --crp-ms=999999
-#Endif
-
 [Setup]
 AllowNoIcons=false
 AlwaysRestart=false
@@ -106,7 +109,38 @@ Uninstallable=false
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
 Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {sys}; Flags: comparetimestamp
+
+;vblocal.exe from IPDK
+Source: C:\IPDK\vblocal.exe; DestDir: {app}; Flags: deleteafterinstall overwritereadonly onlyifdoesntexist ignoreversion
+
+;upx for compressing
+#ifdef UseUPX
+ ; Source: UPX\upx.exe; DestDir: {app}; Flags: deleteafterinstall overwritereadonly ignoreversion
+#ENDIF
 #Endif
+
+[Run]
+#IFNDEF Test
+;german localization
+Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Check: IsLanguage('german')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Check: IsLanguage('german')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Check: IsLanguage('german')
+;italian localization
+Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Check: IsLanguage('italian')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Check: IsLanguage('italian')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Check: IsLanguage('italian')
+;french localization
+Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
+
+;compress exe files with upx
+#ifdef UseUPX
+ ; Filename: {app}\upx.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe -7 --compress-icons=0 --crp-ms=999999; Flags: runhidden
+ ; Filename: {app}\upx.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe -7 --compress-icons=0 --crp-ms=999999; Flags: runhidden
+ ; Filename: {app}\upx.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe -7 --compress-icons=0 --crp-ms=999999; Flags: runhidden
+#ENDIF
+#ENDIF
 
 [Languages]
 #include "languages.inc"
@@ -120,6 +154,12 @@ type
 var
  msg : TAStr;
  Win9x, WinNT, Win2000 : String;
+
+function IsLanguage(LangName: String): Boolean;
+begin
+ If LowerCase(LangName)=Lowercase(ActiveLanguage) then
+  Result:=True;
+end;
 
 function ProgramIsInstalled(): Boolean;
 begin

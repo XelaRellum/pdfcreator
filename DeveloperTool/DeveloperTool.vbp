@@ -23,6 +23,7 @@ Module=modLanguage; ..\Common\modLanguages.bas
 Module=modApiConstants; ..\Common\modApiConstants.bas
 Module=modApiFunctions; ..\Common\modApiFunctions.bas
 Module=modApiTypesEnums; ..\Common\modApiTypesEnums.bas
+Module=modGlobal; ..\Common\modGlobal.bas
 IconForm="frmMain"
 Startup="frmMain"
 HelpFile=""

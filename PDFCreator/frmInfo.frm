@@ -14,20 +14,6 @@ Begin VB.Form frmInfo
    ScaleWidth      =   6000
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
-   Begin VB.PictureBox picPDF 
-      Appearance      =   0  '2D
-      BackColor       =   &H80000005&
-      BorderStyle     =   0  'Kein
-      ForeColor       =   &H80000008&
-      Height          =   1035
-      Left            =   345
-      Picture         =   "frmInfo.frx":7A7CC
-      ScaleHeight     =   1035
-      ScaleWidth      =   2085
-      TabIndex        =   2
-      Top             =   990
-      Width           =   2085
-   End
    Begin VB.PictureBox picCredits 
       Appearance      =   0  '2D
       BackColor       =   &H80000005&
@@ -45,16 +31,16 @@ Begin VB.Form frmInfo
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":81942
+         Picture         =   "frmInfo.frx":7A7CC
          Style           =   1  'Grafisch
-         TabIndex        =   4
+         TabIndex        =   0
          Top             =   4080
          Width           =   975
       End
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":81CA7
+         Picture         =   "frmInfo.frx":7AB31
          Top             =   4020
          Width           =   4380
       End
@@ -66,13 +52,27 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   16000
       Left            =   1470
-      Picture         =   "frmInfo.frx":89B85
+      Picture         =   "frmInfo.frx":82A0F
       ScaleHeight     =   16005
       ScaleWidth      =   4350
-      TabIndex        =   0
+      TabIndex        =   4
       Top             =   1260
       Visible         =   0   'False
       Width           =   4350
+   End
+   Begin VB.PictureBox picPDF 
+      Appearance      =   0  '2D
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'Kein
+      ForeColor       =   &H80000008&
+      Height          =   1035
+      Left            =   345
+      Picture         =   "frmInfo.frx":1271D9
+      ScaleHeight     =   1035
+      ScaleWidth      =   2085
+      TabIndex        =   2
+      Top             =   990
+      Width           =   2085
    End
    Begin VB.PictureBox picTitle 
       Appearance      =   0  '2D

@@ -170,8 +170,8 @@ On Error GoTo ErrPtnr_OnError
 50030  With reg
 50040   .hkey = hProfile
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
-50060   AppData = .GetRegistryValue("AppData") & "\"
-50070   LocalTemp = .GetRegistryValue("Local Settings") & "\Temp\"
+50060   AppData = CompletePath(.GetRegistryValue("AppData"))
+50070   LocalTemp = CompletePath(.GetRegistryValue("Local Settings")) & "Temp\"
 50080  End With
 50090  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

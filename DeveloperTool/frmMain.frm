@@ -713,8 +713,10 @@ Private Sub cmdLanguages_Click(Index As Integer)
  End If
  Screen.MousePointer = vbHourglass
  stb.Panels("Count").Text = lsvLanguages.ListItems.Count & " Entries"
- stb.Panels("EngCount").Text = EngCount & " english entries"
- stb.Panels("GerCount").Text = GerCount & " german entries"
+ If stb.Panels.Count >= 3 Then
+  stb.Panels("EngCount").Text = EngCount & " english entries"
+  stb.Panels("GerCount").Text = GerCount & " german entries"
+ End If
  Screen.MousePointer = vbNormal
 End Sub
 
@@ -744,21 +746,27 @@ Private Sub cmdOptions_Click(Index As Integer)
     End If
     .Show vbModal, Me
    End With
-   stb.Panels("EngCount").Text = EngCount & " english entries"
-   stb.Panels("GerCount").Text = GerCount & " german entries"
+   If stb.Panels.Count >= 3 Then
+    stb.Panels("EngCount").Text = EngCount & " english entries"
+    stb.Panels("GerCount").Text = GerCount & " german entries"
+   End If
   Case 1: 'Edit
    EditItem = True
    ShowOption
-   stb.Panels("EngCount").Text = EngCount & " english entries"
-   stb.Panels("GerCount").Text = GerCount & " german entries"
+   If stb.Panels.Count >= 3 Then
+    stb.Panels("EngCount").Text = EngCount & " english entries"
+    stb.Panels("GerCount").Text = GerCount & " german entries"
+   End If
   Case 2: 'Delete
    aw = MsgBox("Delete this option?", vbQuestion Or vbYesNo)
    If aw = vbYes Then
     lsvOptions.ListItems.Remove lsvOptions.SelectedItem.Index
     ChangeOptions = True
    End If
-   stb.Panels("EngCount").Text = EngCount & " english entries"
-   stb.Panels("GerCount").Text = GerCount & " german entries"
+   If stb.Panels.Count >= 3 Then
+    stb.Panels("EngCount").Text = EngCount & " english entries"
+    stb.Panels("GerCount").Text = GerCount & " german entries"
+   End If
   Case 3: 'Save
    With cdlg
     .Filename = "Options.txt"
@@ -1013,7 +1021,7 @@ Private Sub CreateModLanguages()
  Next i
 
  ' InitLanguagesStrings
- Print #fn, "Private Sub InitLanguagesStrings()"
+ Print #fn, "Public Sub InitLanguagesStrings()"
  Print #fn, " With LanguageStrings"
  For i = 1 To Secs.Count
   If UCase$(Secs(i)) <> "SETUP" Then
@@ -1030,24 +1038,11 @@ Private Sub CreateModLanguages()
  Print #fn, " End With"
  Print #fn, "End Sub"
  Print #fn, ""
- ' CheckSetting
- Print #fn, "Private Function CheckSetting(ByVal CheckStr As String, ByVal OldStr As String) As String"
- Print #fn, " CheckStr = Trim$(CheckStr)"
- Print #fn, " If Len(CheckStr) > 0 Then"
- Print #fn, "   CheckSetting = CheckStr"
- Print #fn, "  Else"
- Print #fn, "   CheckSetting = OldStr"
- Print #fn, " End If"
- Print #fn, "End Function"
- Print #fn, ""
-
  Close #fn
-
  With frmText
   .Filename = Filename
   .Show vbModal, Me
  End With
-
 End Sub
 
 Private Sub CreateModOptions()
@@ -1342,6 +1337,7 @@ Private Sub CreateModOptions()
  Print #fn, " If StopPrinter = True Then"
  Print #fn, "   Options.PrinterStop = 1"
  Print #fn, "   PrinterStop = True"
+ Print #fn, "   PrintSelectedJobs = False"
  Print #fn, "  Else"
  Print #fn, "   Options.PrinterStop = 0"
  Print #fn, "   PrinterStop = False"
@@ -2084,6 +2080,7 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "LogLines"
   .Add "GetOptions"
   .Add "OnePagePerFile"
+  .Add "RemoveAllKnownFileExtensions"
   .Add "RunProgramAfterSaving"
   .Add "RunProgramAfterSavingProgramname"
   .Add "RunProgramAfterSavingProgramParameters"
@@ -2091,6 +2088,7 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "RunProgramAfterSavingWindowstyle"
   .Add "PDFOwnerPasswordString"
   .Add "PDFUserPasswordString"
+  .Add "SendMailMethod"
   .Add "StandardKeywords"
   .Add "StandardDateformat"
   .Add "StandardCreationdate"
@@ -2105,6 +2103,11 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "StampUseOutlineFont"
   .Add "StartStandardProgram"
   .Add "ShowAnimation"
+  .Add "AdditionalGhostscriptSearchpath"
+  .Add "AddWindowsFontpath"
+  .Add "NoProcessingAtStartup"
+  .Add "StandardSaveformat"
+  .Add "PDFOptimize"
  End With
  IsSpecialString = False
  For i = 1 To ss.Count

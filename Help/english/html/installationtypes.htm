@@ -28,7 +28,24 @@
         network printer for PDFCreator and allows computers on your network to 
         create PDF documents, Bitmap images, and Postscript files remotely. If 
         you use a server installation on a terminal server, make sure that you 
-        do not install PDFCreator in application mode.</p>
+        do not install PDFCreator in application mode.<br>
+        <br>
+        With a server installation, you can use Auto-Save Mode to automatically 
+        save documents to a specified directory with UNC-pathnames and/or filename 
+        tokens (for more information on Auto-Save Mode, click <a href="autosave.htm">here</a>). 
+        When using this feature, make sure the user has access rights to save 
+        in the specified directory. <br>
+        <em>Example:</em> \\file1\users\&lt;username&gt;\PDFs<br>
+        <br>
+        <strong>Note:</strong> When using a server installation, make sure to 
+        create a share for the printer with user access rights belonging to yourself. 
+        Also, make sure that at least one instance of PDFCreator is open. You 
+        can install PDFCreator as a service by using the &quot;instsrv.exe&quot; 
+        and &quot;srvany.exe&quot; tools from the resource kit of your Windows 
+        installation. If you do install PDFCreator as a service, make sure to 
+        use a user account with access rights writing in a Auto-Save directory. 
+        Settings can only be changed on the server. Users cannot change any settings 
+        in PDFCreator.</p>
       </td>
   </tr>
 </table>

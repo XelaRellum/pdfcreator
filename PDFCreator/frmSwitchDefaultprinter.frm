@@ -86,7 +86,7 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Caption = App.EXEName
-50020  Me.Icon = frmMain.Icon
+50020
 50030  ChangeDefaultprinter = False
 50040  With LanguageStrings
 50050   lblSwitchDefaultprinter.Caption = .MessagesMsg35

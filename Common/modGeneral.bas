@@ -253,18 +253,18 @@ Public Function IsFilePrintable(Filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ext As String, reg As clsRegistry
+50010  Dim Ext As String, reg As clsRegistry
 50020  IsFilePrintable = False
 50030  If Len(Filename) = 0 Then
 50040   Exit Function
 50050  End If
-50060  SplitPath Filename, , , , , ext
-50070  If Len(ext) = 0 Then
+50060  SplitPath Filename, , , , , Ext
+50070  If Len(Ext) = 0 Then
 50080   Exit Function
 50090  End If
 50100  Set reg = New clsRegistry
 50110  reg.hkey = HKEY_LOCAL_MACHINE
-50120  reg.KeyRoot = "Software\CLASSES\." & ext
+50120  reg.KeyRoot = "Software\CLASSES\." & Ext
 50130  If reg.KeyExists = False Then
 50140   Set reg = Nothing
 50150   Exit Function
@@ -479,6 +479,35 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function GetFontsDirectory() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim TempMyFiles, reg As clsRegistry, tStr As String
+50020  Set reg = New clsRegistry
+50030  With reg
+50040   .hkey = HKEY_CURRENT_USER
+50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer"
+50060   .Subkey = "Shell Folders"
+50070   tStr = .GetRegistryValue("Fonts")
+50080  End With
+50090  Set reg = Nothing
+50100  If LenB(tStr) = 0 Then
+50110   tStr = CompletePath(GetWindowsDirectory) & "Fonts"
+50120  End If
+50130  GetFontsDirectory = tStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetFontsDirectory")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function GetMyLocalAppData() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -615,30 +644,27 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim res As Long, TempDir As String
 50020
 50030  If IsWin9xMe = True Then
-50040    TempDir = GetTempPathApi
-50050    If LenB(Environ$("Redmon_User")) > 0 Then
-50060      TempDir = CompletePath(TempDir) & "PDFCreator\" & Environ$("Redmon_User")
-50070     Else
-50080      TempDir = CompletePath(TempDir) & "PDFCreator\" & GetUsername
-50090    End If
-50100   Else
-50110    If IsWinNT4 = True Then
-50120      TempDir = GetMyAppData
-50130      If LenB(Environ$("Redmon_User")) > 0 Then
-50140        TempDir = CompletePath(TempDir) & "PDFCreator\" & Environ$("Redmon_User")
-50150       Else
-50160        TempDir = CompletePath(TempDir) & "PDFCreator\" & GetUsername
-50170      End If
-50180     Else
-50190      TempDir = GetMyLocalAppData
-50200      TempDir = Left(TempDir, InStrRev(TempDir, "\")) & "Temp\PDFCreator\"
-50210    End If
+50040    ' In Win9xMe you cannot use the username because the usernaem can
+50050    ' have forbidden chars like \/:*?"<>|
+50060    TempDir = CompletePath(GetTempPathApi) & "PDFCreator\"
+50070   Else
+50080    If IsWinNT4 = True Then
+50090      TempDir = GetMyAppData
+50100      If LenB(Environ$("Redmon_User")) > 0 Then
+50110        TempDir = CompletePath(TempDir) & "PDFCreator\" & Environ$("Redmon_User")
+50120       Else
+50130        TempDir = CompletePath(TempDir) & "PDFCreator\" & GetUsername
+50140      End If
+50150     Else
+50160      TempDir = GetMyLocalAppData
+50170      TempDir = Left(TempDir, InStrRev(TempDir, "\")) & "Temp\PDFCreator\"
+50180    End If
+50190  End If
+50200  If Trim$(TempDir) = vbNullString Then
+50210   TempDir = CompletePath(App.Path) & "Temp\"
 50220  End If
-50230  If Trim$(TempDir) = vbNullString Then
-50240   TempDir = CompletePath(App.Path) & "Temp\"
-50250  End If
-50260
-50270  GetTempPath = CompletePath(TempDir)
+50230
+50240  GetTempPath = CompletePath(TempDir)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -701,11 +727,11 @@ Public Function GetWindowsDirectory() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim res As Long, Windir As String
-50020  Windir = Space$(MAX_PATH)
-50030  res = GetWindowsDirectoryA(MAX_PATH, Windir)
+50010  Dim res As Long, WinDir As String
+50020  WinDir = Space$(MAX_PATH)
+50030  res = GetWindowsDirectoryA(WinDir, MAX_PATH)
 50040  If res > 0 Then
-50050    GetWindowsDirectory = Left$(Windir, res)
+50050    GetWindowsDirectory = Left$(WinDir, res)
 50060   Else
 50070    GetWindowsDirectory = "C:\Windows"
 50080  End If
@@ -1278,71 +1304,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ReplaceStrInFile(Filename As String, SearchStr As String, _
- ReplaceStr As String, Optional BufferSize As Long = 65536)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Content As String, iSearch As Long, pLen As Long, chunk As Long, fpos As Long, _
-  fnI As Long, fnO As Long, LSearchStr As Long, LReplaceStr As Long, _
-  Tempfile As String
-50040  If Len(SearchStr) = 0 Or Len(ReplaceStr) = 0 Then
-50050   Exit Sub
-50060  End If
-50070  fnI = FreeFile
-50080  Open Filename For Binary Access Read As #fnI
-50090  fnO = FreeFile
-50100  Tempfile = GetTempFile(CompletePath(GetPDFCreatorTempfolder), "~RE")
-50110  Open Tempfile For Output As #fnO
-50120  LSearchStr = Len(SearchStr)
-50130  LReplaceStr = Len(ReplaceStr)
-50140  chunk = BufferSize
-50150  fpos = 1: pLen = LOF(fnI)
-50160  Do Until pLen = 0
-50170   If LOF(fnI) - fpos + 1 < chunk Then
-50180    chunk = LOF(fnI) - fpos + 1
-50190   End If
-50200   Content = Space$(chunk)
-50210   Get #fnI, fpos, Content
-50220   iSearch = InStrRev(Content, SearchStr)
-50230   If iSearch = 0 Then
-50240     pLen = chunk - LSearchStr + 1
-50250     DoEvents
-50260     Print #fnO, Left(Content, pLen);
-50270     DoEvents
-50280     fpos = fpos + pLen
-50290    Else
-50300     pLen = iSearch + LSearchStr - 1
-50310     If pLen < chunk - LSearchStr + 1 Then
-50320      pLen = chunk - LSearchStr + 1
-50330     End If
-50340     fpos = fpos + pLen
-50350     Do Until iSearch = 0
-50360      Content = Left(Content, iSearch - 1) & ReplaceStr & Mid(Content, iSearch + LSearchStr)
-50370      iSearch = InStrRev(Content, SearchStr, iSearch)
-50380      pLen = pLen + LReplaceStr - LSearchStr
-50390     Loop
-50400     DoEvents
-50410     Print #fnO, Left(Content, pLen);
-50420     DoEvents
-50430   End If
-50440  Loop
-50450  Print #fnO, Right(Content, LSearchStr - 1);
-50460  Close #fnO: Close #fnI
-50470  Name Tempfile As Filename
-50480  DoEvents
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "ReplaceStrInFile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Public Function RemoveCompletePath(Path As String, Optional ShowDialog As Boolean) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1533,4 +1494,229 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function RaiseAPIError() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim ErrorMsg As String, ErrNum As Long
+50020  ErrNum = Err.LastDllError
+50030  ErrorMsg = String(256, 0)
+50040  ErrorMsg = Left$(ErrorMsg, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM Or FORMAT_MESSAGE_IGNORE_INSERTS, 0, ErrNum, 0&, ErrorMsg, Len(ErrorMsg), ByVal 0))
+50050  If Mid(ErrorMsg, Len(ErrorMsg) - 1) = vbCrLf Then
+50060   ErrorMsg = Mid(ErrorMsg, 1, Len(ErrorMsg) - 2)
+50070  End If
+50080  RaiseAPIError = ErrNum & ": " & ErrorMsg
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "RaiseAPIError")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetAllFileExtensions() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, tColl As Collection, i As Long
+50020  Set reg = New clsRegistry
+50030  Set tColl = reg.EnumRegistryKeys(HKEY_CLASSES_ROOT, "")
+50040  Set GetAllFileExtensions = New Collection
+50050  For i = 1 To tColl.Count
+50060   If Len(tColl(i)) > 0 Then
+50070    If Mid(tColl(i), 1, 1) = "." Then
+50080     GetAllFileExtensions.Add Mid(tColl(i), 2)
+50090    End If
+50100   End If
+50110  Next i
+50120  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetAllFileExtensions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function StringInCollection(coll As Collection, Str1 As String, Optional CaseSensitive As Boolean = False) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, tStr As String
+50020  StringInCollection = False: tStr = UCase$(Str1)
+50030  If Not coll Is Nothing And Len(Str1) > 0 Then
+50040   For i = 1 To coll.Count
+50050    If CaseSensitive = True Then
+50060      If coll(i) = Str1 Then
+50070       StringInCollection = True
+50080       Exit Function
+50090      End If
+50100     Else
+50110      If UCase$(coll(i)) = UCase$(Str1) Then
+50120       StringInCollection = True
+50130       Exit Function
+50140      End If
+50150    End If
+50160   Next i
+50170  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "StringInCollection")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function RemoveAllKnownFileExtensions(Filename As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tColl As Collection, Ext As String, File As String, OldFilename As String
+50020  RemoveAllKnownFileExtensions = Filename
+50030  SplitPath Filename, , , , File, Ext
+50040  If LenB(Ext) > 0 Then
+50050   Set tColl = GetAllFileExtensions
+50060   Do
+50070    SplitPath Filename, , , , File, Ext
+50080    Filename = File
+50090    DoEvents
+50100   Loop Until StringInCollection(tColl, Ext) = False
+50110   If LenB(Ext) > 0 Then
+50120     RemoveAllKnownFileExtensions = File & "." & Ext
+50130    Else
+50140     RemoveAllKnownFileExtensions = File
+50150   End If
+50160  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "RemoveAllKnownFileExtensions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetIExplorerVersion() As String
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim reg As clsRegistry
+50050  Set reg = New clsRegistry
+50060  With reg
+50070   .hkey = HKEY_LOCAL_MACHINE
+50080   .KeyRoot = "SOFTWARE\Microsoft\Internet Explorer"
+50090   GetIExplorerVersion = .GetRegistryValue("Version")
+50100  End With
+50110  Set reg = Nothing
+50120 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50130 Exit Function
+ErrPtnr_OnError:
+50151 Select Case ErrPtnr.OnError("modGeneral", "GetIExplorerVersion")
+      Case 0: Resume
+50170 Case 1: Resume Next
+50180 Case 2: Exit Function
+50190 Case 3: End
+50200 End Select
+50210 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function FormISLoaded(FormName As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  FormISLoaded = False
+50030  For i = 1 To Forms.Count
+50040   If UCase$(FormName) = UCase$(Forms(i - 1).Name) Then
+50050    FormISLoaded = True
+50060   End If
+50070  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "FormISLoaded")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function InCollection(colTest As Collection, sKey As String) As Boolean
+'
+' Check to see if item [sKey] is in collection [colTest].
+' Return True if it is, false if not
+'
+ On Error GoTo ErrorHandler
+ If VarType(colTest.item(sKey)) = vbObject Then
+  '
+  ' This test will indicate if the item actually exists in the
+  ' collection. No further checking is needed.
+  '
+ End If
+ InCollection = True
+Exit Function
+ErrorHandler:
+   InCollection = False
+End Function
+
+Public Sub DrawBorder3D(ByVal obj As Object, Index As Integer, BorderWidth As Long)
+ Dim r As Rect, DrawObj As Object, tRedraw As Boolean, tDrawwidth As Integer, _
+  tScalemode As Long, RectType As Long, RectStyle As Long
+
+ On Error Resume Next
+ If BorderWidth <= 0 Then
+  Exit Sub
+ End If
+ RectStyle = BF_RECT
+ RectType = Choose(Index, EDGE_RAISED, EDGE_SUNKEN, EDGE_ETCHED, EDGE_BUMP)
+ If TypeOf obj Is Form Or TypeOf obj Is PictureBox Then
+   With obj
+    tScalemode = .ScaleMode
+    .ScaleMode = vbPixels
+    r.Left = .ScaleLeft
+    r.Top = .ScaleTop
+    r.Right = .ScaleWidth
+    r.Bottom = .ScaleHeight
+   End With
+   Set DrawObj = obj
+  Else
+   With obj
+    r.Left = .Left - BorderWidth
+    r.Top = .Top - BorderWidth
+    r.Right = r.Left + .Width + BorderWidth + 1
+    r.Bottom = r.Top + .Height + BorderWidth + 1
+   End With
+   Set DrawObj = obj.Container
+ End If
+ With DrawObj
+  tRedraw = .AutoRedraw
+  tDrawwidth = .DrawWidth
+  .DrawWidth = BorderWidth
+  .AutoRedraw = True
+  DrawEdge .hDC, r, RectType, RectStyle
+  .AutoRedraw = tRedraw
+  .DrawWidth = tDrawwidth
+  .Refresh
+  .ScaleMode = tScalemode
+ End With
+End Sub
+
 

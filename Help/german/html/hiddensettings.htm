@@ -20,6 +20,24 @@
     <td class="main"><p class="header">Versteckte Einstellungen</p>
       <p>PDFCreator hat einige Einstellungen, die f&uuml;r Testzwecke gedacht 
         sind. Diese k&ouml;nnen in der PDFCreator.ini Datei gefunden werden.</p>
+      <p><strong>AdditionalGhostscriptSearchpath:</strong> Diese Einstellung erlaubt
+        zus&auml;tzliche Verzeichnisse zum Ghostscript-Suchpfad hinzuzuf&uuml;gen. Dies kann verwendet
+        werden, um zus&auml;tzliche Verzeichnisse mit Schriftarten hinzuzuf&uuml;gen.</p>
+      <p><strong>AddWindowsFontpath:</strong> Wird diese Einstellung aktiviert, durchsucht
+        Ghostscript das Windows-Schriftarten Verzeichnis nach m&ouml;glichen Schriftarten.<br>
+        <em>Eigenschaften:</em><br>
+        0 - aus<br>
+        1 - an (Standard)</p>
+      <p><strong>NoProcessingAtStartup:</strong> Wird diese Einstellung aktiviert, beginnt PDFCreator nach
+        dem Start nicht mit der Verarbeitung. Die Verarbeitung kann manuell gestartet werden, wenn &uuml;ber
+        das Men&uuml; <em><strong>Dokument</em></strong> der Men&uuml;punkt <em><strong>Drucken</em></strong>
+        gew&auml;hlt wird oder durch die Deaktivierung des Men&uuml;punktes <em><strong>Drucker anhalten</em></strong>
+        im Men&uuml; <em><strong>Drucker</em></strong>. Diese Einstellung ist sinnvoll, wenn zun&auml;chst Dokumente
+        im Druckmonitor gesammelt und diese dann sp&auml;ter verbunden bzw. einzeln verarbeitet
+        werden sollen.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus (Standard)<br>
+        1 - An</p>
       <p><strong>OnePagePerFile:</strong> Die Einstellung erlaubt Benutzern eine 
         neue Datei f&uuml;r jede Seite des Originals zu erstellen. Aufgrund von 
         Einschr&auml;nkungen in Ghostscript funktioniert das nicht mit PDF und 
@@ -27,6 +45,25 @@
         <em>Eigenschaften: </em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
+      <p><strong>PDFOptimize:</strong> Die Einstellung optimiert die erstellte
+        PDF-Datei für die Darstellung im Web. Dadurch kann die erste Seite bereits
+        angezeigt werden, bevor das gesamte Dokument geladen ist.<br>
+        Zur Zeit ist es nicht möglich eine Verschlüsselung und Optimierung gleichzeitig
+        zu nutzen. Verschlüsselte PDF-Dateien sind nicht für die schnelle Web-Anzeige
+        optimiert.<br>
+        <em>Eigenschaften: </em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein</p>
+      <p><strong>PDFOwnerPasswordString:</strong> Diese Einstellung kann in Verbindung 
+        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
+        &uuml;bernimmt das Passwort automatisch als Besitzerpasswort. <em><strong>ACHTUNG:</strong></em> 
+        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
+        diese Option auf eigene Gefahr.</p>
+      <p><strong>PDFUserPasswordString:</strong> Diese Einstellung kann in Verbindung 
+        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
+        &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em> 
+        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
+        diese Option auf eigene Gefahr.</p>
       <p><strong>RunProgramAfterSaving:</strong> Diese Einstellung legt fest, 
         ob das unter RunProgramAfterSavingProgramname angegebene Programm ausgef&uuml;hrt 
         wird, wenn PDFCreator das Dokument gespeichert hat.<br>
@@ -37,6 +74,9 @@
         zu dem auszuf&uuml;hrenden Programm festgelegt.<br>
         <em>Beispiel:</em> RunProgramAfterSavingProgramname=&quot;C:\Programme\Mein 
         Programm\Mein Programm.exe&quot;</p>
+      <p><strong>RunProgramAfterSavingProgramParameters:</strong> Diese Einstellung 
+        wird in Verbindung mit RunProgramAfterSaving benutzt. Sie gibt die Parameter 
+        an, mit denen das Programm aufgerufen wird.</p>
       <p><strong>RunProgramAfterSavingWaitUntilReady:</strong> Diese Einstellung 
         legt fest, ob PDFCreator wartet, bis das Programm die Verarbeitung des Dokumentes
         abgeschlossen hat.<br>
@@ -53,36 +93,17 @@
         3 - Das Programm wird maximiert ausgef&uuml;hrt und aktiviert.<br>
         4 - Das Programm wird normal ausgef&uuml;hrt und nicht aktiviert.<br>
         6 - Das Programm wird minimiert ausgef&uuml;hrt und nicht aktiviert.</p>
-      <p><strong>RunProgramAfterSavingProgramParameters:</strong> Diese Einstellung 
-        wird in Verbindung mit RunProgramAfterSaving benutzt. Sie gibt die Parameter 
-        an, mit denen das Programm aufgerufen wird.</p>
-      <p><strong>PDFOwnerPasswordString:</strong> Diese Einstellung kann in Verbindung 
-        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
-        &uuml;bernimmt das Passwort automatisch als Besitzerpasswort. <em><strong>ACHTUNG:</strong></em> 
-        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
-        diese Option auf eigene Gefahr.</p>
-      <p><strong>PDFUserPasswordString:</strong> Diese Einstellung kann in Verbindung 
-        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
-        &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em> 
-        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
-        diese Option auf eigene Gefahr.</p>
-      <p><strong>StandardCreationdate:</strong> Diese Einstellung erlaubt dem 
-        Benutzer, ein Standarderstellungsdatum f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StandardDateformat:</strong> Diese Einstellung erlaubt dem Benutzer, 
-        das Format f&uuml;r das Erstellungs- und &Auml;nderungsdatum festzulegen.</p>
-      <p><strong>StandardKeywords:</strong> Diese Einstellung erlaubt dem Benutzer, 
-        Schl&uuml;sselw&ouml;rter f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StandardModifydate:</strong> Diese Einstellung erlaubt dem Benutzer, 
-        ein Standarddatum der letzten &Auml;nderung f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StandardSubject:</strong> Diese Einstellung erlaubt dem Benutzer, 
-        einen Standardbetreff f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StandardTitle:</strong> Diese Einstellung erlaubt dem Benutzer, 
-        ein Standardtitel f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StampString:</strong> Wenn diese Einstellung gesetzt ist, legt 
-        PDFCreator einen Stempel &uuml;ber das Dokument. Sie k&ouml;nnen die Schriftart, 
-        Farbe, Gr&ouml;&szlig;e und Umrandung des Stempels mit den folgenden Einstellungen 
-        festlegen. Diese Einstellung ist noch sehr experimentell. Bitte kontrollieren Sie
-        die erstellten Dokumente.</p>
+      <p><strong>SendMailMethod:</strong> Legt das Verfahren fest wie eine Email
+        erstellt werden soll.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Das Programm w&auml;hlt automatisch die beste Methode f&uuml;r das Versenden einer Email. (Standard)<br>
+        1 - Das Programm verwendet die Mapi-Schnittstelle.<br>
+        2 - Das Programm verwendet die "SendTo"-Methode des Windows-Explorers.</p>
+      <p><strong>ShowAnimation:</strong> Diese Einstellung erm&ouml;glicht die Animation w&auml;hrend des
+        Erstellungsprozesses aus- oder anzuschalten.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Zeigt keine Animation.<br>
+        1 - Zeigt eine Animation. (Standard)</p>
       <p><strong>StampFontColor:</strong> Legt die Farbe f&uuml;r den Stempeltext 
         fest. Verwenden Sie daf&uuml;r HTML-Farben.<br>
         <em>Beispiel f&uuml;r Rot:</em> StampFontColor=#FF0000 
@@ -91,13 +112,44 @@
         fest. </p>
       <p><strong>StampFontsize:</strong> Legt die Schriftgr&ouml;&szlig;e f&uuml;r 
         den Stempeltext fest. </p>
+      <p><strong>StampOutlineFontthickness:</strong> Legt die Breite der Umrandung 
+        f&uuml;r den Stempeltext fest. </p>
+      <p><strong>StampString:</strong> Wenn diese Einstellung gesetzt ist, legt 
+        PDFCreator einen Stempel &uuml;ber das Dokument. Sie k&ouml;nnen die Schriftart, 
+        Farbe, Gr&ouml;&szlig;e und Umrandung des Stempels mit den folgenden Einstellungen 
+        festlegen. Diese Einstellung ist noch sehr experimentell. Bitte kontrollieren Sie
+        die erstellten Dokumente.</p>
       <p><strong>StampUseOutlineFont:</strong> Diese Einstellung legt fest, ob 
         eine Umrandung f&uuml;r den Stempeltext benutzt wird.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <p><strong>StampOutlineFontthickness:</strong> Legt die Breite der Umrandung 
-        f&uuml;r den Stempeltext fest. </p>
+      <p><strong>StandardCreationdate:</strong> Diese Einstellung erlaubt dem 
+        Benutzer, ein Standarderstellungsdatum f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardDateformat:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        das Format f&uuml;r das Erstellungs- und &Auml;nderungsdatum festzulegen.</p>
+      <p><strong>StandardKeywords:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        Schl&uuml;sselw&ouml;rter f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardModifydate:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        ein Standarddatum der letzten &Auml;nderung f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardSaveformat:</strong> Diese Einstellung erlaubt das Standardformat im
+       <em>Speichern unter</em> Dialog festzulegen. Das Standardformat ist pdf. Die folgenden
+        Formate sind erlaubt: pdf, png, jpg, bmp, pcx, tif, ps, eps.<br>
+        <em>Beispiel</em>:<br>
+        StandardSaveformat=tif</p>
+      <p><strong>StandardSubject:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        einen Standardbetreff f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>StandardTitle:</strong> Diese Einstellung erlaubt dem Benutzer, 
+        ein Standardtitel f&uuml;r alle Dokumente anzugeben.</p>
+      <p><strong>RemoveAllKnownFileExtensions:</strong> Wird diese Einstellung aktiviert, 
+        entfernt PDFCretor alle bekannten Erweiterungen von rechts beginnend, bis eine
+        unbekannte Erweiterung gefunden wurde.
+        Beispiel: Wenn der interne Titel einer Postscriptdatei 'Pic.jpg.-12.31.2005.pcx'
+        lautet, ver&auml;nert PDFCreator diesen zu 'Pic.jpg.-12.31.2005'. 
+        Dies erleichert das Speichern wesentlich.<br>
+        <em>Eigenschaften:</em><br>
+        0 - aus<br>
+        1 - an (Standard)</p>
       </td>
   </tr>
 </table>

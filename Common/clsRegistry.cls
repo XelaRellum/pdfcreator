@@ -396,28 +396,33 @@ On Error GoTo ErrPtnr_OnError
 50650                 If Length < UBound(resBinary) + 1 Then
 50660                     ReDim Preserve resBinary(0 To Length - 1) As Byte
 50670                 End If
-50680                     For i = 0 To UBound(resBinary)
-50690                          resString = resString & " " & Format(Trim(Hex(resBinary(i))), "0#")
-50700                     Next i
-50710                     valueInfo(1) = LTrim(resString) 'Get rid of leading space
-50720
-50730             Case REG_MULTI_SZ
-50740                 resString = Space$(Length - 2)
-50750                 CopyMemory ByVal resString, resBinary(0), Length - 2
-50760
-50770                 resString = Replace(resString, vbNullChar, ",", , , vbBinaryCompare)
-50780                 valueInfo(1) = resString
-50790
-50800             Case Else
-50810         End Select
-50820
-50830         EnumRegistryValues.Add valueInfo, valueInfo(0)
+50680                 resString = ""
+50690                     For i = 0 To UBound(resBinary)
+50700                      If Len(Trim(Hex(resBinary(i)))) < 2 Then
+50710                        resString = resString & " 0" & Trim(Hex(resBinary(i)))
+50720                       Else
+50730                        resString = resString & " " & Trim(Hex(resBinary(i)))
+50740                      End If
+50750                     Next i
+50760                     valueInfo(1) = LTrim(resString) 'Get rid of leading space
+50770
+50780             Case REG_MULTI_SZ
+50790                 resString = Space$(Length - 2)
+50800                 CopyMemory ByVal resString, resBinary(0), Length - 2
+50810
+50820                 resString = Replace(resString, vbNullChar, ",", , , vbBinaryCompare)
+50830                 valueInfo(1) = resString
 50840
-50850         Index = Index + 1
-50860     Loop
+50850             Case Else
+50860         End Select
 50870
-50880     If handle Then RegCloseKey handle
+50880         EnumRegistryValues.Add valueInfo, valueInfo(0)
 50890
+50900         Index = Index + 1
+50910     Loop
+50920
+50930     If handle Then RegCloseKey handle
+50940
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
