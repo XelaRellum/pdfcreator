@@ -1,0 +1,12 @@
+modMain = 22, 22, 593, 352, C
+modArguments = 0, 0, 617, 326, C
+modGeneral = 44, 44, 615, 374, C
+clsStdIO = 66, 66, 623, 431, C
+modProfile = 88, 88, 595, 453, C
+modGetSpecialFolder = 110, 110, 617, 475, C
+clsRegistry = 132, 132, 749, 458, C
+modPDFCreator = 22, 22, 639, 348, C
+modOptions = 44, 44, 661, 370, C
+clsINI = 88, 88, 624, 406, C
+clsHash = 66, 66, 602, 384, C
+modINIFastRead = 44, 44, 580, 362, C

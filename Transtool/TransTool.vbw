@@ -1,0 +1,4 @@
+frmMain = 66, 66, 595, 384, C, 22, 22, 551, 340, C
+clsINI = 88, 88, 624, 406, C
+modPanelControl = 66, 66, 602, 384, C
+clsSystem = 110, 110, 646, 428, C
