@@ -4,7 +4,7 @@ Option Explicit
 Public Function OpenFileDialog(Files As Collection, Optional InitFilename As String = "", _
  Optional Filter As String, Optional DefaultFileExtension As String = "*.*", _
  Optional InitDir As String = "", Optional DialogTitle As String = "", _
- Optional Flags As OpenSaveFlags, Optional hwnd As Long = 0) As Long
+ Optional Flags As OpenSaveFlags, Optional hwnd As Long = 0, Optional FilterIndex As Long = 1) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -27,7 +27,7 @@ On Error GoTo ErrPtnr_OnError
 50170   .nStructSize = Len(ofn)
 50180   .hWndOwner = hwnd
 50190   .sFilter = tFil
-50200   .nFilterIndex = 0
+50200   .nFilterIndex = FilterIndex
 50210   .sFile = InitFilename & Space$(1024) & vbNullChar & vbNullChar
 50220   .nMaxFile = Len(.sFile)
 50230   .sDefFileExt = DefaultFileExtension & vbNullChar & vbNullChar
@@ -80,7 +80,7 @@ End Function
 Public Function SaveFileDialog(Filename As String, Optional InitFilename As String = "", _
  Optional Filter As String, Optional DefaultFileExtension As String = "*.*", _
  Optional InitDir As String = "", Optional DialogTitle As String = "", _
- Optional Flags As OpenSaveFlags, Optional hwnd As Long = 0) As Long
+ Optional Flags As OpenSaveFlags, Optional hwnd As Long = 0, Optional FilterIndex As Long = 1) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -103,7 +103,7 @@ On Error GoTo ErrPtnr_OnError
 50170   .nStructSize = Len(ofn)
 50180   .hWndOwner = hwnd
 50190   .sFilter = tFil
-50200   .nFilterIndex = 0
+50200   .nFilterIndex = FilterIndex
 50210   .sFile = InitFilename & Space$(1024) & vbNullChar & vbNullChar
 50220   .nMaxFile = Len(.sFile)
 50230   .sDefFileExt = DefaultFileExtension & vbNullChar & vbNullChar

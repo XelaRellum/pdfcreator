@@ -230,169 +230,580 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Function CallGhostscript(Comment As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim LastStop As Currency, res As Boolean
+50020  LastStop = ExactTimer_Value()
+50030  res = CallGS(GSParams)
+50040  IfLoggingWriteLogfile "Time for converting in seconds [" & Comment & "]: " & CStr(ExactTimer_Value() - LastStop)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CallGhostscript")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreatePDF(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim FName As String, tStr As String, encPDF As EncryptData, tEnc As Boolean
+50020
+50030  InitParams
+50040  Set ParamCommands = New Collection
+50050
+50060  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50070  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50080   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50090  End If
+50100  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50110   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50120  End If
+50130  AddParams "-I" & tStr
+50140  AddParams "-q"
+50150  AddParams "-dNOPAUSE"
+50160  AddParams "-dSAFER"
+50170  AddParams "-dBATCH"
+50180  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50190   AddParams "-sFontPath=" & GetFontsDirectory
+50200  End If
+50210  AddParams "-sDEVICE=pdfwrite"
+50220  AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+50230  AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+50240  AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
+50250  AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+50260  AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+50270  AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
+50280  AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+50290  AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
+50300  AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50310
+50320  tEnc = False
+50330  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And _
+    SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
+50350   If SetEncryptionParams(encPDF, "", "") = True Then
+50360     tEnc = True
+50370     If Len(encPDF.OwnerPass) > 0 Then
+50380      AddParams "-sOwnerPassword=" & encPDF.OwnerPass & ""
+50390     End If
+50400     If Len(encPDF.UserPass) > 0 Then
+50410      AddParams "-sUserPassword=" & encPDF.UserPass
+50420     End If
+50430     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
+50440     If GS_COMPATIBILITY = "1.4" Then
+50450       AddParams "-dEncryptionR=3"
+50460      Else
+50470       AddParams "-dEncryptionR=2"
+50480     End If
+50490     If encPDF.EncryptionLevel = encLow Then
+50500       AddParams "-dKeyLength=40"
+50510      Else
+50520       AddParams "-dKeyLength=128"
+50530     End If
+50540    Else
+50550     If Options.UseAutosave = 0 Then
+50560      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50570     End If
+50580   End If
+50590  End If
+50600  AddParams "-sOutputFile=" & GSOutputFile
+50610
+50620  SetColorParams
+50630  SetGreyParams
+50640  SetMonoParams
+50650
+50660  AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50670  AddParams "-dUCRandBGInfo=/Preserve"
+50680  AddParams "-dUseFlateCompression=true"
+50690  AddParams "-dParseDSCCommentsForDocInfo=true"
+50700  AddParams "-dParseDSCComments=true"
+50710  AddParams "-dOPM=" & GS_OVERPRINT
+50720  AddParams "-dOffOptimizations=0"
+50730  AddParams "-dLockDistillerParams=false"
+50740  AddParams "-dGrayImageDepth=-1"
+50750  AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50760  AddParams "-dDefaultRenderingIntent=/Default"
+50770  AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50780  AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50790  AddParams "-dDetectBlends=true"
+50800  AddParamCommands
+50810
+50820  AddParams "-f"
+50830  AddParams GSInputFile
+50840  ShowParams
+50850  If tEnc = True Then
+50860    CallGhostscript "PDF with encryption"
+50870   Else
+50880    CallGhostscript "PDF without encryption"
+50890  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePDF")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreatePNG(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFontPath=" & GetFontsDirectory
+50250  End If
+50260
+50270  If Options.OnePagePerFile = 1 Then
+50280   SplitPath GSOutputFile, , Path, , FName, Ext
+50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50300  End If
+50310
+50320  AddParams "-sDEVICE=" & GS_PNGColorscount
+50330  AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50340  AddParams "-sOutputFile=" & GSOutputFile
+50350  AddParams GSInputFile
+50360
+50370
+50380  AddParams "-f"
+50390  AddParams GSInputFile
+50400  ShowParams
+50410  CallGhostscript "PNG"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePNG")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreateJPEG(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFontPath=" & GetFontsDirectory
+50250  End If
+50260
+50270  If Options.OnePagePerFile = 1 Then
+50280   SplitPath GSOutputFile, , Path, , FName, Ext
+50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50300  End If
+50310
+50320  AddParams "-sDEVICE=" & GS_JPEGColorscount
+50330  AddParams "-dJPEGQ=" & GS_JPEGQuality
+50340  AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50350  AddParams "-sOutputFile=" & GSOutputFile
+50360  AddParams GSInputFile
+50370
+50380
+50390  AddParams "-f"
+50400  AddParams GSInputFile
+50410  ShowParams
+50420  CallGhostscript "JPEG"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateJPEG")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreateBMP(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFontPath=" & GetFontsDirectory
+50250  End If
+50260
+50270  If Options.OnePagePerFile = 1 Then
+50280   SplitPath GSOutputFile, , Path, , FName, Ext
+50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50300  End If
+50310
+50320  AddParams "-sDEVICE=" & GS_BMPColorscount
+50330  AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50340  AddParams "-sOutputFile=" & GSOutputFile
+50350  AddParams GSInputFile
+50360
+50370
+50380  AddParams "-f"
+50390  AddParams GSInputFile
+50400  ShowParams
+50410  CallGhostscript "BMP"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateBMP")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreatePCX(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFontPath=" & GetFontsDirectory
+50250  End If
+50260
+50270  If Options.OnePagePerFile = 1 Then
+50280   SplitPath GSOutputFile, , Path, , FName, Ext
+50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50300  End If
+50310
+50320  AddParams "-sDEVICE=" & GS_PCXColorscount
+50330  AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50340  AddParams "-sOutputFile=" & GSOutputFile
+50350  AddParams GSInputFile
+50360
+50370
+50380  AddParams "-f"
+50390  AddParams GSInputFile
+50400  ShowParams
+50410  CallGhostscript "PCX"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePCX")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreateTIFF(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFontPath=" & GetFontsDirectory
+50250  End If
+50260
+50270  If Options.OnePagePerFile = 1 Then
+50280   SplitPath GSOutputFile, , Path, , FName, Ext
+50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50300  End If
+50310
+50320  AddParams "-sDEVICE=" & GS_TIFFColorscount
+50330  AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50340  AddParams "-sOutputFile=" & GSOutputFile
+50350  AddParams GSInputFile
+50360
+50370
+50380  AddParams "-f"
+50390  AddParams GSInputFile
+50400  ShowParams
+50410  CallGhostscript "TIFF"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateTIFF")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreatePS(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFontPath=" & GetFontsDirectory
+50250  End If
+50260
+50270  AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
+50280  AddParams "-sDEVICE=pswrite"
+50290  AddParams "-sOutputFile=" & GSOutputFile
+50300  AddParams GSInputFile
+50310
+50320
+50330  AddParams "-f"
+50340  AddParams GSInputFile
+50350  ShowParams
+50360  CallGhostscript "PS"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePS")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreateEPS(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFontPath=" & GetFontsDirectory
+50250  End If
+50260
+50270  If Options.OnePagePerFile = 1 Then
+50280   SplitPath GSOutputFile, , Path, , FName, Ext
+50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50300  End If
+50310
+50320  AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
+50330  AddParams "-sDEVICE=epswrite"
+50340  AddParams "-sOutputFile=" & GSOutputFile
+50350  AddParams GSInputFile
+50360
+50370
+50380  AddParams "-f"
+50390  AddParams GSInputFile
+50400  ShowParams
+50410  CallGhostscript "EPS"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateEPS")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function CallGScript(GSInputFile As String, GSOutputFile As String, _
  Options As tOptions, Ghostscriptdevice As tGhostscriptDevice)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim gsret As Long, i As Long, enc As Boolean, _
- Path As String, FName As String, Ext As String, tStr As String
-50030
-50040  GSInit Options
-50050  InitParams
-50060  Set ParamCommands = New Collection
-50070
-50080  If Options.OnePagePerFile = 1 Then
-50090   SplitPath GSOutputFile, , Path, , FName, Ext
-50100   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50110  End If
-50120  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
-50130  If Len(Options.DirectoryGhostscriptResource) > 0 Then
-50140   tStr = tStr & ";" & Options.DirectoryGhostscriptResource
-50150  End If
-50160  AddParams "-I" & tStr
-50170  AddParams "-q"
-50180  AddParams "-dNOPAUSE"
-50190  AddParams "-dSAFER"
-50200  AddParams "-dBATCH"
-50211  Select Case Ghostscriptdevice
+50010  Dim enc As Boolean, encPDF As EncryptData, retEnc As Boolean, _
+  Tempfile As String, tL As Long
+50030  GSInit Options
+50041  Select Case Ghostscriptdevice
         Case 0: 'PDF
-50230    AddParams "-sDEVICE=pdfwrite"
-50240 '   AddParams "-dPDFSETTINGS=/printer"
-50250    AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
-50260    AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
-50270    AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
-50280    AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
-50290    AddParams "-dCompressPages=" & GS_COMPRESSPAGES
-50300    AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
-50310    AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
-50320    AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
-50330    AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50340
-50350    If Options.PDFUseSecurity <> 0 And SecurityIsPossible = True Then
-50360      If Options.PDFEncryptor > 0 Then
-50370        Dim Tempfile As String, Temppath As String, encPDF As EncryptData, retEnc As Boolean
-50380        Tempfile = GetTempFile(GetTempPath, "~PDF")
-50390        AddParams "-sOutputFile=" & Tempfile
-50400       Else
-50410        If SetEncryptionParams(encPDF, "", "") = True Then
-50420          If Len(encPDF.OwnerPass) > 0 Then
-50430           AddParams "-sOwnerPassword=" & encPDF.OwnerPass & ""
-50440          End If
-50450          If Len(encPDF.UserPass) > 0 Then
-50460           AddParams "-sUserPassword=" & encPDF.UserPass
-50470          End If
-50480          AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50490 '         Debug.Print BuildPermissionString(encPDF), CalculatePermissions(encPDF)
-50500          If GS_COMPATIBILITY = "1.4" Then
-50510            AddParams "-dEncryptionR=3"
-50520           Else
-50530            AddParams "-dEncryptionR=2"
-50540          End If
-50550          If encPDF.EncryptionLevel = encLow Then
-50560            AddParams "-dKeyLength=40"
-50570           Else
-50580            AddParams "-dKeyLength=128"
-50590          End If
-50600         Else
-50610          MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50620        End If
-50630
-50640        AddParams "-sOutputFile=" & GSOutputFile
-50650 '       AddParams "-c .setpdfwrite"
-50660      End If
-50670     Else
-50680      AddParams "-sOutputFile=" & GSOutputFile
-50690    End If
-50700
-50710    SetColorParams
-50720    SetGreyParams
-50730    SetMonoParams
-50740
-50750
-50760 '   AddParams "-dGrayACSImageDict " & GS_COMPRESSGREYLEVEL
-50770
-50780    AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50790    AddParams "-dUCRandBGInfo=/Preserve"
-50800    AddParams "-dUseFlateCompression=true"
-50810    AddParams "-dParseDSCCommentsForDocInfo=true"
-50820    AddParams "-dParseDSCComments=true"
-50830    AddParams "-dOPM=" & GS_OVERPRINT
-50840    AddParams "-dOffOptimizations=0"
-50850    AddParams "-dLockDistillerParams=false"
-50860    AddParams "-dGrayImageDepth=-1"
-50870    AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50880    AddParams "-dDefaultRenderingIntent=/Default"
-50890    AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50900    AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50910    AddParams "-dOptimize=true"
-50920    AddParams "-dDetectBlends=true"
-50930
-50940    AddParamCommands
-50950
-50960    AddParams "-f"
-50970    AddParams GSInputFile
-50980    ShowParams
-50990   Case 1: 'PNG
-51000    AddParams "-sDEVICE=" & GS_PNGColorscount
-51010    AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-51020    AddParams "-sOutputFile=" & GSOutputFile
-51030    AddParams GSInputFile
-51040   Case 2: 'JPEG
-51050    AddParams "-sDEVICE=" & GS_JPEGColorscount
-51060    AddParams "-dJPEGQ=" & GS_JPEGQuality
-51070    AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-51080    AddParams "-sOutputFile=" & GSOutputFile
-51090    AddParams GSInputFile
-51100   Case 3: 'BMP
-51110    AddParams "-sDEVICE=" & GS_BMPColorscount
-51120    AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-51130    AddParams "-q"
-51140    AddParams "-sOutputFile=" & GSOutputFile
-51150    AddParams GSInputFile
-51160   Case 4: 'PCX
-51170    AddParams "-sDEVICE=" & GS_PCXColorscount
-51180    AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-51190    AddParams "-sOutputFile=" & GSOutputFile
-51200    AddParams GSInputFile
-51210   Case 5: 'TIFF
-51220    AddParams "-sDEVICE=" & GS_TIFFColorscount
-51230    AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-51240    AddParams "-sOutputFile=" & GSOutputFile
-51250    AddParams GSInputFile
-51260   Case 6: 'PS
-51270    AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
-51280    AddParams "-sDEVICE=pswrite"
-51290    AddParams "-sOutputFile=" & GSOutputFile
-51300    AddParams GSInputFile
-51310   Case 7: 'EPS
-51320    AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
-51330    AddParams "-sDEVICE=epswrite"
-51340    AddParams "-sOutputFile=" & GSOutputFile
-51350    AddParams GSInputFile
-51360  End Select
-51370
-51380  gsret = CallGS(GSParams)
-51390
-51400  If (Options.PDFUseSecurity <> 0) And (Ghostscriptdevice = PDFWriter) And _
-    (Options.PDFEncryptor > 0) And SecurityIsPossible = True Then
-51420   KillFile GSOutputFile
-51430   enc = SetEncryptionParams(encPDF, Tempfile, GSOutputFile)
-51440   If enc = True Then
-51450     retEnc = EncryptPDF(encPDF)
-51460     If retEnc = False Then
-51470      FileCopy Tempfile, GSOutputFile
-51480      IfLoggingWriteLogfile "Error with encryption - using unencrypted file"
-51490     End If
-51500     KillFile Tempfile
-51510    Else
-51520     MsgBox LanguageStrings.MessagesMsg23, vbCritical
-51530     If FileExists(GSOutputFile) = True And FileInUse(GSOutputFile) = False Then
-51540      KillFile GSOutputFile
-51550     End If
-51560     Name Tempfile As GSOutputFile
-51570   End If
-51580  End If
+50060    With Options
+50070     If .PDFOptimize = 1 And .PDFUseSecurity = 0 Then
+50080       Tempfile = GetTempFile(GetTempPath, "~CP")
+50090       KillFile Tempfile
+50100       CreatePDF GSInputFile, Tempfile, Options
+50110       OptimizePDF Tempfile, GSOutputFile
+50120       KillFile Tempfile
+50130      Else
+50140       If .PDFUseSecurity <> 0 And SecurityIsPossible = True Then
+50150         If .PDFEncryptor = 1 Then
+50160           enc = SetEncryptionParams(encPDF, GSInputFile, GSOutputFile)
+50170           If enc = True Then
+50180            retEnc = EncryptPDF(encPDF)
+50190            If retEnc = False Then
+50200             IfLoggingWriteLogfile "Error with encryption - using unencrypted file"
+50210             Name GSInputFile As GSOutputFile
+50220            End If
+50230           End If
+50240          Else
+50250           tL = .PDFOptimize
+50260           .PDFOptimize = 0
+50270           CreatePDF GSInputFile, GSOutputFile, Options
+50280           .PDFOptimize = tL
+50290         End If
+50300        Else
+50310         CreatePDF GSInputFile, GSOutputFile, Options
+50320       End If
+50330     End If
+50340    End With
+50350   Case 1: 'PNG
+50360    CreatePNG GSInputFile, GSOutputFile, Options
+50370   Case 2: 'JPEG
+50380    CreateJPEG GSInputFile, GSOutputFile, Options
+50390   Case 3: 'BMP
+50400    CreateBMP GSInputFile, GSOutputFile, Options
+50410   Case 4: 'PCX
+50420    CreatePCX GSInputFile, GSOutputFile, Options
+50430   Case 5: 'TIFF
+50440    CreateTIFF GSInputFile, GSOutputFile, Options
+50450   Case 6: 'PS
+50460    CreatePS GSInputFile, GSOutputFile, Options
+50470   Case 7: 'EPS
+50480    CreateEPS GSInputFile, GSOutputFile, Options
+50490  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -405,25 +816,25 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function OptimizePDF(GSInputFile As String, GSOutputFile As String)
+Public Function OptimizePDF(PDFInputFilename As String, PDFOutputFilename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 Dim gsret
-50020
-50030 InitParams
-50040
-50050 AddParams "-I" & App.Path & "\lib;" & App.Path & "\fonts"
-50060 AddParams "-q"
-50070 AddParams "-dNODISPLAY"
-50080 AddParams "-dSAFER"
-50090 AddParams "-dDELAYSAFER"
-50100 AddParams "-- pdfopt.ps"
-50110 AddParams GSInputFile
-50120 AddParams GSOutputFile
-50130
-50140 frmMain.Refresh
-50150 gsret = CallGS(GSParams)
+50010  Dim LastStop As Currency
+50020  InitParams
+50030  AddParams "-q"
+50040  AddParams "-dNODISPLAY"
+50050  AddParams "-dSAFER"
+50060  AddParams "-dDELAYSAFER"
+50070  AddParams "--"
+50080  AddParams "pdfopt.ps"
+50090  AddParams PDFInputFilename
+50100  AddParams PDFOutputFilename
+50110
+50120  GSParams(0) = "pdfopt"
+50130  LastStop = ExactTimer_Value()
+50140  OptimizePDF = CallGS(GSParams)
+50150  IfLoggingWriteLogfile "Time for optimizing in seconds: " & CStr(ExactTimer_Value() - LastStop)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -603,31 +1014,28 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ShowParams()
+Private Function ShowParams() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tStr As String, fn As Long
+50010  Dim i As Long, tStr As String
 50020  tStr = GSParams(LBound(GSParams))
 50030  For i = LBound(GSParams) + 1 To UBound(GSParams)
 50040   tStr = tStr & vbCrLf & GSParams(i)
 50050  Next i
 50060  IfLoggingWriteLogfile "Ghostscriptparameter:" & vbCrLf & tStr
-50070 ' fn = FreeFile
-50080 ' Open CompletePath(App.Path) & "\params.txt" For Output As #1
-50090 ' Close #1
-50100 ' OpenDocument CompletePath(App.Path) & "\params.txt"
+50070  ShowParams = "Ghostscriptparameter:" & vbCrLf & tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
+Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGhostscript", "ShowParams")
 Case 0: Resume
 Case 1: Resume Next
-Case 2: Exit Sub
+Case 2: Exit Function
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
+End Function
 
 Private Sub AddParams(strValue As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -763,33 +1171,37 @@ On Error GoTo ErrPtnr_OnError
 50110    retPasswd = True
 50120   Else
 50130    If SavePasswordsForThisSession = False Then
-50140      retPasswd = EnterPasswords(encData.UserPass, encData.OwnerPass, frmPassword)
-50150     Else
-50160      encData.OwnerPass = OwnerPassword: encData.UserPass = UserPassword
-50170    End If
-50180  End If
-50190  If retPasswd = True Or SavePasswordsForThisSession = True Then
-50200    With encData
-50210     .DisallowPrinting = Options.PDFDisallowPrinting
-50220     .DisallowModifyContents = Options.PDFDisallowModifyContents
-50230     .DisallowCopy = Options.PDFDisallowCopy
-50240     .DisallowModifyAnnotations = Options.PDFDisallowModifyAnnotations
-50250     .AllowFillIn = Options.PDFAllowFillIn
-50260     .AllowScreenReaders = Options.PDFAllowScreenReaders
-50270     .AllowAssembly = Options.PDFAllowAssembly
-50280     .AllowDegradedPrinting = Options.PDFAllowDegradedPrinting
-50290     If Options.PDFHighEncryption = 1 Then
-50300       .EncryptionLevel = encStrong
-50310      Else
-50320       .EncryptionLevel = encLow
-50330     End If
-50340    End With
-50350    SetEncryptionParams = True
-50360    encData.UserPass = UserPassword
-50370    encData.OwnerPass = OwnerPassword
-50380   Else
-50390    SetEncryptionParams = False
-50400  End If
+50140      If Options.UseAutosave = 0 Then
+50150        retPasswd = EnterPasswords(encData.UserPass, encData.OwnerPass, frmPassword)
+50160       Else
+50170        retPasswd = False
+50180      End If
+50190     Else
+50200      encData.OwnerPass = OwnerPassword: encData.UserPass = UserPassword
+50210    End If
+50220  End If
+50230  If retPasswd = True Or SavePasswordsForThisSession = True Then
+50240    With encData
+50250     .DisallowPrinting = Options.PDFDisallowPrinting
+50260     .DisallowModifyContents = Options.PDFDisallowModifyContents
+50270     .DisallowCopy = Options.PDFDisallowCopy
+50280     .DisallowModifyAnnotations = Options.PDFDisallowModifyAnnotations
+50290     .AllowFillIn = Options.PDFAllowFillIn
+50300     .AllowScreenReaders = Options.PDFAllowScreenReaders
+50310     .AllowAssembly = Options.PDFAllowAssembly
+50320     .AllowDegradedPrinting = Options.PDFAllowDegradedPrinting
+50330     If Options.PDFHighEncryption = 1 Then
+50340       .EncryptionLevel = encStrong
+50350      Else
+50360       .EncryptionLevel = encLow
+50370     End If
+50380    End With
+50390    SetEncryptionParams = True
+50400    encData.UserPass = UserPassword
+50410    encData.OwnerPass = OwnerPassword
+50420   Else
+50430    SetEncryptionParams = False
+50440  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

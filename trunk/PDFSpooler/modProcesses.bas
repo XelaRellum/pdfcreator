@@ -11,15 +11,26 @@ Public Function FindProcess(UserName As String, Optional SessionID As Long = 0) 
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim res As Long
+50010  Dim res As Long, ProcessID As Long
 50020  If IsTerminalServer = True Then
-50030    res = FindTSProcess(UserName, SessionID)
-50040    WriteToSpecialLogfile "Terminal token is asked for (" & UserName & ", " & SessionID & "):" & res
-50050   Else
-50060    res = FindNormalProcess(UserName)
-50070    WriteToSpecialLogfile "Console token is asked for (" & UserName & "):" & res
-50080  End If
-50090  FindProcess = res
+50030    If FindTSProcess(UserName, SessionID, ProcessID) = True Then
+50040      WriteToSpecialLogfile "Terminal token is asked for (" & UserName & ", " & SessionID & "):" & ProcessID
+50050     Else
+50060      WriteToSpecialLogfile "Cannot detect a terminal token. Looking for console token."
+50070      If FindNormalProcess(UserName, ProcessID) = True Then
+50080        WriteToSpecialLogfile "Console token is asked for (" & UserName & "):" & ProcessID
+50090       Else
+50100        WriteToSpecialLogfile "Cannot console token!"
+50110      End If
+50120    End If
+50130   Else
+50140    If FindNormalProcess(UserName, ProcessID) = True Then
+50150      WriteToSpecialLogfile "Console token is asked for (" & UserName & "):" & ProcessID
+50160     Else
+50170      WriteToSpecialLogfile "Cannot console token!"
+50180    End If
+50190  End If
+50200  FindProcess = ProcessID
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -42,44 +53,42 @@ End Function
 '   If found, then the pid, otherwise 0
 ' Last modification:
 '   09/07/2004 Gergely Matefi
-Private Function FindTSProcess(UserName As String, SessionID As Long)
+Private Function FindTSProcess(UserName As String, SessionID As Long, ProcessID As Long) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim RetVal As Long, Count As Long, i As Integer, lpBuffer As Long, _
-  p As Long, udtProcessInfo As WTS_PROCESS_INFO, isMissing As Boolean, _
-  ProcessID As Long
-50040
-50050  ProcessID = 0
-50060  WriteToSpecialLogfile "Process enumeration..."
-50070  RetVal = WTSEnumerateProcesses(WTS_CURRENT_SERVER_HANDLE, 0&, 1, lpBuffer, Count)
-50080  If RetVal <> 0 Then ' WTSEnumerateProcesses was successful
-50090    p = lpBuffer
-50100    i = 1
-50110    isMissing = True
-50120    While i <= Count And isMissing = True
-50130     MoveMemory udtProcessInfo, ByVal p, LenB(udtProcessInfo)
-50140     WriteToSpecialLogfile "Process: SessionID=" & udtProcessInfo.SessionID & " ProcessID=" & udtProcessInfo.ProcessID
-50150     If udtProcessInfo.SessionID = SessionID And udtProcessInfo.ProcessID > 0 Then
-50160      ' Retrieve the name of the account and the name of the first
-50170      ' domain on which this SID is found.  Passes in the Owner's SID
-50180      ' obtained previously.  Call LookupAccountSid twice, the first time
-50190      ' to obtain the required size of the owner and domain names.
-50200      If UCase$(GetUsernameFromUserSID(udtProcessInfo.pUserSid)) = UCase$(UserName) Then
-50210       ProcessID = udtProcessInfo.ProcessID
-50220       isMissing = False
-50230       WriteToSpecialLogfile "Process found: ProcessID=" & ProcessID & " Username=" & UserName
-50240      End If
-50250     End If
-50260     i = i + 1
-50270     p = p + LenB(udtProcessInfo)
-50280    Wend
-50290    WTSFreeMemory lpBuffer   'Free your memory buffer
-50300   Else
-50310    ' Error occurred calling WTSEnumerateProcesses
-50320    WriteToSpecialLogfile "Error occurred calling WTSEnumerateProcesses.  " & Err.LastDllError
-50330  End If
-50340  FindTSProcess = ProcessID
+  p As Long, udtProcessInfo As WTS_PROCESS_INFO, isMissing As Boolean
+50030  ProcessID = 0: FindTSProcess = False
+50040  WriteToSpecialLogfile "Process enumeration..."
+50050  RetVal = WTSEnumerateProcesses(WTS_CURRENT_SERVER_HANDLE, 0&, 1, lpBuffer, Count)
+50060  If RetVal <> 0 Then ' WTSEnumerateProcesses was successful
+50070    p = lpBuffer
+50080    i = 1
+50090    isMissing = True
+50100    While i <= Count And isMissing = True
+50110     MoveMemory udtProcessInfo, ByVal p, LenB(udtProcessInfo)
+50120     WriteToSpecialLogfile "Process: SessionID=" & udtProcessInfo.SessionID & " ProcessID=" & udtProcessInfo.ProcessID
+50130     If udtProcessInfo.SessionID = SessionID And udtProcessInfo.ProcessID > 0 Then
+50140      ' Retrieve the name of the account and the name of the first
+50150      ' domain on which this SID is found.  Passes in the Owner's SID
+50160      ' obtained previously.  Call LookupAccountSid twice, the first time
+50170      ' to obtain the required size of the owner and domain names.
+50180      If UCase$(GetUsernameFromUserSID(udtProcessInfo.pUserSid)) = UCase$(UserName) Then
+50190       ProcessID = udtProcessInfo.ProcessID
+50200       isMissing = False
+50210       FindTSProcess = True
+50220       WriteToSpecialLogfile "Process found: ProcessID=" & ProcessID & " Username=" & UserName
+50230      End If
+50240     End If
+50250     i = i + 1
+50260     p = p + LenB(udtProcessInfo)
+50270    Wend
+50280    WTSFreeMemory lpBuffer   'Free your memory buffer
+50290   Else
+50300    ' Error occurred calling WTSEnumerateProcesses
+50310    WriteToSpecialLogfile "Error occurred calling WTSEnumerateProcesses.  " & RaiseAPIError
+50320  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -92,7 +101,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function FindNormalProcess(UserName As String) As Long
+Private Function FindNormalProcess(UserName As String, ProcessID) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -100,50 +109,54 @@ On Error GoTo ErrPtnr_OnError
   lProcID() As Long, lModules(1 To 200) As Long, hProcess As Long, _
   sModuleName As String, n As Long, c As Long
 50040  c = 0
-50050  If IsWinNT4 = True Then
-50060    lCb = 8: lCbNeeded = 96
-50070    Do While lCb <= lCbNeeded
-50080     lCb = lCb * 2
-50090     ReDim lProcID(lCb / 4) As Long
-50100     EnumProcesses lProcID(1), lCb, lCbNeeded
-50110    Loop
-50120    For n = 1 To lCbNeeded / 4
-50130     hProcess = OpenProcess(PROCESS_QUERY_INFORMATION Or PROCESS_VM_READ, 0, lProcID(n))
-50140     If hProcess <> 0 Then
-50150      nResult = EnumProcessModules(hProcess, lModules(1), 200, lCbNeeded2)
-50160      If nResult <> 0 Then
-50170       sModuleName = Space(MAX_PATH)
-50180       nResult = GetModuleFileNameEx(hProcess, lModules(1), sModuleName, Len(sModuleName))
-50190       sModuleName = LCase$(Left$(sModuleName, nResult))
-50200       If UCase$(GetProcessUserName(lProcID(n))) = UCase$(UserName) Then
-50210        FindNormalProcess = lProcID(n)
-50220        CloseHandle hProcess
-50230        Exit For
-50240       End If
-50250      End If
-50260     End If
-50270     CloseHandle hProcess
-50280    Next n
-50290   Else
-50300    Dim lSnapshot As Long, uProcess As PROCESSENTRY32, Exefile As String
-50310    lSnapshot = CreateToolhelpSnapshot(TH32CS_SNAPPROCESS, 0&)
-50320    If lSnapshot <> 0 Then
-50330      uProcess.dwSize = Len(uProcess)
-50340      nResult = ProcessFirst(lSnapshot, uProcess)
-50350      Do Until nResult = 0
-50360       Exefile = uProcess.szexeFile
-50370       Exefile = Left$(Exefile, InStr(Exefile, Chr$(0)) - 1)
-50380       If Right$(LCase(Exefile), 4) = ".exe" Then
-50390        If UCase$(GetProcessUserName(uProcess.th32ProcessID)) = UCase$(UserName) Then
-50400         FindNormalProcess = uProcess.th32ProcessID
-50410         Exit Do
-50420        End If
-50430       End If
-50440       nResult = ProcessNext(lSnapshot, uProcess)
-50450      Loop
-50460     CloseHandle lSnapshot
-50470    End If
-50480  End If
+50050  FindNormalProcess = False
+50060  If IsWinNT4 = True Then
+50070    lCb = 8: lCbNeeded = 96
+50080    Do While lCb <= lCbNeeded
+50090     lCb = lCb * 2
+50100     ReDim lProcID(lCb / 4) As Long
+50110     EnumProcesses lProcID(1), lCb, lCbNeeded
+50120    Loop
+50130    For n = 1 To lCbNeeded / 4
+50140     hProcess = OpenProcess(PROCESS_QUERY_INFORMATION Or PROCESS_VM_READ, 0, lProcID(n))
+50150     If hProcess <> 0 Then
+50160      nResult = EnumProcessModules(hProcess, lModules(1), 200, lCbNeeded2)
+50170      If nResult <> 0 Then
+50180       sModuleName = Space(MAX_PATH)
+50190       nResult = GetModuleFileNameEx(hProcess, lModules(1), sModuleName, Len(sModuleName))
+50200       sModuleName = LCase$(Left$(sModuleName, nResult))
+50210       If UCase$(GetProcessUserName(lProcID(n))) = UCase$(UserName) Then
+50220        ProcessID = lProcID(n)
+50230        FindNormalProcess = True
+50240        FindNormalProcess = lProcID(n)
+50250        CloseHandle hProcess
+50260        Exit For
+50270       End If
+50280      End If
+50290     End If
+50300     CloseHandle hProcess
+50310    Next n
+50320   Else
+50330    Dim lSnapshot As Long, uProcess As PROCESSENTRY32, Exefile As String
+50340    lSnapshot = CreateToolhelpSnapshot(TH32CS_SNAPPROCESS, 0&)
+50350    If lSnapshot <> 0 Then
+50360      uProcess.dwSize = Len(uProcess)
+50370      nResult = ProcessFirst(lSnapshot, uProcess)
+50380      Do Until nResult = 0
+50390       Exefile = uProcess.szexeFile
+50400       Exefile = Left$(Exefile, InStr(Exefile, Chr$(0)) - 1)
+50410       If Right$(LCase(Exefile), 4) = ".exe" Then
+50420        If UCase$(GetProcessUserName(uProcess.th32ProcessID)) = UCase$(UserName) Then
+50430         ProcessID = uProcess.th32ProcessID
+50440         FindNormalProcess = True
+50450         Exit Do
+50460        End If
+50470       End If
+50480       nResult = ProcessNext(lSnapshot, uProcess)
+50490      Loop
+50500     CloseHandle lSnapshot
+50510    End If
+50520  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

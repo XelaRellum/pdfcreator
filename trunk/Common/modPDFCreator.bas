@@ -103,46 +103,59 @@ End Select
 End Sub
 
 Public Sub IfLoggingWriteLogfile(Logtext As String)
- Dim fn As Long, i As Long, bufStr As String, s() As String, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim fn As Long, i As Long, bufStr As String, s() As String, _
   tStr As String, tB As Boolean
-
- If Options.Logging = 0 Then
-  Exit Sub
- End If
-
- If DirExists(PDFCreatorLogfilePath) = False Then
-   tB = MakePath(PDFCreatorLogfilePath)
-  Else
-   tB = True
- End If
-
- If tB = True Then
-
-  bufStr = ReadLogfile
-
-  fn = FreeFile
-  Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
-
-  If Len(bufStr) > 0 Then
-    s = Split(bufStr, vbCrLf)
-    If Options.LogLines < UBound(s) - 1 Then
-      For i = UBound(s) - Options.LogLines + 2 To UBound(s)
-       tStr = s(i - 2)
-       Print #fn, s(i - 2)
-      Next i
-     Else
-      For i = LBound(s) + 1 To UBound(s)
-       tStr = s(i)
-       Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
-      Next i
-    End If
-    Print #fn, Now & ": " & Logtext
-   Else
-    Print #fn, "Windowsversion: " & GetWinVersionStr
-    Print #fn, Now & ": " & Logtext
-  End If
-  Close #fn
- End If
+50030
+50040  If Options.Logging = 0 Then
+50050   Exit Sub
+50060  End If
+50070
+50080  If DirExists(PDFCreatorLogfilePath) = False Then
+50090    tB = MakePath(PDFCreatorLogfilePath)
+50100   Else
+50110    tB = True
+50120  End If
+50130
+50140  If tB = True Then
+50150
+50160   bufStr = ReadLogfile
+50170
+50180   fn = FreeFile
+50190   Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
+50200
+50210   If Len(bufStr) > 0 Then
+50220     s = Split(bufStr, vbCrLf)
+50230     If Options.LogLines < UBound(s) - 1 Then
+50240       For i = UBound(s) - Options.LogLines + 2 To UBound(s)
+50250        tStr = s(i - 2)
+50260        Print #fn, s(i - 2)
+50270       Next i
+50280      Else
+50290       For i = LBound(s) + 1 To UBound(s)
+50300        tStr = s(i)
+50310        Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
+50320       Next i
+50330     End If
+50340     Print #fn, Now & ": " & Logtext
+50350    Else
+50360     Print #fn, "Windowsversion: " & GetWinVersionStr
+50370     Print #fn, Now & ": " & Logtext
+50380   End If
+50390   Close #fn
+50400  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDFCreator", "IfLoggingWriteLogfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Public Sub IfLoggingShowLogfile(Optional frmLog As Form, Optional frmMain As Form)
@@ -422,7 +435,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub RunProgramAfterSaving(Docname As String, Parameters As String, Windowstyle As Long)
+Public Sub RunProgramAfterSaving(hwnd As Long, Docname As String, Parameters As String, Windowstyle As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -433,9 +446,9 @@ On Error GoTo ErrPtnr_OnError
 50050   IfLoggingWriteLogfile tStr
 50060   WriteToSpecialLogfile tStr
 50070   If Options.RunProgramAfterSavingWaitUntilReady = 1 Then
-50080     ShellAndWait "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , , WCTermination
+50080     ShellAndWait hwnd, "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , Windowstyle, WCTermination
 50090    Else
-50100     ShellAndWait "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , , WCNone
+50100     ShellAndWait hwnd, "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , Windowstyle, WCNone
 50110   End If
 50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

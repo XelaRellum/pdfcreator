@@ -45,6 +45,7 @@ PDFGeneralAutorotate|cmbPDFRotate.Listindex|Long|2|0|2
 PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|1|0|2
 PDFGeneralOverprint|cmbPDFOverprint.Listindex|Long|0|0|1
 PDFGeneralResolution|txtPDFRes.Text|Long|600|0|<
+PDFOptimize||Boolean|0||
 
 ' <PDF Security>
 PDFAllowAssembly|chkAllowAssembly.Value|Boolean|0||
@@ -68,6 +69,8 @@ PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
 OnePagePerFile||Boolean|0|0|1
 
 ' <Program>
+AdditionalGhostscriptSearchpath||String|||
+AddWindowsFontpath||Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
 AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|5
@@ -82,6 +85,7 @@ LastSaveDirectory|LastSaveDirectory|String|||
 Logging|Logging|Boolean|0||
 LogLines|LogLines|Long|100|100|1000
 NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
+NoProcessingAtStartup||Boolean|0||
 OptionsEnabled||Boolean|1||
 OptionsVisible||Boolean|1||
 PrinterStop|PrinterStop|Boolean|0||
@@ -90,6 +94,7 @@ ProcessPriority|sldProcessPriority.value|Long|1|0|3
 ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
 ProgramFontSize|cmbProgramFontSize.text|Long|8|1|72
+RemoveAllKnownFileExtensions||Boolean|1||
 RemoveSpaces|chkSpaces.Value|Boolean|1||
 RunProgramAfterSaving||Boolean|0|0|1
 RunProgramAfterSavingProgramname||String|||
@@ -97,6 +102,8 @@ RunProgramAfterSavingProgramParameters||String|||
 RunProgramAfterSavingWaitUntilReady||Boolean|1|0|1
 RunProgramAfterSavingWindowstyle||Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
+SendMailMethod||Long|0|0|<
+ShowAnimation||Boolean|1||
 StampFontColor||String|#FF0000||
 StampFontname||String|Arial||
 StampFontsize||Long|48|1|<
@@ -108,6 +115,7 @@ StandardCreationdate||String|||
 StandardDateformat||String|YYYYMMDDHHNNSS||
 StandardKeywords||String|||
 StandardModifydate||String|||
+StandardSaveformat||String|pdf||
 StandardSubject||String|||
 StandardTitle||String|||
 StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
@@ -115,7 +123,6 @@ UseAutosave|chkUseAutosave.Value|Boolean|0||
 UseAutosaveDirectory|chkUseAutosaveDirectory.Value|Boolean|1||
 UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||
 UseStandardAuthor|chkUseStandardAuthor.Value|Boolean|0||
-ShowAnimation||Boolean|1||
 
 ' <PS LanguageLevel>
 EPSLanguageLevel|cmbEPSLanguageLevel.Listindex|Long|2|0|3

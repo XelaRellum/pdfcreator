@@ -135,6 +135,8 @@ Option Explicit
 
 Public bSuccess As Boolean, bFinished As Boolean, iPasswords As Integer
 
+Private oldMousePointer As Long
+
 Private Sub CancelButton_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -177,30 +179,48 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Me.KeyPreview = True
-50020  Me.Icon = frmMain.Icon
-50030  With LanguageStrings
-50040   Caption = .OptionsPDFEnterPasswords
-50050   fraUserPass.Caption = .OptionsUserPass
-50060   fraOwnerPass.Caption = .OptionsOwnerPass
-50070   lblUserPass.Caption = .OptionsPDFSetPassword
-50080   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
-50090   lblOwnerPass.Caption = .OptionsPDFSetPassword
-50100   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
-50110   OKButton.Caption = .OptionsPassOK
-50120   CancelButton.Caption = .OptionsPassCancel
-50130   chkSavePasswords.Caption = .OptionsSavePasswords
-50140  End With
-50150  With Options
-50160   fraUserPass.Enabled = .PDFUserPass
-50170   fraOwnerPass.Enabled = .PDFOwnerPass
-50180  End With
-50190  bSuccess = False
-50200  bFinished = False
+50010  oldMousePointer = Screen.MousePointer
+50020  Me.KeyPreview = True
+50030  Screen.MousePointer = vbNormal
+50040  With LanguageStrings
+50050   Caption = .OptionsPDFEnterPasswords
+50060   fraUserPass.Caption = .OptionsUserPass
+50070   fraOwnerPass.Caption = .OptionsOwnerPass
+50080   lblUserPass.Caption = .OptionsPDFSetPassword
+50090   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
+50100   lblOwnerPass.Caption = .OptionsPDFSetPassword
+50110   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
+50120   OKButton.Caption = .OptionsPassOK
+50130   CancelButton.Caption = .OptionsPassCancel
+50140   chkSavePasswords.Caption = .OptionsSavePasswords
+50150  End With
+50160  With Options
+50170   fraUserPass.Enabled = .PDFUserPass
+50180   fraOwnerPass.Enabled = .PDFOwnerPass
+50190  End With
+50200  bSuccess = False
+50210  bFinished = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPassword", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Form_Unload(Cancel As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Screen.MousePointer = oldMousePointer
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "Form_Unload")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

@@ -181,9 +181,11 @@ On Error GoTo ErrPtnr_OnError
 50270    nParts(i) = Replace$(nParts(i), Chr$(2), " ")
 50280    nParts(i) = Replace$(nParts(i), Chr$(3), "/")
 50290    nParts(i) = Replace$(nParts(i), Chr$(4), "-")
-50300    mArguments.Add nParts(i), nParts(i)
-50310   End If
-50320  Next i
+50300    If Not InCollection(mArguments, nParts(i)) Then
+50310     mArguments.Add nParts(i), nParts(i)
+50320    End If
+50330   End If
+50340  Next i
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

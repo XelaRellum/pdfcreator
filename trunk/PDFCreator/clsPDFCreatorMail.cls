@@ -34,26 +34,35 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Function Send(ByVal Filename As String, Optional Subject As String = "") As Long
+Public Function Send(ByVal Filename As String, Optional Subject As String = "", Optional SendMailMethod As Long = 0) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case UCase$(iStandardEmailClient)
-        Case "MICROSOFT OUTLOOK"
-50030    Send = MSOutlookEmail(Filename, Subject)
-50040   Case "PEGASUS MAIL"
-50050    Send = PegasusEmail(Filename, Subject)
-50060   Case "THE BAT!"
-50070    Send = TheBatEmail(Filename, Subject)
-50080   Case "FOXMAIL"
-50090    Send = FoxEmail(Filename, Subject)
-50100   Case "SYLPHEED"
-50110    Send = SylpheedClaws(Filename, Subject)
-50120   Case "OUTLOOK EXPRESS"
-50130    Send = VBMapiEmail(Filename, Subject)
-50140   Case Else
-50150    Send = SendToMailRecipientViaSendmailDll(Filename)
-50160  End Select
+50011  Select Case SendMailMethod
+        Case 1
+50030    Send = VBMapiEmail(Filename, Subject)
+50040   Case 2
+50050    Send = SendToMailRecipientViaSendmailDll(Filename)
+50060   Case Else
+50071    Select Case UCase$(iStandardEmailClient)
+          Case "MICROSOFT OUTLOOK"
+50090      Send = MSOutlookEmail(Filename, Subject)
+50100     Case "PEGASUS MAIL"
+50110      Send = PegasusEmail(Filename, Subject)
+50120     Case "THE BAT!"
+50130      Send = TheBatEmail(Filename, Subject)
+50140     Case "FOXMAIL"
+50150      Send = FoxEmail(Filename, Subject)
+50160     Case "SYLPHEED"
+50170      Send = SylpheedClaws(Filename, Subject)
+50180     Case "OUTLOOK EXPRESS", "MOZILLA THUNDERBIRD", "MOZILLA"
+50190      Send = VBMapiEmail(Filename, Subject)
+50200     Case "LOTUS NOTES"
+50210      Send = SendNotesMail(Filename, Subject)
+50220     Case Else
+50230      Send = SendToMailRecipientViaSendmailDll(Filename)
+50240    End Select
+50250  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -359,4 +368,63 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-
+Private Function SendNotesMail(Attachments As String, Optional Subject As String = "")
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  'Display email in Notes prefilled with Subject and Attachments
+50020  'Allow user to make edits (eg. to message) and then send manually
+50030  'based on code at
+ 'http://www.granite.ab.ca/access/email/lotusnotesedit.htm
+50050  'AND HughLerwill
+50060  Const EMBED_ATTACHMENT As Integer = 1454, notesclass As String = "NOTES"
+50070
+50080  Dim i As Long, t As Long, lotusWindow As Long, session As Object, _
+  db As Object, doc As Object, beDoc As Object, workspace As Object, _
+  bodypart As Object
+50110
+50120  t = Timer
+50130  Screen.MousePointer = vbHourglass
+50140  Do Until lotusWindow <> 0 Or Timer - t > 5
+50150   lotusWindow = FindWindow(notesclass, vbNullString)
+50160  Loop
+50170
+50180  Screen.MousePointer = vbDefault
+50190
+50200  If lotusWindow = 0 Then
+50210    MsgBox "Lotus Notes must be running before you use this facility!" & vbCrLf & _
+    "Please click ok and then try again.", vbExclamation
+50230   Else
+50240    showWindow lotusWindow, SW_MAXIMIZE
+50250    SetForegroundWindow lotusWindow
+50260    Set session = CreateObject("Notes.Notessession")
+50270    Set db = session.getDatabase("", "")
+50280    db.Openmail
+50290    Set beDoc = db.CreateDocument
+50300    Set bodypart = beDoc.CREATERICHTEXTITEM("Body")
+50310    beDoc.Form = "Memo"
+50320    beDoc.Subject = Subject
+50330    beDoc.sendto = ""
+50340    If Attachments <> "" Then
+50350     bodypart.EmbedObject EMBED_ATTACHMENT, "", Attachments
+50360    End If
+50370    Set workspace = CreateObject("Notes.NotesUIWorkspace")
+50380    Call workspace.EditDocument(True, beDoc).GotoField("To")
+50390    Set session = Nothing
+50400    Set db = Nothing
+50410    Set doc = Nothing
+50420    Set beDoc = Nothing
+50430    Set workspace = Nothing
+50440    Set bodypart = Nothing
+50450  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreatorMail", "SendNotesMail")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function

@@ -246,50 +246,51 @@ On Error GoTo ErrPtnr_OnError
 50070     Dim iTemp As Long
 50080     Dim callerHandle As Long
 50090     Dim ptrArgs As Long
-50100
-50110     ' Print out the revision details.
-50120     ' If we want to insist on a particular version of Ghostscript
-50130     ' we should check the return value of CheckRevision().
-50140     'CheckRevision (705)
-50150
-50160     ' Load Ghostscript and get the instance handle
-50170     intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)
-50180     If (intReturn < 0) Then
-50190         CallGS = False
-50200         Return
-50210     End If
-50220
-50230     ' Capture stdio
-50240     intReturn = gsapi_set_stdio(intGSInstanceHandle, AddressOf gsdll_stdin, AddressOf gsdll_stdout, AddressOf gsdll_stderr)
-50250
-50260     If (intReturn >= 0) Then
-50270         ' Convert the Unicode strings to null terminated ANSI byte arrays
-50280         ' then get pointers to the byte arrays.
-50290         intElementCount = UBound(astrGSArgs)
-50300         ReDim aAnsiArgs(intElementCount)
-50310         ReDim aPtrArgs(intElementCount)
-50320
-50330         For intCounter = 0 To intElementCount
-50340             aAnsiArgs(intCounter) = StrConv(astrGSArgs(intCounter), vbFromUnicode)
-50350             aPtrArgs(intCounter) = StrPtr(aAnsiArgs(intCounter))
-50360         Next
-50370         ptrArgs = VarPtr(aPtrArgs(0))
-50380
-50390         intReturn = gsapi_init_with_args(intGSInstanceHandle, intElementCount + 1, ptrArgs)
-50400
-50410         ' Stop the Ghostscript interpreter
-50420         gsapi_exit (intGSInstanceHandle)
-50430     End If
-50440
-50450     ' release the Ghostscript instance handle
-50460     gsapi_delete_instance (intGSInstanceHandle)
-50470
-50480     If (intReturn >= 0) Then
-50490         CallGS = True
-50500     Else
-50510         CallGS = False
-50520     End If
-50530
+50100     Dim sFile As String
+50110
+50120     ' Print out the revision details.
+50130     ' If we want to insist on a particular version of Ghostscript
+50140     ' we should check the return value of CheckRevision().
+50150     'CheckRevision (705)
+50160
+50170     ' Load Ghostscript and get the instance handle
+50180     intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)
+50190     If (intReturn < 0) Then
+50200         CallGS = False
+50210         Return
+50220     End If
+50230
+50240     ' Capture stdio
+50250     intReturn = gsapi_set_stdio(intGSInstanceHandle, AddressOf gsdll_stdin, AddressOf gsdll_stdout, AddressOf gsdll_stderr)
+50260
+50270     If (intReturn >= 0) Then
+50280         ' Convert the Unicode strings to null terminated ANSI byte arrays
+50290         ' then get pointers to the byte arrays.
+50300         intElementCount = UBound(astrGSArgs)
+50310         ReDim aAnsiArgs(intElementCount)
+50320         ReDim aPtrArgs(intElementCount)
+50330
+50340         For intCounter = 0 To intElementCount
+50350             aAnsiArgs(intCounter) = StrConv(astrGSArgs(intCounter), vbFromUnicode)
+50360             aPtrArgs(intCounter) = StrPtr(aAnsiArgs(intCounter))
+50370         Next
+50380         ptrArgs = VarPtr(aPtrArgs(0))
+50390
+50400         intReturn = gsapi_init_with_args(intGSInstanceHandle, intElementCount + 1, ptrArgs)
+50410
+50420         ' Stop the Ghostscript interpreter
+50430         gsapi_exit (intGSInstanceHandle)
+50440     End If
+50450
+50460     ' release the Ghostscript instance handle
+50470     gsapi_delete_instance (intGSInstanceHandle)
+50480 '    Debug.Print intReturn
+50490     If (intReturn >= 0) Then
+50500         CallGS = True
+50510     Else
+50520         CallGS = False
+50530     End If
+50540
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

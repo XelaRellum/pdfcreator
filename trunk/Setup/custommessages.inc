@@ -5,3 +5,5 @@
 #include "dutch.inc"
 #include "italian.inc"
 #include "hungarian.inc"
+#include "french.inc"
+#include "slovensko.inc"

@@ -176,7 +176,7 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  KeyPreview = True
-50020  Icon = frmMain.Icon
+50020
 50030  With Options
 50040   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50050  End With

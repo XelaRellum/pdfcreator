@@ -712,6 +712,3 @@ For Each a In CallStackCollection
 Next
 End Sub
 
-Private Sub Form_Load()
- Me.Icon = frmMain.Icon
-End Sub

@@ -1,10 +1,16 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.0.7 (with ISPP) and ISTool 5.0.6.1
+; Setup created with Inno Setup QuickStart Pack 5.0.8 (with ISPP) and ISTool 5.0.6.1
 ; Installation from Frank Heindörfer
 
 ;#define Test
-
 ;#define FastCompilation
+;#define CompileHelp
+;#define UseUPX
+#define IncludeGhostscript
+
+#define ProgramLicense "GNU"
+#define GhostscriptLicense "GPL"
+#define GhostscriptLicense "AFPL"
 
 #ifdef FastCompilation
  #define CompressionMode="none"
@@ -13,12 +19,6 @@
  #define CompressionMode="lzma"
  #define SetupLZMACompressionMode "ultra"
 #endif
-
-#define IncludeGhostscript
-
-#define ProgramLicense "GNU"
-#define GhostscriptLicense "GPL"
-;#define GhostscriptLicense "AFPL"
 
 #Ifdef IncludeGhostscript
 #If (GhostscriptLicense=="GPL")
@@ -31,10 +31,21 @@
 #ENDIF
 #ENDIF
 
+;remove the german localization
+#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
+#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
+#expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+
+#ifdef CompileHelp
+ #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
+ #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
+#endif
+
 #define GetFileVersionVBExe(str S)     Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + Local[3] + Local[4]
 #define GetFileVersionVBExeLine(str S) Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])-1), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])-1), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + '_' + Local[3] + '_'  + Local[4]
 
 #define Homepage             "http://www.pdfcreator.de.vu"
+#define SourceforgeHomepage  "http://www.sf.net/projects/pdfcreator"
 #define Appname              "PDFCreator"
 #define AppExename           "PDFCreator.exe"
 #define SpoolerExename       "PDFSpooler.exe"
@@ -84,27 +95,10 @@
 ;#define UpdateIsPossible
 #define UpdateIsPossibleMinVersion "0.8.1"
 
-[_ISToolPreCompile]
-#If (SetupLZMACompressionMode=="ultra")
-;Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   -d
-;Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe -d
-;Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe -d
-
-Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   --best --compress-icons=0 --crp-ms=999999
-Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe --best --compress-icons=0 --crp-ms=999999
-Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe --best --compress-icons=0 --crp-ms=999999
-
-;Name: .\upx\upx.exe; Parameters: ..\TransTool\TransTool.exe   -3 --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\PDFSpooler\PDFSpooler.exe -3 --compress-icons=0 --crp-ms=999999
-;Name: .\upx\upx.exe; Parameters: ..\PDFCreator\PDFCreator.exe -3 --compress-icons=0 --crp-ms=999999
-#Endif
-
-Name: C:\Program Files\HTML Help Workshop\HHC.EXE; Parameters: ..\Help\english\PDFCreator.hhp
-Name: C:\Program Files\HTML Help Workshop\HHC.EXE; Parameters: ..\Help\german\PDFCreator.hhp
-
 [Setup]
 AllowNoIcons=false
 AlwaysRestart=false
+AppContact={#Homepage}
 AppCopyright=© 2002 - 2004 Philip Chinery, Frank Heindörfer
 AppID={#AppIDStr}
 AppName={#AppName}
@@ -113,6 +107,7 @@ AppPublisher=Philip Chinery, Frank Heindörfer
 AppPublisherURL={#Homepage}
 AppSupportURL={#Homepage}
 AppUpdatesURL={#Homepage}
+AppVersion={#AppVersion}
 ChangesAssociations=true
 Compression={#CompressionMode}
 CreateUninstallRegKey=false
@@ -141,7 +136,6 @@ VersionInfoTextVersion=0.8.1
 
 WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
-OutputManifestFile=C:\_P\Setup\Installation\test.manifest
 
 [InstallDelete]
 #Ifdef GhostscriptVersion
@@ -169,36 +163,48 @@ Source: ..\SystemFiles\MSMPIDE.DLL; DestDir: {sys}; Components: program; Flags: 
 Source: ..\SystemFiles\OLEPRO32.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
 Source: ..\SystemFiles\OLEAUT32.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
 
-;Systemfiles Language: German
+;Language satellite system files
 ;http://msdn.microsoft.com/vbasic/downloads/tools/ipdk.aspx
-Source: C:\IPDK\German\CMDLGDE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt
-Source: C:\IPDK\German\MSCC2DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt
-Source: C:\IPDK\German\MSCMCDE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt
-Source: C:\IPDK\German\VB6DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt
+;Language: German
+Source: C:\IPDK\German\MSCC2DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
+Source: C:\IPDK\German\MSCMCDE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
+Source: C:\IPDK\German\VB6DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
+;Language: Italian
+Source: C:\IPDK\Italian\MSCC2IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
+Source: C:\IPDK\Italian\MSCMCIT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
+Source: C:\IPDK\Italian\VB6IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
+;Language: French
+Source: C:\IPDK\French\MSCC2FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
+Source: C:\IPDK\French\MSCMCFR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
+Source: C:\IPDK\French\VB6FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
 
 ;Printerdriver files
 ; Win9x/Me
-Source: ..\Printer\Adobe\Windows\ICONLIB.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\Windows\PSMON.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\PDFCREATOR.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\Windows\ADOBEPS4.HLP; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND IsLanguage('german')
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND NOT IsLanguage('german')
+Source: ..\Printer\Adobe\Windows\ICONLIB.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver; Flags: deleteafterinstall
+Source: ..\Printer\Adobe\Windows\PSMON.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver; Flags: deleteafterinstall
+Source: ..\Printer\Adobe\Windows\ADOBEPS4.HLP; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin9xPrinterdriver
 Source: ..\Printer\Adobe\Windows\FONTSDIR.MFD; DestDir: {win}; Flags: ignoreversion; Components: program; Check: InstallWin9xPrinterdriver
 Source: ..\Printer\Adobe\Windows\adfonts.mfm; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
 Source: ..\Printer\Adobe\Windows\ADOBEPS4.DRV; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
 ; WinNt 4.0
-Source: ..\Printer\Adobe\PDFCREATOR.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver AND IsLanguage('german')
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver AND NOT IsLanguage('german')
 Source: ..\Printer\Adobe\WinNT\AdobePS5.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\AdobePSu.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\ADOBEPSU.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\AdobePS5.ntf; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 ; Win2000
-Source: ..\Printer\Adobe\PDFCREATOR.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver AND IsLanguage('german')
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver AND NOT IsLanguage('german')
 Source: ..\Printer\Adobe\Win2000\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2000Printerdriver
 Source: ..\Printer\Adobe\Win2000\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2000Printerdriver
 Source: ..\Printer\Adobe\Win2000\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver
 Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver
 ; WinXP
-Source: ..\Printer\Adobe\PDFCREATOR.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver AND IsLanguage('german')
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver AND NOT IsLanguage('german')
 Source: ..\Printer\Adobe\WinXP\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinXpPrinterdriver
 Source: ..\Printer\Adobe\WinXP\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinXpPrinterdriver
 Source: ..\Printer\Adobe\WinXP\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver
@@ -207,6 +213,7 @@ Source: ..\Printer\Adobe\WinXP\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirector
 ;Ghostscript
 #IFDEF GhostscriptVersion
 Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
+Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
 #ENDIF
 
 ;Redmon files
@@ -224,12 +231,21 @@ Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Components: program; Flags
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Components: program; Flags: comparetimestamp
 Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {sys}; Components: program; Flags: comparetimestamp
 
+;vblocal.exe from IPDK
+Source: C:\IPDK\vblocal.exe; DestDir: {app}; Components: program; Flags: deleteafterinstall overwritereadonly onlyifdoesntexist ignoreversion
+
+;upx for compressing
+#ifdef UseUPX
+; Source: UPX\upx.exe; DestDir: {app}; Components: program; Flags: deleteafterinstall overwritereadonly ignoreversion
+#ENDIF
+
 ;ShFolder for older systems
 ;http://www.microsoft.com/downloads/release.asp?releaseid=30340
 Source: ShFolder\ShFolder.Exe; DestDir: {app}; Components: program; Flags: ignoreversion deleteafterinstall; MinVersion: 4.0.950,4.0.1381; OnlyBelowVersion: 4.1.2222,5.0.2195
 
 ;pdfenc
 Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignoreversion
+
 
 ;Help file
 ;Source: ..\Help\english\PDFCreator.chm; DestDir: {app}; Components: program; Flags: ignoreversion; Languages: czech english slovak dutch italian
@@ -310,7 +326,7 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\PDFCreator; Filenam
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: URL; String: http://www.pdfcreator.de.vu/; Components: program
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program
 
-Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: https://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program
+Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program
 
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist
@@ -364,7 +380,18 @@ Root: HKCR; SubKey: PostScript; ValueType: string; ValueData: PostScript; Flags:
 
 ;Uninstall - Software
 Root: HKLM; Subkey: {#UninstallRegStr}; Flags: uninsdeletekey
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: DisplayName; Valuedata: {#AppName} {#AppVersionStr}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Comments; Valuedata: PDFCreator - Opensource; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: DisplayIcon; Valuedata: {app}\PDFCreator.exe; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: DisplayName; Valuedata: {#AppName} {#AppVersionStr}; Flags: uninsdeletevalue; MinVersion: 4.0.950,0; OnlyBelowVersion: 0,0
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: DisplayName; Valuedata: {#AppName}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381; OnlyBelowVersion: 0,0
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: DisplayVersion; Valuedata: {#AppVersionStr}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: HelpLink; Valuedata: {#SourceforgeHomepage}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: InstallDate; Valuedata: {code:GetDateString}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Publisher; Valuedata: Frank Heindörfer, Philip Chinery; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Readme; Valuedata: {#Homepage}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: URLInfoAbout; Valuedata: {#SourceforgeHomepage}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: URLUpdateInfo; Valuedata: {#SourceforgeHomepage}; Flags: uninsdeletevalue
+
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ApplicationVersion; Valuedata: {#AppVersion}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: BetaVersion; Valuedata: {#BetaVersion}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFCreatorVersion; Valuedata: {#PDFCreatorVersion}; Flags: uninsdeletevalue
@@ -380,9 +407,7 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Ghostscrip
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Flags: uninsdeletevalue; Components: ghostscript
 #Endif
 
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: HelpLink; Valuedata: {#Homepage}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UninstallString; Valuedata: {app}\unins000.exe; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Publisher; Valuedata: Frank Heindörfer, Philip Chinery; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printername; Valuedata: {code:GetPrintername}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printerdrivername; Valuedata: {code:GetPrinterdrivername}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printerportname; Valuedata: {code:GetPrinterportname}; Flags: uninsdeletevalue
@@ -409,6 +434,26 @@ Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueN
 
 [Run]
 #IFNDEF Test
+;german localization
+Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
+;italian localization
+Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
+;french localization
+Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
+Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
+
+;compress exe files with upx
+#ifdef UseUPX
+; Filename: {app}\upx.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe -7 --compress-icons=0 --crp-ms=999999; Components: program; Flags: runhidden
+; Filename: {app}\upx.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe -7 --compress-icons=0 --crp-ms=999999; Components: program; Flags: runhidden
+; Filename: {app}\upx.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe -7 --compress-icons=0 --crp-ms=999999; Components: program; Flags: runhidden
+#ENDIF
+
 Filename: {app}\ShFolder.Exe; WorkingDir: {app}; Parameters: /Q:A; Flags: runminimized; Components: program; MinVersion: 4.0.950,4.0.1381; OnlyBelowVersion: 4.1.2222,5.0.2195
 Filename: {app}\PDFCreator.exe; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
 Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shellexec skipifsilent; Check: Not IsPrinterInstallationSuccessfully
@@ -427,6 +472,7 @@ Name: {%tmp}\{#Appname}; Type: filesandordirs
 Name: {%tmp}\PDFCreatorSpool; Type: filesandordirs
 
 [Messages]
+;Remove the 'StatusRunProgram' message
 StatusRunProgram=
 
 [Languages]
@@ -654,6 +700,11 @@ var progTitel, progHandle: TArrayOfString;
     Standardmodus: TRadioButton;
     ServerDescriptionPage: TOutputMsgWizardPage;
     PrinterInstallationSuccessfully: Boolean;
+
+function GetDateString(Default:String):String;
+begin
+ result:=GetDateTimeString('yyyymmdd',#0,#0)
+end;
 
 function GetStrFromPtrA(lpszA : LongInt) : String;
 var
@@ -1020,9 +1071,9 @@ begin
  res:=res and tres;
  tres:=RegWriteStringValue(HKLM,SubKeyName,'Printer',GetPrintername(''));
  res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'Printerror',0);
+ tres:=RegWriteDWordValue(HKLM,SubKeyName,'PrintError',0);
  res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'Runuser',0);
+ tres:=RegWriteDWordValue(HKLM,SubKeyName,'RunUser',0);
  res:=res and tres;
  tres:=RegWriteDWordValue(HKLM,SubKeyName,'ShowWindow',0);
  res:=res and tres;
@@ -1076,12 +1127,12 @@ begin
   AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
   ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
   DI3.cVersion:=2;
-  DI3.pDependentFiles :='PDFCREATOR.PPD'#0 + 'ADOBEPS5.DLL'#0 + 'ADOBEPSU.DLL'#0 + 'ADOBEPS5.NTF'#0 + 'ADOBEPSU.HLP'#0#0;
+  DI3.pDependentFiles :='PDFCREAT.PPD'#0 + 'ADOBEPS5.DLL'#0 + 'ADOBEPSU.DLL'#0 + 'ADOBEPS5.NTF'#0 + 'ADOBEPSU.HLP'#0#0;
   DI3.pConfigFile :='ADOBEPSU.DLL';
   DI3.pDriverPath := 'ADOBEPS5.DLL';
   DI3.pEnvironment:='Windows NT x86';
   DI3.pHelpFile :='ADOBEPSU.HLP';
-  DI3.pDataFile :='PDFCREATOR.PPD';
+  DI3.pDataFile :='PDFCREAT.PPD';
   DI3.pDefaultDataType :='RAW';
   DI3.pMonitorName :='';
 
@@ -1109,7 +1160,7 @@ begin
   DI3.pDriverPath := 'PSCRIPT5.DLL';
   DI3.pEnvironment:='Windows NT x86';
   DI3.pHelpFile :='PSCRIPT.HLP';
-  DI3.pDataFile :='PDFCREATOR.PPD';
+  DI3.pDataFile :='PDFCREAT.PPD';
   DI3.pDefaultDataType :='RAW';
   DI3.pMonitorName :='';
 
@@ -1137,7 +1188,7 @@ begin
   DI3.pDriverPath := 'PSCRIPT5.DLL';
   DI3.pEnvironment:='Windows NT x86';
   DI3.pHelpFile :='PSCRIPT.HLP';
-  DI3.pDataFile :='PDFCREATOR.PPD';
+  DI3.pDataFile :='PDFCREAT.PPD';
   DI3.pDefaultDataType :='RAW';
   DI3.pMonitorName :='';
 

@@ -42,10 +42,10 @@ On Error GoTo ErrPtnr_OnError
 50060  If Len(VBA.Command$) > 0 Then
 50070   TemplateFile = CommandSwitch("Templatefile=", True)
 50080   SplitPath TemplateFile, , Path
-50090   If Len(Path) = 0 Then
+50090   If LenB(Path) = 0 Then
 50100    TemplateFile = CompletePath(App.Path) & TemplateFile
 50110   End If
-50120   If Len(TemplateFile) > 0 Then
+50120   If LenB(TemplateFile) > 0 Then
 50130    If FileExists(TemplateFile) Then
 50140      TemplateInifile = TemplateFile
 50150     Else
@@ -54,10 +54,10 @@ On Error GoTo ErrPtnr_OnError
 50180   End If
 50190   Translatedfile = CommandSwitch("Translatedfile=", True)
 50200   SplitPath Translatedfile, , Path
-50210   If Len(Path) = 0 Then
+50210   If LenB(Path) = 0 Then
 50220    Translatedfile = CompletePath(App.Path) & Translatedfile
 50230   End If
-50240   If Len(Translatedfile) > 0 Then
+50240   If LenB(Translatedfile) > 0 Then
 50250    If FileExists(Translatedfile) = True Then
 50260      If FileInUse(Translatedfile) = False Then
 50270        TranslatedInifile = Translatedfile

@@ -1,7 +1,7 @@
 Attribute VB_Name = "modShell"
 Option Explicit
 
-Public Function ShellAndWait(ByVal Operation As String, _
+Public Function ShellAndWait(ByVal hwnd As Long, ByVal Operation As String, _
                              ByVal FilePath As String, _
                              Optional Parameter As String, _
                              Optional WorkingFolder As String, _
@@ -20,7 +20,7 @@ On Error GoTo ErrPtnr_OnError
 50060  With ShExInfo
 50070   .cbSize = Len(ShExInfo)
 50080   .fMask = SEE_MASK_FLAG_NO_UI Or SEE_MASK_NOCLOSEPROCESS
-50090   .hwnd = frmMain.hwnd
+50090   .hwnd = hwnd
 50100   .lpVerb = Operation
 50110   .lpFile = FilePath
 50120   .lpParameters = Parameter
