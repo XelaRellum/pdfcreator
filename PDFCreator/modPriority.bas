@@ -16,12 +16,12 @@ Const HIGH_PRIORITY_CLASS = &H80
 Const IDLE_PRIORITY_CLASS = &H40
 Const NORMAL_PRIORITY_CLASS = &H20
 Const REALTIME_PRIORITY_CLASS = &H100
-Private Declare Function SetThreadPriority Lib "kernel32" (ByVal hThread As Long, ByVal nPriority As Long) As Long
-Private Declare Function SetPriorityClass Lib "kernel32" (ByVal hProcess As Long, ByVal dwPriorityClass As Long) As Long
-Private Declare Function GetThreadPriority Lib "kernel32" (ByVal hThread As Long) As Long
-Private Declare Function GetPriorityClass Lib "kernel32" (ByVal hProcess As Long) As Long
-Private Declare Function GetCurrentThread Lib "kernel32" () As Long
-Private Declare Function GetCurrentProcess Lib "kernel32" () As Long
+Private Declare Function SetThreadPriority Lib "Kernel32" (ByVal hThread As Long, ByVal nPriority As Long) As Long
+Private Declare Function SetPriorityClass Lib "Kernel32" (ByVal hProcess As Long, ByVal dwPriorityClass As Long) As Long
+Private Declare Function GetThreadPriority Lib "Kernel32" (ByVal hThread As Long) As Long
+Private Declare Function GetPriorityClass Lib "Kernel32" (ByVal hProcess As Long) As Long
+Private Declare Function GetCurrentThread Lib "Kernel32" () As Long
+Private Declare Function GetCurrentProcess Lib "Kernel32" () As Long
 
 Public Enum tProcessPriority
  RealTime = REALTIME_PRIORITY_CLASS
@@ -31,39 +31,13 @@ Public Enum tProcessPriority
 End Enum
 
 Public Function GetProcessPriority() As Long
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If IsWin9xMe = False Then
-50020   GetPriorityClass GetCurrentProcess
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPriority", "GetProcessPriority")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If IsWin9xMe = False Then
+  GetPriorityClass GetCurrentProcess
+ End If
 End Function
 
 Public Sub SetProcessPriority(ProccessPriority As tProcessPriority)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If IsWin9xMe = False Then
-50020   SetPriorityClass GetCurrentProcess, ProccessPriority
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPriority", "SetProcessPriority")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If IsWin9xMe = False Then
+  SetPriorityClass GetCurrentProcess, ProccessPriority
+ End If
 End Sub

@@ -1,10 +1,9 @@
 VERSION 5.00
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmPrinting 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "PDFCreator"
-   ClientHeight    =   3465
+   ClientHeight    =   5775
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   5490
@@ -12,13 +11,43 @@ Begin VB.Form frmPrinting
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3465
+   ScaleHeight     =   5775
    ScaleWidth      =   5490
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin VB.TextBox txtKeywords 
+      Height          =   285
+      Left            =   120
+      TabIndex        =   19
+      Top             =   3960
+      Width           =   5295
+   End
+   Begin VB.TextBox txtSubject 
+      Height          =   285
+      Left            =   120
+      TabIndex        =   17
+      Top             =   3240
+      Width           =   5295
+   End
+   Begin VB.TextBox txtModifyDate 
+      Height          =   285
+      Left            =   120
+      TabIndex        =   15
+      Top             =   1800
+      Width           =   4335
+   End
+   Begin VB.CommandButton cmdNow 
+      Caption         =   "Now"
+      Height          =   255
+      Index           =   1
+      Left            =   4680
+      TabIndex        =   14
+      Top             =   1800
+      Width           =   735
+   End
    Begin MSComCtl2.Animation anmProcess 
       Height          =   825
-      Left            =   120
+      Left            =   360
       TabIndex        =   10
       Top             =   120
       Visible         =   0   'False
@@ -35,12 +64,13 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   1440
       TabIndex        =   7
-      Top             =   2880
+      Top             =   5160
       Width           =   1095
    End
    Begin VB.CommandButton cmdNow 
       Caption         =   "Now"
       Height          =   255
+      Index           =   0
       Left            =   4680
       TabIndex        =   3
       Top             =   1080
@@ -50,7 +80,7 @@ Begin VB.Form frmPrinting
       Height          =   285
       Left            =   120
       TabIndex        =   4
-      Top             =   1800
+      Top             =   2520
       Width           =   5295
    End
    Begin VB.TextBox txtCreationDate 
@@ -65,15 +95,8 @@ Begin VB.Form frmPrinting
       Height          =   615
       Left            =   120
       TabIndex        =   5
-      Top             =   2160
-      Width           =   5175
-   End
-   Begin MSComDlg.CommonDialog cdlg 
-      Left            =   4440
-      Top             =   0
-      _ExtentX        =   847
-      _ExtentY        =   847
-      _Version        =   393216
+      Top             =   4440
+      Width           =   5295
    End
    Begin VB.CommandButton cmdWaiting 
       Appearance      =   0  '2D
@@ -83,7 +106,7 @@ Begin VB.Form frmPrinting
       Left            =   120
       MaskColor       =   &H00D9E5E9&
       TabIndex        =   6
-      Top             =   2880
+      Top             =   5160
       Width           =   1095
    End
    Begin VB.CommandButton cmdEMail 
@@ -91,7 +114,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   2760
       TabIndex        =   8
-      Top             =   2880
+      Top             =   5160
       Width           =   1215
    End
    Begin VB.TextBox txtTitle 
@@ -109,15 +132,39 @@ Begin VB.Form frmPrinting
       Left            =   4200
       MaskColor       =   &H00D9E5E9&
       TabIndex        =   0
-      Top             =   2880
+      Top             =   5160
       Width           =   1095
+   End
+   Begin VB.Label lblKeywords 
+      Caption         =   "Keywords:"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   20
+      Top             =   3720
+      Width           =   2895
+   End
+   Begin VB.Label lblSubject 
+      Caption         =   "Subject:"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   18
+      Top             =   3000
+      Width           =   2895
+   End
+   Begin VB.Label lblModifyDate 
+      Caption         =   "Modify Date:"
+      Height          =   255
+      Left            =   120
+      TabIndex        =   16
+      Top             =   1560
+      Width           =   2895
    End
    Begin VB.Label lblCreateFor 
       Caption         =   "Author:"
       Height          =   255
       Left            =   120
       TabIndex        =   13
-      Top             =   1560
+      Top             =   2280
       Width           =   2895
    End
    Begin VB.Label lblCreationDate 
@@ -154,160 +201,140 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Public SaveFilename As String, SaveFilterIndex As Long, SaveCancel As Boolean
+Private SaveFilename As String, SaveFilterIndex As Long
 
-Dim PSHeader As tPSHeader
+Private PSHeader As tPSHeader
 
 Private Sub chkStartStandardReader_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkStartStandardProgram.Value = 1 Then
-50020    Options.StartStandardProgram = 1
-50030   Else
-50040    Options.StartStandardProgram = 0
-50050  End If
-50060  SaveOptions Options
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "chkStartStandardReader_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkStartStandardProgram.Value = 1 Then
+   Options.StartStandardProgram = 1
+  Else
+   Options.StartStandardProgram = 0
+ End If
+ SaveOptions Options
 End Sub
 
 Private Sub cmdEMail_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim mail As clsPDFCreatorMail, PDFFile As String
-50020
-50030  If GsDllLoaded = 0 Then
-50040   MsgBox LanguageStrings.MessagesMsg08
-50050   SetPrinterStop True
-50060   frmMain.Visible = True
-50070   Unload Me
-50080   Exit Sub
-50090  End If
-50100
-50110  Set mail = New clsPDFCreatorMail
-50120
-50130  PDFFile = Trim$(Create_eDoc)
-50140  If Dir(PDFFile) <> "" And Len(Trim$(PDFFile)) > 0 Then
-50150   If mail.Send(Trim$(PDFFile)) <> 0 Then
-50160    MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
-50170   End If
-50180  End If
-50190
-50200  Me.Visible = False
-50210  Set mail = Nothing
-50220  Unload Me
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "cmdEMail_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Dim mail As clsPDFCreatorMail, PDFFile As String
+
+ ' UnloadDLLComplete GsDllLoaded
+ ' GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+
+ If GsDllLoaded = 0 Then
+  MsgBox LanguageStrings.MessagesMsg08
+  SetPrinterStop True
+  frmMain.Visible = True
+  Unload Me
+  Exit Sub
+ End If
+
+ Set mail = New clsPDFCreatorMail
+
+ PDFFile = Trim$(Create_eDoc)
+
+ ' UnloadDLLComplete GsDllLoaded
+
+ If Dir(PDFFile) <> "" And Len(Trim$(PDFFile)) > 0 Then
+  If mail.Send(PDFFile) <> 0 Then
+   MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+  End If
+ End If
+
+ Me.Visible = False
+ Set mail = Nothing
+ Unload Me
 End Sub
 
-Private Sub cmdNow_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  txtCreationDate.Text = CStr(Now)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "cmdNow_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+
+Private Sub cmdNow_Click(Index As Integer)
+ Select Case Index
+  Case 0:
+   txtCreationDate.Text = CStr(Now)
+  Case 1:
+   txtModifyDate.Text = CStr(Now)
+ End Select
 End Sub
 
 Private Sub cmdOptions_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  frmOptions.Show , Me
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "cmdOptions_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ frmOptions.Show , Me
 End Sub
 
 Private Sub cmdSave_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If GsDllLoaded = 0 Then
-50020   MsgBox LanguageStrings.MessagesMsg08
-50030   SetPrinterStop True
-50040   frmMain.Visible = True
-50050   Unload Me
-50060   Exit Sub
-50070  End If
-50080  Create_eDoc
-50090  Unload Me
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "cmdSave_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
+ Dim PDFFile As String
 
-Private Function GetFilename(FilterIndex As Long) As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SaveFilename = ReplaceForbiddenChars(txtTitle.Text) & ".pdf"
-50020  SaveFilterIndex = 0: SaveCancel = False
-50030  frmSave.Show vbModal, Me
-50040  GetFilename = SaveFilename
-50050  FilterIndex = SaveFilterIndex
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "GetFilename")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
+ 'UnloadDLLComplete GsDllLoaded
+ 'GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+
+ If GsDllLoaded = 0 Then
+  MsgBox LanguageStrings.MessagesMsg08
+  SetPrinterStop True
+  frmMain.Visible = True
+  Unload Me
+  Exit Sub
+ End If
+ If LenB(Dir(CompletePath(App.Path) & "pdfenc.exe")) > 0 Or _
+  GhostScriptSecurity = True Then
+   SecurityIsPossible = True
+ End If
+ 'GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+
+ If LenB(Dir(CompletePath(App.Path) & "pdfenc.exe")) > 0 Or _
+  GhostScriptSecurity = True Then
+   SecurityIsPossible = True
+ End If
+
+ PDFFile = Trim$(Create_eDoc)
+
+ 'UnloadDLLComplete GsDllLoaded
+
+
+ If PDFFile <> vbNullString Then Unload Me
+End Sub
 
 Private Function Create_eDoc() As String
  On Error GoTo ErrorHandler
  Dim OutputFile As String, Path As String, tStr As String, _
-  tErrNumber As Long, FileName As String, FilterIndex As Long
+  tErrNumber As Long, Filename As String, Filterindex As Long, _
+  PDFDocInfo As tPDFDocInfo, Filter As String, Cancel As Boolean, _
+  Files As Collection
 
- FileName = GetFilename(FilterIndex)
- If SaveCancel = True Then
-  Exit Function
- End If
-
+ With LanguageStrings
+  Filter = .ListPDFFiles & " (*.pdf)|*.pdf|" & _
+   .PrintingPNGFiles & " (*.png)|*.png|" & _
+   .PrintingJPEGFiles & " (*.jpg)|*.jpg|" & _
+   .PrintingBMPFiles & " (*.bmp)|*.bmp|" & _
+   .PrintingPCXFiles & " (*.pcx)|*.pcx|" & _
+   .PrintingTIFFFiles & " (*.tif)|*.tif|" & _
+   .PrintingPSFiles & " (*.ps)|*.ps|" & _
+   .PrintingEPSFiles & " (*.eps)|*.eps"
+ End With
+ With LanguageStrings
+  PSHeader = GetPSHeader(PDFSpoolfile)
+'  If WinXP = False Then
+'    SaveFilterIndex = SaveFileDialog(SaveFilename, ReplaceForbiddenChars(PSHeader.Title.Comment), _
+'     Filter, _
+'     "*.pdf", _
+'     GetMyFiles, _
+'     .SaveOpenSaveTitle, _
+'      OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS + OFN_HIDEREADONLY, _
+'      Me.hwnd)
+'    If SaveFilterIndex < 0 Then
+'     Exit Function
+'    End If
+'   Else
+    SaveFilename = ReplaceForbiddenChars(txtTitle.Text) & ".pdf"
+    Set Files = GetFilename(SaveFilename, Options.LastSaveDirectory, Filterindex, Filter, saveFile, Cancel, Me)
+    If SaveOpenCancel = True Then
+     Exit Function
+    End If
+    If Files.Count <> 1 Then
+     Exit Function
+    End If
+    SaveFilterIndex = Filterindex
+    SaveFilename = Files.item(1)
+'  End If
+ End With
+ 
  'Stop Timer: Important! If Animation will be stopped and the timer runs,
  'this form will unload immediately (sendmessage in modResAvi)!
  frmMain.Timer1.Enabled = False
@@ -327,8 +354,29 @@ Private Function Create_eDoc() As String
  PSHeader.Creator.Comment = App.EXEName & _
   " Version " & App.Major & "." & App.Minor & "." & App.Revision
  PSHeader.Title.Comment = txtTitle.Text
- PutPSHeader PDFSpoolfile, PSHeader
- Select Case SaveFilterIndex + 1
+ 
+ With PDFDocInfo
+  .Author = txtCreateFor.Text
+  If IsDate(txtCreationDate.Text) = True Then
+    .CreationDate = Format(txtCreationDate.Text, "YYYYMMDDHHNNSS")
+   Else
+    .CreationDate = Format(Now, "YYYYMMDDHHNNSS")
+  End If
+  .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+  .Keywords = txtKeywords.Text
+  If IsDate(txtModifyDate.Text) = True Then
+    .ModifyDate = Format(txtModifyDate.Text, "YYYYMMDDHHNNSS")
+   Else
+    .ModifyDate = Format(Now, "YYYYMMDDHHNNSS")
+  End If
+  .Subject = txtSubject.Text
+  .Title = txtTitle.Text
+ End With
+ 
+ AppendPDFDocInfo PDFSpoolfile, PDFDocInfo
+ 
+' PutPSHeader PDFSpoolfile, PSHeader
+ Select Case SaveFilterIndex
   Case 1:
    CallGScript PDFSpoolfile, OutputFile, Options, PDFWriter
   Case 2:
@@ -362,9 +410,11 @@ ErrorHandler:
  Me.MousePointer = vbNormal
  tErrNumber = Err.number
  tStr = Err.number & ", " & Err.Description
+ On Error GoTo 0
  On Error Resume Next
  Me.Hide
  If tErrNumber <> 32755 Then
+  MsgBox Err.Description
   If Dir(PDFSpoolfile) <> "" Then
    Kill PDFSpoolfile
   End If
@@ -376,135 +426,108 @@ ErrorHandler:
 End Function
 
 Private Sub ShowAnimation(Show As Boolean)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  DoEvents
-50020  lblTitle.Visible = Not Show
-50030  lblCreationDate.Visible = Not Show
-50040  lblCreateFor.Visible = Not Show
-50050  txtTitle.Visible = Not Show
-50060  txtCreationDate.Visible = Not Show
-50070  txtCreateFor.Visible = Not Show
-50080
-50090  cmdWaiting.Visible = Not Show
-50100  cmdEMail.Visible = Not Show
-50110  cmdSave.Visible = Not Show
-50120  chkStartStandardProgram.Visible = Not Show
-50130  cmdNow.Visible = Not Show
-50140
-50150  anmProcess.Visible = Show
-50160  lblStatus.Visible = Show
-50170
-50180  If Show = True Then
-50190    Me.Height = 1760
-50200    Me.Width = 4530
-50210    ResAnimate anmProcess, ranOpen, 100
-50220    ResAnimate anmProcess, ranPlay
-50230   Else
-50240    ResAnimate anmProcess, ranStop
-50250    ResAnimate anmProcess, ranClose
-50260    Me.Height = 2520
-50270  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "ShowAnimation")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ DoEvents
+ lblTitle.Visible = Not Show
+ lblCreationDate.Visible = Not Show
+ lblCreateFor.Visible = Not Show
+ txtTitle.Visible = Not Show
+ txtCreationDate.Visible = Not Show
+ txtCreateFor.Visible = Not Show
+
+ cmdWaiting.Visible = Not Show
+ cmdEMail.Visible = Not Show
+ cmdSave.Visible = Not Show
+ chkStartStandardProgram.Visible = Not Show
+ cmdNow(0).Visible = Not Show: cmdNow(1).Visible = Not Show
+
+ anmProcess.Visible = Show
+ lblStatus.Visible = Show
+
+ If Show = True Then
+   Me.Height = 1760
+   Me.Width = 4530
+   ResAnimate anmProcess, ranOpen, 100
+   ResAnimate anmProcess, ranPlay
+  Else
+   ResAnimate anmProcess, ranStop
+   ResAnimate anmProcess, ranClose
+   Me.Height = 2520
+ End If
 End Sub
 
 Private Sub cmdWaiting_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPrinterStop True
-50020  frmMain.Visible = True
-50030  Unload Me
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "cmdWaiting_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPrinterStop True
+ frmMain.Visible = True
+ Unload Me
+End Sub
+
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+ If KeyCode = vbKeyF1 Then
+  KeyCode = 0
+  Call HTMLHelp_ShowTopic("html\welcome.htm")
+ End If
 End Sub
 
 Private Sub Form_Load()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Printing = True
-50020  RemoveX Me
-50030  If frmMain.Visible = False Then
-50040   FormInTaskbar Me, True, True
-50050  End If
-50060  With LanguageStrings
-50070   lblTitle.Caption = .PrintingDocumentTitle
-50080   lblStatus.Caption = .PrintingStatus
-50090   lblCreationDate.Caption = .PrintingCreationDate
-50100   lblCreateFor.Caption = .PrintingAuthor
-50110   chkStartStandardProgram.Caption = .PrintingStartStandardProgram
-50120   cmdWaiting.Caption = .PrintingWaiting
-50130   cmdOptions.Caption = .DialogPrinterOptions
-50140   cmdEMail.Caption = .PrintingEMail
-50150   cmdSave.Caption = .PrintingSave
-50160   cmdNow.Caption = .PrintingNow
-50170  End With
-50180  If Options.StartStandardProgram = 1 Then
-50190    chkStartStandardProgram.Value = 1
-50200   Else
-50210    chkStartStandardProgram.Value = 0
-50220  End If
-50230 ' txtTitle.Text = GetPDFTitle(PDFSpoolfile)
-50240  PSHeader = GetPSHeader(PDFSpoolfile)
-50250  With PSHeader
-50260 '  txtTitle.Text = Trim$(.Title.Comment)
-50270   txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename)
-50280   If Options.UseStandardAuthor = 1 Then
-50290     txtCreateFor.Text = Options.StandardAuthor
-50300    Else
-50310     txtCreateFor.Text = Trim$(.CreateFor.Comment)
-50320   End If
-50330   If Options.UseCreationDateNow = 1 Then
-50340     txtCreationDate.Text = Now
-50350    Else
-50360     txtCreationDate.Text = Trim$(.CreationDate.Comment)
-50370   End If
-50380  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "Form_Load")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Me.KeyPreview = True
+ Caption = App.Title & " " & GetProgramReleaseStr ' & " " & LanguageStrings.CommonTitle
+ Printing = True
+ RemoveX Me
+ If frmMain.Visible = False Then
+  FormInTaskbar Me, True, True
+ End If
+ With LanguageStrings
+  lblTitle.Caption = .PrintingDocumentTitle
+  lblStatus.Caption = .PrintingStatus
+  lblCreationDate.Caption = .PrintingCreationDate
+  lblCreateFor.Caption = .PrintingAuthor
+  lblModifyDate.Caption = .PrintingModifyDate
+  lblSubject.Caption = .PrintingSubject
+  lblKeywords.Caption = .PrintingKeywords
+  chkStartStandardProgram.Caption = .PrintingStartStandardProgram
+  cmdWaiting.Caption = .PrintingWaiting
+  cmdOptions.Caption = .DialogPrinterOptions
+  cmdEMail.Caption = .PrintingEMail
+  cmdSave.Caption = .PrintingSave
+  cmdNow(0).Caption = .PrintingNow
+  cmdNow(1).Caption = .PrintingNow
+ End With
+ If Options.StartStandardProgram = 1 Then
+   chkStartStandardProgram.Value = 1
+  Else
+   chkStartStandardProgram.Value = 0
+ End If
+' txtTitle.Text = GetPDFTitle(PDFSpoolfile)
+ PSHeader = GetPSHeader(PDFSpoolfile)
+ With PSHeader
+'  txtTitle.Text = Trim$(.Title.Comment)
+  txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename)
+  If Options.UseStandardAuthor = 1 Then
+'    txtCreateFor.Text = Options.StandardAuthor
+    txtCreateFor.Text = GetSubstFilename(PDFSpoolfile, Options.StandardAuthor, True)
+   Else
+    txtCreateFor.Text = Trim$(.CreateFor.Comment)
+  End If
+  If Options.UseCreationDateNow = 1 Then
+    txtCreationDate.Text = Now
+   Else
+    If IsDate(.CreationDate.Comment) = True Then
+      txtCreationDate.Text = CStr(CDate(Trim$(.CreationDate.Comment)))
+     Else
+      txtCreationDate.Text = Trim$(.CreationDate.Comment)
+    End If
+  End If
+  txtModifyDate.Text = txtCreationDate.Text
+ End With
+ If Options.OptionsEnabled = 0 Then
+  cmdOptions.Enabled = False
+ End If
+ If Options.OptionsVisible = 0 Then
+  cmdOptions.Visible = False
+ End If
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetTopMost Me, False, False
-50020  Printing = False
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "Form_Unload")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetTopMost Me, False, False
+ Printing = False
 End Sub

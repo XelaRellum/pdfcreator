@@ -1,0 +1,11 @@
+Zeile 19: Klasse MSComCtl2.Animation des Steuerelements anmProcess war keine geladene Steuerelementklasse.
+Zeile 71: Klasse MSComDlg.CommonDialog des Steuerelements cdlg war keine geladene Steuerelementklasse.
+Zeile 26: Der Eigenschaftsname _ExtentX in anmProcess ist ungültig.
+Zeile 27: Der Eigenschaftsname _ExtentY in anmProcess ist ungültig.
+Zeile 28: Der Eigenschaftsname _Version in anmProcess ist ungültig.
+Zeile 29: Der Eigenschaftsname AutoPlay in anmProcess ist ungültig.
+Zeile 30: Der Eigenschaftsname FullWidth in anmProcess ist ungültig.
+Zeile 31: Der Eigenschaftsname FullHeight in anmProcess ist ungültig.
+Zeile 74: Der Eigenschaftsname _ExtentX in cdlg ist ungültig.
+Zeile 75: Der Eigenschaftsname _ExtentY in cdlg ist ungültig.
+Zeile 76: Der Eigenschaftsname _Version in cdlg ist ungültig.
