@@ -23,7 +23,7 @@ Attribute VB_Name = "modDrawEdge"
 'Win32 API-Function DrawEdge, used to draw system-style edges.
 Option Explicit
 
-Public Declare Function DrawEdge Lib "user32" (ByVal hdc As Long, _
+Public Declare Function DrawEdge Lib "user32" (ByVal hDC As Long, _
        qrc As RECT, ByVal edge As Long, ByVal grfFlags As Long) _
       As Long
 
@@ -69,7 +69,7 @@ Public Const BF_ADJUST = &H2000   ' Calculate the space left over.
 Public Const BF_FLAT = &H4000     ' For flat rather than 3-D borders.
 Public Const BF_MONO = &H8000     ' For monochrome borders.
 
-Public Type RECT
+Private Type RECT
   Left As Long
   Top As Long
   Right As Long

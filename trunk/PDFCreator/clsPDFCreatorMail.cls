@@ -18,150 +18,152 @@ Option Explicit
 Private iStandardEmailClient As String
 
 Public Property Get StandardEmailClient() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  StandardEmailClient = iStandardEmailClient
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Property
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreatorMail", "StandardEmailClient [GET]")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Property
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ StandardEmailClient = iStandardEmailClient
 End Property
 
-Public Function Send(ByVal FileName As String, Optional Subject As String = "") As Long
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If UCase$(iStandardEmailClient) = "MICROSOFT OUTLOOK" Then
-50020    Send = MSOutlookEmail(FileName, Subject)
-50030   Else
-50040    Send = VBMapiEmail(FileName, Subject)
-50050  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreatorMail", "Send")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Public Function Send(ByVal Filename As String, Optional Subject As String = "") As Long
+ Select Case UCase$(iStandardEmailClient)
+  Case "MICROSOFT OUTLOOK"
+   Send = MSOutlookEmail(Filename, Subject)
+  Case "PEGASUS MAIL"
+   Send = PegasusEmail(Filename, Subject)
+  Case "THE BAT!"
+   Send = TheBatEmail(Filename, Subject)
+  Case "FOXMAIL"
+   Send = FoxEmail(Filename, Subject)
+  Case "SYLPHEED"
+   Send = SylpheedClaws(Filename, Subject)
+  Case Else
+   Send = VBMapiEmail(Filename, Subject)
+ End Select
 End Function
 
 Private Sub Class_Initialize()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  iStandardEmailClient = GetStandardEmailClient
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreatorMail", "Class_Initialize")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ iStandardEmailClient = GetStandardEmailClient
 End Sub
 
 Private Function GetStandardEmailClient() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry
-50020  Set reg = New clsRegistry
-50030  reg.hkey = HKEY_LOCAL_MACHINE
-50040  reg.KeyRoot = "SOFTWARE\Clients\Mail"
-50050  GetStandardEmailClient = reg.GetRegistryValue("")
-50060  Set reg = Nothing
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreatorMail", "GetStandardEmailClient")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Dim reg As clsRegistry
+ Set reg = New clsRegistry
+ reg.hkey = HKEY_LOCAL_MACHINE
+ reg.KeyRoot = "SOFTWARE\Clients\Mail"
+ GetStandardEmailClient = reg.GetRegistryValue("")
+ Set reg = Nothing
 End Function
 
-Private Function MSOutlookEmail(FileName As String, Optional Subject As String = "") As Long
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50020  Dim olApp As Object, oItem As Object
-50030  MSOutlookEmail = 0
-50040  Set olApp = CreateObject("Outlook.Application")
-50050  If olApp Is Nothing Then
-50060   MSOutlookEmail = -1
-50070   Exit Function
-50080  End If
-50090  Set oItem = olApp.CreateItem(0)
-50100  With oItem
-50110   .To = "": .CC = "": .BCC = "": .Subject = Subject
-50120   .Attachments.Add FileName
-50130   .Display
-50140  End With
-50150  Set oItem = Nothing: Set olApp = Nothing
-50160  Exit Function
-'ErrorHandler:
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-'Exit Function
-ErrPtnr_OnError:
-50180  MSOutlookEmail = -1
-Select Case ErrPtnr.OnError("clsPDFCreatorMail", "MSOutlookEmail")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Private Function MSOutlookEmail(Filename As String, Optional Subject As String = "") As Long
+ Dim olApp As Object, oItem As Object
+ MSOutlookEmail = 0
+ Set olApp = CreateObject("Outlook.Application")
+ If olApp Is Nothing Then
+  MSOutlookEmail = -1
+  Exit Function
+ End If
+ Set oItem = olApp.CreateItem(0)
+ With oItem
+  .To = "": .CC = "": .BCC = "": .Subject = Subject
+  .Attachments.Add Filename
+  .Display
+ End With
+ Set oItem = Nothing: Set olApp = Nothing
 End Function
 
-Private Function VBMapiEmail(FileName As String, Optional Subject As String = "") As Long
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50020  Dim MAPISession As Object, MAPIMessages As Object
-50030
-50040  VBMapiEmail = 0
-50050
-50060  Set MAPISession = CreateObject("MSMAPI.MAPISession")
-50070  Set MAPIMessages = CreateObject("MSMAPI.MAPIMessages")
-50080
-50090  With MAPISession
-50100   .LogonUI = True
-50110   .SignOn
-50120  End With
-50130  With MAPIMessages
-50140   .SessionID = MAPISession.SessionID
-50150   .Compose
-50160   .AttachmentIndex = 0
-50170   .AttachmentPathName = FileName
-50180   .MsgSubject = Subject
-50190   .Send True
-50200  End With
-50210  MAPISession.SignOff
-50220  Exit Function
-'ErrorHandler:
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-'Exit Function
-ErrPtnr_OnError:
-50240  VBMapiEmail = -1
-Select Case ErrPtnr.OnError("clsPDFCreatorMail", "VBMapiEmail")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Private Function VBMapiEmail(Filename As String, Optional Subject As String = "") As Long
+ On Error GoTo ErrorHandler
+ Dim MAPISess As MAPISession, MAPIMess As MAPIMessages
+
+ VBMapiEmail = 0
+
+ Set MAPISess = New MAPISession
+ Set MAPIMess = New MAPIMessages
+
+ With MAPISess
+  .LogonUI = True
+  .SignOn
+ End With
+ With MAPIMess
+  .SessionID = MAPISess.SessionID
+  .Compose
+  If Len(Trim$(Filename)) > 0 Then
+   .AttachmentIndex = 0
+   .AttachmentPathName = Filename
+   .AttachmentName = Filename
+  End If
+  .MsgSubject = Subject
+  .Send True
+ End With
+ MAPISess.SignOff
+ Set MAPIMess = Nothing
+ Set MAPISess = Nothing
+ Exit Function
+ErrorHandler:
+ MsgBox LanguageStrings.MessagesMsg20 & vbCrLf & vbCrLf & _
+  "Line " & Erl & ": [" & Err.number & "] " & Err.Description
+ Err.Clear
+End Function
+
+Private Function PegasusEmail(Filename As String, Optional Subject As String = "") As Long
+ Dim cReg As clsRegistry, PegasusBaseDir As String, WsendToPath As String
+ PegasusEmail = 0
+ Set cReg = New clsRegistry
+
+ cReg.hkey = HKEY_CLASSES_ROOT
+ cReg.KeyRoot = "Software\Pegasus Mail\BaseDir"
+ PegasusBaseDir = cReg.GetRegistryValue("")
+ WsendToPath = CompletePath(PegasusBaseDir) & "wsendto.exe"
+ If Dir(WsendToPath) <> "" Then
+   Shell """" & WsendToPath & """ """ & Filename & """"
+  Else
+   MsgBox LanguageStrings.MessagesMsg20
+   PegasusEmail = -1
+ End If
+End Function
+
+Private Function TheBatEmail(Filename As String, Optional Subject As String = "") As Long
+ Dim cReg As clsRegistry, ExePath As String
+ TheBatEmail = 0
+ Set cReg = New clsRegistry
+
+ cReg.hkey = HKEY_CURRENT_USER
+ cReg.KeyRoot = "Software\Rit\The Bat!"
+ ExePath = cReg.GetRegistryValue("EXE path")
+ If Dir(ExePath) <> "" Then
+   Shell """" & ExePath & """ """ & Filename & """"
+  Else
+   MsgBox LanguageStrings.MessagesMsg20
+   TheBatEmail = -1
+ End If
+End Function
+
+Private Function FoxEmail(Filename As String, Optional Subject As String = "") As Long
+ Dim cReg As clsRegistry, ExePath As String
+ FoxEmail = 0
+ Set cReg = New clsRegistry
+
+ cReg.hkey = HKEY_LOCAL_MACHINE
+ cReg.KeyRoot = "Software\Aerofox\Foxmail"
+ ExePath = cReg.GetRegistryValue("Executable")
+ If Dir(ExePath) <> "" Then
+   Shell """" & ExePath & """ /min """ & Filename & """"
+  Else
+   MsgBox LanguageStrings.MessagesMsg20
+   FoxEmail = -1
+ End If
+End Function
+
+Private Function SylpheedClaws(Filename As String, Optional Subject As String = "") As Long
+ Dim cReg As clsRegistry, ExePath As String
+ SylpheedClaws = 0
+ Set cReg = New clsRegistry
+
+ cReg.hkey = HKEY_LOCAL_MACHINE
+ cReg.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sylpheed-Claws_is1"
+ ExePath = cReg.GetRegistryValue("Inno Setup: App Path")
+ ExePath = CompletePath(ExePath) & "bin\sylpheed.exe"
+ If Dir(ExePath) <> "" Then
+   Shell """" & ExePath & """ --attach """ & Filename & """"
+  Else
+   MsgBox LanguageStrings.MessagesMsg20
+   SylpheedClaws = -1
+ End If
 End Function

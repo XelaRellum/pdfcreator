@@ -1,27 +1,65 @@
 PDFCreator Revision History
 ================================
-Copyright (C)2002-2003 Philip Chinery, Frank Heindörfer
+Copyright (C)2002-2004 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfcreator.de.vu/
           http://www.sourceforge.net/projects/pdfcreator/
 
+
+Version 0.8.0 (April 2, 2004)
+-------------------------------------------------------------------------------
+Improvements:
+- Now it is possible to donate us.
+  (See: http://www.pdfcreator.de.vu/)
+- Security! PDFCreator can handle either security settings from AFPL Ghostscript
+  above 8.14 or can use then program 'pdfenc' from Steven Lee.
+- Improved printer driver handling
+- 2 new variables: OptionsEnable and OptionsVisible
+  (a simple protection to save the options - useful for administrators)
+  Set this variables manually in the file PDFCreator.ini to save the options.
+- Email Clients:
+  Succesfully tested with MS Outlook, Outlook Express, Thunderbird, Eudora,
+  Pegasus Mail (WsendTo.exe), The Bat!, Foxmail, Sylpheed-Claws, IncrediMail
+  Problems with: Ak-Mail, GeMail, Postguard, Vivian Mail
+- Add PDF document properties 'Keywords' and 'Subject'
+- You can add printable files (also via 'Drag and Drop') and through the 
+  windows explorer context menu.
+- Added Commandline parameter PF:
+  Convert a printable file in a pdf document
+  example: pdfcreator.exe -PF"c:\autoexec.bat"
+- Update check from PDFCreator Menu
+
+Bug Fixes:
+- Fixed a problem using email function
+- Fixed a problem using combine function
+- Fixed some minor bugs
+
+Kwown issues:
+- doesn't work in remote sessions on terminalservers
+  (Please patient, we work hard on this problem.)
+- no hyperlinks possible
+
+
 Version 0.7.1 (July 22, 2003)
--------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Bug Fixes:
 - Fixed up a problem using email function
 - Fixed up a problem using non-conform postscriptfiles
-- Commandline parameter: -CLEARCACHE to clear the temp. cache
+- Commandline parameter: pdfcreator.exe -CLEARCACHE to clear
+  the temp. cache
 
 Version 0.7.0 (July 17, 2003)
--------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 What's new:
-- 2 new output formats: Postscript (PS) and Encapsulated Postscript (EPS)
+- 2 new output formats: Postscript (PS) and 
+  Encapsulated Postscript (EPS)
 - Process priority can be changed. (only for NT and above)
 - Enhanced errorhandling
 - Improved programmspeed
 - Individual installation of Ghostscript
 - Ask if .ps files should be associated with PDFCreator
-- Commandline parameter: -IF"My Inputfile.ps" -OF"My Outputfile.pdf"
+- Commandline parameter: 
+  example: pdfcreator.exe -IF"My Inputfile.ps" -OF"My Outputfile.pdf"
 - Special filename handling include filename substitutions
 - Switch back to Ghostscript 8.00
 - Support the Outlook Format: Plain Text
@@ -40,6 +78,6 @@ Bug Fixes:
 
 
 Version 0.6.0 (May 18, 2003)
--------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 New release with a completely new redesign.

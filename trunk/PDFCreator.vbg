@@ -1,0 +1,5 @@
+VBGROUP 5.0
+StartupProject=PDFCreator\PDFCreator.vbp
+Project=PDFSpooler\PDFSpooler.vbp
+Project=Transtool\TransTool.vbp
+Project=UnInst\UnInst.vbp

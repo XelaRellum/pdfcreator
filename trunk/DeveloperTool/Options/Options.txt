@@ -1,0 +1,98 @@
+'Optionname|OptionControlvalue|Type|Standard|LeftLimit|RightLimit
+
+' <Colors Bitmap>
+BitmapResolution|txtBitmapResolution.Text|Long|150|1|<
+BMPColorscount|cmbBMPColors.Listindex|Long|1|0|6
+JPEGColorscount|cmbJPEGColors.Listindex|Long|0|0|1
+JPEGQuality|txtJPEGQuality.Text|Long|75|0|100
+PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
+PNGColorscount|cmbPNGColors.Listindex|Long|0|0|4
+TIFFColorscount|cmbTIFFColors.Listindex|Long|0|0|7
+
+' <ColorsPDF>
+PDFColorsCMYKToRGB|chkPDFCMYKtoRGB.Value|Boolean|1||
+PDFColorsColorModel|cmbPDFColorModel.Listindex|Long|1|0|2
+PDFColorsPreserveHalftone|chkPDFPreserveHalftone.Value|Boolean|0||
+PDFColorsPreserveOverprint|chkPDFPreserveOverprint.Value|Boolean|1||
+PDFColorsPreserveTransfer|chkPDFPreserveTransfer.Value|Boolean|1||
+
+' <CompressionPDF>
+PDFCompressionColorCompression|chkPDFColorComp.Value|Boolean|1||
+PDFCompressionColorCompressionChoice|cmbPDFColorComp.Listindex|Long|0|0|7
+PDFCompressionColorResample|chkPDFColorResample.Value|Boolean|0||
+PDFCompressionColorResampleChoice|cmbPDFColorResample.Listindex|Long|0|0|2
+PDFCompressionColorResolution|txtPDFColorRes.Text|Long|300|0|<
+PDFCompressionGreyCompression|chkPDFGreyComp.Value|Boolean|1||
+PDFCompressionGreyCompressionChoice|cmbPDFGreyComp.Listindex|Long|0|0|7
+PDFCompressionGreyResample|chkPDFGreyResample.Value|Boolean|0||
+PDFCompressionGreyResampleChoice|cmbPDFGreyResample.Listindex|Long|0|0|2
+PDFCompressionGreyResolution|txtPDFGreyRes.Text|Long|300|0|<
+PDFCompressionMonoCompression|chkPDFMonoComp.Value|Boolean|1||
+PDFCompressionMonoCompressionChoice|cmbPDFMonoComp.Listindex|Long|0|0|3
+PDFCompressionMonoResample|chkPDFMonoResample.Value|Boolean|0||
+PDFCompressionMonoResampleChoice|cmbPDFMonoResample.Listindex|Long|0|0|2
+PDFCompressionMonoResolution|txtPDFMonoRes.Text|Long|1200|0|<
+PDFCompressionTextCompression|chkPDFTextComp.Value|Boolean|1||
+
+' <FontsPDF>
+PDFFontsEmbedAll|chkPDFEmbedAll.Value|Boolean|1||
+PDFFontsSubSetFonts|chkPDFSubSetFonts.Value|Boolean|1||
+PDFFontsSubSetFontsPercent|txtPDFSubSetPerc.Text|Long|100|0|<
+
+' <GeneralPDF>
+PDFGeneralASCII85|chkPDFASCII85.Value|Boolean|0||
+PDFGeneralAutorotate|cmbPDFRotate.Listindex|Long|2|0|2
+PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|1|0|2
+PDFGeneralOverprint|cmbPDFOverprint.Listindex|Long|0|0|1
+PDFGeneralResolution|txtPDFRes.Text|Long|600|0|<
+
+' <PDF Security>
+PDFAllowAssembly|chkAllowAssembly.Value|Boolean|0||
+PDFAllowDegradedPrinting|chkAllowDegradedPrinting.Value|Boolean|0||
+PDFAllowFillIn|chkAllowFillIn.Value|Boolean|0||
+PDFAllowScreenReaders|chkAllowScreenReaders.Value|Boolean|0||
+PDFDisallowCopy|chkAllowCopy.Value|Boolean|1||
+PDFDisallowModifyAnnotations|chkAllowModifyAnnotations.Value|Boolean|0||
+PDFDisallowModifyContents|chkAllowModifyContents.Value|Boolean|0||
+PDFDisallowPrinting|chkAllowPrinting.Value|Boolean|0||
+PDFEncryptor|cmbPDFEncryptor.Itemdata(Frm.cmbPDFEncryptor.Listindex)|Long|0|0|1
+PDFHighEncryption|optEncHigh.Value|Boolean|0||
+PDFLowEncryption|optEncLow.Value|Boolean|1||
+PDFOwnerPass|chkOwnerPass.Value|Boolean|0||
+PDFUserPass|chkUserPass.Value|Boolean|0||
+PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
+
+' <Program>
+AutosaveDirectory|txtAutosaveDirectory.Text|String|||
+AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
+AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|5
+DirectoryGhostscriptBinaries|txtGSbin.text|String|||
+DirectoryGhostscriptFonts|txtGSfonts.text|String|||
+DirectoryGhostscriptLibraries|txtGSlib.text|String|||
+FilenameSubstitutions||String|Microsoft Word - \.doc||
+FilenameSubstitutionsOnlyInTitle|chkFilenameSubst.Value|Boolean|1||
+Language|Language|String|english||
+LastSaveDirectory|LastSaveDirectory|String|||
+Logging|Logging|Boolean|0||
+LogLines|LogLines|Long|100|100|1000
+NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
+OptionsEnabled||Boolean|1||
+OptionsVisible||Boolean|1||
+PrinterStop|PrinterStop|Boolean|0||
+PrinterTemppath|txtTemppath.text|String|||
+ProcessPriority|sldProcessPriority.value|Long|1|0|3
+ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
+ProgramFontCharset|cmbCharset.Text|Long|0|0|<
+ProgramFontSize|txtProgramFontSize.text|Long|8|1|72
+RemoveSpaces|chkSpaces.Value|Boolean|1||
+SaveFilename|txtSaveFilename.Text|String|<Title>||
+StandardAuthor|txtStandardAuthor.Text|String|||
+StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
+UseAutosave|chkUseAutosave.Value|Boolean|0||
+UseAutosaveDirectory|chkUseAutosaveDirectory.Value|Boolean|1||
+UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||
+UseStandardAuthor|chkUseStandardAuthor.Value|Boolean|0||
+
+' <PS LanguageLevel>
+EPSLanguageLevel|cmbEPSLanguageLevel.Listindex|Long|2|0|3
+PSLanguageLevel|cmbPSLanguageLevel.Listindex|Long|2|0|3
