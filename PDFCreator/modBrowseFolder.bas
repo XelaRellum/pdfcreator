@@ -32,29 +32,42 @@ Public Declare Function SHBrowseForFolder Lib "shell32" (lpbi As BrowseInfo) As 
 Public Declare Function SHGetPathFromIDList Lib "shell32" (ByVal pidList As Long, ByVal lpBuffer As String) As Long
 
 Public Function BrowseForFolder(hwndOwner As Long, sPrompt As String) As String
- 'declare variables to be used
- Dim iNull As Integer, lpIDList As Long, lResult As Long, sPath As String, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  'declare variables to be used
+50020  Dim iNull As Integer, lpIDList As Long, lResult As Long, sPath As String, _
   udtBI As BrowseInfo
-
- 'initialise variables
- With udtBI
-  .hwndOwner = hwndOwner
-  .lpszTitle = lstrcat(sPrompt, "")
-  .ulFlags = BIF_RETURNONLYFSDIRS
- End With
-
- 'Call the browse for folder API
- lpIDList = SHBrowseForFolder(udtBI)
-
- 'get the resulting string path
- If lpIDList Then
-  sPath = String$(MAX_PATH, 0)
-  lResult = SHGetPathFromIDList(lpIDList, sPath)
-  Call CoTaskMemFree(lpIDList)
-  iNull = InStr(sPath, vbNullChar)
-  If iNull Then sPath = Left$(sPath, iNull - 1)
- End If
-
- 'If cancel was pressed, sPath = ""
- BrowseForFolder = sPath
+50040
+50050  'initialise variables
+50060  With udtBI
+50070   .hwndOwner = hwndOwner
+50080   .lpszTitle = lstrcat(sPrompt, "")
+50090   .ulFlags = BIF_RETURNONLYFSDIRS
+50100  End With
+50110
+50120  'Call the browse for folder API
+50130  lpIDList = SHBrowseForFolder(udtBI)
+50140
+50150  'get the resulting string path
+50160  If lpIDList Then
+50170   sPath = String$(MAX_PATH, 0)
+50180   lResult = SHGetPathFromIDList(lpIDList, sPath)
+50190   Call CoTaskMemFree(lpIDList)
+50200   iNull = InStr(sPath, vbNullChar)
+50210   If iNull Then sPath = Left$(sPath, iNull - 1)
+50220  End If
+50230
+50240  'If cancel was pressed, sPath = ""
+50250  BrowseForFolder = sPath
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modBrowseFolder", "BrowseForFolder")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function

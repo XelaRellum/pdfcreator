@@ -1323,37 +1323,89 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub chkUseAutosave_Click()
- If chkUseAutosave.Value = 1 Then
-   ViewAutosave True
-  Else
-   ViewAutosave False
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkUseAutosave.Value = 1 Then
+50020    ViewAutosave True
+50030   Else
+50040    ViewAutosave False
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "chkUseAutosave_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub chkUseAutosaveDirectory_Click()
- If chkUseAutosaveDirectory.Value = 1 Then
-   ViewAutosaveDirectory True
-  Else
-   ViewAutosaveDirectory False
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkUseAutosaveDirectory.Value = 1 Then
+50020    ViewAutosaveDirectory True
+50030   Else
+50040    ViewAutosaveDirectory False
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "chkUseAutosaveDirectory_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub chkUseSecurity_Click()
- UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "chkUseSecurity_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub chkUseStandardAuthor_Click()
- If chkUseStandardAuthor.Value = 1 Then
-   txtStandardAuthor.Enabled = True
-   txtStandardAuthor.BackColor = &H80000005
-  Else
-   txtStandardAuthor.Enabled = False
-   txtStandardAuthor.BackColor = &H8000000F
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkUseStandardAuthor.Value = 1 Then
+50020    txtStandardAuthor.Enabled = True
+50030    txtStandardAuthor.BackColor = &H80000005
+50040   Else
+50050    txtStandardAuthor.Enabled = False
+50060    txtStandardAuthor.BackColor = &H8000000F
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "chkUseStandardAuthor_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbCharset_Change()
- On Local Error GoTo ErrorHandler
+ On Error GoTo ErrorHandler
  txtTest.Font.Charset = cmbCharset.Text
  Exit Sub
 ErrorHandler:
@@ -1364,195 +1416,442 @@ ErrorHandler:
 End Sub
 
 Private Sub cmbCharset_Click()
- With cmbCharset
-  .Text = .ItemData(.ListIndex)
- End With
- txtTest.Font.Charset = cmbCharset.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With cmbCharset
+50020   .Text = .ItemData(.ListIndex)
+50030  End With
+50040  txtTest.Font.Charset = cmbCharset.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbCharset_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbCharset_KeyPress(KeyAscii As Integer)
- Dim allow As String, tStr As String
- allow = "0123456789" & Chr$(8) & Chr$(13)
- tStr = Chr$(KeyAscii)
- If InStr(1, allow, tStr) = 0 Then
-   KeyAscii = 0
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim allow As String, tStr As String
+50020  allow = "0123456789" & Chr$(8) & Chr$(13)
+50030  tStr = Chr$(KeyAscii)
+50040  If InStr(1, allow, tStr) = 0 Then
+50050    KeyAscii = 0
+50060  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbCharset_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbCharset_Validate(Cancel As Boolean)
- Dim i As Long, tStr As String
- tStr = ""
- For i = 1 To Len(cmbCharset.Text)
-  If InStr("0123456789", Mid(cmbCharset.Text, i, 1)) > 0 Then
-    tStr = tStr & Mid(cmbCharset.Text, i, 1)
-   Else
-    Exit For
-  End If
- Next i
- If Len(Trim$(tStr)) = 0 Then
-   cmbCharset.Text = 0
-  Else
-   cmbCharset.Text = tStr
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, tStr As String
+50020  tStr = ""
+50030  For i = 1 To Len(cmbCharset.Text)
+50040   If InStr("0123456789", Mid(cmbCharset.Text, i, 1)) > 0 Then
+50050     tStr = tStr & Mid(cmbCharset.Text, i, 1)
+50060    Else
+50070     Exit For
+50080   End If
+50090  Next i
+50100  If Len(Trim$(tStr)) = 0 Then
+50110    cmbCharset.Text = 0
+50120   Else
+50130    cmbCharset.Text = tStr
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbCharset_Validate")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbAutoSaveFilenameTokens_Click()
- txtAutosaveFilename.Text = txtAutosaveFilename.Text & cmbAutoSaveFilenameTokens.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  txtAutosaveFilename.Text = txtAutosaveFilename.Text & cmbAutoSaveFilenameTokens.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbAutoSaveFilenameTokens_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbSaveFilenameTokens_Click()
- txtSaveFilename.Text = txtSaveFilename.Text & cmbSaveFilenameTokens.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  txtSaveFilename.Text = txtSaveFilename.Text & cmbSaveFilenameTokens.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbSaveFilenameTokens_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbFonts_Click()
- txtTest.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  txtTest.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbFonts_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmbPDFCompat_Click()
- UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbPDFCompat_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdCancel_Click()
- Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdCancel_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdCancelTest_Click()
- With Options
-  SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-  cmbCharset.Text = .ProgramFontCharset
-  SetFont frmMain, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With Options
+50020   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50030   cmbCharset.Text = .ProgramFontCharset
+50040   SetFont frmMain, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50050  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdCancelTest_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdFilenameSubst_Click(Index As Integer)
- Select Case Index
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Select Case Index
   Case 0: ' Add
-   AddFilenameSubstitutions
-  Case 1: ' Change
-   ChangeFilenameSubstitutions
-  Case 2: ' Delete
-   DeleteFilenameSubstitutions
-  Case 3: ' Up
-   MoveUpFilenameSubstitutions
-  Case 4: ' Down
-   MoveDownFilenameSubstitutions
- End Select
+50030    AddFilenameSubstitutions
+50040   Case 1: ' Change
+50050    ChangeFilenameSubstitutions
+50060   Case 2: ' Delete
+50070    DeleteFilenameSubstitutions
+50080   Case 3: ' Up
+50090    MoveUpFilenameSubstitutions
+50100   Case 4: ' Down
+50110    MoveDownFilenameSubstitutions
+50120  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdFilenameSubst_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdGetAutosaveDirectory_Click()
-Dim strFolder As String
-
-strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
-If Len(strFolder) = 0 Then Exit Sub
-If Right$(strFolder, 1) <> "\" Then
- strFolder = strFolder & "\"
-End If
-txtAutosaveDirectory.Text = strFolder
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 Dim strFolder As String
+50020
+50030 strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
+50040 If Len(strFolder) = 0 Then Exit Sub
+50050 If Right$(strFolder, 1) <> "\" Then
+50060  strFolder = strFolder & "\"
+50070 End If
+50080 txtAutosaveDirectory.Text = strFolder
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdGetAutosaveDirectory_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdGetgsbinDirectory_Click()
- Dim strFolder As String
-
- strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsGhostscriptBinariesDirectoryPrompt)
- If Len(strFolder) = 0 Then Exit Sub
- strFolder = CompletePath(strFolder)
- txtGSbin.Text = strFolder
- With txtGSbin
-  .ToolTipText = .Text
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim strFolder As String
+50020
+50030  strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsGhostscriptBinariesDirectoryPrompt)
+50040  If Len(strFolder) = 0 Then Exit Sub
+50050  strFolder = CompletePath(strFolder)
+50060  txtGSbin.Text = strFolder
+50070  With txtGSbin
+50080   .ToolTipText = .Text
+50090  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdGetgsbinDirectory_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdGetgsfontsDirectory_Click()
- Dim strFolder As String
-
- strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsGhostscriptFontsDirectoryPrompt)
- If Len(strFolder) = 0 Then Exit Sub
- strFolder = CompletePath(strFolder)
- txtGSfonts.Text = strFolder
- With txtGSfonts
-  .ToolTipText = .Text
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim strFolder As String
+50020
+50030  strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsGhostscriptFontsDirectoryPrompt)
+50040  If Len(strFolder) = 0 Then Exit Sub
+50050  strFolder = CompletePath(strFolder)
+50060  txtGSfonts.Text = strFolder
+50070  With txtGSfonts
+50080   .ToolTipText = .Text
+50090  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdGetgsfontsDirectory_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdGetgslibDirectory_Click()
- Dim strFolder As String
-
- strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsGhostscriptLibrariesDirectoryPrompt)
- If Len(strFolder) = 0 Then Exit Sub
- strFolder = CompletePath(strFolder)
- txtGSlib.Text = strFolder
- With txtGSlib
-  .ToolTipText = .Text
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim strFolder As String
+50020
+50030  strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsGhostscriptLibrariesDirectoryPrompt)
+50040  If Len(strFolder) = 0 Then Exit Sub
+50050  strFolder = CompletePath(strFolder)
+50060  txtGSlib.Text = strFolder
+50070  With txtGSlib
+50080   .ToolTipText = .Text
+50090  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdGetgslibDirectory_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdGetTemppath_Click()
- Dim strFolder As String
-
- strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsPrintertempDirectoryPrompt)
- If Len(strFolder) = 0 Then Exit Sub
- strFolder = CompletePath(strFolder)
- txtTemppath.Text = strFolder
- With txtTemppath
-  .ToolTipText = .Text
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim strFolder As String
+50020
+50030  strFolder = BrowseForFolder(Me.hWnd, LanguageStrings.OptionsPrintertempDirectoryPrompt)
+50040  If Len(strFolder) = 0 Then Exit Sub
+50050  strFolder = CompletePath(strFolder)
+50060  txtTemppath.Text = strFolder
+50070  With txtTemppath
+50080   .ToolTipText = .Text
+50090  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdGetTemppath_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdReset_Click()
- Dim res As Long, Options As tOptions
- res = MsgBox(LanguageStrings.MessagesMsg03, vbYesNo)
- If res = vbYes Then
-  Options = StandardOptions
-  ShowOptions Me, Options
-  With Options
-   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-   cmbCharset.Text = .ProgramFontCharset
-   SetFont frmMain, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-  End With
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim res As Long, Options As tOptions
+50020  res = MsgBox(LanguageStrings.MessagesMsg03, vbYesNo)
+50030  If res = vbYes Then
+50040   Options = StandardOptions
+50050   ShowOptions Me, Options
+50060   With Options
+50070    SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50080    cmbCharset.Text = .ProgramFontCharset
+50090    SetFont frmMain, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50100   End With
+50110  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdReset_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdSave_Click()
- GetOptions Me, Options
- SaveOptions Options
- If IsWin9xMe = False Then
-  Select Case Options.ProcessPriority
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  GetOptions Me, Options
+50020  SaveOptions Options
+50030  If IsWin9xMe = False Then
+50040   Select Case Options.ProcessPriority
    Case 0: 'Idle
-    SetProcessPriority Idle
-   Case 1: 'Normal
-    SetProcessPriority Normal
-   Case 2: 'High
-    SetProcessPriority High
-   Case 3: 'Realtime
-    SetProcessPriority RealTime
-  End Select
- End If
-
- GsDllLoaded = LoadDLL(Options.DirectoryGhostscriptBinaries & "\gsdll32.dll")
-
- Unload Me
+50060     SetProcessPriority Idle
+50070    Case 1: 'Normal
+50080     SetProcessPriority Normal
+50090    Case 2: 'High
+50100     SetProcessPriority High
+50110    Case 3: 'Realtime
+50120     SetProcessPriority RealTime
+50130   End Select
+50140  End If
+50150
+50160  GsDllLoaded = LoadDLL(Options.DirectoryGhostscriptBinaries & "\gsdll32.dll")
+50170
+50180  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdSave_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdTest_Click()
- Dim tCharset As Long
- tCharset = cmbCharset.Text
- SetFont Me, cmbFonts.List(cmbFonts.ListIndex), CLng(cmbCharset.Text), txtProgramFontsize.Text
- cmbCharset.Text = tCharset
- SetFont frmMain, cmbFonts.List(cmbFonts.ListIndex), CLng(cmbCharset.Text), txtProgramFontsize.Text
- cmdCancelTest.Enabled = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tCharset As Long
+50020  tCharset = cmbCharset.Text
+50030  SetFont Me, cmbFonts.List(cmbFonts.ListIndex), CLng(cmbCharset.Text), txtProgramFontsize.Text
+50040  cmbCharset.Text = tCharset
+50050  SetFont frmMain, cmbFonts.List(cmbFonts.ListIndex), CLng(cmbCharset.Text), txtProgramFontsize.Text
+50060  cmdCancelTest.Enabled = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdTest_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdTestpage_Click()
- Dim TestPSPage As String, fn As Long, FileName As String
- TestPSPage = LoadResString(3000)
- TestPSPage = Replace(TestPSPage, "[TESTPAGE]", LanguageStrings.OptionsTestpage, , 1, vbTextCompare)
- TestPSPage = Replace(TestPSPage, "[DATE]", Now, , 1, vbTextCompare)
-
- fn = FreeFile
- FileName = GetTempFile(GetPDFCreatorTempfolder, "~PD")
- Open FileName For Output As fn
- Print #fn, TestPSPage
- Close #fn
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim TestPSPage As String, fn As Long, FileName As String
+50020  TestPSPage = LoadResString(3000)
+50030  TestPSPage = Replace(TestPSPage, "[TESTPAGE]", LanguageStrings.OptionsTestpage, , 1, vbTextCompare)
+50040  TestPSPage = Replace(TestPSPage, "[DATE]", Now, , 1, vbTextCompare)
+50050
+50060  fn = FreeFile
+50070  FileName = GetTempFile(GetPDFCreatorTempfolder, "~PD")
+50080  Open FileName For Output As fn
+50090  Print #fn, TestPSPage
+50100  Close #fn
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdTestpage_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
@@ -2038,451 +2337,763 @@ Private Sub Form_Load()
 End Sub
 
 Private Sub ShowProgOptions()
- lblJPEGQuality.Visible = False
- cmbPNGColors.Visible = False
- cmbJPEGColors.Visible = False
- cmbBMPColors.Visible = False
- cmbPCXColors.Visible = False
- cmbTIFFColors.Visible = False
- tbstrPDFOptions.Visible = False
- fraProgFont.Visible = False
- fraProgGeneral.Visible = False
- fraProgAutosave.Visible = False
- fraProgSave.Visible = False
- fraProgDirectories.Visible = False
- fraProgDocument.Visible = False
- fraBitmapGeneral.Visible = False
- fraPDFGeneral.Visible = False
- fraPDFCompress.Visible = False
- fraPDFFonts.Visible = False
- fraPDFColors.Visible = False
- fraPDFSecurity.Visible = False
- txtJPEGQuality.Visible = False
- lblJPEQQualityProzent.Visible = False
- fraPSGeneral.Visible = False
- cmbPSLanguageLevel.Visible = False
- cmbEPSLanguageLevel.Visible = False
-
- Select Case trv.SelectedItem.Key
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lblJPEGQuality.Visible = False
+50020  cmbPNGColors.Visible = False
+50030  cmbJPEGColors.Visible = False
+50040  cmbBMPColors.Visible = False
+50050  cmbPCXColors.Visible = False
+50060  cmbTIFFColors.Visible = False
+50070  tbstrPDFOptions.Visible = False
+50080  fraProgFont.Visible = False
+50090  fraProgGeneral.Visible = False
+50100  fraProgAutosave.Visible = False
+50110  fraProgSave.Visible = False
+50120  fraProgDirectories.Visible = False
+50130  fraProgDocument.Visible = False
+50140  fraBitmapGeneral.Visible = False
+50150  fraPDFGeneral.Visible = False
+50160  fraPDFCompress.Visible = False
+50170  fraPDFFonts.Visible = False
+50180  fraPDFColors.Visible = False
+50190  fraPDFSecurity.Visible = False
+50200  txtJPEGQuality.Visible = False
+50210  lblJPEQQualityProzent.Visible = False
+50220  fraPSGeneral.Visible = False
+50230  cmbPSLanguageLevel.Visible = False
+50240  cmbEPSLanguageLevel.Visible = False
+50250
+50260  Select Case trv.SelectedItem.Key
   Case "Program"
-   Set picOptions = LoadResPicture(2101, vbResIcon)
-   lblOptions = LanguageStrings.OptionsProgramGeneralDescription
-   fraProgGeneral.Visible = True
-  Case "ProgramGeneral"
-   Set picOptions = LoadResPicture(2101, vbResIcon)
-   lblOptions = LanguageStrings.OptionsProgramGeneralDescription
-   fraProgGeneral.Visible = True
-  Case "ProgramSave"
-   Set picOptions = LoadResPicture(2106, vbResIcon)
-   lblOptions = LanguageStrings.OptionsProgramSaveDescription
-   fraProgSave.Visible = True
-  Case "ProgramAutosave"
-   Set picOptions = LoadResPicture(2103, vbResIcon)
-   lblOptions = LanguageStrings.OptionsProgramAutosaveDescription
-   fraProgAutosave.Visible = True
-  Case "ProgramFonts"
-   Set picOptions = LoadResPicture(2102, vbResIcon)
-   lblOptions = LanguageStrings.OptionsProgramFontDescription
-   fraProgFont.Visible = True
-  Case "ProgramDirectories"
-   Set picOptions = LoadResPicture(2104, vbResIcon)
-   lblOptions = LanguageStrings.OptionsProgramDirectoriesDescription
-   fraProgDirectories.Visible = True
-  Case "ProgramDocument"
-   Set picOptions = LoadResPicture(2105, vbResIcon)
-   lblOptions = LanguageStrings.OptionsProgramDocumentDescription
-   fraProgDocument.Visible = True
-  Case "Formats"
-   Set picOptions = LoadResPicture(2111, vbResIcon)
-   lblOptions = LanguageStrings.OptionsPDFDescription
-   tbstrPDFOptions.Visible = True
-   fraPDFGeneral.Visible = True
-  Case "FormatsPDF"
-   Set picOptions = LoadResPicture(2111, vbResIcon)
-   lblOptions = LanguageStrings.OptionsPDFDescription
-   tbstrPDFOptions.Visible = True
-   fraPDFGeneral.Visible = True
-  Case "FormatsPNG"
-   Set picOptions = LoadResPicture(2112, vbResIcon)
-   lblOptions = LanguageStrings.OptionsPNGDescription
-   fraBitmapGeneral.Visible = True
-   cmbPNGColors.Visible = True
-  Case "FormatsJPEG"
-   Set picOptions = LoadResPicture(2113, vbResIcon)
-   lblOptions = LanguageStrings.OptionsJPEGDescription
-   fraBitmapGeneral.Visible = True
-   lblJPEGQuality.Caption = LanguageStrings.OptionsJPEGQuality
-   lblJPEGQuality.Visible = True
-   txtJPEGQuality.Visible = True
-   lblJPEQQualityProzent.Visible = True
-   lblJPEQQualityProzent.Left = txtJPEGQuality.Left + txtJPEGQuality.Width + 100
-   cmbJPEGColors.Visible = True
-  Case "FormatsBMP"
-   Set picOptions = LoadResPicture(2114, vbResIcon)
-   lblOptions = LanguageStrings.OptionsBMPDescription
-   fraBitmapGeneral.Visible = True
-   cmbBMPColors.Visible = True
-  Case "FormatsPCX"
-   Set picOptions = LoadResPicture(2115, vbResIcon)
-   lblOptions = LanguageStrings.OptionsPCXDescription
-   fraBitmapGeneral.Visible = True
-   cmbPCXColors.Visible = True
-  Case "FormatsTIFF"
-   Set picOptions = LoadResPicture(2116, vbResIcon)
-   lblOptions = LanguageStrings.OptionsTIFFDescription
-   fraBitmapGeneral.Visible = True
-   cmbTIFFColors.Visible = True
-  Case "FormatsPS"
-   Set picOptions = LoadResPicture(2117, vbResIcon)
-   lblOptions.Caption = LanguageStrings.OptionsPSDescription
-   fraPSGeneral.Visible = True
-   cmbPSLanguageLevel.Visible = True
-   fraPSGeneral.Caption = LanguageStrings.OptionsPSDescription
-  Case "FormatsEPS"
-   Set picOptions = LoadResPicture(2118, vbResIcon)
-   lblOptions.Caption = LanguageStrings.OptionsEPSDescription
-   fraPSGeneral.Visible = True
-   cmbEPSLanguageLevel.Visible = True
-   fraPSGeneral.Caption = LanguageStrings.OptionsEPSDescription
- End Select
+50280    Set picOptions = LoadResPicture(2101, vbResIcon)
+50290    lblOptions = LanguageStrings.OptionsProgramGeneralDescription
+50300    fraProgGeneral.Visible = True
+50310   Case "ProgramGeneral"
+50320    Set picOptions = LoadResPicture(2101, vbResIcon)
+50330    lblOptions = LanguageStrings.OptionsProgramGeneralDescription
+50340    fraProgGeneral.Visible = True
+50350   Case "ProgramSave"
+50360    Set picOptions = LoadResPicture(2106, vbResIcon)
+50370    lblOptions = LanguageStrings.OptionsProgramSaveDescription
+50380    fraProgSave.Visible = True
+50390   Case "ProgramAutosave"
+50400    Set picOptions = LoadResPicture(2103, vbResIcon)
+50410    lblOptions = LanguageStrings.OptionsProgramAutosaveDescription
+50420    fraProgAutosave.Visible = True
+50430   Case "ProgramFonts"
+50440    Set picOptions = LoadResPicture(2102, vbResIcon)
+50450    lblOptions = LanguageStrings.OptionsProgramFontDescription
+50460    fraProgFont.Visible = True
+50470   Case "ProgramDirectories"
+50480    Set picOptions = LoadResPicture(2104, vbResIcon)
+50490    lblOptions = LanguageStrings.OptionsProgramDirectoriesDescription
+50500    fraProgDirectories.Visible = True
+50510   Case "ProgramDocument"
+50520    Set picOptions = LoadResPicture(2105, vbResIcon)
+50530    lblOptions = LanguageStrings.OptionsProgramDocumentDescription
+50540    fraProgDocument.Visible = True
+50550   Case "Formats"
+50560    Set picOptions = LoadResPicture(2111, vbResIcon)
+50570    lblOptions = LanguageStrings.OptionsPDFDescription
+50580    tbstrPDFOptions.Visible = True
+50590    fraPDFGeneral.Visible = True
+50600   Case "FormatsPDF"
+50610    Set picOptions = LoadResPicture(2111, vbResIcon)
+50620    lblOptions = LanguageStrings.OptionsPDFDescription
+50630    tbstrPDFOptions.Visible = True
+50640    fraPDFGeneral.Visible = True
+50650   Case "FormatsPNG"
+50660    Set picOptions = LoadResPicture(2112, vbResIcon)
+50670    lblOptions = LanguageStrings.OptionsPNGDescription
+50680    fraBitmapGeneral.Visible = True
+50690    cmbPNGColors.Visible = True
+50700   Case "FormatsJPEG"
+50710    Set picOptions = LoadResPicture(2113, vbResIcon)
+50720    lblOptions = LanguageStrings.OptionsJPEGDescription
+50730    fraBitmapGeneral.Visible = True
+50740    lblJPEGQuality.Caption = LanguageStrings.OptionsJPEGQuality
+50750    lblJPEGQuality.Visible = True
+50760    txtJPEGQuality.Visible = True
+50770    lblJPEQQualityProzent.Visible = True
+50780    lblJPEQQualityProzent.Left = txtJPEGQuality.Left + txtJPEGQuality.Width + 100
+50790    cmbJPEGColors.Visible = True
+50800   Case "FormatsBMP"
+50810    Set picOptions = LoadResPicture(2114, vbResIcon)
+50820    lblOptions = LanguageStrings.OptionsBMPDescription
+50830    fraBitmapGeneral.Visible = True
+50840    cmbBMPColors.Visible = True
+50850   Case "FormatsPCX"
+50860    Set picOptions = LoadResPicture(2115, vbResIcon)
+50870    lblOptions = LanguageStrings.OptionsPCXDescription
+50880    fraBitmapGeneral.Visible = True
+50890    cmbPCXColors.Visible = True
+50900   Case "FormatsTIFF"
+50910    Set picOptions = LoadResPicture(2116, vbResIcon)
+50920    lblOptions = LanguageStrings.OptionsTIFFDescription
+50930    fraBitmapGeneral.Visible = True
+50940    cmbTIFFColors.Visible = True
+50950   Case "FormatsPS"
+50960    Set picOptions = LoadResPicture(2117, vbResIcon)
+50970    lblOptions.Caption = LanguageStrings.OptionsPSDescription
+50980    fraPSGeneral.Visible = True
+50990    cmbPSLanguageLevel.Visible = True
+51000    fraPSGeneral.Caption = LanguageStrings.OptionsPSDescription
+51010   Case "FormatsEPS"
+51020    Set picOptions = LoadResPicture(2118, vbResIcon)
+51030    lblOptions.Caption = LanguageStrings.OptionsEPSDescription
+51040    fraPSGeneral.Visible = True
+51050    cmbEPSLanguageLevel.Visible = True
+51060    fraPSGeneral.Caption = LanguageStrings.OptionsEPSDescription
+51070  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "ShowProgOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub lsvFilenameSubst_Click()
- Set_txtFilenameSubst
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set_txtFilenameSubst
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "lsvFilenameSubst_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub optEncHigh_Click()
- UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "optEncHigh_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub optEncLow_Click()
- UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UpdateSecurityFields
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "optEncLow_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub sldProcessPriority_Change()
- lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & sldProcessPriority.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & sldProcessPriority.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "sldProcessPriority_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub sldProcessPriority_Scroll()
- With sldProcessPriority
-  Select Case .Value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With sldProcessPriority
+50020   Select Case .Value
    Case 0: 'Idle
-    .Text = LanguageStrings.OptionsProcesspriorityIdle
-   Case 1: 'Normal
-    .Text = LanguageStrings.OptionsProcesspriorityNormal
-   Case 2: 'High
-    .Text = LanguageStrings.OptionsProcesspriorityHigh
-   Case 3: 'Realtime
-    .Text = LanguageStrings.OptionsProcesspriorityRealtime
-  End Select
- End With
+50040     .Text = LanguageStrings.OptionsProcesspriorityIdle
+50050    Case 1: 'Normal
+50060     .Text = LanguageStrings.OptionsProcesspriorityNormal
+50070    Case 2: 'High
+50080     .Text = LanguageStrings.OptionsProcesspriorityHigh
+50090    Case 3: 'Realtime
+50100     .Text = LanguageStrings.OptionsProcesspriorityRealtime
+50110   End Select
+50120  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "sldProcessPriority_Scroll")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub tbstrPDFOptions_Click()
- fraPDFGeneral.Visible = False
- fraPDFCompress.Visible = False
- fraPDFFonts.Visible = False
- fraPDFColors.Visible = False
- fraPDFSecurity.Visible = False
- Select Case tbstrPDFOptions.SelectedItem.Index
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  fraPDFGeneral.Visible = False
+50020  fraPDFCompress.Visible = False
+50030  fraPDFFonts.Visible = False
+50040  fraPDFColors.Visible = False
+50050  fraPDFSecurity.Visible = False
+50060  Select Case tbstrPDFOptions.SelectedItem.Index
   Case 1:
-   fraPDFGeneral.Visible = True
-  Case 2:
-   fraPDFCompress.Visible = True
-  Case 3:
-   fraPDFFonts.Visible = True
-  Case 4:
-   fraPDFColors.Visible = True
-  Case 5:
-   fraPDFSecurity.Visible = True
- End Select
+50080    fraPDFGeneral.Visible = True
+50090   Case 2:
+50100    fraPDFCompress.Visible = True
+50110   Case 3:
+50120    fraPDFFonts.Visible = True
+50130   Case 4:
+50140    fraPDFColors.Visible = True
+50150   Case 5:
+50160    fraPDFSecurity.Visible = True
+50170  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "tbstrPDFOptions_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub trv_Click()
- ShowProgOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ShowProgOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "trv_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub trv_NodeClick(ByVal Node As MSComctlLib.Node)
- ShowProgOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ShowProgOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "trv_NodeClick")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub txtAutosaveFilename_Change()
- txtAutosaveFilename.ToolTipText = txtAutosaveFilename.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  txtAutosaveFilename.ToolTipText = txtAutosaveFilename.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "txtAutosaveFilename_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub txtProgramFontSize_Change()
- Dim tL As Long
-If Trim$(txtProgramFontsize.Text) = "" Then
-  txtProgramFontsize.Text = 8
- End If
- tL = CLng(txtProgramFontsize.Text)
- If tL <= 0 Then
-  tL = 1
- End If
- If tL > 72 Then
-  tL = 72
- End If
- txtProgramFontsize.Text = tL
- txtTest.Font.Size = tL
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tL As Long
+50020 If Trim$(txtProgramFontsize.Text) = "" Then
+50030   txtProgramFontsize.Text = 8
+50040  End If
+50050  tL = CLng(txtProgramFontsize.Text)
+50060  If tL <= 0 Then
+50070   tL = 1
+50080  End If
+50090  If tL > 72 Then
+50100   tL = 72
+50110  End If
+50120  txtProgramFontsize.Text = tL
+50130  txtTest.Font.Size = tL
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "txtProgramFontSize_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub txtProgramFontSize_KeyPress(KeyAscii As Integer)
- Dim allow As String, tStr As String
-
- allow = "0123456789" & Chr$(8) & Chr$(13)
-
- tStr = Chr$(KeyAscii)
-
- If InStr(1, allow, tStr) = 0 Then
-   KeyAscii = 0
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim allow As String, tStr As String
+50020
+50030  allow = "0123456789" & Chr$(8) & Chr$(13)
+50040
+50050  tStr = Chr$(KeyAscii)
+50060
+50070  If InStr(1, allow, tStr) = 0 Then
+50080    KeyAscii = 0
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "txtProgramFontSize_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub ViewAutosave(ViewIt As Boolean)
- lblAutosaveformat.Enabled = ViewIt
- cmbAutosaveFormat.Enabled = ViewIt
- lblAutosaveFilename.Enabled = ViewIt
- txtAutosaveFilename.Enabled = ViewIt
- lblAutosaveFilenameTokens.Enabled = ViewIt
- cmbAutoSaveFilenameTokens.Enabled = ViewIt
- chkUseAutosaveDirectory.Enabled = ViewIt
- If ViewIt = True Then
-   cmbAutosaveFormat.BackColor = &H80000005
-   cmbAutoSaveFilenameTokens.BackColor = &H80000005
-   txtAutosaveFilename.BackColor = &H80000005
-  Else
-   cmbAutosaveFormat.BackColor = &H8000000F
-   cmbAutoSaveFilenameTokens.BackColor = &H8000000F
-   txtAutosaveFilename.BackColor = &H8000000F
- End If
- If chkUseAutosaveDirectory.Value = 1 And ViewIt = True Then
-   ViewAutosaveDirectory True
-  Else
-   ViewAutosaveDirectory False
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lblAutosaveformat.Enabled = ViewIt
+50020  cmbAutosaveFormat.Enabled = ViewIt
+50030  lblAutosaveFilename.Enabled = ViewIt
+50040  txtAutosaveFilename.Enabled = ViewIt
+50050  lblAutosaveFilenameTokens.Enabled = ViewIt
+50060  cmbAutoSaveFilenameTokens.Enabled = ViewIt
+50070  chkUseAutosaveDirectory.Enabled = ViewIt
+50080  If ViewIt = True Then
+50090    cmbAutosaveFormat.BackColor = &H80000005
+50100    cmbAutoSaveFilenameTokens.BackColor = &H80000005
+50110    txtAutosaveFilename.BackColor = &H80000005
+50120   Else
+50130    cmbAutosaveFormat.BackColor = &H8000000F
+50140    cmbAutoSaveFilenameTokens.BackColor = &H8000000F
+50150    txtAutosaveFilename.BackColor = &H8000000F
+50160  End If
+50170  If chkUseAutosaveDirectory.Value = 1 And ViewIt = True Then
+50180    ViewAutosaveDirectory True
+50190   Else
+50200    ViewAutosaveDirectory False
+50210  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "ViewAutosave")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub ViewAutosaveDirectory(ViewIt As Boolean)
- If ViewIt = True Then
-   txtAutosaveDirectory.Enabled = True
-   txtAutosaveDirectory.BackColor = &HC0FFFF
-   cmdGetAutosaveDirectory.Enabled = True
-  Else
-   txtAutosaveDirectory.Enabled = False
-   txtAutosaveDirectory.BackColor = &H8000000F
-   cmdGetAutosaveDirectory.Enabled = False
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If ViewIt = True Then
+50020    txtAutosaveDirectory.Enabled = True
+50030    txtAutosaveDirectory.BackColor = &HC0FFFF
+50040    cmdGetAutosaveDirectory.Enabled = True
+50050   Else
+50060    txtAutosaveDirectory.Enabled = False
+50070    txtAutosaveDirectory.BackColor = &H8000000F
+50080    cmdGetAutosaveDirectory.Enabled = False
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "ViewAutosaveDirectory")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub UpdateSecurityFields()
- If chkUseSecurity.Value = False Then
-   fraPDFEncLevel.Enabled = False
-   optEncHigh.Enabled = False
-   optEncLow.Enabled = False
-
-   fraSecurityPass.Enabled = False
-   chkUserPass.Enabled = False
-   chkOwnerPass.Enabled = False
-
-   fraPDFPermissions.Enabled = False
-   chkAllowPrinting.Enabled = False
-   chkAllowCopy.Enabled = False
-   chkAllowModifyAnnotations.Enabled = False
-   chkAllowModifyContents.Enabled = False
-
-   fraPDFHighPermissions.Enabled = False
-   chkAllowDegradedPrinting.Enabled = False
-   chkAllowFillIn.Enabled = False
-   chkAllowScreenReaders.Enabled = False
-   chkAllowAssembly.Enabled = False
-  Else
-   fraPDFEncLevel.Enabled = True
-   If cmbPDFCompat.ListIndex >= 2 Then
-     optEncHigh.Enabled = True
-    Else
-     optEncHigh.Enabled = False
-   End If
-   optEncLow.Enabled = True
-
-   fraSecurityPass.Enabled = True
-   chkUserPass.Enabled = True
-   chkOwnerPass.Enabled = True
-
-   fraPDFPermissions.Enabled = True
-   chkAllowPrinting.Enabled = True
-   chkAllowCopy.Enabled = True
-   chkAllowModifyAnnotations.Enabled = True
-   chkAllowModifyContents.Enabled = True
-
-   If optEncHigh.Value = True Then
-     fraPDFHighPermissions.Enabled = True
-     chkAllowDegradedPrinting.Enabled = True
-     chkAllowFillIn.Enabled = True
-     chkAllowScreenReaders.Enabled = True
-     chkAllowAssembly.Enabled = True
-    Else
-     fraPDFHighPermissions.Enabled = False
-     chkAllowDegradedPrinting.Enabled = False
-     chkAllowFillIn.Enabled = False
-     chkAllowScreenReaders.Enabled = False
-     chkAllowAssembly.Enabled = False
-   End If
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkUseSecurity.Value = False Then
+50020    fraPDFEncLevel.Enabled = False
+50030    optEncHigh.Enabled = False
+50040    optEncLow.Enabled = False
+50050
+50060    fraSecurityPass.Enabled = False
+50070    chkUserPass.Enabled = False
+50080    chkOwnerPass.Enabled = False
+50090
+50100    fraPDFPermissions.Enabled = False
+50110    chkAllowPrinting.Enabled = False
+50120    chkAllowCopy.Enabled = False
+50130    chkAllowModifyAnnotations.Enabled = False
+50140    chkAllowModifyContents.Enabled = False
+50150
+50160    fraPDFHighPermissions.Enabled = False
+50170    chkAllowDegradedPrinting.Enabled = False
+50180    chkAllowFillIn.Enabled = False
+50190    chkAllowScreenReaders.Enabled = False
+50200    chkAllowAssembly.Enabled = False
+50210   Else
+50220    fraPDFEncLevel.Enabled = True
+50230    If cmbPDFCompat.ListIndex >= 2 Then
+50240      optEncHigh.Enabled = True
+50250     Else
+50260      optEncHigh.Enabled = False
+50270    End If
+50280    optEncLow.Enabled = True
+50290
+50300    fraSecurityPass.Enabled = True
+50310    chkUserPass.Enabled = True
+50320    chkOwnerPass.Enabled = True
+50330
+50340    fraPDFPermissions.Enabled = True
+50350    chkAllowPrinting.Enabled = True
+50360    chkAllowCopy.Enabled = True
+50370    chkAllowModifyAnnotations.Enabled = True
+50380    chkAllowModifyContents.Enabled = True
+50390
+50400    If optEncHigh.Value = True Then
+50410      fraPDFHighPermissions.Enabled = True
+50420      chkAllowDegradedPrinting.Enabled = True
+50430      chkAllowFillIn.Enabled = True
+50440      chkAllowScreenReaders.Enabled = True
+50450      chkAllowAssembly.Enabled = True
+50460     Else
+50470      fraPDFHighPermissions.Enabled = False
+50480      chkAllowDegradedPrinting.Enabled = False
+50490      chkAllowFillIn.Enabled = False
+50500      chkAllowScreenReaders.Enabled = False
+50510      chkAllowAssembly.Enabled = False
+50520    End If
+50530  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "UpdateSecurityFields")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub cmdAsso_Click()
- PsAssociate
- SHChangeNotify SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0
- cmdAsso.Enabled = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  PsAssociate
+50020  SHChangeNotify SHCNE_ASSOCCHANGED, SHCNF_IDLIST, 0, 0
+50030  cmdAsso.Enabled = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdAsso_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub AddFilenameSubstitutions()
- Dim i As Long, res As Long
- res = CheckFilenameSubstitutions(0)
- Select Case res
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim i As Long, res As Long
+50050  res = CheckFilenameSubstitutions(0)
+50060  Select Case res
   Case 0:
-   lsvFilenameSubst.ListItems.Add , , txtFilenameSubst(0).Text
-   lsvFilenameSubst.ListItems(lsvFilenameSubst.ListItems.Count).SubItems(1) = txtFilenameSubst(1).Text
-   lsvFilenameSubst.ListItems(lsvFilenameSubst.ListItems.Count).Selected = True
-   lsvFilenameSubst.ListItems(lsvFilenameSubst.ListItems.Count).EnsureVisible
-   Set_txtFilenameSubst
-  Case 2:
-   MsgBox LanguageStrings.MessagesMsg12 & _
+50080    lsvFilenameSubst.ListItems.Add , , txtFilenameSubst(0).Text
+50090    lsvFilenameSubst.ListItems(lsvFilenameSubst.ListItems.Count).SubItems(1) = txtFilenameSubst(1).Text
+50100    lsvFilenameSubst.ListItems(lsvFilenameSubst.ListItems.Count).Selected = True
+50110    lsvFilenameSubst.ListItems(lsvFilenameSubst.ListItems.Count).EnsureVisible
+50120    Set_txtFilenameSubst
+50130   Case 2:
+50140    MsgBox LanguageStrings.MessagesMsg12 & _
     vbCrLf & vbTab & "\ / : * ? < > | """
-  Case 3:
-   MsgBox LanguageStrings.MessagesMsg11
- End Select
+50160   Case 3:
+50170    MsgBox LanguageStrings.MessagesMsg11
+50180  End Select
+50190 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50200 Exit Sub
+ErrPtnr_OnError:
+50220 Select Case ErrPtnr.OnError("frmOptions", "AddFilenameSubstitutions")
+Case 0: Resume
+50240 Case 1: Resume Next
+50250 Case 2: Exit Sub
+50260 Case 3: End
+50270 End Select
+50280 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub ChangeFilenameSubstitutions()
- Dim i As Long, res As Long
- res = CheckFilenameSubstitutions(lsvFilenameSubst.SelectedItem.Index)
- Select Case res
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim i As Long, res As Long
+50050  res = CheckFilenameSubstitutions(lsvFilenameSubst.SelectedItem.Index)
+50060  Select Case res
   Case 0:
-   lsvFilenameSubst.SelectedItem.Text = txtFilenameSubst(0).Text
-   lsvFilenameSubst.SelectedItem.SubItems(1) = txtFilenameSubst(1).Text
-  Case 2:
-   MsgBox LanguageStrings.MessagesMsg12 & _
+50080    lsvFilenameSubst.SelectedItem.Text = txtFilenameSubst(0).Text
+50090    lsvFilenameSubst.SelectedItem.SubItems(1) = txtFilenameSubst(1).Text
+50100   Case 2:
+50110    MsgBox LanguageStrings.MessagesMsg12 & _
     vbCrLf & vbTab & "\ / : * ? < > | """
-  Case 3:
-   MsgBox LanguageStrings.MessagesMsg11
- End Select
+50130   Case 3:
+50140    MsgBox LanguageStrings.MessagesMsg11
+50150  End Select
+50160 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50170 Exit Sub
+ErrPtnr_OnError:
+50190 Select Case ErrPtnr.OnError("frmOptions", "ChangeFilenameSubstitutions")
+Case 0: Resume
+50210 Case 1: Resume Next
+50220 Case 2: Exit Sub
+50230 Case 3: End
+50240 End Select
+50250 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub DeleteFilenameSubstitutions()
- Dim oIndex As Long
- With lsvFilenameSubst
-  oIndex = .SelectedItem.Index
-  If .ListItems.Count > 0 Then
-   .ListItems.Remove .SelectedItem.Index
-   If oIndex > .ListItems.Count Then
-    oIndex = .ListItems.Count
-   End If
-   If .ListItems.Count > 0 Then
-    .ListItems(oIndex).Selected = True
-    .ListItems(oIndex).EnsureVisible
-   End If
-   Set_txtFilenameSubst
-  End If
- End With
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim oIndex As Long
+50050  With lsvFilenameSubst
+50060   oIndex = .SelectedItem.Index
+50070   If .ListItems.Count > 0 Then
+50080    .ListItems.Remove .SelectedItem.Index
+50090    If oIndex > .ListItems.Count Then
+50100     oIndex = .ListItems.Count
+50110    End If
+50120    If .ListItems.Count > 0 Then
+50130     .ListItems(oIndex).Selected = True
+50140     .ListItems(oIndex).EnsureVisible
+50150    End If
+50160    Set_txtFilenameSubst
+50170   End If
+50180  End With
+50190 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50200 Exit Sub
+ErrPtnr_OnError:
+50220 Select Case ErrPtnr.OnError("frmOptions", "DeleteFilenameSubstitutions")
+Case 0: Resume
+50240 Case 1: Resume Next
+50250 Case 2: Exit Sub
+50260 Case 3: End
+50270 End Select
+50280 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub MoveUpFilenameSubstitutions()
- Dim tStrL As String, tStrR As String
- With lsvFilenameSubst
-  tStrL = .ListItems(.SelectedItem.Index).Text
-  tStrR = .ListItems(.SelectedItem.Index).SubItems(1)
-  .ListItems(.SelectedItem.Index).Text = .ListItems(.SelectedItem.Index - 1).Text
-  .ListItems(.SelectedItem.Index).SubItems(1) = .ListItems(.SelectedItem.Index - 1).SubItems(1)
-  .ListItems(.SelectedItem.Index - 1).Text = tStrL
-  .ListItems(.SelectedItem.Index - 1).SubItems(1) = tStrR
-  .ListItems(.SelectedItem.Index - 1).Selected = True
-  .ListItems(.SelectedItem.Index).EnsureVisible
- End With
- Set_txtFilenameSubst
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim tStrL As String, tStrR As String
+50050  With lsvFilenameSubst
+50060   tStrL = .ListItems(.SelectedItem.Index).Text
+50070   tStrR = .ListItems(.SelectedItem.Index).SubItems(1)
+50080   .ListItems(.SelectedItem.Index).Text = .ListItems(.SelectedItem.Index - 1).Text
+50090   .ListItems(.SelectedItem.Index).SubItems(1) = .ListItems(.SelectedItem.Index - 1).SubItems(1)
+50100   .ListItems(.SelectedItem.Index - 1).Text = tStrL
+50110   .ListItems(.SelectedItem.Index - 1).SubItems(1) = tStrR
+50120   .ListItems(.SelectedItem.Index - 1).Selected = True
+50130   .ListItems(.SelectedItem.Index).EnsureVisible
+50140  End With
+50150  Set_txtFilenameSubst
+50160 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50170 Exit Sub
+ErrPtnr_OnError:
+50190 Select Case ErrPtnr.OnError("frmOptions", "MoveUpFilenameSubstitutions")
+Case 0: Resume
+50210 Case 1: Resume Next
+50220 Case 2: Exit Sub
+50230 Case 3: End
+50240 End Select
+50250 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub MoveDownFilenameSubstitutions()
- Dim tStrL As String, tStrR As String
- With lsvFilenameSubst
-  tStrL = .ListItems(.SelectedItem.Index).Text
-  tStrR = .ListItems(.SelectedItem.Index).SubItems(1)
-  .ListItems(.SelectedItem.Index).Text = .ListItems(.SelectedItem.Index + 1).Text
-  .ListItems(.SelectedItem.Index).SubItems(1) = .ListItems(.SelectedItem.Index + 1).SubItems(1)
-  .ListItems(.SelectedItem.Index + 1).Text = tStrL
-  .ListItems(.SelectedItem.Index + 1).SubItems(1) = tStrR
-  .ListItems(.SelectedItem.Index + 1).Selected = True
-  .ListItems(.SelectedItem.Index).EnsureVisible
- End With
- Set_txtFilenameSubst
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim tStrL As String, tStrR As String
+50050  With lsvFilenameSubst
+50060   tStrL = .ListItems(.SelectedItem.Index).Text
+50070   tStrR = .ListItems(.SelectedItem.Index).SubItems(1)
+50080   .ListItems(.SelectedItem.Index).Text = .ListItems(.SelectedItem.Index + 1).Text
+50090   .ListItems(.SelectedItem.Index).SubItems(1) = .ListItems(.SelectedItem.Index + 1).SubItems(1)
+50100   .ListItems(.SelectedItem.Index + 1).Text = tStrL
+50110   .ListItems(.SelectedItem.Index + 1).SubItems(1) = tStrR
+50120   .ListItems(.SelectedItem.Index + 1).Selected = True
+50130   .ListItems(.SelectedItem.Index).EnsureVisible
+50140  End With
+50150  Set_txtFilenameSubst
+50160 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50170 Exit Sub
+ErrPtnr_OnError:
+50190 Select Case ErrPtnr.OnError("frmOptions", "MoveDownFilenameSubstitutions")
+Case 0: Resume
+50210 Case 1: Resume Next
+50220 Case 2: Exit Sub
+50230 Case 3: End
+50240 End Select
+50250 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Function CheckFilenameSubstitutions(Index As Long) As Long
- Dim i As Long
- CheckFilenameSubstitutions = 0
- If Len(txtFilenameSubst(0).Text) = 0 Then
-  CheckFilenameSubstitutions = 1
-  Exit Function
- End If
- If IsForbiddenChars(txtFilenameSubst(0).Text) = True Then
-  txtFilenameSubst(0).SetFocus
-  CheckFilenameSubstitutions = 2
-  Exit Function
- End If
- If IsForbiddenChars(txtFilenameSubst(1).Text) = True Then
-  txtFilenameSubst(1).SetFocus
-  CheckFilenameSubstitutions = 2
-  Exit Function
- End If
- If Index = 0 Then
-   For i = 1 To lsvFilenameSubst.ListItems.Count
-    If UCase$(txtFilenameSubst(0).Text) = UCase$(lsvFilenameSubst.ListItems(i).Text) Then
-     CheckFilenameSubstitutions = 3
-     Exit Function
-    End If
-   Next i
-  Else
-   For i = 1 To lsvFilenameSubst.ListItems.Count
-    If UCase$(txtFilenameSubst(0).Text) = UCase$(lsvFilenameSubst.ListItems(i).Text) And _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  CheckFilenameSubstitutions = 0
+50030  If Len(txtFilenameSubst(0).Text) = 0 Then
+50040   CheckFilenameSubstitutions = 1
+50050   Exit Function
+50060  End If
+50070  If IsForbiddenChars(txtFilenameSubst(0).Text) = True Then
+50080   txtFilenameSubst(0).SetFocus
+50090   CheckFilenameSubstitutions = 2
+50100   Exit Function
+50110  End If
+50120  If IsForbiddenChars(txtFilenameSubst(1).Text) = True Then
+50130   txtFilenameSubst(1).SetFocus
+50140   CheckFilenameSubstitutions = 2
+50150   Exit Function
+50160  End If
+50170  If Index = 0 Then
+50180    For i = 1 To lsvFilenameSubst.ListItems.Count
+50190     If UCase$(txtFilenameSubst(0).Text) = UCase$(lsvFilenameSubst.ListItems(i).Text) Then
+50200      CheckFilenameSubstitutions = 3
+50210      Exit Function
+50220     End If
+50230    Next i
+50240   Else
+50250    For i = 1 To lsvFilenameSubst.ListItems.Count
+50260     If UCase$(txtFilenameSubst(0).Text) = UCase$(lsvFilenameSubst.ListItems(i).Text) And _
      Index <> lsvFilenameSubst.SelectedItem.Index Then
-     CheckFilenameSubstitutions = 3
-     Exit Function
-    End If
-   Next i
- End If
+50280      CheckFilenameSubstitutions = 3
+50290      Exit Function
+50300     End If
+50310    Next i
+50320  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "CheckFilenameSubstitutions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Private Sub CheckCmdFilenameSubst()
- If lsvFilenameSubst.ListItems.Count > 0 Then
-   cmdFilenameSubst(1).Enabled = True
-   cmdFilenameSubst(2).Enabled = True
-  Else
-   cmdFilenameSubst(1).Enabled = False
-   cmdFilenameSubst(2).Enabled = False
- End If
- If lsvFilenameSubst.ListItems.Count > 1 Then
-   cmdFilenameSubst(3).Enabled = True
-   cmdFilenameSubst(4).Enabled = True
-  Else
-   cmdFilenameSubst(3).Enabled = False
-   cmdFilenameSubst(4).Enabled = False
- End If
- If lsvFilenameSubst.ListItems.Count > 0 Then
-  If lsvFilenameSubst.SelectedItem.Index = 1 Then
-   cmdFilenameSubst(3).Enabled = False
-  End If
-  If lsvFilenameSubst.SelectedItem.Index = lsvFilenameSubst.ListItems.Count Then
-   cmdFilenameSubst(4).Enabled = False
-  End If
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If lsvFilenameSubst.ListItems.Count > 0 Then
+50020    cmdFilenameSubst(1).Enabled = True
+50030    cmdFilenameSubst(2).Enabled = True
+50040   Else
+50050    cmdFilenameSubst(1).Enabled = False
+50060    cmdFilenameSubst(2).Enabled = False
+50070  End If
+50080  If lsvFilenameSubst.ListItems.Count > 1 Then
+50090    cmdFilenameSubst(3).Enabled = True
+50100    cmdFilenameSubst(4).Enabled = True
+50110   Else
+50120    cmdFilenameSubst(3).Enabled = False
+50130    cmdFilenameSubst(4).Enabled = False
+50140  End If
+50150  If lsvFilenameSubst.ListItems.Count > 0 Then
+50160   If lsvFilenameSubst.SelectedItem.Index = 1 Then
+50170    cmdFilenameSubst(3).Enabled = False
+50180   End If
+50190   If lsvFilenameSubst.SelectedItem.Index = lsvFilenameSubst.ListItems.Count Then
+50200    cmdFilenameSubst(4).Enabled = False
+50210   End If
+50220  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "CheckCmdFilenameSubst")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Set_txtFilenameSubst()
- CheckCmdFilenameSubst
- If lsvFilenameSubst.ListItems.Count > 0 Then
-  txtFilenameSubst(0).Text = lsvFilenameSubst.SelectedItem.Text
-  txtFilenameSubst(0).ToolTipText = txtFilenameSubst(0).Text
-  txtFilenameSubst(1).Text = lsvFilenameSubst.SelectedItem.SubItems(1)
-  txtFilenameSubst(1).ToolTipText = txtFilenameSubst(1).Text
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  CheckCmdFilenameSubst
+50020  If lsvFilenameSubst.ListItems.Count > 0 Then
+50030   txtFilenameSubst(0).Text = lsvFilenameSubst.SelectedItem.Text
+50040   txtFilenameSubst(0).ToolTipText = txtFilenameSubst(0).Text
+50050   txtFilenameSubst(1).Text = lsvFilenameSubst.SelectedItem.SubItems(1)
+50060   txtFilenameSubst(1).ToolTipText = txtFilenameSubst(1).Text
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "Set_txtFilenameSubst")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub

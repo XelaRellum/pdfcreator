@@ -8,6 +8,6 @@ modINIFastRead = 88, 88, 761, 376, C
 modGeneral = 66, 66, 626, 354, C
 clsRegistry = 0, 0, 0, 0, C
 modGetSpecialFolder = 110, 110, 670, 435, C
-ErrPtnr = 0, 0, 0, 0, C, 132, 132, 692, 457, C
+ErrPtnr = 66, 66, 590, 391, C, 63, 92, 623, 417, C
 modArguments = 0, 0, 0, 0, C
 clsMutex = 0, 0, 0, 0, C

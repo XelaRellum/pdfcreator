@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup 4.0.4 beta, ISPP 1.1 Pre-release and ISTool 4.0.4 beta
+; Setup created with Inno Setup 4.0.5 beta, ISPP 1.1 Pre-release and ISTool 4.0.4 beta
 ; Installation from Frank Heindörfer, Philip Chinery
 
 ;#define Test
@@ -58,6 +58,7 @@
 #define PrintMonitorPortReg  PrintReg + "Monitors\" + Monitorname + "\Ports\" + Portname
 
 #define UpdateIsPossible
+#define UpdateIsPossibleMinVersion "0.7.0"
 
 [_ISTool]
 EnableISX=true
@@ -150,10 +151,9 @@ Source: ..\Printer\Win98\AD59A730.MFD; DestDir: {win}; Components: printer; MinV
 Source: ..\Printer\Win98\FONTSDIR.MFD; DestDir: {win}; Components: printer; MinVersion: 4.00.950,0; Flags: ignoreversion
 Source: ..\Printer\Win98\System\Psmon.dll; DestDir: {code:PrinterDriverDirectory|{sys}}; Components: printer; MinVersion: 4.00.950,0
 Source: ..\Printer\Win98\System\Adfonts.mfm; DestDir: {code:PrinterDriverDirectory|{sys}}; Components: printer; MinVersion: 4.00.950,0; Flags: ignoreversion
-Source: ..\Printer\Win98\System\Adist5.PPD; DestDir: {code:PrinterDriverDirectory|{sys}}; Components: printer; MinVersion: 4.00.950,0; Flags: ignoreversion
 Source: ..\Printer\Win98\System\Adobeps4.drv; DestDir: {code:PrinterDriverDirectory|{sys}}; Components: printer; MinVersion: 4.00.950,0
 Source: ..\Printer\Win98\System\Adobeps4.hlp; DestDir: {code:PrinterDriverDirectory|{sys}}; Components: printer; MinVersion: 4.00.950,0; Flags: ignoreversion
-Source: ..\Printer\Win98\System\defprtr2.ppd; DestDir: {code:PrinterDriverDirectory|{sys}}; Components: printer; MinVersion: 4.00.950,0; Flags: ignoreversion
+Source: ..\Printer\Win98\System\Defprtr2.ppd; DestDir: {code:PrinterDriverDirectory|{sys}}; Components: printer; MinVersion: 4.00.950,0; Flags: ignoreversion
 
 ; for WinNt/2000/XP
 Source: ..\Printer\WinNt\PDFCreator.PPD; DestDir: {code:PrinterDriverDirectory|{sys}\spool\drivers\w32x86}; Components: printer; MinVersion: 0,4.00.1381
@@ -185,7 +185,7 @@ Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: URL; String: htt
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: {userdocs}; Components: program
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: {userdocs}; Components: program
-Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: Language; String: english; Components: program; Languages: German
+Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: Language; String: english; Components: program; Languages: English
 Filename: {userappdata}\PDFCreator\PDFCreator.ini; Section: Options; Key: Language; String: deutsch; Components: program; Languages: German
 
 [Registry]
@@ -583,7 +583,7 @@ begin
    DI3.pDriverPath := 'ADOBEPS4.DRV';
    DI3.pEnvironment:='Windows 4.0';
    DI3.pHelpFile :='ADOBEPS4.HLP';
-   DI3.pDataFile :='ADIST5.PPD';
+   DI3.pDataFile :='DEFPRTR2.PPD';
  end;
  DI3.pDependentFiles :='';
  DI3.pDefaultDataType :='RAW';
@@ -685,7 +685,10 @@ var
 begin
  if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}', 'ApplicationVersion', instVersion)=true then
    if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}', 'BetaVersion', BetaVersion)=true then
-     result:=instversion + ' Beta ' + BetaVersion
+     if trim(BetaVersion)<>'' then
+       Result:=instversion + ' Beta ' + BetaVersion
+      else
+       Result:=instversion
     else
      Result:=instversion
   else
@@ -903,18 +906,25 @@ begin
    FullInstallation:=false;
    cv:=CompareVBVersion(GetInstalledVersion,ExpandConstant('{#AppVersion}'));
    if cv=-1 then begin
-    Result:=true;
-    if verySilent=false then begin
-     tmsg:=msg[1];
-     if UsingWinNt=true then
-      tmsg:=tmsg+msg[2];
-     tmsg:=tmsg+msg[3];
-     a:=msgbox(tmsg,mbConfirmation, MB_OKCancel);
-     if a=IDCancel then
-       Result:=false
-      else
-       Result:=true;
+    cv:=CompareVBVersion(GetInstalledVersion,ExpandConstant('{#UpdateIsPossibleMinVersion}'));
+    if cv=-1 then begin
+      Result:=false;
+      msgbox(msg[6],mbConfirmation, MB_OKCancel);
+     end else begin
+      Result:=true;
+      if verySilent=false then begin
+       tmsg:=msg[1];
+       if UsingWinNt=true then
+        tmsg:=tmsg+msg[2];
+       tmsg:=tmsg+msg[3];
+       a:=msgbox(tmsg,mbConfirmation, MB_OKCancel);
+       if a=IDCancel then
+         Result:=false
+        else
+         Result:=true;
+      end
     end
+    cv:=-1;
    end
    if cv=0 then begin
     msgbox(msg[4],mbInformation, MB_OK);

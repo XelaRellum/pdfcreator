@@ -88,93 +88,223 @@ Option Explicit
 
 Private Const WM_NCLBUTTONDOWN = &HA1
 Private Const HTCAPTION = 2
-Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hWnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Function ReleaseCapture Lib "user32" () As Long
 Private m_blnUnloading As Boolean
 
 Private Sub AnimateScroller()
- Dim lngSecondCurrX As Long, lngCurrentX As Long, intCounter As Integer
-
- While Not m_blnUnloading
-  lngCurrentX = lngCurrentX + 1
-  If intCounter = 40 Then intCounter = -1
-  intCounter = intCounter + 1
-  picCredits.Cls
-  If lngCurrentX + picCredits.ScaleHeight > picForeground.ScaleHeight Then
-    lngSecondCurrX = picForeground.ScaleHeight - lngCurrentX
-   Else
-    lngSecondCurrX = picCredits.ScaleHeight
-  End If
-
-  Call TransBlt(picCredits.hDC, 0, 0, picForeground.ScaleWidth, lngSecondCurrX, picForeground.hDC, 0, lngCurrentX, vbBlack)
-
-  If lngSecondCurrX < picCredits.ScaleHeight Then
-   Call TransBlt(picCredits.hDC, 0, lngSecondCurrX, picForeground.ScaleWidth, picCredits.ScaleHeight - lngSecondCurrX, picForeground.hDC, 0, 0, vbBlack)
-   'DoEvents
-  End If
-
-  If lngSecondCurrX = 0 Then lngCurrentX = 0
-  DoEvents
- Wend
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim lngSecondCurrX As Long, lngCurrentX As Long, intCounter As Integer
+50020
+50030  While Not m_blnUnloading
+50040   lngCurrentX = lngCurrentX + 1
+50050   If intCounter = 40 Then intCounter = -1
+50060   intCounter = intCounter + 1
+50070   picCredits.Cls
+50080   If lngCurrentX + picCredits.ScaleHeight > picForeground.ScaleHeight Then
+50090     lngSecondCurrX = picForeground.ScaleHeight - lngCurrentX
+50100    Else
+50110     lngSecondCurrX = picCredits.ScaleHeight
+50120   End If
+50130
+50140   Call TransBlt(picCredits.hDC, 0, 0, picForeground.ScaleWidth, lngSecondCurrX, picForeground.hDC, 0, lngCurrentX, vbBlack)
+50150
+50160   If lngSecondCurrX < picCredits.ScaleHeight Then
+50170    Call TransBlt(picCredits.hDC, 0, lngSecondCurrX, picForeground.ScaleWidth, picCredits.ScaleHeight - lngSecondCurrX, picForeground.hDC, 0, 0, vbBlack)
+50180    'DoEvents
+50190   End If
+50200
+50210   If lngSecondCurrX = 0 Then lngCurrentX = 0
+50220   DoEvents
+50230  Wend
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "AnimateScroller")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Activate()
- m_blnUnloading = False
- Call AnimateScroller
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  m_blnUnloading = False
+50020  Call AnimateScroller
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "Form_Activate")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
- Dim rctPicRect As RECT, Version As String
-
- Me.Width = Me.ScaleX(Me.Picture.Width, vbHimetric, vbTwips)
- Me.Height = Me.ScaleY(Me.Picture.Height, vbHimetric, vbTwips)
- MakeFormTransparent Me, vbMagenta
-
- picCredits.ScaleMode = vbPixels
- picCredits.AutoRedraw = True
-
- picForeground.ScaleMode = vbPixels
- picForeground.AutoRedraw = True
-
- Version = GetProgramRelease
-
- With picTitle
-  .ForeColor = RGB(7, 16, 127)
-  .CurrentX = 15
-  .CurrentY = 35
-  picTitle.Print Version
- End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim rctPicRect As RECT, Version As String
+50020
+50030  Me.Width = Me.ScaleX(Me.Picture.Width, vbHimetric, vbTwips)
+50040  Me.Height = Me.ScaleY(Me.Picture.Height, vbHimetric, vbTwips)
+50050  MakeFormTransparent Me, vbMagenta
+50060
+50070  picCredits.ScaleMode = vbPixels
+50080  picCredits.AutoRedraw = True
+50090
+50100  picForeground.ScaleMode = vbPixels
+50110  picForeground.AutoRedraw = True
+50120
+50130  Version = GetProgramRelease
+50140
+50150  With picTitle
+50160   .ForeColor = RGB(7, 16, 127)
+50170   .CurrentX = 15
+50180   .CurrentY = 35
+50190   picTitle.Print Version
+50200  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
- ReleaseCapture
- SendMessage Me.hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ReleaseCapture
+50020  SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "Form_MouseDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
- m_blnUnloading = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  m_blnUnloading = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "Form_QueryUnload")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub imgClose_Click()
- Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "imgClose_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picCredits_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
- ReleaseCapture
- SendMessage Me.hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+Private Sub picCredits_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ReleaseCapture
+50020  SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "picCredits_MouseDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picForeground_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
- ReleaseCapture
- SendMessage Me.hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+Private Sub picForeground_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ReleaseCapture
+50020  SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "picForeground_MouseDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picPDF_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
- ReleaseCapture
- SendMessage Me.hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+Private Sub picPDF_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ReleaseCapture
+50020  SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "picPDF_MouseDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picTitle_MouseDown(Button As Integer, Shift As Integer, x As Single, y As Single)
- ReleaseCapture
- SendMessage Me.hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+Private Sub picTitle_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ReleaseCapture
+50020  SendMessage Me.hwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0&
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "picTitle_MouseDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub

@@ -1,6 +1,10 @@
-Please put in this directory the following Adobe Postscriptfiles.
+Download the Adobe PostScript printer drivers for Windows.
 
 http://www.adobe.com/support/downloads/product.jsp?product=44&platform=Windows
+
+Install these drivers on a WinNT 4.0.
+
+Please put in this directory the following Adobe Postscriptfiles.
 
 ADOBEPS5.DLL       457.600 Bytes     Version 0.2.522.15
 ADOBEPS5.NTF       792.644 Bytes

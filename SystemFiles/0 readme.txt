@@ -1,5 +1,4 @@
 Copy the following systemfiles to this directory. You find all files in the systemroot.
-(See Additional files)
 
 ASYCFILT.DLL
 COMDLG32.OCX
