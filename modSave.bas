@@ -10,7 +10,7 @@ End Type
 
 Declare Function UnhookWindowsHookEx Lib "user32" (ByVal hHook As Long) As Long
 Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" (ByVal hWnd As Long, ByVal nIndex As Long) As Long
-Declare Function GetCurrentThreadId Lib "KERNEL32" () As Long
+Declare Function GetCurrentThreadId Lib "kernel32" () As Long
 Declare Function SetWindowsHookEx Lib "user32" Alias "SetWindowsHookExA" (ByVal idHook As Long, ByVal lpfn As Long, ByVal hmod As Long, ByVal dwThreadId As Long) As Long
 Declare Function SetWindowPos Lib "user32" (ByVal hWnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Declare Function GetWindowRect Lib "user32" (ByVal hWnd As Long, lpRect As RECT) As Long
@@ -27,7 +27,7 @@ Dim hHook As Long
 Declare Function GetOpenFileName Lib "comdlg32.dll" Alias "GetOpenFileNameA" (pOpenfilename As OPENFILENAME) As Long
 Declare Function GetSaveFileName Lib "comdlg32.dll" Alias "GetSaveFileNameA" (pOpenfilename As OPENFILENAME) As Long
 Declare Function CommDlgExtendedError Lib "comdlg32.dll" () As Long
-Declare Function GetShortPathName Lib "KERNEL32" Alias "GetShortPathNameA" (ByVal lpszLongPath As String, ByVal lpszShortPath As String, ByVal cchBuffer As Long) As Long
+Declare Function GetShortPathName Lib "kernel32" Alias "GetShortPathNameA" (ByVal lpszLongPath As String, ByVal lpszShortPath As String, ByVal cchBuffer As Long) As Long
 
 Declare Function GetDC Lib "user32" (ByVal hWnd As Long) As Long
 Declare Function ReleaseDC Lib "user32" (ByVal hWnd As Long, ByVal hDC As Long) As Long
@@ -271,7 +271,7 @@ Dim Thread As Long
     FileDialog.hwndOwner = hWnd
     FileDialog.sFileTitle = Space$(2048)
     FileDialog.nTitleSize = Len(FileDialog.sFileTitle)
-    FileDialog.sFile = Space$(2047) & Chr$(0)
+    FileDialog.sFile = FileDialog.sFile & Chr$(0) & Space$(2000) & Chr$(0)
     FileDialog.nFileSize = Len(FileDialog.sFile)
     
     If FileDialog.flags = 0 Then

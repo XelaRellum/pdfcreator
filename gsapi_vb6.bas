@@ -89,23 +89,26 @@ Public Function gsdll_stdout(ByVal intGSInstanceHandle As Long, ByVal strz As Lo
     ' If you can think of a more efficient method, please tell me!
     ' We need to convert from a byte buffer to a string
     ' First we create a byte array of the appropriate size
-    Dim aByte() As Byte
-    ReDim aByte(intBytes)
-    ' Then we get the address of the byte array
-    Dim ptrByte As Long
-    ptrByte = VarPtr(aByte(0))
-    ' Then we copy the buffer to the byte array
-    CopyMemory ptrByte, strz, intBytes
-    ' Then we copy the byte array to a string, character by character
-    Dim str As String
-    Dim i As Long
-    For i = 0 To intBytes - 1
-        str = str + Chr(aByte(i))
-    Next
-    ' Finally we output the message
-    'Debug.Print (str)
-    ReturnValue str
-    gsdll_stdout = intBytes
+    
+'    If frmMain.chkDebug.Value = True Then
+      Dim aByte() As Byte
+      ReDim aByte(intBytes)
+      ' Then we get the address of the byte array
+      Dim ptrByte As Long
+      ptrByte = VarPtr(aByte(0))
+      ' Then we copy the buffer to the byte array
+      CopyMemory ptrByte, strz, intBytes
+      ' Then we copy the byte array to a string, character by character
+      Dim str As String
+      Dim i As Long
+      For i = 0 To intBytes - 1
+          str = str + Chr(aByte(i))
+      Next
+      ' Finally we output the message
+      'Debug.Print (str)
+      ReturnValue str
+      gsdll_stdout = intBytes
+'    End If
 End Function
 
 Public Function gsdll_stderr(ByVal intGSInstanceHandle As Long, ByVal strz As Long, ByVal intBytes As Long) As Long
@@ -176,7 +179,7 @@ Public Function CallGS(ByRef astrGSArgs() As String) As Boolean
     ' Print out the revision details.
     ' If we want to insist on a particular version of Ghostscript
     ' we should check the return value of CheckRevision().
-    CheckRevision (705)
+    'CheckRevision (705)
 
     ' Load Ghostscript and get the instance handle
     intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)

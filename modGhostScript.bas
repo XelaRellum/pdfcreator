@@ -2,17 +2,37 @@ Attribute VB_Name = "modGhostScript"
 Option Explicit
 
 Public Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" _
-        (ByVal hwnd As Long, ByVal lpOperation As String, _
+        (ByVal hWnd As Long, ByVal lpOperation As String, _
         ByVal lpFile As String, ByVal lpParameters As String, _
         ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
 
-Public Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Public Declare Function GetTempPath Lib "kernel32" Alias _
+  "GetTempPathA" (ByVal nBufferLength As Long, ByVal lpBuffer _
+  As String) As Long
+
+Public Declare Function GetTempFileName Lib "kernel32" Alias _
+  "GetTempFileNameA" (ByVal lpszPath As String, ByVal _
+  lpPrefixString As String, ByVal wUnique As Long, ByVal _
+  lpTempFileName As String) As Long
+  
+Public Declare Function SetWindowPos Lib "user32" (ByVal hWnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 
 Global Const HWND_TOPMOST = -1
 Global Const HWND_NOTOPMOST = -2
 Global Const SWP_NOMOVE = &H2
 Global Const SWP_NOSIZE = &H1
 
+Global DOKUMENT_PS As String
+Global DOKUMENT_PDF As String
+Global DOKUMENT_ALL As String
+
+Global EMAIL_NAME As String
+
+Global SELECT_FILE As String
+Global SAVE_FILE As String
+
+Private GSParams() As String
+Private GSParamsIndex As Integer
 
 Public GS_ERROR
 Public UseReturnPipe
@@ -29,6 +49,18 @@ Public GS_COMPRESSPAGES
 Public GS_COMPRESSCOLOR
 Public GS_COMPRESSGREY
 Public GS_COMPRESSMONO
+Public GS_COMPRESSCOLORMETHOD
+Public GS_COMPRESSGREYMETHOD
+Public GS_COMPRESSMONOMETHOD
+Public GS_COMPRESSCOLORVALUE
+Public GS_COMPRESSGREYVALUE
+Public GS_COMPRESSMONOVALUE
+Public GS_COMPRESSCOLORLEVEL
+Public GS_COMPRESSGREYLEVEL
+Public GS_COMPRESSMONOLEVEL
+Public GS_COMPRESSCOLORAUTO
+Public GS_COMPRESSGREYAUTO
+Public GS_COMPRESSMONOAUTO
 Public GS_COLORRESOLUTION
 Public GS_GREYRESOLUTION
 Public GS_MONORESOLUTION
@@ -66,6 +98,14 @@ GS_COMPRESSCOLOR = Bool2Text(frmOptions.chkColorComp.Value)
 GS_COMPRESSGREY = Bool2Text(frmOptions.chkGreyComp.Value)
 GS_COMPRESSMONO = Bool2Text(frmOptions.chkMonoComp.Value)
 
+SelectColorCompression frmOptions.cmbColorComp.ListIndex
+SelectGreyCompression frmOptions.cmbGreyComp.ListIndex
+'GS_COMPRESSMONOMETHOD = Bool2Text(frmOptions.chkMonoComp.Value)
+
+GS_COMPRESSCOLORVALUE = Bool2Text(frmOptions.chkColorComp.Value)
+GS_COMPRESSGREYVALUE = Bool2Text(frmOptions.chkGreyComp.Value)
+GS_COMPRESSMONOVALUE = Bool2Text(frmOptions.chkMonoComp.Value)
+
 GS_COLORRESOLUTION = frmOptions.txtColorRes.Text
 GS_GREYRESOLUTION = frmOptions.txtGreyRes.Text
 GS_MONORESOLUTION = frmOptions.txtMonoRes.Text
@@ -96,72 +136,92 @@ UseReturnPipe = 1
 End Sub
 
 Public Function CallGScript(GSInputFile As String, GSOutputFile As String)
-Dim GSParams(45) As String
-Dim GSRet
+Dim gsret
 
 GSInit
+InitParams
 
-GSParams(0) = vbNullString
-GSParams(1) = "-I" & App.Path & "\lib;" & App.Path & "\fonts"
-GSParams(2) = "-q"
-GSParams(3) = "-dNOPAUSE"
-GSParams(4) = "-dSAFER"
-GSParams(5) = "-dBATCH"
-GSParams(6) = "-sDEVICE=pdfwrite"
-GSParams(7) = "-dPDFSETTINGS=/printer"
-GSParams(8) = "-dCompatibilityLevel=" & GS_COMPATIBILITY
-GSParams(9) = "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
-GSParams(10) = "-dProcessColorModel=/Device" & GS_COLORMODEL
-GSParams(11) = "-dAutoRotatePages=/" & GS_AUTOROTATE
-GSParams(12) = "-dCompressPages=" & GS_COMPRESSPAGES
-GSParams(13) = "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
-GSParams(14) = "-dSubsetFonts=" & GS_SUBSETFONTS
-GSParams(15) = "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
-GSParams(16) = "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-GSParams(17) = "-dColorImageResolution=" & GS_COLORRESOLUTION
-GSParams(18) = "-dGrayImageResolution=" & GS_GREYRESOLUTION
-GSParams(19) = "-dMonoImageResolution=" & GS_MONORESOLUTION
-GSParams(20) = "-dDownsampleColorImages=" & GS_COLORRESAMPLE
-GSParams(21) = "-dDownsampleGrayImages=" & GS_GREYRESAMPLE
-GSParams(22) = "-dDownsampleMonoImages=" & GS_MONORESAMPLE
-GSParams(23) = "-dColorImageDownsampleType=/" & GS_COLORRESAMPLEMETHOD
-GSParams(24) = "-dGrayImageDownsampleType=/" & GS_GREYRESAMPLEMETHOD
-GSParams(25) = "-dMonoImageDownsampleType=/" & GS_MONORESAMPLEMETHOD
-GSParams(26) = "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-GSParams(27) = "-dUCRandBGInfo=/Preserve"
-GSParams(28) = "-dUseFlateCompression=true"
-GSParams(29) = "-dParseDSCCommentsForDocInfo=true"
-GSParams(30) = "-dParseDSCComments=true"
-GSParams(31) = "-dOPM=" & GS_OVERPRINT
-GSParams(32) = "-dOffOptimizations=0"
-GSParams(33) = "-dLockDistillerParams=false"
-GSParams(34) = "-dGrayImageDepth=-1"
-GSParams(35) = "-dColorImageFilter=/DCTEncode"
-GSParams(36) = "-dASCII85EncodePages=" & GS_ASCII85
-GSParams(37) = "-dDefaultRenderingIntent=/Default"
-GSParams(38) = "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-GSParams(39) = "-dPreserveHalftoneInfo=" & GS_HALFTONE
-GSParams(40) = "-q"
-GSParams(41) = "-dNOPAUSE"
-GSParams(42) = "-dSAFER"
-GSParams(43) = "-sOutputFile=" & GSOutputFile
-GSParams(44) = GSInputFile
-GSParams(45) = "-c quit"
+AddParams "-I" & App.Path & "\lib;" & App.Path & "\fonts"
+AddParams "-q"
+AddParams "-dNOPAUSE"
+AddParams "-dSAFER"
+AddParams "-dBATCH"
+AddParams "-sDEVICE=pdfwrite"
+AddParams "-dPDFSETTINGS=/printer"
+AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
+AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
+AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
+AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+
+AddParams "-dAutoFilterColorImages=" & GS_COMPRESSCOLORAUTO
+AddParams "-dEncodeColorImages=" & GS_COMPRESSCOLOR
+AddParams "-dColorImageFilter=/" & GS_COMPRESSCOLORMETHOD
+'AddParams "-dColorImageDict " & GS_COMPRESSCOLORLEVEL
+'AddParams "-sColorImageDict=<< /QFactor 0.25 /HSamples [1 1 1 1] /VSamples [1 1 1 1] >>"
+'AddParams "-c<< /QFactor 0.9 >>"
+
+AddParams "-dEncodeGrayImages=" & GS_COMPRESSGREY
+AddParams "-dGrayImageFilter=/" & GS_COMPRESSGREYMETHOD
+'AddParams "-dGrayACSImageDict " & GS_COMPRESSGREYLEVEL
+
+AddParams "-dColorImageResolution=" & GS_COLORRESOLUTION
+AddParams "-dGrayImageResolution=" & GS_GREYRESOLUTION
+AddParams "-dMonoImageResolution=" & GS_MONORESOLUTION
+AddParams "-dDownsampleColorImages=" & GS_COLORRESAMPLE
+AddParams "-dDownsampleGrayImages=" & GS_GREYRESAMPLE
+AddParams "-dDownsampleMonoImages=" & GS_MONORESAMPLE
+AddParams "-dColorImageDownsampleType=/" & GS_COLORRESAMPLEMETHOD
+AddParams "-dGrayImageDownsampleType=/" & GS_GREYRESAMPLEMETHOD
+AddParams "-dMonoImageDownsampleType=/" & GS_MONORESAMPLEMETHOD
+AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+AddParams "-dUCRandBGInfo=/Preserve"
+AddParams "-dUseFlateCompression=true"
+AddParams "-dParseDSCCommentsForDocInfo=true"
+AddParams "-dParseDSCComments=true"
+AddParams "-dOPM=" & GS_OVERPRINT
+AddParams "-dOffOptimizations=0"
+AddParams "-dLockDistillerParams=false"
+AddParams "-dGrayImageDepth=-1"
+AddParams "-dASCII85EncodePages=" & GS_ASCII85
+AddParams "-dDefaultRenderingIntent=/Default"
+AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+AddParams "-dOptimize=true"
+AddParams "-dDetectBlends=true"
+AddParams "-q"
+AddParams "-dNOPAUSE"
+AddParams "-dSAFER"
+AddParams "-sOutputFile=" & GSOutputFile
+AddParams GSInputFile
+AddParams "-c quit"
 
 frmMain.Refresh
-'ShellRet = Shell(Chr(34) & App.Path & "\bin\GSWIN32C.EXE" & Chr(34) & GSParams)
-'ShellRet = ExecCmdPipe(Chr(34) & App.Path & "\bin\GSWIN32C.EXE" & Chr(34) & GSParams)
-    
-GSRet = CallGS(GSParams)
-
-'Debug.Print GSRet
-
-If frmMain.chkDebug.Value = 1 Then
-    'frmMain.Text1.Text = "Parameter:" & vbCrLf & GSParams & vbCrLf & App.Path & vbCrLf & Chr(34) & App.Path & "\bin\GSWIN32C.EXE" & Chr(34)
-    'frmMain.Text2.Text = strGhostscriptErrors
-End If
-
+gsret = CallGS(GSParams)
 End Function
+
+Public Function OptimizePDF(GSInputFile As String, GSOutputFile As String)
+Dim gsret
+
+InitParams
+
+AddParams "-I" & App.Path & "\lib;" & App.Path & "\fonts"
+AddParams "-q"
+AddParams "-dNODISPLAY"
+AddParams "-dSAFER"
+AddParams "-dDELAYSAFER"
+AddParams "-- pdfopt.ps"
+AddParams GSInputFile
+AddParams GSOutputFile
+
+frmMain.Refresh
+gsret = CallGS(GSParams)
+End Function
+
 
 Public Function GetTitle(FileName As String)
 Dim PosTitle
@@ -169,7 +229,7 @@ Dim PosTitleEnd
 Dim strTM As String
 
 Open FileName For Input As #1
-   strTM = Input(1000, #1)
+   strTM = Input(5000, #1)
 Close #1   ' Datei schlieﬂen.
 
 PosTitle = InStr(1, strTM, "%%Title: ", vbTextCompare)
@@ -183,6 +243,7 @@ End Function
 Public Sub SaveTitle(FileName, NewTitle)
 Dim PosTitle
 Dim PosTitleEnd
+Dim PosTitleEnd2
 Dim strTM As String
 Dim OldTitle As String
 
@@ -192,6 +253,9 @@ Close #1   ' Datei schlieﬂen.
 
 PosTitle = InStr(1, strTM, "%%Title: ", vbTextCompare)
 PosTitleEnd = InStr(PosTitle, strTM, vbCr, vbTextCompare)
+PosTitleEnd2 = InStr(PosTitle, strTM, vbLf, vbTextCompare)
+
+If PosTitleEnd = 0 Then PosTitleEnd = PosTitleEnd2
 
 OldTitle = Mid$(strTM, PosTitle + 9, PosTitleEnd - PosTitle - 9)
 
@@ -223,4 +287,71 @@ newData = Replace(data, vbLf, vbCrLf)
 
 frmMain.Text1.Text = frmMain.Text1.Text & newData
 frmMain.Text1.Refresh
+End Sub
+
+Private Sub SelectColorCompression(ByVal gsMethod)
+GS_COMPRESSCOLORAUTO = "false"
+Select Case gsMethod
+  Case 0
+    GS_COMPRESSCOLORAUTO = "true"
+    GS_COMPRESSCOLORMETHOD = "null"
+    GS_COMPRESSCOLORLEVEL = "null"
+  Case 1
+    GS_COMPRESSCOLORMETHOD = "DCTEncode"
+    GS_COMPRESSCOLORLEVEL = "Maximum"
+  Case 2
+    GS_COMPRESSCOLORMETHOD = "DCTEncode"
+    GS_COMPRESSCOLORLEVEL = "High"
+  Case 3
+    GS_COMPRESSCOLORMETHOD = "DCTEncode"
+    GS_COMPRESSCOLORLEVEL = "Medium"
+  Case 4
+    GS_COMPRESSCOLORMETHOD = "DCTEncode"
+    GS_COMPRESSCOLORLEVEL = "Low"
+  Case 5
+    GS_COMPRESSCOLORMETHOD = "DCTEncode"
+    GS_COMPRESSCOLORLEVEL = "Minimum"
+  Case 6
+    GS_COMPRESSCOLORMETHOD = "FlateEncode"
+    GS_COMPRESSCOLORLEVEL = "Maximum"
+End Select
+End Sub
+
+Private Sub SelectGreyCompression(ByVal gsMethod)
+GS_COMPRESSGREYAUTO = "false"
+Select Case gsMethod
+  Case 0
+    GS_COMPRESSGREYAUTO = "true"
+    GS_COMPRESSGREYMETHOD = "null"
+    GS_COMPRESSGREYLEVEL = "null"
+  Case 1
+    GS_COMPRESSGREYMETHOD = "DCTEncode"
+    GS_COMPRESSGREYLEVEL = "Maximum"
+  Case 2
+    GS_COMPRESSGREYMETHOD = "DCTEncode"
+    GS_COMPRESSGREYLEVEL = "High"
+  Case 3
+    GS_COMPRESSGREYMETHOD = "DCTEncode"
+    GS_COMPRESSGREYLEVEL = "Medium"
+  Case 4
+    GS_COMPRESSGREYMETHOD = "DCTEncode"
+    GS_COMPRESSGREYLEVEL = "Low"
+  Case 5
+    GS_COMPRESSGREYMETHOD = "DCTEncode"
+    GS_COMPRESSGREYLEVEL = "Minimum"
+  Case 6
+    GS_COMPRESSGREYMETHOD = "FlateEncode"
+    GS_COMPRESSGREYLEVEL = "Maximum"
+End Select
+End Sub
+
+Private Sub InitParams()
+GSParamsIndex = 0
+ReDim GSParams(GSParamsIndex)
+End Sub
+
+Private Sub AddParams(strValue As String)
+GSParamsIndex = GSParamsIndex + 1
+ReDim Preserve GSParams(GSParamsIndex)
+GSParams(GSParamsIndex) = strValue
 End Sub
