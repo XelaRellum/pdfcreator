@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmOptions 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "PDF Optionen"
@@ -14,6 +14,203 @@ Begin VB.Form frmOptions
    ScaleHeight     =   5115
    ScaleWidth      =   6480
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.Frame fraCompress 
+      Caption         =   "Komprimierung"
+      Height          =   3855
+      Left            =   360
+      TabIndex        =   10
+      Top             =   600
+      Visible         =   0   'False
+      Width           =   5775
+      Begin VB.Frame fraGrey 
+         Caption         =   "Graustufenbilder"
+         Height          =   975
+         Left            =   120
+         TabIndex        =   26
+         Top             =   1680
+         Width           =   5535
+         Begin VB.TextBox txtGreyRes 
+            Height          =   285
+            Left            =   4440
+            TabIndex        =   31
+            Top             =   540
+            Width           =   735
+         End
+         Begin VB.ComboBox cmbGreyResample 
+            Height          =   315
+            ItemData        =   "frmOptions.frx":08CA
+            Left            =   2280
+            List            =   "frmOptions.frx":08D7
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   30
+            Tag             =   "Bicubic|Subsample|Average"
+            Top             =   540
+            Width           =   1935
+         End
+         Begin VB.CheckBox chkGreyResample 
+            Caption         =   "Resample"
+            Height          =   255
+            Left            =   2280
+            TabIndex        =   29
+            Top             =   240
+            Width           =   1455
+         End
+         Begin VB.ComboBox cmbGreyComp 
+            Height          =   315
+            ItemData        =   "frmOptions.frx":0916
+            Left            =   120
+            List            =   "frmOptions.frx":092F
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   28
+            Top             =   540
+            Width           =   1935
+         End
+         Begin VB.CheckBox chkGreyComp 
+            Caption         =   "Komprimieren"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   27
+            Top             =   240
+            Width           =   1695
+         End
+         Begin VB.Label lblGreyRes 
+            Caption         =   "Auflösung"
+            Height          =   255
+            Left            =   4440
+            TabIndex        =   32
+            Top             =   240
+            Width           =   975
+         End
+      End
+      Begin VB.Frame fraMono 
+         Caption         =   "Monochrombilder"
+         Height          =   975
+         Left            =   120
+         TabIndex        =   19
+         Top             =   2760
+         Width           =   5535
+         Begin VB.CheckBox chkMonoComp 
+            Caption         =   "Komprimieren"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   24
+            Top             =   240
+            Width           =   1695
+         End
+         Begin VB.ComboBox cmbMonoComp 
+            Height          =   315
+            ItemData        =   "frmOptions.frx":0987
+            Left            =   120
+            List            =   "frmOptions.frx":0991
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   23
+            Top             =   540
+            Width           =   1935
+         End
+         Begin VB.CheckBox chkMonoResample 
+            Caption         =   "Resample"
+            Height          =   255
+            Left            =   2280
+            TabIndex        =   22
+            Top             =   240
+            Width           =   1455
+         End
+         Begin VB.ComboBox cmbMonoResample 
+            Height          =   315
+            ItemData        =   "frmOptions.frx":09A1
+            Left            =   2280
+            List            =   "frmOptions.frx":09AE
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   21
+            Tag             =   "Bicubic|Subsample|Average"
+            Top             =   540
+            Width           =   1935
+         End
+         Begin VB.TextBox txtMonoRes 
+            Height          =   285
+            Left            =   4440
+            TabIndex        =   20
+            Top             =   540
+            Width           =   735
+         End
+         Begin VB.Label lblMonoRes 
+            Caption         =   "Auflösung"
+            Height          =   255
+            Left            =   4440
+            TabIndex        =   25
+            Top             =   240
+            Width           =   975
+         End
+      End
+      Begin VB.CheckBox chkTextComp 
+         Caption         =   "Texte komprimieren"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   12
+         Top             =   240
+         Width           =   4335
+      End
+      Begin VB.Frame fraColor 
+         Caption         =   "Farbbilder"
+         Height          =   975
+         Left            =   120
+         TabIndex        =   11
+         Top             =   600
+         Width           =   5535
+         Begin VB.TextBox txtColorRes 
+            Height          =   285
+            Left            =   4440
+            TabIndex        =   18
+            Top             =   540
+            Width           =   735
+         End
+         Begin VB.ComboBox cmbColorResample 
+            Height          =   315
+            ItemData        =   "frmOptions.frx":09ED
+            Left            =   2280
+            List            =   "frmOptions.frx":09FA
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   16
+            Tag             =   "Bicubic|Subsample|Average"
+            Top             =   540
+            Width           =   1935
+         End
+         Begin VB.CheckBox chkColorResample 
+            Caption         =   "Resample"
+            Height          =   255
+            Left            =   2280
+            TabIndex        =   15
+            Top             =   240
+            Width           =   1455
+         End
+         Begin VB.ComboBox cmbColorComp 
+            Height          =   315
+            ItemData        =   "frmOptions.frx":0A39
+            Left            =   120
+            List            =   "frmOptions.frx":0A52
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   14
+            Top             =   540
+            Width           =   1935
+         End
+         Begin VB.CheckBox chkColorComp 
+            Caption         =   "Komprimieren"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   13
+            Top             =   240
+            Width           =   1695
+         End
+         Begin VB.Label lblColorRes 
+            Caption         =   "Auflösung"
+            Height          =   255
+            Left            =   4440
+            TabIndex        =   17
+            Top             =   240
+            Width           =   975
+         End
+      End
+   End
    Begin VB.Frame fraColors 
       Caption         =   "Farbverwaltung"
       Height          =   3495
@@ -24,9 +221,9 @@ Begin VB.Form frmOptions
       Width           =   5775
       Begin VB.ComboBox cmbColorModel 
          Height          =   315
-         ItemData        =   "frmOptions.frx":08CA
+         ItemData        =   "frmOptions.frx":0AAA
          Left            =   120
-         List            =   "frmOptions.frx":08D7
+         List            =   "frmOptions.frx":0AB7
          Style           =   2  'Dropdown-Liste
          TabIndex        =   48
          Tag             =   "RGB|CMYK|GRAY"
@@ -113,203 +310,6 @@ Begin VB.Form frmOptions
          TabIndex        =   40
          Top             =   1200
          Width           =   615
-      End
-   End
-   Begin VB.Frame fraCompress 
-      Caption         =   "Komprimierung"
-      Height          =   3855
-      Left            =   360
-      TabIndex        =   10
-      Top             =   600
-      Visible         =   0   'False
-      Width           =   5775
-      Begin VB.Frame fraGrey 
-         Caption         =   "Graustufenbilder"
-         Height          =   975
-         Left            =   120
-         TabIndex        =   26
-         Top             =   1680
-         Width           =   5535
-         Begin VB.TextBox txtGreyRes 
-            Height          =   285
-            Left            =   4440
-            TabIndex        =   31
-            Top             =   540
-            Width           =   735
-         End
-         Begin VB.ComboBox cmbGreyResample 
-            Height          =   315
-            ItemData        =   "frmOptions.frx":0934
-            Left            =   2280
-            List            =   "frmOptions.frx":0941
-            Style           =   2  'Dropdown-Liste
-            TabIndex        =   30
-            Tag             =   "Bicubic|Subsample|Average"
-            Top             =   540
-            Width           =   1935
-         End
-         Begin VB.CheckBox chkGreyResample 
-            Caption         =   "Resample"
-            Height          =   255
-            Left            =   2280
-            TabIndex        =   29
-            Top             =   240
-            Width           =   1455
-         End
-         Begin VB.ComboBox cmbGreyComp 
-            Height          =   315
-            ItemData        =   "frmOptions.frx":0980
-            Left            =   120
-            List            =   "frmOptions.frx":0999
-            Style           =   2  'Dropdown-Liste
-            TabIndex        =   28
-            Top             =   540
-            Width           =   1935
-         End
-         Begin VB.CheckBox chkGreyComp 
-            Caption         =   "Komprimieren"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   27
-            Top             =   240
-            Width           =   1695
-         End
-         Begin VB.Label lblGreyRes 
-            Caption         =   "Auflösung"
-            Height          =   255
-            Left            =   4440
-            TabIndex        =   32
-            Top             =   240
-            Width           =   975
-         End
-      End
-      Begin VB.Frame fraMono 
-         Caption         =   "Monochrombilder"
-         Height          =   975
-         Left            =   120
-         TabIndex        =   19
-         Top             =   2760
-         Width           =   5535
-         Begin VB.CheckBox chkMonoComp 
-            Caption         =   "Komprimieren"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   24
-            Top             =   240
-            Width           =   1695
-         End
-         Begin VB.ComboBox cmbMonoComp 
-            Height          =   315
-            ItemData        =   "frmOptions.frx":09F1
-            Left            =   120
-            List            =   "frmOptions.frx":09FB
-            Style           =   2  'Dropdown-Liste
-            TabIndex        =   23
-            Top             =   540
-            Width           =   1935
-         End
-         Begin VB.CheckBox chkMonoResample 
-            Caption         =   "Resample"
-            Height          =   255
-            Left            =   2280
-            TabIndex        =   22
-            Top             =   240
-            Width           =   1455
-         End
-         Begin VB.ComboBox cmbMonoResample 
-            Height          =   315
-            ItemData        =   "frmOptions.frx":0A0B
-            Left            =   2280
-            List            =   "frmOptions.frx":0A18
-            Style           =   2  'Dropdown-Liste
-            TabIndex        =   21
-            Tag             =   "Bicubic|Subsample|Average"
-            Top             =   540
-            Width           =   1935
-         End
-         Begin VB.TextBox txtMonoRes 
-            Height          =   285
-            Left            =   4440
-            TabIndex        =   20
-            Top             =   540
-            Width           =   735
-         End
-         Begin VB.Label lblMonoRes 
-            Caption         =   "Auflösung"
-            Height          =   255
-            Left            =   4440
-            TabIndex        =   25
-            Top             =   240
-            Width           =   975
-         End
-      End
-      Begin VB.CheckBox chkTextComp 
-         Caption         =   "Texte komprimieren"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   12
-         Top             =   240
-         Width           =   4335
-      End
-      Begin VB.Frame fraColor 
-         Caption         =   "Farbbilder"
-         Height          =   975
-         Left            =   120
-         TabIndex        =   11
-         Top             =   600
-         Width           =   5535
-         Begin VB.TextBox txtColorRes 
-            Height          =   285
-            Left            =   4440
-            TabIndex        =   18
-            Top             =   540
-            Width           =   735
-         End
-         Begin VB.ComboBox cmbColorResample 
-            Height          =   315
-            ItemData        =   "frmOptions.frx":0A57
-            Left            =   2280
-            List            =   "frmOptions.frx":0A64
-            Style           =   2  'Dropdown-Liste
-            TabIndex        =   16
-            Tag             =   "Bicubic|Subsample|Average"
-            Top             =   540
-            Width           =   1935
-         End
-         Begin VB.CheckBox chkColorResample 
-            Caption         =   "Resample"
-            Height          =   255
-            Left            =   2280
-            TabIndex        =   15
-            Top             =   240
-            Width           =   1455
-         End
-         Begin VB.ComboBox cmbColorComp 
-            Height          =   315
-            ItemData        =   "frmOptions.frx":0AA3
-            Left            =   120
-            List            =   "frmOptions.frx":0ABC
-            Style           =   2  'Dropdown-Liste
-            TabIndex        =   14
-            Top             =   540
-            Width           =   1935
-         End
-         Begin VB.CheckBox chkColorComp 
-            Caption         =   "Komprimieren"
-            Height          =   255
-            Left            =   120
-            TabIndex        =   13
-            Top             =   240
-            Width           =   1695
-         End
-         Begin VB.Label lblColorRes 
-            Caption         =   "Auflösung"
-            Height          =   255
-            Left            =   4440
-            TabIndex        =   17
-            Top             =   240
-            Width           =   975
-         End
       End
    End
    Begin VB.Frame fraGeneral 
@@ -604,6 +604,14 @@ Next i
 frmOptions.Caption = GetIni(App.Path & "\languages\" & strLang, "OPTIONS", "frmOptions", frmOptions.Caption)
 frmProcess.Caption = GetIni(App.Path & "\languages\" & strLang, "PROCESSING", "frmProcess", frmProcess.Caption)
 frmProcess.lblStatus.Caption = GetIni(App.Path & "\languages\" & strLang, "PROCESSING", "lblStatus", frmProcess.lblStatus.Caption)
+
+DOKUMENT_PS = GetIni(App.Path & "\languages\" & strLang, "FILES", "DocumentPS", "PostScript-File (*.ps)")
+DOKUMENT_PDF = GetIni(App.Path & "\languages\" & strLang, "FILES", "DocumentPDF", "PDF-Document (*.pdf)")
+DOKUMENT_ALL = GetIni(App.Path & "\languages\" & strLang, "FILES", "DocumentAll", "All Files (*.*)")
+SELECT_FILE = GetIni(App.Path & "\languages\" & strLang, "FILES", "Open", "Select File")
+SAVE_FILE = GetIni(App.Path & "\languages\" & strLang, "FILES", "SaveAs", "Save as")
+
+EMAIL_NAME = GetIni(App.Path & "\languages\" & strLang, "EMAIL", "DocumentName", "Document")
 End Sub
 
 Private Function InCount(str As String)
