@@ -1,0 +1,13 @@
+modMain = 44, 44, 604, 332, C
+modLanguage = 0, 0, 0, 0, C
+modOptions = 44, 44, 717, 332, C
+clsINI = 0, 0, 0, 0, C
+clsHash = 0, 0, 0, 0, C
+modPDFCreator = 132, 132, 692, 457, C
+modINIFastRead = 88, 88, 761, 376, C
+modGeneral = 66, 66, 626, 354, C
+clsRegistry = 0, 0, 0, 0, C
+modGetSpecialFolder = 110, 110, 670, 435, C
+ErrPtnr = 0, 0, 0, 0, C, 132, 132, 692, 457, C
+modArguments = 0, 0, 0, 0, C
+clsMutex = 0, 0, 0, 0, C

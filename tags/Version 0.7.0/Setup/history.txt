@@ -1,0 +1,38 @@
+PDFCreator Revision History
+================================
+Copyright (C)2002-2003 Philip Chinery, Frank Heindörfer
+Homepage: http://www.pdfcreator.de.vu/
+          http://www.sourceforge.net/projects/pdfcreator/
+
+Version 0.7.0 (July 17, 2003)
+-------------------------------------------------------------------
+
+What's new:
+- 2 new output formats: Postscript (PS) and Encapsulated Postscript (EPS)
+- Process priority can be changed. (only for NT and above)
+- Enhanced errorhandling
+- Improved programmspeed
+- Individual installation of Ghostscript
+- Ask if .ps files should be associated with PDFCreator
+- Commandline parameter: -IF"My Inputfile.ps" -OF"My Outputfile.pdf"
+- Special filename handling include filename substitutions
+- Switch back to Ghostscript 8.00
+- Support the Outlook Format: Plain Text
+- New testpage
+
+Bug Fixes:
+- Fixed up the 'subst' problem in the 'Save as' dialog
+- Fixed up the problem that the program can't create a temp directory
+- Fixed up some localization errors
+- Fixed up some problems in the setup
+- Fixed up the problem on computers with low resources
+  (PDFCreator does not create pdfs with many pages.)
+- Fixed up 'Laufzeitfehler 9' when start pdfcreator
+- Fixed up uninstall printer driver
+- Can handle special drives and partitions
+
+
+Version 0.6.0 (May 18, 2003)
+-------------------------------------------------------------------
+
+New release with a completely new redesign.
