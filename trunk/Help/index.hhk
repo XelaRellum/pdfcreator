@@ -9,6 +9,28 @@
 </OBJECT>
 <UL>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="/CLEARCACHE">
+		<param name="Name" value="Command Line Parameters">
+		<param name="Local" value="html\commandline.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="/IF">
+		<param name="Name" value="Command Line Parameters">
+		<param name="Local" value="html\commandline.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="/OF">
+		<param name="Name" value="Command Line Parameters">
+		<param name="Local" value="html\commandline.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="/PF">
+		<param name="Name" value="Create a PDF">
+		<param name="Local" value="html\createpdf.htm">
+		<param name="Name" value="Command Line Parameters">
+		<param name="Local" value="html\commandline.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="About">
 		<param name="Name" value="What is PDFCreator?">
 		<param name="Local" value="html\whatis.htm">
@@ -27,6 +49,11 @@
 		<param name="Name" value="Auto-Save">
 		<param name="Name" value="Auto-Save Mode">
 		<param name="Local" value="html\autosave.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Batch">
+		<param name="Name" value="Command Line Parameters">
+		<param name="Local" value="html\commandline.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Bitmap">
@@ -54,11 +81,16 @@
 		<param name="Local" value="html\createpdf.htm">
 		<param name="Name" value="What's New in PDFCreator">
 		<param name="Local" value="html\whatsnew.htm">
+		<param name="Name" value="Command Line Parameters">
+		<param name="Local" value="html\commandline.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Command Prompt">
 		<param name="Name" value="Create a PDF">
 		<param name="Local" value="html\createpdf.htm">
+		<param name="URL" value="html\commandline.html">
+		<param name="Name" value="Command Line Parameters">
+		<param name="Local" value="html\commandline.html">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Compression">
@@ -184,11 +216,6 @@
 		<param name="Local" value="html\pdfgeneral.htm">
 		<param name="Name" value="PDF Settings: Security">
 		<param name="Local" value="html\pdfsecurity.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="-PF">
-		<param name="Name" value="Create a PDF">
-		<param name="Local" value="html\createpdf.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="PNG">

@@ -18,13 +18,31 @@
   </tr>
   <tr> 
     <td class="main"><p class="header">Frequently Asked Questions</p>
+      <p><strong>Q: What is the difference between the AFPL and the Ghostscript 
+        version of PDFCreator?</strong></p>
+      <p>A: The main difference is the Ghostscript version used. The AFPL version 
+        is newer than the GPL version, but the license is more restrictive. If 
+        you just want to use PDFCreator, then both versions are fine and the AFPL 
+        should be prefered, as it is far better. If you need an aspect of the 
+        license, that is not covered by the AFPL but by the GPL, then you should 
+        download the GPL version.</p>
+      <p><strong>Q: After installing PDFCreator I get an Error &quot;Exception 
+        EInOutError in module is-XXXXX.exe at 0000631C. File not found&quot;. 
+        What can I do?</strong></p>
+      <p>A: This is a problem with old InstallShield installations which should 
+        have been completed some time ago. In most cases you can safely delete 
+        the file with the given filename from your windows directory. If you are 
+        not sure if they are important, then move them to a backup folder.</p>
+      <p><strong>Q: I cannot search/Copy &amp; Paste the text in my PDF file. 
+        What ca I do?</strong></p>
+      <p>A: This is a problem with a wrong printer driver installed by PDFCreator 
+        0.7.1. Please uninstall PDFCreator, reboot and install the latest version.</p>
       <p><strong>Q: I have installed PDFCreator but it does not work, what should 
         I do?</strong></p>
       <p>A: Please check if a printer driver is installed. If not, try to uninstall 
         PDFCreator. Reboot and install it again. Reboot again and check if a printer 
         is installed. If not, check the SetupLog.txt in the PDFCreator directory. 
-        If an error has occurred, then let us know in the forums at SourceForge.net 
-        by clicking <a href="https://sourceforge.net/forum/?group_id=57796" target="_blank">here</a>.</p>
+        If an error has occured, then let us know in the forums at SourceForge.net.</p>
       <p><strong>Q: The printer driver is not compatible with a policy enabled 
         on your computer that blocks NT 4.0 drivers</strong></p>
       <p>A: The error message you get is because of a Group Policy that by default 
@@ -32,11 +50,13 @@
         drivers have access to system-wide memory, and poorly written drivers 
         can cause Blue Screens. To allow installation of these kind of drivers, 
         follow these steps:</p>
-      <p>1. Click Start and then Run<br>
-        2. Write gpedit.msc and press ENTER<br>
-        3. Navigate to Computer Configuration/Administrative Templates/Printers 
-        and change Disallow installation of printers using kernel-mode drivers 
-        to Disabled</p>
+      <ol>
+        <li>Click Start and then Run</li>
+        <li>Write gpedit.msc and press ENTER</li>
+        <li>Navigate to Computer Configuration/Administrative Templates/Printers 
+          and change Disallow installation of printers using kernel-mode drivers 
+          to Disabled</li>
+      </ol>
       <p><strong>Q: Why does black text appear to be slightly grey?</strong></p>
       <p>A: The color model CMYK lets black text appear slightly grey though they 
         have a black level of 100%. To solve this set the color model to RGB in 

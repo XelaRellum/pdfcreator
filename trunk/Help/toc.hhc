@@ -48,6 +48,10 @@
 			<param name="Local" value="html\combine.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Command Line Parameters">
+			<param name="Local" value="html\commandline.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Change the Language">
 			<param name="Local" value="html\changelang.htm">
 			</OBJECT>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Command Line Parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<a name="top"></a> 
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td class="title">PDFCreator Help</td>
+  </tr>
+  <tr> 
+    <td background="../images/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td class="main"><p class="header">Command Line Parameters</p>
+      <p>PDFCreator enables you to create documents via the command line interface. 
+        Here are the different commands that PDFCreator supports:</p>
+      <p><strong>/CLEARCACHE</strong><br>
+        Clears all PDFCreator temporary files. This is useful if PDFCreator will 
+        not start because of a corrupt temp file.<br>
+        <em>Example:</em> pdfcreator.exe /CLEARCACHE</p>
+      <p><strong>/PF&lt;filename&gt;</strong><br>
+        Print a file with the standard program linking with the extension of the 
+        file. In general, this option is useful in connection with Auto-Save mode. 
+        <strong>There is NO space between the parameter and the file name</strong>.<br>
+        <em>Example:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;</p>
+      <p><strong>/NSTRUE</strong><br>
+        When you use the /PF parameter, PDFCreator stays open after it's done 
+        its task. The /NSTRUE parameter automatically closes PDFCreator after 
+        it is done.<br>
+        <em>Example:</em> pdfcreator.exe /NSTRUE /PF&quot;C:\help.doc&quot;</p>
+      <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br>
+        </strong>Convert a postscript file to a PDF or bitmap. The /OF parameter 
+        must be used in conjunction with the /IF parameter. To set the output 
+        file format, include the file extension in the output file name. <strong>There 
+        is NO space between the parameters and the file names.</strong><br>
+        <em>Examples:</em><br>
+        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;<br>
+        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.tif&quot;</p>
+      </td>
+  </tr>
+</table>
+</body>
+</html>
