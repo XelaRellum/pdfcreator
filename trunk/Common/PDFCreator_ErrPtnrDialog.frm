@@ -364,7 +364,7 @@ Private Type OSVERSIONINFO
     dwPlatformId As Long
     szCSDVersion As String * 128
 End Type
-Private Declare Function GetVersionEx& Lib "Kernel32" Alias "GetVersionExA" (lpVersionInformation As OSVERSIONINFO)
+Private Declare Function GetVersionEx& Lib "kernel32" Alias "GetVersionExA" (lpVersionInformation As OSVERSIONINFO)
 Private Const VER_PLATFORM_WIN32_NT& = 2
 Private Const VER_PLATFORM_WIN32_WINDOWS& = 1
 Private Const VER_PLATFORM_WIN32s& = 0
@@ -463,7 +463,7 @@ Public Function OnError%(AktModul$, AktProc$, Optional ContBits% = 255)
 '.------------------------------------------------------------------------------
 
 ' fill the dialog's label captions
-lblError(0) = Err.number & " (" & Err.Description & ")"
+lblError(0) = Err.Number & " (" & Err.Description & ")"
 lblError(1) = AktModul$
 lblError(2) = AktProc$
 lblError(3) = Erl
@@ -495,11 +495,11 @@ Private Sub BuildProtocol(a$)
 '.  Function :  concatenate and append the error protocol
 '.------------------------------------------------------------------------------
 
-Dim t$, r$, f%, e&, b$
+Dim t$, R$, f%, e&, B$
 Dim v As OSVERSIONINFO
 
 t$ = String$(70, "-") + vbCrLf
-r$ = Space$(10)
+R$ = Space$(10)
 
 ' header
 a$ = t$
@@ -511,14 +511,14 @@ a$ = a$ + Caption + vbCrLf
 a$ = a$ + t$
 a$ = a$ + UCase$(framFehler.Caption) + vbCrLf
 For f% = 0 To 3
-    a$ = a$ + r$ + lblErrTitel(f%) + vbTab + lblError(f%) + vbCrLf
+    a$ = a$ + R$ + lblErrTitel(f%) + vbTab + lblError(f%) + vbCrLf
 Next
-a$ = a$ + r$ + "Date/Time:" + vbTab + Date$ + " / " + Time$ + vbCrLf
+a$ = a$ + R$ + "Date/Time:" + vbTab + Date$ + " / " + time$ + vbCrLf
 ' call stack
 a$ = a$ + t$
 a$ = a$ + UCase$(framCallStack.Caption) + vbCrLf
 For f% = 0 To lstCallStack.ListCount - 1
-    a$ = a$ + r$ + lstCallStack.List(f%) + vbCrLf
+    a$ = a$ + R$ + lstCallStack.List(f%) + vbCrLf
 Next
 ' system information
 a$ = a$ + t$
@@ -660,7 +660,7 @@ Public Sub CallStack(a$)
 '.------------------------------------------------------------------------------
 '.  Function :  push a procedure to the call stack
 '.------------------------------------------------------------------------------
-a$ = Time$ + " " + a$
+a$ = time$ + " " + a$
 With CallStackCollection
     If .Count Then .Add a$, , 1 Else .Add a$
     If .Count > CallStackLength% Then .Remove .Count

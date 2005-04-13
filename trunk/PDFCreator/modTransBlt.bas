@@ -37,7 +37,7 @@ Option Explicit
 ' Win98/2K have a TransparentBlt API function located in msimg32.dll
 ' but it doesn't deallocate system ressources after finishing (?!).
 
-Public Sub TransBlt(ByVal hDestDC As Long, ByVal X As Long, _
+Public Sub TransBlt(ByVal hDestDC As Long, ByVal x As Long, _
                     ByVal Y As Long, ByVal nWidth As Long, _
                     ByVal nHeight As Long, ByVal hSrcDC As _
                     Long, ByVal xSrc As Long, ByVal ySrc As _
@@ -55,7 +55,7 @@ On Error GoTo ErrPtnr_OnError
 50080       ' Save original settings, Blt, restore settings.
 50090       lngOrigMode = SetBkMode(hDestDC, NEWTRANSPARENT)
 50100       lngOrigColor = SetBkColor(hDestDC, lngTransColor)
-50110       Call BitBlt(hDestDC, X, Y, nWidth, nHeight, hSrcDC, xSrc, ySrc, SRCCOPY)
+50110       Call BitBlt(hDestDC, x, Y, nWidth, nHeight, hSrcDC, xSrc, ySrc, SRCCOPY)
 50120       Call SetBkColor(hDestDC, lngOrigColor)
 50130       Call SetBkMode(hDestDC, lngOrigMode)
 50140     Else
@@ -109,7 +109,7 @@ On Error GoTo ErrPtnr_OnError
 50620       Call BitBlt(lngInvDC, 0, 0, nWidth, nHeight, lngMaskDC, 0, 0, NOTSRCCOPY)
 50630
 50640       ' Copy background bitmap to result & create final transparent bitmap.
-50650       Call BitBlt(lngResultDC, 0, 0, nWidth, nHeight, hDestDC, X, Y, SRCCOPY)
+50650       Call BitBlt(lngResultDC, 0, 0, nWidth, nHeight, hDestDC, x, Y, SRCCOPY)
 50660
 50670       ' AND mask bitmap w/ result DC to punch hole in the background by painting black area for
 50680       ' non-transparent portion of source bitmap.
@@ -123,7 +123,7 @@ On Error GoTo ErrPtnr_OnError
 50760       Call BitBlt(lngResultDC, 0, 0, nWidth, nHeight, hSrcDC, xSrc, ySrc, SRCPAINT)
 50770
 50780       ' Display transparent bitmap on background.
-50790       Call BitBlt(hDestDC, X, Y, nWidth, nHeight, lngResultDC, 0, 0, SRCCOPY)
+50790       Call BitBlt(hDestDC, x, Y, nWidth, nHeight, lngResultDC, 0, 0, SRCCOPY)
 50800
 50810       ' Restore backup of original bitmap.
 50820       Call BitBlt(hSrcDC, xSrc, ySrc, nWidth, nHeight, lngSaveDC, 0, 0, SRCCOPY)

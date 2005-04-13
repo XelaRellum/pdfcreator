@@ -56,7 +56,7 @@ On Error GoTo ErrPtnr_OnError
 50070  pic.Height = Me.Height
 50080  With pic
 50090   .Cls
-50100   BitBlt .hDC, 0, 0, .Width, .Height, frmMain.picAbout.hDC, 0, 0, vbSrcCopy
+50100   BitBlt .hdc, 0, 0, .Width, .Height, frmMain.picAbout.hdc, 0, 0, vbSrcCopy
 50110  End With
 50120  Me.Visible = True
 50130  Timer1.Interval = 10

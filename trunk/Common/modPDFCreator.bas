@@ -5,7 +5,7 @@ Public Function ReadLogfile() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, bufStr As String, tStr As String
+50010  Dim fn As Long, bufStr As String, tstr As String
 50020
 50030  If FileExists(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) = False Then
 50040   Exit Function
@@ -18,9 +18,9 @@ On Error GoTo ErrPtnr_OnError
 50110   If Len(bufStr) = 0 Then
 50120     Line Input #fn, bufStr
 50130    Else
-50140     Line Input #fn, tStr
-50150     If Len(Trim$(tStr)) > 0 Then
-50160      bufStr = bufStr & vbCrLf & tStr
+50140     Line Input #fn, tstr
+50150     If Len(Trim$(tstr)) > 0 Then
+50160      bufStr = bufStr & vbCrLf & tstr
 50170     End If
 50180   End If
 50190  Wend
@@ -107,7 +107,7 @@ Public Sub IfLoggingWriteLogfile(Logtext As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, i As Long, bufStr As String, s() As String, _
-  tStr As String, tB As Boolean
+  tstr As String, tB As Boolean
 50030
 50040  If Options.Logging = 0 Then
 50050   Exit Sub
@@ -130,12 +130,12 @@ On Error GoTo ErrPtnr_OnError
 50220     s = Split(bufStr, vbCrLf)
 50230     If Options.LogLines < UBound(s) - 1 Then
 50240       For i = UBound(s) - Options.LogLines + 2 To UBound(s)
-50250        tStr = s(i - 2)
+50250        tstr = s(i - 2)
 50260        Print #fn, s(i - 2)
 50270       Next i
 50280      Else
 50290       For i = LBound(s) + 1 To UBound(s)
-50300        tStr = s(i)
+50300        tstr = s(i)
 50310        Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
 50320       Next i
 50330     End If
@@ -349,10 +349,10 @@ End Function
 
 Public Sub ClearCache()
  On Error Resume Next
- Dim cFiles As Collection, tStr As String, i As Long, tStrf() As String
- tStr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
- If DirExists(tStr) = True Then
-  Call FindFiles(tStr, cFiles, "~P*.tmp", , True)
+ Dim cFiles As Collection, tstr As String, i As Long, tStrf() As String
+ tstr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
+ If DirExists(tstr) = True Then
+  Call FindFiles(tstr, cFiles, "~P*.tmp", , True)
   For i = 1 To cFiles.Count
    If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
     tStrf = Split(cFiles(i), "|")
@@ -439,22 +439,46 @@ Public Sub RunProgramAfterSaving(hwnd As Long, Docname As String, Parameters As 
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String
-50020  If FileExists(Docname) = True And FileExists(Options.RunProgramAfterSavingProgramname) = True Then
-50030   tStr = "Autosavemodus: Run program after saving: Program:" & Options.RunProgramAfterSavingProgramname & _
-   "   Parameters:" & Parameters & Docname & "   WaitUntilReady:" & Options.RunProgramAfterSavingWaitUntilReady
-50050   IfLoggingWriteLogfile tStr
-50060   WriteToSpecialLogfile tStr
+50010  Dim tstr As String
+50020  If FileExists(Docname) = True And FileExists(RemoveLeadingAndTrailingQuotes(Options.RunProgramAfterSavingProgramname)) = True Then
+50030   tstr = "Run program after saving: Program:" & Options.RunProgramAfterSavingProgramname & _
+   " Parameters:" & Parameters & Docname & "   WaitUntilReady:" & Options.RunProgramAfterSavingWaitUntilReady
+50050   IfLoggingWriteLogfile tstr
+50060   WriteToSpecialLogfile tstr
 50070   If Options.RunProgramAfterSavingWaitUntilReady = 1 Then
-50080     ShellAndWait hwnd, "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , Windowstyle, WCTermination
+50080     ShellAndWait hwnd, "open", RemoveLeadingAndTrailingQuotes(Options.RunProgramAfterSavingProgramname), Parameters & Docname, , Windowstyle, WCTermination
 50090    Else
-50100     ShellAndWait hwnd, "open", Options.RunProgramAfterSavingProgramname, Parameters & Docname, , Windowstyle, WCNone
+50100     ShellAndWait hwnd, "open", RemoveLeadingAndTrailingQuotes(Options.RunProgramAfterSavingProgramname), Parameters & Docname, , Windowstyle, WCNone
 50110   End If
 50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modPDFCreator", "RunProgramAfterSaving")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub RunProgramBeforeSaving(hwnd As Long, Docname As String, Parameters As String, Windowstyle As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tstr As String
+50020  If FileExists(Docname) = True And FileExists(RemoveLeadingAndTrailingQuotes(Options.RunProgramBeforeSavingProgramname)) = True Then
+50030   tstr = "Run program before saving: Program:" & Options.RunProgramBeforeSavingProgramname & _
+   " Parameters:" & Parameters & Docname
+50050   IfLoggingWriteLogfile tstr
+50060   WriteToSpecialLogfile tstr
+50070   ShellAndWait hwnd, "open", RemoveLeadingAndTrailingQuotes(Options.RunProgramBeforeSavingProgramname), Parameters & Docname, , Windowstyle, WCTermination
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDFCreator", "RunProgramBeforeSaving")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -470,10 +494,10 @@ On Error GoTo ErrPtnr_OnError
 50010  If Options.PDFUserPass <> 0 Or Options.PDFOwnerPass <> 0 Then
 50020    With f
 50030     .Visible = False
-50040     .fraUserPass.Enabled = Options.PDFUserPass
+50040     .dmFraUserPass.Enabled = Options.PDFUserPass
 50050     .lblUserPass.Enabled = Options.PDFUserPass
 50060     .lblUserPassRepeat.Enabled = Options.PDFUserPass
-50070     .fraOwnerPass.Enabled = Options.PDFOwnerPass
+50070     .dmFraOwnerPass.Enabled = Options.PDFOwnerPass
 50080     .lblOwnerPass.Enabled = Options.PDFOwnerPass
 50090     .lblOwnerPassRepeat.Enabled = Options.PDFOwnerPass
 50100     .iPasswords = Abs(Options.PDFUserPass) + Abs(Options.PDFOwnerPass * 2)
@@ -503,36 +527,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
-Public Function GetRunProgramAfterSavingProgramParameters() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String
-50020  tStr = LTrim$(Options.RunProgramAfterSavingProgramParameters)
-50030  If Len(tStr) > 0 Then
-50040   If Mid$(tStr, 1, 1) = """" Then
-50050    tStr = Mid$(tStr, 2)
-50060   End If
-50070  End If
-50080  If Len(tStr) > 0 Then
-50090   If Mid$(tStr, Len(tStr), 1) = """" Then
-50100    tStr = Mid$(tStr, 1, Len(tStr) - 1)
-50110   End If
-50120  End If
-50130  GetRunProgramAfterSavingProgramParameters = tStr
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDFCreator", "GetRunProgramAfterSavingProgramParameters")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 
 Public Sub AddExplorerIntegration()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

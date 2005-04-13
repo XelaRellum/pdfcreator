@@ -1,6 +1,8 @@
 Attribute VB_Name = "modShell"
 Option Explicit
 
+Public ShellAndWaitingIsRunning As Boolean
+
 Public Function ShellAndWait(ByVal hwnd As Long, ByVal Operation As String, _
                              ByVal FilePath As String, _
                              Optional Parameter As String, _
@@ -12,8 +14,8 @@ Public Function ShellAndWait(ByVal hwnd As Long, ByVal Operation As String, _
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010
-50020  Dim res As Long, ShExInfo As SHELLEXECUTEINFO
+50010  Dim res As Long, ShExInfo As SHELLEXECUTEINFO
+50020  ShellAndWaitingIsRunning = True
 50030  If WorkingFolder = vbNullString Then
 50040   WorkingFolder = FilePath
 50050  End If
@@ -54,6 +56,7 @@ On Error GoTo ErrPtnr_OnError
 50400    ShellAndWait = "Can't close application."
 50410   End If
 50420  End If
+50430  ShellAndWaitingIsRunning = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

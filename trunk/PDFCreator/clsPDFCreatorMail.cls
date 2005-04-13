@@ -34,7 +34,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Function Send(ByVal Filename As String, Optional Subject As String = "", Optional SendMailMethod As Long = 0) As Long
+Public Function Send(ByVal Filename As String, Optional Subject As String = "", Optional SendMailMethod As Long = 0, Optional EmailAddress As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -46,7 +46,7 @@ On Error GoTo ErrPtnr_OnError
 50060   Case Else
 50071    Select Case UCase$(iStandardEmailClient)
           Case "MICROSOFT OUTLOOK"
-50090      Send = MSOutlookEmail(Filename, Subject)
+50090      Send = MSOutlookEmail(Filename, Subject, EmailAddress)
 50100     Case "PEGASUS MAIL"
 50110      Send = PegasusEmail(Filename, Subject)
 50120     Case "THE BAT!"
@@ -56,9 +56,9 @@ On Error GoTo ErrPtnr_OnError
 50160     Case "SYLPHEED"
 50170      Send = SylpheedClaws(Filename, Subject)
 50180     Case "OUTLOOK EXPRESS", "MOZILLA THUNDERBIRD", "MOZILLA"
-50190      Send = VBMapiEmail(Filename, Subject)
+50190      Send = VBMapiEmail(Filename, Subject, EmailAddress)
 50200     Case "LOTUS NOTES"
-50210      Send = SendNotesMail(Filename, Subject)
+50210      Send = SendNotesMail(Filename, Subject, EmailAddress)
 50220     Case Else
 50230      Send = SendToMailRecipientViaSendmailDll(Filename)
 50240    End Select
@@ -114,7 +114,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function MSOutlookEmail(Filename As String, Optional Subject As String = "") As Long
+Private Function MSOutlookEmail(Filename As String, Optional Subject As String = "", Optional EmailAddress As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -127,7 +127,7 @@ On Error GoTo ErrPtnr_OnError
 50070  End If
 50080  Set oItem = olApp.CreateItem(0)
 50090  With oItem
-50100   .To = "": .CC = "": .BCC = "": .Subject = Subject
+50100   .To = EmailAddress: .CC = "": .BCC = "": .Subject = Subject
 50110   .Attachments.Add Filename
 50120   .Display
 50130  End With
@@ -144,7 +144,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function VBMapiEmail(Filename As String, Optional Subject As String = "") As Long
+Private Function VBMapiEmail(Filename As String, Optional Subject As String = "", Optional EmailAddress As String) As Long
  On Error GoTo ErrorHandler
  Dim MAPISess As MAPISession, MAPIMess As MAPIMessages
 
@@ -154,12 +154,17 @@ Private Function VBMapiEmail(Filename As String, Optional Subject As String = ""
  Set MAPIMess = New MAPIMessages
 
  With MAPISess
+  .DownLoadMail = False
   .LogonUI = True
   .SignOn
+  .NewSession = True
  End With
  With MAPIMess
   .SessionID = MAPISess.SessionID
   .Compose
+  If LenB(EmailAddress) > 0 Then
+   .RecipAddress = EmailAddress
+  End If
   If Len(Trim$(Filename)) > 0 Then
    .AttachmentIndex = 0
    .AttachmentPathName = Filename
@@ -296,7 +301,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-
 Private Function SendToMailRecipientViaSendmailDll(ByVal Filename As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -368,7 +372,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function SendNotesMail(Attachments As String, Optional Subject As String = "")
+Private Function SendNotesMail(Attachments As String, Optional Subject As String = "", Optional EmailAddress As String = "")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -380,7 +384,7 @@ On Error GoTo ErrPtnr_OnError
 50060  Const EMBED_ATTACHMENT As Integer = 1454, notesclass As String = "NOTES"
 50070
 50080  Dim i As Long, t As Long, lotusWindow As Long, session As Object, _
-  db As Object, doc As Object, beDoc As Object, workspace As Object, _
+  dB As Object, doc As Object, beDoc As Object, workspace As Object, _
   bodypart As Object
 50110
 50120  t = Timer
@@ -395,23 +399,23 @@ On Error GoTo ErrPtnr_OnError
 50210    MsgBox "Lotus Notes must be running before you use this facility!" & vbCrLf & _
     "Please click ok and then try again.", vbExclamation
 50230   Else
-50240    showWindow lotusWindow, SW_MAXIMIZE
+50240    ShowWindow lotusWindow, SW_MAXIMIZE
 50250    SetForegroundWindow lotusWindow
 50260    Set session = CreateObject("Notes.Notessession")
-50270    Set db = session.getDatabase("", "")
-50280    db.Openmail
-50290    Set beDoc = db.CreateDocument
+50270    Set dB = session.getDatabase("", "")
+50280    dB.Openmail
+50290    Set beDoc = dB.CreateDocument
 50300    Set bodypart = beDoc.CREATERICHTEXTITEM("Body")
 50310    beDoc.Form = "Memo"
 50320    beDoc.Subject = Subject
-50330    beDoc.sendto = ""
+50330    beDoc.sendto = EmailAddress
 50340    If Attachments <> "" Then
 50350     bodypart.EmbedObject EMBED_ATTACHMENT, "", Attachments
 50360    End If
 50370    Set workspace = CreateObject("Notes.NotesUIWorkspace")
 50380    Call workspace.EditDocument(True, beDoc).GotoField("To")
 50390    Set session = Nothing
-50400    Set db = Nothing
+50400    Set dB = Nothing
 50410    Set doc = Nothing
 50420    Set beDoc = Nothing
 50430    Set workspace = Nothing

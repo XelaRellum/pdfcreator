@@ -13,45 +13,28 @@ Begin VB.Form frmLog
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
    Visible         =   0   'False
+   Begin VB.CommandButton cmdClear 
+      Caption         =   "C&lear"
+      Height          =   495
+      Left            =   105
+      TabIndex        =   2
+      Top             =   3045
+      Width           =   1335
+   End
    Begin VB.CheckBox chkLogging 
       Caption         =   "Logging"
       Height          =   225
       Left            =   105
-      TabIndex        =   4
+      TabIndex        =   1
       Top             =   105
       Visible         =   0   'False
       Width           =   2220
-   End
-   Begin VB.CommandButton cmdSave 
-      Caption         =   "Save"
-      Height          =   495
-      Left            =   1680
-      TabIndex        =   2
-      Top             =   2955
-      Width           =   1335
    End
    Begin VB.Timer Timer1 
       Enabled         =   0   'False
       Interval        =   100
       Left            =   360
       Top             =   675
-   End
-   Begin VB.CommandButton cmdClear 
-      Caption         =   "Clear"
-      Height          =   495
-      Left            =   120
-      TabIndex        =   3
-      Top             =   2955
-      Width           =   1335
-   End
-   Begin VB.CommandButton cmdClose 
-      Cancel          =   -1  'True
-      Caption         =   "Close"
-      Height          =   495
-      Left            =   3240
-      TabIndex        =   1
-      Top             =   2955
-      Width           =   1335
    End
    Begin VB.TextBox txtLog 
       BackColor       =   &H00C0FFFF&
@@ -64,6 +47,23 @@ Begin VB.Form frmLog
       Top             =   435
       Width           =   4455
    End
+   Begin VB.CommandButton cmdSave 
+      Caption         =   "&Save"
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   3
+      Top             =   3045
+      Width           =   1335
+   End
+   Begin VB.CommandButton cmdClose 
+      Cancel          =   -1  'True
+      Caption         =   "&Close"
+      Height          =   495
+      Left            =   3255
+      TabIndex        =   4
+      Top             =   3045
+      Width           =   1335
+   End
 End
 Attribute VB_Name = "frmLog"
 Attribute VB_GlobalNameSpace = False
@@ -71,13 +71,6 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
-Private Declare Function SendMessage Lib "user32" Alias _
-        "SendMessageA" (ByVal hwnd As Long, ByVal wMsg _
-        As Long, ByVal wParam As Long, ByVal lParam As _
-        Any) As Long
-
-Private Const WM_SETTEXT = &HC
 
 Private Sub cmdClear_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -137,7 +130,7 @@ On Error GoTo ErrPtnr_OnError
 50050   Exit Sub
 50060  End If
 50070  If cFiles.Count > 0 And FileExists(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) = True Then
-50080   FileCopy CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile, cFiles.item(1)
+50080   FileCopy CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile, cFiles.Item(1)
 50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -239,8 +232,8 @@ On Error GoTo ErrPtnr_OnError
 50130  With txtLog
 50140   .Top = Abs(CLng(ShowOnlyLogfile)) * (chkLogging.Top + chkLogging.Height + 100)
 50150   .Left = 0
-50160   .Width = Me.Width - 100
-50170   .Height = Me.Height - cmdClose.Height - 600 - .Top
+50160   .Width = ScaleWidth
+50170   .Height = ScaleHeight - cmdClose.Height - .Top - 200
 50180  End With
 50190  cmdClear.Top = txtLog.Top + txtLog.Height + 100
 50200  cmdClear.Left = txtLog.Left + 50

@@ -13,12 +13,13 @@ Begin VB.Form frmPrintfiles
    StartUpPosition =   3  'Windows-Standard
    Visible         =   0   'False
    Begin VB.CommandButton cmd 
-      Caption         =   "Cancel"
+      Cancel          =   -1  'True
+      Caption         =   "&Cancel"
       Height          =   435
-      Left            =   1890
-      TabIndex        =   2
-      Top             =   1470
-      Width           =   1905
+      Left            =   2160
+      TabIndex        =   4
+      Top             =   1440
+      Width           =   1815
    End
    Begin VB.Timer Timer1 
       Enabled         =   0   'False
@@ -29,7 +30,7 @@ Begin VB.Form frmPrintfiles
    Begin PDFCreator.XP_ProgressBar xpPgb 
       Height          =   330
       Left            =   210
-      TabIndex        =   0
+      TabIndex        =   3
       Top             =   960
       Width           =   5685
       _ExtentX        =   10028
@@ -61,7 +62,7 @@ Begin VB.Form frmPrintfiles
       Height          =   195
       Index           =   2
       Left            =   2880
-      TabIndex        =   4
+      TabIndex        =   2
       Top             =   720
       Width           =   405
    End
@@ -80,7 +81,7 @@ Begin VB.Form frmPrintfiles
       Height          =   195
       Index           =   1
       Left            =   210
-      TabIndex        =   3
+      TabIndex        =   1
       Top             =   525
       Width           =   435
    End
@@ -99,7 +100,7 @@ Begin VB.Form frmPrintfiles
       Height          =   195
       Index           =   0
       Left            =   210
-      TabIndex        =   1
+      TabIndex        =   0
       Top             =   210
       Width           =   375
    End
@@ -112,94 +113,94 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmd_Click()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  CancelPrintfiles = True
-50050  cmd.Enabled = False
-50060 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50070 Exit Sub
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  CancelPrintfiles = True
+50020  cmd.Enabled = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-50091 Select Case ErrPtnr.OnError("frmPrintfiles", "cmd_Click")
-      Case 0: Resume
-50110 Case 1: Resume Next
-50120 Case 2: Exit Sub
-50130 Case 3: End
-50140 End Select
-50150 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("frmPrintfiles", "cmd_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Dim Files As Collection
-50050  CancelPrintfiles = False
-50060  Caption = App.Title & " " & GetProgramReleaseStr
-50070  RemoveX Me
-50080  Set Files = GetFiles(PrintFilename, "")
-50090  If Files.Count > 1 Then
-50100   Visible = True
-50110  End If
-50120  lbl(0).Caption = LanguageStrings.ListFilename
-50130  lbl(1).Caption = LanguageStrings.ListSize
-50140  With xpPgb
-50150   .Min = 1
-50160   .Max = Files.Count
-50170   .Color = vbGreen
-50180   .Font.Bold = True
-50190   .ShowText = True
-50200  End With
-50210  Timer1.Enabled = True
-50220 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50230 Exit Sub
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Files As Collection
+50020  CancelPrintfiles = False
+50030  Caption = App.Title & " " & GetProgramReleaseStr
+50040  RemoveX Me
+50050  Set Files = GetFiles(PrintFilename, "")
+50060  If Files.Count > 1 Then
+50070   Visible = True
+50080  End If
+50090  lbl(0).Caption = LanguageStrings.ListFilename
+50100  lbl(1).Caption = LanguageStrings.ListSize
+50110  With xpPgb
+50120   .Min = 1
+50130   .Max = Files.Count
+50140   .Color = vbGreen
+50150   .Font.Bold = True
+50160   .ShowText = True
+50170  End With
+50180  Timer1.Enabled = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-50251 Select Case ErrPtnr.OnError("frmPrintfiles", "Form_Load")
-      Case 0: Resume
-50270 Case 1: Resume Next
-50280 Case 2: Exit Sub
-50290 Case 3: End
-50300 End Select
-50310 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("frmPrintfiles", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Resize()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  If WindowState = vbMinimized Then
-50050   Exit Sub
-50060  End If
-50070  xpPgb.Left = (Width - xpPgb.Width) / 2
-50080  Move (Screen.Width - Width) / 2, (Screen.Height - Height) / 2
-50090  cmd.Move (Width - cmd.Width) / 2, cmd.Top
-50100 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50110 Exit Sub
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If WindowState = vbMinimized Then
+50020   Exit Sub
+50030  End If
+50040  xpPgb.Left = (Width - xpPgb.Width) / 2
+50050  Move (Screen.Width - Width) / 2, (Screen.Height - Height) / 2
+50060  cmd.Move (Width - cmd.Width) / 2, cmd.Top
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-50131 Select Case ErrPtnr.OnError("frmPrintfiles", "Form_Resize")
-      Case 0: Resume
-50150 Case 1: Resume Next
-50160 Case 2: Exit Sub
-50170 Case 3: End
-50180 End Select
-50190 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("frmPrintfiles", "Form_Resize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Timer1_Timer()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Timer1.Enabled = False
-50050  PrintFile Me, PrintFilename, xpPgb, lbl(0), lbl(1), lbl(2)
-50060  Unload Me
-50070 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50080 Exit Sub
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Timer1.Enabled = False
+50020  PrintFile Me, PrintFilename, xpPgb, lbl(0), lbl(1), lbl(2)
+50030  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-50101 Select Case ErrPtnr.OnError("frmPrintfiles", "Timer1_Timer")
-      Case 0: Resume
-50120 Case 1: Resume Next
-50130 Case 2: Exit Sub
-50140 Case 3: End
-50150 End Select
-50160 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("frmPrintfiles", "Timer1_Timer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub

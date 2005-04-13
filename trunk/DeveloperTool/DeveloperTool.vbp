@@ -24,6 +24,7 @@ Module=modApiConstants; ..\Common\modApiConstants.bas
 Module=modApiFunctions; ..\Common\modApiFunctions.bas
 Module=modApiTypesEnums; ..\Common\modApiTypesEnums.bas
 Module=modGlobal; ..\Common\modGlobal.bas
+Module=modCollAddSorted; ..\Common\modCollAddSorted.bas
 IconForm="frmMain"
 Startup="frmMain"
 HelpFile=""

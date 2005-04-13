@@ -30,29 +30,29 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Declare Function BitBlt Lib "gdi32" (ByVal hDestDC As Long, ByVal x As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal hSrcDC As Long, ByVal xSrc As Long, ByVal ySrc As Long, ByVal dwRop As Long) As Long
-Private Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hDC As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
-Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hDC As Long) As Long
+Private Declare Function CreateCompatibleBitmap Lib "gdi32" (ByVal hdc As Long, ByVal nWidth As Long, ByVal nHeight As Long) As Long
+Private Declare Function CreateCompatibleDC Lib "gdi32" (ByVal hdc As Long) As Long
 Private Declare Function CreateDC Lib "gdi32" Alias "CreateDCA" (ByVal lpDriverName As String, ByVal lpDeviceName As String, ByVal lpOutput As String, lpInitData As Any) As Long
 Private Declare Function CreateHatchBrush Lib "gdi32" (ByVal fnStyle As Integer, ByVal COLORREF As Long) As Long
 Private Declare Function CreatePatternBrush Lib "gdi32" (ByVal hBitmap As Long) As Long
 Private Declare Function CreatePen Lib "gdi32" (ByVal nPenStyle As Long, ByVal nWidth As Long, ByVal crColor As Long) As Long
 Private Declare Function CreateSolidBrush Lib "gdi32" (ByVal crColor As Long) As Long
 Private Declare Function DeleteObject Lib "gdi32" (ByVal hObject As Long) As Long
-Private Declare Function DeleteDC Lib "gdi32" (ByVal hDC As Long) As Long
-Private Declare Function DrawText Lib "user32" Alias "DrawTextA" (ByVal hDC As Long, ByVal lpStr As String, ByVal nCount As Long, lpRect As Rect, ByVal wFormat As Long) As Long
-Private Declare Function DrawEdge Lib "user32" (ByVal hDC As Long, qrc As Rect, ByVal edge As Long, ByVal grfFlags As Long) As Long
-Private Declare Function FillRect Lib "user32" (ByVal hDC As Long, lpRect As Rect, ByVal hBrush As Long) As Long
-Private Declare Function FrameRect Lib "user32" (ByVal hDC As Long, lpRect As Rect, ByVal hBrush As Long) As Long
+Private Declare Function DeleteDC Lib "gdi32" (ByVal hdc As Long) As Long
+Private Declare Function DrawText Lib "user32" Alias "DrawTextA" (ByVal hdc As Long, ByVal lpStr As String, ByVal nCount As Long, lpRect As Rect, ByVal wFormat As Long) As Long
+Private Declare Function DrawEdge Lib "user32" (ByVal hdc As Long, qrc As Rect, ByVal edge As Long, ByVal grfFlags As Long) As Long
+Private Declare Function FillRect Lib "user32" (ByVal hdc As Long, lpRect As Rect, ByVal hBrush As Long) As Long
+Private Declare Function FrameRect Lib "user32" (ByVal hdc As Long, lpRect As Rect, ByVal hBrush As Long) As Long
 Private Declare Function GetClientRect Lib "user32" (ByVal hwnd As Long, lpRect As Rect) As Long
 Private Declare Function GetSysColor Lib "user32" (ByVal nIndex As Long) As Long
-Private Declare Function LineTo Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal Y As Long) As Long
-Private Declare Function MoveToEx Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal Y As Long, lpPoint As POINTAPI) As Long
-Private Declare Function PatBlt Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal dwRop As Long) As Long
-Private Declare Function SelectObject Lib "gdi32" (ByVal hDC As Long, ByVal hObject As Long) As Long
-Private Declare Function SetBkColor Lib "gdi32" (ByVal hDC As Long, ByVal crColor As Long) As Long
-Private Declare Function SetBkMode Lib "gdi32" (ByVal hDC As Long, ByVal nBkMode As Long) As Long
-Private Declare Function SetPixelV Lib "gdi32" (ByVal hDC As Long, ByVal x As Long, ByVal Y As Long, ByVal crColor As Long) As Long
-Private Declare Function SetTextColor Lib "gdi32" (ByVal hDC As Long, ByVal crColor As Long) As Long
+Private Declare Function LineTo Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long) As Long
+Private Declare Function MoveToEx Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long, lpPoint As POINTAPI) As Long
+Private Declare Function PatBlt Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long, ByVal nWidth As Long, ByVal nHeight As Long, ByVal dwRop As Long) As Long
+Private Declare Function SelectObject Lib "gdi32" (ByVal hdc As Long, ByVal hObject As Long) As Long
+Private Declare Function SetBkColor Lib "gdi32" (ByVal hdc As Long, ByVal crColor As Long) As Long
+Private Declare Function SetBkMode Lib "gdi32" (ByVal hdc As Long, ByVal nBkMode As Long) As Long
+Private Declare Function SetPixelV Lib "gdi32" (ByVal hdc As Long, ByVal x As Long, ByVal Y As Long, ByVal crColor As Long) As Long
+Private Declare Function SetTextColor Lib "gdi32" (ByVal hdc As Long, ByVal crColor As Long) As Long
 
 
 '=====================================================
@@ -150,7 +150,7 @@ Private hFntOld    As Long
 Private m_lWidth   As Long
 Private m_lHeight  As Long
 Private fPercent   As Double
-Private TR         As Rect
+Private tR         As Rect
 Private TBR        As Rect
 Private TSR        As Rect
 Private AT         As Rect
@@ -173,9 +173,9 @@ On Error GoTo ErrPtnr_OnError
 50030             If m_Value > 100 Then m_Value = 100
 50040
 50050
-50060             GetClientRect m_hWnd, TR               '//--- Reference = Control Client Area
+50060             GetClientRect m_hWnd, tR               '//--- Reference = Control Client Area
 50070
-50080             DrawFillRectangle TR, IIf(m_Scrolling = ccScrollingMediaPlayer, &H0, vbWhite), m_hDC '//--- Draw BackGround
+50080             DrawFillRectangle tR, IIf(m_Scrolling = ccScrollingMediaPlayer, &H0, vbWhite), m_hDC '//--- Draw BackGround
 50090
 50100             '//-- Draw ProgressBar Style
 50110
@@ -263,7 +263,7 @@ On Error GoTo ErrPtnr_OnError
 50930
 50940             If m_MemDC Then
 50950                 With UserControl
-50960                     pDraw .hDC, 0, 0, .ScaleWidth, .ScaleHeight, .ScaleLeft, .ScaleTop
+50960                     pDraw .hdc, 0, 0, .ScaleWidth, .ScaleHeight, .ScaleLeft, .ScaleTop
 50970                 End With
 50980             End If
 50990
@@ -287,13 +287,13 @@ Private Sub DrawOfficeXPProgressbar()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
-50020         DrawRectangle TR, ShiftColorXP(m_Color, 100), m_hDC
+50020         DrawRectangle tR, ShiftColorXP(m_Color, 100), m_hDC
 50030
 50040         With TBR
 50050           .Left = 1
 50060           .Top = 1
-50070           .Bottom = TR.Bottom - 1
-50080           .Right = TR.Left + (TR.Right - TR.Left) * (m_Value / 100)
+50070           .Bottom = tR.Bottom - 1
+50080           .Right = tR.Left + (tR.Right - tR.Left) * (m_Value / 100)
 50090         End With
 50100
 50110         DrawFillRectangle TBR, ShiftColorXP(m_Color, 180), m_hDC
@@ -317,11 +317,11 @@ Private Sub DrawJavTProgressbar()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
-50020        DrawRectangle TR, ShiftColorXP(m_Color, 10), m_hDC
-50030        TBR.Right = TR.Left + (TR.Right - TR.Left) * (m_Value / 101)
-50040        DrawGradient m_Color, ShiftColorXP(m_Color, 100), 2, 2, TR.Right - 2, TR.Bottom - 5, m_hDC ', True
-50050        DrawGradient ShiftColorXP(m_Color, 250), m_Color, 3, 3, TBR.Right, TR.Bottom - 6, m_hDC  ', True
-50060        DrawLine TBR.Right, 2, TBR.Right, TR.Bottom - 2, m_hDC, ShiftColorXP(m_Color, 25)
+50020        DrawRectangle tR, ShiftColorXP(m_Color, 10), m_hDC
+50030        TBR.Right = tR.Left + (tR.Right - tR.Left) * (m_Value / 101)
+50040        DrawGradient m_Color, ShiftColorXP(m_Color, 100), 2, 2, tR.Right - 2, tR.Bottom - 5, m_hDC ', True
+50050        DrawGradient ShiftColorXP(m_Color, 250), m_Color, 3, 3, TBR.Right, tR.Bottom - 6, m_hDC  ', True
+50060        DrawLine TBR.Right, 2, TBR.Right, tR.Bottom - 2, m_hDC, ShiftColorXP(m_Color, 25)
 50070
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -345,15 +345,15 @@ On Error GoTo ErrPtnr_OnError
 50020 Dim Brush      As Long
 50030 Dim origBrush  As Long
 50040
-50050        DrawEdge m_hDC, TR, 2, BF_RECT                       '//--- Draw ProgressBar Border
+50050        DrawEdge m_hDC, tR, 2, BF_RECT                       '//--- Draw ProgressBar Border
 50060
 50070        If Nothing Is m_Picture Then Exit Sub                '//--- In Case No Picture is Choosen
 50080
 50090        Brush = CreatePatternBrush(m_Picture.handle)         '//-- Use Pattern Picture Draw
 50100        origBrush = SelectObject(m_hDC, Brush)
-50110        TBR.Right = TR.Left + (TR.Right - TR.Left) * (m_Value / 101)
+50110        TBR.Right = tR.Left + (tR.Right - tR.Left) * (m_Value / 101)
 50120
-50130        PatBlt m_hDC, 2, 2, TBR.Right, TR.Bottom - 4, vbPatCopy
+50130        PatBlt m_hDC, 2, 2, TBR.Right, tR.Bottom - 4, vbPatCopy
 50140
 50150        SelectObject m_hDC, origBrush
 50160        DeleteObject Brush
@@ -376,8 +376,8 @@ Private Sub DrawPastelProgressbar()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010         DrawEdge m_hDC, TR, 6, BF_RECT
-50020         DrawGradient ShiftColorXP(m_Color, 140), ShiftColorXP(m_Color, 200), 2, 2, TR.Left + (TR.Right - TR.Left - 4) * (m_Value / 100), TR.Bottom - 3, m_hDC, True
+50010         DrawEdge m_hDC, tR, 6, BF_RECT
+50020         DrawGradient ShiftColorXP(m_Color, 140), ShiftColorXP(m_Color, 200), 2, 2, tR.Left + (tR.Right - tR.Left - 4) * (m_Value / 100), tR.Bottom - 3, m_hDC, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -397,14 +397,14 @@ Private Sub DrawMetalProgressbar()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010          TBR.Right = TR.Left + (TR.Right - TR.Left - 4) * (m_Value / 100)
+50010          TBR.Right = tR.Left + (tR.Right - tR.Left - 4) * (m_Value / 100)
 50020
-50030          DrawGradient vbWhite, &HC0C0C0, 2, 2, TR.Right - 3, (TR.Bottom - 3) / 2, m_hDC
-50040          DrawGradient BlendColor(&HC0C0C0, &H0, 255), &HC0C0C0, 2, (TR.Bottom - 3) / 2, TR.Right - 3, (TR.Bottom - 3) / 2, m_hDC
-50050          DrawGradient ShiftColorXP(m_Color, 150), BlendColor(m_Color, &H0, 180), 2, 2, TBR.Right, (TR.Bottom - 3) / 2, m_hDC
-50060          DrawGradient BlendColor(m_Color, &H0, 190), m_Color, 2, (TR.Bottom - 3) / 2, TBR.Right, (TR.Bottom - 3) / 2, m_hDC
+50030          DrawGradient vbWhite, &HC0C0C0, 2, 2, tR.Right - 3, (tR.Bottom - 3) / 2, m_hDC
+50040          DrawGradient BlendColor(&HC0C0C0, &H0, 255), &HC0C0C0, 2, (tR.Bottom - 3) / 2, tR.Right - 3, (tR.Bottom - 3) / 2, m_hDC
+50050          DrawGradient ShiftColorXP(m_Color, 150), BlendColor(m_Color, &H0, 180), 2, 2, TBR.Right, (tR.Bottom - 3) / 2, m_hDC
+50060          DrawGradient BlendColor(m_Color, &H0, 190), m_Color, 2, (tR.Bottom - 3) / 2, TBR.Right, (tR.Bottom - 3) / 2, m_hDC
 50070
-50080          TR.Left = TR.Left + 3
+50080          tR.Left = tR.Left + 3
 50090          pDrawBorder
 50100
 50110
@@ -429,13 +429,13 @@ On Error GoTo ErrPtnr_OnError
 50010
 50020    Dim hBrush As Long
 50030
-50040    DrawEdge m_hDC, TR, 9, BF_RECT
+50040    DrawEdge m_hDC, tR, 9, BF_RECT
 50050
 50060    With TBR
 50070       .Left = 2
 50080       .Top = 2
-50090       .Bottom = TR.Bottom - 2
-50100       .Right = TR.Left + (TR.Right - TR.Left) * (m_Value / 101)
+50090       .Bottom = tR.Bottom - 2
+50100       .Right = tR.Left + (tR.Right - tR.Left) * (m_Value / 101)
 50110    End With
 50120
 50130    hBrush = CreateHatchBrush(m_Brush, GetLngColor(Color))
@@ -462,8 +462,8 @@ Private Sub DrawMediaProgressbar()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
-50020         DrawRectangle TR, BlendColor(m_Color, &H0, 200), m_hDC
-50030         DrawGradient &H0&, ShiftColorXP(GetLngColor(BlendColor(m_Color, &H0, 100)), 10), 2, 2, TR.Left + (TR.Right - TR.Left - 5) * (m_Value / 100), TR.Bottom - 2, m_hDC, True
+50020         DrawRectangle tR, BlendColor(m_Color, &H0, 200), m_hDC
+50030         DrawGradient &H0&, ShiftColorXP(GetLngColor(BlendColor(m_Color, &H0, 100)), 10), 2, 2, tR.Left + (tR.Right - tR.Left - 5) * (m_Value / 100), tR.Bottom - 2, m_hDC, True
 50040
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -489,9 +489,9 @@ On Error GoTo ErrPtnr_OnError
 50020       lSegmentWidth = IIf(m_Scrolling = 0, 6, 0) '/-- Windows Default
 50030       lSegmentSpacing = 2                        '/-- Windows Default
 50040
-50050       TR.Left = TR.Left + 3
+50050       tR.Left = tR.Left + 3
 50060
-50070       LSet TBR = TR
+50070       LSet TBR = tR
 50080
 50090       fPercent = m_Value / 98
 50100
@@ -503,12 +503,12 @@ On Error GoTo ErrPtnr_OnError
 50160       '                                 Calc Horizontal ProgressBar
 50170       '---------------------------------------------------------------------------------------
 50180
-50190          TBR.Right = TR.Left + (TR.Right - TR.Left) * fPercent
+50190          TBR.Right = tR.Left + (tR.Right - tR.Left) * fPercent
 50200
 50210          TBR.Right = TBR.Right - ((TBR.Right - TBR.Left) Mod (lSegmentWidth + lSegmentSpacing))
 50220
-50230          If TBR.Right < TR.Left Then
-50240             TBR.Right = TR.Left
+50230          If TBR.Right < tR.Left Then
+50240             TBR.Right = tR.Left
 50250          End If
 50260
 50270       Else
@@ -517,9 +517,9 @@ On Error GoTo ErrPtnr_OnError
 50300       '                                 Calc Vertical ProgressBar
 50310       '---------------------------------------------------------------------------------------
 50320          fPercent = 1# - fPercent
-50330          TBR.Top = TR.Top + (TR.Bottom - TR.Top) * fPercent
+50330          TBR.Top = tR.Top + (tR.Bottom - tR.Top) * fPercent
 50340          TBR.Top = TBR.Top - ((TBR.Top - TBR.Bottom) Mod (lSegmentWidth + lSegmentSpacing))
-50350          If TBR.Top > TR.Bottom Then TBR.Top = TR.Bottom
+50350          If TBR.Top > tR.Bottom Then TBR.Top = tR.Bottom
 50360
 50370
 50380
@@ -550,7 +550,7 @@ On Error GoTo ErrPtnr_OnError
 50030
 50040   hBR = CreateSolidBrush(vbWhite)
 50050
-50060       LSet TSR = TR
+50060       LSet TSR = tR
 50070
 50080
 50090       If m_Orientation = 0 Then
@@ -605,19 +605,19 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010 Dim RTemp As Rect
 50020
-50030  TR.Left = TR.Left - 3
+50030  tR.Left = tR.Left - 3
 50040
-50050  Let RTemp = TR
+50050  Let RTemp = tR
 50060
 50070
-50080  DrawLine 2, 1, TR.Right - 2, 1, m_hDC, &HBEBEBE
-50090  DrawLine 2, TR.Bottom - 2, TR.Right - 2, TR.Bottom - 2, m_hDC, &HEFEFEF
-50100  DrawLine 1, 2, 1, TR.Bottom - 2, m_hDC, &HBEBEBE
-50110  DrawLine 2, 2, 2, TR.Bottom - 2, m_hDC, &HEFEFEF
-50120  DrawLine 2, 2, TR.Right - 2, 2, m_hDC, &HEFEFEF
-50130  DrawLine TR.Right - 2, 2, TR.Right - 2, TR.Bottom - 2, m_hDC, &HEFEFEF
+50080  DrawLine 2, 1, tR.Right - 2, 1, m_hDC, &HBEBEBE
+50090  DrawLine 2, tR.Bottom - 2, tR.Right - 2, tR.Bottom - 2, m_hDC, &HEFEFEF
+50100  DrawLine 1, 2, 1, tR.Bottom - 2, m_hDC, &HBEBEBE
+50110  DrawLine 2, 2, 2, tR.Bottom - 2, m_hDC, &HEFEFEF
+50120  DrawLine 2, 2, tR.Right - 2, 2, m_hDC, &HEFEFEF
+50130  DrawLine tR.Right - 2, 2, tR.Right - 2, tR.Bottom - 2, m_hDC, &HEFEFEF
 50140
-50150  DrawRectangle TR, GetLngColor(&H686868), m_hDC
+50150  DrawRectangle tR, GetLngColor(&H686868), m_hDC
 50160
 50170
 50180  Call SetPixelV(m_hDC, 0, 0, GetLngColor(vbWhite))
@@ -628,25 +628,25 @@ On Error GoTo ErrPtnr_OnError
 50230  Call SetPixelV(m_hDC, 2, 0, GetLngColor(&H7D7E7F))
 50240  Call SetPixelV(m_hDC, 2, 2, GetLngColor(&HBEBEBE))
 50250
-50260  Call SetPixelV(m_hDC, 0, TR.Bottom - 1, GetLngColor(vbWhite))
-50270  Call SetPixelV(m_hDC, 1, TR.Bottom - 1, GetLngColor(&HA6ABAC))
-50280  Call SetPixelV(m_hDC, 2, TR.Bottom - 1, GetLngColor(&H7D7E7F))
-50290  Call SetPixelV(m_hDC, 0, TR.Bottom - 3, GetLngColor(&H7D7E7F)) '//BOTTOM RIGHT CORNER
-50300  Call SetPixelV(m_hDC, 0, TR.Bottom - 2, GetLngColor(&HA7ABAC))
-50310  Call SetPixelV(m_hDC, 1, TR.Bottom - 2, GetLngColor(&H777777))
+50260  Call SetPixelV(m_hDC, 0, tR.Bottom - 1, GetLngColor(vbWhite))
+50270  Call SetPixelV(m_hDC, 1, tR.Bottom - 1, GetLngColor(&HA6ABAC))
+50280  Call SetPixelV(m_hDC, 2, tR.Bottom - 1, GetLngColor(&H7D7E7F))
+50290  Call SetPixelV(m_hDC, 0, tR.Bottom - 3, GetLngColor(&H7D7E7F)) '//BOTTOM RIGHT CORNER
+50300  Call SetPixelV(m_hDC, 0, tR.Bottom - 2, GetLngColor(&HA7ABAC))
+50310  Call SetPixelV(m_hDC, 1, tR.Bottom - 2, GetLngColor(&H777777))
 50320
-50330  Call SetPixelV(m_hDC, TR.Right - 1, 0, GetLngColor(vbWhite))
-50340  Call SetPixelV(m_hDC, TR.Right - 1, 1, GetLngColor(&HBEBEBE))
-50350  Call SetPixelV(m_hDC, TR.Right - 1, 2, GetLngColor(&H7D7E7F)) '//TOP LEFT CORNER
-50360  Call SetPixelV(m_hDC, TR.Right - 2, 2, GetLngColor(&HBEBEBE))
-50370  Call SetPixelV(m_hDC, TR.Right - 2, 1, GetLngColor(&H686868))
+50330  Call SetPixelV(m_hDC, tR.Right - 1, 0, GetLngColor(vbWhite))
+50340  Call SetPixelV(m_hDC, tR.Right - 1, 1, GetLngColor(&HBEBEBE))
+50350  Call SetPixelV(m_hDC, tR.Right - 1, 2, GetLngColor(&H7D7E7F)) '//TOP LEFT CORNER
+50360  Call SetPixelV(m_hDC, tR.Right - 2, 2, GetLngColor(&HBEBEBE))
+50370  Call SetPixelV(m_hDC, tR.Right - 2, 1, GetLngColor(&H686868))
 50380
-50390  Call SetPixelV(m_hDC, TR.Right - 1, TR.Bottom - 1, GetLngColor(vbWhite))
-50400  Call SetPixelV(m_hDC, TR.Right - 1, TR.Bottom - 2, GetLngColor(&HBEBEBE))
-50410  Call SetPixelV(m_hDC, TR.Right - 1, TR.Bottom - 3, GetLngColor(&H7D7E7F))
-50420  Call SetPixelV(m_hDC, TR.Right - 2, TR.Bottom - 2, GetLngColor(&H777777)) '//TOP RIGHT CORNER
-50430  Call SetPixelV(m_hDC, TR.Right - 2, TR.Bottom - 1, GetLngColor(&HBEBEBE))
-50440  Call SetPixelV(m_hDC, TR.Right - 3, TR.Bottom - 1, GetLngColor(&H7D7E7F))
+50390  Call SetPixelV(m_hDC, tR.Right - 1, tR.Bottom - 1, GetLngColor(vbWhite))
+50400  Call SetPixelV(m_hDC, tR.Right - 1, tR.Bottom - 2, GetLngColor(&HBEBEBE))
+50410  Call SetPixelV(m_hDC, tR.Right - 1, tR.Bottom - 3, GetLngColor(&H7D7E7F))
+50420  Call SetPixelV(m_hDC, tR.Right - 2, tR.Bottom - 2, GetLngColor(&H777777)) '//TOP RIGHT CORNER
+50430  Call SetPixelV(m_hDC, tR.Right - 2, tR.Bottom - 1, GetLngColor(&HBEBEBE))
+50440  Call SetPixelV(m_hDC, tR.Right - 3, tR.Bottom - 1, GetLngColor(&H7D7E7F))
 50450
 50460
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -678,9 +678,9 @@ On Error GoTo ErrPtnr_OnError
 50060     If TBR.Right <= 14 Then TBR.Right = 12
 50070
 50080     TempRect.Left = 4
-50090     TempRect.Right = IIf(TBR.Right + 4 > TR.Right, TBR.Right - 4, TBR.Right)
+50090     TempRect.Right = IIf(TBR.Right + 4 > tR.Right, TBR.Right - 4, TBR.Right)
 50100     TempRect.Top = 8
-50110     TempRect.Bottom = TR.Bottom - 8
+50110     TempRect.Bottom = tR.Bottom - 8
 50120
 50130     '=======================================================================================
 50140     '                                 Draw Horizontal ProgressBar
@@ -697,9 +697,9 @@ On Error GoTo ErrPtnr_OnError
 50250 Else
 50260
 50270     TempRect.Left = 9
-50280     TempRect.Right = TR.Right - 8
+50280     TempRect.Right = tR.Right - 8
 50290     TempRect.Top = TBR.Top
-50300     TempRect.Bottom = TR.Bottom
+50300     TempRect.Bottom = tR.Bottom
 50310
 50320     '=======================================================================================
 50330     '                                 Draw Vertical ProgressBar
@@ -708,9 +708,9 @@ On Error GoTo ErrPtnr_OnError
 50360     If m_Scrolling = ccScrollingSearch Then
 50370          GoSub VerticalSearch
 50380     Else
-50390         DrawGradient ShiftColorXP(m_Color, 150), m_Color, 4, TBR.Top, 4, TR.Bottom, m_hDC, True
+50390         DrawGradient ShiftColorXP(m_Color, 150), m_Color, 4, TBR.Top, 4, tR.Bottom, m_hDC, True
 50400         DrawFillRectangle TempRect, m_Color, m_hDC
-50410         DrawGradient m_Color, ShiftColorXP(m_Color, 150), TR.Right - 8, TBR.Top, 4, TR.Bottom, m_hDC, True
+50410         DrawGradient m_Color, ShiftColorXP(m_Color, 150), tR.Right - 8, TBR.Top, 4, tR.Bottom, m_hDC, True
 50420     End If
 50430
 50440     '--------------------   <-------- Gradient Color From (- to +)
@@ -730,8 +730,8 @@ HorizontalSearch:
 50580           .Left = TBR.Right + ((lSegmentSpacing + 10) * (ITemp)) - (45 * ((100 - m_Value) / 100))
 50590           .Right = .Left + 10
 50600           .Top = 8
-50610           .Bottom = TR.Bottom - 8
-50620           DrawGradient ShiftColorXP(m_Color, 220 - (40 * ITemp)), ShiftColorXP(m_Color, 200 - (40 * ITemp)), .Left, 3, 9, TR.Bottom - 2, m_hDC, True
+50610           .Bottom = tR.Bottom - 8
+50620           DrawGradient ShiftColorXP(m_Color, 220 - (40 * ITemp)), ShiftColorXP(m_Color, 200 - (40 * ITemp)), .Left, 3, 9, tR.Bottom - 2, m_hDC, True
 50630         End With
 50640
 50650     Next ITemp
@@ -745,10 +745,10 @@ VerticalSearch:
 50730
 50740         With TempRect
 50750           .Left = 8
-50760           .Right = TR.Right - 8
+50760           .Right = tR.Right - 8
 50770           .Top = TBR.Top + ((lSegmentSpacing + 10) * ITemp)
 50780           .Bottom = .Top + 10
-50790           DrawGradient ShiftColorXP(m_Color, 220 - (40 * ITemp)), ShiftColorXP(m_Color, 200 - (40 * ITemp)), TR.Right - 2, .Top, 2, 9, m_hDC
+50790           DrawGradient ShiftColorXP(m_Color, 220 - (40 * ITemp)), ShiftColorXP(m_Color, 200 - (40 * ITemp)), tR.Right - 2, .Top, 2, 9, m_hDC
 50800         End With
 50810
 50820     Next ITemp
@@ -799,7 +799,7 @@ On Error GoTo ErrPtnr_OnError
 50240       '//-- If ProgressBar is already over the Text don't draw the old text, yust draw the Alpha Text
 50250            'It saves some memory
 50260
-50270       If ((TR.Right * (m_Value / 100)) <= AT.Right) Or Not isAlpha Then
+50270       If ((tR.Right * (m_Value / 100)) <= AT.Right) Or Not isAlpha Then
 50280             DrawText m_hDC, ThisText, Len(ThisText), AT, DT_SINGLELINE
 50290       End If
 50300
@@ -833,8 +833,8 @@ On Error GoTo ErrPtnr_OnError
 50010
 50020       '//--Calculates the Bounding Rects Of the Text using DT_CALCRECT
 50030       DrawText m_hDC, ThisText, Len(ThisText), AT, DT_CALCRECT
-50040       AT.Left = (TR.Right / 2) - ((AT.Right - AT.Left) / 2)
-50050       AT.Top = (TR.Bottom / 2) - ((AT.Bottom - AT.Top) / 2)
+50040       AT.Left = (tR.Right / 2) - ((AT.Right - AT.Left) / 2)
+50050       AT.Top = (tR.Bottom / 2) - ((AT.Bottom - AT.Top) / 2)
 50060
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -864,10 +864,10 @@ On Error GoTo ErrPtnr_OnError
 50070         '//-- This is When the Text is Drawn
 50080             '//--Gives the Media Player Text Look (Changes Color When Progress is over the Text)
 50090
-50100             If (TR.Right * (m_Value / 100)) >= AT.Left Then
+50100             If (tR.Right * (m_Value / 100)) >= AT.Left Then
 50110                 SetTextColor m_hDC, GetLngColor(IIf(m_Scrolling = ccScrollingMediaPlayer, ShiftColorXP(m_Color, 80), vbWhite))
-50120                 AT.Left = (TR.Right / 2) - ((AT.Right - AT.Left) / 2)
-50130                 AT.Right = (TR.Right * (m_Value / 100))
+50120                 AT.Left = (tR.Right / 2) - ((AT.Right - AT.Left) / 2)
+50130                 AT.Right = (tR.Right * (m_Value / 100))
 50140                 DrawText m_hDC, ThisText, Len(ThisText), AT, DT_SINGLELINE
 50150                 SelectObject m_hDC, hFntOld
 50160             End If
@@ -912,7 +912,7 @@ End Function
 
 '======================================================================
 'DRAWS A BORDER RECTANGLE AREA OF AN SPECIFIED COLOR
-Private Sub DrawRectangle(ByRef BRect As Rect, ByVal Color As Long, ByVal hDC As Long)
+Private Sub DrawRectangle(ByRef BRect As Rect, ByVal Color As Long, ByVal hdc As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -920,7 +920,7 @@ On Error GoTo ErrPtnr_OnError
 50020 Dim hBrush As Long
 50030
 50040     hBrush = CreateSolidBrush(Color)
-50050     FrameRect hDC, BRect, hBrush
+50050     FrameRect hdc, BRect, hBrush
 50060     DeleteObject hBrush
 50070
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -984,23 +984,23 @@ Private Function ShiftColorXP(ByVal MyColor As Long, ByVal Base As Long) As Long
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
-50020     Dim r As Long, G As Long, b As Long, Delta As Long
+50020     Dim R As Long, G As Long, B As Long, Delta As Long
 50030
-50040     r = (MyColor And &HFF)
+50040     R = (MyColor And &HFF)
 50050     G = ((MyColor \ &H100) Mod &H100)
-50060     b = ((MyColor \ &H10000) Mod &H100)
+50060     B = ((MyColor \ &H10000) Mod &H100)
 50070
 50080     Delta = &HFF - Base
 50090
-50100     b = Base + b * Delta \ &HFF
+50100     B = Base + B * Delta \ &HFF
 50110     G = Base + G * Delta \ &HFF
-50120     r = Base + r * Delta \ &HFF
+50120     R = Base + R * Delta \ &HFF
 50130
-50140     If r > 255 Then r = 255
+50140     If R > 255 Then R = 255
 50150     If G > 255 Then G = 255
-50160     If b > 255 Then b = 255
+50160     If B > 255 Then B = 255
 50170
-50180     ShiftColorXP = r + 256& * G + 65536 * b
+50180     ShiftColorXP = R + 256& * G + 65536 * B
 50190
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -1017,7 +1017,7 @@ End Function
 
 '======================================================================
 'DRAWS A 2 COLOR GRADIENT AREA WITH A PREDEFINED DIRECTION
-Public Sub DrawGradient(lEndColor As Long, lStartcolor As Long, ByVal x As Long, ByVal Y As Long, ByVal x2 As Long, ByVal y2 As Long, ByVal hDC As Long, Optional bH As Boolean)
+Public Sub DrawGradient(lEndColor As Long, lStartcolor As Long, ByVal x As Long, ByVal Y As Long, ByVal X2 As Long, ByVal Y2 As Long, ByVal hdc As Long, Optional bH As Boolean)
     On Error Resume Next
     
     ''Draw a Vertical Gradient in the current HDC
@@ -1034,17 +1034,17 @@ Public Sub DrawGradient(lEndColor As Long, lStartcolor As Long, ByVal x As Long,
     eR = (lEndColor And &HFF)
     eG = (lEndColor \ &H100) And &HFF
     eB = (lEndColor And &HFF0000) / &H10000
-    sR = (sR - eR) / IIf(bH, x2, y2)
-    sG = (sG - eG) / IIf(bH, x2, y2)
-    sB = (sB - eB) / IIf(bH, x2, y2)
+    sR = (sR - eR) / IIf(bH, X2, Y2)
+    sG = (sG - eG) / IIf(bH, X2, Y2)
+    sB = (sB - eB) / IIf(bH, X2, Y2)
     
         
-    For ni = 0 To IIf(bH, x2, y2)
+    For ni = 0 To IIf(bH, X2, Y2)
         
         If bH Then
-            DrawLine x + ni, Y, x + ni, y2, hDC, RGB(eR + (ni * sR), eG + (ni * sG), eB + (ni * sB))
+            DrawLine x + ni, Y, x + ni, Y2, hdc, RGB(eR + (ni * sR), eG + (ni * sG), eB + (ni * sB))
         Else
-            DrawLine x, Y + ni, x2, Y + ni, hDC, RGB(eR + (ni * sR), eG + (ni * sG), eB + (ni * sB))
+            DrawLine x, Y + ni, X2, Y + ni, hdc, RGB(eR + (ni * sR), eG + (ni * sG), eB + (ni * sB))
         End If
         
     Next ni
@@ -1192,7 +1192,7 @@ End Sub
 '======================================================================
 'DRAWS THE TEMP DC
 Public Sub pDraw( _
-      ByVal hDC As Long, _
+      ByVal hdc As Long, _
       Optional ByVal xSrc As Long = 0, Optional ByVal ySrc As Long = 0, _
       Optional ByVal WidthSrc As Long = 0, Optional ByVal HeightSrc As Long = 0, _
       Optional ByVal xDst As Long = 0, Optional ByVal yDst As Long = 0 _
@@ -1202,7 +1202,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010    If WidthSrc <= 0 Then WidthSrc = m_lWidth
 50020    If HeightSrc <= 0 Then HeightSrc = m_lHeight
-50030    BitBlt hDC, xDst, yDst, WidthSrc, HeightSrc, m_ThDC, xSrc, ySrc, vbSrcCopy
+50030    BitBlt hdc, xDst, yDst, WidthSrc, HeightSrc, m_ThDC, xSrc, ySrc, vbSrcCopy
 50040
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1274,7 +1274,7 @@ On Error GoTo ErrPtnr_OnError
 50090
 50100      '----------------------------------------------------------
 50110      'Default Values
-50120      hDC = UserControl.hDC
+50120      hdc = UserControl.hdc
 50130      hwnd = UserControl.hwnd
 50140      m_Max = 100
 50150      m_Min = 0
@@ -1318,7 +1318,7 @@ Private Sub UserControl_Resize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 hDC = UserControl.hDC
+50010 hdc = UserControl.hdc
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1494,15 +1494,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get hDC() As Long
+Public Property Get hdc() As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010    hDC = m_hDC
+50010    hdc = m_hDC
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("XP_ProgressBar", "hDC [GET]")
+Select Case ErrPtnr.OnError("XP_ProgressBar", "hdc [GET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -1511,7 +1511,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Let hDC(ByVal cHdc As Long)
+Public Property Let hdc(ByVal cHdc As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1520,7 +1520,7 @@ On Error GoTo ErrPtnr_OnError
 50030    m_hDC = ThDC(UserControl.ScaleWidth, UserControl.ScaleHeight)
 50040
 50050    If m_hDC = 0 Then
-50060       m_hDC = UserControl.hDC   'On Fail...Do it Normally
+50060       m_hDC = UserControl.hdc   'On Fail...Do it Normally
 50070    Else
 50080       m_MemDC = True
 50090    End If
@@ -1529,7 +1529,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("XP_ProgressBar", "hDC [LET]")
+Select Case ErrPtnr.OnError("XP_ProgressBar", "hdc [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property

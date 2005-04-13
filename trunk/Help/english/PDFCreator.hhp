@@ -1,6 +1,6 @@
 [OPTIONS]
 Compatibility=1.1 or later
-Compiled file=PDFCreator.chm
+Compiled file=PDFCreator_english.chm
 Contents file=toc.hhc
 Default Window=Main
 Default topic=html\welcome.htm

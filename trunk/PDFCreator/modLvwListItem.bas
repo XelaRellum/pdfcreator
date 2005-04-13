@@ -4,7 +4,7 @@ Option Explicit
 Public Type ListSubItemStore
  Bold As String
  ForeColor As Long
- Key As String
+ key As String
  ReportIcon As Variant
  Tag As Variant
  Text As String
@@ -17,7 +17,7 @@ Public Type ListItemStore
  ForeColor As Long
  Ghosted As Boolean
  Icon As Variant
- Key As String
+ key As String
  ListSubItems() As ListSubItemStore
  Selected As Boolean
  SmallIcon As Variant
@@ -264,7 +264,7 @@ On Error GoTo ErrPtnr_OnError
 50160                     ListItemStore.ForeColor = .ForeColor
 50170                     ListItemStore.Ghosted = .Ghosted
 50180                     ListItemStore.Icon = .Icon
-50190                     ListItemStore.Key = .Key
+50190                     ListItemStore.key = .key
 50200                     ListItemStore.Selected = .Selected
 50210                     ListItemStore.SmallIcon = .SmallIcon
 50220                     If IsObject(.Tag) Then
@@ -280,7 +280,7 @@ On Error GoTo ErrPtnr_OnError
 50320                             With .ListSubItems(i)
 50330                                 ListItemStore.ListSubItems(i).Bold = .Bold
 50340                                 ListItemStore.ListSubItems(i).ForeColor = .ForeColor
-50350                                 ListItemStore.ListSubItems(i).Key = .Key
+50350                                 ListItemStore.ListSubItems(i).key = .key
 50360                                 ListItemStore.ListSubItems(i).ReportIcon = .ReportIcon
 50370                                 If IsObject(.Tag) Then
 50380                                     Set ListItemStore.ListSubItems(i).Tag = .Tag
@@ -328,7 +328,7 @@ On Error GoTo ErrPtnr_OnError
 50060       Set zGetListItem = KeyIndexListItem
 50070      End If
 50080     Else
-50090      Set zGetListItem = .ListItems.item(KeyIndexListItem)
+50090      Set zGetListItem = .ListItems.Item(KeyIndexListItem)
 50100   End If
 50110  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -371,14 +371,14 @@ Public Sub LvwInsertListItemStore(ListView As ListView, ListItemStore As ListIte
     With ListItemStore
         On Error Resume Next
         If IsEmpty(nIndex) Then
-            Set nListItem = ListView.ListItems.Add(, .Key, .Text, .Icon, .SmallIcon)
+            Set nListItem = ListView.ListItems.Add(, .key, .Text, .Icon, .SmallIcon)
         ElseIf nIndex = 0 Then
             Exit Sub
         Else
             If nIndex > ListView.ListItems.Count Then
-                Set nListItem = ListView.ListItems.Add(, .Key, .Text, .Icon, .SmallIcon)
+                Set nListItem = ListView.ListItems.Add(, .key, .Text, .Icon, .SmallIcon)
             Else
-                Set nListItem = ListView.ListItems.Add(nIndex, .Key, .Text, .Icon, .SmallIcon)
+                Set nListItem = ListView.ListItems.Add(nIndex, .key, .Text, .Icon, .SmallIcon)
             End If
         End If
         nListItem.Bold = .Bold
@@ -386,9 +386,9 @@ Public Sub LvwInsertListItemStore(ListView As ListView, ListItemStore As ListIte
         nListItem.ForeColor = .ForeColor
         nListItem.Ghosted = .Ghosted
         If Len(NewKey) Then
-            nListItem.Key = NewKey
+            nListItem.key = NewKey
         Else
-            nListItem.Key = .Key
+            nListItem.key = .key
         End If
         If IsObject(.Tag) Then
             Set nListItem.Tag = .Tag
@@ -398,7 +398,7 @@ Public Sub LvwInsertListItemStore(ListView As ListView, ListItemStore As ListIte
         nListItem.ToolTipText = .ToolTipText
         If UBound(.ListSubItems) Then
             For i = 1 To UBound(.ListSubItems)
-                Set nListSubItem = nListItem.ListSubItems.Add(, .ListSubItems(i).Key, .ListSubItems(i).Text, .ListSubItems(i).ReportIcon, .ListSubItems(i).ToolTipText)
+                Set nListSubItem = nListItem.ListSubItems.Add(, .ListSubItems(i).key, .ListSubItems(i).Text, .ListSubItems(i).ReportIcon, .ListSubItems(i).ToolTipText)
                 nListSubItem.Bold = .ListSubItems(i).Bold
                 nListSubItem.ForeColor = .ListSubItems(i).ForeColor
                 If IsObject(.ListSubItems(i).Tag) Then

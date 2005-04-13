@@ -46,10 +46,10 @@
         0 - Aus (Standard)<br>
         1 - Ein</p>
       <p><strong>PDFOptimize:</strong> Die Einstellung optimiert die erstellte
-        PDF-Datei für die Darstellung im Web. Dadurch kann die erste Seite bereits
+        PDF-Datei f&uuml;r die Darstellung im Web. Dadurch kann die erste Seite bereits
         angezeigt werden, bevor das gesamte Dokument geladen ist.<br>
-        Zur Zeit ist es nicht möglich eine Verschlüsselung und Optimierung gleichzeitig
-        zu nutzen. Verschlüsselte PDF-Dateien sind nicht für die schnelle Web-Anzeige
+        Zur Zeit ist es nicht m&ouml;glich eine Verschl&uuml;sselung und Optimierung gleichzeitig
+        zu nutzen. Verschl&uuml;sselte PDF-Dateien sind nicht f&uuml;r die schnelle Web-Anzeige
         optimiert.<br>
         <em>Eigenschaften: </em><br>
         0 - Aus (Standard)<br>
@@ -66,7 +66,8 @@
         diese Option auf eigene Gefahr.</p>
       <p><strong>RunProgramAfterSaving:</strong> Diese Einstellung legt fest, 
         ob das unter RunProgramAfterSavingProgramname angegebene Programm ausgef&uuml;hrt 
-        wird, wenn PDFCreator das Dokument gespeichert hat.<br>
+        wird, wenn PDFCreator das Dokument gespeichert hat. Der Name Dokumentes
+        wird als Parameter &uuml;bergeben.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
@@ -85,6 +86,31 @@
         1 - Ein</p>
       <p><strong>RunProgramAfterSavingWindowstyle:</strong> Diese Einstellung legt 
         die Erscheinung des Fensters des Programmes fest, das nach dem Speichern 
+        ausgef&uuml;hrt wird.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Das Programm wird versteckt ausgef&uuml;hrt.<br>
+        1 - Das Programm wird normal ausgef&uuml;hrt und aktiviert.<br>
+        2 - Das Programm wird minimiert ausgef&uuml;hrt und aktiviert.<br>
+        3 - Das Programm wird maximiert ausgef&uuml;hrt und aktiviert.<br>
+        4 - Das Programm wird normal ausgef&uuml;hrt und nicht aktiviert.<br>
+        6 - Das Programm wird minimiert ausgef&uuml;hrt und nicht aktiviert.</p>
+      <p><strong>RunProgramBeforeSaving:</strong> Diese Einstellung legt fest, 
+        ob das unter RunProgramBeforeSavingProgramname angegebene Programm ausgef&uuml;hrt 
+        wird, bevor PDFCreator das Dokument gespeichert hat. PDFCreator wartet, bis das
+        Programm die Verarbeitung des Dokumentes abgeschlossen hat. Der Name Dokumentes
+        wird als Parameter &uuml;bergeben.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein</p>
+      <p><strong>RunProgramBeforeSavingProgramname:</strong> Hier wird der Pfad 
+        zu dem auszuf&uuml;hrenden Programm festgelegt.<br>
+        <em>Beispiel:</em> RunProgramBeforeSavingProgramname=&quot;C:\Programme\Mein 
+        Programm\Mein Programm.exe&quot;</p>
+      <p><strong>RunProgramBeforeSavingProgramParameters:</strong> Diese Einstellung 
+        wird in Verbindung mit RunProgramBeforeSaving benutzt. Sie gibt die Parameter 
+        an, mit denen das Programm aufgerufen wird.</p>
+      <p><strong>RunProgramBeforeSavingWindowstyle:</strong> Diese Einstellung legt 
+        die Erscheinung des Fensters des Programmes fest, das vor dem Speichern 
         ausgef&uuml;hrt wird.<br>
         <em>Eigenschaften:</em><br>
         0 - Das Programm wird versteckt ausgef&uuml;hrt.<br>

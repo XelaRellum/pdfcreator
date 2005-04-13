@@ -2,16 +2,37 @@ VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    Caption         =   "Transtool"
-   ClientHeight    =   6420
+   ClientHeight    =   6435
    ClientLeft      =   165
-   ClientTop       =   735
+   ClientTop       =   855
    ClientWidth     =   9915
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   6420
+   ScaleHeight     =   6435
    ScaleWidth      =   9915
    StartUpPosition =   3  'Windows-Standard
    WindowState     =   2  'Maximiert
+   Begin TransTool.XP_ProgressBar xpPgb 
+      Height          =   280
+      Left            =   9240
+      TabIndex        =   7
+      Top             =   735
+      Visible         =   0   'False
+      Width           =   540
+      _ExtentX        =   953
+      _ExtentY        =   503
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BrushStyle      =   0
+      Color           =   65280
+   End
    Begin VB.PictureBox picAbout 
       Appearance      =   0  '2D
       AutoRedraw      =   -1  'True
@@ -23,7 +44,7 @@ Begin VB.Form frmMain
       ScaleHeight     =   33
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   33
-      TabIndex        =   7
+      TabIndex        =   6
       Top             =   720
       Visible         =   0   'False
       Width           =   495
@@ -38,32 +59,10 @@ Begin VB.Form frmMain
       Appearance      =   0  '2D
       Height          =   315
       Left            =   8160
-      TabIndex        =   6
+      TabIndex        =   5
       Text            =   "8"
       Top             =   720
       Width           =   975
-   End
-   Begin TransTool.XP_ProgressBar xpPgb 
-      Height          =   255
-      Left            =   9240
-      TabIndex        =   5
-      Top             =   720
-      Visible         =   0   'False
-      Width           =   615
-      _ExtentX        =   1085
-      _ExtentY        =   450
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BrushStyle      =   0
-      Color           =   6956042
-      Scrolling       =   8
    End
    Begin VB.Timer Timer3 
       Enabled         =   0   'False
@@ -166,18 +165,27 @@ Begin VB.Form frmMain
    End
    Begin MSComctlLib.StatusBar stb 
       Align           =   2  'Unten ausrichten
-      Height          =   255
+      Height          =   285
       Left            =   0
       TabIndex        =   1
-      Top             =   6165
+      Top             =   6150
       Width           =   9915
       _ExtentX        =   17489
-      _ExtentY        =   450
+      _ExtentY        =   503
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
          NumPanels       =   1
          BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
          EndProperty
+      EndProperty
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
       EndProperty
    End
    Begin MSComctlLib.ListView lsv 
@@ -224,6 +232,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   0
+      Picture         =   "frmMain.frx":6F30
       Top             =   840
       Width           =   930
    End
@@ -418,10 +427,10 @@ Private Sub cmbCharset_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tStr As String
+50010  Dim allow As String, tstr As String
 50020  allow = "0123456789" & Chr$(8) & Chr$(13)
-50030  tStr = Chr$(KeyAscii)
-50040  If InStr(1, allow, tStr) = 0 Then
+50030  tstr = Chr$(KeyAscii)
+50040  If InStr(1, allow, tstr) = 0 Then
 50050   KeyAscii = 0
 50060  End If
 50070  RefreshListview
@@ -474,25 +483,25 @@ End Select
 End Sub
 
 Private Sub Form_Load()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Set mutex = New clsMutex
-50050  InitForm
-50060  ShowPaypalMenuimage
-50070  RecentfileslistLocation = ApplicationDatapath
-50080  ShowRecentFiles
-50090  Timer2.Enabled = True
-50100 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50110 Exit Sub
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set mutex = New clsMutex
+50020  InitForm
+50030  ShowPaypalMenuimage
+50040  RecentfileslistLocation = ApplicationDatapath
+50050  ShowRecentFiles
+50060  Timer2.Enabled = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-50131 Select Case ErrPtnr.OnError("frmMain", "Form_Load")
-      Case 0: Resume
-50150 Case 1: Resume Next
-50160 Case 2: Exit Sub
-50170 Case 3: End
-50180 End Select
-50190 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("frmMain", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Resize()
@@ -615,8 +624,19 @@ Private Sub lsv_KeyPress(KeyAscii As Integer)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If KeyAscii = 13 Then
-50020   lsv.StartLabelEdit
-50030  End If
+50020   If lsv.ListItems.Count > 0 Then
+50030    OldString = lsv.SelectedItem.Text
+50040    frmEdit.txt(0).Text = Replace(lsv.SelectedItem.SubItems(5), "%n", vbCrLf)
+50050    frmEdit.txt(1).Text = Replace(lsv.SelectedItem.Text, "%n", vbCrLf)
+50060    frmEdit.Show vbModal, Me
+50070    If OldString <> lsv.SelectedItem.Text Then
+50080     ChangedListitem = True
+50090     Caption = "Transtool*"
+50100    End If
+50110    RefreshStb
+50120   End If
+50130   EnableEmptyButton
+50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -633,7 +653,7 @@ Private Sub mnEdit_Click(Index As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim item As ListItem
+50010  Dim Item As ListItem
 50021  Select Case Index
         Case 0
 50040    frmSearch.Show vbModeless, Me
@@ -800,7 +820,7 @@ Private Sub tlb_ButtonClick(ByVal Button As MSComctlLib.Button)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case Button.Key
+50011  Select Case Button.key
         Case Is = "open"
 50030    OpenLanguageFile
 50040   Case Is = "save"
@@ -846,10 +866,10 @@ Private Sub cmbProgramFontSize_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tStr As String
+50010  Dim allow As String, tstr As String
 50020  allow = "0123456789" & Chr$(8) & Chr$(13)
-50030  tStr = Chr$(KeyAscii)
-50040  If InStr(1, allow, tStr) = 0 Then
+50030  tstr = Chr$(KeyAscii)
+50040  If InStr(1, allow, tstr) = 0 Then
 50050   KeyAscii = 0
 50060  End If
 50070  RefreshListview
@@ -922,22 +942,22 @@ On Error GoTo ErrPtnr_OnError
 50070
 50080  With tlb.Buttons
 50090   For i = 1 To .Count
-50100    If .item(i).Caption <> "-" Then
-50110     .item(i).Enabled = Enable
+50100    If .Item(i).Caption <> "-" Then
+50110     .Item(i).Enabled = Enable
 50120    End If
 50130   Next i
 50140  End With
 50150  With mnFile
 50160   For i = .LBound To .UBound - 1
-50170    If .item(i).Caption <> "-" Then
-50180     .item(i).Enabled = Enable
+50170    If .Item(i).Caption <> "-" Then
+50180     .Item(i).Enabled = Enable
 50190    End If
 50200   Next i
 50210  End With
 50220  With mnEdit
 50230   For i = .LBound To .UBound
-50240    If .item(i).Caption <> "-" Then
-50250     .item(i).Enabled = Enable
+50240    If .Item(i).Caption <> "-" Then
+50250     .Item(i).Enabled = Enable
 50260    End If
 50270   Next i
 50280  End With
@@ -987,10 +1007,10 @@ Private Sub GotoEmptyValue()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim item As ListItem
-50020  Set item = lsv.FindItem("", lvwText)
-50030  item.EnsureVisible
-50040  lsv.ListItems(item.Index).Selected = True
+50010  Dim Item As ListItem
+50020  Set Item = lsv.FindItem("", lvwText)
+50030  Item.EnsureVisible
+50040  lsv.ListItems(Item.Index).Selected = True
 50050 ' lsv.StartLabelEdit
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1005,171 +1025,171 @@ End Select
 End Sub
 
 Private Sub InitForm()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Dim cSystem As clsSystem, SMF As Collection, fi As Long, i As Long, tStr As String, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim cSystem As clsSystem, SMF As Collection, fi As Long, i As Long, tstr As String, _
   tlbB As MSComctlLib.Button, ctl As Control
-50060  Set cSystem = New clsSystem: Set SMF = cSystem.GetSystemFont(Me, Menu)
-50070  With tlb
-50080   Set .ImageList = imlTlb
-50090   Set tlbB = tlb.Buttons.Add(, "open", , tbrDefault, "open")
-50100   tlbB.ToolTipText = "File open"
+50030  Set cSystem = New clsSystem: Set SMF = cSystem.GetSystemFont(Me, Menu)
+50040  With tlb
+50050   Set .ImageList = imlTlb
+50060   Set tlbB = tlb.Buttons.Add(, "open", , tbrDefault, "open")
+50070   tlbB.ToolTipText = "File open"
+50080   tlbB.Description = .ToolTipText
+50090   Set tlbB = tlb.Buttons.Add(, "save", , tbrDefault, "save")
+50100   tlbB.ToolTipText = "File save"
 50110   tlbB.Description = .ToolTipText
-50120   Set tlbB = tlb.Buttons.Add(, "save", , tbrDefault, "save")
-50130   tlbB.ToolTipText = "File save"
-50140   tlbB.Description = .ToolTipText
-50150   tlb.Buttons.Add , , , tbrSeparator
-50160   Set tlbB = tlb.Buttons.Add(, "search", , tbrDefault, "search")
-50170   tlbB.ToolTipText = "Search"
+50120   tlb.Buttons.Add , , , tbrSeparator
+50130   Set tlbB = tlb.Buttons.Add(, "search", , tbrDefault, "search")
+50140   tlbB.ToolTipText = "Search"
+50150   tlbB.Description = .ToolTipText
+50160   Set tlbB = tlb.Buttons.Add(, "empty", , tbrDefault, "empty")
+50170   tlbB.ToolTipText = mnEdit(3).Caption
 50180   tlbB.Description = .ToolTipText
-50190   Set tlbB = tlb.Buttons.Add(, "empty", , tbrDefault, "empty")
-50200   tlbB.ToolTipText = mnEdit(3).Caption
-50210   tlbB.Description = .ToolTipText
-50220   tlb.Buttons.Add , , , tbrSeparator
-50230   Set tlbB = tlb.Buttons.Add(, "unmark", , tbrDefault, "unmark")
-50240   tlbB.Enabled = False
-50250   tlbB.ToolTipText = mnEdit(1).Caption
-50260   tlbB.Description = .ToolTipText
-50270  End With
-50280  TSWidth = 1200
-50290  With lsv.ColumnHeaders
-50300   .Clear
-50310   .Add , "TranslatedString", "Translated text", 0
-50320   .Add , "EmptyCol", "", 0 ' because of the listview-listsubitem-bold bug
-50330   .Add , "Line", "", 500, lvwColumnRight
-50340   .Add , "TemplateSection", "Section", TSWidth
-50350   .Add , "TemplateKey", "Key", 0
-50360   .Add , "TemplateString", "Template text", 0
-50370  End With
-50380  With lsv.ColumnHeaders
-50390   .item("TranslatedString").Width = (lsv.Width - lsv.ColumnHeaders("Line").Width - TSWidth) / 3
-50400   .item("TemplateKey").Width = .item("TranslatedString").Width
-50410   .item("TemplateString").Width = .item("TranslatedString").Width
-50420  End With
-50430  lsv.ColumnHeaders("TranslatedString").Position = 6
-50440  Set lsv.ColumnHeaderIcons = imlLsv
+50190   tlb.Buttons.Add , , , tbrSeparator
+50200   Set tlbB = tlb.Buttons.Add(, "unmark", , tbrDefault, "unmark")
+50210   tlbB.Enabled = False
+50220   tlbB.ToolTipText = mnEdit(1).Caption
+50230   tlbB.Description = .ToolTipText
+50240  End With
+50250  TSWidth = 1200
+50260  With lsv.ColumnHeaders
+50270   .Clear
+50280   .Add , "TranslatedString", "Translated text", 0
+50290   .Add , "EmptyCol", "", 0 ' because of the listview-listsubitem-bold bug
+50300   .Add , "Line", "", 500, lvwColumnRight
+50310   .Add , "TemplateSection", "Section", TSWidth
+50320   .Add , "TemplateKey", "Key", 0
+50330   .Add , "TemplateString", "Template text", 0
+50340  End With
+50350  With lsv.ColumnHeaders
+50360   .Item("TranslatedString").Width = (lsv.Width - lsv.ColumnHeaders("Line").Width - TSWidth) / 3
+50370   .Item("TemplateKey").Width = .Item("TranslatedString").Width
+50380   .Item("TemplateString").Width = .Item("TranslatedString").Width
+50390  End With
+50400  lsv.ColumnHeaders("TranslatedString").Position = 6
+50410  Set lsv.ColumnHeaderIcons = imlLsv
+50420
+50430  lsv.SortKey = 3
+50440  lsv.ColumnHeaders(lsv.SortKey + 1).Icon = 1
 50450
-50460  lsv.SortKey = 3
-50470  lsv.ColumnHeaders(lsv.SortKey + 1).Icon = 1
-50480
-50490  With stb.Panels
-50500   .Clear
-50510   .Add , "Keys", "Keys:"
-50520   .Add , "EmptyKeys", "Empty Keys: "
-50530   .Add , "Fonts", ""
-50540   .Add , "Charset", ""
-50550   .Add , "Fontsize", ""
-50560   .Add , "Status", ""
-50570  End With
-50580  With stb
-50590   .Panels("Keys").Width = 1500
-50600   .Panels("Keys").ToolTipText = "Count of keys"
-50610   .Panels("EmptyKeys").Width = 1500
-50620   .Panels("EmptyKeys").ToolTipText = "Count of empty keys"
-50630   .Panels("Fonts").Width = 3000
-50640   .Panels("Fonts").ToolTipText = "Font"
-50650   .Panels("Charset").Width = 1500
-50660   .Panels("Charset").ToolTipText = "Charset"
-50670   .Panels("Fontsize").Width = 1000
-50680   .Panels("Fontsize").ToolTipText = "Fontsize"
-50690   .Panels("Status").ToolTipText = "Progress"
-50700  End With
-50710  With xpPgb
-50720   .Scrolling = ccScrollingStandard
-50730   .ShowText = True
-50740   .Color = RGB(&H80, &HFF, &H80)
-50750   .Font.Bold = True
-50760  End With
-50770  With cmbFonts
-50780   .Clear
-50790   For i = 1 To Screen.FontCount
-50800    tStr = Trim$(Screen.Fonts(i))
-50810    If Len(tStr) > 0 Then
-50820     cmbFonts.AddItem tStr
-50830    End If
-50840   Next i
-50850   If .ListCount > 0 Then
-50860     For i = 0 To cmbFonts.ListCount - 1
-50870      If SMF.Count > 0 Then
-50880       If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
-50890        fi = i
-50900       End If
-50910      End If
-50920     Next i
-50930    Else
-50940    .ListIndex = 0
-50950   End If
-50960  End With
-50970  With cmbCharset
-50980   .Clear
-50990   .AddItem "0, Western": .ItemData(.NewIndex) = 0
-51000   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
-51010   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
-51020   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
-51030   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
-51040   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
-51050   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
-51060   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
-51070   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
-51080   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
-51090   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
-51100   .Text = 0
-51110  End With
-51120  If fi >= 0 Then
-51130   cmbFonts.ListIndex = fi
-51140   cmbCharset.Text = SMF(1)(2)
-51150   lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
-51160   lsv.Font.Charset = cmbCharset.Text
-51170   cmbProgramFontsize.Text = SMF(1)(1)
-51180  End If
-51190  With cmbProgramFontsize
-51200   .AddItem "8"
-51210   .AddItem "9"
-51220   .AddItem "10"
-51230   .AddItem "11"
-51240   .AddItem "12"
-51250   .AddItem "14"
-51260   .AddItem "16"
-51270   .AddItem "18"
-51280   .AddItem "20"
-51290   .AddItem "22"
-51300   .AddItem "24"
-51310   .AddItem "26"
-51320   .AddItem "28"
-51330   .AddItem "36"
-51340   .AddItem "48"
-51350   .AddItem "72"
-51360  End With
-51370  For Each ctl In Controls
-51380   If TypeOf ctl Is ComboBox Then
-51390    ComboSetListWidth ctl
-51400   End If
-51410  Next ctl
-51420  cmbCharset.ListIndex = 0
+50460  With stb.Panels
+50470   .Clear
+50480   .Add , "Keys", "Keys:"
+50490   .Add , "EmptyKeys", "Empty Keys: "
+50500   .Add , "Fonts", ""
+50510   .Add , "Charset", ""
+50520   .Add , "Fontsize", ""
+50530   .Add , "Status", ""
+50540  End With
+50550  With stb
+50560   .Panels("Keys").Width = 1500
+50570   .Panels("Keys").ToolTipText = "Count of keys"
+50580   .Panels("EmptyKeys").Width = 1500
+50590   .Panels("EmptyKeys").ToolTipText = "Count of empty keys"
+50600   .Panels("Fonts").Width = 3000
+50610   .Panels("Fonts").ToolTipText = "Font"
+50620   .Panels("Charset").Width = 1500
+50630   .Panels("Charset").ToolTipText = "Charset"
+50640   .Panels("Fontsize").Width = 1000
+50650   .Panels("Fontsize").ToolTipText = "Fontsize"
+50660   .Panels("Status").ToolTipText = "Progress"
+50670  End With
+50680  With xpPgb
+50690   .Scrolling = ccScrollingStandard
+50700   .ShowText = True
+50710   .Color = RGB(&H80, &HFF, &H80)
+50720   .Font.Bold = True
+50730  End With
+50740  With cmbFonts
+50750   .Clear
+50760   For i = 1 To Screen.FontCount
+50770    tstr = Trim$(Screen.Fonts(i))
+50780    If Len(tstr) > 0 Then
+50790     cmbFonts.AddItem tstr
+50800    End If
+50810   Next i
+50820   If .ListCount > 0 Then
+50830     For i = 0 To cmbFonts.ListCount - 1
+50840      If SMF.Count > 0 Then
+50850       If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
+50860        fi = i
+50870       End If
+50880      End If
+50890     Next i
+50900    Else
+50910    .ListIndex = 0
+50920   End If
+50930  End With
+50940  With cmbCharset
+50950   .Clear
+50960   .AddItem "0, Western": .ItemData(.NewIndex) = 0
+50970   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
+50980   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
+50990   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
+51000   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
+51010   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
+51020   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
+51030   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
+51040   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
+51050   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
+51060   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
+51070   .Text = 0
+51080  End With
+51090  If fi >= 0 Then
+51100   cmbFonts.ListIndex = fi
+51110   cmbCharset.Text = SMF(1)(2)
+51120   lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
+51130   lsv.Font.Charset = cmbCharset.Text
+51140   cmbProgramFontsize.Text = SMF(1)(1)
+51150  End If
+51160  With cmbProgramFontsize
+51170   .AddItem "8"
+51180   .AddItem "9"
+51190   .AddItem "10"
+51200   .AddItem "11"
+51210   .AddItem "12"
+51220   .AddItem "14"
+51230   .AddItem "16"
+51240   .AddItem "18"
+51250   .AddItem "20"
+51260   .AddItem "22"
+51270   .AddItem "24"
+51280   .AddItem "26"
+51290   .AddItem "28"
+51300   .AddItem "36"
+51310   .AddItem "48"
+51320   .AddItem "72"
+51330  End With
+51340  For Each ctl In Controls
+51350   If TypeOf ctl Is ComboBox Then
+51360    ComboSetListWidth ctl
+51370   End If
+51380  Next ctl
+51390  cmbCharset.ListIndex = 0
+51400
+51410  SetOptimalComboboxHeigth cmbCharset, Me
+51420  SetOptimalComboboxHeigth cmbProgramFontsize, Me
 51430
-51440  SetOptimalComboboxHeigth cmbCharset, Me
-51450  SetOptimalComboboxHeigth cmbProgramFontsize, Me
-51460
-51470  SetPanelControl cmbFonts, stb, "Fonts", True
-51480  SetPanelControl cmbCharset, stb, "Charset", True
-51490  SetPanelControl cmbProgramFontsize, stb, "Fontsize", True
-51500  SetPanelControl xpPgb, stb, "Status", True
-51510
-51520  Set imgPaypal.Picture = LoadResPicture(1002, vbResBitmap)
-51530  ChangedListitem = False
-51540  SaveFilename = ""
-51550  Timer1.Enabled = True
-51560 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-51570 Exit Sub
+51440  SetPanelControl cmbFonts, stb, "Fonts", True
+51450  SetPanelControl cmbCharset, stb, "Charset", True
+51460  SetPanelControl cmbProgramFontsize, stb, "Fontsize", True
+51470  SetPanelControl xpPgb, stb, "Status", True
+51480
+51490  'Set imgPaypal.Picture = LoadResPicture(1002, vbResBitmap)
+51500  ChangedListitem = False
+51510  SaveFilename = ""
+51520  Timer1.Enabled = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-51591 Select Case ErrPtnr.OnError("frmMain", "InitForm")
-      Case 0: Resume
-51610 Case 1: Resume Next
-51620 Case 2: Exit Sub
-51630 Case 3: End
-51640 End Select
-51650 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("frmMain", "InitForm")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub OpenLanguageFile()
@@ -1181,9 +1201,9 @@ On Error GoTo ErrPtnr_OnError
   "Languages-INI-Files (*.ini)|*.ini|All Files (*.*)|*.*", "*.ini", App.Path, _
   "Open translated file", OFN_PATHMUSTEXIST, Me.hwnd) > 0 Then
 50050   If Files.Count > 0 Then
-50060    If Dir(Files.item(1)) <> "" And Len(Trim$(Files.item(1))) > 0 Then
-50070     ShowLanguageIniFile Files.item(1)
-50080     SaveFilename = Files.item(1)
+50060    If Dir(Files.Item(1)) <> "" And Len(Trim$(Files.Item(1))) > 0 Then
+50070     ShowLanguageIniFile Files.Item(1)
+50080     SaveFilename = Files.Item(1)
 50090     AddRecentfile SaveFilename
 50100     ShowRecentFiles
 50110    End If
@@ -1212,9 +1232,9 @@ On Error GoTo ErrPtnr_OnError
   "Languages-INI-Files (*.ini)|*.ini|All Files (*.*)|*.*", "*.ini", App.Path, _
   "Open template file", OFN_PATHMUSTEXIST, Me.hwnd) > 0 Then
 50050   If Files.Count > 0 Then
-50060    If Dir(Files.item(1)) <> "" And Len(Trim$(Files.item(1))) > 0 Then
-50070     If CheckTemplate(Files.item(1)) = True Then
-50080      ReadTemplate Files.item(1)
+50060    If Dir(Files.Item(1)) <> "" And Len(Trim$(Files.Item(1))) > 0 Then
+50070     If CheckTemplate(Files.Item(1)) = True Then
+50080      ReadTemplate Files.Item(1)
 50090     End If
 50100    End If
 50110   End If
@@ -1238,7 +1258,7 @@ Private Sub SaveLanguageFile(Optional SaveAs As Boolean = False)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Files As Collection, Filename As String, c As Long, aw As Long, ini As clsINI, _
-  i As Long
+  i As Long, res As Long
 50030  c = GetCountEmptyValues
 50040  If c > 0 Then
 50050   If c = 1 Then
@@ -1251,44 +1271,45 @@ On Error GoTo ErrPtnr_OnError
 50120   End If
 50130  End If
 50140  If Len(SaveFilename) = 0 Or SaveAs = True Then
-50150   If SaveFileDialog(Filename, , "Languages-INI-Files (*.ini)|*.ini", "*.ini", App.Path, _
-   App.EXEName, OFN_OVERWRITEPROMPT + OFN_PATHMUSTEXIST, Me.hwnd) > 0 Then
-50170    If Len(Trim$(Filename)) > 0 Then
-50180     SaveFilename = Filename
-50190    End If
-50200   End If
-50210  End If
-50220  If Len(SaveFilename) > 0 Then
-50230   mnFileMain.Enabled = False
-50240   mnEditMain.Enabled = False
-50250   mnHelpMain.Enabled = False
-50260   lsv.Enabled = False
-50270   tlb.Enabled = False
-50280   Screen.MousePointer = vbHourglass
-50290   Set ini = New clsINI
-50300   ini.Filename = SaveFilename
-50310   ini.CreateIniFile
-50320   With xpPgb
-50330    .Visible = True
-50340    .Min = 0: .Max = lsv.ListItems.Count
-50350    For i = 1 To lsv.ListItems.Count
-50360     With lsv.ListItems(i)
-50370      ini.SaveKey .Text, .ListSubItems(4).Text, .ListSubItems(3).Text
-50380     End With
-50390     .Value = i
-50400    Next i
-50410    .Value = 0
-50420    .Visible = False
-50430   End With
-50440   ChangedListitem = False
-50450   Caption = "Transtool"
-50460   Screen.MousePointer = vbNormal
-50470   mnFileMain.Enabled = True
-50480   mnEditMain.Enabled = True
-50490   mnHelpMain.Enabled = True
-50500   lsv.Enabled = True
-50510   tlb.Enabled = True
-50520  End If
+50150   res = SaveFileDialog(Filename, , "Languages-INI-Files (*.ini)|*.ini", "*.ini", App.Path, _
+   App.EXEName, OFN_OVERWRITEPROMPT + OFN_PATHMUSTEXIST, Me.hwnd)
+50170   If res > 0 Then
+50180    If Len(Trim$(Filename)) > 0 Then
+50190     SaveFilename = Filename
+50200    End If
+50210   End If
+50220  End If
+50230  If res > 0 Then
+50240   mnFileMain.Enabled = False
+50250   mnEditMain.Enabled = False
+50260   mnHelpMain.Enabled = False
+50270   lsv.Enabled = False
+50280   tlb.Enabled = False
+50290   Screen.MousePointer = vbHourglass
+50300   Set ini = New clsINI
+50310   ini.Filename = SaveFilename
+50320   ini.CreateIniFile
+50330   With xpPgb
+50340    .Visible = True
+50350    .Min = 0: .Max = lsv.ListItems.Count
+50360    For i = 1 To lsv.ListItems.Count
+50370     With lsv.ListItems(i)
+50380      ini.SaveKey .Text, .ListSubItems(4).Text, .ListSubItems(3).Text
+50390     End With
+50400     .Value = i
+50410    Next i
+50420    .Value = 0
+50430    .Visible = False
+50440   End With
+50450   ChangedListitem = False
+50460   Caption = "Transtool"
+50470   Screen.MousePointer = vbNormal
+50480   mnFileMain.Enabled = True
+50490   mnEditMain.Enabled = True
+50500   mnHelpMain.Enabled = True
+50510   lsv.Enabled = True
+50520   tlb.Enabled = True
+50530  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1314,7 +1335,7 @@ On Error GoTo ErrPtnr_OnError
 50070  If secs.Count > 0 Then
 50080   c = 0
 50090   For i = 1 To secs.Count
-50100    Set keys = ini.GetAllKeysFromSection(secs.item(i), , , True)
+50100    Set keys = ini.GetAllKeysFromSection(secs.Item(i), , , True)
 50110    c = c + keys.Count
 50120   Next i
 50130   With xpPgb
@@ -1322,14 +1343,14 @@ On Error GoTo ErrPtnr_OnError
 50150    .Visible = True
 50160    c = 0
 50170    For i = 1 To secs.Count
-50180     Set keys = ini.GetAllKeysFromSection(secs.item(i), , , True)
+50180     Set keys = ini.GetAllKeysFromSection(secs.Item(i), , , True)
 50190     For j = 1 To keys.Count
 50200      c = c + 1
 50210      .Value = c
 50220      For l = 1 To lsv.ListItems.Count
-50230       If UCase$(lsv.ListItems(l).ListSubItems(3)) = UCase$(secs.item(i)) And _
-       UCase$(lsv.ListItems(l).ListSubItems(4)) = UCase$(keys.item(j)(0)) Then
-50250         lsv.ListItems(l).Text = keys.item(j)(1)
+50230       If UCase$(lsv.ListItems(l).ListSubItems(3)) = UCase$(secs.Item(i)) And _
+       UCase$(lsv.ListItems(l).ListSubItems(4)) = UCase$(keys.Item(j)(0)) Then
+50250         lsv.ListItems(l).Text = keys.Item(j)(1)
 50260         Exit For
 50270       End If
 50280      Next l
@@ -1476,9 +1497,9 @@ On Error GoTo ErrPtnr_OnError
 50150   .Width = Me.ScaleWidth
 50160  End With
 50170  With lsv.ColumnHeaders
-50180   .item("TranslatedString").Width = (lsv.Width - lsv.ColumnHeaders("Line").Width - TSWidth) / 3 - 120
-50190   .item("TemplateKey").Width = .item("TranslatedString").Width
-50200   .item("TemplateString").Width = .item("TranslatedString").Width
+50180   .Item("TranslatedString").Width = (lsv.Width - lsv.ColumnHeaders("Line").Width - TSWidth) / 3 - 120
+50190   .Item("TemplateKey").Width = .Item("TranslatedString").Width
+50200   .Item("TemplateString").Width = .Item("TranslatedString").Width
 50210  End With
 50220  With stb
 50230   tL = Me.ScaleWidth - .Panels("Keys").Width - .Panels("EmptyKeys").Width - _
@@ -1517,7 +1538,7 @@ On Error GoTo ErrPtnr_OnError
 50090    If i <= col.Count Then
 50100     SplitPath col(i), , Path, , File
 50110     mnFile(mnFileRecentFilesStart + i - 1).Caption = "&" & i & " " & _
-     ShortenPath(Me.hDC, CompletePath(Path) & File, 200)
+     ShortenPath(Me.hdc, CompletePath(Path) & File, 200)
 50130     mnFile(mnFileRecentFilesStart + i - 1).Tag = col(i)
 50140     mnFile(mnFileRecentFilesStart + i - 1).Visible = True
 50150     If mnFile(mnFile.Count - 2).Visible = False Then

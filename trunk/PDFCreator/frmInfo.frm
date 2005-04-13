@@ -14,6 +14,30 @@ Begin VB.Form frmInfo
    ScaleWidth      =   6000
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.CommandButton cmdCancel 
+      Cancel          =   -1  'True
+      Caption         =   "Cancel"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   5
+      Top             =   120
+      Visible         =   0   'False
+      Width           =   1095
+   End
+   Begin VB.PictureBox picPDF 
+      Appearance      =   0  '2D
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'Kein
+      ForeColor       =   &H80000008&
+      Height          =   1035
+      Left            =   345
+      Picture         =   "frmInfo.frx":6B53
+      ScaleHeight     =   1035
+      ScaleWidth      =   2085
+      TabIndex        =   2
+      Top             =   990
+      Width           =   2085
+   End
    Begin VB.PictureBox picCredits 
       Appearance      =   0  '2D
       BackColor       =   &H80000005&
@@ -31,7 +55,7 @@ Begin VB.Form frmInfo
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":7A7CC
+         Picture         =   "frmInfo.frx":7D1A
          Style           =   1  'Grafisch
          TabIndex        =   0
          Top             =   4080
@@ -40,7 +64,7 @@ Begin VB.Form frmInfo
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":7AB31
+         Picture         =   "frmInfo.frx":807F
          Top             =   4020
          Width           =   4380
       End
@@ -52,27 +76,13 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   16000
       Left            =   1470
-      Picture         =   "frmInfo.frx":82A0F
+      Picture         =   "frmInfo.frx":89ED
       ScaleHeight     =   16005
       ScaleWidth      =   4350
       TabIndex        =   4
       Top             =   1260
       Visible         =   0   'False
       Width           =   4350
-   End
-   Begin VB.PictureBox picPDF 
-      Appearance      =   0  '2D
-      BackColor       =   &H80000005&
-      BorderStyle     =   0  'Kein
-      ForeColor       =   &H80000008&
-      Height          =   1035
-      Left            =   345
-      Picture         =   "frmInfo.frx":1271D9
-      ScaleHeight     =   1035
-      ScaleWidth      =   2085
-      TabIndex        =   2
-      Top             =   990
-      Width           =   2085
    End
    Begin VB.PictureBox picTitle 
       Appearance      =   0  '2D
@@ -82,7 +92,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   375
       Left            =   2310
-      Picture         =   "frmInfo.frx":12E34F
+      Picture         =   "frmInfo.frx":EA94
       ScaleHeight     =   25
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   127
@@ -93,7 +103,7 @@ Begin VB.Form frmInfo
    Begin VB.Image imgClose 
       Height          =   600
       Left            =   1575
-      Picture         =   "frmInfo.frx":130791
+      Picture         =   "frmInfo.frx":F15C
       Top             =   210
       Width           =   600
    End
@@ -128,10 +138,10 @@ On Error GoTo ErrPtnr_OnError
 50110     lngSecondCurrX = picCredits.ScaleHeight
 50120   End If
 50130
-50140   Call TransBlt(picCredits.hDC, 0, 0, picForeground.ScaleWidth, lngSecondCurrX, picForeground.hDC, 0, lngCurrentX, vbBlack)
+50140   Call TransBlt(picCredits.hdc, 0, 0, picForeground.ScaleWidth, lngSecondCurrX, picForeground.hdc, 0, lngCurrentX, vbBlack)
 50150
 50160   If lngSecondCurrX < picCredits.ScaleHeight Then
-50170    Call TransBlt(picCredits.hDC, 0, lngSecondCurrX, picForeground.ScaleWidth, picCredits.ScaleHeight - lngSecondCurrX, picForeground.hDC, 0, 0, vbBlack)
+50170    Call TransBlt(picCredits.hdc, 0, lngSecondCurrX, picForeground.ScaleWidth, picCredits.ScaleHeight - lngSecondCurrX, picForeground.hdc, 0, 0, vbBlack)
 50180    'DoEvents
 50190   End If
 50200
@@ -142,6 +152,23 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmInfo", "AnimateScroller")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmdCancel_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "cmdCancel_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -245,7 +272,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub Form_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub Form_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -297,7 +324,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picCredits_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picCredits_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -315,7 +342,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picForeground_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picForeground_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -333,7 +360,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picPDF_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picPDF_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -351,7 +378,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub picTitle_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub picTitle_MouseDown(Button As Integer, Shift As Integer, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---

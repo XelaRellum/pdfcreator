@@ -23,6 +23,7 @@ Module=modShell; ..\PDFCreator\modShell.bas
 Module=modLanguage; ..\Common\modLanguages.bas
 Form=..\Common\PDFCreator_ErrPtnrDialog.frm
 Form=frmMain.frm
+Module=modCollAddSorted; ..\Common\modCollAddSorted.bas
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""

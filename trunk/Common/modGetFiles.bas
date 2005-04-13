@@ -3,7 +3,7 @@ Option Explicit
 
 Public Function FindFiles(ByVal Path As String, ByRef Files As Collection, _
  Optional ByVal Pattern As String = "*.*", Optional ByVal Attributes As VbFileAttribute = vbNormal, _
- Optional ByVal Recursive As Boolean = True) As Long
+ Optional ByVal Recursive As Boolean = True, Optional OnlyNotInUse As Boolean = False) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -40,13 +40,18 @@ On Error GoTo ErrPtnr_OnError
 50310     If (FileAttr And Attributes) = Attributes Then
 50320      If LCase$(Filename) Like Pattern Then
 50330       FindFiles = FindFiles + 1
-50340       Files.Add Path & "|" & Path & Filename & "|" & FileLen(Path & Filename) & "|" & FileDateTime(Path & Filename)
-50350 '     tColl.Add Path & "|" & Path & tFilename & "|" & FileLen(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
-50360      End If
-50370     End If
-50380   End If
-50390  Loop While FindNextFileA(hFind, WFD)
-50400  FindClose hFind
+50340       If OnlyNotInUse = False Then
+50350         Files.Add Path & "|" & Path & Filename & "|" & FileLen(Path & Filename) & "|" & FileDateTime(Path & Filename)
+50360        Else
+50370         If FileInUse(Path & Filename) = False Then
+50380          Files.Add Path & "|" & Path & Filename & "|" & FileLen(Path & Filename) & "|" & FileDateTime(Path & Filename)
+50390         End If
+50400       End If
+50410      End If
+50420     End If
+50430   End If
+50440  Loop While FindNextFileA(hFind, WFD)
+50450  FindClose hFind
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

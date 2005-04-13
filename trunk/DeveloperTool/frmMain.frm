@@ -5,7 +5,7 @@ Begin VB.Form frmMain
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
    ClientLeft      =   165
-   ClientTop       =   735
+   ClientTop       =   855
    ClientWidth     =   12930
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -206,6 +206,16 @@ Begin VB.Form frmMain
       Top             =   420
       Width           =   3315
       Begin VB.CommandButton cmdTestpage 
+         Caption         =   "Create modTestpage.bas"
+         Enabled         =   0   'False
+         Height          =   495
+         Index           =   4
+         Left            =   1680
+         TabIndex        =   41
+         Top             =   1050
+         Width           =   1575
+      End
+      Begin VB.CommandButton cmdTestpage 
          Caption         =   "Copy Testpage to Clipboard"
          Enabled         =   0   'False
          Height          =   495
@@ -249,6 +259,7 @@ Begin VB.Form frmMain
          Height          =   375
          Left            =   105
          MultiLine       =   -1  'True
+         ScrollBars      =   3  'Beides
          TabIndex        =   10
          Top             =   240
          Width           =   3105
@@ -503,7 +514,7 @@ Private EditItem As Boolean, TempFile1 As String, _
  ChangeStamppage As Boolean, LastIncFile As String
 
 Public Function AddLanguagesItem(Str1 As String, Str2 As String, Str3 As String, Str4 As String) As Boolean
- Dim item As ListItem, i As Long
+ Dim Item As ListItem, i As Long
  AddLanguagesItem = True
 
  If EditItem = False Then
@@ -516,25 +527,25 @@ Public Function AddLanguagesItem(Str1 As String, Str2 As String, Str3 As String,
    Next i
    For i = lsvLanguages.ListItems.Count To 1 Step -1
     If UCase$(Str1) = UCase$(lsvLanguages.ListItems(i).Text) Then
-     Set item = lsvLanguages.ListItems.Add(i + 1, , Str1)
+     Set Item = lsvLanguages.ListItems.Add(i + 1, , Str1)
      Exit For
     End If
    Next i
    If i = 0 Then
-    Set item = lsvLanguages.ListItems.Add(, , Str1)
+    Set Item = lsvLanguages.ListItems.Add(, , Str1)
    End If
   Else
-   Set item = lsvLanguages.SelectedItem
-   item.Text = Str1
+   Set Item = lsvLanguages.SelectedItem
+   Item.Text = Str1
  End If
- item.SubItems(1) = Str2
- item.SubItems(2) = Str3
- item.SubItems(3) = Str4
+ Item.SubItems(1) = Str2
+ Item.SubItems(2) = Str3
+ Item.SubItems(3) = Str4
  ChangeLanguages = True
 End Function
 
 Public Function AddOptionsItem(Str1 As String, Str2 As String, Str3 As String, Str4 As String, Str5 As String, Str6 As String, Comment As String) As Boolean
- Dim item As ListItem, i As Long
+ Dim Item As ListItem, i As Long
  AddOptionsItem = True
  If EditItem = False Then
    For i = 1 To lsvOptions.ListItems.Count
@@ -553,23 +564,23 @@ Public Function AddOptionsItem(Str1 As String, Str2 As String, Str3 As String, S
    Next i
    For i = lsvOptions.ListItems.Count To 1 Step -1
     If UCase$(Comment) = UCase$(lsvOptions.ListItems(i).Text) Then
-     Set item = lsvOptions.ListItems.Add(i + 1, , Comment)
+     Set Item = lsvOptions.ListItems.Add(i + 1, , Comment)
      Exit For
     End If
    Next i
    If i = 0 Then
-    Set item = lsvOptions.ListItems.Add(, , Comment)
+    Set Item = lsvOptions.ListItems.Add(, , Comment)
    End If
   Else
-   Set item = lsvOptions.SelectedItem
-   item.Text = Comment
+   Set Item = lsvOptions.SelectedItem
+   Item.Text = Comment
  End If
- item.SubItems(1) = Str1
- item.SubItems(2) = Str2
- item.SubItems(3) = Str3
- item.SubItems(4) = Str4
- item.SubItems(5) = Str5
- item.SubItems(6) = Str6
+ Item.SubItems(1) = Str1
+ Item.SubItems(2) = Str2
+ Item.SubItems(3) = Str3
+ Item.SubItems(4) = Str4
+ Item.SubItems(5) = Str5
+ Item.SubItems(6) = Str6
  ChangeOptions = True
 End Function
 
@@ -648,7 +659,7 @@ ErrorHandler:
 End Sub
 
 Private Sub cmdLanguages_Click(Index As Integer)
- Dim aw As Long, tStr As String, i As Long
+ Dim aw As Long, tstr As String, i As Long
  Select Case Index
   Case 0: 'Add
    EditItem = False
@@ -659,11 +670,11 @@ Private Sub cmdLanguages_Click(Index As Integer)
       .cmbSection.Text = lsvLanguages.SelectedItem.Text
     End If
     If lsvLanguages.ListItems.Count > 0 Then
-     tStr = UCase$(lsvLanguages.ListItems(1).Text)
+     tstr = UCase$(lsvLanguages.ListItems(1).Text)
      .cmbSection.AddItem lsvLanguages.ListItems(1).Text
      For i = 2 To lsvLanguages.ListItems.Count
-      If UCase$(lsvLanguages.ListItems(i).Text) <> tStr Then
-       tStr = UCase$(lsvLanguages.ListItems(i).Text)
+      If UCase$(lsvLanguages.ListItems(i).Text) <> tstr Then
+       tstr = UCase$(lsvLanguages.ListItems(i).Text)
        .cmbSection.AddItem lsvLanguages.ListItems(i).Text
       End If
      Next i
@@ -721,7 +732,7 @@ Private Sub cmdLanguages_Click(Index As Integer)
 End Sub
 
 Private Sub cmdOptions_Click(Index As Integer)
- Dim aw As Long, tStr As String, i As Long
+ Dim aw As Long, tstr As String, i As Long
  
  On Error GoTo ErrorHandler
  
@@ -735,11 +746,11 @@ Private Sub cmdOptions_Click(Index As Integer)
       .cmbComment.Text = lsvOptions.SelectedItem.Text
     End If
     If lsvOptions.ListItems.Count > 0 Then
-     tStr = UCase$(lsvOptions.ListItems(1).Text)
+     tstr = UCase$(lsvOptions.ListItems(1).Text)
      .cmbComment.AddItem lsvOptions.ListItems(1).Text
      For i = 2 To lsvOptions.ListItems.Count
-      If UCase$(lsvOptions.ListItems(i).Text) <> tStr Then
-       tStr = UCase$(lsvOptions.ListItems(i).Text)
+      If UCase$(lsvOptions.ListItems(i).Text) <> tstr Then
+       tstr = UCase$(lsvOptions.ListItems(i).Text)
        .cmbComment.AddItem lsvOptions.ListItems(i).Text
       End If
      Next i
@@ -886,6 +897,10 @@ Private Sub cmdTestpage_Click(Index As Integer)
     .ShowOpen
     LoadFileInTextbox .Filename, txtTestpage
     cmdTestpage(1).Enabled = True
+    If Len(txtTestpage.Text) > 0 Then
+     cmdTestpage(4).Enabled = True
+'     cmdTestpage(5).Enabled = True
+    End If
    End With
   Case 1 ' Save
    With cdlg
@@ -910,6 +925,28 @@ Private Sub cmdTestpage_Click(Index As Integer)
   Case 3 ' Clipboard
    'Replace 0A0D with 0D and copy testpage to clipboard
    Clipboard.SetText Replace$(txtTestpage.Text, Chr$(&HD), ""), vbCFText
+  Case 4 ' Create modTestpage.bas
+   With cdlg
+    .CancelError = True
+    .Filename = "modTestpage.bas"
+    .Filter = "Postscript Files (*.bas)|*.bas"
+    .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
+    .InitDir = App.Path & "\Testpage"
+    .ShowSave
+    CreateModTestpage .Filename, txtTestpage.Text
+   End With
+'  Case 5 ' Save compressed
+'   With cdlg
+'    .Filename = "PDFCreator-compressed.ps"
+'    .Filter = "Postscript Files (*.ps)|*.ps|(*.txt)|*.txt"
+'    .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
+'    .InitDir = App.Path & "\Testpage"
+'    .ShowSave
+'    Dim b() As Byte
+'    b = StrConv(txtTestpage.Text, vbFromUnicode)
+'    Compress_Huffman_Dynamic b
+'    SaveCompressedFile .Filename, b
+'   End With
  End Select
  Exit Sub
 ErrorHandler:
@@ -955,7 +992,7 @@ End Function
 
 Private Sub CreateModLanguages()
  Dim fn As Long, ini As New clsINI, Secs As Collection, keys As Collection, _
-  i As Long, j As Long, tStr As String, Filename As String
+  i As Long, j As Long, tstr As String, Filename As String
 
  fn = FreeFile
 
@@ -974,11 +1011,11 @@ Private Sub CreateModLanguages()
  ini.Filename = App.Path & "\..\PDFCreator\Languages\english.ini"
  Set Secs = ini.GetAllSectionsFromInifile(, True)
  For i = 1 To Secs.Count
-  ini.Section = Secs.item(i)
+  ini.Section = Secs.Item(i)
   If UCase$(Secs(i)) <> "SETUP" Then
    Set keys = ini.GetAllKeysFromSection(, , , True)
    For j = 1 To keys.Count
-    Print #1, " " & Secs.item(i) & keys.item(j)(0) & " As String"
+    Print #1, " " & Secs.Item(i) & keys.Item(j)(0) & " As String"
    Next j
    If i < Secs.Count Then
     Print #fn, ""
@@ -994,23 +1031,23 @@ Private Sub CreateModLanguages()
  Print #fn, " InitLanguagesStrings"
  For i = 1 To Secs.Count
   If UCase$(Secs(i)) <> "SETUP" Then
-   Print #fn, " Load" & Secs.item(i) & "Strings Languagefile"
+   Print #fn, " Load" & Secs.Item(i) & "Strings Languagefile"
   End If
  Next i
  Print #fn, "End Sub"
  Print #fn, ""
  For i = 1 To Secs.Count
   If UCase$(Secs(i)) <> "SETUP" Then
-   Print #fn, "Private Sub Load" & Secs.item(i) & "Strings(ByVal Languagefile As String)"
+   Print #fn, "Private Sub Load" & Secs.Item(i) & "Strings(ByVal Languagefile As String)"
    Print #fn, " Dim hLang As New clsHash"
 
-   Print #fn, " ReadINISection Languagefile, """ & Secs.item(i) & """, hLang"
+   Print #fn, " ReadINISection Languagefile, """ & Secs.Item(i) & """, hLang"
    Print #fn, " With LanguageStrings"
 
-   ini.Section = Secs.item(i)
+   ini.Section = Secs.Item(i)
    Set keys = ini.GetAllKeysFromSection(, , , True)
    For j = 1 To keys.Count
-    Print #fn, "  ." & Secs.item(i) & keys.item(j)(0) & " = Replace$(hLang.Retrieve(""" & keys.item(j)(0) & """, ." & Secs.item(i) & keys.item(j)(0) & "),""/n"",vbCrLf)"
+    Print #fn, "  ." & Secs.Item(i) & keys.Item(j)(0) & " = Replace$(hLang.Retrieve(""" & keys.Item(j)(0) & """, ." & Secs.Item(i) & keys.Item(j)(0) & "),""/n"",vbCrLf)"
    Next j
    Print #fn, " End With"
 
@@ -1025,10 +1062,10 @@ Private Sub CreateModLanguages()
  Print #fn, " With LanguageStrings"
  For i = 1 To Secs.Count
   If UCase$(Secs(i)) <> "SETUP" Then
-   ini.Section = Secs.item(i)
+   ini.Section = Secs.Item(i)
    Set keys = ini.GetAllKeysFromSection(, , , True)
    For j = 1 To keys.Count
-    Print #fn, "  ." & Secs.item(i) & keys.item(j)(0) & " = """ & keys.item(j)(1) & """"
+    Print #fn, "  ." & Secs.Item(i) & keys.Item(j)(0) & " = """ & keys.Item(j)(1) & """"
    Next j
    If i < Secs.Count Then
     Print #fn, ""
@@ -1509,8 +1546,8 @@ Private Function GerCount() As Long
 End Function
 
 Private Sub LoadOptions(Filename As String)
- Dim fn As Long, tStr As String, tStrf() As String, i As Long, _
-  item As ListItem, j As Long, c As Long, aw As Long, Comment As String, flag As Long
+ Dim fn As Long, tstr As String, tStrf() As String, i As Long, _
+  Item As ListItem, j As Long, c As Long, aw As Long, Comment As String, flag As Long
  c = 0: flag = 0
  fn = FreeFile
  lsvOptions.ListItems.Clear
@@ -1518,17 +1555,17 @@ Private Sub LoadOptions(Filename As String)
  Do While Not EOF(fn)
   aw = vbOK
   c = c + 1
-  Line Input #fn, tStr
-  tStr = Trim$(tStr)
-  If Len(tStr) > 0 Then
-   If Mid(tStr, 1, 1) <> "'" Then
-     If InStr(tStr, "|") > 0 Then
-       tStrf = Split(tStr, "|")
-       Set item = lsvOptions.ListItems.Add(, , Comment)
+  Line Input #fn, tstr
+  tstr = Trim$(tstr)
+  If Len(tstr) > 0 Then
+   If Mid(tstr, 1, 1) <> "'" Then
+     If InStr(tstr, "|") > 0 Then
+       tStrf = Split(tstr, "|")
+       Set Item = lsvOptions.ListItems.Add(, , Comment)
        For i = LBound(tStrf) To UBound(tStrf)
         If i = 2 Then
           If CheckType(tStrf(i)) = True Then
-            item.SubItems(i + 1) = tStrf(i)
+            Item.SubItems(i + 1) = tStrf(i)
            Else
             If flag < 1 Then
              aw = MsgBox("Is this a old 'options.txt'?", vbQuestion Or vbYesNo)
@@ -1541,13 +1578,13 @@ Private Sub LoadOptions(Filename As String)
             If flag = 1 Then
              Select Case UCase$(tStrf(i))
               Case "B":
-               item.SubItems(i + 1) = "Boolean"
+               Item.SubItems(i + 1) = "Boolean"
               Case "D":
-               item.SubItems(i + 1) = "Double"
+               Item.SubItems(i + 1) = "Double"
               Case "L":
-               item.SubItems(i + 1) = "Long"
+               Item.SubItems(i + 1) = "Long"
               Case "S":
-               item.SubItems(i + 1) = "String"
+               Item.SubItems(i + 1) = "String"
               Case Else:
                aw = MsgBox("Typeerror (unknown type '" & tStrf(i) & "') in line " & c, vbExclamation Or vbOKCancel)
              End Select
@@ -1562,17 +1599,17 @@ Private Sub LoadOptions(Filename As String)
           If Len(tStrf(i)) = 0 Then
            tStrf(i) = " "
           End If
-          item.SubItems(i + 1) = tStrf(i)
+          Item.SubItems(i + 1) = tStrf(i)
         End If
        Next i
       Else
-       Set item = lsvOptions.ListItems.Add(, , Comment)
-       item.SubItems(1) = tStr
+       Set Item = lsvOptions.ListItems.Add(, , Comment)
+       Item.SubItems(1) = tstr
      End If
     Else
-     i = InStr(tStr, "<"): j = InStr(tStr, ">")
+     i = InStr(tstr, "<"): j = InStr(tstr, ">")
      If i > 0 And j > 0 And j > i Then
-      Comment = Mid(tStr, i + 1, j - i - 1)
+      Comment = Mid(tstr, i + 1, j - i - 1)
      End If
    End If
   End If
@@ -1596,7 +1633,7 @@ Private Sub LoadFileInTextbox(Filename As String, txt As TextBox)
  Dim fn As Long
  fn = FreeFile
  Open Filename For Input As #fn
- txt.Text = Input(LOF(fn), #fn)
+ Call SendMessage(txt.hwnd, WM_SETTEXT, 0&, ByVal CStr(Input(LOF(fn), #fn)))
  Close #fn
 End Sub
 
@@ -1617,7 +1654,7 @@ Private Sub lsvOptions_DblClick()
  ShowOption
 End Sub
 
-Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
  With lsvOptions
   If .FullRowSelect Then
    .Refresh
@@ -1631,7 +1668,7 @@ End Sub
 
 Private Sub ReadTemplate()
  Dim ini As clsINI, Secs As Collection, keys As Collection, _
-  i As Long, j As Long, k As Long, c As Long, item As ListItem
+  i As Long, j As Long, k As Long, c As Long, Item As ListItem
  Set ini = New clsINI
  ini.Filename = App.Path & "\..\PDFCreator\Languages\english.ini"
  If ini.CheckIniFile = False Then
@@ -1642,39 +1679,39 @@ Private Sub ReadTemplate()
  For i = 1 To Secs.Count - 1
   c = 1
   For j = i + 1 To Secs.Count
-   If Secs.item(i) = Secs.item(j) Then
+   If Secs.Item(i) = Secs.Item(j) Then
     c = c + 1
    End If
   Next j
   If c > 1 Then
-   MsgBox "Error: There are " & c & " Sections '" & Secs.item(i) & "'!", vbExclamation
+   MsgBox "Error: There are " & c & " Sections '" & Secs.Item(i) & "'!", vbExclamation
   End If
  Next i
 
  lsvLanguages.ListItems.Clear
  For i = 1 To Secs.Count
-  Set keys = ini.GetAllKeysFromSection(Secs.item(i), , , True)
+  Set keys = ini.GetAllKeysFromSection(Secs.Item(i), , , True)
   For j = 1 To keys.Count - 1
    c = 1
    For k = j + 1 To keys.Count
-    If CStr(keys.item(j)(0)) = CStr(keys.item(k)(0)) Then
+    If CStr(keys.Item(j)(0)) = CStr(keys.Item(k)(0)) Then
      c = c + 1
     End If
    Next k
    If c > 1 Then
-    MsgBox "Error: There are " & c & " Keys '" & keys.item(j)(0) & "' in section '" & Secs.item(i) & "'!", vbExclamation
+    MsgBox "Error: There are " & c & " Keys '" & keys.Item(j)(0) & "' in section '" & Secs.Item(i) & "'!", vbExclamation
    End If
   Next j
   For j = 1 To keys.Count
-   Set item = lsvLanguages.ListItems.Add(, , Secs.item(i))
-   item.SubItems(1) = keys.item(j)(0)
-   item.SubItems(2) = keys.item(j)(1)
+   Set Item = lsvLanguages.ListItems.Add(, , Secs.Item(i))
+   Item.SubItems(1) = keys.Item(j)(0)
+   Item.SubItems(2) = keys.Item(j)(1)
   Next j
  Next i
  ini.Filename = App.Path & "\..\PDFCreator\Languages\german.ini"
  For i = 1 To lsvLanguages.ListItems.Count
   ini.Section = lsvLanguages.ListItems(i).Text
-  ini.Key = lsvLanguages.ListItems(i).SubItems(1)
+  ini.key = lsvLanguages.ListItems(i).SubItems(1)
   lsvLanguages.ListItems(i).SubItems(3) = ini.GetKeyFromSection
   DoEvents
  Next i
@@ -1747,14 +1784,18 @@ Private Sub RefreshFrame()
     .Height = fra(tbstr.SelectedItem.Index - 1).Height - 900
    End With
    With cmdTestpage
-    .item(0).Top = txtTestpage.Top + txtTestpage.Height + 50
-    .item(0).Left = txtTestpage.Left
-    .item(1).Top = .item(0).Top
-    .item(1).Left = .item(0).Left + .item(0).Width + 150
-    .item(2).Top = .item(0).Top
-    .item(2).Left = .item(1).Left + .item(1).Width + 150
-    .item(3).Top = .item(0).Top
-    .item(3).Left = .item(2).Left + .item(2).Width + 150
+    .Item(0).Top = txtTestpage.Top + txtTestpage.Height + 50
+    .Item(0).Left = txtTestpage.Left
+    .Item(1).Top = .Item(0).Top
+    .Item(1).Left = .Item(0).Left + .Item(0).Width + 150
+    .Item(2).Top = .Item(0).Top
+    .Item(2).Left = .Item(1).Left + .Item(1).Width + 150
+    .Item(3).Top = .Item(0).Top
+    .Item(3).Left = .Item(2).Left + .Item(2).Width + 150
+    .Item(4).Top = .Item(0).Top
+    .Item(4).Left = .Item(3).Left + .Item(3).Width + 150
+'    .Item(5).Top = .Item(0).Top
+'    .Item(5).Left = .Item(4).Left + .Item(4).Width + 150
    End With
    With stb
     .Panels.Clear
@@ -1767,14 +1808,14 @@ Private Sub RefreshFrame()
     .Height = fra(tbstr.SelectedItem.Index - 1).Height - 900
    End With
    With cmdStamppage
-    .item(0).Top = txtStamppage.Top + txtStamppage.Height + 50
-    .item(0).Left = txtStamppage.Left
-    .item(1).Top = .item(0).Top
-    .item(1).Left = .item(0).Left + .item(0).Width + 150
-    .item(2).Top = .item(0).Top
-    .item(2).Left = .item(1).Left + .item(1).Width + 150
-    .item(3).Top = .item(0).Top
-    .item(3).Left = .item(2).Left + .item(2).Width + 150
+    .Item(0).Top = txtStamppage.Top + txtStamppage.Height + 50
+    .Item(0).Left = txtStamppage.Left
+    .Item(1).Top = .Item(0).Top
+    .Item(1).Left = .Item(0).Left + .Item(0).Width + 150
+    .Item(2).Top = .Item(0).Top
+    .Item(2).Left = .Item(1).Left + .Item(1).Width + 150
+    .Item(3).Top = .Item(0).Top
+    .Item(3).Left = .Item(2).Left + .Item(2).Width + 150
    End With
    With stb
     .Panels.Clear
@@ -1787,12 +1828,12 @@ Private Sub RefreshFrame()
     .Height = fra(tbstr.SelectedItem.Index - 1).Height - 900
    End With
    With cmdIncFile
-    .item(0).Top = txtIncFile.Top + txtIncFile.Height + 50
-    .item(0).Left = txtIncFile.Left
-    .item(1).Top = .item(0).Top
-    .item(1).Left = .item(0).Left + .item(0).Width + 150
-    .item(2).Top = .item(1).Top
-    .item(2).Left = .item(1).Left + .item(1).Width + 150
+    .Item(0).Top = txtIncFile.Top + txtIncFile.Height + 50
+    .Item(0).Left = txtIncFile.Left
+    .Item(1).Top = .Item(0).Top
+    .Item(1).Left = .Item(0).Left + .Item(0).Width + 150
+    .Item(2).Top = .Item(1).Top
+    .Item(2).Left = .Item(1).Left + .Item(1).Width + 150
    End With
    With stb
     .Panels.Clear
@@ -1842,7 +1883,7 @@ Private Sub tbstr_Click()
 End Sub
 
 Private Sub SaveOptions(Filename As String)
- Dim i As Long, j As Long, fn As Long, tStr As String, tStrC As String
+ Dim i As Long, j As Long, fn As Long, tstr As String, tStrC As String
  fn = FreeFile
  Open Filename For Output As #fn
  tStrC = lsvOptions.ListItems(1).Text
@@ -1854,11 +1895,11 @@ Private Sub SaveOptions(Filename As String)
    tStrC = Trim$(lsvOptions.ListItems(i).Text)
    Print #fn, vbCrLf & "' <" & tStrC & ">"
   End If
-  tStr = lsvOptions.ListItems(i).SubItems(1)
+  tstr = lsvOptions.ListItems(i).SubItems(1)
   For j = 2 To lsvOptions.ColumnHeaders.Count - 1
-   tStr = tStr & "|" & Trim$(lsvOptions.ListItems(i).SubItems(j))
+   tstr = tstr & "|" & Trim$(lsvOptions.ListItems(i).SubItems(j))
   Next j
-  Print #fn, tStr
+  Print #fn, tstr
  Next i
  Close fn
 End Sub
@@ -1868,6 +1909,14 @@ Private Sub SaveFile(Filename As String, txtStr As String)
  fn = FreeFile
  Open Filename For Output As #fn
  Print #fn, txtStr
+ Close #fn
+End Sub
+
+Private Sub SaveCompressedFile(Filename As String, b() As Byte)
+ Dim fn As Long
+ fn = FreeFile
+ Open Filename For Binary As #fn
+ Put #fn, , b
  Close #fn
 End Sub
 
@@ -1901,15 +1950,15 @@ Private Sub SaveTemplate()
 End Sub
 
 Private Sub ShowOption()
- Dim item As ListItem, tStr As String, i As Long
+ Dim Item As ListItem, tstr As String, i As Long
  With frmOption
   .cmbComment.Text = lsvOptions.SelectedItem.Text
   If lsvOptions.ListItems.Count > 0 Then
-   tStr = UCase$(lsvOptions.ListItems(1).Text)
+   tstr = UCase$(lsvOptions.ListItems(1).Text)
    .cmbComment.AddItem lsvOptions.ListItems(1).Text
    For i = 2 To lsvOptions.ListItems.Count
-    If UCase$(lsvOptions.ListItems(i).Text) <> tStr Then
-     tStr = UCase$(lsvOptions.ListItems(i).Text)
+    If UCase$(lsvOptions.ListItems(i).Text) <> tstr Then
+     tstr = UCase$(lsvOptions.ListItems(i).Text)
      .cmbComment.AddItem lsvOptions.ListItems(i).Text
     End If
    Next i
@@ -1941,16 +1990,16 @@ Private Sub ShowOption()
 End Sub
 
 Private Sub ShowLanguage()
- Dim item As ListItem, tStr As String, i As Long
+ Dim Item As ListItem, tstr As String, i As Long
  With frmLanguage
   .cmbSection.Text = lsvLanguages.SelectedItem.Text
 
   If lsvLanguages.ListItems.Count > 0 Then
-   tStr = UCase$(lsvLanguages.ListItems(1).Text)
+   tstr = UCase$(lsvLanguages.ListItems(1).Text)
    .cmbSection.AddItem lsvLanguages.ListItems(1).Text
    For i = 2 To lsvLanguages.ListItems.Count
-    If UCase$(lsvLanguages.ListItems(i).Text) <> tStr Then
-     tStr = UCase$(lsvLanguages.ListItems(i).Text)
+    If UCase$(lsvLanguages.ListItems(i).Text) <> tstr Then
+     tstr = UCase$(lsvLanguages.ListItems(i).Text)
      .cmbSection.AddItem lsvLanguages.ListItems(i).Text
     End If
    Next i
@@ -1996,7 +2045,7 @@ Private Sub txtTestpage_Change()
 End Sub
 
 Private Function LoadAndConvert(RegFilename As String, os As eOSTyp) As Boolean
- Dim fn As Long, found As Boolean, resStr As String, tStr As String, sa() As String, _
+ Dim fn As Long, found As Boolean, resStr As String, tstr As String, sa() As String, _
   i As Long, j As Long, regStr As String
 
  LoadAndConvert = True
@@ -2009,16 +2058,16 @@ Private Function LoadAndConvert(RegFilename As String, os As eOSTyp) As Boolean
  found = False: fn = FreeFile
  Open RegFilename For Input As #fn
  Do While Not EOF(fn)
-  Line Input #fn, tStr
-  If InStr(UCase$(tStr), regStr) > 0 Then
+  Line Input #fn, tstr
+  If InStr(UCase$(tstr), regStr) > 0 Then
    found = True
-   resStr = Mid(tStr, Len(regStr) + 1)
+   resStr = Mid(tstr, Len(regStr) + 1)
    Do While Not EOF(fn)
-    Line Input #fn, tStr
-    If InStr(tStr, """") Or LenB(Trim$(tStr)) = 0 Or Mid$(Trim$(tStr), 1, 1) = "[" Then
+    Line Input #fn, tstr
+    If InStr(tstr, """") Or LenB(Trim$(tstr)) = 0 Or Mid$(Trim$(tstr), 1, 1) = "[" Then
      Exit Do
     End If
-    resStr = resStr & tStr
+    resStr = resStr & tstr
     DoEvents
    Loop
   End If
@@ -2038,35 +2087,35 @@ Private Function LoadAndConvert(RegFilename As String, os As eOSTyp) As Boolean
    resStr = Replace$(resStr, vbCr, "")
    resStr = Replace$(resStr, vbLf, "")
    sa = Split(resStr, ",")
-   tStr = "": resStr = ""
+   tstr = "": resStr = ""
    j = 0
    For i = 0 To UBound(sa)
     j = j + 1
     If j = 1 Then
-     tStr = tStr + "''"
+     tstr = tstr + "''"
     End If
-    tStr = tStr + GetHStr(sa(i))
+    tstr = tstr + GetHStr(sa(i))
     If j = 32 Then
-     tStr = tStr + vbCrLf
+     tstr = tstr + vbCrLf
      j = 0
     End If
    Next i
  End If
- If LenB(tStr) >= 3 Then
-  If Mid(tStr, Len(tStr) - 1) = vbCrLf Then
-   tStr = Mid(tStr, 1, Len(tStr) - 1)
+ If LenB(tstr) >= 3 Then
+  If Mid(tstr, Len(tstr) - 1) = vbCrLf Then
+   tstr = Mid(tstr, 1, Len(tstr) - 1)
   End If
  End If
- txtPrintRegData.Text = tStr
+ txtPrintRegData.Text = tstr
 End Function
 
 Private Function GetHStr(NumberStr As String) As String
- Dim tStr As String, i As Long
- tStr = CStr(CLng("&h" + NumberStr))
- For i = 1 To 3 - Len(tStr)
-  tStr = "0" & tStr
+ Dim tstr As String, i As Long
+ tstr = CStr(CLng("&h" + NumberStr))
+ For i = 1 To 3 - Len(tstr)
+  tstr = "0" & tstr
  Next i
- GetHStr = "#" + tStr
+ GetHStr = "#" + tstr
 End Function
 
 Private Function IsSpecialString(specialString As String) As Boolean
@@ -2108,6 +2157,13 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "NoProcessingAtStartup"
   .Add "StandardSaveformat"
   .Add "PDFOptimize"
+  .Add "StandardMailDomain"
+  .Add "Toolbars"
+  .Add "DontUseDocumentSettings"
+  .Add "RunProgramBeforeSaving"
+  .Add "RunProgramBeforeSavingProgramname"
+  .Add "RunProgramBeforeSavingProgramParameters"
+  .Add "RunProgramBeforeSavingWindowstyle"
  End With
  IsSpecialString = False
  For i = 1 To ss.Count
@@ -2121,26 +2177,26 @@ End Function
 
 Private Function GetKeysAndValuesFromInifile(Section As String, Filename As String) As String
  Dim ini As New clsINI, keys As Collection, _
-  i As Long, tStr As String, File As String
+  i As Long, tstr As String, File As String
  ini.Filename = Filename
  SplitPath Filename, , , , File
  Set keys = ini.GetAllKeysFromSection(Section)
  For i = 1 To keys.Count
-  If Len(tStr) = 0 Then
-    tStr = LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
+  If Len(tstr) = 0 Then
+    tstr = LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
    Else
-    tStr = tStr & vbCrLf & LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
+    tstr = tstr & vbCrLf & LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
   End If
  Next i
  Set ini = Nothing
  LastIncFile = File
- If Len(tStr) > 0 Then
-  GetKeysAndValuesFromInifile = GetSortedText(tStr)
+ If Len(tstr) > 0 Then
+  GetKeysAndValuesFromInifile = GetSortedText(tstr)
  End If
 End Function
 
 Private Function GetSortedText(txt As String) As String
- Dim tStrf() As String, coll As Collection, i As Long, j As Long, tStr As String
+ Dim tStrf() As String, coll As Collection, i As Long, j As Long, tstr As String
  GetSortedText = txt
  If InStr(1, txt, vbCrLf, vbTextCompare) Then
   tStrf = Split(txt, vbCrLf)
@@ -2157,11 +2213,34 @@ Private Function GetSortedText(txt As String) As String
     coll.Add tStrf(i)
    End If
   Next i
-  tStr = coll(1)
+  tstr = coll(1)
   For j = 2 To coll.Count
-   tStr = tStr & vbCrLf & coll(j)
+   tstr = tstr & vbCrLf & coll(j)
   Next j
   Set coll = Nothing
-  GetSortedText = tStr
+  GetSortedText = tstr
  End If
 End Function
+
+Private Sub CreateModTestpage(Filename As String, Str1 As String)
+ Dim fn As Long, tStrf() As String, i As Long
+ tStrf = Split(Str1, vbCrLf)
+ fn = FreeFile
+ 
+ Open Filename For Output As #fn
+ 
+ Print #fn, "Attribute VB_Name = ""modTestpage"""
+ Print #fn, "Option Explicit"
+ Print #fn, ""
+ Print #fn, "Public Function GetTestpage() As String"
+ Print #fn, " Dim tStr As String"
+ Print #fn, " tStr = """""
+ For i = LBound(tStrf) To UBound(tStrf)
+ Print #fn, " tStr = tStr & """ & tStrf(i) & """ & vbCr"
+ Next i
+ Print #fn, " GetTestpage = tStr"
+ Print #fn, "End Function"
+ 
+ Close #fn
+End Sub
+

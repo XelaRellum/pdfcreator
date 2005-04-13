@@ -13,16 +13,7 @@ Begin VB.Form frmSwitchDefaultprinter
    ScaleHeight     =   1890
    ScaleWidth      =   4755
    StartUpPosition =   3  'Windows-Standard
-   Begin VB.CommandButton cmd 
-      Caption         =   "&Cancel"
-      Height          =   495
-      Index           =   1
-      Left            =   3240
-      TabIndex        =   3
-      Top             =   1320
-      Width           =   1455
-   End
-   Begin VB.CommandButton cmd 
+   Begin VB.CommandButton cmd1 
       Caption         =   "&Ok"
       Height          =   495
       Index           =   0
@@ -38,6 +29,16 @@ Begin VB.Form frmSwitchDefaultprinter
       TabIndex        =   1
       Top             =   840
       Width           =   4455
+   End
+   Begin VB.CommandButton cmd1 
+      Cancel          =   -1  'True
+      Caption         =   "&Cancel"
+      Height          =   495
+      Index           =   1
+      Left            =   3180
+      TabIndex        =   3
+      Top             =   1320
+      Width           =   1455
    End
    Begin VB.Label lblSwitchDefaultprinter 
       AutoSize        =   -1  'True
