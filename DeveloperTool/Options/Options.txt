@@ -66,18 +66,19 @@ PDFUserPasswordString||String|||
 PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
 
 ' <Printing>
-OnePagePerFile||Boolean|0|0|1
+OnePagePerFile||Boolean|0||
 
 ' <Program>
 AdditionalGhostscriptSearchpath||String|||
 AddWindowsFontpath||Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
-AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|5
+AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|7
 DirectoryGhostscriptBinaries|txtGSbin.text|String|||
 DirectoryGhostscriptFonts|txtGSfonts.text|String|||
 DirectoryGhostscriptLibraries|txtGSlib.text|String|||
 DirectoryGhostscriptResource|txtGSResource.text|String|||
+DontUseDocumentSettings||Boolean|0||
 FilenameSubstitutions||String|Microsoft Word - \.doc||
 FilenameSubstitutionsOnlyInTitle|chkFilenameSubst.Value|Boolean|1||
 Language|Language|String|english||
@@ -96,11 +97,15 @@ ProgramFontCharset|cmbCharset.Text|Long|0|0|<
 ProgramFontSize|cmbProgramFontSize.text|Long|8|1|72
 RemoveAllKnownFileExtensions||Boolean|1||
 RemoveSpaces|chkSpaces.Value|Boolean|1||
-RunProgramAfterSaving||Boolean|0|0|1
+RunProgramAfterSaving||Boolean|0||
 RunProgramAfterSavingProgramname||String|||
 RunProgramAfterSavingProgramParameters||String|||
-RunProgramAfterSavingWaitUntilReady||Boolean|1|0|1
+RunProgramAfterSavingWaitUntilReady||Boolean|1||
 RunProgramAfterSavingWindowstyle||Long|1|0|6
+RunProgramBeforeSaving||Boolean|0||
+RunProgramBeforeSavingProgramname||String|||
+RunProgramBeforeSavingProgramParameters||String|||
+RunProgramBeforeSavingWindowstyle||Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
 SendMailMethod||Long|0|0|<
 ShowAnimation||Boolean|1||
@@ -114,11 +119,13 @@ StandardAuthor|txtStandardAuthor.Text|String|||
 StandardCreationdate||String|||
 StandardDateformat||String|YYYYMMDDHHNNSS||
 StandardKeywords||String|||
+StandardMailDomain||String|||
 StandardModifydate||String|||
 StandardSaveformat||String|pdf||
 StandardSubject||String|||
 StandardTitle||String|||
 StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
+Toolbars||Long|1|0|<
 UseAutosave|chkUseAutosave.Value|Boolean|0||
 UseAutosaveDirectory|chkUseAutosaveDirectory.Value|Boolean|1||
 UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||

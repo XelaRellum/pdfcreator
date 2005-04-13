@@ -249,8 +249,8 @@ ErrorIniEntry=Fehler beim Erstellen eines INI-Eintrages in die Datei "%1".
 ; *** File copying errors
 FileAbortRetryIgnore=Klicken Sie auf "Wiederholen" für einen weiteren Versuch, "Ignorieren", um diese Datei zu überspringen (nicht empfohlen), oder "Abbrechen", um die Installation abzubrechen.
 FileAbortRetryIgnore2=Klicken Sie auf "Wiederholen" für einen weiteren Versuch, "Ignorieren", um trotzdem fortzufahren (nicht empfohlen), oder "Abbrechen", um die Installation abzubrechen.
-SourceIsCorrupted=Die Quelldatei ist beschädigt
-SourceDoesntExist=Die Quelldatei "%1" existiert nicht
+SourceIsCorrupted=Die Quelldatei ist beschädigt!
+SourceDoesntExist=Die Quelldatei "%1" existiert nicht!
 ExistingFileReadOnly=Die vorhandene Datei ist schreibgeschützt.%n%nKlicken Sie auf "Wiederholen", um den Schreibschutz zu entfernen, "Ignorieren", um die Datei zu überspringen, oder "Abbrechen", um die Installation abzubrechen.
 ErrorReadingExistingDest=Lesefehler in Datei:
 FileExists=Die Datei ist bereits vorhanden.%n%nSoll sie überschrieben werden?

@@ -1,5 +1,5 @@
 ; PDFCreator-Patch Installation
-; Setup created with Inno Setup QuickStart Pack 5.0.7 (with ISPP) and ISTool 5.0.6.1
+; Setup created with Inno Setup QuickStart Pack 5.0.8 (with ISPP) and ISTool 5.0.8
 ; Installation from Frank Heindörfer, Philip Chinery
 
 ;#define FastCompilation
@@ -86,7 +86,6 @@ DefaultGroupName={#AppName}
 DisableDirPage=true
 DisableStartupPrompt=true
 InternalCompressLevel={#SetupLZMACompressionMode}
-;LicenseFile=.\License\GNU Readme.rtf
 OutputBaseFilename=Patch-{#AppName}-{#SetupAppVersionStr}
 OutputDir=Installation
 RestartIfNeededByRun=true
@@ -110,14 +109,28 @@ Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
 Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {sys}; Flags: comparetimestamp
 
+Source: ..\PDFCreator\PDFCreator.exe.manifest; DestDir: {app}; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Transtool\TransTool.exe.manifest; DestDir: {app}\languages; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+
+Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists
+Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Flags: ignoreversion
+
 ;vblocal.exe from IPDK
 Source: C:\IPDK\vblocal.exe; DestDir: {app}; Flags: deleteafterinstall overwritereadonly onlyifdoesntexist ignoreversion
+
+; help files
+Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Flags: ignoreversion
+Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversion
 
 ;upx for compressing
 #ifdef UseUPX
  ; Source: UPX\upx.exe; DestDir: {app}; Flags: deleteafterinstall overwritereadonly ignoreversion
 #ENDIF
 #Endif
+
+
+[INI]
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Toolbars; String: 3; Flags: createkeyifdoesntexist
 
 [Run]
 #IFNDEF Test
@@ -159,6 +172,23 @@ function IsLanguage(LangName: String): Boolean;
 begin
  If LowerCase(LangName)=Lowercase(ActiveLanguage) then
   Result:=True;
+end;
+
+function IsStandardmodus(): Boolean;
+var PDFServer:String;
+begin
+ Result:=true;
+ If RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}', 'PDFServer', PDFServer)=true then
+  If PDFServer='1' then
+   Result:=false;
+end;
+
+function GetIniPath(Default:String):String;
+begin
+ if IsStandardmodus() = True then
+   Result:=ExpandConstant('{userappdata}')+'\PDFCreator'
+  else
+   Result:=ExpandConstant('{app}');
 end;
 
 function ProgramIsInstalled(): Boolean;

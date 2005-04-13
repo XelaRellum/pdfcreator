@@ -17,6 +17,7 @@ Public Type tOptions
  DirectoryGhostscriptFonts As String
  DirectoryGhostscriptLibraries As String
  DirectoryGhostscriptResource As String
+ DontUseDocumentSettings As Long
  EPSLanguageLevel As Long
  FilenameSubstitutions As String
  FilenameSubstitutionsOnlyInTitle As Long
@@ -93,6 +94,10 @@ Public Type tOptions
  RunProgramAfterSavingProgramParameters As String
  RunProgramAfterSavingWaitUntilReady As Long
  RunProgramAfterSavingWindowstyle As Long
+ RunProgramBeforeSaving As Long
+ RunProgramBeforeSavingProgramname As String
+ RunProgramBeforeSavingProgramParameters As String
+ RunProgramBeforeSavingWindowstyle As Long
  SaveFilename As String
  SendMailMethod As Long
  ShowAnimation As Long
@@ -106,12 +111,14 @@ Public Type tOptions
  StandardCreationdate As String
  StandardDateformat As String
  StandardKeywords As String
+ StandardMailDomain As String
  StandardModifydate As String
  StandardSaveformat As String
  StandardSubject As String
  StandardTitle As String
  StartStandardProgram As Long
  TIFFColorscount As Long
+ Toolbars As Long
  UseAutosave As Long
  UseAutosaveDirectory As Long
  UseCreationDateNow As Long
@@ -153,107 +160,114 @@ On Error GoTo ErrPtnr_OnError
 50270   reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 50280   .DirectoryGhostscriptResource = CompletePath(reg.GetRegistryValue("GhostscriptDirectoryResource"))
 50290   Set reg = Nothing
-50300   .EPSLanguageLevel = "2"
-50310   .FilenameSubstitutions = "Microsoft Word - \.doc"
-50320   .FilenameSubstitutionsOnlyInTitle = "1"
-50330   .JPEGColorscount = "0"
-50340   .JPEGQuality = "75"
-50350   .Language = "english"
-50360   .LastSaveDirectory = GetMyFiles
-50370   .Logging = "0"
-50380   .LogLines = "100"
-50390   .NoConfirmMessageSwitchingDefaultprinter = "0"
-50400   .NoProcessingAtStartup = "0"
-50410   .OnePagePerFile = "0"
-50420   .OptionsEnabled = "1"
-50430   .OptionsVisible = "1"
-50440   .PCXColorscount = "0"
-50450   .PDFAllowAssembly = "0"
-50460   .PDFAllowDegradedPrinting = "0"
-50470   .PDFAllowFillIn = "0"
-50480   .PDFAllowScreenReaders = "0"
-50490   .PDFColorsCMYKToRGB = "1"
-50500   .PDFColorsColorModel = "1"
-50510   .PDFColorsPreserveHalftone = "0"
-50520   .PDFColorsPreserveOverprint = "1"
-50530   .PDFColorsPreserveTransfer = "1"
-50540   .PDFCompressionColorCompression = "1"
-50550   .PDFCompressionColorCompressionChoice = "0"
-50560   .PDFCompressionColorResample = "0"
-50570   .PDFCompressionColorResampleChoice = "0"
-50580   .PDFCompressionColorResolution = "300"
-50590   .PDFCompressionGreyCompression = "1"
-50600   .PDFCompressionGreyCompressionChoice = "0"
-50610   .PDFCompressionGreyResample = "0"
-50620   .PDFCompressionGreyResampleChoice = "0"
-50630   .PDFCompressionGreyResolution = "300"
-50640   .PDFCompressionMonoCompression = "1"
-50650   .PDFCompressionMonoCompressionChoice = "0"
-50660   .PDFCompressionMonoResample = "0"
-50670   .PDFCompressionMonoResampleChoice = "0"
-50680   .PDFCompressionMonoResolution = "1200"
-50690   .PDFCompressionTextCompression = "1"
-50700   .PDFDisallowCopy = "1"
-50710   .PDFDisallowModifyAnnotations = "0"
-50720   .PDFDisallowModifyContents = "0"
-50730   .PDFDisallowPrinting = "0"
-50740   .PDFEncryptor = "0"
-50750   .PDFFontsEmbedAll = "1"
-50760   .PDFFontsSubSetFonts = "1"
-50770   .PDFFontsSubSetFontsPercent = "100"
-50780   .PDFGeneralASCII85 = "0"
-50790   .PDFGeneralAutorotate = "2"
-50800   .PDFGeneralCompatibility = "1"
-50810   .PDFGeneralOverprint = "0"
-50820   .PDFGeneralResolution = "600"
-50830   .PDFHighEncryption = "0"
-50840   .PDFLowEncryption = "1"
-50850   .PDFOptimize = "0"
-50860   .PDFOwnerPass = "0"
-50870   .PDFOwnerPasswordString = " "
-50880   .PDFUserPass = "0"
-50890   .PDFUserPasswordString = " "
-50900   .PDFUseSecurity = "0"
-50910   .PNGColorscount = "0"
-50920   .PrinterStop = "0"
-50930   .PrinterTemppath = GetTempPath
-50940   .ProcessPriority = "1"
-50950   .ProgramFont = "MS Sans Serif"
-50960   .ProgramFontCharset = "0"
-50970   .ProgramFontSize = "8"
-50980   .PSLanguageLevel = "2"
-50990   .RemoveAllKnownFileExtensions = "1"
-51000   .RemoveSpaces = "1"
-51010   .RunProgramAfterSaving = "0"
-51020   .RunProgramAfterSavingProgramname = " "
-51030   .RunProgramAfterSavingProgramParameters = " "
-51040   .RunProgramAfterSavingWaitUntilReady = "1"
-51050   .RunProgramAfterSavingWindowstyle = "1"
-51060   .SaveFilename = "<Title>"
-51070   .SendMailMethod = "0"
-51080   .ShowAnimation = "1"
-51090   .StampFontColor = "#FF0000"
-51100   .StampFontname = "Arial"
-51110   .StampFontsize = "48"
-51120   .StampOutlineFontthickness = "0"
-51130   .StampString = " "
-51140   .StampUseOutlineFont = "1"
-51150   .StandardAuthor = " "
-51160   .StandardCreationdate = " "
-51170   .StandardDateformat = "YYYYMMDDHHNNSS"
-51180   .StandardKeywords = " "
-51190   .StandardModifydate = " "
-51200   .StandardSaveformat = "pdf"
-51210   .StandardSubject = " "
-51220   .StandardTitle = " "
-51230   .StartStandardProgram = "1"
-51240   .TIFFColorscount = "0"
-51250   .UseAutosave = "0"
-51260   .UseAutosaveDirectory = "1"
-51270   .UseCreationDateNow = "0"
-51280   .UseStandardAuthor = "0"
-51290  End With
-51300  StandardOptions = myOptions
+50300   .DontUseDocumentSettings = "0"
+50310   .EPSLanguageLevel = "2"
+50320   .FilenameSubstitutions = "Microsoft Word - \.doc"
+50330   .FilenameSubstitutionsOnlyInTitle = "1"
+50340   .JPEGColorscount = "0"
+50350   .JPEGQuality = "75"
+50360   .Language = "english"
+50370   .LastSaveDirectory = GetMyFiles
+50380   .Logging = "0"
+50390   .LogLines = "100"
+50400   .NoConfirmMessageSwitchingDefaultprinter = "0"
+50410   .NoProcessingAtStartup = "0"
+50420   .OnePagePerFile = "0"
+50430   .OptionsEnabled = "1"
+50440   .OptionsVisible = "1"
+50450   .PCXColorscount = "0"
+50460   .PDFAllowAssembly = "0"
+50470   .PDFAllowDegradedPrinting = "0"
+50480   .PDFAllowFillIn = "0"
+50490   .PDFAllowScreenReaders = "0"
+50500   .PDFColorsCMYKToRGB = "1"
+50510   .PDFColorsColorModel = "1"
+50520   .PDFColorsPreserveHalftone = "0"
+50530   .PDFColorsPreserveOverprint = "1"
+50540   .PDFColorsPreserveTransfer = "1"
+50550   .PDFCompressionColorCompression = "1"
+50560   .PDFCompressionColorCompressionChoice = "0"
+50570   .PDFCompressionColorResample = "0"
+50580   .PDFCompressionColorResampleChoice = "0"
+50590   .PDFCompressionColorResolution = "300"
+50600   .PDFCompressionGreyCompression = "1"
+50610   .PDFCompressionGreyCompressionChoice = "0"
+50620   .PDFCompressionGreyResample = "0"
+50630   .PDFCompressionGreyResampleChoice = "0"
+50640   .PDFCompressionGreyResolution = "300"
+50650   .PDFCompressionMonoCompression = "1"
+50660   .PDFCompressionMonoCompressionChoice = "0"
+50670   .PDFCompressionMonoResample = "0"
+50680   .PDFCompressionMonoResampleChoice = "0"
+50690   .PDFCompressionMonoResolution = "1200"
+50700   .PDFCompressionTextCompression = "1"
+50710   .PDFDisallowCopy = "1"
+50720   .PDFDisallowModifyAnnotations = "0"
+50730   .PDFDisallowModifyContents = "0"
+50740   .PDFDisallowPrinting = "0"
+50750   .PDFEncryptor = "0"
+50760   .PDFFontsEmbedAll = "1"
+50770   .PDFFontsSubSetFonts = "1"
+50780   .PDFFontsSubSetFontsPercent = "100"
+50790   .PDFGeneralASCII85 = "0"
+50800   .PDFGeneralAutorotate = "2"
+50810   .PDFGeneralCompatibility = "1"
+50820   .PDFGeneralOverprint = "0"
+50830   .PDFGeneralResolution = "600"
+50840   .PDFHighEncryption = "0"
+50850   .PDFLowEncryption = "1"
+50860   .PDFOptimize = "0"
+50870   .PDFOwnerPass = "0"
+50880   .PDFOwnerPasswordString = " "
+50890   .PDFUserPass = "0"
+50900   .PDFUserPasswordString = " "
+50910   .PDFUseSecurity = "0"
+50920   .PNGColorscount = "0"
+50930   .PrinterStop = "0"
+50940   .PrinterTemppath = GetTempPath
+50950   .ProcessPriority = "1"
+50960   .ProgramFont = "MS Sans Serif"
+50970   .ProgramFontCharset = "0"
+50980   .ProgramFontSize = "8"
+50990   .PSLanguageLevel = "2"
+51000   .RemoveAllKnownFileExtensions = "1"
+51010   .RemoveSpaces = "1"
+51020   .RunProgramAfterSaving = "0"
+51030   .RunProgramAfterSavingProgramname = " "
+51040   .RunProgramAfterSavingProgramParameters = " "
+51050   .RunProgramAfterSavingWaitUntilReady = "1"
+51060   .RunProgramAfterSavingWindowstyle = "1"
+51070   .RunProgramBeforeSaving = "0"
+51080   .RunProgramBeforeSavingProgramname = " "
+51090   .RunProgramBeforeSavingProgramParameters = " "
+51100   .RunProgramBeforeSavingWindowstyle = "1"
+51110   .SaveFilename = "<Title>"
+51120   .SendMailMethod = "0"
+51130   .ShowAnimation = "1"
+51140   .StampFontColor = "#FF0000"
+51150   .StampFontname = "Arial"
+51160   .StampFontsize = "48"
+51170   .StampOutlineFontthickness = "0"
+51180   .StampString = " "
+51190   .StampUseOutlineFont = "1"
+51200   .StandardAuthor = " "
+51210   .StandardCreationdate = " "
+51220   .StandardDateformat = "YYYYMMDDHHNNSS"
+51230   .StandardKeywords = " "
+51240   .StandardMailDomain = " "
+51250   .StandardModifydate = " "
+51260   .StandardSaveformat = "pdf"
+51270   .StandardSubject = " "
+51280   .StandardTitle = " "
+51290   .StartStandardProgram = "1"
+51300   .TIFFColorscount = "0"
+51310   .Toolbars = "1"
+51320   .UseAutosave = "0"
+51330   .UseAutosaveDirectory = "1"
+51340   .UseCreationDateNow = "0"
+51350   .UseStandardAuthor = "0"
+51360  End With
+51370  StandardOptions = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -270,7 +284,7 @@ Public Function ReadOptions() As tOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ini As clsINI, myOptions As tOptions, tStr As String, hOpt As New clsHash
+50010  Dim ini As clsINI, myOptions As tOptions, tstr As String, hOpt As New clsHash
 50020  Set ini = New clsINI
 50030  ini.Filename = PDFCreatorINIFile
 50040  ini.Section = "Options"
@@ -280,577 +294,607 @@ On Error GoTo ErrPtnr_OnError
 50080  End If
 50090  ReadINISection PDFCreatorINIFile, "Options", hOpt
 50100  With myOptions
-50110   tStr = hOpt.Retrieve("AdditionalGhostscriptSearchpath", " ")
-50120   .AdditionalGhostscriptSearchpath = tStr
-50130   tStr = hOpt.Retrieve("AddWindowsFontpath")
-50140   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-50150     .AddWindowsFontpath = CLng(tStr)
+50110   tstr = hOpt.Retrieve("AdditionalGhostscriptSearchpath", " ")
+50120   .AdditionalGhostscriptSearchpath = tstr
+50130   tstr = hOpt.Retrieve("AddWindowsFontpath")
+50140   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+50150     .AddWindowsFontpath = CLng(tstr)
 50160    Else
 50170     .AddWindowsFontpath = 1
 50180   End If
-50190   tStr = hOpt.Retrieve("AutosaveDirectory", GetMyFiles)
-50200   .AutosaveDirectory = CompletePath(tStr)
-50210   tStr = hOpt.Retrieve("AutosaveFilename", "<DateTime>")
-50220   .AutosaveFilename = tStr
-50230   tStr = hOpt.Retrieve("AutosaveFormat")
-50240   If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
-50250     .AutosaveFormat = CLng(tStr)
+50190   tstr = hOpt.Retrieve("AutosaveDirectory", GetMyFiles)
+50200   .AutosaveDirectory = CompletePath(tstr)
+50210   tstr = hOpt.Retrieve("AutosaveFilename", "<DateTime>")
+50220   .AutosaveFilename = tstr
+50230   tstr = hOpt.Retrieve("AutosaveFormat")
+50240   If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
+50250     .AutosaveFormat = CLng(tstr)
 50260    Else
 50270     .AutosaveFormat = 0
 50280   End If
-50290   tStr = hOpt.Retrieve("BitmapResolution")
-50300   If CLng(tStr) >= 1 Then
-50310     .BitmapResolution = CLng(tStr)
+50290   tstr = hOpt.Retrieve("BitmapResolution")
+50300   If CLng(tstr) >= 1 Then
+50310     .BitmapResolution = CLng(tstr)
 50320    Else
 50330     .BitmapResolution = 150
 50340   End If
-50350   tStr = hOpt.Retrieve("BMPColorscount")
-50360   If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
-50370     .BMPColorscount = CLng(tStr)
+50350   tstr = hOpt.Retrieve("BMPColorscount")
+50360   If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
+50370     .BMPColorscount = CLng(tstr)
 50380    Else
 50390     .BMPColorscount = 1
 50400   End If
-50410   tStr = hOpt.Retrieve("DirectoryGhostscriptBinaries", App.Path)
-50420   If DirExists(tStr) = True Then
-50430     .DirectoryGhostscriptBinaries = CompletePath(tStr)
+50410   tstr = hOpt.Retrieve("DirectoryGhostscriptBinaries", App.Path)
+50420   If DirExists(tstr) = True Then
+50430     .DirectoryGhostscriptBinaries = CompletePath(tstr)
 50440    Else
 50450     .DirectoryGhostscriptBinaries = ""
 50460   End If
-50470   tStr = hOpt.Retrieve("DirectoryGhostscriptFonts", App.Path & "\fonts")
-50480   If DirExists(tStr) = True Then
-50490     .DirectoryGhostscriptFonts = CompletePath(tStr)
+50470   tstr = hOpt.Retrieve("DirectoryGhostscriptFonts", App.Path & "\fonts")
+50480   If DirExists(tstr) = True Then
+50490     .DirectoryGhostscriptFonts = CompletePath(tstr)
 50500    Else
 50510     .DirectoryGhostscriptFonts = ""
 50520   End If
-50530   tStr = hOpt.Retrieve("DirectoryGhostscriptLibraries", App.Path & "\lib")
-50540   If DirExists(tStr) = True Then
-50550     .DirectoryGhostscriptLibraries = CompletePath(tStr)
+50530   tstr = hOpt.Retrieve("DirectoryGhostscriptLibraries", App.Path & "\lib")
+50540   If DirExists(tstr) = True Then
+50550     .DirectoryGhostscriptLibraries = CompletePath(tstr)
 50560    Else
 50570     .DirectoryGhostscriptLibraries = ""
 50580   End If
-50590   tStr = hOpt.Retrieve("DirectoryGhostscriptResource", " ")
-50600   .DirectoryGhostscriptResource = tStr
-50610   tStr = hOpt.Retrieve("EPSLanguageLevel")
-50620   If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-50630     .EPSLanguageLevel = CLng(tStr)
+50590   tstr = hOpt.Retrieve("DirectoryGhostscriptResource", " ")
+50600   .DirectoryGhostscriptResource = tstr
+50610   tstr = hOpt.Retrieve("DontUseDocumentSettings")
+50620   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+50630     .DontUseDocumentSettings = CLng(tstr)
 50640    Else
-50650     .EPSLanguageLevel = 2
+50650     .DontUseDocumentSettings = 0
 50660   End If
-50670   tStr = hOpt.Retrieve("FilenameSubstitutions", "Microsoft Word - \.doc")
-50680   .FilenameSubstitutions = tStr
-50690   tStr = hOpt.Retrieve("FilenameSubstitutionsOnlyInTitle")
-50700   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-50710     .FilenameSubstitutionsOnlyInTitle = CLng(tStr)
-50720    Else
-50730     .FilenameSubstitutionsOnlyInTitle = 1
-50740   End If
-50750   tStr = hOpt.Retrieve("JPEGColorscount")
-50760   If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-50770     .JPEGColorscount = CLng(tStr)
+50670   tstr = hOpt.Retrieve("EPSLanguageLevel")
+50680   If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
+50690     .EPSLanguageLevel = CLng(tstr)
+50700    Else
+50710     .EPSLanguageLevel = 2
+50720   End If
+50730   tstr = hOpt.Retrieve("FilenameSubstitutions", "Microsoft Word - \.doc")
+50740   .FilenameSubstitutions = tstr
+50750   tstr = hOpt.Retrieve("FilenameSubstitutionsOnlyInTitle")
+50760   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+50770     .FilenameSubstitutionsOnlyInTitle = CLng(tstr)
 50780    Else
-50790     .JPEGColorscount = 0
+50790     .FilenameSubstitutionsOnlyInTitle = 1
 50800   End If
-50810   tStr = hOpt.Retrieve("JPEGQuality")
-50820   If CLng(tStr) >= 0 And CLng(tStr) <= 100 Then
-50830     .JPEGQuality = CLng(tStr)
+50810   tstr = hOpt.Retrieve("JPEGColorscount")
+50820   If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
+50830     .JPEGColorscount = CLng(tstr)
 50840    Else
-50850     .JPEGQuality = 75
+50850     .JPEGColorscount = 0
 50860   End If
-50870   tStr = hOpt.Retrieve("Language", "english")
-50880   .Language = tStr
-50890   tStr = hOpt.Retrieve("LastSaveDirectory", GetMyFiles)
-50900   If DirExists(tStr) = True Then
-50910     .LastSaveDirectory = CompletePath(tStr)
-50920    Else
-50930     .LastSaveDirectory = GetMyFiles
-50940   End If
-50950   tStr = hOpt.Retrieve("Logging")
-50960   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-50970     .Logging = CLng(tStr)
+50870   tstr = hOpt.Retrieve("JPEGQuality")
+50880   If CLng(tstr) >= 0 And CLng(tstr) <= 100 Then
+50890     .JPEGQuality = CLng(tstr)
+50900    Else
+50910     .JPEGQuality = 75
+50920   End If
+50930   tstr = hOpt.Retrieve("Language", "english")
+50940   .Language = tstr
+50950   tstr = hOpt.Retrieve("LastSaveDirectory", GetMyFiles)
+50960   If DirExists(tstr) = True Then
+50970     .LastSaveDirectory = CompletePath(tstr)
 50980    Else
-50990     .Logging = 0
+50990     .LastSaveDirectory = GetMyFiles
 51000   End If
-51010   tStr = hOpt.Retrieve("LogLines")
-51020   If CLng(tStr) >= 100 And CLng(tStr) <= 1000 Then
-51030     .LogLines = CLng(tStr)
+51010   tstr = hOpt.Retrieve("Logging")
+51020   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51030     .Logging = CLng(tstr)
 51040    Else
-51050     .LogLines = 100
+51050     .Logging = 0
 51060   End If
-51070   tStr = hOpt.Retrieve("NoConfirmMessageSwitchingDefaultprinter")
-51080   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51090     .NoConfirmMessageSwitchingDefaultprinter = CLng(tStr)
+51070   tstr = hOpt.Retrieve("LogLines")
+51080   If CLng(tstr) >= 100 And CLng(tstr) <= 1000 Then
+51090     .LogLines = CLng(tstr)
 51100    Else
-51110     .NoConfirmMessageSwitchingDefaultprinter = 0
+51110     .LogLines = 100
 51120   End If
-51130   tStr = hOpt.Retrieve("NoProcessingAtStartup")
-51140   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51150     .NoProcessingAtStartup = CLng(tStr)
+51130   tstr = hOpt.Retrieve("NoConfirmMessageSwitchingDefaultprinter")
+51140   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51150     .NoConfirmMessageSwitchingDefaultprinter = CLng(tstr)
 51160    Else
-51170     .NoProcessingAtStartup = 0
+51170     .NoConfirmMessageSwitchingDefaultprinter = 0
 51180   End If
-51190   tStr = hOpt.Retrieve("OnePagePerFile")
-51200   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51210     .OnePagePerFile = CLng(tStr)
+51190   tstr = hOpt.Retrieve("NoProcessingAtStartup")
+51200   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51210     .NoProcessingAtStartup = CLng(tstr)
 51220    Else
-51230     .OnePagePerFile = 0
+51230     .NoProcessingAtStartup = 0
 51240   End If
-51250   tStr = hOpt.Retrieve("OptionsEnabled")
-51260   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51270     .OptionsEnabled = CLng(tStr)
+51250   tstr = hOpt.Retrieve("OnePagePerFile")
+51260   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51270     .OnePagePerFile = CLng(tstr)
 51280    Else
-51290     .OptionsEnabled = 1
+51290     .OnePagePerFile = 0
 51300   End If
-51310   tStr = hOpt.Retrieve("OptionsVisible")
-51320   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51330     .OptionsVisible = CLng(tStr)
+51310   tstr = hOpt.Retrieve("OptionsEnabled")
+51320   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51330     .OptionsEnabled = CLng(tstr)
 51340    Else
-51350     .OptionsVisible = 1
+51350     .OptionsEnabled = 1
 51360   End If
-51370   tStr = hOpt.Retrieve("PCXColorscount")
-51380   If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
-51390     .PCXColorscount = CLng(tStr)
+51370   tstr = hOpt.Retrieve("OptionsVisible")
+51380   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51390     .OptionsVisible = CLng(tstr)
 51400    Else
-51410     .PCXColorscount = 0
+51410     .OptionsVisible = 1
 51420   End If
-51430   tStr = hOpt.Retrieve("PDFAllowAssembly")
-51440   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51450     .PDFAllowAssembly = CLng(tStr)
+51430   tstr = hOpt.Retrieve("PCXColorscount")
+51440   If CLng(tstr) >= 0 And CLng(tstr) <= 5 Then
+51450     .PCXColorscount = CLng(tstr)
 51460    Else
-51470     .PDFAllowAssembly = 0
+51470     .PCXColorscount = 0
 51480   End If
-51490   tStr = hOpt.Retrieve("PDFAllowDegradedPrinting")
-51500   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51510     .PDFAllowDegradedPrinting = CLng(tStr)
+51490   tstr = hOpt.Retrieve("PDFAllowAssembly")
+51500   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51510     .PDFAllowAssembly = CLng(tstr)
 51520    Else
-51530     .PDFAllowDegradedPrinting = 0
+51530     .PDFAllowAssembly = 0
 51540   End If
-51550   tStr = hOpt.Retrieve("PDFAllowFillIn")
-51560   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51570     .PDFAllowFillIn = CLng(tStr)
+51550   tstr = hOpt.Retrieve("PDFAllowDegradedPrinting")
+51560   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51570     .PDFAllowDegradedPrinting = CLng(tstr)
 51580    Else
-51590     .PDFAllowFillIn = 0
+51590     .PDFAllowDegradedPrinting = 0
 51600   End If
-51610   tStr = hOpt.Retrieve("PDFAllowScreenReaders")
-51620   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51630     .PDFAllowScreenReaders = CLng(tStr)
+51610   tstr = hOpt.Retrieve("PDFAllowFillIn")
+51620   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51630     .PDFAllowFillIn = CLng(tstr)
 51640    Else
-51650     .PDFAllowScreenReaders = 0
+51650     .PDFAllowFillIn = 0
 51660   End If
-51670   tStr = hOpt.Retrieve("PDFColorsCMYKToRGB")
-51680   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51690     .PDFColorsCMYKToRGB = CLng(tStr)
+51670   tstr = hOpt.Retrieve("PDFAllowScreenReaders")
+51680   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51690     .PDFAllowScreenReaders = CLng(tstr)
 51700    Else
-51710     .PDFColorsCMYKToRGB = 1
+51710     .PDFAllowScreenReaders = 0
 51720   End If
-51730   tStr = hOpt.Retrieve("PDFColorsColorModel")
-51740   If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-51750     .PDFColorsColorModel = CLng(tStr)
+51730   tstr = hOpt.Retrieve("PDFColorsCMYKToRGB")
+51740   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51750     .PDFColorsCMYKToRGB = CLng(tstr)
 51760    Else
-51770     .PDFColorsColorModel = 1
+51770     .PDFColorsCMYKToRGB = 1
 51780   End If
-51790   tStr = hOpt.Retrieve("PDFColorsPreserveHalftone")
-51800   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51810     .PDFColorsPreserveHalftone = CLng(tStr)
+51790   tstr = hOpt.Retrieve("PDFColorsColorModel")
+51800   If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
+51810     .PDFColorsColorModel = CLng(tstr)
 51820    Else
-51830     .PDFColorsPreserveHalftone = 0
+51830     .PDFColorsColorModel = 1
 51840   End If
-51850   tStr = hOpt.Retrieve("PDFColorsPreserveOverprint")
-51860   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51870     .PDFColorsPreserveOverprint = CLng(tStr)
+51850   tstr = hOpt.Retrieve("PDFColorsPreserveHalftone")
+51860   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51870     .PDFColorsPreserveHalftone = CLng(tstr)
 51880    Else
-51890     .PDFColorsPreserveOverprint = 1
+51890     .PDFColorsPreserveHalftone = 0
 51900   End If
-51910   tStr = hOpt.Retrieve("PDFColorsPreserveTransfer")
-51920   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51930     .PDFColorsPreserveTransfer = CLng(tStr)
+51910   tstr = hOpt.Retrieve("PDFColorsPreserveOverprint")
+51920   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51930     .PDFColorsPreserveOverprint = CLng(tstr)
 51940    Else
-51950     .PDFColorsPreserveTransfer = 1
+51950     .PDFColorsPreserveOverprint = 1
 51960   End If
-51970   tStr = hOpt.Retrieve("PDFCompressionColorCompression")
-51980   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-51990     .PDFCompressionColorCompression = CLng(tStr)
+51970   tstr = hOpt.Retrieve("PDFColorsPreserveTransfer")
+51980   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+51990     .PDFColorsPreserveTransfer = CLng(tstr)
 52000    Else
-52010     .PDFCompressionColorCompression = 1
+52010     .PDFColorsPreserveTransfer = 1
 52020   End If
-52030   tStr = hOpt.Retrieve("PDFCompressionColorCompressionChoice")
-52040   If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
-52050     .PDFCompressionColorCompressionChoice = CLng(tStr)
+52030   tstr = hOpt.Retrieve("PDFCompressionColorCompression")
+52040   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+52050     .PDFCompressionColorCompression = CLng(tstr)
 52060    Else
-52070     .PDFCompressionColorCompressionChoice = 0
+52070     .PDFCompressionColorCompression = 1
 52080   End If
-52090   tStr = hOpt.Retrieve("PDFCompressionColorResample")
-52100   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52110     .PDFCompressionColorResample = CLng(tStr)
+52090   tstr = hOpt.Retrieve("PDFCompressionColorCompressionChoice")
+52100   If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
+52110     .PDFCompressionColorCompressionChoice = CLng(tstr)
 52120    Else
-52130     .PDFCompressionColorResample = 0
+52130     .PDFCompressionColorCompressionChoice = 0
 52140   End If
-52150   tStr = hOpt.Retrieve("PDFCompressionColorResampleChoice")
-52160   If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-52170     .PDFCompressionColorResampleChoice = CLng(tStr)
+52150   tstr = hOpt.Retrieve("PDFCompressionColorResample")
+52160   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+52170     .PDFCompressionColorResample = CLng(tstr)
 52180    Else
-52190     .PDFCompressionColorResampleChoice = 0
+52190     .PDFCompressionColorResample = 0
 52200   End If
-52210   tStr = hOpt.Retrieve("PDFCompressionColorResolution")
-52220   If CLng(tStr) >= 0 Then
-52230     .PDFCompressionColorResolution = CLng(tStr)
+52210   tstr = hOpt.Retrieve("PDFCompressionColorResampleChoice")
+52220   If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
+52230     .PDFCompressionColorResampleChoice = CLng(tstr)
 52240    Else
-52250     .PDFCompressionColorResolution = 300
+52250     .PDFCompressionColorResampleChoice = 0
 52260   End If
-52270   tStr = hOpt.Retrieve("PDFCompressionGreyCompression")
-52280   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52290     .PDFCompressionGreyCompression = CLng(tStr)
+52270   tstr = hOpt.Retrieve("PDFCompressionColorResolution")
+52280   If CLng(tstr) >= 0 Then
+52290     .PDFCompressionColorResolution = CLng(tstr)
 52300    Else
-52310     .PDFCompressionGreyCompression = 1
+52310     .PDFCompressionColorResolution = 300
 52320   End If
-52330   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionChoice")
-52340   If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
-52350     .PDFCompressionGreyCompressionChoice = CLng(tStr)
+52330   tstr = hOpt.Retrieve("PDFCompressionGreyCompression")
+52340   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+52350     .PDFCompressionGreyCompression = CLng(tstr)
 52360    Else
-52370     .PDFCompressionGreyCompressionChoice = 0
+52370     .PDFCompressionGreyCompression = 1
 52380   End If
-52390   tStr = hOpt.Retrieve("PDFCompressionGreyResample")
-52400   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52410     .PDFCompressionGreyResample = CLng(tStr)
+52390   tstr = hOpt.Retrieve("PDFCompressionGreyCompressionChoice")
+52400   If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
+52410     .PDFCompressionGreyCompressionChoice = CLng(tstr)
 52420    Else
-52430     .PDFCompressionGreyResample = 0
+52430     .PDFCompressionGreyCompressionChoice = 0
 52440   End If
-52450   tStr = hOpt.Retrieve("PDFCompressionGreyResampleChoice")
-52460   If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-52470     .PDFCompressionGreyResampleChoice = CLng(tStr)
+52450   tstr = hOpt.Retrieve("PDFCompressionGreyResample")
+52460   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+52470     .PDFCompressionGreyResample = CLng(tstr)
 52480    Else
-52490     .PDFCompressionGreyResampleChoice = 0
+52490     .PDFCompressionGreyResample = 0
 52500   End If
-52510   tStr = hOpt.Retrieve("PDFCompressionGreyResolution")
-52520   If CLng(tStr) >= 0 Then
-52530     .PDFCompressionGreyResolution = CLng(tStr)
+52510   tstr = hOpt.Retrieve("PDFCompressionGreyResampleChoice")
+52520   If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
+52530     .PDFCompressionGreyResampleChoice = CLng(tstr)
 52540    Else
-52550     .PDFCompressionGreyResolution = 300
+52550     .PDFCompressionGreyResampleChoice = 0
 52560   End If
-52570   tStr = hOpt.Retrieve("PDFCompressionMonoCompression")
-52580   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52590     .PDFCompressionMonoCompression = CLng(tStr)
+52570   tstr = hOpt.Retrieve("PDFCompressionGreyResolution")
+52580   If CLng(tstr) >= 0 Then
+52590     .PDFCompressionGreyResolution = CLng(tstr)
 52600    Else
-52610     .PDFCompressionMonoCompression = 1
+52610     .PDFCompressionGreyResolution = 300
 52620   End If
-52630   tStr = hOpt.Retrieve("PDFCompressionMonoCompressionChoice")
-52640   If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-52650     .PDFCompressionMonoCompressionChoice = CLng(tStr)
+52630   tstr = hOpt.Retrieve("PDFCompressionMonoCompression")
+52640   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+52650     .PDFCompressionMonoCompression = CLng(tstr)
 52660    Else
-52670     .PDFCompressionMonoCompressionChoice = 0
+52670     .PDFCompressionMonoCompression = 1
 52680   End If
-52690   tStr = hOpt.Retrieve("PDFCompressionMonoResample")
-52700   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52710     .PDFCompressionMonoResample = CLng(tStr)
+52690   tstr = hOpt.Retrieve("PDFCompressionMonoCompressionChoice")
+52700   If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
+52710     .PDFCompressionMonoCompressionChoice = CLng(tstr)
 52720    Else
-52730     .PDFCompressionMonoResample = 0
+52730     .PDFCompressionMonoCompressionChoice = 0
 52740   End If
-52750   tStr = hOpt.Retrieve("PDFCompressionMonoResampleChoice")
-52760   If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-52770     .PDFCompressionMonoResampleChoice = CLng(tStr)
+52750   tstr = hOpt.Retrieve("PDFCompressionMonoResample")
+52760   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+52770     .PDFCompressionMonoResample = CLng(tstr)
 52780    Else
-52790     .PDFCompressionMonoResampleChoice = 0
+52790     .PDFCompressionMonoResample = 0
 52800   End If
-52810   tStr = hOpt.Retrieve("PDFCompressionMonoResolution")
-52820   If CLng(tStr) >= 0 Then
-52830     .PDFCompressionMonoResolution = CLng(tStr)
+52810   tstr = hOpt.Retrieve("PDFCompressionMonoResampleChoice")
+52820   If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
+52830     .PDFCompressionMonoResampleChoice = CLng(tstr)
 52840    Else
-52850     .PDFCompressionMonoResolution = 1200
+52850     .PDFCompressionMonoResampleChoice = 0
 52860   End If
-52870   tStr = hOpt.Retrieve("PDFCompressionTextCompression")
-52880   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52890     .PDFCompressionTextCompression = CLng(tStr)
+52870   tstr = hOpt.Retrieve("PDFCompressionMonoResolution")
+52880   If CLng(tstr) >= 0 Then
+52890     .PDFCompressionMonoResolution = CLng(tstr)
 52900    Else
-52910     .PDFCompressionTextCompression = 1
+52910     .PDFCompressionMonoResolution = 1200
 52920   End If
-52930   tStr = hOpt.Retrieve("PDFDisallowCopy")
-52940   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52950     .PDFDisallowCopy = CLng(tStr)
+52930   tstr = hOpt.Retrieve("PDFCompressionTextCompression")
+52940   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+52950     .PDFCompressionTextCompression = CLng(tstr)
 52960    Else
-52970     .PDFDisallowCopy = 1
+52970     .PDFCompressionTextCompression = 1
 52980   End If
-52990   tStr = hOpt.Retrieve("PDFDisallowModifyAnnotations")
-53000   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53010     .PDFDisallowModifyAnnotations = CLng(tStr)
+52990   tstr = hOpt.Retrieve("PDFDisallowCopy")
+53000   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53010     .PDFDisallowCopy = CLng(tstr)
 53020    Else
-53030     .PDFDisallowModifyAnnotations = 0
+53030     .PDFDisallowCopy = 1
 53040   End If
-53050   tStr = hOpt.Retrieve("PDFDisallowModifyContents")
-53060   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53070     .PDFDisallowModifyContents = CLng(tStr)
+53050   tstr = hOpt.Retrieve("PDFDisallowModifyAnnotations")
+53060   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53070     .PDFDisallowModifyAnnotations = CLng(tstr)
 53080    Else
-53090     .PDFDisallowModifyContents = 0
+53090     .PDFDisallowModifyAnnotations = 0
 53100   End If
-53110   tStr = hOpt.Retrieve("PDFDisallowPrinting")
-53120   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53130     .PDFDisallowPrinting = CLng(tStr)
+53110   tstr = hOpt.Retrieve("PDFDisallowModifyContents")
+53120   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53130     .PDFDisallowModifyContents = CLng(tstr)
 53140    Else
-53150     .PDFDisallowPrinting = 0
+53150     .PDFDisallowModifyContents = 0
 53160   End If
-53170   tStr = hOpt.Retrieve("PDFEncryptor")
-53180   If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-53190     .PDFEncryptor = CLng(tStr)
+53170   tstr = hOpt.Retrieve("PDFDisallowPrinting")
+53180   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53190     .PDFDisallowPrinting = CLng(tstr)
 53200    Else
-53210     .PDFEncryptor = 0
+53210     .PDFDisallowPrinting = 0
 53220   End If
-53230   tStr = hOpt.Retrieve("PDFFontsEmbedAll")
-53240   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53250     .PDFFontsEmbedAll = CLng(tStr)
+53230   tstr = hOpt.Retrieve("PDFEncryptor")
+53240   If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
+53250     .PDFEncryptor = CLng(tstr)
 53260    Else
-53270     .PDFFontsEmbedAll = 1
+53270     .PDFEncryptor = 0
 53280   End If
-53290   tStr = hOpt.Retrieve("PDFFontsSubSetFonts")
-53300   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53310     .PDFFontsSubSetFonts = CLng(tStr)
+53290   tstr = hOpt.Retrieve("PDFFontsEmbedAll")
+53300   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53310     .PDFFontsEmbedAll = CLng(tstr)
 53320    Else
-53330     .PDFFontsSubSetFonts = 1
+53330     .PDFFontsEmbedAll = 1
 53340   End If
-53350   tStr = hOpt.Retrieve("PDFFontsSubSetFontsPercent")
-53360   If CLng(tStr) >= 0 Then
-53370     .PDFFontsSubSetFontsPercent = CLng(tStr)
+53350   tstr = hOpt.Retrieve("PDFFontsSubSetFonts")
+53360   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53370     .PDFFontsSubSetFonts = CLng(tstr)
 53380    Else
-53390     .PDFFontsSubSetFontsPercent = 100
+53390     .PDFFontsSubSetFonts = 1
 53400   End If
-53410   tStr = hOpt.Retrieve("PDFGeneralASCII85")
-53420   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53430     .PDFGeneralASCII85 = CLng(tStr)
+53410   tstr = hOpt.Retrieve("PDFFontsSubSetFontsPercent")
+53420   If CLng(tstr) >= 0 Then
+53430     .PDFFontsSubSetFontsPercent = CLng(tstr)
 53440    Else
-53450     .PDFGeneralASCII85 = 0
+53450     .PDFFontsSubSetFontsPercent = 100
 53460   End If
-53470   tStr = hOpt.Retrieve("PDFGeneralAutorotate")
-53480   If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-53490     .PDFGeneralAutorotate = CLng(tStr)
+53470   tstr = hOpt.Retrieve("PDFGeneralASCII85")
+53480   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53490     .PDFGeneralASCII85 = CLng(tstr)
 53500    Else
-53510     .PDFGeneralAutorotate = 2
+53510     .PDFGeneralASCII85 = 0
 53520   End If
-53530   tStr = hOpt.Retrieve("PDFGeneralCompatibility")
-53540   If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-53550     .PDFGeneralCompatibility = CLng(tStr)
+53530   tstr = hOpt.Retrieve("PDFGeneralAutorotate")
+53540   If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
+53550     .PDFGeneralAutorotate = CLng(tstr)
 53560    Else
-53570     .PDFGeneralCompatibility = 1
+53570     .PDFGeneralAutorotate = 2
 53580   End If
-53590   tStr = hOpt.Retrieve("PDFGeneralOverprint")
-53600   If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-53610     .PDFGeneralOverprint = CLng(tStr)
+53590   tstr = hOpt.Retrieve("PDFGeneralCompatibility")
+53600   If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
+53610     .PDFGeneralCompatibility = CLng(tstr)
 53620    Else
-53630     .PDFGeneralOverprint = 0
+53630     .PDFGeneralCompatibility = 1
 53640   End If
-53650   tStr = hOpt.Retrieve("PDFGeneralResolution")
-53660   If CLng(tStr) >= 0 Then
-53670     .PDFGeneralResolution = CLng(tStr)
+53650   tstr = hOpt.Retrieve("PDFGeneralOverprint")
+53660   If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
+53670     .PDFGeneralOverprint = CLng(tstr)
 53680    Else
-53690     .PDFGeneralResolution = 600
+53690     .PDFGeneralOverprint = 0
 53700   End If
-53710   tStr = hOpt.Retrieve("PDFHighEncryption")
-53720   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53730     .PDFHighEncryption = CLng(tStr)
+53710   tstr = hOpt.Retrieve("PDFGeneralResolution")
+53720   If CLng(tstr) >= 0 Then
+53730     .PDFGeneralResolution = CLng(tstr)
 53740    Else
-53750     .PDFHighEncryption = 0
+53750     .PDFGeneralResolution = 600
 53760   End If
-53770   tStr = hOpt.Retrieve("PDFLowEncryption")
-53780   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53790     .PDFLowEncryption = CLng(tStr)
+53770   tstr = hOpt.Retrieve("PDFHighEncryption")
+53780   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53790     .PDFHighEncryption = CLng(tstr)
 53800    Else
-53810     .PDFLowEncryption = 1
+53810     .PDFHighEncryption = 0
 53820   End If
-53830   tStr = hOpt.Retrieve("PDFOptimize")
-53840   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53850     .PDFOptimize = CLng(tStr)
+53830   tstr = hOpt.Retrieve("PDFLowEncryption")
+53840   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53850     .PDFLowEncryption = CLng(tstr)
 53860    Else
-53870     .PDFOptimize = 0
+53870     .PDFLowEncryption = 1
 53880   End If
-53890   tStr = hOpt.Retrieve("PDFOwnerPass")
-53900   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53910     .PDFOwnerPass = CLng(tStr)
+53890   tstr = hOpt.Retrieve("PDFOptimize")
+53900   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53910     .PDFOptimize = CLng(tstr)
 53920    Else
-53930     .PDFOwnerPass = 0
+53930     .PDFOptimize = 0
 53940   End If
-53950   tStr = hOpt.Retrieve("PDFOwnerPasswordString", " ")
-53960   .PDFOwnerPasswordString = tStr
-53970   tStr = hOpt.Retrieve("PDFUserPass")
-53980   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-53990     .PDFUserPass = CLng(tStr)
-54000    Else
-54010     .PDFUserPass = 0
-54020   End If
-54030   tStr = hOpt.Retrieve("PDFUserPasswordString", " ")
-54040   .PDFUserPasswordString = tStr
-54050   tStr = hOpt.Retrieve("PDFUseSecurity")
-54060   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54070     .PDFUseSecurity = CLng(tStr)
-54080    Else
-54090     .PDFUseSecurity = 0
-54100   End If
-54110   tStr = hOpt.Retrieve("PNGColorscount")
-54120   If CLng(tStr) >= 0 And CLng(tStr) <= 4 Then
-54130     .PNGColorscount = CLng(tStr)
+53950   tstr = hOpt.Retrieve("PDFOwnerPass")
+53960   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+53970     .PDFOwnerPass = CLng(tstr)
+53980    Else
+53990     .PDFOwnerPass = 0
+54000   End If
+54010   tstr = hOpt.Retrieve("PDFOwnerPasswordString", " ")
+54020   .PDFOwnerPasswordString = tstr
+54030   tstr = hOpt.Retrieve("PDFUserPass")
+54040   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54050     .PDFUserPass = CLng(tstr)
+54060    Else
+54070     .PDFUserPass = 0
+54080   End If
+54090   tstr = hOpt.Retrieve("PDFUserPasswordString", " ")
+54100   .PDFUserPasswordString = tstr
+54110   tstr = hOpt.Retrieve("PDFUseSecurity")
+54120   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54130     .PDFUseSecurity = CLng(tstr)
 54140    Else
-54150     .PNGColorscount = 0
+54150     .PDFUseSecurity = 0
 54160   End If
-54170   tStr = hOpt.Retrieve("PrinterStop")
-54180   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54190     .PrinterStop = CLng(tStr)
+54170   tstr = hOpt.Retrieve("PNGColorscount")
+54180   If CLng(tstr) >= 0 And CLng(tstr) <= 4 Then
+54190     .PNGColorscount = CLng(tstr)
 54200    Else
-54210     .PrinterStop = 0
+54210     .PNGColorscount = 0
 54220   End If
-54230   tStr = hOpt.Retrieve("PrinterTemppath", GetTempPath)
-54240   If DirExists(tStr) = True Then
-54250     .PrinterTemppath = CompletePath(tStr)
+54230   tstr = hOpt.Retrieve("PrinterStop")
+54240   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54250     .PrinterStop = CLng(tstr)
 54260    Else
-54270     .PrinterTemppath = GetTempPath
+54270     .PrinterStop = 0
 54280   End If
-54290   tStr = hOpt.Retrieve("ProcessPriority")
-54300   If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-54310     .ProcessPriority = CLng(tStr)
+54290   tstr = hOpt.Retrieve("PrinterTemppath", GetTempPath)
+54300   If DirExists(tstr) = True Then
+54310     .PrinterTemppath = CompletePath(tstr)
 54320    Else
-54330     .ProcessPriority = 1
+54330     .PrinterTemppath = GetTempPath
 54340   End If
-54350   tStr = hOpt.Retrieve("ProgramFont", "MS Sans Serif")
-54360   .ProgramFont = tStr
-54370   tStr = hOpt.Retrieve("ProgramFontCharset")
-54380   If CLng(tStr) >= 0 Then
-54390     .ProgramFontCharset = CLng(tStr)
-54400    Else
-54410     .ProgramFontCharset = 0
-54420   End If
-54430   tStr = hOpt.Retrieve("ProgramFontSize")
-54440   If CLng(tStr) >= 1 And CLng(tStr) <= 72 Then
-54450     .ProgramFontSize = CLng(tStr)
+54350   tstr = hOpt.Retrieve("ProcessPriority")
+54360   If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
+54370     .ProcessPriority = CLng(tstr)
+54380    Else
+54390     .ProcessPriority = 1
+54400   End If
+54410   tstr = hOpt.Retrieve("ProgramFont", "MS Sans Serif")
+54420   .ProgramFont = tstr
+54430   tstr = hOpt.Retrieve("ProgramFontCharset")
+54440   If CLng(tstr) >= 0 Then
+54450     .ProgramFontCharset = CLng(tstr)
 54460    Else
-54470     .ProgramFontSize = 8
+54470     .ProgramFontCharset = 0
 54480   End If
-54490   tStr = hOpt.Retrieve("PSLanguageLevel")
-54500   If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-54510     .PSLanguageLevel = CLng(tStr)
+54490   tstr = hOpt.Retrieve("ProgramFontSize")
+54500   If CLng(tstr) >= 1 And CLng(tstr) <= 72 Then
+54510     .ProgramFontSize = CLng(tstr)
 54520    Else
-54530     .PSLanguageLevel = 2
+54530     .ProgramFontSize = 8
 54540   End If
-54550   tStr = hOpt.Retrieve("RemoveAllKnownFileExtensions")
-54560   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54570     .RemoveAllKnownFileExtensions = CLng(tStr)
+54550   tstr = hOpt.Retrieve("PSLanguageLevel")
+54560   If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
+54570     .PSLanguageLevel = CLng(tstr)
 54580    Else
-54590     .RemoveAllKnownFileExtensions = 1
+54590     .PSLanguageLevel = 2
 54600   End If
-54610   tStr = hOpt.Retrieve("RemoveSpaces")
-54620   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54630     .RemoveSpaces = CLng(tStr)
+54610   tstr = hOpt.Retrieve("RemoveAllKnownFileExtensions")
+54620   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54630     .RemoveAllKnownFileExtensions = CLng(tstr)
 54640    Else
-54650     .RemoveSpaces = 1
+54650     .RemoveAllKnownFileExtensions = 1
 54660   End If
-54670   tStr = hOpt.Retrieve("RunProgramAfterSaving")
-54680   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54690     .RunProgramAfterSaving = CLng(tStr)
+54670   tstr = hOpt.Retrieve("RemoveSpaces")
+54680   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54690     .RemoveSpaces = CLng(tstr)
 54700    Else
-54710     .RunProgramAfterSaving = 0
+54710     .RemoveSpaces = 1
 54720   End If
-54730   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramname", " ")
-54740   .RunProgramAfterSavingProgramname = tStr
-54750   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramParameters", " ")
-54760   .RunProgramAfterSavingProgramParameters = tStr
-54770   tStr = hOpt.Retrieve("RunProgramAfterSavingWaitUntilReady")
-54780   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54790     .RunProgramAfterSavingWaitUntilReady = CLng(tStr)
-54800    Else
-54810     .RunProgramAfterSavingWaitUntilReady = 1
-54820   End If
-54830   tStr = hOpt.Retrieve("RunProgramAfterSavingWindowstyle")
-54840   If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
-54850     .RunProgramAfterSavingWindowstyle = CLng(tStr)
+54730   tstr = hOpt.Retrieve("RunProgramAfterSaving")
+54740   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54750     .RunProgramAfterSaving = CLng(tstr)
+54760    Else
+54770     .RunProgramAfterSaving = 0
+54780   End If
+54790   tstr = hOpt.Retrieve("RunProgramAfterSavingProgramname", " ")
+54800   .RunProgramAfterSavingProgramname = tstr
+54810   tstr = hOpt.Retrieve("RunProgramAfterSavingProgramParameters", " ")
+54820   .RunProgramAfterSavingProgramParameters = tstr
+54830   tstr = hOpt.Retrieve("RunProgramAfterSavingWaitUntilReady")
+54840   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54850     .RunProgramAfterSavingWaitUntilReady = CLng(tstr)
 54860    Else
-54870     .RunProgramAfterSavingWindowstyle = 1
+54870     .RunProgramAfterSavingWaitUntilReady = 1
 54880   End If
-54890   tStr = hOpt.Retrieve("SaveFilename", "<Title>")
-54900   .SaveFilename = tStr
-54910   tStr = hOpt.Retrieve("SendMailMethod")
-54920   If CLng(tStr) >= 0 Then
-54930     .SendMailMethod = CLng(tStr)
-54940    Else
-54950     .SendMailMethod = 0
-54960   End If
-54970   tStr = hOpt.Retrieve("ShowAnimation")
-54980   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54990     .ShowAnimation = CLng(tStr)
-55000    Else
-55010     .ShowAnimation = 1
-55020   End If
-55030   tStr = hOpt.Retrieve("StampFontColor", "#FF0000")
-55040   .StampFontColor = tStr
-55050   tStr = hOpt.Retrieve("StampFontname", "Arial")
-55060   .StampFontname = tStr
-55070   tStr = hOpt.Retrieve("StampFontsize")
-55080   If CLng(tStr) >= 1 Then
-55090     .StampFontsize = CLng(tStr)
-55100    Else
-55110     .StampFontsize = 48
-55120   End If
-55130   tStr = hOpt.Retrieve("StampOutlineFontthickness")
-55140   If CLng(tStr) >= 0 Then
-55150     .StampOutlineFontthickness = CLng(tStr)
+54890   tstr = hOpt.Retrieve("RunProgramAfterSavingWindowstyle")
+54900   If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
+54910     .RunProgramAfterSavingWindowstyle = CLng(tstr)
+54920    Else
+54930     .RunProgramAfterSavingWindowstyle = 1
+54940   End If
+54950   tstr = hOpt.Retrieve("RunProgramBeforeSaving")
+54960   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+54970     .RunProgramBeforeSaving = CLng(tstr)
+54980    Else
+54990     .RunProgramBeforeSaving = 0
+55000   End If
+55010   tstr = hOpt.Retrieve("RunProgramBeforeSavingProgramname", " ")
+55020   .RunProgramBeforeSavingProgramname = tstr
+55030   tstr = hOpt.Retrieve("RunProgramBeforeSavingProgramParameters", " ")
+55040   .RunProgramBeforeSavingProgramParameters = tstr
+55050   tstr = hOpt.Retrieve("RunProgramBeforeSavingWindowstyle")
+55060   If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
+55070     .RunProgramBeforeSavingWindowstyle = CLng(tstr)
+55080    Else
+55090     .RunProgramBeforeSavingWindowstyle = 1
+55100   End If
+55110   tstr = hOpt.Retrieve("SaveFilename", "<Title>")
+55120   .SaveFilename = tstr
+55130   tstr = hOpt.Retrieve("SendMailMethod")
+55140   If CLng(tstr) >= 0 Then
+55150     .SendMailMethod = CLng(tstr)
 55160    Else
-55170     .StampOutlineFontthickness = 0
+55170     .SendMailMethod = 0
 55180   End If
-55190   tStr = hOpt.Retrieve("StampString", " ")
-55200   .StampString = tStr
-55210   tStr = hOpt.Retrieve("StampUseOutlineFont")
-55220   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-55230     .StampUseOutlineFont = CLng(tStr)
-55240    Else
-55250     .StampUseOutlineFont = 1
-55260   End If
-55270   tStr = hOpt.Retrieve("StandardAuthor", " ")
-55280   .StandardAuthor = tStr
-55290   tStr = hOpt.Retrieve("StandardCreationdate", " ")
-55300   .StandardCreationdate = tStr
-55310   tStr = hOpt.Retrieve("StandardDateformat", "YYYYMMDDHHNNSS")
-55320   .StandardDateformat = tStr
-55330   tStr = hOpt.Retrieve("StandardKeywords", " ")
-55340   .StandardKeywords = tStr
-55350   tStr = hOpt.Retrieve("StandardModifydate", " ")
-55360   .StandardModifydate = tStr
-55370   tStr = hOpt.Retrieve("StandardSaveformat", "pdf")
-55380   .StandardSaveformat = tStr
-55390   tStr = hOpt.Retrieve("StandardSubject", " ")
-55400   .StandardSubject = tStr
-55410   tStr = hOpt.Retrieve("StandardTitle", " ")
-55420   .StandardTitle = tStr
-55430   tStr = hOpt.Retrieve("StartStandardProgram")
-55440   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-55450     .StartStandardProgram = CLng(tStr)
+55190   tstr = hOpt.Retrieve("ShowAnimation")
+55200   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+55210     .ShowAnimation = CLng(tstr)
+55220    Else
+55230     .ShowAnimation = 1
+55240   End If
+55250   tstr = hOpt.Retrieve("StampFontColor", "#FF0000")
+55260   .StampFontColor = tstr
+55270   tstr = hOpt.Retrieve("StampFontname", "Arial")
+55280   .StampFontname = tstr
+55290   tstr = hOpt.Retrieve("StampFontsize")
+55300   If CLng(tstr) >= 1 Then
+55310     .StampFontsize = CLng(tstr)
+55320    Else
+55330     .StampFontsize = 48
+55340   End If
+55350   tstr = hOpt.Retrieve("StampOutlineFontthickness")
+55360   If CLng(tstr) >= 0 Then
+55370     .StampOutlineFontthickness = CLng(tstr)
+55380    Else
+55390     .StampOutlineFontthickness = 0
+55400   End If
+55410   tstr = hOpt.Retrieve("StampString", " ")
+55420   .StampString = tstr
+55430   tstr = hOpt.Retrieve("StampUseOutlineFont")
+55440   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+55450     .StampUseOutlineFont = CLng(tstr)
 55460    Else
-55470     .StartStandardProgram = 1
+55470     .StampUseOutlineFont = 1
 55480   End If
-55490   tStr = hOpt.Retrieve("TIFFColorscount")
-55500   If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
-55510     .TIFFColorscount = CLng(tStr)
-55520    Else
-55530     .TIFFColorscount = 0
-55540   End If
-55550   tStr = hOpt.Retrieve("UseAutosave")
-55560   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-55570     .UseAutosave = CLng(tStr)
-55580    Else
-55590     .UseAutosave = 0
-55600   End If
-55610   tStr = hOpt.Retrieve("UseAutosaveDirectory")
-55620   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-55630     .UseAutosaveDirectory = CLng(tStr)
-55640    Else
-55650     .UseAutosaveDirectory = 1
-55660   End If
-55670   tStr = hOpt.Retrieve("UseCreationDateNow")
-55680   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-55690     .UseCreationDateNow = CLng(tStr)
+55490   tstr = hOpt.Retrieve("StandardAuthor", " ")
+55500   .StandardAuthor = tstr
+55510   tstr = hOpt.Retrieve("StandardCreationdate", " ")
+55520   .StandardCreationdate = tstr
+55530   tstr = hOpt.Retrieve("StandardDateformat", "YYYYMMDDHHNNSS")
+55540   .StandardDateformat = tstr
+55550   tstr = hOpt.Retrieve("StandardKeywords", " ")
+55560   .StandardKeywords = tstr
+55570   tstr = hOpt.Retrieve("StandardMailDomain", " ")
+55580   .StandardMailDomain = tstr
+55590   tstr = hOpt.Retrieve("StandardModifydate", " ")
+55600   .StandardModifydate = tstr
+55610   tstr = hOpt.Retrieve("StandardSaveformat", "pdf")
+55620   .StandardSaveformat = tstr
+55630   tstr = hOpt.Retrieve("StandardSubject", " ")
+55640   .StandardSubject = tstr
+55650   tstr = hOpt.Retrieve("StandardTitle", " ")
+55660   .StandardTitle = tstr
+55670   tstr = hOpt.Retrieve("StartStandardProgram")
+55680   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+55690     .StartStandardProgram = CLng(tstr)
 55700    Else
-55710     .UseCreationDateNow = 0
+55710     .StartStandardProgram = 1
 55720   End If
-55730   tStr = hOpt.Retrieve("UseStandardAuthor")
-55740   If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-55750     .UseStandardAuthor = CLng(tStr)
+55730   tstr = hOpt.Retrieve("TIFFColorscount")
+55740   If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
+55750     .TIFFColorscount = CLng(tstr)
 55760    Else
-55770     .UseStandardAuthor = 0
+55770     .TIFFColorscount = 0
 55780   End If
-55790  End With
-55800  Set ini = Nothing
-55810  ReadOptions = myOptions
+55790   tstr = hOpt.Retrieve("Toolbars")
+55800   If CLng(tstr) >= 0 Then
+55810     .Toolbars = CLng(tstr)
+55820    Else
+55830     .Toolbars = 1
+55840   End If
+55850   tstr = hOpt.Retrieve("UseAutosave")
+55860   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+55870     .UseAutosave = CLng(tstr)
+55880    Else
+55890     .UseAutosave = 0
+55900   End If
+55910   tstr = hOpt.Retrieve("UseAutosaveDirectory")
+55920   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+55930     .UseAutosaveDirectory = CLng(tstr)
+55940    Else
+55950     .UseAutosaveDirectory = 1
+55960   End If
+55970   tstr = hOpt.Retrieve("UseCreationDateNow")
+55980   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+55990     .UseCreationDateNow = CLng(tstr)
+56000    Else
+56010     .UseCreationDateNow = 0
+56020   End If
+56030   tstr = hOpt.Retrieve("UseStandardAuthor")
+56040   If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
+56050     .UseStandardAuthor = CLng(tstr)
+56060    Else
+56070     .UseStandardAuthor = 0
+56080   End If
+56090  End With
+56100  Set ini = Nothing
+56110  ReadOptions = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -886,107 +930,114 @@ On Error GoTo ErrPtnr_OnError
 50170   ini.SaveKey CStr(.DirectoryGhostscriptFonts), "DirectoryGhostscriptFonts"
 50180   ini.SaveKey CStr(.DirectoryGhostscriptLibraries), "DirectoryGhostscriptLibraries"
 50190   ini.SaveKey CStr(.DirectoryGhostscriptResource), "DirectoryGhostscriptResource"
-50200   ini.SaveKey CStr(.EPSLanguageLevel), "EPSLanguageLevel"
-50210   ini.SaveKey CStr(.FilenameSubstitutions), "FilenameSubstitutions"
-50220   ini.SaveKey CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), "FilenameSubstitutionsOnlyInTitle"
-50230   ini.SaveKey CStr(.JPEGColorscount), "JPEGColorscount"
-50240   ini.SaveKey CStr(.JPEGQuality), "JPEGQuality"
-50250   ini.SaveKey CStr(.Language), "Language"
-50260   ini.SaveKey CStr(.LastSaveDirectory), "LastSaveDirectory"
-50270   ini.SaveKey CStr(Abs(.Logging)), "Logging"
-50280   ini.SaveKey CStr(.LogLines), "LogLines"
-50290   ini.SaveKey CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), "NoConfirmMessageSwitchingDefaultprinter"
-50300   ini.SaveKey CStr(Abs(.NoProcessingAtStartup)), "NoProcessingAtStartup"
-50310   ini.SaveKey CStr(Abs(.OnePagePerFile)), "OnePagePerFile"
-50320   ini.SaveKey CStr(Abs(.OptionsEnabled)), "OptionsEnabled"
-50330   ini.SaveKey CStr(Abs(.OptionsVisible)), "OptionsVisible"
-50340   ini.SaveKey CStr(.PCXColorscount), "PCXColorscount"
-50350   ini.SaveKey CStr(Abs(.PDFAllowAssembly)), "PDFAllowAssembly"
-50360   ini.SaveKey CStr(Abs(.PDFAllowDegradedPrinting)), "PDFAllowDegradedPrinting"
-50370   ini.SaveKey CStr(Abs(.PDFAllowFillIn)), "PDFAllowFillIn"
-50380   ini.SaveKey CStr(Abs(.PDFAllowScreenReaders)), "PDFAllowScreenReaders"
-50390   ini.SaveKey CStr(Abs(.PDFColorsCMYKToRGB)), "PDFColorsCMYKToRGB"
-50400   ini.SaveKey CStr(.PDFColorsColorModel), "PDFColorsColorModel"
-50410   ini.SaveKey CStr(Abs(.PDFColorsPreserveHalftone)), "PDFColorsPreserveHalftone"
-50420   ini.SaveKey CStr(Abs(.PDFColorsPreserveOverprint)), "PDFColorsPreserveOverprint"
-50430   ini.SaveKey CStr(Abs(.PDFColorsPreserveTransfer)), "PDFColorsPreserveTransfer"
-50440   ini.SaveKey CStr(Abs(.PDFCompressionColorCompression)), "PDFCompressionColorCompression"
-50450   ini.SaveKey CStr(.PDFCompressionColorCompressionChoice), "PDFCompressionColorCompressionChoice"
-50460   ini.SaveKey CStr(Abs(.PDFCompressionColorResample)), "PDFCompressionColorResample"
-50470   ini.SaveKey CStr(.PDFCompressionColorResampleChoice), "PDFCompressionColorResampleChoice"
-50480   ini.SaveKey CStr(.PDFCompressionColorResolution), "PDFCompressionColorResolution"
-50490   ini.SaveKey CStr(Abs(.PDFCompressionGreyCompression)), "PDFCompressionGreyCompression"
-50500   ini.SaveKey CStr(.PDFCompressionGreyCompressionChoice), "PDFCompressionGreyCompressionChoice"
-50510   ini.SaveKey CStr(Abs(.PDFCompressionGreyResample)), "PDFCompressionGreyResample"
-50520   ini.SaveKey CStr(.PDFCompressionGreyResampleChoice), "PDFCompressionGreyResampleChoice"
-50530   ini.SaveKey CStr(.PDFCompressionGreyResolution), "PDFCompressionGreyResolution"
-50540   ini.SaveKey CStr(Abs(.PDFCompressionMonoCompression)), "PDFCompressionMonoCompression"
-50550   ini.SaveKey CStr(.PDFCompressionMonoCompressionChoice), "PDFCompressionMonoCompressionChoice"
-50560   ini.SaveKey CStr(Abs(.PDFCompressionMonoResample)), "PDFCompressionMonoResample"
-50570   ini.SaveKey CStr(.PDFCompressionMonoResampleChoice), "PDFCompressionMonoResampleChoice"
-50580   ini.SaveKey CStr(.PDFCompressionMonoResolution), "PDFCompressionMonoResolution"
-50590   ini.SaveKey CStr(Abs(.PDFCompressionTextCompression)), "PDFCompressionTextCompression"
-50600   ini.SaveKey CStr(Abs(.PDFDisallowCopy)), "PDFDisallowCopy"
-50610   ini.SaveKey CStr(Abs(.PDFDisallowModifyAnnotations)), "PDFDisallowModifyAnnotations"
-50620   ini.SaveKey CStr(Abs(.PDFDisallowModifyContents)), "PDFDisallowModifyContents"
-50630   ini.SaveKey CStr(Abs(.PDFDisallowPrinting)), "PDFDisallowPrinting"
-50640   ini.SaveKey CStr(.PDFEncryptor), "PDFEncryptor"
-50650   ini.SaveKey CStr(Abs(.PDFFontsEmbedAll)), "PDFFontsEmbedAll"
-50660   ini.SaveKey CStr(Abs(.PDFFontsSubSetFonts)), "PDFFontsSubSetFonts"
-50670   ini.SaveKey CStr(.PDFFontsSubSetFontsPercent), "PDFFontsSubSetFontsPercent"
-50680   ini.SaveKey CStr(Abs(.PDFGeneralASCII85)), "PDFGeneralASCII85"
-50690   ini.SaveKey CStr(.PDFGeneralAutorotate), "PDFGeneralAutorotate"
-50700   ini.SaveKey CStr(.PDFGeneralCompatibility), "PDFGeneralCompatibility"
-50710   ini.SaveKey CStr(.PDFGeneralOverprint), "PDFGeneralOverprint"
-50720   ini.SaveKey CStr(.PDFGeneralResolution), "PDFGeneralResolution"
-50730   ini.SaveKey CStr(Abs(.PDFHighEncryption)), "PDFHighEncryption"
-50740   ini.SaveKey CStr(Abs(.PDFLowEncryption)), "PDFLowEncryption"
-50750   ini.SaveKey CStr(Abs(.PDFOptimize)), "PDFOptimize"
-50760   ini.SaveKey CStr(Abs(.PDFOwnerPass)), "PDFOwnerPass"
-50770   ini.SaveKey CStr(.PDFOwnerPasswordString), "PDFOwnerPasswordString"
-50780   ini.SaveKey CStr(Abs(.PDFUserPass)), "PDFUserPass"
-50790   ini.SaveKey CStr(.PDFUserPasswordString), "PDFUserPasswordString"
-50800   ini.SaveKey CStr(Abs(.PDFUseSecurity)), "PDFUseSecurity"
-50810   ini.SaveKey CStr(.PNGColorscount), "PNGColorscount"
-50820   ini.SaveKey CStr(Abs(.PrinterStop)), "PrinterStop"
-50830   ini.SaveKey CStr(.PrinterTemppath), "PrinterTemppath"
-50840   ini.SaveKey CStr(.ProcessPriority), "ProcessPriority"
-50850   ini.SaveKey CStr(.ProgramFont), "ProgramFont"
-50860   ini.SaveKey CStr(.ProgramFontCharset), "ProgramFontCharset"
-50870   ini.SaveKey CStr(.ProgramFontSize), "ProgramFontSize"
-50880   ini.SaveKey CStr(.PSLanguageLevel), "PSLanguageLevel"
-50890   ini.SaveKey CStr(Abs(.RemoveAllKnownFileExtensions)), "RemoveAllKnownFileExtensions"
-50900   ini.SaveKey CStr(Abs(.RemoveSpaces)), "RemoveSpaces"
-50910   ini.SaveKey CStr(Abs(.RunProgramAfterSaving)), "RunProgramAfterSaving"
-50920   ini.SaveKey CStr(.RunProgramAfterSavingProgramname), "RunProgramAfterSavingProgramname"
-50930   ini.SaveKey CStr(.RunProgramAfterSavingProgramParameters), "RunProgramAfterSavingProgramParameters"
-50940   ini.SaveKey CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), "RunProgramAfterSavingWaitUntilReady"
-50950   ini.SaveKey CStr(.RunProgramAfterSavingWindowstyle), "RunProgramAfterSavingWindowstyle"
-50960   ini.SaveKey CStr(.SaveFilename), "SaveFilename"
-50970   ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
-50980   ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
-50990   ini.SaveKey CStr(.StampFontColor), "StampFontColor"
-51000   ini.SaveKey CStr(.StampFontname), "StampFontname"
-51010   ini.SaveKey CStr(.StampFontsize), "StampFontsize"
-51020   ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
-51030   ini.SaveKey CStr(.StampString), "StampString"
-51040   ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
-51050   ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
-51060   ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
-51070   ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
-51080   ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
-51090   ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
-51100   ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
-51110   ini.SaveKey CStr(.StandardSubject), "StandardSubject"
-51120   ini.SaveKey CStr(.StandardTitle), "StandardTitle"
-51130   ini.SaveKey CStr(Abs(.StartStandardProgram)), "StartStandardProgram"
-51140   ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
-51150   ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
-51160   ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
-51170   ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
-51180   ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
-51190  End With
-51200  Set ini = Nothing
+50200   ini.SaveKey CStr(Abs(.DontUseDocumentSettings)), "DontUseDocumentSettings"
+50210   ini.SaveKey CStr(.EPSLanguageLevel), "EPSLanguageLevel"
+50220   ini.SaveKey CStr(.FilenameSubstitutions), "FilenameSubstitutions"
+50230   ini.SaveKey CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), "FilenameSubstitutionsOnlyInTitle"
+50240   ini.SaveKey CStr(.JPEGColorscount), "JPEGColorscount"
+50250   ini.SaveKey CStr(.JPEGQuality), "JPEGQuality"
+50260   ini.SaveKey CStr(.Language), "Language"
+50270   ini.SaveKey CStr(.LastSaveDirectory), "LastSaveDirectory"
+50280   ini.SaveKey CStr(Abs(.Logging)), "Logging"
+50290   ini.SaveKey CStr(.LogLines), "LogLines"
+50300   ini.SaveKey CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), "NoConfirmMessageSwitchingDefaultprinter"
+50310   ini.SaveKey CStr(Abs(.NoProcessingAtStartup)), "NoProcessingAtStartup"
+50320   ini.SaveKey CStr(Abs(.OnePagePerFile)), "OnePagePerFile"
+50330   ini.SaveKey CStr(Abs(.OptionsEnabled)), "OptionsEnabled"
+50340   ini.SaveKey CStr(Abs(.OptionsVisible)), "OptionsVisible"
+50350   ini.SaveKey CStr(.PCXColorscount), "PCXColorscount"
+50360   ini.SaveKey CStr(Abs(.PDFAllowAssembly)), "PDFAllowAssembly"
+50370   ini.SaveKey CStr(Abs(.PDFAllowDegradedPrinting)), "PDFAllowDegradedPrinting"
+50380   ini.SaveKey CStr(Abs(.PDFAllowFillIn)), "PDFAllowFillIn"
+50390   ini.SaveKey CStr(Abs(.PDFAllowScreenReaders)), "PDFAllowScreenReaders"
+50400   ini.SaveKey CStr(Abs(.PDFColorsCMYKToRGB)), "PDFColorsCMYKToRGB"
+50410   ini.SaveKey CStr(.PDFColorsColorModel), "PDFColorsColorModel"
+50420   ini.SaveKey CStr(Abs(.PDFColorsPreserveHalftone)), "PDFColorsPreserveHalftone"
+50430   ini.SaveKey CStr(Abs(.PDFColorsPreserveOverprint)), "PDFColorsPreserveOverprint"
+50440   ini.SaveKey CStr(Abs(.PDFColorsPreserveTransfer)), "PDFColorsPreserveTransfer"
+50450   ini.SaveKey CStr(Abs(.PDFCompressionColorCompression)), "PDFCompressionColorCompression"
+50460   ini.SaveKey CStr(.PDFCompressionColorCompressionChoice), "PDFCompressionColorCompressionChoice"
+50470   ini.SaveKey CStr(Abs(.PDFCompressionColorResample)), "PDFCompressionColorResample"
+50480   ini.SaveKey CStr(.PDFCompressionColorResampleChoice), "PDFCompressionColorResampleChoice"
+50490   ini.SaveKey CStr(.PDFCompressionColorResolution), "PDFCompressionColorResolution"
+50500   ini.SaveKey CStr(Abs(.PDFCompressionGreyCompression)), "PDFCompressionGreyCompression"
+50510   ini.SaveKey CStr(.PDFCompressionGreyCompressionChoice), "PDFCompressionGreyCompressionChoice"
+50520   ini.SaveKey CStr(Abs(.PDFCompressionGreyResample)), "PDFCompressionGreyResample"
+50530   ini.SaveKey CStr(.PDFCompressionGreyResampleChoice), "PDFCompressionGreyResampleChoice"
+50540   ini.SaveKey CStr(.PDFCompressionGreyResolution), "PDFCompressionGreyResolution"
+50550   ini.SaveKey CStr(Abs(.PDFCompressionMonoCompression)), "PDFCompressionMonoCompression"
+50560   ini.SaveKey CStr(.PDFCompressionMonoCompressionChoice), "PDFCompressionMonoCompressionChoice"
+50570   ini.SaveKey CStr(Abs(.PDFCompressionMonoResample)), "PDFCompressionMonoResample"
+50580   ini.SaveKey CStr(.PDFCompressionMonoResampleChoice), "PDFCompressionMonoResampleChoice"
+50590   ini.SaveKey CStr(.PDFCompressionMonoResolution), "PDFCompressionMonoResolution"
+50600   ini.SaveKey CStr(Abs(.PDFCompressionTextCompression)), "PDFCompressionTextCompression"
+50610   ini.SaveKey CStr(Abs(.PDFDisallowCopy)), "PDFDisallowCopy"
+50620   ini.SaveKey CStr(Abs(.PDFDisallowModifyAnnotations)), "PDFDisallowModifyAnnotations"
+50630   ini.SaveKey CStr(Abs(.PDFDisallowModifyContents)), "PDFDisallowModifyContents"
+50640   ini.SaveKey CStr(Abs(.PDFDisallowPrinting)), "PDFDisallowPrinting"
+50650   ini.SaveKey CStr(.PDFEncryptor), "PDFEncryptor"
+50660   ini.SaveKey CStr(Abs(.PDFFontsEmbedAll)), "PDFFontsEmbedAll"
+50670   ini.SaveKey CStr(Abs(.PDFFontsSubSetFonts)), "PDFFontsSubSetFonts"
+50680   ini.SaveKey CStr(.PDFFontsSubSetFontsPercent), "PDFFontsSubSetFontsPercent"
+50690   ini.SaveKey CStr(Abs(.PDFGeneralASCII85)), "PDFGeneralASCII85"
+50700   ini.SaveKey CStr(.PDFGeneralAutorotate), "PDFGeneralAutorotate"
+50710   ini.SaveKey CStr(.PDFGeneralCompatibility), "PDFGeneralCompatibility"
+50720   ini.SaveKey CStr(.PDFGeneralOverprint), "PDFGeneralOverprint"
+50730   ini.SaveKey CStr(.PDFGeneralResolution), "PDFGeneralResolution"
+50740   ini.SaveKey CStr(Abs(.PDFHighEncryption)), "PDFHighEncryption"
+50750   ini.SaveKey CStr(Abs(.PDFLowEncryption)), "PDFLowEncryption"
+50760   ini.SaveKey CStr(Abs(.PDFOptimize)), "PDFOptimize"
+50770   ini.SaveKey CStr(Abs(.PDFOwnerPass)), "PDFOwnerPass"
+50780   ini.SaveKey CStr(.PDFOwnerPasswordString), "PDFOwnerPasswordString"
+50790   ini.SaveKey CStr(Abs(.PDFUserPass)), "PDFUserPass"
+50800   ini.SaveKey CStr(.PDFUserPasswordString), "PDFUserPasswordString"
+50810   ini.SaveKey CStr(Abs(.PDFUseSecurity)), "PDFUseSecurity"
+50820   ini.SaveKey CStr(.PNGColorscount), "PNGColorscount"
+50830   ini.SaveKey CStr(Abs(.PrinterStop)), "PrinterStop"
+50840   ini.SaveKey CStr(.PrinterTemppath), "PrinterTemppath"
+50850   ini.SaveKey CStr(.ProcessPriority), "ProcessPriority"
+50860   ini.SaveKey CStr(.ProgramFont), "ProgramFont"
+50870   ini.SaveKey CStr(.ProgramFontCharset), "ProgramFontCharset"
+50880   ini.SaveKey CStr(.ProgramFontSize), "ProgramFontSize"
+50890   ini.SaveKey CStr(.PSLanguageLevel), "PSLanguageLevel"
+50900   ini.SaveKey CStr(Abs(.RemoveAllKnownFileExtensions)), "RemoveAllKnownFileExtensions"
+50910   ini.SaveKey CStr(Abs(.RemoveSpaces)), "RemoveSpaces"
+50920   ini.SaveKey CStr(Abs(.RunProgramAfterSaving)), "RunProgramAfterSaving"
+50930   ini.SaveKey CStr(.RunProgramAfterSavingProgramname), "RunProgramAfterSavingProgramname"
+50940   ini.SaveKey CStr(.RunProgramAfterSavingProgramParameters), "RunProgramAfterSavingProgramParameters"
+50950   ini.SaveKey CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), "RunProgramAfterSavingWaitUntilReady"
+50960   ini.SaveKey CStr(.RunProgramAfterSavingWindowstyle), "RunProgramAfterSavingWindowstyle"
+50970   ini.SaveKey CStr(Abs(.RunProgramBeforeSaving)), "RunProgramBeforeSaving"
+50980   ini.SaveKey CStr(.RunProgramBeforeSavingProgramname), "RunProgramBeforeSavingProgramname"
+50990   ini.SaveKey CStr(.RunProgramBeforeSavingProgramParameters), "RunProgramBeforeSavingProgramParameters"
+51000   ini.SaveKey CStr(.RunProgramBeforeSavingWindowstyle), "RunProgramBeforeSavingWindowstyle"
+51010   ini.SaveKey CStr(.SaveFilename), "SaveFilename"
+51020   ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
+51030   ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
+51040   ini.SaveKey CStr(.StampFontColor), "StampFontColor"
+51050   ini.SaveKey CStr(.StampFontname), "StampFontname"
+51060   ini.SaveKey CStr(.StampFontsize), "StampFontsize"
+51070   ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
+51080   ini.SaveKey CStr(.StampString), "StampString"
+51090   ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
+51100   ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
+51110   ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
+51120   ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
+51130   ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
+51140   ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
+51150   ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
+51160   ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
+51170   ini.SaveKey CStr(.StandardSubject), "StandardSubject"
+51180   ini.SaveKey CStr(.StandardTitle), "StandardTitle"
+51190   ini.SaveKey CStr(Abs(.StartStandardProgram)), "StartStandardProgram"
+51200   ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
+51210   ini.SaveKey CStr(.Toolbars), "Toolbars"
+51220   ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
+51230   ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
+51240   ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
+51250   ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
+51260  End With
+51270  Set ini = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1011,7 +1062,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   tList = Split(.FilenameSubstitutions, "\")
@@ -1107,7 +1158,7 @@ Public Sub GetOptions(Frm As Form, sOptions As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tStr As String, lsv As ListView
+50010  Dim i As Long, tstr As String, lsv As ListView
 50020  With sOptions
 50030  .AutosaveDirectory = Frm.txtAutosaveDirectory.Text
 50040  .AutosaveFilename = Frm.txtAutosaveFilename.Text
@@ -1117,18 +1168,18 @@ On Error GoTo ErrPtnr_OnError
 50080  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50090  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50100  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50110  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
+50110  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
 50120  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
-50130  tStr = ""
+50130  tstr = ""
 50140  Set lsv = Frm.lsvFilenameSubst
 50150  For i = 1 To lsv.ListItems.Count
 50160   If i < lsv.ListItems.Count Then
-50170     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1) & "\"
+50170     tstr = tstr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1) & "\"
 50180    Else
-50190     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1)
+50190     tstr = tstr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1)
 50200   End If
 50210  Next i
-50220  .FilenameSubstitutions = tStr
+50220  .FilenameSubstitutions = tstr
 50230  .FilenameSubstitutionsOnlyInTitle = Abs(Frm.chkFilenameSubst.Value)
 50240  .JPEGColorscount = Frm.cmbJPEGColors.ListIndex
 50250  .JPEGQuality = Frm.txtJPEGQuality.Text

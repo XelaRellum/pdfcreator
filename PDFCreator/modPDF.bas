@@ -12,10 +12,19 @@ End Type
 
 Public Type tPSHeader
  StartComment As tPSComment
+ BoundingBox As tPSComment
+ Orientation As tPSComment
  Title As tPSComment
  Creator As tPSComment
  CreationDate As tPSComment
  CreateFor As tPSComment
+ DocumentNeededResources As tPSComment
+ DocumentSuppliedResources As tPSComment
+ DocumentData As tPSComment
+ Pages As tPSComment
+ PageOrder As tPSComment
+ TargetDevice As tPSComment
+ LanguageLevel As tPSComment
  EndComment As tPSComment
 End Type
 
@@ -30,67 +39,73 @@ Public Type tPDFDocInfo
  Title As String
 End Type
 
-Public Function GetPDFTitle(Filename As String) As String
+Public Function GetPSTitle(Filename As String) As String
 50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 50020 On Error GoTo ErrPtnr_OnError
 50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Dim psH As tPSHeader
-50050  psH = GetPSHeader(Filename)
-50060  GetPDFTitle = psH.Title.Comment
-50070 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50080 Exit Function
+50040  Dim tStr As String, psH As tPSHeader, pbg As PropertyBag
+50050  Set pbg = ReadInfoSpoolfile(Filename)
+50060  tStr = pbg.ReadProperty("REDMON_DOCNAME")
+50070  If LenB(tStr) = 0 Then
+50080   psH = GetPSHeader(Filename)
+50090   tStr = psH.Title.Comment
+50100  End If
+50110  GetPSTitle = tStr
+50120 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50130 Exit Function
 ErrPtnr_OnError:
-50101 Select Case ErrPtnr.OnError("modPDF", "GetPDFTitle")
+50151 Select Case ErrPtnr.OnError("modPDF", "GetPSTitle")
       Case 0: Resume
-50120 Case 1: Resume Next
-50130 Case 2: Exit Function
-50140 Case 3: End
-50150 End Select
-50160 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50170 Case 1: Resume Next
+50180 Case 2: Exit Function
+50190 Case 3: End
+50200 End Select
+50210 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function GetPSHeader(Filename As String) As tPSHeader
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, bufStr As String, PSHeader As tPSHeader, Buffer As Long
-50020  If FileExists(Filename) And FileInUse(Filename) = False Then
-50030   DoEvents
-50040   fn = FreeFile
-50050   If FileLen(Filename) = 0 Then
-50060    Exit Function
-50070   End If
-50080   Buffer = 5000
-50090   If FileLen(Filename) < Buffer Then
-50100    Buffer = FileLen(Filename)
-50110   End If
-50120
-50130   Open Filename For Binary Access Read As fn
-50140   bufStr = Space$(Buffer)
-50150   Get #fn, 1, bufStr
-50160   Close #fn
-50170
-50180   With PSHeader
-50190    .StartComment = GetPSComment(bufStr, "%!")
-50200    .CreateFor = GetPSComment(bufStr, "%%For:")
-50210    .CreationDate = GetPSComment(bufStr, "%%CreationDate:")
-50220    .Creator = GetPSComment(bufStr, "%%Creator:")
-50230    .Title = GetPSComment(bufStr, "%%Title:")
-50240    .EndComment = GetPSComment(bufStr, "%%EndComments")
-50250   End With
-50260   GetPSHeader = PSHeader
-50270   DoEvents
-50280  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim fn As Long, bufStr As String, PSHeader As tPSHeader, Buffer As Long
+50050  If FileExists(Filename) And FileInUse(Filename) = False Then
+50060   DoEvents
+50070   fn = FreeFile
+50080   If FileLen(Filename) = 0 Then
+50090    Exit Function
+50100   End If
+50110   Buffer = 5000
+50120   If FileLen(Filename) < Buffer Then
+50130    Buffer = FileLen(Filename)
+50140   End If
+50150
+50160   Open Filename For Binary Access Read As fn
+50170   bufStr = Space$(Buffer)
+50180   Get #fn, 1, bufStr
+50190   Close #fn
+50200
+50210   With PSHeader
+50220    .StartComment = GetPSComment(bufStr, "%!")
+50230    .CreateFor = GetPSComment(bufStr, "%%For:")
+50240    .CreationDate = GetPSComment(bufStr, "%%CreationDate:")
+50250    .Creator = GetPSComment(bufStr, "%%Creator:")
+50260    .Pages = GetPSComment(bufStr, "%%Pages:")
+50270    .Title = GetPSComment(bufStr, "%%Title:")
+50280    .EndComment = GetPSComment(bufStr, "%%EndComments")
+50290   End With
+50300   GetPSHeader = PSHeader
+50310   DoEvents
+50320  End If
+50330 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50340 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDF", "GetPSHeader")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50361 Select Case ErrPtnr.OnError("modPDF", "GetPSHeader")
+      Case 0: Resume
+50380 Case 1: Resume Next
+50390 Case 2: Exit Function
+50400 Case 3: End
+50410 End Select
+50420 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Private Function GetPSComment(ByRef bufStr As String, Comment As String) As tPSComment
@@ -102,7 +117,7 @@ Private Function GetPSComment(ByRef bufStr As String, Comment As String) As tPSC
 50060  If InStr(UCase$(bufStr), UCase$(Comment)) > 0 Then
 50070   With PSComment
 50080    .StartByte = InStr(bufStr, Comment)
-50090    .EndByte = InStr(.StartByte, bufStr, Chr$(&HA))
+50090    .EndByte = InStr(.StartByte, bufStr, vbLf)
 50100    If .EndByte - (.StartByte + Len(Comment)) > 0 Then
 50110     .Comment = Mid$(bufStr, .StartByte + Len(Comment), .EndByte - (.StartByte + Len(Comment)))
 50120     .Comment = Replace(Replace(.Comment, Chr$(&HA), ""), Chr$(&HD), "")
@@ -218,89 +233,149 @@ Public Function GetSubstFilename(Postscriptfile As String, TokenFilename As Stri
 50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 50020 On Error GoTo ErrPtnr_OnError
 50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Dim PSHeader As tPSHeader, Author As String, _
+50040  Dim PSHeader As tPSHeader, Author As String, ClientComputer As String, _
   Title As String, UserName As String, Computername As String, i As Long, _
   DateTime As String, Filename As String, tStr As String, tList() As String, _
-  Subst() As String, UserProfilPath As String, MyFiles As String, Path As String
-50080
-50090  If Len(TokenFilename) = 0 Then
-50100   Exit Function
-50110  End If
-50120
-50130  DateTime = GetDocDate("", Options.StandardDateformat, CStr(Now))
-50140  If Preview = False Then
-50150    If FileExists(Postscriptfile) = True Then
-50160     PSHeader = GetPSHeader(Postscriptfile)
-50170    End If
-50180    If Options.UseStandardAuthor = 1 Then
-50190      Author = Options.StandardAuthor
-50200     Else
-50210      Author = PSHeader.CreateFor.Comment
-50220    End If
-50230   Else
-50240    PSHeader.Title.Comment = "'Preview Title'"
-50250    Author = "'Preview Author'"
-50260  End If
-50270
-50280  If Options.FilenameSubstitutionsOnlyInTitle = 1 Then
-50290   tList = Split(Options.FilenameSubstitutions, "\")
-50300   Title = PSHeader.Title.Comment
-50310   If UBound(tList) >= 0 Then
-50320    For i = 0 To UBound(tList)
-50330     Subst = Split(tList(i), "|")
-50340     If UBound(Subst) = 0 Then
-50350       tStr = ""
-50360      Else
-50370       tStr = Subst(1)
-50380     End If
-50390     Title = Replace(Title, Subst(0), tStr, , , vbTextCompare)
-50400    Next i
-50410   End If
-50420  End If
-50430
-50440  UserName = GetDocUsername(Postscriptfile, Preview)
-50450
-50460  Computername = GetComputerName
-50470  MyFiles = GetMyFiles
-50480
-50490  Filename = TokenFilename
-50500  Filename = Replace(Filename, "<DateTime>", DateTime, , , vbTextCompare)
-50510  Filename = Replace(Filename, "<Computername>", Computername, , , vbTextCompare)
-50520  Filename = Replace(Filename, "<Username>", UserName, , , vbTextCompare)
-50530  Filename = Replace(Filename, "<Title>", Title, , , vbTextCompare)
-50540  If WithoutAuthor = False Then
-50550   Filename = Replace(Filename, "<Author>", Author, , , vbTextCompare)
-50560  End If
-50570  Filename = Replace(Filename, "<MyFiles>", MyFiles, , , vbTextCompare)
+  Subst() As String, UserProfilPath As String, MyFiles As String, _
+  MyDesktop As String, Path As String, pbg As PropertyBag
+50090
+50100  Set pbg = InitPropertyBag
+50110
+50120  If Len(TokenFilename) = 0 Then
+50130   Exit Function
+50140  End If
+50150
+50160  DateTime = GetDocDate("", Options.StandardDateformat, CStr(Now))
+50170  If Preview = False Then
+50180    If FileExists(Postscriptfile) = True Then
+50190     PSHeader = GetPSHeader(Postscriptfile)
+50200     Set pbg = ReadInfoSpoolfile(Postscriptfile)
+50210    End If
+50220    If Options.UseStandardAuthor = 1 Then
+50230      Author = Options.StandardAuthor
+50240     Else
+50250      Author = PSHeader.CreateFor.Comment
+50260    End If
+50270    If LenB(pbg.ReadProperty("REDMON_MACHINE")) > 0 Then
+50280      ClientComputer = ReplaceForbiddenChars(pbg.ReadProperty("REDMON_MACHINE"), "")
+50290     Else
+50300      ClientComputer = ReplaceForbiddenChars(Environ$("REDMON_MACHINE"), "")
+50310      If LenB(ClientComputer) = 0 Then
+50320       ClientComputer = GetComputerName
+50330      End If
+50340    End If
+50350   Else
+50360    PSHeader.Title.Comment = "'Preview Title'"
+50370    Author = "'Preview Author'"
+50380    ClientComputer = "'Preview ClientComputer'"
+50390  End If
+50400
+50410  If Options.FilenameSubstitutionsOnlyInTitle = 1 Then
+50420   tList = Split(Options.FilenameSubstitutions, "\")
+50430   Title = PSHeader.Title.Comment
+50440   If UBound(tList) >= 0 Then
+50450    For i = 0 To UBound(tList)
+50460     Subst = Split(tList(i), "|")
+50470     If UBound(Subst) = 0 Then
+50480       tStr = ""
+50490      Else
+50500       tStr = Subst(1)
+50510     End If
+50520     Title = Replace(Title, Subst(0), tStr, , , vbTextCompare)
+50530    Next i
+50540   End If
+50550  End If
+50560
+50570  UserName = GetDocUsername(Postscriptfile, Preview)
 50580
-50590  If Options.FilenameSubstitutionsOnlyInTitle = 0 Then
-50600   tList = Split(Options.FilenameSubstitutions, "\")
-50610   If UBound(tList) >= 0 Then
-50620    For i = 0 To UBound(tList)
-50630     Subst = Split(tList(i), "|")
-50640     If UBound(Subst) = 0 Then
-50650       tStr = ""
-50660      Else
-50670       tStr = Subst(1)
-50680     End If
-50690     Filename = Replace(Filename, Subst(0), tStr, , , vbTextCompare)
-50700    Next i
-50710   End If
+50590  Computername = GetComputerName
+50600  MyFiles = GetMyFiles
+50610  MyDesktop = GetDesktop
+50620
+50630  Filename = TokenFilename
+50640  Filename = Replace(Filename, "<DateTime>", DateTime, , , vbTextCompare)
+50650  Filename = Replace(Filename, "<Computername>", Computername, , , vbTextCompare)
+50660
+50670  Filename = Replace(Filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
+50680  Filename = Replace(Filename, "<Username>", UserName, , , vbTextCompare)
+50690  Filename = Replace(Filename, "<Title>", Title, , , vbTextCompare)
+50700  If WithoutAuthor = False Then
+50710   Filename = Replace(Filename, "<Author>", Author, , , vbTextCompare)
 50720  End If
-50730  If Options.RemoveSpaces = 1 Then
-50740   Filename = Trim$(Filename)
-50750  End If
-50760  GetSubstFilename = Filename
-50770 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50780 Exit Function
+50730  Filename = Replace(Filename, "<MyFiles>", MyFiles, , , vbTextCompare)
+50740  Filename = Replace(Filename, "<MyDesktop>", MyDesktop, , , vbTextCompare)
+50750
+50760  tStr = "DOCNAME"
+50770  If Preview = True Then
+50780    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50790   Else
+50800    Filename = Replace(Filename, "<REDMON_" & tStr & ">", pbg.ReadProperty("REDMON_" & tStr), , , vbTextCompare)
+50810  End If
+50820  tStr = "JOB"
+50830  If Preview = True Then
+50840    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50850   Else
+50860    Filename = Replace(Filename, "<REDMON_" & tStr & ">", pbg.ReadProperty("REDMON_" & tStr), , , vbTextCompare)
+50870  End If
+50880  tStr = "MACHINE"
+50890  If Preview = True Then
+50900    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50910   Else
+50920    Filename = Replace(Filename, "<REDMON_" & tStr & ">", pbg.ReadProperty("REDMON_" & tStr), , , vbTextCompare)
+50930  End If
+50940  tStr = "PORT"
+50950  If Preview = True Then
+50960    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50970   Else
+50980    Filename = Replace(Filename, "<REDMON_" & tStr & ">", pbg.ReadProperty("REDMON_" & tStr), , , vbTextCompare)
+50990  End If
+51000  tStr = "PRINTER"
+51010  If Preview = True Then
+51020    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51030   Else
+51040    Filename = Replace(Filename, "<REDMON_" & tStr & ">", pbg.ReadProperty("REDMON_" & tStr), , , vbTextCompare)
+51050  End If
+51060  tStr = "SESSIONID"
+51070  If Preview = True Then
+51080    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51090   Else
+51100    Filename = Replace(Filename, "<REDMON_" & tStr & ">", pbg.ReadProperty("REDMON_" & tStr), , , vbTextCompare)
+51110  End If
+51120  tStr = "USER"
+51130  If Preview = True Then
+51140    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51150   Else
+51160    Filename = Replace(Filename, "<REDMON_" & tStr & ">", pbg.ReadProperty("REDMON_" & tStr), , , vbTextCompare)
+51170  End If
+51180
+51190  If Options.FilenameSubstitutionsOnlyInTitle = 0 Then
+51200   tList = Split(Options.FilenameSubstitutions, "\")
+51210   If UBound(tList) >= 0 Then
+51220    For i = 0 To UBound(tList)
+51230     Subst = Split(tList(i), "|")
+51240     If UBound(Subst) = 0 Then
+51250       tStr = ""
+51260      Else
+51270       tStr = Subst(1)
+51280     End If
+51290     Filename = Replace(Filename, Subst(0), tStr, , , vbTextCompare)
+51300    Next i
+51310   End If
+51320  End If
+51330  If Options.RemoveSpaces = 1 Then
+51340   Filename = Trim$(Filename)
+51350  End If
+51360  GetSubstFilename = Filename
+51370 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+51380 Exit Function
 ErrPtnr_OnError:
-50801 Select Case ErrPtnr.OnError("modPDF", "GetSubstFilename")
+51401 Select Case ErrPtnr.OnError("modPDF", "GetSubstFilename")
       Case 0: Resume
-50820 Case 1: Resume Next
-50830 Case 2: Exit Function
-50840 Case 3: End
-50850 End Select
-50860 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+51420 Case 1: Resume Next
+51430 Case 2: Exit Function
+51440 Case 3: End
+51450 End Select
+51460 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function IsPostscriptFile(ByVal Filename As String) As Boolean
@@ -421,48 +496,42 @@ Public Function GetDocUsername(Postscriptfile As String, NoFile As Boolean) As S
 50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 50020 On Error GoTo ErrPtnr_OnError
 50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Dim UserName As String, Path As String, i As Long, PSHeader As tPSHeader
-50050  If NoFile = False Then
-50060   If Len(Postscriptfile) > 0 Then
-50070    If FileExists(Postscriptfile) = True Then
-50080     PSHeader = GetPSHeader(Postscriptfile)
-50090     If Len(PSHeader.CreateFor.Comment) > 0 Then
-50100      UserName = PSHeader.CreateFor.Comment
-50110     End If
-50120     SplitPath Postscriptfile, , Path
-50130     Path = CompletePath(Path)
-50140     If Len(Path) > 1 Then
-50150      Path = Left(Path, Len(Path) - 1)
-50160      i = InStrRev(Path, "\", , vbTextCompare)
-50170      If i > 0 Then
-50180       If Len(UserName) = 0 Then
-50190        UserName = Mid$(Path, i + 1)
-50200       End If
-50210      End If
-50220     End If
-50230    End If
-50240   End If
+50040  Dim UserName As String, Path As String, i As Long, PSHeader As tPSHeader, _
+  pbg As PropertyBag
+50060  If NoFile = False Then
+50070   If Len(Postscriptfile) > 0 Then
+50080    If FileExists(Postscriptfile) = True Then
+50090     Set pbg = ReadInfoSpoolfile(Postscriptfile)
+50100     If LenB(pbg.ReadProperty("REDMON_USER")) > 0 Then
+50110      UserName = pbg.ReadProperty("REDMON_USER")
+50120     End If
+50130     If LenB(UserName) = 0 Then
+50140      PSHeader = GetPSHeader(Postscriptfile)
+50150      If Len(PSHeader.CreateFor.Comment) > 0 Then
+50160       UserName = PSHeader.CreateFor.Comment
+50170      End If
+50180     End If
+50190    End If
+50200   End If
+50210  End If
+50220  If LenB(UserName) = 0 Then
+50230 ' If LenB(UserName) = 0 Or UCase$(UserName) = UCase$(App.EXEName) Then
+50240   UserName = Environ$("Redmon_User")
 50250  End If
-50260  If Len(UserName) = 0 Or UCase$(UserName) = UCase$(App.EXEName) Then
-50270   UserName = Environ$("Redmon_User")
+50260  If Len(UserName) = 0 Then
+50270   UserName = GetUsername
 50280  End If
-50290 ' If Len(UserName) = 0 Then
-50300 '  UserName = PSHeader.CreateFor.Comment
-50310 ' End If
-50320  If Len(UserName) = 0 Then
-50330   UserName = GetUsername
-50340  End If
-50350  GetDocUsername = UserName
-50360 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50370 Exit Function
+50290  GetDocUsername = UserName
+50300 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50310 Exit Function
 ErrPtnr_OnError:
-50391 Select Case ErrPtnr.OnError("modPDF", "GetDocUsername")
+50331 Select Case ErrPtnr.OnError("modPDF", "GetDocUsername")
       Case 0: Resume
-50410 Case 1: Resume Next
-50420 Case 2: Exit Function
-50430 Case 3: End
-50440 End Select
-50450 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50350 Case 1: Resume Next
+50360 Case 2: Exit Function
+50370 Case 3: End
+50380 End Select
+50390 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function GetDocDate(Optional StandardDate As String = "", Optional StandardDateformat As String = "", Optional UseThisdate As String = "") As String
@@ -565,93 +634,69 @@ ErrPtnr_OnError:
 End Function
 
 Public Sub ConvertPostscriptFile(InputFilename As String, OutputFilename As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Ext As String, Tempfile As String
-50020  IFIsPS = False
-50030  If LenB(InputFilename) > 0 Then
-50040   If FileExists(InputFilename) = True Then
-50050     If LenB(OutputFilename) > 0 Then
-50060       If IsPostscriptFile(InputFilename) = True Then
-50070        If GsDllLoaded = 0 Then
-50080         Exit Sub
-50090        End If
-50100        SplitPath OutputFilename, , , , , Ext
-50110        GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
-50120        If GsDllLoaded = 0 Then
-50130         MsgBox LanguageStrings.MessagesMsg08
-50140        End If
-50151        Select Case UCase$(Ext)
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim Ext As String, Tempfile As String
+50050  IFIsPS = False
+50060  If LenB(InputFilename) > 0 Then
+50070   If FileExists(InputFilename) = True Then
+50080     If LenB(OutputFilename) > 0 Then
+50090       If IsPostscriptFile(InputFilename) = True Then
+50100        If GsDllLoaded = 0 Then
+50110         Exit Sub
+50120        End If
+50130        SplitPath OutputFilename, , , , , Ext
+50140        GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+50150        If GsDllLoaded = 0 Then
+50160         MsgBox LanguageStrings.MessagesMsg08
+50170        End If
+50181        Select Case UCase$(Ext)
               Case "PDF"
-50170          CallGScript InputFilename, OutputFilename, Options, PDFWriter
-50180         Case "PNG"
-50190          CallGScript InputFilename, OutputFilename, Options, PNGWriter
-50200         Case "JPG"
-50210          CallGScript InputFilename, OutputFilename, Options, JPEGWriter
-50220         Case "BMP"
-50230          CallGScript InputFilename, OutputFilename, Options, BMPWriter
-50240         Case "PCX"
-50250          CallGScript InputFilename, OutputFilename, Options, PCXWriter
-50260         Case "TIF"
-50270          CallGScript InputFilename, OutputFilename, Options, TIFFWriter
-50280         Case "PS"
-50290          CallGScript InputFilename, OutputFilename, Options, PSWriter
-50300         Case "EPS"
-50310          CallGScript InputFilename, OutputFilename, Options, EPSWriter
-50320        End Select
-50330       End If
-50340       If GsDllLoaded <> 0 Then
-50350        UnloadDLLComplete GsDllLoaded
+50200          CallGScript InputFilename, OutputFilename, Options, PDFWriter
+50210         Case "PNG"
+50220          CallGScript InputFilename, OutputFilename, Options, PNGWriter
+50230         Case "JPG"
+50240          CallGScript InputFilename, OutputFilename, Options, JPEGWriter
+50250         Case "BMP"
+50260          CallGScript InputFilename, OutputFilename, Options, BMPWriter
+50270         Case "PCX"
+50280          CallGScript InputFilename, OutputFilename, Options, PCXWriter
+50290         Case "TIF"
+50300          CallGScript InputFilename, OutputFilename, Options, TIFFWriter
+50310         Case "PS"
+50320          CallGScript InputFilename, OutputFilename, Options, PSWriter
+50330         Case "EPS"
+50340          CallGScript InputFilename, OutputFilename, Options, EPSWriter
+50350        End Select
 50360       End If
-50370       Exit Sub
-50380      Else
-50390       If IsPostscriptFile(InputFilename) = True Then
-50400         IfLoggingWriteLogfile "Get inputfile: " & InputFilename
-50410         WriteToSpecialLogfile "Get inputfile: " & InputFilename
-50420         If DirExists(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory & "\" & Environ$("REDMON_USER")) = False Then
-50430          MakePath CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory & "\" & Environ$("REDMON_USER")
-50440         End If
-50450         If IsWin9xMe = True Then
-50460           Tempfile = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory & "\", "~PD")
-50470          Else
-50480           Tempfile = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory & "\" & Environ$("REDMON_USER"), "~PD")
-50490         End If
-50500         KillFile Tempfile
-50510         If FileExists(Tempfile) = False Then
-50520          'MsgBox ">" & CommandSwitch("IF", True) & vbCrLf & ">" & Tempfile
-50530          If PDFCreatorPrinter Then
-50540            IfLoggingWriteLogfile "Move the inputfile to " & Tempfile
-50550            WriteToSpecialLogfile "Move the inputfile to " & Tempfile
-50560            Name CommandSwitch("IF", True) As Tempfile
-50570           Else
-50580            IfLoggingWriteLogfile "Copy the inputfile to " & Tempfile
-50590            WriteToSpecialLogfile "Copy the inputfile to " & Tempfile
-50600            FileCopy InputFilename, Tempfile
-50610          End If
-50620         End If
-50630         IFIsPS = True
-50640        Else
-50650         MsgBox LanguageStrings.MessagesMsg06
-50660       End If
-50670       DoEvents
-50680     End If
-50690    Else
-50700     If LenB(InputFilename) > 0 Then
-50710      MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
+50370       If GsDllLoaded <> 0 Then
+50380        UnloadDLLComplete GsDllLoaded
+50390       End If
+50400       Exit Sub
+50410      Else
+50420       If IsPostscriptFile(InputFilename) = True Then
+50430         IFIsPS = True
+50440        Else
+50450         MsgBox LanguageStrings.MessagesMsg06
+50460       End If
+50470       DoEvents
+50480     End If
+50490    Else
+50500     If LenB(InputFilename) > 0 Then
+50510      MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
       "InputFile -IF" & vbCrLf & ">" & InputFilename & "<", vbExclamation + vbOKOnly
-50730     End If
-50740   End If
-50750  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
+50530     End If
+50540   End If
+50550  End If
+50560 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50570 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDF", "ConvertPostscriptFile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50591 Select Case ErrPtnr.OnError("modPDF", "ConvertPostscriptFile")
+      Case 0: Resume
+50610 Case 1: Resume Next
+50620 Case 2: Exit Sub
+50630 Case 3: End
+50640 End Select
+50650 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-

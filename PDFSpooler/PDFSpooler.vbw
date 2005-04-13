@@ -22,3 +22,4 @@ modPDFCreator = 110, 110, 690, 372, C
 modGetFiles = 0, 0, 0, 0, C
 modShell = 0, 0, 0, 0, C
 modLanguage = 0, 0, 0, 0, C
+modCollAddSorted = 0, 0, 0, 0, C

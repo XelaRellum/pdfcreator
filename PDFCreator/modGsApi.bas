@@ -243,7 +243,7 @@ On Error GoTo ErrPtnr_OnError
 50040     Dim aPtrArgs() As Long
 50050     Dim intCounter As Long
 50060     Dim intElementCount As Long
-50070     Dim iTemp As Long
+50070     Dim ITemp As Long
 50080     Dim callerHandle As Long
 50090     Dim ptrArgs As Long
 50100     Dim sFile As String

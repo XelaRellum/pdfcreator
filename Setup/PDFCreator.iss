@@ -1,10 +1,10 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.0.8 (with ISPP) and ISTool 5.0.6.1
+; Setup created with Inno Setup QuickStart Pack 5.0.8 (with ISPP) and ISTool 5.0.8
 ; Installation from Frank Heindörfer
 
 ;#define Test
 ;#define FastCompilation
-;#define CompileHelp
+#define CompileHelp
 ;#define UseUPX
 #define IncludeGhostscript
 
@@ -32,9 +32,11 @@
 #ENDIF
 
 ;remove the german localization
-#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
-#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
-#expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+#IFNDEF Test
+ #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
+ #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
+ #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+#endif
 
 #ifdef CompileHelp
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
@@ -166,22 +168,34 @@ Source: ..\SystemFiles\OLEAUT32.DLL; DestDir: {sys}; Components: program; Flags:
 ;Language satellite system files
 ;http://msdn.microsoft.com/vbasic/downloads/tools/ipdk.aspx
 ;Language: German
+;Source: C:\IPDK\German\CMCT3DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
 Source: C:\IPDK\German\MSCC2DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
 Source: C:\IPDK\German\MSCMCDE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
 Source: C:\IPDK\German\VB6DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
 ;Language: Italian
+;Source: C:\IPDK\Italian\CMCT3IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
 Source: C:\IPDK\Italian\MSCC2IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
 Source: C:\IPDK\Italian\MSCMCIT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
 Source: C:\IPDK\Italian\VB6IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
 ;Language: French
+;Source: C:\IPDK\French\CMCT3FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
 Source: C:\IPDK\French\MSCC2FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
 Source: C:\IPDK\French\MSCMCFR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
 Source: C:\IPDK\French\VB6FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
 
 ;Printerdriver files
+;PPD-File
 ; Win9x/Me
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND IsLanguage('german')
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND NOT IsLanguage('german')
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND IsLanguage('german') AND NOT UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+Source: {code:GetExternalPPDFile}; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
+; WinNt4, Win2k, WinXP, Win2k3
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver) AND IsLanguage('german') AND NOT UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
+
+;Driver files
+; Win9x/Me
 Source: ..\Printer\Adobe\Windows\ICONLIB.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver; Flags: deleteafterinstall
 Source: ..\Printer\Adobe\Windows\PSMON.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver; Flags: deleteafterinstall
 Source: ..\Printer\Adobe\Windows\ADOBEPS4.HLP; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin9xPrinterdriver
@@ -189,26 +203,21 @@ Source: ..\Printer\Adobe\Windows\FONTSDIR.MFD; DestDir: {win}; Flags: ignorevers
 Source: ..\Printer\Adobe\Windows\adfonts.mfm; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
 Source: ..\Printer\Adobe\Windows\ADOBEPS4.DRV; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
 ; WinNt 4.0
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver AND IsLanguage('german')
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver AND NOT IsLanguage('german')
 Source: ..\Printer\Adobe\WinNT\AdobePS5.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\AdobePSu.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\ADOBEPSU.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\AdobePS5.ntf; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 ; Win2000
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver AND IsLanguage('german')
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver AND NOT IsLanguage('german')
-Source: ..\Printer\Adobe\Win2000\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2000Printerdriver
-Source: ..\Printer\Adobe\Win2000\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2000Printerdriver
-Source: ..\Printer\Adobe\Win2000\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver
-Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2000Printerdriver
-; WinXP
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver AND IsLanguage('german')
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver AND NOT IsLanguage('german')
-Source: ..\Printer\Adobe\WinXP\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinXpPrinterdriver
-Source: ..\Printer\Adobe\WinXP\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinXpPrinterdriver
-Source: ..\Printer\Adobe\WinXP\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver
-Source: ..\Printer\Adobe\WinXP\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXpPrinterdriver
+Source: ..\Printer\Adobe\Win2000\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRPTFE.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+;WinXP, Win2003
+Source: ..\Printer\Adobe\Win2kXP2k3\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\Win2kXP2k3\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\Win2kXP2k3\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\Win2kXP2k3\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
 
 ;Ghostscript
 #IFDEF GhostscriptVersion
@@ -220,6 +229,7 @@ Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; Dest
 Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll
 Source: ..\Printer\Redmon\redmon95.dll; Components: program; DestDir: {sys}; MinVersion: 4.00.950,0; DestName: pdfcmn95.dll
 
+;Source: ..\SystemFiles\COMCT332.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSCOMCTL.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSMAPI32.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
@@ -248,9 +258,8 @@ Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignorever
 
 
 ;Help file
-;Source: ..\Help\english\PDFCreator.chm; DestDir: {app}; Components: program; Flags: ignoreversion; Languages: czech english slovak dutch italian
-Source: ..\Help\english\PDFCreator.chm; DestDir: {app}; Components: program; Flags: ignoreversion; Languages: Not german
-Source: ..\Help\german\PDFCreator.chm; DestDir: {app}; Components: program; Flags: ignoreversion; Languages: german
+Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: program; Flags: ignoreversion
+Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: program; Flags: ignoreversion
 
 ;#If (GhostscriptLicense=="AFPL")
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
@@ -270,7 +279,7 @@ Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components:
 Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\eesti.ini; DestDir: {app}\languages; Components: languages\eesti; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\espanol.ini; DestDir: {app}\languages; Components: languages\espanol; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
@@ -291,8 +300,11 @@ Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Component
 Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\ukrainian; Flags: ignoreversion
 
 ;Ini file
-;Source: PDFCreator.ini; DestDir: {userappdata}\PDFCreator; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall
 Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall
+
+;Manifest files
+Source: ..\PDFCreator\PDFCreator.exe.manifest; DestDir: {app}; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Transtool\TransTool.exe.manifest; DestDir: {app}\languages; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
 
 ;Ghostscript
 #IFDEF IncludeGhostscript
@@ -301,6 +313,9 @@ Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {ap
 Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
 #ENDIF
 #ENDIF
+
+[Dirs]
+Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; Flags: createonlyiffileexists
@@ -314,7 +329,9 @@ Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flag
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\{cm:UninstallProgram,{#Appname}}; Filename: {uninstallexe}; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}
-Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator.chm; WorkingDir: {app}
+Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: Not german
+Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_german.chm; WorkingDir: {app}; Languages: german
+
 Name: {group}\{cm:Logfile}; Filename: {app}\PDFCreator.exe; Parameters: -ShowOnlyLogfile; WorkingDir: {app}; IconIndex: 0; Check: IsServerInstallation
 Name: {group}\{cm:Settings}; Filename: {app}\PDFCreator.exe; Parameters: -ShowOnlyOptions; WorkingDir: {app}; IconIndex: 0; Check: IsServerInstallation
 
@@ -333,6 +350,7 @@ Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirec
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryJava; String: {sys}; Components: program; Flags: createkeyifdoesntexist
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Language; String: {code:GetActiveLanguage}; Flags: createkeyifdoesntexist
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: {code:GetPrinterTemppath}; Flags: createkeyifdoesntexist
 
 #Ifdef GhostscriptVersion
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptBinaries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: program; Flags: createkeyifdoesntexist
@@ -429,7 +447,7 @@ Root: HKLM; Subkey: SOFTWARE\Classes\Applications\PDFCreator.exe; Flags: uninsde
 Root: HKCU; Subkey: Printers\Settings; ValueName: {code:GetPrintername}; Flags: uninsdeletevalue noerror dontcreatekey
 Root: HKCU; Subkey: Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder\Start Menu\Programs\PDFCreator; Flags: uninsdeletekey noerror dontcreatekey
 
-;CustomMessages for uninstall. InnoSetop 5.0.5 Beta doesn't support custom messages for uninstalling.
+;CustomMessages for uninstall. InnoSetop doesn't support custom messages for uninstalling at the moment.
 Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueName: UninstallOptions; Valuedata: {cm:UninstallOptions}; Flags: uninsdeletevalue
 
 [Run]
@@ -456,6 +474,7 @@ Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.
 
 Filename: {app}\ShFolder.Exe; WorkingDir: {app}; Parameters: /Q:A; Flags: runminimized; Components: program; MinVersion: 4.0.950,4.0.1381; OnlyBelowVersion: 4.1.2222,5.0.2195
 Filename: {app}\PDFCreator.exe; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
+;Filename: {app}\PDFCreator.exe; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
 Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shellexec skipifsilent; Check: Not IsPrinterInstallationSuccessfully
 #ENDIF
 
@@ -507,7 +526,10 @@ Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage
 
 Name: languages\eesti; Description: Eesti; Types: full
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed
-Name: languages\espanol; Description: Espanol; Types: full
+
+Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish')
+Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish')
+
 Name: languages\french; Description: French; Types: full
 Name: languages\galician; Description: Galician; Types: full
 
@@ -689,10 +711,14 @@ function DeleteMonitor(pName : String;  pEnviroment: String; pMonitorName : Stri
 var progTitel, progHandle: TArrayOfString;
     msg : TAStr;
     FullInstallation : boolean;
-    Printername, Printerdrivername, Printerportname, Printermonitorname, LogFile, UninstallLogfile,
-     PrintSystem, Win9x, WinNT, Win2000, WinXP : String;
+    Printername, Printerdrivername, Printerportname, Printermonitorname,
+     LogFile, UninstallLogfile,
+     PrintSystem, Win9x, WinNT, Win2000, WinXP, Win2003 : String;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
+
+    cmdlPrintername, cmdlPPDFile: String;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall: Boolean;
 
     SCPage:TWizardPage;
     PrinternamePage: TInputQueryWizardpage;
@@ -765,6 +791,21 @@ begin
  Result:=ActiveLanguage();
 end;
 
+function GetPrinterTemppath(Default:string): String;
+var
+ TempDir: String;
+begin
+ If (InstallOnThisVersion('4.00.950,0','0,0')=irInstall) then     // Win9xMe
+  TempDir:=ExpandConstant('{%tmp}');
+ If InstallOnThisVersion('0,4.0.1381','5.0.2195,0')=irInstall then // WinNt
+  TempDir:=ExpandConstant('{userappdata}')+ '\PDFCreator\' + ExpandConstant('{username}');
+ If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then // Win2k and above
+  TempDir:=ExpandConstant('{%tmp}')+ '\PDFCreator';
+ If Length(TempDir) = 0 Then
+  TempDir := ExpandConstant('{app}') + '\Temp';
+ Result:=TempDir;
+end;
+
 function IsLanguage(LangName: String): Boolean;
 begin
  If LowerCase(LangName)=Lowercase(ActiveLanguage) then
@@ -774,6 +815,19 @@ end;
 procedure SetDummyRunOnce;
 begin
  RegWriteStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'PDFCreatorRestart', '');
+end;
+
+function UseOwnPPDFile(): Boolean;
+begin
+ if Length(cmdlPPDFile)>0 then
+  Result:=True
+ else
+  Result:=False;
+end;
+
+function GetExternalPPDFile(Default:string): String;
+begin
+ Result:=cmdlPPDFile
 end;
 
 function InstallWin9xPrinterdriver(): Boolean;
@@ -796,20 +850,10 @@ begin
    Result:=True
 end;
 
-function InstallWin2000Printerdriver(): Boolean;
+function InstallWin2kXP2k3Printerdriver(): Boolean;
 begin
  Result:=False;
- If (InstallOnThisVersion('0,5.0.2195','0,5.01.2600')=irInstall) then
-  Result:=True;
- If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then
-  If PrinterdriverPage.Values[2] then
-   Result:=True
-end;
-
-function InstallWinXpPrinterdriver(): Boolean;
-begin
- Result:=False;
- If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then
+ If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
   Result:=True
 end;
 
@@ -1044,7 +1088,6 @@ begin
  end;
  If UsingWinNT=false then
   SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
-//  SendMessage(65535, 26, 0, StrToInt('windows')); // Ini-Refresh !!! Important for Win9x/Me
 end;
 
 function InstallPort:Boolean;
@@ -1149,13 +1192,21 @@ begin
   If UsingWinNT=false then
    SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
  end;
-// Win2000
- If InstallWin2000Printerdriver then begin
-  ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),Win2000);
+// Win2000, WinXP, Win2003
+ If InstallWin2kXP2k3Printerdriver then begin
+  If InstallOnThisVersion('0,5.0.2195','0,5.01.2600')=irInstall then
+    ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),Win2000)
+   else If InstallOnThisVersion('0,5.0.2600','0,5.02.3790')=irInstall then
+     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),WinXP)
+    else
+     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),Win2003);
   AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
   ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
   DI3.cVersion:=3;
-  DI3.pDependentFiles :='PSCRIPT.NTF'#0#0;
+  If InstallOnThisVersion('0,5.0.2195','0,5.01.2600')=irInstall then
+    DI3.pDependentFiles :='PSCRPTFE.NTF'#0+'PSCRIPT.NTF'#0#0
+   else
+    DI3.pDependentFiles :='PSCRIPT.NTF'#0#0;
   DI3.pConfigFile :='PS5UI.DLL';
   DI3.pDriverPath := 'PSCRIPT5.DLL';
   DI3.pEnvironment:='Windows NT x86';
@@ -1164,35 +1215,7 @@ begin
   DI3.pDefaultDataType :='RAW';
   DI3.pMonitorName :='';
 
-  SaveStringToFile(LogFile, 'Install printerdriver for Win2k:' + #13#10, True)
-  SaveStringToFile(LogFile, ' Drivername : ' + DI3.pName  + #13#10, True)
-
-  res := AddPrinterDriver(Chr(0), 3, DI3);
-
-  if res=0 then begin
-    Result:=False;
-    SaveStringToFile(LogFile, ' Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
-   end else
-    SaveStringToFile(LogFile, ' Result: Success' + #13#10#13#10, True);
-  If UsingWinNT=false then
-   SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
- end;
-// WinXp
- If InstallWinXpPrinterdriver then begin
-  ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'), WinXP);
-  AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
-  ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
-  DI3.cVersion:=3;
-  DI3.pDependentFiles :='PSCRIPT.NTF'#0#0;
-  DI3.pConfigFile :='PS5UI.DLL';
-  DI3.pDriverPath := 'PSCRIPT5.DLL';
-  DI3.pEnvironment:='Windows NT x86';
-  DI3.pHelpFile :='PSCRIPT.HLP';
-  DI3.pDataFile :='PDFCREAT.PPD';
-  DI3.pDefaultDataType :='RAW';
-  DI3.pMonitorName :='';
-
-  SaveStringToFile(LogFile, 'Install printerdriver for WinXp/2k3:' + #13#10, True)
+  SaveStringToFile(LogFile, 'Install printerdriver for Win2kXP2k3:' + #13#10, True)
   SaveStringToFile(LogFile, ' Drivername : ' + DI3.pName  + #13#10, True)
 
   res := AddPrinterDriver(Chr(0), 3, DI3);
@@ -1688,15 +1711,58 @@ begin
        Result := False
     else
      Result:=False
+end;
 
+function CheckMonitorname(MonitornameStr: String): Boolean;
+var
+ Monitors: Array of TMonitorInfo1; c, i: LongInt;
+begin
+ Result:=False;
+ if Length(MonitornameStr)=0 then exit;
+ c:=GetMonitors(Monitors);
+ for i:=0 to c-1 do
+  If Uppercase(Monitors[i].pName)=Uppercase(MonitornameStr) then begin
+   Result:=True;
+   exit
+  end
+end;
+
+function CheckPrintername(PrinternameStr: String; ShowMsg: Boolean): Boolean;
+var
+ Printers: Array of TPrinterInfo2; c, i: LongInt;
+begin
+ Result:=False;
+ if Length(PrinternameStr)=0 then begin
+  If ShowMsg then
+   MsgBox(ExpandConstant('{cm:FalsePrintername2}'),mbError,MB_OK);
+  exit
+ end;
+ if Length(PrinternameStr)>221 then begin
+  If ShowMsg then
+   MsgBox(ExpandConstant('{cm:FalsePrintername3}'),mbError,MB_OK);
+  exit
+ end;
+ if (Pos('!',PrinternameStr)>0)or(Pos('\',PrinternameStr)>0)or(Pos(',',PrinternameStr)>0) then begin
+  If ShowMsg then
+   MsgBox(ExpandConstant('{cm:FalsePrintername1}'),mbError,MB_OK);
+  exit
+ end;
+ c:=GetPrinters(Printers);
+ for i:=0 to c-1 do begin
+  If Uppercase(Printers[i].pPrinterName)=Uppercase(PrinternameStr) then begin
+   If ShowMsg then
+    MsgBox(ExpandConstant('{cm:FalsePrintername4}'),mbError,MB_OK);
+   exit
+  end
+ end
+ Result:=True;
 end;
 
 function NextButtonClick(CurPageID: Integer): Boolean;
-var
- tStr: String; Printers: Array of TPrinterInfo2; c, i: LongInt;
 begin
-// MsgBox(IntToStr(CurPageID),mbInformation,MB_OK)
  Result:=False;
+ if CurPageID=wpWelcome then
+  PrinternamePage.Values[0]:=Printername;
  if CurPageID=wpReady then begin
   GetActivePDFLoaders;
   KillActivePDFLoaders;
@@ -1705,31 +1771,11 @@ begin
  if CurPageID=wpFinished then
   SaveInstallInformations;
  if CurPageID = PrinternamePage.ID then begin
-  tStr:=PrinternamePage.Values[0];
-  if Length(tStr)=0 then begin
-   MsgBox(ExpandConstant('{cm:FalsePrintername2}'),mbError,MB_OK);
+  if CheckPrintername(PrinternamePage.Values[0],True)=False then begin
    PrinternamePage.Values[0]:='PDFCreator';
-   exit
+   exit;
   end;
-  if Length(tStr)>221 then begin
-   MsgBox(ExpandConstant('{cm:FalsePrintername3}'),mbError,MB_OK);
-   PrinternamePage.Values[0]:='PDFCreator';
-   exit
-  end;
-  if (Pos('!',tStr)>0)or(Pos('\',tStr)>0)or(Pos(',',tStr)>0) then begin
-   MsgBox(ExpandConstant('{cm:FalsePrintername1}'),mbError,MB_OK);
-   PrinternamePage.Values[0]:='PDFCreator';
-   exit
-  end;
-  c:=GetPrinters(Printers);
-  for i:=0 to c-1 do begin
-   If Uppercase(Printers[i].pPrinterName)=Uppercase(tStr) then begin
-    MsgBox(ExpandConstant('{cm:FalsePrintername4}'),mbError,MB_OK);
-    PrinternamePage.Values[0]:='PDFCreator';
-    exit
-   end
-  end
-  Printername := tStr;
+  Printername := PrinternamePage.Values[0];
  end
  Result:=True;
 end;
@@ -1979,14 +2025,95 @@ begin
  Result:=RegValueExists(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'PDFCreatorRestart')
 end;
 
+function AnalyzeCommandlineParameters:Boolean;
+var
+ i:Longint; cmdParam, pStr: String;
+begin
+ Result:=false;
+
+ for i:=0 to Paramcount do begin
+  if Length(paramstr(i))=1 then begin
+   Msgbox('False commandline parameter: ' + paramstr(i),mbError,MB_OK);
+   exit;
+  end;
+  if (paramstr(i)='-?') or (paramstr(i)='/?') then begin
+   Msgbox('Additional setup commandline parameters: '#13#10#13#10 +
+    '/?'#9#9#9#9'- this help screen'#13#10 +
+    '/ForceInstall'#9#9#9'- force the installation'#13#10 +
+    '/Printername=<PrinterName>'#9'- set a different printername'#13#10 +
+    '/PPDFile=<PPDFile>'#9#9'- use a own ppd file'
+    ,mbInformation,MB_OK);
+   exit;
+  end;
+
+  if uppercase(paramstr(i))='/VERYSILENT' then
+   cmdlVerySilent:=true;
+  if uppercase(paramstr(i))='/SILENT' then
+   cmdlSilent:=true;
+  if uppercase(paramstr(i))='/FORCEINSTALL' then
+   cmdlForceInstall:=true;
+
+  cmdParam:='/PPDFile';
+  pStr:=Copy(paramstr(i),1,Length(cmdParam));
+  if uppercase(pstr)=uppercase(cmdParam) then begin
+   if Copy(paramstr(i),Length(cmdParam)+1,1)='=' then
+     cmdlPPDFile:=Copy(paramstr(i),Length(cmdParam)+2,Length(paramstr(i)))
+    else
+     cmdlPPDFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
+  end;
+  cmdParam:='/Printername';
+  pStr:=Copy(paramstr(i),1,Length(cmdParam));
+  if uppercase(pstr)=uppercase(cmdParam) then begin
+   if Copy(paramstr(i),Length(cmdParam)+1,1)='=' then
+     cmdlPrintername:=Copy(paramstr(i),Length(cmdParam)+2,Length(paramstr(i)))
+    else
+     cmdlPrintername:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
+  end;
+ end;
+ If Length(cmdlPrintername)>0 then begin
+  If CheckPrintername(cmdlPrintername, Not cmdlVerySilent)=False then begin
+   Result:=False
+   exit;
+  end;
+  Printername:=cmdlPrintername;
+ end;
+
+ if Length(cmdlPPDFile)>0 then
+  if FileExists(cmdlPPDFile)=False then begin
+   pStr:=SetupMessage(msgSourceDoesntExist);
+   StringChange(pStr,'%1',cmdlPPDFile);
+   if cmdlVerySilent=false then
+    msgbox(pStr,mbCriticalError, MB_OK);
+   Result:=False
+   exit;
+  end;
+ Result:=true;
+end;
+
 function InitializeSetup(): Boolean;
 var
 #ifdef UpdateIsPossible
  cv,a:Longint;  verySilent:boolean;
 #else
- a:Longint; verySilent:boolean;
+ a:Longint;
 #endif
 begin
+ InitMessages;
+ Win9x:=   'Windows 95, Windows 98, Windows Me';
+ WinNt:=   'Windows NT 4.0';
+ Win2000:= 'Windows 2000';
+ WinXP:=   'Windows XP';
+ Win2003:= 'Windows 2003';
+ PrinterMonitorname:= 'PDFCreator';
+ PrinterPortname:=    'PDFCreator:';
+ PrinterDrivername:=  'PDFCreator';
+ Printername:=        'PDFCreator';
+
+ If AnalyzeCommandlineParameters=false then begin
+  result:=false;
+  exit
+ end;
+
  If IsDummyRunOnce then begin
   MsgBox(ExpandConstant('{cm:RestartError}'),mbError,MB_OK);
   Result:=False;
@@ -2001,18 +2128,6 @@ begin
   Result:=False;
   Exit
  end;
-
- InitMessages;
- Win9x:=   'Windows 95, Windows 98, Windows Me';
- WinNt:=   'Windows NT 4.0';
- Win2000:= 'Windows 2000';
- WinXP:=   'Windows XP';
- PrinterMonitorname:= 'PDFCreator';
- PrinterPortname:=    'PDFCreator:';
- PrinterDrivername:=  'PDFCreator';
- Printername:=        'PDFCreator';
-
- verySilent:=false;
 
  if CheckForMutexes('{#PDFCreatorExeIDStr}')=true then begin
   Repeat
@@ -2032,12 +2147,9 @@ begin
   until (a=IDCancel) or (CheckForMutexes('{#PDFSpoolerExeIDStr}')=false);
   if a=IDCancel then exit;
  end;
- for a:=1 to Paramcount do begin
-  if uppercase(paramstr(a))='/VERYSILENT' then
-   verySilent:=true;
- end;
+
 #ifdef UpdateIsPossible
- If ProgramIsInstalled=true then begin
+ If ProgramIsInstalled And not cmdlForceInstall then begin
    FullInstallation:=false;
    cv:=CompareVBVersion(GetInstalledVersion,'{#AppVersion}');
    if cv=-1 then begin
@@ -2087,17 +2199,17 @@ begin
 #Else
  Result:= true;
  FullInstallation:=true;
- If ProgramIsInstalled=true then begin
-   if verySilent=false then begin
+ If ProgramIsInstalled and not cmdlForceInstall then begin
+   if cmdlVerySilent=false then begin
     msgbox(msg[4],mbInformation, MB_OK);
    end;
    Result:=false;
   end else
-   If IsAdminLoggedOn=True then
+   If IsAdminLoggedOn then
      Result := True
     else begin
      Result:=true;
-     if verySilent=false then begin
+     if cmdlVerySilent=false then begin
       a:=MsgBox(msg[0], mbConfirmation, MB_YesNo);
       If a=IDYES then
         Result:=True
@@ -2160,7 +2272,7 @@ begin
   ExpandConstant('{cm:Printername}'), ExpandConstant('{cm:PrinternameDescription}'),
   ExpandConstant('{cm:PrinternameMessage}'));
  PrinternamePage.Add(ExpandConstant('{cm:PrinternameValue}'), False);
- PrinternamePage.Values[0]:='PDFCreator';
+ PrinternamePage.Values[0]:=Printername;
 
  PrinterdriverPage := CreateInputOptionPage(PrinternamePage.ID,
   ExpandConstant('{cm:AdditionalPrinterdriver}'),
@@ -2169,8 +2281,6 @@ begin
  PrinterdriverPage.Add('Windows 95, Windows 98, Windows Me');
  if InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
   PrinterdriverPage.Add('Windows NT 4.0');
- if InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then
-  PrinterdriverPage.Add('Windows 2000');
 
  ProgressPage := CreateOutputProgressPage(ExpandConstant('{cm:InstallPrinter}'),
   ExpandConstant('{cm:InstallPrinterDescription}'));
@@ -2192,11 +2302,8 @@ begin
   If InstallOnThisVersion('0,4.0.1381','0,0,5.0.2195')=irInstall then
    If PrinterdriverPage.Values[0] then
     ShowAdditionPrinterdriversInMemo:=True
-  If InstallOnThisVersion('0,5.0.2195','0,5.01.2600')=irInstall then
+  If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
    If PrinterdriverPage.Values[0] Or PrinterdriverPage.Values[1] then
-    ShowAdditionPrinterdriversInMemo:=True
-  If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then
-   If PrinterdriverPage.Values[0] Or PrinterdriverPage.Values[1] Or PrinterdriverPage.Values[2] then
     ShowAdditionPrinterdriversInMemo:=True
   If ShowAdditionPrinterdriversInMemo Then begin
    S := S + ExpandConstant('{cm:AdditionalPrinterdriverCaption}');
@@ -2204,19 +2311,11 @@ begin
    If InstallOnThisVersion('0,4.0.1381','0,5.0.2195')=irInstall then
     If PrinterdriverPage.Values[0] then
      S := S + Space + Win9x + NewLine;
-   If InstallOnThisVersion('0,5.0.2195','0,5.01.2600')=irInstall then begin
+   If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then begin
     If PrinterdriverPage.Values[0] then
      S := S + Space + Win9x + NewLine;
     If PrinterdriverPage.Values[1] then
      S := S + Space + WinNt + NewLine;
-   end
-   If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then begin
-    If PrinterdriverPage.Values[0] then
-     S := S + Space + Win9x + NewLine;
-    If PrinterdriverPage.Values[1] then
-     S := S + Space + WinNt + NewLine;
-    If PrinterdriverPage.Values[2] then
-     S := S + Space + Win2000 + NewLine;
    end
    S := S + NewLine;
   end;
@@ -2241,9 +2340,7 @@ begin
     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
    If InstallWinNtPrinterdriver then
     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
-   If InstallWin2000Printerdriver then
-    AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
-   If InstallWinXpPrinterdriver then
+   If InstallWin2kXP2k3Printerdriver then
     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
    ProgressPage.SetProgress(0, 0);
    ProgressPage.Show;
@@ -2261,8 +2358,15 @@ begin
      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
      ProgressPage.SetText(ExpandConstant('{cm:InstallPrintermonitor}'), GetPrinterMonitorname(''));
      GetPorts(Ports);
-     tres:=InstallMonitor(GetPrintermonitorname(''));
-     res:=res and tres;
+
+     s := GetPrintermonitorname('');
+     if Not CheckMonitorname(s) then begin
+      tres:=InstallMonitor(s);
+      res:=res and tres;
+     end else
+      SaveStringToFile(LogFile, ' Monitorname : ' + s  + ' already exists.'#13#10, True);
+     s :='';
+
      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
 
@@ -2389,3 +2493,5 @@ begin
       end;
   end;
 end;
+
+//#expr SaveToFile("C:\test.iss")

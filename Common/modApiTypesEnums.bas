@@ -346,7 +346,7 @@ Public Enum OpenSaveFlags
 End Enum
 
 Public Type POINTAPI
- X As Long
+ x As Long
  Y As Long
 End Type
 
@@ -422,7 +422,7 @@ End Type
 Public Type CHOOSEFONT
  lStructSize As Long
  hWndOwner As Long
- hDC As Long
+ hdc As Long
  lpLogFont As Long
  iPointSize As Long
  Flags As Long
@@ -443,7 +443,7 @@ Public Type PRINTDLG_TYPE
  hWndOwner As Long
  hDevMode As Long
  hDevNames As Long
- hDC As Long
+ hdc As Long
  Flags As Long
  nFromPage As Integer
  nToPage As Integer
@@ -713,4 +713,26 @@ End Type
 Public Type TOKEN_USER
  User As SID_AND_ATTRIBUTES
 End Type
+
+Public Type VS_FIXEDFILEINFO
+ dwSignature As Long
+ dwStrucVersionl As Integer
+ dwStrucVersionh As Integer
+ dwFileVersionMSl As Integer
+ dwFileVersionMSh As Integer
+ dwFileVersionLSl As Integer
+ dwFileVersionLSh As Integer
+ dwProductVersionMSl As Integer
+ dwProductVersionMSh As Integer
+ dwProductVersionLSl As Integer
+ dwProductVersionLSh As Integer
+ dwFileFlagsMask As Long
+ dwFileFlags As Long
+ dwFileOS As Long
+ dwFileType As Long
+ dwFileSubtype As Long
+ dwFileDateMS As Long
+ dwFileDateLS As Long
+End Type
+
 

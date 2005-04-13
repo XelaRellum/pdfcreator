@@ -21,7 +21,7 @@ Private Declare Function SystemParametersInfo Lib _
         lpvParam As Any, ByVal fuWinIni As Long) As Long
                
 Private Declare Function GetDeviceCaps Lib "gdi32" _
-        (ByVal hDC As Long, ByVal nIndex As Long) As _
+        (ByVal hdc As Long, ByVal nIndex As Long) As _
         Long
 
 Private Const SPI_GETICONTITLELOGFONT = 31
@@ -99,7 +99,7 @@ On Error GoTo ErrPtnr_OnError
 50120    FName = Left$(FName, InStr(1, FName, Chr$(0)) - 1)
 50130    FSize = ITLF.lfHeight
 50140    If FSize < 1 Then
-50150     FSize = Abs((72 / GetDeviceCaps(Frm.hDC, LOGPIXELSY)) * FSize)
+50150     FSize = Abs((72 / GetDeviceCaps(Frm.hdc, LOGPIXELSY)) * FSize)
 50160    End If
 50170    sFont(0) = FName: sFont(1) = FSize: sFont(2) = ITLF.lfCharSet
 50180    GetSystemFont.Add sFont
@@ -121,7 +121,7 @@ On Error GoTo ErrPtnr_OnError
 50340   FName = Left$(FName, InStr(1, FName, Chr$(0)) - 1)
 50350   FSize = tNMLF.lfHeight
 50360   If FSize < 1 Then
-50370    FSize = Abs((72 / GetDeviceCaps(Frm.hDC, LOGPIXELSY)) * FSize)
+50370    FSize = Abs((72 / GetDeviceCaps(Frm.hdc, LOGPIXELSY)) * FSize)
 50380   End If
 50390   sFont(0) = FName: sFont(1) = FSize: sFont(2) = tNMLF.lfCharSet
 50400   GetSystemFont.Add sFont

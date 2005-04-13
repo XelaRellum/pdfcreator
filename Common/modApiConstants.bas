@@ -176,6 +176,7 @@ Public Const SM_CYCAPTION                    As Long = 4
 
 Public Const WM_GETTEXT                      As Long = &HD
 Public Const WM_GETTEXTLENGTH                As Long = &HE
+Public Const WM_SETTEXT                      As Long = &HC
 
 Public Const BIF_RETURNONLYFSDIRS            As Long = 1
 
@@ -396,4 +397,57 @@ Public Const NERR_UseNotFound = (NERR_BASE + 150)
 
 Public Const TH32CS_SNAPPROCESS              As Long = 2&
 
+Public Const BITSPIXEL                       As Long = 12
+
+Public Const VS_FFI_SIGNATURE = &HFEEF04BD
+Public Const VS_FFI_STRUCVERSION = &H10000
+Public Const VS_FFI_FILEFLAGSMASK = &H3F&
+
+Public Const VS_FF_DEBUG = &H1
+Public Const VS_FF_PRERELEASE = &H2
+Public Const VS_FF_PATCHED = &H4
+Public Const VS_FF_PRIVATEBUILD = &H8
+Public Const VS_FF_INFOINFERRED = &H10
+Public Const VS_FF_SPECIALBUILD = &H20
+
+Public Const VOS_UNKNOWN = &H0
+Public Const VOS_DOS = &H10000
+Public Const VOS_OS216 = &H20000
+Public Const VOS_OS232 = &H30000
+Public Const VOS_NT = &H40000
+Public Const VOS__BASE = &H0
+Public Const VOS__WINDOWS16 = &H1
+Public Const VOS__PM16 = &H2
+Public Const VOS__PM32 = &H3
+Public Const VOS__WINDOWS32 = &H4
+
+Public Const VOS_DOS_WINDOWS16 = &H10001
+Public Const VOS_DOS_WINDOWS32 = &H10004
+Public Const VOS_OS216_PM16 = &H20002
+Public Const VOS_OS232_PM32 = &H30003
+Public Const VOS_NT_WINDOWS32 = &H40004
+
+Public Const VFT_UNKNOWN = &H0
+Public Const VFT_APP = &H1
+Public Const VFT_DLL = &H2
+Public Const VFT_DRV = &H3
+Public Const VFT_FONT = &H4
+Public Const VFT_VXD = &H5
+Public Const VFT_STATIC_LIB = &H7
+
+Public Const VFT2_UNKNOWN = &H0
+Public Const VFT2_DRV_PRINTER = &H1
+Public Const VFT2_DRV_KEYBOARD = &H2
+Public Const VFT2_DRV_LANGUAGE = &H3
+Public Const VFT2_DRV_DISPLAY = &H4
+Public Const VFT2_DRV_MOUSE = &H5
+Public Const VFT2_DRV_NETWORK = &H6
+Public Const VFT2_DRV_SYSTEM = &H7
+Public Const VFT2_DRV_INSTALLABLE = &H8
+Public Const VFT2_DRV_SOUND = &H9
+Public Const VFT2_DRV_COMM = &HA
+
+Public Const VFT2_FONT_RASTER = &H1
+Public Const VFT2_FONT_VECTOR = &H2
+Public Const VFT2_FONT_TRUETYPE = &H3
 

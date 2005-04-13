@@ -32,7 +32,7 @@ Option Compare Text
 
 Private aKey() As String, aVal() As Variant, Upper As Long, Last As Long
 
-Public Sub Add(Key As String, Value As Variant)
+Public Sub Add(key As String, Value As Variant)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -43,18 +43,18 @@ On Error GoTo ErrPtnr_OnError
 50050
 50060  For i = 0 To Upper
 50070   thisKey = aKey(i)
-50080   If StrComp(thisKey, Key) = 0 Then
+50080   If StrComp(thisKey, key) = 0 Then
 50090    found = True
 50100    Exit For
 50110   End If
 50120  Next i
 50130
 50140  If found Then
-50150    aKey(i) = Key
+50150    aKey(i) = key
 50160    aVal(i) = Value
 50170    Last = i
 50180   Else
-50190    aKey(Upper) = Key
+50190    aKey(Upper) = key
 50200    aVal(Upper) = Value
 50210    Last = Upper
 50220    Upper = Upper + 1
@@ -71,7 +71,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub Delete(Key As String)
+Public Sub Delete(key As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -80,7 +80,7 @@ On Error GoTo ErrPtnr_OnError
 50030  If Upper = 0 Then Exit Sub
 50040  For i = 0 To Upper - 1
 50050   thisKey = aKey(i)
-50060   If StrComp(thisKey, Key) = 0 Then
+50060   If StrComp(thisKey, key) = 0 Then
 50070    found = True
 50080    Exit For
 50090   End If
@@ -139,14 +139,14 @@ Public Function keys() As String()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, Key() As String
-50020  ReDim Key(0 To Upper - 1)
+50010  Dim i As Long, key() As String
+50020  ReDim key(0 To Upper - 1)
 50030
 50040  For i = 0 To Upper - 1
-50050   Key(i) = aKey(i)
+50050   key(i) = aKey(i)
 50060  Next i
 50070
-50080  keys = Key
+50080  keys = key
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -159,7 +159,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function Retrieve(Key As String, Optional Default As Variant = 0) As Variant
+Public Function Retrieve(key As String, Optional Default As Variant = 0) As Variant
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -168,7 +168,7 @@ On Error GoTo ErrPtnr_OnError
 50030  If Upper > 0 Then
 50040   For i = 0 To Upper - 1
 50050    thisKey = aKey(i)
-50060    If StrComp(thisKey, Key) = 0 Then
+50060    If StrComp(thisKey, key) = 0 Then
 50070     found = True
 50080     Exit For
 50090    End If

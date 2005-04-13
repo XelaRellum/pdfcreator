@@ -48,8 +48,8 @@ On Error GoTo ErrPtnr_OnError
 50010     Dim lngRetr As Long, lngHeight As Long, lngWidth As Long
 50020     Dim lngRgnFinal As Long, lngRgnTmp As Long
 50030     Dim lngStart As Long
-50040     Dim X As Long, Y As Long
-50050     Dim hDC As Long
+50040     Dim x As Long, Y As Long
+50050     Dim hdc As Long
 50060
 50070     Dim bi24BitInfo As BITMAPINFO
 50080     Dim iBitmap As Long
@@ -63,7 +63,7 @@ On Error GoTo ErrPtnr_OnError
 50160     OldScaleMode = picSource.ScaleMode
 50170     picSource.ScaleMode = vbPixels
 50180
-50190     hDC = picSource.hDC
+50190     hdc = picSource.hdc
 50200     lngWidth = picSource.ScaleWidth '- 1
 50210     lngHeight = picSource.ScaleHeight - 1
 50220
@@ -82,15 +82,15 @@ On Error GoTo ErrPtnr_OnError
 50350     'ByteArrays in der erforderlichen Größe anlegen
 50360     ReDim PicBits(0 To bi24BitInfo.bmiHeader.biWidth * 3 - 1, 0 To bi24BitInfo.bmiHeader.biHeight - 1)
 50370
-50380     iDC = CreateCompatibleDC(hDC)
+50380     iDC = CreateCompatibleDC(hdc)
 50390     'Gerätekontextunabhängige Bitmap (DIB) erzeugen
 50400     iBitmap = CreateDIBSection(iDC, bi24BitInfo, DIB_RGB_COLORS, ByVal 0&, ByVal 0&, ByVal 0&)
 50410     'iBitmap in den neuen DIB-DC wählen
 50420     Call SelectObject(iDC, iBitmap)
 50430     'hDC des Quell-Fensters in den hDC der DIB kopieren
-50440     Call BitBlt(iDC, 0, 0, bi24BitInfo.bmiHeader.biWidth, bi24BitInfo.bmiHeader.biHeight, hDC, 0, 0, vbSrcCopy)
+50440     Call BitBlt(iDC, 0, 0, bi24BitInfo.bmiHeader.biWidth, bi24BitInfo.bmiHeader.biHeight, hdc, 0, 0, vbSrcCopy)
 50450     'Gerätekontextunabhängige Bitmap in ByteArrays kopieren
-50460     Call GetDIBits(hDC, iBitmap, 0, bi24BitInfo.bmiHeader.biHeight, PicBits(0, 0), bi24BitInfo, DIB_RGB_COLORS)
+50460     Call GetDIBits(hdc, iBitmap, 0, bi24BitInfo.bmiHeader.biHeight, PicBits(0, 0), bi24BitInfo, DIB_RGB_COLORS)
 50470
 50480     'Wir brauchen nur den Array, also können wir die Bitmap direkt wieder löschen.
 50490
@@ -101,27 +101,27 @@ On Error GoTo ErrPtnr_OnError
 50540
 50550     lngRgnFinal = CreateRectRgn(0, 0, 0, 0)
 50560     For Y = 0 To lngHeight
-50570         X = 0
-50580         Do While X < lngWidth
-50590             Do While X < lngWidth And _
-                RGB(PicBits(X * 3 + 2, lngHeight - Y + 1), _
-                    PicBits(X * 3 + 1, lngHeight - Y + 1), _
-                    PicBits(X * 3, lngHeight - Y + 1) _
+50570         x = 0
+50580         Do While x < lngWidth
+50590             Do While x < lngWidth And _
+                RGB(PicBits(x * 3 + 2, lngHeight - Y + 1), _
+                    PicBits(x * 3 + 1, lngHeight - Y + 1), _
+                    PicBits(x * 3, lngHeight - Y + 1) _
                     ) = lngTransColor
 50640
-50650                 X = X + 1
+50650                 x = x + 1
 50660             Loop
-50670             If X <= lngWidth Then
-50680                 lngStart = X
-50690                 Do While X < lngWidth And _
-                    RGB(PicBits(X * 3 + 2, lngHeight - Y + 1), _
-                        PicBits(X * 3 + 1, lngHeight - Y + 1), _
-                        PicBits(X * 3, lngHeight - Y + 1) _
+50670             If x <= lngWidth Then
+50680                 lngStart = x
+50690                 Do While x < lngWidth And _
+                    RGB(PicBits(x * 3 + 2, lngHeight - Y + 1), _
+                        PicBits(x * 3 + 1, lngHeight - Y + 1), _
+                        PicBits(x * 3, lngHeight - Y + 1) _
                         ) <> lngTransColor
-50740                     X = X + 1
+50740                     x = x + 1
 50750                 Loop
-50760                 If X + 1 > lngWidth Then X = lngWidth
-50770                 lngRgnTmp = CreateRectRgn(lngStart, Y, X, Y + 1)
+50760                 If x + 1 > lngWidth Then x = lngWidth
+50770                 lngRgnTmp = CreateRectRgn(lngStart, Y, x, Y + 1)
 50780                 lngRetr = CombineRgn(lngRgnFinal, lngRgnFinal, lngRgnTmp, RGN_OR)
 50790                 DeleteObject lngRgnTmp
 50800             End If

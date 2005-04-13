@@ -3,10 +3,10 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmSearch 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Form1"
-   ClientHeight    =   3465
+   ClientHeight    =   4440
    ClientLeft      =   45
-   ClientTop       =   330
-   ClientWidth     =   4680
+   ClientTop       =   225
+   ClientWidth     =   4740
    BeginProperty Font 
       Name            =   "MS Sans Serif"
       Size            =   9.75
@@ -20,18 +20,36 @@ Begin VB.Form frmSearch
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3465
-   ScaleWidth      =   4680
+   ScaleHeight     =   4440
+   ScaleWidth      =   4740
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
-   Begin TransTool.XP_ProgressBar xpPgb 
-      Height          =   180
+   Begin VB.CommandButton cmdBrowse 
+      Height          =   375
+      Index           =   0
+      Left            =   1920
+      TabIndex        =   5
+      Top             =   3390
+      Width           =   375
+      Caption         =   "<"
+   End
+   Begin VB.CommandButton cmd 
+      Height          =   375
+      Index           =   0
       Left            =   3360
-      TabIndex        =   2
-      Top             =   3240
-      Width           =   1095
-      _ExtentX        =   1931
-      _ExtentY        =   318
+      TabIndex        =   3
+      Top             =   3390
+      Width           =   1215
+      Caption         =   "&Search"
+   End
+   Begin TransTool.XP_ProgressBar xpPgb 
+      Height          =   225
+      Left            =   3255
+      TabIndex        =   13
+      Top             =   3885
+      Width           =   1380
+      _ExtentX        =   2434
+      _ExtentY        =   397
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -42,61 +60,26 @@ Begin VB.Form frmSearch
          Strikethrough   =   0   'False
       EndProperty
       BrushStyle      =   0
-      Color           =   8454016
+      Color           =   65280
    End
-   Begin VB.CommandButton cmdBrowse 
-      Caption         =   ">"
-      Enabled         =   0   'False
-      Height          =   375
-      Index           =   1
-      Left            =   2400
-      TabIndex        =   8
-      Top             =   2760
-      Width           =   375
-   End
-   Begin VB.CommandButton cmdBrowse 
-      Caption         =   "<"
-      Enabled         =   0   'False
-      Height          =   375
-      Index           =   0
-      Left            =   1920
-      TabIndex        =   7
-      Top             =   2760
-      Width           =   375
-   End
-   Begin VB.Frame fraSettings 
+   Begin TransTool.dmFrame dmFraSettings 
+      Height          =   1275
+      Left            =   105
+      TabIndex        =   11
+      Top             =   1785
+      Width           =   4530
+      _ExtentX        =   7990
+      _ExtentY        =   2249
       Caption         =   "Settings"
-      BeginProperty Font 
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
          Charset         =   0
-         Weight          =   400
+         Weight          =   700
          Underline       =   0   'False
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Height          =   975
-      Left            =   120
-      TabIndex        =   4
-      Top             =   1680
-      Width           =   4455
-      Begin VB.CheckBox chkCaseSensitive 
-         Caption         =   "Case s&ensitive"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   255
-         Left            =   120
-         TabIndex        =   6
-         Top             =   240
-         Width           =   4215
-      End
       Begin VB.CheckBox chkWholeWord 
          Caption         =   "&Whole word"
          BeginProperty Font 
@@ -109,81 +92,63 @@ Begin VB.Form frmSearch
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   120
-         TabIndex        =   5
-         Top             =   600
+         Left            =   105
+         TabIndex        =   2
+         Top             =   780
+         Width           =   4215
+      End
+      Begin VB.CheckBox chkCaseSensitive 
+         Caption         =   "Case s&ensitive"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   105
+         TabIndex        =   1
+         Top             =   420
          Width           =   4215
       End
    End
-   Begin MSComctlLib.StatusBar stb 
-      Align           =   2  'Unten ausrichten
-      Height          =   255
-      Left            =   0
-      TabIndex        =   3
-      Top             =   3210
-      Width           =   4680
-      _ExtentX        =   8255
-      _ExtentY        =   450
-      _Version        =   393216
-      BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
-         NumPanels       =   1
-         BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
-         EndProperty
-      EndProperty
-   End
-   Begin VB.CommandButton cmd 
-      Caption         =   "&Close"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Index           =   1
-      Left            =   120
-      TabIndex        =   1
-      Top             =   2760
-      Width           =   1215
-   End
-   Begin VB.CommandButton cmd 
-      Caption         =   "&Search"
-      Enabled         =   0   'False
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   375
-      Index           =   0
-      Left            =   3360
-      TabIndex        =   0
-      Top             =   2760
-      Width           =   1215
-   End
-   Begin VB.Frame fraSearch 
-      Caption         =   "Search"
-      BeginProperty Font 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+   Begin TransTool.dmFrame dmFraSearch 
       Height          =   1590
       Left            =   105
-      TabIndex        =   9
-      Top             =   0
+      TabIndex        =   7
+      Top             =   105
       Width           =   4530
+      _ExtentX        =   7990
+      _ExtentY        =   2805
+      Caption         =   "Search"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.ComboBox cmbSearchtext 
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   315
+         Left            =   120
+         TabIndex        =   0
+         Top             =   1155
+         Width           =   4350
+      End
       Begin VB.ComboBox cmbColumn 
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -197,44 +162,9 @@ Begin VB.Form frmSearch
          Height          =   315
          Left            =   120
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   11
+         TabIndex        =   9
          Top             =   525
          Width           =   4350
-      End
-      Begin VB.ComboBox cmbSearchtext 
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   315
-         Left            =   120
-         TabIndex        =   10
-         Top             =   1155
-         Width           =   4350
-      End
-      Begin VB.Label lbl 
-         AutoSize        =   -1  'True
-         Caption         =   "Searchtext"
-         BeginProperty Font 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Height          =   195
-         Index           =   1
-         Left            =   105
-         TabIndex        =   13
-         Top             =   945
-         Width           =   765
       End
       Begin VB.Label lbl 
          AutoSize        =   -1  'True
@@ -251,10 +181,72 @@ Begin VB.Form frmSearch
          Height          =   195
          Index           =   0
          Left            =   120
-         TabIndex        =   12
+         TabIndex        =   8
          Top             =   315
          Width           =   495
       End
+      Begin VB.Label lbl 
+         AutoSize        =   -1  'True
+         Caption         =   "Searchtext"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   195
+         Index           =   1
+         Left            =   105
+         TabIndex        =   10
+         Top             =   945
+         Width           =   765
+      End
+   End
+   Begin MSComctlLib.StatusBar stb 
+      Align           =   2  'Unten ausrichten
+      Height          =   360
+      Left            =   0
+      TabIndex        =   12
+      Top             =   4080
+      Width           =   4740
+      _ExtentX        =   8361
+      _ExtentY        =   635
+      _Version        =   393216
+      BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
+         NumPanels       =   1
+         BeginProperty Panel1 {8E3867AB-8586-11D1-B16A-00C0F0283628} 
+         EndProperty
+      EndProperty
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+   End
+   Begin VB.CommandButton cmd 
+      Height          =   375
+      Index           =   1
+      Left            =   105
+      TabIndex        =   6
+      Top             =   3390
+      Width           =   1215
+      Caption         =   "&Close"
+   End
+   Begin VB.CommandButton cmdBrowse 
+      Height          =   375
+      Index           =   1
+      Left            =   2400
+      TabIndex        =   4
+      Top             =   3390
+      Width           =   375
+      Caption         =   ">"
    End
 End
 Attribute VB_Name = "frmSearch"
@@ -379,9 +371,9 @@ On Error GoTo ErrPtnr_OnError
 50300  End With
 50310
 50320  With stb
-50330   .Panels("Status").ToolTipText = .Panels("Status").Key
-50340   .Panels("FoundIndex").ToolTipText = .Panels("FoundIndex").Key
-50350   .Panels("Progress").ToolTipText = .Panels("Progress").Key
+50330   .Panels("Status").ToolTipText = .Panels("Status").key
+50340   .Panels("FoundIndex").ToolTipText = .Panels("FoundIndex").key
+50350   .Panels("Progress").ToolTipText = .Panels("Progress").key
 50360  End With
 50370
 50380  Set cmbSearchtext.Font = frmMain.lsv.Font
@@ -409,25 +401,25 @@ On Error GoTo ErrPtnr_OnError
 50030   .Panels("FoundIndex").Width = 500
 50040   .Panels("Progress").Width = stb.Width - stb.Panels("Status").Width - 100
 50050  End With
-50060  With fraSearch
-50070   .Top = 0
-50080   .Left = 0
-50090   .Width = ScaleWidth
+50060  With dmFraSearch
+50070   .Top = 100
+50080   .Left = 100
+50090   .Width = ScaleWidth - 200
 50100  End With
-50110  With fraSettings
-50120   .Top = fraSearch.Top + fraSearch.Height
-50130   .Left = fraSearch.Left
-50140   .Width = fraSearch.Width
+50110  With dmFraSettings
+50120   .Top = dmFraSearch.Top + dmFraSearch.Height + 100
+50130   .Left = dmFraSearch.Left
+50140   .Width = dmFraSearch.Width
 50150  End With
-50160  cmbColumn.Width = fraSearch.Width - 220
-50170  cmbSearchtext.Width = fraSearch.Width - 220
+50160  cmbColumn.Width = dmFraSearch.Width - 220
+50170  cmbSearchtext.Width = dmFraSearch.Width - 220
 50180  With cmd(1)
-50190   .Top = fraSettings.Top + fraSettings.Height + 50
-50200   .Left = fraSettings.Left
+50190   .Top = dmFraSettings.Top + dmFraSettings.Height + 50
+50200   .Left = dmFraSettings.Left
 50210  End With
 50220  With cmd(0)
 50230   .Top = cmd(1).Top
-50240   .Left = fraSettings.Left + fraSettings.Width - cmd(0).Width
+50240   .Left = dmFraSettings.Left + dmFraSettings.Width - cmd(0).Width
 50250  End With
 50260  With cmdBrowse(0)
 50270   .Top = cmd(1).Top
@@ -438,7 +430,7 @@ On Error GoTo ErrPtnr_OnError
 50320   .Left = ScaleWidth / 2 + 50
 50330  End With
 50340  Height = cmd(1).Top + cmd(1).Height + stb.Height + (Height - ScaleHeight) + 100
-50350  SetPanelControl xpPgb, stb, "Progress", True
+50350  SetPanelControl xpPgb, stb, "Progress", False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -710,7 +702,7 @@ On Error GoTo ErrPtnr_OnError
 50320  Next i
 50330  With xpPgb
 50340   .Min = 0
-50350   .Max = 0
+50350   .Max = 1
 50360   .Visible = False
 50370  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -779,7 +771,7 @@ Private Sub ShowFoundItems(lsv As ListView, Items As Collection, ItemIndex As Lo
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim rectList As Rect, item As ListItem, lsvItemTop As Long, lsvItemLeft As Long, _
+50010  Dim rectList As Rect, Item As ListItem, lsvItemTop As Long, lsvItemLeft As Long, _
   itemHeight As Long, itemWidth As Long, sTPPX As Long, sTPPY As Long, pt As POINTAPI, _
   cRect As Rect
 50040  If Items.Count > 0 Then

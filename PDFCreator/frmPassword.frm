@@ -13,117 +13,139 @@ Begin VB.Form frmPassword
    ScaleHeight     =   3675
    ScaleWidth      =   4530
    ShowInTaskbar   =   0   'False
-   Begin VB.Frame fraOwnerPass 
-      Caption         =   "Owner Password"
+   Begin VB.CommandButton CancelButton 
+      Caption         =   "&Cancel"
+      Height          =   375
+      Left            =   120
+      TabIndex        =   12
+      Top             =   3240
+      Width           =   1215
+   End
+   Begin PDFCreator.dmFrame dmFraOwnerPass 
       Height          =   1215
       Left            =   120
-      TabIndex        =   10
+      TabIndex        =   5
       Top             =   1440
       Width           =   4335
-      Begin VB.TextBox txtOwnerPassRepeat 
-         Height          =   285
-         IMEMode         =   3  'DISABLE
-         Left            =   1200
-         PasswordChar    =   "*"
-         TabIndex        =   3
-         Top             =   720
-         Width           =   3015
-      End
+      _ExtentX        =   7646
+      _ExtentY        =   2143
+      Caption         =   "Owner password"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtOwnerPass 
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   1200
          PasswordChar    =   "*"
-         TabIndex        =   2
-         Top             =   300
+         TabIndex        =   6
+         Top             =   360
          Width           =   3015
       End
-      Begin VB.Label lblOwnerPassRepeat 
-         AutoSize        =   -1  'True
-         Caption         =   "Repeat:"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   12
-         Top             =   720
-         Width           =   570
+      Begin VB.TextBox txtOwnerPassRepeat 
+         Height          =   285
+         IMEMode         =   3  'DISABLE
+         Left            =   1200
+         PasswordChar    =   "*"
+         TabIndex        =   8
+         Top             =   780
+         Width           =   3015
       End
       Begin VB.Label lblOwnerPass 
          AutoSize        =   -1  'True
          Caption         =   "Password:"
          Height          =   195
          Left            =   120
-         TabIndex        =   11
-         Top             =   360
+         TabIndex        =   7
+         Top             =   420
          Width           =   735
       End
-   End
-   Begin VB.Frame fraUserPass 
-      Caption         =   "User Password"
-      Height          =   1215
-      Left            =   120
-      TabIndex        =   7
-      Top             =   120
-      Width           =   4335
-      Begin VB.TextBox txtUserPassRepeat 
-         Height          =   285
-         IMEMode         =   3  'DISABLE
-         Left            =   1200
-         PasswordChar    =   "*"
-         TabIndex        =   1
-         Top             =   660
-         Width           =   3015
-      End
-      Begin VB.TextBox txtUserPass 
-         Height          =   285
-         IMEMode         =   3  'DISABLE
-         Left            =   1200
-         PasswordChar    =   "*"
-         TabIndex        =   0
-         Top             =   240
-         Width           =   3015
-      End
-      Begin VB.Label lblUserPassRepeat 
+      Begin VB.Label lblOwnerPassRepeat 
          AutoSize        =   -1  'True
          Caption         =   "Repeat:"
          Height          =   195
          Left            =   120
          TabIndex        =   9
-         Top             =   720
+         Top             =   780
          Width           =   570
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraUserPass 
+      Height          =   1215
+      Left            =   120
+      TabIndex        =   0
+      Top             =   120
+      Width           =   4335
+      _ExtentX        =   7646
+      _ExtentY        =   2143
+      Caption         =   "User password"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.TextBox txtUserPass 
+         Height          =   285
+         IMEMode         =   3  'DISABLE
+         Left            =   1200
+         PasswordChar    =   "*"
+         TabIndex        =   1
+         Top             =   360
+         Width           =   3015
+      End
+      Begin VB.TextBox txtUserPassRepeat 
+         Height          =   285
+         IMEMode         =   3  'DISABLE
+         Left            =   1200
+         PasswordChar    =   "*"
+         TabIndex        =   3
+         Top             =   780
+         Width           =   3015
       End
       Begin VB.Label lblUserPass 
          AutoSize        =   -1  'True
          Caption         =   "Password:"
          Height          =   195
          Left            =   120
-         TabIndex        =   8
-         Top             =   360
+         TabIndex        =   2
+         Top             =   480
          Width           =   735
       End
-   End
-   Begin VB.CommandButton CancelButton 
-      Caption         =   "Cancel"
-      Height          =   375
-      Left            =   120
-      TabIndex        =   6
-      Top             =   3240
-      Width           =   1215
-   End
-   Begin VB.CommandButton OKButton 
-      Caption         =   "OK"
-      Height          =   375
-      Left            =   3240
-      TabIndex        =   5
-      Top             =   3240
-      Width           =   1215
+      Begin VB.Label lblUserPassRepeat 
+         AutoSize        =   -1  'True
+         Caption         =   "Repeat:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   4
+         Top             =   840
+         Width           =   570
+      End
    End
    Begin VB.CheckBox chkSavePasswords 
       Caption         =   "Save passwords for this session."
       Height          =   375
       Left            =   120
-      TabIndex        =   4
+      TabIndex        =   10
       Top             =   2760
       Width           =   4215
+   End
+   Begin VB.CommandButton OKButton 
+      Caption         =   "&OK"
+      Height          =   375
+      Left            =   3240
+      TabIndex        =   11
+      Top             =   3240
+      Width           =   1215
    End
 End
 Attribute VB_Name = "frmPassword"
@@ -184,8 +206,8 @@ On Error GoTo ErrPtnr_OnError
 50030  Screen.MousePointer = vbNormal
 50040  With LanguageStrings
 50050   Caption = .OptionsPDFEnterPasswords
-50060   fraUserPass.Caption = .OptionsUserPass
-50070   fraOwnerPass.Caption = .OptionsOwnerPass
+50060   dmFraUserPass.Caption = .OptionsUserPass
+50070   dmFraOwnerPass.Caption = .OptionsOwnerPass
 50080   lblUserPass.Caption = .OptionsPDFSetPassword
 50090   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
 50100   lblOwnerPass.Caption = .OptionsPDFSetPassword
@@ -195,8 +217,8 @@ On Error GoTo ErrPtnr_OnError
 50140   chkSavePasswords.Caption = .OptionsSavePasswords
 50150  End With
 50160  With Options
-50170   fraUserPass.Enabled = .PDFUserPass
-50180   fraOwnerPass.Enabled = .PDFOwnerPass
+50170   dmFraUserPass.Enabled = .PDFUserPass
+50180   dmFraOwnerPass.Enabled = .PDFOwnerPass
 50190  End With
 50200  bSuccess = False
 50210  bFinished = False
@@ -244,14 +266,14 @@ On Error GoTo ErrPtnr_OnError
 50090   Exit Sub
 50100  End If
 50110
-50120  If Len(txtUserPass.Text) = 0 And fraUserPass.Enabled = True Then
+50120  If Len(txtUserPass.Text) = 0 And dmFraUserPass.Enabled = True Then
 50130   aw = MsgBox(LanguageStrings.MessagesMsg24, vbQuestion + vbYesNo)
 50140   If aw = vbNo Then
 50150    Exit Sub
 50160   End If
 50170  End If
 50180
-50190  If Len(txtOwnerPass.Text) = 0 And fraOwnerPass.Enabled = True Then
+50190  If Len(txtOwnerPass.Text) = 0 And dmFraOwnerPass.Enabled = True Then
 50200   aw = MsgBox(LanguageStrings.MessagesMsg25, vbQuestion + vbYesNo)
 50210   If aw = vbNo Then
 50220    Exit Sub

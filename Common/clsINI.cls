@@ -18,7 +18,7 @@ Option Explicit
 Private iFilename As String, iSection As String, iKey As String, _
  iErrCode As Long, iErrVar(1 To 2) As String
 
-Public Property Let Key(ByVal vData As String)
+Public Property Let key(ByVal vData As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -26,7 +26,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsINI", "Key [LET]")
+Select Case ErrPtnr.OnError("clsINI", "key [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -35,15 +35,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get Key() As String
+Public Property Get key() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Key = iKey
+50010  key = iKey
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsINI", "Key [GET]")
+Select Case ErrPtnr.OnError("clsINI", "key [GET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -203,7 +203,7 @@ On Error GoTo ErrPtnr_OnError
 50040  tSection = GetSectionname(Section)
 50050  Set tColl = GetAllSectionsFromInifile(tFilename)
 50060  For i = 1 To tColl.Count
-50070   If UCase$(tSection) = UCase$(tColl.item(i)) Then
+50070   If UCase$(tSection) = UCase$(tColl.Item(i)) Then
 50080    CheckSection = True
 50090    Set tColl = Nothing
 50100    Exit Function
@@ -292,7 +292,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function CheckKey(Optional Key As String, Optional Section As String, Optional Filename As String) As Boolean
+Public Function CheckKey(Optional key As String, Optional Section As String, Optional Filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -301,11 +301,11 @@ On Error GoTo ErrPtnr_OnError
 50030  CheckKey = False
 50040  tFilename = GetFilename(Filename)
 50050  tSection = GetSectionname(Section)
-50060  tKey = GetKeyname(Key)
+50060  tKey = GetKeyname(key)
 50070
 50080  Set tColl = GetAllKeysFromSection(tSection, tFilename)
 50090  For i = 1 To tColl.Count
-50100   If UCase$(tKey) = UCase$(tColl.item(i)(0)) Then
+50100   If UCase$(tKey) = UCase$(tColl.Item(i)(0)) Then
 50110    CheckKey = True
 50120    Set tColl = Nothing
 50130    Exit Function
@@ -323,7 +323,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetKeyFromSection(Optional Key As String, Optional Section As String, Optional Filename As String) As String
+Public Function GetKeyFromSection(Optional key As String, Optional Section As String, Optional Filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -332,14 +332,14 @@ On Error GoTo ErrPtnr_OnError
   tColl As Collection, i As Long, res As Long
 50040  tFilename = GetFilename(Filename)
 50050  tSection = GetSectionname(Section)
-50060  tKey = GetKeyname(Key)
+50060  tKey = GetKeyname(key)
 50070
 50080  GetKeyFromSection = vbNullString
 50090  If CheckSection(tSection, tFilename) = True Then
 50100   Set tColl = GetAllKeysFromSection(tSection, tFilename)
 50110   For i = 1 To tColl.Count
-50120    If UCase$(tKey) = UCase$(tColl.item(i)(0)) Then
-50130     GetKeyFromSection = tColl.item(i)(1)
+50120    If UCase$(tKey) = UCase$(tColl.Item(i)(0)) Then
+50130     GetKeyFromSection = tColl.Item(i)(1)
 50140     Set tColl = Nothing
 50150     Exit Function
 50160    End If
@@ -478,7 +478,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub DeleteKeyFromSection(Optional Key As String, Optional Section As String, Optional Filename As String)
+Public Sub DeleteKeyFromSection(Optional key As String, Optional Section As String, Optional Filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -486,7 +486,7 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  tFilename = GetFilename(Filename)
 50040  tSection = GetSectionname(Section)
-50050  tKey = GetKeyname(Key)
+50050  tKey = GetKeyname(key)
 50060
 50070  If CheckKey(tKey, tSection, tFilename) = True Then
 50080   res = WritePrivateProfileString(tSection, tKey, vbNullString, tFilename)
@@ -503,7 +503,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function SaveKey(Value As String, Optional Key As String, Optional Section As String, Optional Filename As String) As Boolean
+Public Function SaveKey(Value As String, Optional key As String, Optional Section As String, Optional Filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -511,7 +511,7 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  tFilename = GetFilename(Filename)
 50040  tSection = GetSectionname(Section)
-50050  tKey = GetKeyname(Key)
+50050  tKey = GetKeyname(key)
 50060
 50070  res = WritePrivateProfileString(tSection & vbNullString, tKey & vbNullString, _
   Value & vbNullString, tFilename & vbNullString)

@@ -14,7 +14,7 @@ On Error GoTo ErrPtnr_OnError
 50020     Dim BufferSize          As Long
 50030     Dim psidAdmin           As Long
 50040     Dim lResult             As Long
-50050     Dim X                   As Integer
+50050     Dim x                   As Integer
 50060     Dim tpTokens            As TOKEN_GROUPS
 50070     Dim tpSidAuth           As SID_IDENTIFIER_AUTHORITY
 50080     Dim llRetVal            As Long
@@ -55,14 +55,14 @@ On Error GoTo ErrPtnr_OnError
                 0, 0, 0, psidAdmin)
 50440             If lResult <> 1 Then Exit Function
 50450             If IsValidSid(psidAdmin) Then
-50460                 For X = 0 To tpTokens.GroupCount
+50460                 For x = 0 To tpTokens.GroupCount
 50470
 50480                      ' Run through your token sid pointers
-50490                     If IsValidSid(tpTokens.Groups(X).Sid) Then
+50490                     If IsValidSid(tpTokens.Groups(x).Sid) Then
 50500
 50510                          ' Test for a match between the admin sid equalling
 50520                          ' your Sid 's
-50530                         If EqualSid(ByVal tpTokens.Groups(X).Sid, _
+50530                         If EqualSid(ByVal tpTokens.Groups(x).Sid, _
                             ByVal psidAdmin) Then
 50550                             IsAdmin = True
 50560                             Exit For

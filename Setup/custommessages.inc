@@ -7,3 +7,4 @@
 #include "hungarian.inc"
 #include "french.inc"
 #include "slovensko.inc"
+#include "spanish.inc"

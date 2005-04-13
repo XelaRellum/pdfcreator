@@ -703,85 +703,85 @@ Public Function GetWinVersionStr() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String, win As RGB_WINVER
+50010  Dim tstr As String, win As RGB_WINVER
 50020
 50030  If IsBackOfficeServer Then
-50040   tStr = tStr & " BackOfficeServer"
+50040   tstr = tstr & " BackOfficeServer"
 50050  End If
 50060  If IsBladeServer Then
-50070   tStr = tStr & " BladeServer"
+50070   tstr = tstr & " BladeServer"
 50080  End If
 50090  If IsDomainController Then
-50100   tStr = tStr & " DomainController"
+50100   tstr = tstr & " DomainController"
 50110  End If
 50120  If IsEnterpriseServer Then
-50130   tStr = tStr & " EnterpriseServer"
+50130   tstr = tstr & " EnterpriseServer"
 50140  End If
 50150  If IsSmallBusinessRestrictedServer Then
-50160   tStr = tStr & " SmallBusinessRestrictedServer"
+50160   tstr = tstr & " SmallBusinessRestrictedServer"
 50170  End If
 50180  If IsSmallBusinessServer Then
-50190   tStr = tStr & " SmallBusinessServer"
+50190   tstr = tstr & " SmallBusinessServer"
 50200  End If
 50210  If IsTerminalServer Then
-50220   tStr = tStr & " TerminalServer"
+50220   tstr = tstr & " TerminalServer"
 50230  End If
 50240  If IsWin2000 Then
-50250   tStr = tStr & " Win2000"
+50250   tstr = tstr & " Win2000"
 50260  End If
 50270  If IsWin2000AdvancedServer Then
-50280   tStr = tStr & " Win2000AdvancedServer"
+50280   tstr = tstr & " Win2000AdvancedServer"
 50290  End If
 50300  If IsWin2000Server Then
-50310   tStr = tStr & " Win2000Server"
+50310   tstr = tstr & " Win2000Server"
 50320  End If
 50330  If IsWin2000Workstation Then
-50340   tStr = tStr & " Win2000Workstation"
+50340   tstr = tstr & " Win2000Workstation"
 50350  End If
 50360  If IsWin2003Server Then
-50370   tStr = tStr & " Win2003Server"
+50370   tstr = tstr & " Win2003Server"
 50380  End If
 50390  If IsWin95 Then
-50400   tStr = tStr & " Win95"
+50400   tstr = tstr & " Win95"
 50410  End If
 50420  If IsWin95OSR2 Then
-50430   tStr = tStr & " Win95OSR2"
+50430   tstr = tstr & " Win95OSR2"
 50440  End If
 50450  If IsWin98 Then
-50460   tStr = tStr & " Win98"
+50460   tstr = tstr & " Win98"
 50470  End If
 50480  If IsWinME Then
-50490   tStr = tStr & " WinME"
+50490   tstr = tstr & " WinME"
 50500  End If
 50510  If IsWinNT4 Then
-50520   tStr = tStr & " WinNT4"
+50520   tstr = tstr & " WinNT4"
 50530  End If
 50540  If IsWinNT4Server Then
-50550   tStr = tStr & " WinNT4Server"
+50550   tstr = tstr & " WinNT4Server"
 50560  End If
 50570  If IsWinNT4Workstation Then
-50580   tStr = tStr & " WinNT4Workstation"
+50580   tstr = tstr & " WinNT4Workstation"
 50590  End If
 50600  If IsWinXP Then
-50610   tStr = tStr & " WinXP"
+50610   tstr = tstr & " WinXP"
 50620  End If
 50630  If IsWinXPHomeEdition Then
-50640   tStr = tStr & " WinXPHomeEdition"
+50640   tstr = tstr & " WinXPHomeEdition"
 50650  End If
 50660  If IsWinXPProEdition Then
-50670   tStr = tStr & " WinXPProEdition"
+50670   tstr = tstr & " WinXPProEdition"
 50680  End If
 50690  If IsWinXPSP2 Then
-50700   tStr = tStr & " WinXPSP2"
+50700   tstr = tstr & " WinXPSP2"
 50710  End If
 50720
-50730  tStr = Trim$(tStr)
-50740  If Len(tStr) > 0 Then
-50750   tStr = " [" & tStr & "]"
+50730  tstr = Trim$(tstr)
+50740  If Len(tstr) > 0 Then
+50750   tstr = " [" & tstr & "]"
 50760  End If
 50770  Call GetWinVersion(win)
 50780  GetWinVersionStr = win.VersionName & " " & win.VersionNo & " Build " & _
-  win.BuildNo & " (" & win.ServicePack & ")" & tStr
+  win.BuildNo & " (" & win.ServicePack & ")" & tstr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

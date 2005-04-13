@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form frmAbout 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "TransTool"
-   ClientHeight    =   7590
+   ClientHeight    =   7980
    ClientLeft      =   2340
    ClientTop       =   1935
    ClientWidth     =   6300
@@ -11,10 +11,83 @@ Begin VB.Form frmAbout
    LinkTopic       =   "Form2"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   7590
+   ScaleHeight     =   7980
    ScaleWidth      =   6300
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin VB.Frame fraAbout 
+      Height          =   1275
+      Left            =   0
+      TabIndex        =   5
+      Top             =   6090
+      Width           =   6255
+      Begin VB.Label lbl 
+         Caption         =   "ProgramVersion"
+         Height          =   255
+         Index           =   0
+         Left            =   105
+         TabIndex        =   6
+         Top             =   210
+         Width           =   5055
+      End
+      Begin VB.Label lbl 
+         Caption         =   "License"
+         Height          =   255
+         Index           =   1
+         Left            =   105
+         TabIndex        =   7
+         Top             =   450
+         Width           =   5055
+      End
+      Begin VB.Label lbl 
+         Caption         =   "Author"
+         Height          =   255
+         Index           =   2
+         Left            =   105
+         TabIndex        =   8
+         Top             =   690
+         Width           =   4935
+      End
+      Begin VB.Label lbl 
+         AutoSize        =   -1  'True
+         Caption         =   "HomepageSourceforge"
+         ForeColor       =   &H00008000&
+         Height          =   195
+         Index           =   4
+         Left            =   4425
+         MousePointer    =   99  'Benutzerdefiniert
+         TabIndex        =   10
+         Top             =   930
+         Width           =   1650
+      End
+      Begin VB.Label lbl 
+         AutoSize        =   -1  'True
+         Caption         =   "Homepage"
+         ForeColor       =   &H00008000&
+         Height          =   195
+         Index           =   3
+         Left            =   105
+         MousePointer    =   99  'Benutzerdefiniert
+         TabIndex        =   9
+         Top             =   930
+         Width           =   780
+      End
+      Begin VB.Image ImgPaypal 
+         Height          =   465
+         Left            =   5265
+         Picture         =   "frmAbout.frx":548A
+         Top             =   210
+         Width           =   930
+      End
+   End
+   Begin VB.CommandButton cmd 
+      Caption         =   "&Close"
+      Height          =   450
+      Left            =   4920
+      TabIndex        =   0
+      Top             =   7455
+      Width           =   1260
+   End
    Begin VB.PictureBox picBackground 
       Appearance      =   0  '2D
       BackColor       =   &H80000005&
@@ -24,8 +97,8 @@ Begin VB.Form frmAbout
       Left            =   1080
       ScaleHeight     =   375
       ScaleWidth      =   735
-      TabIndex        =   10
-      Top             =   7200
+      TabIndex        =   1
+      Top             =   7410
       Width           =   735
    End
    Begin VB.PictureBox picBuffer 
@@ -37,127 +110,75 @@ Begin VB.Form frmAbout
       Left            =   120
       ScaleHeight     =   375
       ScaleWidth      =   735
-      TabIndex        =   9
-      Top             =   7200
+      TabIndex        =   2
+      Top             =   7410
       Width           =   735
    End
    Begin VB.Timer Timer3 
       Enabled         =   0   'False
       Left            =   3360
-      Top             =   7080
+      Top             =   7290
    End
    Begin VB.PictureBox picAbout 
       Appearance      =   0  '2D
+      AutoSize        =   -1  'True
       BackColor       =   &H00FFFFFF&
       BorderStyle     =   0  'Kein
       ForeColor       =   &H80000008&
-      Height          =   4455
+      Height          =   4500
       Left            =   120
-      ScaleHeight     =   4455
-      ScaleWidth      =   6015
-      TabIndex        =   8
+      Picture         =   "frmAbout.frx":57EF
+      ScaleHeight     =   4500
+      ScaleWidth      =   6000
+      TabIndex        =   3
       Top             =   120
       Visible         =   0   'False
-      Width           =   6015
+      Width           =   6000
    End
    Begin VB.Timer Timer2 
       Enabled         =   0   'False
       Interval        =   250
       Left            =   2760
-      Top             =   7080
+      Top             =   7290
    End
    Begin VB.Timer Timer1 
       Interval        =   100
       Left            =   2160
-      Top             =   7080
-   End
-   Begin VB.CommandButton cmd 
-      Cancel          =   -1  'True
-      Caption         =   "Close"
-      Default         =   -1  'True
-      Height          =   345
-      Left            =   4920
-      TabIndex        =   0
-      Top             =   7200
-      Width           =   1260
+      Top             =   7290
    End
    Begin VB.Frame fraDescription 
       Caption         =   "Description"
       Height          =   1215
       Left            =   0
-      TabIndex        =   5
+      TabIndex        =   4
       Top             =   4800
       Width           =   6255
-      Begin VB.TextBox txtDescription 
-         Alignment       =   2  'Zentriert
+      Begin VB.PictureBox picDescription 
          Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
          BorderStyle     =   0  'Kein
-         Height          =   735
-         Left            =   240
-         Locked          =   -1  'True
-         MultiLine       =   -1  'True
-         TabIndex        =   6
-         Top             =   360
-         Width           =   5775
+         Enabled         =   0   'False
+         ForeColor       =   &H80000008&
+         Height          =   960
+         Left            =   105
+         ScaleHeight     =   960
+         ScaleWidth      =   6105
+         TabIndex        =   11
+         Top             =   210
+         Width           =   6105
+         Begin VB.TextBox txtDescription 
+            Alignment       =   2  'Zentriert
+            Appearance      =   0  '2D
+            BackColor       =   &H8000000F&
+            BorderStyle     =   0  'Kein
+            Height          =   735
+            Left            =   0
+            Locked          =   -1  'True
+            MultiLine       =   -1  'True
+            TabIndex        =   12
+            Top             =   0
+            Width           =   5775
+         End
       End
-   End
-   Begin VB.Image ImgPaypal 
-      Height          =   465
-      Left            =   5280
-      Top             =   6120
-      Width           =   930
-   End
-   Begin VB.Label lbl 
-      AutoSize        =   -1  'True
-      Caption         =   "Homepage"
-      ForeColor       =   &H00008000&
-      Height          =   195
-      Index           =   3
-      Left            =   120
-      MousePointer    =   99  'Benutzerdefiniert
-      TabIndex        =   7
-      Top             =   6840
-      Width           =   780
-   End
-   Begin VB.Label lbl 
-      AutoSize        =   -1  'True
-      Caption         =   "HomepageSourceforge"
-      ForeColor       =   &H00008000&
-      Height          =   195
-      Index           =   4
-      Left            =   4440
-      MousePointer    =   99  'Benutzerdefiniert
-      TabIndex        =   4
-      Top             =   6840
-      Width           =   1650
-   End
-   Begin VB.Label lbl 
-      Caption         =   "Author"
-      Height          =   255
-      Index           =   2
-      Left            =   120
-      TabIndex        =   3
-      Top             =   6600
-      Width           =   4935
-   End
-   Begin VB.Label lbl 
-      Caption         =   "License"
-      Height          =   255
-      Index           =   1
-      Left            =   120
-      TabIndex        =   2
-      Top             =   6360
-      Width           =   5055
-   End
-   Begin VB.Label lbl 
-      Caption         =   "ProgramVersion"
-      Height          =   255
-      Index           =   0
-      Left            =   120
-      TabIndex        =   1
-      Top             =   6120
-      Width           =   5055
    End
    Begin VB.Shape shpRec 
       BorderColor     =   &H80000010&
@@ -200,7 +221,7 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Set imgPaypal.Picture = LoadResPicture(1002, vbResBitmap)
+50010
 50020  lbl(0).Caption = App.ProductName & " " & App.Major & "." & App.Minor & "." & App.Revision
 50030  lbl(1).Caption = "License: GNU GENERAL PUBLIC LICENSE"
 50040  lbl(2).Caption = "Author: Frank Heindörfer, Philip Chinery (c) 2004"
@@ -212,11 +233,11 @@ On Error GoTo ErrPtnr_OnError
 50100  MOver3 = False: MOver4 = False
 50110  sCol1 = lbl(3).ForeColor
 50120  sCol2 = lbl(4).ForeColor
-50130 ' Set picAbout.Picture = LoadResPicture(1001, vbResBitmap)
+50130
 50140  With picAbout
 50150   .AutoRedraw = True
 50160   .ScaleMode = vbPixels
-50170   Set .Picture = LoadResPicture(1001, vbResBitmap)
+50170
 50180   .Visible = True
 50190  End With
 50200  SetAboutText
@@ -234,7 +255,7 @@ On Error GoTo ErrPtnr_OnError
 50320   .ScaleMode = vbPixels
 50330   .AutoRedraw = True
 50340   .Visible = False
-50350   Set .Picture = LoadResPicture(1001, vbResBitmap)
+50350   Set .Picture = picAbout.Picture
 50360  End With
 50370
 50380  Timer2.Enabled = True
@@ -270,24 +291,40 @@ On Error GoTo ErrPtnr_OnError
 50120   .Width = shpRec.Width
 50130   .Height = 800
 50140  End With
-50150  With txtDescription
+50150  With picDescription
 50160   .Top = 250
 50170   .Left = border
 50180   .Width = fraDescription.Width - 100
 50190   .Height = fraDescription.Height - 300
 50200  End With
-50210  lbl(0).Top = fraDescription.Top + fraDescription.Height + border
-50220  lbl(1).Top = lbl(0).Top + lbl(0).Height
-50230  lbl(2).Top = lbl(1).Top + lbl(1).Height
-50240  lbl(3).Top = lbl(2).Top + lbl(2).Height
-50250  lbl(4).Top = lbl(3).Top
-50260  lbl(4).Left = fraDescription.Left + fraDescription.Width - lbl(4).Width - 100
-50270  cmd.Top = lbl(4).Top + lbl(4).Height + 100
-50280  Me.Height = cmd.Top + cmd.Height + 400
-50290  imgPaypal.Top = lbl(0).Top
-50300  imgPaypal.Left = fraDescription.Left + fraDescription.Width - imgPaypal.Width
-50310  Timer3.Interval = 40
-50320  Timer3.Enabled = True
+50210  With txtDescription
+50220   .Top = 0
+50230   .Left = 0
+50240   .Width = picDescription.Width
+50250   .Height = picDescription.Height
+50260  End With
+50270  With fraAbout
+50280   .Top = fraDescription.Top + fraDescription.Height + border
+50290   .Left = fraDescription.Left
+50300   .Width = fraDescription.Width
+50310  End With
+50320
+50330  lbl(0).Top = 200
+50340  lbl(0).Left = 70
+50350  lbl(1).Top = lbl(0).Top + lbl(0).Height
+50360  lbl(1).Left = lbl(0).Left
+50370  lbl(2).Top = lbl(1).Top + lbl(1).Height
+50380  lbl(2).Left = lbl(1).Left
+50390  lbl(3).Top = lbl(2).Top + lbl(2).Height
+50400  lbl(3).Left = lbl(2).Left
+50410  lbl(4).Top = lbl(3).Top
+50420  lbl(4).Left = fraAbout.Width - lbl(4).Width - lbl(0).Left
+50430  cmd.Top = fraAbout.Top + fraAbout.Height + 100
+50440  Me.Height = cmd.Top + cmd.Height + (Me.Height - Me.ScaleHeight) + 100
+50450  imgPaypal.Top = lbl(0).Top
+50460  imgPaypal.Left = fraAbout.Width - imgPaypal.Width - lbl(0).Left
+50470  Timer3.Interval = 40
+50480  Timer3.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -312,7 +349,7 @@ On Error GoTo ErrPtnr_OnError
 50060
 50070  With frmMain.picAbout
 50080   .Cls
-50090   BitBlt .hDC, 0, 0, .Width, .Height, dc, 0, 0, vbSrcCopy
+50090   BitBlt .hdc, 0, 0, .Width, .Height, dc, 0, 0, vbSrcCopy
 50100  End With
 50110
 50120  ReleaseDC Me.hwnd, dc
@@ -367,6 +404,7 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
 
 Private Sub lbl_Click(Index As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -471,17 +509,17 @@ Private Sub Timer1_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim x1 As Long, y1 As Long, x2 As Long, y2 As Long, p As POINTAPI
+50010  Dim X1 As Long, Y1 As Long, X2 As Long, Y2 As Long, p As POINTAPI
 50020  If MOver3 = True Then
 50030   With lbl(3)
 50040    If .Tag <> "1" Then
 50050     Call ClientToScreen(Me.hwnd, p)
-50060     x1 = p.x + .Left / Screen.TwipsPerPixelX
-50070     y1 = p.Y + .Top / Screen.TwipsPerPixelX
-50080     x2 = x1 + .Width / Screen.TwipsPerPixelX
-50090     y2 = y1 + .Height / Screen.TwipsPerPixelX
+50060     X1 = p.x + .Left / Screen.TwipsPerPixelX
+50070     Y1 = p.Y + .Top / Screen.TwipsPerPixelX
+50080     X2 = X1 + .Width / Screen.TwipsPerPixelX
+50090     Y2 = Y1 + .Height / Screen.TwipsPerPixelX
 50100     Call GetCursorPos(p)
-50110     If p.x < x1 Or p.x > x2 Or p.Y < y1 Or p.Y > y2 Then
+50110     If p.x < X1 Or p.x > X2 Or p.Y < Y1 Or p.Y > Y2 Then
 50120      .FontUnderline = False
 50130      If .ForeColor <> RGB(0, 80, 80) Then
 50140       .ForeColor = sCol1
@@ -495,12 +533,12 @@ On Error GoTo ErrPtnr_OnError
 50220   With lbl(4)
 50230    If .Tag <> "1" Then
 50240     Call ClientToScreen(Me.hwnd, p)
-50250     x1 = p.x + .Left / Screen.TwipsPerPixelX
-50260     y1 = p.Y + .Top / Screen.TwipsPerPixelX
-50270     x2 = x1 + .Width / Screen.TwipsPerPixelX
-50280     y2 = y1 + .Height / Screen.TwipsPerPixelX
+50250     X1 = p.x + .Left / Screen.TwipsPerPixelX
+50260     Y1 = p.Y + .Top / Screen.TwipsPerPixelX
+50270     X2 = X1 + .Width / Screen.TwipsPerPixelX
+50280     Y2 = Y1 + .Height / Screen.TwipsPerPixelX
 50290     Call GetCursorPos(p)
-50300     If p.x < x1 Or p.x > x2 Or p.Y < y1 Or p.Y > y2 Then
+50300     If p.x < X1 Or p.x > X2 Or p.Y < Y1 Or p.Y > Y2 Then
 50310      .FontUnderline = False
 50320      If .ForeColor <> RGB(0, 80, 80) Then
 50330       .ForeColor = sCol1
@@ -551,8 +589,8 @@ On Error GoTo ErrPtnr_OnError
 50050  With picBuffer
 50060
 50070 '  Set .Picture = LoadResPicture(1001, vbResBitmap)
-50080   Call BitBlt(.hDC, 0, .ScaleTop, .ScaleWidth, _
-   .ScaleHeight, picBackground.hDC, 0, 0, vbSrcCopy)
+50080   Call BitBlt(.hdc, 0, .ScaleTop, .ScaleWidth, _
+   .ScaleHeight, picBackground.hdc, 0, 0, vbSrcCopy)
 50100   .Refresh
 50110
 50120   ' Shaddow
@@ -577,8 +615,8 @@ On Error GoTo ErrPtnr_OnError
 50310    picBuffer.Print tLine.Text
 50320    tL = tL + tLine.Font.Size + 12
 50330   Next i
-50340   Call BitBlt(picAbout.hDC, picBorder, picAbout.ScaleTop + picBorder, picAbout.ScaleWidth - 2 * picBorder, _
-   picAbout.ScaleHeight - 2 * picBorder, .hDC, picBorder, picBorder, vbSrcCopy)
+50340   Call BitBlt(picAbout.hdc, picBorder, picAbout.ScaleTop + picBorder, picAbout.ScaleWidth - 2 * picBorder, _
+   picAbout.ScaleHeight - 2 * picBorder, .hdc, picBorder, picBorder, vbSrcCopy)
 50360   picAbout.Refresh
 50370
 50380   yOffs = yOffs - 1

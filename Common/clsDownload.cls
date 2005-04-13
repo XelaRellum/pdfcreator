@@ -60,7 +60,7 @@ Private Declare Function HttpQueryInfo Lib "wininet.dll" Alias "HttpQueryInfoA" 
 ByRef lBufferLength As Long, ByRef lIndex As Long) As Integer
 
 Private Declare Function GetInputState Lib "user32" () As Long
-Private Declare Function GetTickCount Lib "Kernel32" () As Long
+Private Declare Function GetTickCount Lib "kernel32" () As Long
 
 Private mvarStatus As Byte
 Private mvarSize As Long
@@ -278,11 +278,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Private Property Let ReceivedBytes(r As Long)
+Private Property Let ReceivedBytes(R As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  mvarReceivedBytes = r
+50010  mvarReceivedBytes = R
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:

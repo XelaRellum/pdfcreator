@@ -158,7 +158,7 @@ Private Sub PrinterPort(InstallTyp As eInstall)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, b() As Byte, tStr As String, i As Integer, res As Long
+50010  Dim reg As clsRegistry, B() As Byte, tStr As String, i As Integer, res As Long
 50020  Set reg = New clsRegistry
 50031  Select Case InstallTyp
         Case 0: ' Install
@@ -338,7 +338,7 @@ On Error GoTo ErrPtnr_OnError
 50330      If IsWin9xMe = True Then
 50340       Set ini = New clsINI
 50350       ini.Filename = CompletePath(GetWindowsDirectory) & "win.ini"
-50360       ini.Key = "PDFCreator"
+50360       ini.key = "PDFCreator"
 50370       ini.Section = "Devices"
 50380       ini.SaveKey "PSCRIPT,PDFCreator:"
 50390       ini.Section = "PrinterPorts"
@@ -396,7 +396,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set tColl = GetAvailableMonitors
 50030  IsPrinterMonitorInstalled = False
 50040  For i = 1 To tColl.Count
-50050   If UCase$(PrinterMonitor) = UCase$(tColl.item(i)) Then
+50050   If UCase$(PrinterMonitor) = UCase$(tColl.Item(i)) Then
 50060    IsPrinterMonitorInstalled = True
 50070    Exit For
 50080   End If
@@ -421,7 +421,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set tColl = GetAvailablePorts
 50030  IsPrinterPortInstalled = False
 50040  For i = 1 To tColl.Count
-50050   If UCase$(PrinterPort) = UCase$(tColl.item(i)) Then
+50050   If UCase$(PrinterPort) = UCase$(tColl.Item(i)) Then
 50060    IsPrinterPortInstalled = True
 50070    Exit For
 50080   End If
@@ -446,7 +446,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set tColl = GetAvailablePrinterdrivers
 50030  IsPrinterDriverInstalled = False
 50040  For i = 1 To tColl.Count
-50050   If UCase$(PrinterDriver) = UCase$(tColl.item(i)) Then
+50050   If UCase$(PrinterDriver) = UCase$(tColl.Item(i)) Then
 50060    IsPrinterDriverInstalled = True
 50070    Exit For
 50080   End If
@@ -471,7 +471,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set tColl = GetAvailablePrinters
 50030  IsPrinterInstalled = False
 50040  For i = 1 To tColl.Count
-50050   If UCase$(Printername) = UCase$(tColl.item(i)) Then
+50050   If UCase$(Printername) = UCase$(tColl.Item(i)) Then
 50060    IsPrinterInstalled = True
 50070    Exit For
 50080   End If

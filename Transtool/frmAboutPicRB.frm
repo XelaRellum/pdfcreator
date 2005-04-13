@@ -56,8 +56,8 @@ On Error GoTo ErrPtnr_OnError
 50080  pic.Height = Me.Height
 50090  With pic
 50100   .Cls
-50110   BitBlt .hDC, 0, 0, .Width, .Height, frmMain.picAbout.hDC, 0, 0, vbSrcCopy
-50120   BitBlt .hDC, 0, 0, .Width, .Height, frmMain.picAbout.hDC, _
+50110   BitBlt .hdc, 0, 0, .Width, .Height, frmMain.picAbout.hdc, 0, 0, vbSrcCopy
+50120   BitBlt .hdc, 0, 0, .Width, .Height, frmMain.picAbout.hdc, _
    frmMain.picAbout.Width \ 2 \ Screen.TwipsPerPixelX, _
    frmMain.picAbout.Height \ 2 \ Screen.TwipsPerPixelY, vbSrcCopy
 50150  End With
