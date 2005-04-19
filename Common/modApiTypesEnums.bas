@@ -347,7 +347,7 @@ End Enum
 
 Public Type POINTAPI
  x As Long
- Y As Long
+ y As Long
 End Type
 
 Public Type OPENFILENAME
@@ -735,4 +735,37 @@ Public Type VS_FIXEDFILEINFO
  dwFileDateLS As Long
 End Type
 
+Public Type NOTIFYICONDATAA
+   cbSize As Long
+   hwnd As Long
+   uID As Long
+   uFlags As Long
+   uCallbackMessage As Long
+   hIcon As Long
+   szTip As String * 128
+   dwState As Long
+   dwStateMask As Long
+   szInfo As String * 256
+   uTimeOutOrVersion As Long
+   szInfoTitle As String * 64
+   dwInfoFlags As Long
+   guidItem As Long
+End Type
+
+Public Type NOTIFYICONDATAW
+   cbSize As Long
+   hwnd As Long
+   uID As Long
+   uFlags As Long
+   uCallbackMessage As Long
+   hIcon As Long
+   szTip(0 To 255) As Byte
+   dwState As Long
+   dwStateMask As Long
+   szInfo(0 To 511) As Byte
+   uTimeOutOrVersion As Long
+   szInfoTitle(0 To 127) As Byte
+   dwInfoFlags As Long
+   guidItem As Long
+End Type
 

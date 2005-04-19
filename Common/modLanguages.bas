@@ -322,6 +322,7 @@ Public Type tLanguageStrings
 
  PrintingAuthor As String
  PrintingBMPFiles As String
+ PrintingCancel As String
  PrintingCreationDate As String
  PrintingDocumentTitle As String
  PrintingEMail As String
@@ -822,26 +823,27 @@ On Error GoTo ErrPtnr_OnError
 50030  With LanguageStrings
 50040   .PrintingAuthor = Replace$(hLang.Retrieve("Author", .PrintingAuthor), "/n", vbCrLf)
 50050   .PrintingBMPFiles = Replace$(hLang.Retrieve("BMPFiles", .PrintingBMPFiles), "/n", vbCrLf)
-50060   .PrintingCreationDate = Replace$(hLang.Retrieve("CreationDate", .PrintingCreationDate), "/n", vbCrLf)
-50070   .PrintingDocumentTitle = Replace$(hLang.Retrieve("DocumentTitle", .PrintingDocumentTitle), "/n", vbCrLf)
-50080   .PrintingEMail = Replace$(hLang.Retrieve("EMail", .PrintingEMail), "/n", vbCrLf)
-50090   .PrintingEPSFiles = Replace$(hLang.Retrieve("EPSFiles", .PrintingEPSFiles), "/n", vbCrLf)
-50100   .PrintingJPEGFiles = Replace$(hLang.Retrieve("JPEGFiles", .PrintingJPEGFiles), "/n", vbCrLf)
-50110   .PrintingKeywords = Replace$(hLang.Retrieve("Keywords", .PrintingKeywords), "/n", vbCrLf)
-50120   .PrintingModifyDate = Replace$(hLang.Retrieve("ModifyDate", .PrintingModifyDate), "/n", vbCrLf)
-50130   .PrintingNow = Replace$(hLang.Retrieve("Now", .PrintingNow), "/n", vbCrLf)
-50140   .PrintingPCXFiles = Replace$(hLang.Retrieve("PCXFiles", .PrintingPCXFiles), "/n", vbCrLf)
-50150   .PrintingPDFFiles = Replace$(hLang.Retrieve("PDFFiles", .PrintingPDFFiles), "/n", vbCrLf)
-50160   .PrintingPNGFiles = Replace$(hLang.Retrieve("PNGFiles", .PrintingPNGFiles), "/n", vbCrLf)
-50170   .PrintingPSFiles = Replace$(hLang.Retrieve("PSFiles", .PrintingPSFiles), "/n", vbCrLf)
-50180   .PrintingSave = Replace$(hLang.Retrieve("Save", .PrintingSave), "/n", vbCrLf)
-50190   .PrintingStartStandardProgram = Replace$(hLang.Retrieve("StartStandardProgram", .PrintingStartStandardProgram), "/n", vbCrLf)
-50200   .PrintingStatus = Replace$(hLang.Retrieve("Status", .PrintingStatus), "/n", vbCrLf)
-50210   .PrintingSubject = Replace$(hLang.Retrieve("Subject", .PrintingSubject), "/n", vbCrLf)
-50220   .PrintingTIFFFiles = Replace$(hLang.Retrieve("TIFFFiles", .PrintingTIFFFiles), "/n", vbCrLf)
-50230   .PrintingWaiting = Replace$(hLang.Retrieve("Waiting", .PrintingWaiting), "/n", vbCrLf)
-50240  End With
-50250  Set hLang = Nothing
+50060   .PrintingCancel = Replace$(hLang.Retrieve("Cancel", .PrintingCancel), "/n", vbCrLf)
+50070   .PrintingCreationDate = Replace$(hLang.Retrieve("CreationDate", .PrintingCreationDate), "/n", vbCrLf)
+50080   .PrintingDocumentTitle = Replace$(hLang.Retrieve("DocumentTitle", .PrintingDocumentTitle), "/n", vbCrLf)
+50090   .PrintingEMail = Replace$(hLang.Retrieve("EMail", .PrintingEMail), "/n", vbCrLf)
+50100   .PrintingEPSFiles = Replace$(hLang.Retrieve("EPSFiles", .PrintingEPSFiles), "/n", vbCrLf)
+50110   .PrintingJPEGFiles = Replace$(hLang.Retrieve("JPEGFiles", .PrintingJPEGFiles), "/n", vbCrLf)
+50120   .PrintingKeywords = Replace$(hLang.Retrieve("Keywords", .PrintingKeywords), "/n", vbCrLf)
+50130   .PrintingModifyDate = Replace$(hLang.Retrieve("ModifyDate", .PrintingModifyDate), "/n", vbCrLf)
+50140   .PrintingNow = Replace$(hLang.Retrieve("Now", .PrintingNow), "/n", vbCrLf)
+50150   .PrintingPCXFiles = Replace$(hLang.Retrieve("PCXFiles", .PrintingPCXFiles), "/n", vbCrLf)
+50160   .PrintingPDFFiles = Replace$(hLang.Retrieve("PDFFiles", .PrintingPDFFiles), "/n", vbCrLf)
+50170   .PrintingPNGFiles = Replace$(hLang.Retrieve("PNGFiles", .PrintingPNGFiles), "/n", vbCrLf)
+50180   .PrintingPSFiles = Replace$(hLang.Retrieve("PSFiles", .PrintingPSFiles), "/n", vbCrLf)
+50190   .PrintingSave = Replace$(hLang.Retrieve("Save", .PrintingSave), "/n", vbCrLf)
+50200   .PrintingStartStandardProgram = Replace$(hLang.Retrieve("StartStandardProgram", .PrintingStartStandardProgram), "/n", vbCrLf)
+50210   .PrintingStatus = Replace$(hLang.Retrieve("Status", .PrintingStatus), "/n", vbCrLf)
+50220   .PrintingSubject = Replace$(hLang.Retrieve("Subject", .PrintingSubject), "/n", vbCrLf)
+50230   .PrintingTIFFFiles = Replace$(hLang.Retrieve("TIFFFiles", .PrintingTIFFFiles), "/n", vbCrLf)
+50240   .PrintingWaiting = Replace$(hLang.Retrieve("Waiting", .PrintingWaiting), "/n", vbCrLf)
+50250  End With
+50260  Set hLang = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -891,7 +893,7 @@ On Error GoTo ErrPtnr_OnError
 50020   .CommonAuthor = "Philip Chinery, Frank Heindörfer"
 50030   .CommonLanguagename = "English"
 50040   .CommonTitle = "PDF Print monitor"
-50050   .CommonVersion = "0.8.0"
+50050   .CommonVersion = "0.8.1"
 50060
 50070   .DialogDocument = "Document"
 50080   .DialogDocumentAdd = "Add"
@@ -1204,35 +1206,36 @@ On Error GoTo ErrPtnr_OnError
 53150
 53160   .PrintingAuthor = "Author:"
 53170   .PrintingBMPFiles = "BMP-Files"
-53180   .PrintingCreationDate = "Creation Date:"
-53190   .PrintingDocumentTitle = "Document Title:"
-53200   .PrintingEMail = "eMail"
-53210   .PrintingEPSFiles = "Encapsulated Postscript-Files"
-53220   .PrintingJPEGFiles = "JPEG-Files"
-53230   .PrintingKeywords = "Keywords:"
-53240   .PrintingModifyDate = "Modify Date:"
-53250   .PrintingNow = "Now"
-53260   .PrintingPCXFiles = "PCX-Files"
-53270   .PrintingPDFFiles = "PDF-Files"
-53280   .PrintingPNGFiles = "PNG-Files"
-53290   .PrintingPSFiles = "Postscript-Files"
-53300   .PrintingSave = "Save"
-53310   .PrintingStartStandardProgram = "After saving, open the document with the default program."
-53320   .PrintingStatus = "Creating file..."
-53330   .PrintingSubject = "Subject:"
-53340   .PrintingTIFFFiles = "TIFF-Files"
-53350   .PrintingWaiting = "Waiting"
-53360
-53370   .SaveOpenAttributes = "Attributes"
-53380   .SaveOpenCancel = "Cancel"
-53390   .SaveOpenFilename = "Filename"
-53400   .SaveOpenOpen = "Open"
-53410   .SaveOpenOpenTitle = "Open"
-53420   .SaveOpenSave = "Save"
-53430   .SaveOpenSaveTitle = "Save as"
-53440   .SaveOpenSize = "Size"
-53450
-53460  End With
+53180   .PrintingCancel = "Cancel"
+53190   .PrintingCreationDate = "Creation Date:"
+53200   .PrintingDocumentTitle = "Document Title:"
+53210   .PrintingEMail = "eMail"
+53220   .PrintingEPSFiles = "Encapsulated Postscript-Files"
+53230   .PrintingJPEGFiles = "JPEG-Files"
+53240   .PrintingKeywords = "Keywords:"
+53250   .PrintingModifyDate = "Modify Date:"
+53260   .PrintingNow = "Now"
+53270   .PrintingPCXFiles = "PCX-Files"
+53280   .PrintingPDFFiles = "PDF-Files"
+53290   .PrintingPNGFiles = "PNG-Files"
+53300   .PrintingPSFiles = "Postscript-Files"
+53310   .PrintingSave = "Save"
+53320   .PrintingStartStandardProgram = "After saving, open the document with the default program."
+53330   .PrintingStatus = "Creating file..."
+53340   .PrintingSubject = "Subject:"
+53350   .PrintingTIFFFiles = "TIFF-Files"
+53360   .PrintingWaiting = "Waiting"
+53370
+53380   .SaveOpenAttributes = "Attributes"
+53390   .SaveOpenCancel = "Cancel"
+53400   .SaveOpenFilename = "Filename"
+53410   .SaveOpenOpen = "Open"
+53420   .SaveOpenOpenTitle = "Open"
+53430   .SaveOpenSave = "Save"
+53440   .SaveOpenSaveTitle = "Save as"
+53450   .SaveOpenSize = "Size"
+53460
+53470  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
