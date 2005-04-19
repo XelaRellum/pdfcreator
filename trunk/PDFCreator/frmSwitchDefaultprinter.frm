@@ -13,7 +13,7 @@ Begin VB.Form frmSwitchDefaultprinter
    ScaleHeight     =   1890
    ScaleWidth      =   4755
    StartUpPosition =   3  'Windows-Standard
-   Begin VB.CommandButton cmd1 
+   Begin VB.CommandButton cmd 
       Caption         =   "&Ok"
       Height          =   495
       Index           =   0
@@ -30,7 +30,7 @@ Begin VB.Form frmSwitchDefaultprinter
       Top             =   840
       Width           =   4455
    End
-   Begin VB.CommandButton cmd1 
+   Begin VB.CommandButton cmd 
       Cancel          =   -1  'True
       Caption         =   "&Cancel"
       Height          =   495
