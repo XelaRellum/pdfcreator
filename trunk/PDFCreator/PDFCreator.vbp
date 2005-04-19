@@ -64,6 +64,7 @@ UserControl=..\Common\dmFrame.ctl
 UserControl=..\Common\Line3D.ctl
 UserControl=..\Common\isExplorerBar.ctl
 Module=modFileversion; ..\Common\modFileversion.bas
+Form=frmSysTray.frm
 ResFile32="PDFCreator.RES"
 IconForm="frmMain"
 Startup="Sub Main"

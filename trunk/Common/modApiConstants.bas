@@ -399,55 +399,85 @@ Public Const TH32CS_SNAPPROCESS              As Long = 2&
 
 Public Const BITSPIXEL                       As Long = 12
 
-Public Const VS_FFI_SIGNATURE = &HFEEF04BD
-Public Const VS_FFI_STRUCVERSION = &H10000
-Public Const VS_FFI_FILEFLAGSMASK = &H3F&
+Public Const VS_FFI_SIGNATURE                As Long = &HFEEF04BD
+Public Const VS_FFI_STRUCVERSION             As Long = &H10000
+Public Const VS_FFI_FILEFLAGSMASK            As Long = &H3F&
 
-Public Const VS_FF_DEBUG = &H1
-Public Const VS_FF_PRERELEASE = &H2
-Public Const VS_FF_PATCHED = &H4
-Public Const VS_FF_PRIVATEBUILD = &H8
-Public Const VS_FF_INFOINFERRED = &H10
-Public Const VS_FF_SPECIALBUILD = &H20
+Public Const VS_FF_DEBUG                     As Long = &H1
+Public Const VS_FF_PRERELEASE                As Long = &H2
+Public Const VS_FF_PATCHED                   As Long = &H4
+Public Const VS_FF_PRIVATEBUILD              As Long = &H8
+Public Const VS_FF_INFOINFERRED              As Long = &H10
+Public Const VS_FF_SPECIALBUILD              As Long = &H20
 
-Public Const VOS_UNKNOWN = &H0
-Public Const VOS_DOS = &H10000
-Public Const VOS_OS216 = &H20000
-Public Const VOS_OS232 = &H30000
-Public Const VOS_NT = &H40000
-Public Const VOS__BASE = &H0
-Public Const VOS__WINDOWS16 = &H1
-Public Const VOS__PM16 = &H2
-Public Const VOS__PM32 = &H3
-Public Const VOS__WINDOWS32 = &H4
+Public Const VOS_UNKNOWN                     As Long = &H0
+Public Const VOS_DOS                         As Long = &H10000
+Public Const VOS_OS216                       As Long = &H20000
+Public Const VOS_OS232                       As Long = &H30000
+Public Const VOS_NT                          As Long = &H40000
+Public Const VOS__BASE                       As Long = &H0
+Public Const VOS__WINDOWS16                  As Long = &H1
+Public Const VOS__PM16                       As Long = &H2
+Public Const VOS__PM32                       As Long = &H3
+Public Const VOS__WINDOWS32                  As Long = &H4
 
-Public Const VOS_DOS_WINDOWS16 = &H10001
-Public Const VOS_DOS_WINDOWS32 = &H10004
-Public Const VOS_OS216_PM16 = &H20002
-Public Const VOS_OS232_PM32 = &H30003
-Public Const VOS_NT_WINDOWS32 = &H40004
+Public Const VOS_DOS_WINDOWS16               As Long = &H10001
+Public Const VOS_DOS_WINDOWS32               As Long = &H10004
+Public Const VOS_OS216_PM16                  As Long = &H20002
+Public Const VOS_OS232_PM32                  As Long = &H30003
+Public Const VOS_NT_WINDOWS32                As Long = &H40004
 
-Public Const VFT_UNKNOWN = &H0
-Public Const VFT_APP = &H1
-Public Const VFT_DLL = &H2
-Public Const VFT_DRV = &H3
-Public Const VFT_FONT = &H4
-Public Const VFT_VXD = &H5
-Public Const VFT_STATIC_LIB = &H7
+Public Const VFT_UNKNOWN                     As Long = &H0
+Public Const VFT_APP                         As Long = &H1
+Public Const VFT_DLL                         As Long = &H2
+Public Const VFT_DRV                         As Long = &H3
+Public Const VFT_FONT                        As Long = &H4
+Public Const VFT_VXD                         As Long = &H5
+Public Const VFT_STATIC_LIB                  As Long = &H7
 
-Public Const VFT2_UNKNOWN = &H0
-Public Const VFT2_DRV_PRINTER = &H1
-Public Const VFT2_DRV_KEYBOARD = &H2
-Public Const VFT2_DRV_LANGUAGE = &H3
-Public Const VFT2_DRV_DISPLAY = &H4
-Public Const VFT2_DRV_MOUSE = &H5
-Public Const VFT2_DRV_NETWORK = &H6
-Public Const VFT2_DRV_SYSTEM = &H7
-Public Const VFT2_DRV_INSTALLABLE = &H8
-Public Const VFT2_DRV_SOUND = &H9
-Public Const VFT2_DRV_COMM = &HA
+Public Const VFT2_UNKNOWN                    As Long = &H0
+Public Const VFT2_DRV_PRINTER                As Long = &H1
+Public Const VFT2_DRV_KEYBOARD               As Long = &H2
+Public Const VFT2_DRV_LANGUAGE               As Long = &H3
+Public Const VFT2_DRV_DISPLAY                As Long = &H4
+Public Const VFT2_DRV_MOUSE                  As Long = &H5
+Public Const VFT2_DRV_NETWORK                As Long = &H6
+Public Const VFT2_DRV_SYSTEM                 As Long = &H7
+Public Const VFT2_DRV_INSTALLABLE            As Long = &H8
+Public Const VFT2_DRV_SOUND                  As Long = &H9
+Public Const VFT2_DRV_COMM                   As Long = &HA
 
-Public Const VFT2_FONT_RASTER = &H1
-Public Const VFT2_FONT_VECTOR = &H2
-Public Const VFT2_FONT_TRUETYPE = &H3
+Public Const VFT2_FONT_RASTER                As Long = &H1
+Public Const VFT2_FONT_VECTOR                As Long = &H2
+Public Const VFT2_FONT_TRUETYPE              As Long = &H3
+
+Public Const NIF_ICON                        As Long = &H2
+Public Const NIF_MESSAGE                     As Long = &H1
+Public Const NIF_TIP                         As Long = &H4
+Public Const NIF_STATE                       As Long = &H8
+Public Const NIF_INFO                        As Long = &H10
+
+Public Const NIM_ADD                         As Long = &H0
+Public Const NIM_MODIFY                      As Long = &H1
+Public Const NIM_DELETE                      As Long = &H2
+Public Const NIM_SETFOCUS                    As Long = &H3
+Public Const NIM_SETVERSION                  As Long = &H4
+
+Public Const NOTIFYICON_VERSION              As Long = 3
+
+Public Const WM_MOUSEMOVE                    As Long = &H200
+Public Const WM_LBUTTONDBLCLK                As Long = &H203
+Public Const WM_LBUTTONDOWN                  As Long = &H201
+Public Const WM_LBUTTONUP                    As Long = &H202
+Public Const WM_RBUTTONDBLCLK                As Long = &H206
+Public Const WM_RBUTTONDOWN                  As Long = &H204
+Public Const WM_RBUTTONUP                    As Long = &H205
+
+Public Const NIN_SELECT                      As Long = WM_USER
+Public Const NINF_KEY                        As Long = &H1
+Public Const NIN_KEYSELECT                   As Long = (NIN_SELECT Or NINF_KEY)
+Public Const NIN_BALLOONSHOW                 As Long = (WM_USER + 2)
+Public Const NIN_BALLOONHIDE                 As Long = (WM_USER + 3)
+Public Const NIN_BALLOONTIMEOUT              As Long = (WM_USER + 4)
+Public Const NIN_BALLOONUSERCLICK            As Long = (WM_USER + 5)
 

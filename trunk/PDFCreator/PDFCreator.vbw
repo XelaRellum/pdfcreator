@@ -1,5 +1,5 @@
 clsDownload = 110, 110, 647, 443, C
-clsHash = 0, 0, 0, 0, C
+clsHash = 88, 116, 733, 421, C
 clsINI = 22, 22, 585, 332, C
 clsMutex = 132, 132, 721, 503, C
 clsPDFCreatorMail = 51, 137, 616, 595, C
@@ -56,3 +56,4 @@ dmFrame = 67, 67, 594, 389, C, 44, 44, 573, 361, C
 Line3D = 89, 89, 594, 412, C, 66, 66, 573, 384, C
 isExplorerBar = 67, 88, 610, 444, C, 88, 116, 633, 467, C
 modFileversion = 0, 0, 545, 316, C
+frmSysTray = 66, 87, 631, 395, C, 44, 58, 609, 366, C
