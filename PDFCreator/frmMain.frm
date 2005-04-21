@@ -2263,38 +2263,37 @@ ErrPtnr_OnError:
 End Sub
 
 Private Sub SetMenuPrinterStop()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  If mnPrinter(0).Checked = False Or NoProcessing = True Then
-50050    SetPrinterStop True
-50060    mnPrinter(0).Checked = True
-50070    tlb(0).Buttons(1).Image = 2
-50080   Else
-50090    SetPrinterStop False
-50100    mnPrinter(0).Checked = False
-50110    tlb(0).Buttons(1).Image = 1
-50120  End If
-50130  If Not m_frmSysTray Is Nothing Then
-50140   If mnPrinter(0).Checked = True Then
-50150     m_frmSysTray.IconHandle = imlSystray.ListImages(0).Picture.handle
-50160     m_frmSysTray.mnuSysTray(2).Checked = True
-50170    Else
-50180     m_frmSysTray.IconHandle = imlSystray.ListImages(1).Picture.handle
-50190     m_frmSysTray.mnuSysTray(2).Checked = False
-50200   End If
-50210   m_frmSysTray.IconHandle = m_frmSysTray.Icon.handle
-50220  End If
-50230 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50240 Exit Sub
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If mnPrinter(0).Checked = False Or NoProcessing = True Then
+50020    SetPrinterStop True
+50030    mnPrinter(0).Checked = True
+50040    tlb(0).Buttons(1).Image = 2
+50050   Else
+50060    SetPrinterStop False
+50070    mnPrinter(0).Checked = False
+50080    tlb(0).Buttons(1).Image = 1
+50090  End If
+50100  If Not m_frmSysTray Is Nothing Then
+50110   If mnPrinter(0).Checked = True Then
+50120     m_frmSysTray.IconHandle = imlSystray.ListImages(1).Picture.handle
+50130     m_frmSysTray.mnuSysTray(2).Checked = True
+50140    Else
+50150     m_frmSysTray.IconHandle = imlSystray.ListImages(2).Picture.handle
+50160     m_frmSysTray.mnuSysTray(2).Checked = False
+50170   End If
+50180  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-50261 Select Case ErrPtnr.OnError("frmMain", "SetMenuPrinterStop")
-      Case 0: Resume
-50280 Case 1: Resume Next
-50290 Case 2: Exit Sub
-50300 Case 3: End
-50310 End Select
-50320 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("frmMain", "SetMenuPrinterStop")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub SetLanguageToolbar()
