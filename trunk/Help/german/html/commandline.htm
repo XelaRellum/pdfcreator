@@ -21,20 +21,10 @@
     <td class="main"><p class="header">Kommandozeilenparameter</p>
       <p>PDFCreator bietet die M&ouml;glichkeit, Dokumente &uuml;ber Kommandozeilenparameter 
         zu erstellen. Folgende Parameter werden unterst&uuml;tzt:</p>
-      <p><strong>/CLEARCACHE</strong><br>
+      <p><strong>/ClearCache</strong><br>
         Entfernt alle tempor&auml;ren Dateien. Das ist hilfreich, wenn PDFCreator 
         aufgrund defekter Dateien nicht mehr starten sollte.<br>
         <em>Beispiel:</em> pdfcreator.exe /CLEARCACHE</p>
-      <p><strong>/PF&lt;Dateiname&gt;</strong><br>
-        Druckt eine Datei mit dem Standardprogramm, das mit der Dateiendung verbunden 
-        ist. Im Allgemeinen ist diese Option sinnvoll in Verbindung mit dem automatischen 
-        Speichern. <strong>Der Parameter hat KEIN Leerzeichen zwischen dem Dateinamen</strong>.<br>
-        <em>Beispiel:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;</p>
-      <p><strong>/NOSTART</strong><br>
-        Wenn der Parameter /PF benutzt wird, bleibt PDFCreator ge&ouml;ffnet nachdem 
-        die Aufgabe erledigt wurde. Der /NOSTART Parameter l&auml;sst PDFCreator 
-        sich automatisch beenden, wenn der Auftrag abgearbeitet ist.<br>
-        <em>Beispiel:</em> pdfcreator.exe /NOSTART /PF&quot;C:\help.doc&quot;</p>
       <p><strong>/IF&lt;Eingabe-Dateiname&gt; /OF&lt;Ausgabe-Dateiname&gt;<br>
         </strong>Konvertiert eine PostScript-Datei in eine PDF-Datei oder Bilddatei. Der /OF 
         Parameter kann nur zusammen mit dem /IF Parameter verwendet werden. Das 
@@ -43,28 +33,44 @@
         <em>Beispiele:</em><br>
         pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;<br>
         pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.tif&quot;</p>
-      <p><strong>/ShowOnlyOptions</strong><br>
-        &Ouml;ffnet PDFCreator mit dem Einstellungsdialog. Dieser Parameter ist wichtig, wenn PDFCreator
-        im Servermodus installiert wurde und eine Instanz von PDFCreator bereits als Dienst l&auml;uft.
-        Es werden keine weiteren Fenster ge&ouml;ffnet.<br>
-        <em>Beispiel:</em> pdfcreator.exe /ShowOnlyOptions</p>
-      <p><strong>/ShowOnlyLogfile</strong><br>
-        &Ouml;ffnet PDFCreator mit dem Protokollfenster. Dieser Parameter ist wichtig, wenn PDFCreator
-        im Servermodus installiert wurde und eine Instanz von PDFCreator bereits als Dienst l&auml;uft.
-        Es werden keine weiteren Fenster ge&ouml;ffnet.<br>
-        <em>Beispiel:</em> pdfcreator.exe /ShowOnlyLogfile</p>
+      <p><strong>/NoAbortIfRunning</strong><br>
+        &Ouml;ffnet eine neue Instanz von PDFCreator ohne zu pr&uuml;fen, ob bereits 
+        eine andere Instanz l&auml;uft. Es wird dringend empfohlen diesen Parameter mit dem /NoProcessing 
+        Parameter zu kombinieren! Ansonsten k&ouml;nnten 2 Programme gleichzeitig versuchen Dateien zu
+        konvertieren.
+        Dies kann zu unerw&uuml;nschten Nebeneffekten f&uuml;hren.<br>
+        <em>Beispiel:</em> pdfcreator.exe /NoAbortIfRunning</p>
       <p><strong>/NoProcessing</strong><br>
         Wenn PDFCreator mit diesem Parameter gestartet wird, werden 
         die Dokumente nicht automatisch verarbeitet, sondern in die Warteschlange 
         eingereiht. Die Dokumente werden erst verarbeitet, wenn PDFcreator ohne 
         den Parameter aufgerufen wird.<br>
         <em>Beispiel:</em> pdfcreator.exe /NoProcessing</p>
-      <p><strong>/NoAbortIfRunning</strong><br>
-        &Ouml;ffnet eine neue Instanz von PDFCreator ohne zu pr&uuml;fen, ob bereits 
-        eine andere Instanz l&auml;uft. Es wird dringend empfohlen diesen Parameter mit dem /NoProcessing 
-        Parameter zu kombinieren! Ansonsten k&ouml;nnten 2 Programme gleichzeitig versuchen Dateien zu konvertieren.
-        Dies kann zu unerw&uuml;nschten Nebeneffekten f&uuml;hren.<br>
-        <em>Beispiel:</em> pdfcreator.exe /NoAbortIfRunning</p>
+      <p><strong>/NoStart</strong><br>
+        Wenn der Parameter /PF benutzt wird, bleibt PDFCreator ge&ouml;ffnet nachdem 
+        die Aufgabe erledigt wurde. Der /NOSTART Parameter l&auml;sst PDFCreator 
+        sich automatisch beenden, wenn der Auftrag abgearbeitet ist.<br>
+        <em>Beispiel:</em> pdfcreator.exe /NOSTART /PF&quot;C:\help.doc&quot;</p>
+      <p><strong>/OptionsFile&lt;option-filename&gt;</strong><br>
+        Veranlasst PDFCreator eine spezielle Einstellungsdatei zu verwenden.<br>
+        <em>Beispiel:</em> pdfcreator.exe /OptionsFile&quot;C:\MyPDFCreator.ini&quot;<br>
+        (Hinweis: Mit diesem Parameter und einer speziellen Einrichtung k&ouml;nnen mehr als ein Drucker
+        auf einem Rechner in der Standardinstallation eingerichtet werden.)</p>
+      <p><strong>/PF&lt;Dateiname&gt;</strong><br>
+        Druckt eine Datei mit dem Standardprogramm, das mit der Dateiendung verbunden 
+        ist. Im Allgemeinen ist diese Option sinnvoll in Verbindung mit dem automatischen 
+        Speichern. <strong>Der Parameter hat KEIN Leerzeichen zwischen dem Dateinamen</strong>.<br>
+        <em>Beispiel:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;</p>
+      <p><strong>/ShowOnlyLogfile</strong><br>
+        &Ouml;ffnet PDFCreator mit dem Protokollfenster. Dieser Parameter ist wichtig, wenn PDFCreator
+        im Servermodus installiert wurde und eine Instanz von PDFCreator bereits als Dienst l&auml;uft.
+        Es werden keine weiteren Fenster ge&ouml;ffnet.<br>
+        <em>Beispiel:</em> pdfcreator.exe /ShowOnlyLogfile</p>
+      <p><strong>/ShowOnlyOptions</strong><br>
+        &Ouml;ffnet PDFCreator mit dem Einstellungsdialog. Dieser Parameter ist wichtig, wenn PDFCreator
+        im Servermodus installiert wurde und eine Instanz von PDFCreator bereits als Dienst l&auml;uft.
+        Es werden keine weiteren Fenster ge&ouml;ffnet.<br>
+        <em>Beispiel:</em> pdfcreator.exe /ShowOnlyOptions</p>
       </td>
   </tr>
 </table>
