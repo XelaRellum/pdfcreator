@@ -236,24 +236,29 @@ Private Sub InitProgram()
 50470  InitLanguagesStrings
 50480  LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
 50490  Languagefile = LanguagePath & Options.Language & ".ini"
-50500  If FileExists(Languagefile) = True Then
-50510    LoadLanguage Languagefile
-50520   Else
-50530    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
-50540 '   Options.Language = "english"
-50550  End If
-50560  CreatePDFCreatorTempfolder
-50570  ComputerScreenResolution = ScreenResolution
-50580 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50590 Exit Sub
+50500  If UCase$(Options.Language) = "ESPANOL" And FileExists(Languagefile) = False And _
+   FileExists(LanguagePath & "spanish.ini") = True Then
+50520   Languagefile = LanguagePath & "spanish.ini"
+50530   Options.Language = "spanish"
+50540  End If
+50550  If FileExists(Languagefile) = True Then
+50560    LoadLanguage Languagefile
+50570   Else
+50580    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
+50590 '   Options.Language = "english"
+50600  End If
+50610  CreatePDFCreatorTempfolder
+50620  ComputerScreenResolution = ScreenResolution
+50630 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50640 Exit Sub
 ErrPtnr_OnError:
-50611 Select Case ErrPtnr.OnError("modMain", "InitProgram")
+50661 Select Case ErrPtnr.OnError("modMain", "InitProgram")
       Case 0: Resume
-50630 Case 1: Resume Next
-50640 Case 2: Exit Sub
-50650 Case 3: End
-50660 End Select
-50670 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50680 Case 1: Resume Next
+50690 Case 2: Exit Sub
+50700 Case 3: End
+50710 End Select
+50720 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub CreateUnloadFile()
