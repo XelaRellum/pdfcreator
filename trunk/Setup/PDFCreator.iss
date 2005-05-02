@@ -666,6 +666,8 @@ function lstrlenA (lpString : LongInt) : LongInt;
  external 'lstrlenA@kernel32.dll stdcall';
 function lstrcpyA (lpString1 : String; lpString2 : LongInt) : LongInt;
  external 'lstrcpyA@kernel32.dll stdcall';
+function SearchPath(lpPath : String; lpFilename : String; lpExtension : String; nBufferLength : LongInt; lpBuffer : String; lpFilePart : LongInt) : LongInt;
+ external 'SearchPathA@kernel32.dll stdcall';
 
 function GetPrinterDriverDirectory(pName:String; pEnvironment:String; Level:LongInt; pDriverDirectory:String; cbBuf:LongInt; var pcbNeened:LongInt):Integer;
  external 'GetPrinterDriverDirectoryA@winspool.drv stdcall';
@@ -907,6 +909,23 @@ begin
    'The setup will be cancelled.');
  end;
  result:=tStr;
+end;
+
+function FileInPath(Filename:String; Path:String):Boolean;
+var
+ Buffer: String;
+ res, BufferLength, pFilePart: LongInt;
+begin
+ res:=0;
+ if length(Filename)>0 then begin
+  BufferLength := 260;
+  Buffer:=StringOfChar(#0,BufferLength);
+  res:=SearchPath(Path, Filename, #0, BufferLength, Buffer, pFilePart);
+ end;
+ if res>0 then
+   result:=true
+  else
+   result:=false;
 end;
 
 function GetPorts(var Ports : Array of TPortInfo2) : LongInt;
@@ -1642,6 +1661,7 @@ begin
 end;
 
 procedure SaveInstallInformations;
+var fdPath, fdName : String;
 begin
  SaveStringToFile(LogFile, '--------------------------------------'#13#10#13#10, True);
  SaveStringToFile(LogFile, 'Windowsversion: '+GetWindowsVersionString+#13#10, True);
@@ -1654,6 +1674,18 @@ begin
  SaveStringToFile(LogFile, 'UILanguage: '+IntToStr(GetUILanguage)+#13#10, True);
  SaveStringToFile(LogFile, 'Internet Explorer version: '+GetIExplorerVersion+#13#10, True);
  SaveStringToFile(LogFile, 'Path: '+Getenv('Path')+#13#10, True);
+ if InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then begin
+  fdName:='framedyn.dll';
+  fdPath:=ExpandConstant('{sys}')+'\wbem\'+ fdName;
+  if fileExists(fdPath) then
+    SaveStringToFile(LogFile, fdPath + ': found'+#13#10, True)
+   else
+    SaveStringToFile(LogFile, fdPath + ': NOT found'+#13#10, True);
+  if FileInPath('framedyn.dll','') then
+    SaveStringToFile(LogFile, fdName + ': found in path'+#13#10, True)
+   else
+    SaveStringToFile(LogFile, fdName + ': found NOT in path'+#13#10, True)
+ end;
 end;
 
 procedure SavePrinterInformations;
