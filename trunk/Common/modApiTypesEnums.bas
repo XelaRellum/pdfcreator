@@ -347,7 +347,7 @@ End Enum
 
 Public Type POINTAPI
  x As Long
- y As Long
+ Y As Long
 End Type
 
 Public Type OPENFILENAME
@@ -736,36 +736,57 @@ Public Type VS_FIXEDFILEINFO
 End Type
 
 Public Type NOTIFYICONDATAA
-   cbSize As Long
-   hwnd As Long
-   uID As Long
-   uFlags As Long
-   uCallbackMessage As Long
-   hIcon As Long
-   szTip As String * 128
-   dwState As Long
-   dwStateMask As Long
-   szInfo As String * 256
-   uTimeOutOrVersion As Long
-   szInfoTitle As String * 64
-   dwInfoFlags As Long
-   guidItem As Long
+ cbSize As Long
+ hwnd As Long
+ uID As Long
+ uFlags As Long
+ uCallbackMessage As Long
+ hIcon As Long
+ szTip As String * 128
+ dwState As Long
+ dwStateMask As Long
+ szInfo As String * 256
+ uTimeOutOrVersion As Long
+ szInfoTitle As String * 64
+ dwInfoFlags As Long
+ guidItem As Long
 End Type
 
 Public Type NOTIFYICONDATAW
-   cbSize As Long
-   hwnd As Long
-   uID As Long
-   uFlags As Long
-   uCallbackMessage As Long
-   hIcon As Long
-   szTip(0 To 255) As Byte
-   dwState As Long
-   dwStateMask As Long
-   szInfo(0 To 511) As Byte
-   uTimeOutOrVersion As Long
-   szInfoTitle(0 To 127) As Byte
-   dwInfoFlags As Long
-   guidItem As Long
+ cbSize As Long
+ hwnd As Long
+ uID As Long
+ uFlags As Long
+ uCallbackMessage As Long
+ hIcon As Long
+ szTip(0 To 255) As Byte
+ dwState As Long
+ dwStateMask As Long
+ szInfo(0 To 511) As Byte
+ uTimeOutOrVersion As Long
+ szInfoTitle(0 To 127) As Byte
+ dwInfoFlags As Long
+ guidItem As Long
+End Type
+
+Public Type SYSTEMTIME
+ wYear As Integer
+ wMonth As Integer
+ wDayOfWeek As Integer
+ wDay As Integer
+ wHour As Integer
+ wMinute As Integer
+ wSecond As Integer
+ wMilliseconds As Integer
+End Type
+
+Public Type TIME_ZONE_INFORMATION
+ Bias As Long
+ StandardName(1 To 64) As Byte
+ StandardDate As SYSTEMTIME
+ StandardBias As Long
+ DaylightName(1 To 64) As Byte
+ DaylightDate As SYSTEMTIME
+ DaylightBias As Long
 End Type
 

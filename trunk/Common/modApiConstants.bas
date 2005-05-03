@@ -481,3 +481,6 @@ Public Const NIN_BALLOONHIDE                 As Long = (WM_USER + 3)
 Public Const NIN_BALLOONTIMEOUT              As Long = (WM_USER + 4)
 Public Const NIN_BALLOONUSERCLICK            As Long = (WM_USER + 5)
 
+Public Const TIME_ZONE_ID_UNKNOWN            As Long = &H0&
+Public Const TIME_ZONE_ID_STANDARD           As Long = &H1&
+Public Const TIME_ZONE_ID_DAYLIGHT           As Long = &H2&
