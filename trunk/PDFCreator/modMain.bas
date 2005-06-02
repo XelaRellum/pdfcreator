@@ -9,92 +9,93 @@ Private UnLoadFile As Boolean, ClearCacheDir As Boolean, NoStart As Boolean, _
  OutputFilename As String, InitSettings As Boolean
 
 Public Sub Main()
-50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50020 On Error GoTo ErrPtnr_OnError
-50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50040  Dim Files As Collection, Filename As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Files As Collection, Filename As String
+50020
+50030  ' Reduce the working size of used memory
+50040  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
 50050
-50060  ' Reduce the working size of used memory
-50070  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
+50060  AnalyzeCommandlineParameters
+50070  InitProgram
 50080
-50090  AnalyzeCommandlineParameters
-50100  InitProgram
-50110
-50120  IfLoggingWriteLogfile "PDFCreator Program Start"
-50130  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
-50140  IfLoggingWriteLogfile "PDFCreatorINIFile: " & PDFCreatorINIFile
-50150
-50160  If UnLoadFile Then
-50170   CreateUnloadFile
-50180   Exit Sub
-50190  End If
-50200
-50210  If ClearCacheDir Then
-50220   ClearCache
-50230  End If
-50240
-50250  If LenB(PrintFilename) > 0 Then
-50260   Set Files = GetFiles(PrintFilename, "", SortedByName)
-50270   If Files.Count > 0 Then
-50280     Load frmPrintfiles
-50290    Else
-50300     MsgBox LanguageStrings.MessagesMsg14
-50310   End If
-50320  End If
-50330
-50340  If InitSettings Then
-50350   SaveOptions Options
-50360  End If
-50370
-50380  If NoStart Then
-50390   Exit Sub
-50400  End If
-50410
-50420  If ShowOnlyOptions Then
-50430   frmOptions.Show vbModal
-50440   Exit Sub
-50450  End If
-50460
-50470  If ShowOnlyLogfile Then
-50480   frmLog.Show vbModal
-50490   Exit Sub
-50500  End If
-50510
-50520  LoadGhostscriptDLL
-50530
-50540  If PDFCreatorPrinter = False And FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
-50550    Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-50560    KillFile Filename
-50570    FileCopy InputFilename, Filename
-50580   Else
-50590    ConvertPostscriptFile InputFilename, OutputFilename
-50600  End If
-50610
-50620  If ProgramIsRunning(PDFCreator_GUID) Then
-50630    If Not NoAbortIfRunning Then
-50640     Exit Sub
-50650    End If
-50660   Else
-50670  ' Create a mutex
-50680    Set mutex = New clsMutex
-50690    mutex.CreateMutex PDFCreator_GUID
-50700  End If
-50710
-50720  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-50730   InitCommonControls
-50740  End If
-50750
-50760  Load frmMain
-50770 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50780 Exit Sub
+50090  IfLoggingWriteLogfile "PDFCreator Program Start"
+50100  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
+50110  IfLoggingWriteLogfile "PDFCreatorINIFile: " & PDFCreatorINIFile
+50120
+50130  If UnLoadFile Then
+50140   CreateUnloadFile
+50150   Exit Sub
+50160  End If
+50170
+50180  If ClearCacheDir Then
+50190   ClearCache
+50200  End If
+50210
+50220  If LenB(PrintFilename) > 0 Then
+50230   Set Files = GetFiles(PrintFilename, "", SortedByName)
+50240   If Files.Count > 0 Then
+50250     Load frmPrintfiles
+50260    Else
+50270     MsgBox LanguageStrings.MessagesMsg14
+50280   End If
+50290  End If
+50300
+50310  If InitSettings Then
+50320   SaveOptions Options
+50330  End If
+50340
+50350  If NoStart Then
+50360   Exit Sub
+50370  End If
+50380
+50390  If ShowOnlyOptions Then
+50400   frmOptions.Show vbModal
+50410   Exit Sub
+50420  End If
+50430
+50440  If ShowOnlyLogfile Then
+50450   frmLog.Show vbModal
+50460   Exit Sub
+50470  End If
+50480
+50490  LoadGhostscriptDLL
+50500
+50510  If PDFCreatorPrinter = False And FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
+50520    Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+50530    KillFile Filename
+50540    FileCopy InputFilename, Filename
+50550   Else
+50560    ConvertPostscriptFile InputFilename, OutputFilename
+50570  End If
+50580
+50590  If ProgramIsRunning(PDFCreator_GUID) Then
+50600     MsgBox "A"
+50610     If Not NoAbortIfRunning Then
+50620     Exit Sub
+50630    End If
+50640   Else
+50650  ' Create a mutex
+50660    Set mutex = New clsMutex
+50670    mutex.CreateMutex PDFCreator_GUID
+50680  End If
+50690
+50700  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+50710   InitCommonControls
+50720  End If
+50730
+50740  Load frmMain
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
 ErrPtnr_OnError:
-50801 Select Case ErrPtnr.OnError("modMain", "Main")
-      Case 0: Resume
-50820 Case 1: Resume Next
-50830 Case 2: Exit Sub
-50840 Case 3: End
-50850 End Select
-50860 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Select Case ErrPtnr.OnError("modMain", "Main")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub AnalyzeCommandlineParameters()
@@ -461,4 +462,47 @@ ErrPtnr_OnError:
 50970 Case 3: End
 50980 End Select
 50990 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub SetFont(Frm As Form, ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim ctl As Control, eB As isExplorerBar
+50020
+50030  For Each ctl In Frm.Controls
+50040   If TypeOf ctl Is Label Or _
+     TypeOf ctl Is Form Or _
+     TypeOf ctl Is ComboBox Or _
+     TypeOf ctl Is CheckBox Or _
+     TypeOf ctl Is CommandButton Or _
+     TypeOf ctl Is ListView Or _
+     TypeOf ctl Is StatusBar Or _
+     TypeOf ctl Is TextBox Or _
+     TypeOf ctl Is Frame Then
+50130    With ctl
+50140     .Font = Fontname
+50150     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
+50160      .Fontsize = Fontsize
+50170     End If
+50180     .Font.Charset = Charset
+50190    End With
+50200   End If
+50210   If TypeOf ctl Is isExplorerBar Then
+50220    Set eB = ctl
+50230    eB.Font.Name = Fontname
+50240    eB.Font.Size = Fontsize
+50250    eB.Font.Charset = Charset
+50260   End If
+50270  Next ctl
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "SetFont")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
