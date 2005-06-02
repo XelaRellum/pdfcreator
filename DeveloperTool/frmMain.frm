@@ -1912,11 +1912,11 @@ Private Sub SaveFile(Filename As String, txtStr As String)
  Close #fn
 End Sub
 
-Private Sub SaveCompressedFile(Filename As String, b() As Byte)
+Private Sub SaveCompressedFile(Filename As String, B() As Byte)
  Dim fn As Long
  fn = FreeFile
  Open Filename For Binary As #fn
- Put #fn, , b
+ Put #fn, , B
  Close #fn
 End Sub
 
@@ -2164,6 +2164,7 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "RunProgramBeforeSavingProgramname"
   .Add "RunProgramBeforeSavingProgramParameters"
   .Add "RunProgramBeforeSavingWindowstyle"
+  .Add "OptionsDesign"
  End With
  IsSpecialString = False
  For i = 1 To ss.Count

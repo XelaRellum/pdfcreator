@@ -26,7 +26,7 @@
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 #If (GhostscriptLicense=="AFPL")
- #define GhostscriptVersion "8.51"
+ #define GhostscriptVersion "8.50"
  #define GhostscriptSetupString "AFPLGhostscript"
 #ENDIF
 #ENDIF

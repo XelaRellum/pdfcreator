@@ -87,6 +87,7 @@ Logging|Logging|Boolean|0||
 LogLines|LogLines|Long|100|100|1000
 NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
 NoProcessingAtStartup||Boolean|0||
+OptionsDesign||Long|1|1|2
 OptionsEnabled||Boolean|1||
 OptionsVisible||Boolean|1||
 PrinterStop|PrinterStop|Boolean|0||

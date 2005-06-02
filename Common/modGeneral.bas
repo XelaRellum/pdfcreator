@@ -1084,43 +1084,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub SetFont(Frm As Form, ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control
-50020
-50030  For Each ctl In Frm.Controls
-50040   If TypeOf ctl Is Label Or _
-     TypeOf ctl Is Form Or _
-     TypeOf ctl Is ComboBox Or _
-     TypeOf ctl Is CheckBox Or _
-     TypeOf ctl Is CommandButton Or _
-     TypeOf ctl Is ListView Or _
-     TypeOf ctl Is StatusBar Or _
-     TypeOf ctl Is TextBox Or _
-     TypeOf ctl Is Frame Then
-50130    With ctl
-50140     .Font = Fontname
-50150     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
-50160      .Fontsize = Fontsize
-50170     End If
-50180     .Font.Charset = Charset
-50190    End With
-50200   End If
-50210  Next ctl
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "SetFont")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional Filename As String, Optional File As String, Optional Extension As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
