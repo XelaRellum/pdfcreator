@@ -1,6 +1,10 @@
-; *** Inno Setup version 4.2.2+ Slovak messages ***
-; Translated by: Ing. Michal Krempa
-; Contact: Marek Istvanek (Marek.Istvanek@astra-zlin.cz)
+; *** Inno Setup version 4.2.2+ English messages ***
+;
+;
+; Translated by:              Juraj Matel
+; Contact:          j.matel@orangemail.sk
+;                      http://matel.wz.cz
+;
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -10,20 +14,20 @@
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
 ;
-; $jrsoftware: issrc/Files/Default.isl,v 1.32 2003/06/18 19:24:07 jr Exp $
+; $jrsoftware: issrc/Files/Default.isl,v 1.58 2004/04/07 20:17:13 jr Exp $
 
 [LangOptions]
-LanguageName=Sloven<010D>ina
+LanguageName=Slovak
 LanguageID=$041B
+LanguageCodePage=1250
 ; If the language you are translating to requires special font faces or
 ; sizes, uncomment any of the following entries and change them accordingly.
-;DialogFontName=MS Shell Dlg
+;DialogFontName=
 ;DialogFontSize=8
-;DialogFontStandardHeight=13
-;TitleFontName=Arial
-;TitleFontSize=29
 ;WelcomeFontName=Verdana
 ;WelcomeFontSize=12
+;TitleFontName=Arial
+;TitleFontSize=29
 ;CopyrightFontName=Arial
 ;CopyrightFontSize=8
 
@@ -32,290 +36,285 @@ LanguageID=$041B
 ; *** Application titles
 SetupAppTitle=Sprievodca inštaláciou
 SetupWindowTitle=Sprievodca inštaláciou - %1
-UninstallAppTitle=Sprievodca odinštaláciou
-UninstallAppFullTitle=Sprievodca odinštaláciou - %1
+UninstallAppTitle=Odinštalova
+UninstallAppFullTitle=Odinštalova - %1
 
 ; *** Misc. common
 InformationTitle=Informácia
-ConfirmTitle=Otázka
+ConfirmTitle=Potvrdenie
 ErrorTitle=Chyba
 
 ; *** SetupLdr messages
-SetupLdrStartupMessage=Toto je sprievodca inštaláciou produktu %1. Prajete si pokraèova?
-LdrCannotCreateTemp=Nedá sa vytvori doèasnı súbor. Sprievodca inštaláciou bude ukonèenı
-LdrCannotExecTemp=Nedá sa spusti súbor v doèasnej zloke. Sprievodca inštaláciou bude ukonèenı
+SetupLdrStartupMessage=Chystáte sa nainštalova program %1. Chcete pokraèova?
+LdrCannotCreateTemp=Nie je moné vytvori doèasnı súbor . Inštalácia ukonèená.
+LdrCannotExecTemp=Nie je moné spusti súbor v doèasnom prieèinku. Inštalácia ukonèená.
 
 ; *** Startup error messages
 LastErrorMessage=%1.%n%nChyba %2: %3
-SetupFileMissing=Inštalaèná zloka neobsahuje súbor %1. Opravte, prosím, túto chybu alebo si zaobstarajte novú kópiu tohto produktu.
-SetupFileCorrupt=Súbory sprievodcu inštaláciou sú poškodené. Zaobstarajte si, prosím, novú kópiu tohto produktu.
-SetupFileCorruptOrWrongVer=Súbory sprievodcu inštaláciou sú poškodené alebo sa nezluèujú s touto verziou sprievodcu inštaláciou. Opravte, prosím, túto chybu alebo si zaobstarajte novú kópiu tohto produktu.
-NotOnThisPlatform=Tento produkt sa nedá spusti pod %1.
-OnlyOnThisPlatform=Tento produkt musí by spustenı pod %1.
-WinVersionTooLowError=Tento produkt vyaduje %1 verzie %2 alebo vyššiu.
-WinVersionTooHighError=Tento produkt sa nedá nainštalova v %1 verzie %2 alebo vyššej
-AdminPrivilegesRequired=K vykonaniu inštalácie tohto produktu musíte by prihlásenı(á) ako administrátor.
-PowerUserPrivilegesRequired=K vykonaniu inštalácie tohto produktu musíte by prihlásenı(á) ako administrátor alebo èlen skupiny Power Users.
-SetupAppRunningError=Sprievodca inštaláciou zistil, e %1 je teraz spustenı.%n%nUkonèite, prosím, všetky spustené inštalácie tohto produktu a klepnite na OK pre pokraèovanie alebo na Storno pre ukonèenie.
-UninstallAppRunningError=Sprievodca odinštaláciou zistil, e %1 je teraz spustenı.%n%nUkonèite, prosím, všetky spustené inštalácie tohto produktu a klepnite na OK pre pokraèovanie alebo na Storno pre ukonèenie.
+SetupFileMissing=V inštalaènom prieèinku chıba súbor %1. Ak chcete pokraèova, opravte tento problém alebo poiadajte o novú kópiu programu.
+SetupFileCorrupt=Inštalaènı súbor je poškodenı. Poiadajte o novú verziu programu.
+SetupFileCorruptOrWrongVer=Inštalaènı súbor je poškodenı alebo nekompatibilnı s aktuálnou verziou inštalátora. Ak chcete pokraèova, opravte tento problém alebo poiadajte o novú kópiu programu.
+NotOnThisPlatform=Tento program sa na %1 nedá spusti.
+OnlyOnThisPlatform=Tento program sa dá spusti len na %1.
+WinVersionTooLowError=Program vyaduje %1 verzia %2 alebo novšia.
+WinVersionTooHighError=Tento program nie je moné nainštalova na %1 verzie %2 alebo novšej.
+AdminPrivilegesRequired=Ak chcete pokraèova v inštalácii musíte by prihlásení ako pouívate¾ Administrátor.
+PowerUserPrivilegesRequired=Ak chcete pokraèova v inštalácii musíte by prihlásení ako pouívate¾ Administrátor alebo by skupiny Power Users.
+SetupAppRunningError=Inštalátor zistil, e program %1 je práve spustenı.%n%nUkonèite všetky spustené aplikácie. Ak chcete pokraèova, kliknite na tlaèidlo Ïalej. Kliknutím na tlaèidlo Zruši inštaláciu ukonèíte.
+UninstallAppRunningError=Inštalátor zistil, e program %1 je práve spustenı.%n%nUkonèite všetky spustené aplikácie. Ak chcete pokraèova, kliknite na tlaèidlo Ïalej. Kliknutím na tlaèidlo Zruši inštaláciu ukonèíte.
 
 ; *** Misc. errors
-ErrorCreatingDir=Sprievodca inštaláciou nemohol vytvori zloku "%1"
-ErrorTooManyFilesInDir=Nedá sa vytvori súbor v zloke "%1", pretoe táto zloka u obsahuje príliš ve¾a súborov
+ErrorCreatingDir=Inštalátor nemohol vytvori prieèinok „%1“.
+ErrorTooManyFilesInDir=Inštalátor nemohol vytvori súbor v prieèinku „%1“, pretoe obsahuje príliš ve¾a súborov.
 
 ; *** Setup common messages
-ExitSetupTitle=Ukonèi sprievodcu inštaláciou
-ExitSetupMessage=Inštalacia nebola úplne dokonèená. Ak teraz ukonèíte sprievodcu inštaláciou, produkt nebude nainštalovanı.%n%nSprievodcu inštaláciou môete znovu spusti neskôr a dokonèi tak inštaláciu.%n%nUkonèi sprievodcu inštaláciou?
-AboutSetupMenuItem=&O sprievodcovi inštaláciou...
-AboutSetupTitle=O sprievodcovi inštaláciou
-AboutSetupMessage=%1 verzia %2%n%3%n%n%1 domovská stránka:%n%4
+ExitSetupTitle=Ukonèenie inštalácie
+ExitSetupMessage=Inštalácia nie je dokonèená. Ak ju teraz ukonèíte, program nebude nainštalovanı.%n%nInštalátor môete spusti neskôr a inštaláciu dokonèi.%n%nChcete naozaj skonèi inštaláciu?
+AboutSetupMenuItem=Èo je inštalaènı program...
+AboutSetupTitle=Èo je inštalaènı program...
+AboutSetupMessage=%1 verzia %2%n%3%n%n%1, domovská stránka:%n%4
 AboutSetupNote=
 
 ; *** Buttons
-ButtonBack=< &Spä
-ButtonNext=&Ïalší >
+ButtonBack=< Naspä
+ButtonNext=Ïalej >
 ButtonInstall=&Inštalova
 ButtonOK=OK
-ButtonCancel=Storno
-ButtonYes=&Áno
-ButtonYesToAll=Áno &všetkım
+ButtonCancel=Zruši
+ButtonYes=Áno
+ButtonYesToAll=Áno pre všetky
 ButtonNo=&Nie
-ButtonNoToAll=N&ie všetkım
+ButtonNoToAll=Nie pre všetky
 ButtonFinish=&Dokonèi
-ButtonBrowse=&Prechádza...
-ButtonWizardBrowse=&Prechádza...
-ButtonNewFolder=&Vytvoti novú zloku
+ButtonBrowse=Preh¾adáva...
+ButtonWizardBrowse=Preh¾adáva...
+ButtonNewFolder=Vytvori novı prieèinok
+
+; *** "Select Language" dialog messages
+SelectLanguageTitle=Vıber jazyka
+SelectLanguageLabel=Vyberte jazyk, ktorı chcete pouíva poèas inštalácie:
 
 ; *** Common wizard text
-SelectLanguageTitle=Zvoli jazyk sprievodcu inštaláciou
-SelectLanguageLabel=Zvo¾te jazyk, ktorı sa má poui pri inštalácii:
-ClickNext=Klepnite na Ïalší pre pokraèovanie alebo na Storno pre ukonèenie sprievodcu inštaláciou.
+ClickNext=Ak chcete pokraèova, kliknite na tlaèidlo Ïalej. Kliknutím na tlaèidlo Zruši inštaláciu ukonèíte.
 BeveledLabel=
-BrowseDialogTitle=Vyh¾ada zloku	
-BrowseDialogLabel=Z nišie uvedeného zoznamu vyberte zloku a klepnite na OK.	
-NewFolderName=Nová zloka
+BrowseDialogTitle=Vıber prieèinka programu
+BrowseDialogLabel=V nasledujúcom zozname vyberte prieèinok a kliknite na tlaèidlo OK.
+NewFolderName=Novı prieèinok
 
 ; *** "Welcome" wizard page
-WelcomeLabel1=Víta Vás sprievodca inštaláciou produktu [name].
-WelcomeLabel2=[name/ver] bude nainštalovanı na Váš poèítaè.%n%nOdporúèa sa ukonèi všetky spustené aplikácie predtım, ne budete pokraèova.
+WelcomeLabel1=Víta vás Sprievodca inštaláciou programu [name].
+WelcomeLabel2=Chystáte sa nainštalova program [name/ver] na váš poèítaè.%n%nSkôr ako budete pokraèova, odporúèa sa ukonèi všetky ostatné aplikácie.
 
 ; *** "Password" wizard page
 WizardPassword=Heslo
-PasswordLabel1=Táto inštalácia je chránená heslom.
-PasswordLabel3=Prosím, zadajte heslo a klepnite na Ïalší pre pokraèovanie. Pri zadávaní hesla rozlišujte malé a ve¾ké písmená.
-PasswordEditLabel=&Heslo:
-IncorrectPassword=Zadané heslo nie je správne. Prosím, skúste to znovu.
+PasswordLabel1=Inštalácia je chránená heslom.
+PasswordLabel3=Zadajte heslo a pokraèujte v inštalácii kliknutím na tlaèidlo Ïalej. Rozlišujte ve¾ké a malé písmená.
+PasswordEditLabel=Heslo:
+IncorrectPassword=Zadané heslo nie je správne. Skúste to znova.
 
 ; *** "License Agreement" wizard page
-WizardLicense=Licenèná dohoda
-LicenseLabel=Prosím, preèítajte si pozorne tieto dôleité informácie predtım, ne budete pokraèova.
-LicenseLabel3=Prosím, preèítajte si túto Licenènú dohodu. Musíte súhlasi s podmienkami tejto dohody, aby mohol inštalaènı proces pokraèova.
-LicenseAccepted=&Súhlasím s podmienkami Licenènej dohody 
-LicenseNotAccepted=&Nesúhlasím s podmienkami Licenènej dohody
+WizardLicense=Licenèná zmluva
+LicenseLabel=Preèítajte si tieto dôleité informácie, pred zaèatím inštalácie.
+LicenseLabel3=Preèítajte si túto Licenènú zmluvu. Ak chcete pokraèova v inštalácii, musíte súhlasi so zmluvou.
+LicenseAccepted=Súhlasím so zmluvou
+LicenseNotAccepted=Nesúhlasím so zmluvou
 
 ; *** "Information" wizard pages
-WizardInfoBefore=Informácie
-InfoBeforeLabel=Prosím, preèítajte si pozorne tieto dôleité informácie predtım, ne budete pokraèova.
-InfoBeforeClickLabel=Klepnite na Ïalší pre pokraèovanie inštalaèného procesu.
-WizardInfoAfter=Informácie
-InfoAfterLabel=Prosím, preèítajte si pozorne tieto dôleité informácie predtım, ne budete pokraèova.
-InfoAfterClickLabel=Klepnite na Ïalší pre pokraèovanie inštalaèného procesu.
+WizardInfoBefore=Informácia
+InfoBeforeLabel=Preèítajte si tieto dôleité informácie, pred zaèatím inštalácie.
+InfoBeforeClickLabel=Ak chcete pokraèova, kliknite na tlaèidlo Ïalej.
+WizardInfoAfter=Informácia
+InfoAfterLabel=Preèítajte si tieto dôleité informácie, pred zaèatím inštalácie.
+InfoAfterClickLabel=Ak chcete pokraèova, kliknite na tlaèidlo Ïalej.
 
 ; *** "User Information" wizard page
-WizardUserInfo=Informácie o uivate¾ovi
-UserInfoDesc=Prosím, zadajte poadované informácie.
-UserInfoName=&Uívate¾ské meno:
-UserInfoOrg=&Organizácia:
-UserInfoSerial=&Sériové èíslo:
-UserInfoNameRequired=Uívate¾ské meno musí by zadané.
+WizardUserInfo=Informácie o pouívate¾ovi
+UserInfoDesc=Zadajte informácie o pouívate¾ovi.
+UserInfoName=Meno pouívate¾a:
+UserInfoOrg=Organizácia:
+UserInfoSerial=Sériové èíslo:
+UserInfoNameRequired=Musíte zada meno pouívate¾a.
 
-; *** "Select Destination Directory" wizard page
-WizardSelectDir=Zvo¾te cie¾ovú zloku
-SelectDirDesc=Kam má by [name] nainštalovanı?
-SelectDirBrowseLabel=Klepnite na Ïalší pre pokraèovanie. Pokia¾ chcete zvoli inú zloku, klepnite na Prechádza.
-SelectDirLabel3=[name] bude nainštalovanı do následujúcej zloky.
-;SelectDirLabel2=[name] bude nainštalovanı do následujúcej zloky.%n%nKlepnite na Ïalší pre pokraèovanie.
-;SelectDirLabel=Zvo¾te zloku, do ktorej má by [name] nainštalovanı a klepnite na Ïalší.
-DiskSpaceMBLabel=Tento produkt vyaduje najmenej [mb] MB miesta na disku.
-ToUNCPathname=Sprievodca inštaláciou nemôe inštalova do cesty UNC. Ak sa pokúšate inštalova po sieti, musíte poui niektorú z dostupnıch sieovıch jednotiek.
-InvalidPath=Musíte zada úplnú cestu vrátane písmena jednotky; napríklad:%n%nC:\Aplikácia%n%nalebo cestu UNC v tvare:%n%n\\server\zdie¾aná zloka
-InvalidDrive=Vami zvolená jednotka alebo cesta UNC neexistuje alebo nie je dostupná. Prosím, zvo¾te iné umiestnenie.
-DiskSpaceWarningTitle=Nedostatok miesta na disku
-DiskSpaceWarning=Sprievodca inštaláciou vyaduje najmenej %1 KB vo¾ného miesta pre inštaláciu produktu, ale na zvolenej jednotke je dostupnıch len %2 KB.%n%nPrajete si napriek tomu pokraèova?
-InvalidDirName=Toto nie je platnı názov zloky.
-DirNameTooLong=Názov zloky alebo jej cesta je príliš dlhá.
-BadDirName32=Názvy zloiek nemôu obsahova iadny z nasledujúcich znakov:%n%n%1
-DirExistsTitle=Zloka existuje
-DirExists=Zloka:%n%n%1%n%nu existuje. Má sa napriek tomu inštalova do tejto zloky?
-DirDoesntExistTitle=Zloka neexistuje
-DirDoesntExist=Zloka:%n%n%1%n%nneexistuje. Má by táto zloka vytvorená?
+; *** "Select Destination Location" wizard page
+WizardSelectDir=Umiestnenie programu
+SelectDirDesc=Zadajte cestu k umiestneniu, kam chcete nainštalova program [name].
+SelectDirLabel3=Program [name] sa nainštaluje do nasledujúceho prieèinku.
+SelectDirBrowseLabel=Ak chcete pokraèova, kliknite na tlaèidlo Ïalej. Ak chcete vybra inı prieèinok, kliknite na tlaèidlo Preh¾adáva.
+DiskSpaceMBLabel=Poadované miesto na disku: [mb] MB
+ToUNCPathname=Inštalátor nemôe poui zadanú cestu UNC. Ak sa pokúšate nainštalova tento program v sieti, pouite niektorú z dostupnıch sieovıch jednotiek.
+InvalidPath=Zadajte úplnú cestu spolu s písmenom jednotky (písmeno:\cesta) alebo úplnú cestu spolu so znakom \\ na konci bez názvu súboru (\\server\\zdie¾anie).
+InvalidDrive=Zadané zariadenie alebo cesta UNC neexistuje alebo je odpojená. Vyberte iné zariadenie alebo cestu.
+DiskSpaceWarningTitle=Na disku nie je dos miesta.
+DiskSpaceWarning=Na dokonèenie inštalácie je potrebnıch minimálne %1 kB vo¾ného miesta na disku, zvolená jednotka obsahuje len %2 kB vo¾ného miesta.%n%nNaozaj chcete pokraèova?
+DirNameTooLong=Názov prieèinku alebo zadaná cesta je príliš dlhá.
+InvalidDirName=Názov prieèinku je neplatnı.
+BadDirName32=Názov prieèinku nesmie obsahova iaden z nasledujúcich znakov:%n%n%1
+DirExistsTitle=Prieèinok s tımto názvom u existuje.
+DirExists=Prieèinok %n%n%1%n%u existuje. Chcete pokraèova v inštalácii?
+DirDoesntExistTitle=Prieèinok s tımto názvom neexistuje.
+DirDoesntExist=Prieèinok %n%n%1%n%nneexistuje. Chcete ho vytvori??
 
 ; *** "Select Components" wizard page
-WizardSelectComponents=Vyberte súèasti
-SelectComponentsDesc=Aké súèasti majú by nainštalované?
-SelectComponentsLabel2=Zaškrtnite súèasti, ktoré majú by nainštalované; súèasti, ktoré sa nemajú inštalova, ponechajte nezaškrtnuté. Klepnite na Ïalší pre pokraèovanie.
+WizardSelectComponents=Súèasti programu
+SelectComponentsDesc=Vıber súèastí, ktoré sa majú inštalova.
+SelectComponentsLabel2=Zvo¾te si typ inštalácie alebo vyberte súèasti programu, ktoré chcete nainštalova. Ak chcete pokraèova, kliknite na tlaèidlo Ïalej.
 FullInstallation=Úplná inštalácia
-
 ; if possible don't translate 'Compact' as 'Minimal' (I mean 'Minimal' in your language)
 CompactInstallation=Kompaktná inštalácia
-CustomInstallation=Volite¾ná inštalácia
-NoUninstallWarningTitle=Súèasti existujú
-NoUninstallWarning=Sprievodca inštaláciou zistil, e nasledujúce súèasti sú u na Vašom poèítaèi nainštalované:%n%n%1%n%nNezaškrtnutie tıchto súèastí do vıberu spôsobí, e nebudú neskôr odinštalované.%n%nPrajete si napriek tomu pokraèova?
-ComponentSize1=%1 KB
+CustomInstallation=Vlastná inštalácia
+NoUninstallWarningTitle=Táto súèas programu u existuje.
+NoUninstallWarning=Inštalátor zistil, e nasledujúce súèasti programu sú u na vašom poèítaèi nainštalované:%n%n%1%n%nZrušte vıber tıch súèastí, ktoré nechcete odinštalova.%n%nChcete aj napriek tomu pokraèova?
+ComponentSize1=%1 kB
 ComponentSize2=%1 MB
-ComponentsDiskSpaceMBLabel=Vybrané súèasti vyadujú najmenej [mb] MB miesta na disku.
+ComponentsDiskSpaceMBLabel=Poadované miesto na disku: [mb] MB
 
 ; *** "Select Additional Tasks" wizard page
-WizardSelectTasks=Zvo¾te ïalšie úlohy
-SelectTasksDesc=Ktoré ïalšie úlohy majú by vykonané?
-SelectTasksLabel2=Zvo¾te ïalšie úlohy, ktoré majú by vykonané v priebehu inštalácie produktu [name] a pokraèujte klepnutím na Ïalší.
+WizardSelectTasks=Ïalšie úlohy
+SelectTasksDesc=Aké ïalšie úlohy sa majú vykona?
+SelectTasksLabel2=Vyberte ïalšie úlohy, ktoré sa majú spolu s programom [name] nainštalova. Ak chcete pokraèova, kliknite na tlaèidlo Ïalej.
 
 ; *** "Select Start Menu Folder" wizard page
-WizardSelectProgramGroup=Vyberte zloku v ponuke Štart
-SelectStartMenuFolderDesc=Kam majú by sprievodcom inštaláciou umiestnení zástupci aplikácie?
-SelectStartMenuFolderBrowseLabel=Klepnite na Ïalší pre pokraèovanie. Pokia¾ chcete zvoli inú zloku, klepnite na Prechádza.
-SelectStartMenuFolderLabel3=Zástupci aplikácie budú vytvorené v následujúcej zloke ponuky Štart.
-;SelectStartMenuFolderLabel2=Zástupci aplikácie budú vytvorené v následujúcej zloke ponuky Štart.%n%nKlepnite na Ïalší pre pokraèovanie. Pokia¾ chcete zvoli inú zloku, klepnite na Prechádza.
-;SelectStartMenuFolderLabel=Vyberte zloku v ponuke Štart, do ktorej majú by sprievodcom inštaláciou umiestnení zástupci aplikácie a pokraèujte klepnutím na Ïalší.
-NoIconsCheck=&Nevytvára iadne ikony
-MustEnterGroupName=Musíte zada názov zloky.
-InvalidGroupName=Toto nie je platnı názov zloky.
-GroupNameTooLong=Názov zloky alebo jej cesta je príliš dlhá.
-BadGroupName=Názov zloky nemôe obsahova iadny z nasledujúcich znakov:%n%n%1
-NoProgramGroupCheck2=&Nevytvára zloku v ponuke Štart
+WizardSelectProgramGroup=Inštalácia poloky ponuky Štart
+SelectStartMenuFolderDesc=Kam chcete aby inštalátor vytvoril odkazy na vybraté poloky?
+SelectStartMenuFolderLabel3=Inštalátor vytvorí odkazy na vybraté poloky vo zvolenom prieèinku ponuky Štart.
+SelectStartMenuFolderBrowseLabel=Ak chcete pokraèova, kliknite na tlaèidlo Ïalej. Ak chcete vybra inı prieèinok, kliknite na tlaèidlo Preh¾adáva.
+NoIconsCheck=Nevytvára iadne ikony
+MustEnterGroupName=Zadajte názov prieèinku.
+GroupNameTooLong=Názov prieèinku alebo zadaná cesta je príliš dlhá.
+InvalidGroupName=Názov prieèinku je neplatnı.
+BadGroupName=Názov prieèinku nesmie obsahova iaden z nasledujúcich znakov:%n%n%1
+NoProgramGroupCheck2=Nevytvára poloky ponuky Štart
 
 ; *** "Ready to Install" wizard page
-WizardReady=Inštalácia pripravená
-ReadyLabel1=Sprievodca inštaláciou je teraz pripravenı nainštalova [name] na Váš poèítaè.
-ReadyLabel2a=Klepnite na Inštalova pre pokraèovanie inštalaèného procesu alebo klepnite na Spä, pokia¾ si prajete zmeni niektoré nastavenia inštalácie.
-ReadyLabel2b=Klepnite na Inštalova pre pokraèovanie inštalaèného procesu.
-ReadyMemoUserInfo=Informácie o uívate¾ovi:
-ReadyMemoDir=Cie¾ová zloka:
+WizardReady=Pripravenı na inštaláciu
+ReadyLabel1=Inštalátor je teraz pripravenı na inštaláciu programu [name] na tento poèítaè.
+ReadyLabel2a=V inštalácii pokraèujte kliknutím na tlaèidlo Inštalova. Ak chcete skontrolova alebo zmeni ktoréko¾vek nastavenie, kliknite najskôr na tlaèidlo Spä.
+ReadyLabel2b=V inštalácii pokraèujte kliknutím na tlaèidlo Inštalova.
+ReadyMemoUserInfo=User information:
+ReadyMemoDir=Cie¾ové umiestnenie:
 ReadyMemoType=Typ inštalácie:
 ReadyMemoComponents=Vybrané súèasti:
-ReadyMemoGroup=Zloka v ponuke Štart:
+ReadyMemoGroup=Ponuka Štart:
 ReadyMemoTasks=Ïalšie úlohy:
 
 ; *** "Preparing to Install" wizard page
 WizardPreparing=Príprava inštalácie
-PreparingDesc=Sprievodca inštaláciou pripravuje inštaláciu produktu [name] na Váš poèítaè.
-PreviousInstallNotCompleted=Proces inštalácie/odinštalácie predchádzajúceho produktu nebol úplne dokonèenı. Pre dokonèenie tohto procesu je nutné reštartova tento poèítaè.%n%nPo vykonanom reštarte poèítaèa spuste znovu tohto sprievodcu inštaláciou pre dokonèenie inštalácie produktu [name].
-CannotContinue=Sprievodca inštaláciou nemôe pokraèova. Prosím, klepnite na Storno pre ukonèenie sprievodcu inštaláciou.
+PreparingDesc=Inštalátor pripravuje inštaláciu programu [name] na váš poèítaè.
+PreviousInstallNotCompleted=Inštalácia alebo odinštalovanie programu nebolo dokonèené. Je potrebné reštartova poèítaè na dokonèenie tejto operácie.%n%nPo reštartovaní systému je potrebné znovu spusti inštaláciu programu [name] a dokonèi ju.
+CannotContinue=Inštalácia nemôe pokraèova. Kliknutím na tlaèidlo Zruši, ukonèíte inštaláciu.
 
 ; *** "Installing" wizard page
-WizardInstalling=Inštalujem
-InstallingLabel=Èakajte prosím, pokia¾ sprievodca inštaláciou nedokonèí inštaláciu produktu [name] na Váš poèítaè.
+WizardInstalling=Inštalácia
+InstallingLabel=Poèkajte, kım inštalátor nainštaluje súèasti programu [name]. Môe to trva nieko¾ko minút.
 
 ; *** "Setup Completed" wizard page
-FinishedHeadingLabel=Dokonèuje sa inštalácia produktu [name]
-FinishedLabelNoIcons=Sprievodca inštaláciou dokonèil inštaláciu produktu [name] na Váš poèítaè.
-FinishedLabel=Sprievodca inštaláciou dokonèil inštaláciu produktu [name] na Váš poèítaè. Produkt sa dá spusti pomocou nainštalovanıch ikon a zástupcov.
-ClickFinish=Klepnite na Dokonèi pre ukonèenie sprievodcu inštaláciou.
-FinishedRestartLabel=Pre dokonèenie inštalácie produktu [name] je nutné, aby sprievodca inštaláciou reštartoval Váš poèítaè. Prajete si teraz reštartova Váš poèítaè?
-FinishedRestartMessage=Pre dokonèenie inštalácie produktu [name] je nutné, aby sprievodca inštaláciou reštartoval Váš poèítaè.%n%nPrajete si teraz reštartova Váš poèítaè?
-ShowReadmeCheck=Áno, chcem zobrazi dokument "ÈTIMNE"
-YesRadio=&Áno, chcem teraz reštartova poèítaè
-NoRadio=&Nie, poèítaè reštartujem neskôr
-
+FinishedHeadingLabel=Dokonèuje sa inštalácia programu[name]
+FinishedLabelNoIcons=Inštalátor dokonèil inštaláciu programu [name].
+FinishedLabel=Inštalátor dokonèil inštaláciu programu [name]. Program spustíte pomocou vytvorenej ikony.
+ClickFinish=Inštaláciu programu ukonèíte kliknutím na tlaèidlo Dokonèi.
+FinishedRestartLabel=Inštalátor musí reštartova poèítaè, aby mohol dokonèi inštaláciu programu [name]. Chcete reštartova teraz?
+FinishedRestartMessage=Inštalátor musí reštartova poèítaè, aby mohol dokonèi inštaláciu programu [name].%n%nChcete reštartova teraz?
+ShowReadmeCheck=Áno, chcem zobrazi súbor readme.txt.
+YesRadio=Reštartova teraz
+NoRadio=Reštartova neskôr
 ; used for example as 'Run MyProg.exe'
-RunEntryExec=Spusti %1
-
+RunEntryExec=Spusti program %1
 ; used for example as 'View Readme.txt'
-RunEntryShellExec=Zobrazi %1
+RunEntryShellExec=Zobrazi súbor %1
 
 ; *** "Setup Needs the Next Disk" stuff
-ChangeDiskTitle=Sprievodca inštaláciou vyaduje ïalší disk
-;SelectDirectory=Vyberte zloku
-SelectDiskLabel2=Prosím, vlote disk %1 a klepnite na OK.%n%nAk sa súbory na tomto disku nachádzajú v inej zloke, ne v tej, ktorá je zobrazená nišie, tak zadajte správnu cestu alebo klepnite na Prechádza.
-PathLabel=&Cesta:
-FileNotInDir2=Súbor "%1" sa nedá nájs v "%2". Prosím vlote správny disk alebo zvo¾te inú zloku.
-SelectDirectoryLabel=Prosím, špecifikujte umiestnenie ïalšieho disku.
+ChangeDiskTitle=Inštalátor potrebuje ïalšiu disketu (disk).
+SelectDiskLabel2=Vlote disketu (disk) s názvom %1 a kliknite na tlaèidlo OK.%n%n Ak sa súbory nachádzajú na inom disku alebo prieèinku, kliknite na tlaèidlo Preh¾adáva.
+PathLabel=Cesta:
+FileNotInDir2=Súbor s názvom „%1“ v „%2“ neexistuje. Vlote správny disk alebo vyberte inı prieèinok.
+SelectDirectoryLabel=Zadajte umiestnenie ïalšej diskety (disku).
 
 ; *** Installation phase messages
-SetupAborted=Inštalácia nebola úplne dokonèená.%n%nProsím, opravte chybu a spuste sprievodcu inštaláciou znovu.
-EntryAbortRetryIgnore=Klepnite na Opakova pre zopakovanie akcie, na Preskoèi pre vynechanie akcie alebo na Preruši pre stornovanie inštalácie.
+SetupAborted=Inštalácia nebola dokonèená.%n%nAk chcete pokraèova, opravte tento problém.
+EntryAbortRetryIgnore=Ak chcete operáciu zopakova, kliknite na tlaèidlo Znova. Ak chcete aj napriek tomu pokraèova, kliknite na tlaèidlo Ignorova. Ak ju chcete zruši, kliknite na tlaèidlo Zruši.
 
 ; *** Installation status messages
-StatusCreateDirs=Vytvárajú sa zloky...
+StatusCreateDirs=Vytvárajú sa prieèinky...
 StatusExtractFiles=Extrahujú sa súbory...
-StatusCreateIcons=Vytvárajú sa zástupci...
-StatusCreateIniEntries=Vytvárajú sa záznamy v konfiguraènıch súboroch...
-StatusCreateRegistryEntries=Vytvárajú sa záznamy v systémovom registri...
-StatusRegisterFiles=Registrujú sa súbory...
-StatusSavingUninstall=Ukladajú sa informácie nutné pre neskoršiu odinštálaciu produktu...
+StatusCreateIcons=Vytvárajú sa odkazy...
+StatusCreateIniEntries=Vytvárajú sa INI súbory...
+StatusCreateRegistryEntries=Vytvárajú sa k¾úèe databázy Registry...
+StatusRegisterFiles=Registrácia súborov...
+StatusSavingUninstall=Ukladajú sa údaje pre odinštalovanie...
 StatusRunProgram=Dokonèuje sa inštalácia...
-StatusRollback=Prebieha spätné vrátenie všetkıch vykonanıch zmien...
+StatusRollback=Vrátenie vykonanıch zmien...
 
 ; *** Misc. errors
-ErrorInternal2=Interná chyba: %1
+ErrorInternal2=Vnútorná chyba: %1
 ErrorFunctionFailedNoCode=%1 zlyhala
 ErrorFunctionFailed=%1 zlyhala; kód %2
 ErrorFunctionFailedWithMessage=%1 zlyhala; kód %2.%n%3
-ErrorExecutingProgram=Nedá sa spusti súbor:%n%1
+ErrorExecutingProgram=Nepodarilo sa spusti súbor:%n%1
 
 ; *** Registry errors
-ErrorRegOpenKey=Došlo k chybe pri otváraní k¾úèa systémového registra:%n%1\%2
-ErrorRegCreateKey=Došlo k chybe pri vytváraní k¾úèa systémového registra:%n%1\%2
-ErrorRegWriteKey=Došlo k chybe pri zápise do k¾úèa systémového registra:%n%1\%2
+ErrorRegOpenKey=Chyba pri otváraní k¾úèa databázy Registry:%n%1\%2
+ErrorRegCreateKey=Chyba pri vytváraní k¾úèa databázy Registry:%n%1\%2
+ErrorRegWriteKey=Chyba pri zapisovaní k¾úèa do databázy Registry:%n%1\%2
 
 ; *** INI errors
-ErrorIniEntry=Došlo k chybe pri vytváraní záznamu v konfiguraènom súbore "%1".
+ErrorIniEntry=Pri vytváraní poloky INI v súbore „%1“ sa vyskytla chyba.
 
 ; *** File copying errors
-FileAbortRetryIgnore=Klepnite na Opakova pre zopakovanie akcie, na Preskoèi pre preskoèenie tohto súboru (neodporúèa sa) alebo na Preruši pre stornovanie inštalácie.
-FileAbortRetryIgnore2=Klepnite na Opakova pre zopakovanie akcie, na Preskoèi pre pokraèovanie (neodporúèa se) alebo na Preruši pre stornovanie inštalácie.
-SourceIsCorrupted=Zdrojovı súbor je poškodenı
-SourceDoesntExist=Zdrojovı súbor "%1" neexistuje
-ExistingFileReadOnly=Existujúci súbor je urèenı len pre èítanie.%n%nKlepnite na Opakova pre odstránenie atribútu "len pre èítanie" a zopakovanie akcie, na Preskoèi pre preskoèenie tohto súboru alebo na Preruši pre stornovanie inštalácie.
-ErrorReadingExistingDest=Došlo k chybe pri pokuse o èítanie existujúceho súboru:
-FileExists=Súbor u existuje.%n%nMá by sprievodcom inštaláciou prepísanı?
-ExistingFileNewer=Existujúci súbor je novší ne ten, ktorı sa sprievodca inštaláciou pokúša nainštalova. Odporúèa s ponecha existujúci súbor.%n%nPrajete si ponecha existujúci súbor?
-ErrorChangingAttr=Došlo k chybe pri pokuse o modifikáciu atribútov existujúceho súboru:
-ErrorCreatingTemp=Došlo k chybe pri pokuse o vytvorenie súboru v cie¾ovej zloke:
-ErrorReadingSource=Došlo k chybe pri pokuse o èítanie zdrojového súboru:
-ErrorCopying=Došlo k chybe pri pokuse o skopírovanie súboru:
-ErrorReplacingExistingFile=Došlo k chybe pri pokuse o nahradenie existujúceho súboru:
-ErrorRestartReplace=Funkcia sprievodcu inštaláciou "RestartReplace" zlyhala:
-ErrorRenamingTemp=Došlo k chybe pri pokuse o premenovanie súboru v cie¾ovej zloke:
-ErrorRegisterServer=Nedá sa vykona registráciu DLL/OCX: %1
-ErrorRegisterServerMissingExport=Nedá sa nájs export DllRegisterServer
-ErrorRegisterTypeLib=Nedá sa vykona registráciu typovej kninice: %1
+FileAbortRetryIgnore=Ak chcete operáciu zopakova, kliknite na tlaèidlo Znova. Ak chcete aj napriek tomu pokraèova, kliknite na tlaèidlo Ignorova. Ak ju chcete zruši, kliknite na tlaèidlo Zruši.
+FileAbortRetryIgnore2=Ak chcete operáciu zopakova, kliknite na tlaèidlo Znova. Ak chcete aj napriek tomu pokraèova, kliknite na tlaèidlo Ignorova (neodporúèa sa). Ak ju chcete zruši, kliknite na tlaèidlo Zruši.
+SourceIsCorrupted=Zdrojovı súbor je poškodenı.
+SourceDoesntExist=Zdrojovı súbor „%1“ neexistuje.
+ExistingFileReadOnly=Existujúci súbor je urèenı len na èítanie..%n%nAk chcete odstráni atribút „Len na èítanie“, kliknite na tlaèidlo Znova. Ak chcete vynecha tento súbor, kliknite na tlaèidlo Ignorova. Ak chcete inštaláciu zruši, kliknite na tlaèidlo Zruši.
+ErrorReadingExistingDest=Pri èítaní existujúceho sa vyskytla chyba. Názov súboru:
+FileExists=Súbor u existuje.%n%nChcete ho prepísa?
+ExistingFileNewer=Existujúci súbor je novší ne ten, ktorı chcete nainštalova. Odporúèa sa ponecha existujúci súbor.%n%nChcete ponecha existujúci súbor?
+ErrorChangingAttr=Pri pokuse o zmenu atribútov súboru sa vyskytla chyba. Názov súboru:
+ErrorCreatingTemp=Pri pokuse o vytvorenie súboru v cie¾ovom prieèinku sa vyskytla chyba. Cie¾ovı prieèinok:
+ErrorReadingSource=Pri naèítavaní zdrojového súboru sa vyskytla chyba. Zdrojovı súbor:
+ErrorCopying=Pri kopírovaní súboru sa vyskytla chyba. Názov súboru:
+ErrorReplacingExistingFile=Pri pokuse o prepísanie súboru sa vyskytla chyba. Názov súboru:
+ErrorRestartReplace=Funkcia inštalátora „RestartReplace“ zlyhala:
+ErrorRenamingTemp=Pri pokuse o premenovanie súboru v cie¾ovom prieèinku sa vyskytla chyba. Cie¾ovı prieèinok:
+ErrorRegisterServer=Ovládací prvok DLL/OCX (%1) nie je moné zaregistrova.
+ErrorRegisterServerMissingExport=Funkcia exportu DllRegisterServer sa nenašla.
+ErrorRegisterTypeLib=Nepodarilo sa zaregistrova kninicu typov: %1
 
 ; *** Post-installation errors
-ErrorOpeningReadme=Došlo k chybe pri pokuse o otvorenie dokumentu "ÈTIMNE".
-ErrorRestartingComputer=Sprievodcovi inštaláciou sa nepodarilo reštartova Váš poèítaè. Urobte to, prosím, manuálne.
+ErrorOpeningReadme=Pri pokuse o otvorenie súboru „readme.txt“ sa vyskytla chyba.
+ErrorRestartingComputer=Inštalátor nemôe reštartova poèítaè. Je potrebné to urobi ruène.
 
 ; *** Uninstaller messages
-UninstallNotFound=Súbor "%1" neexistuje. Produkt sa nedá odinštalova.
-UninstallOpenError=Súbor "%1" sa nedá otvori. Produkt sa nedá odinštalova.
-UninstallUnsupportedVer=Sprievodcovi odinštaláciou sa nepodarilo rozpozna formát súboru obsahujúceho informácie pre odinštaláciu produktu "%1". Produkt sa nedá odinštalova
-UninstallUnknownEntry=V súbore obsahujúcom informácie pre odinštaláciu produktu bola zistená neznáma poloka (%1)
-ConfirmUninstall=Ste si naozaj istı(á), e chcete odinštalova %1 a všetky jeho súèasti?
-OnlyAdminCanUninstall=K odinštalovaniu tohto produktu musíte by prihlásenı(á) ako administrátor.
-UninstallStatusLabel=Èakajte, prosím, pokia¾ %1 nebude odinštalovanı z Vášho poèítaèa.
-UninstalledAll=%1 bol úspìšne odinštalovanı z Vášho poèítaèa.
-UninstalledMost=%1 bol odinštalovanı z Vášho poèítaèa.%n%nNiektoré jeho súèasti sa však nepodarilo odinštalova. Tieto môu by odobrané manuálne.
-UninstalledAndNeedsRestart=Pre dokonèenie odinštalácie produktu %1 je nutné, aby sprievodca odinštaláciou reštartoval Váš poèítaè.%n%nPrajete si teraz reštartova Váš poèítaè?
-UninstallDataCorrupted=Súbor "%1" je poškodenı. Produkt sa nedá odinštalova
+UninstallNotFound=Súbor „%1“ neexistuje. Program sa nedá odinštalova.
+UninstallOpenError=Súbor „%1“ sa nedá otvori. Program sa nedá odinštalova.
+UninstallUnsupportedVer=Súbor denníka s informáciami o inštalácii programu „%1“ nie je kompatibilnı s aktuálnou verziou nainštalovaného inštalátora. Inštalátor nemôe odinštalova tento program.
+UninstallUnknownEntry=V denníku s informáciami o inštalácii programu sa vyskytla chyba (%1).
+ConfirmUninstall=Naozaj chcete úplne odstráni program %1 a všetky jeho súèasti?
+OnlyAdminCanUninstall=Ak chcete tento program odinštalova musíte by prihlásení ako pouívate¾ Administrátor.
+UninstallStatusLabel=Poèkajte, prosím, kım sa dokonèí odinštalovanie programu %1 z vášho poèítaèa.
+UninstalledAll=Program %1 bol úspešne odstránenı z tohto poèítaèa.
+UninstalledMost=Program %1 bol odstránenı z tohto poèítaèa.%n%nNiektoré súèasti sa nedali odstráni. Je potrebné ich odstráni ruène.
+UninstalledAndNeedsRestart=Inštalátor musí reštartova poèítaè, aby mohol dokonèi odinštalovanie programu [name].%n%nChcete reštartova teraz?
+UninstallDataCorrupted=Súbor „%1“ je poškodenı. Program sa nedá odinštalova.
 
 ; *** Uninstallation phase messages
-ConfirmDeleteSharedFileTitle=Odobra zdie¾anı súbor?
-ConfirmDeleteSharedFile2=Systém indikuje, e nasledujúci zdie¾anı súbor nie je pouívanı iadnymi inımi aplikáciami. Má by tento zdie¾anı súbor sprievodcom odinštaláciou odstránenı?%n%nAk niektoré  aplikáce tento súbor pouívajú, potom po jeho odstranení nemusia tieto aplikácie pracova správne. Ak si nie ste istı(á), zvo¾te Nie. Ponechanie tohto súboru vo Vašom  systéme nespôsobí iadnu škodu.
+ConfirmDeleteSharedFileTitle=Chcete odstráni zdie¾anı súbor?
+ConfirmDeleteSharedFile2=Nasledujúci zdie¾anı súbor sa práve nepouíva iadnym inım programom. Chcete odstráni tento zdie¾anı súbor?%n%nNiektoré momentálne nespustené programy však po jeho odstránení nemusia pracova správne. Ak si nie ste istí, kliknite na tlaèidlo Nie.
 SharedFileNameLabel=Názov súboru:
 SharedFileLocationLabel=Umiestnenie:
-WizardUninstalling=Stav odinštalácie
-StatusUninstalling=Odinštalovávam %1...
+WizardUninstalling=Odinštalovanie
+StatusUninstalling=Odinštalovanie programu %1...
 
+; The custom messages below aren't used by Setup itself, but if you make
+; use of them in your scripts, you'll want to translate them.
 
 [CustomMessages]
 
-NameAndVersion=%1 verzia %2
-AdditionalIcons=Ïalší zástupci:
-CreateDesktopIcon=Vytvori zástupca na &ploche
-CreateQuickLaunchIcon=Vytvori zástupca na panelu &Snadné spustenie
-ProgramOnTheWeb=Aplikácia %1 na internete
-
-UninstallProgram=Odinstalovat aplikaci %1
-LaunchProgram=Spustit aplikaci %1
-AssocFileExtension=Vytvoøit &asociaci mezi soubory typu %2 a aplikací %1
-AssocingFileExtension=Vytváøí se asociace mezi soubory typu %2 a aplikací %1...
+NameAndVersion=%1 version %2
+AdditionalIcons=Ïalšie ikony:
+CreateDesktopIcon=Vytvori ikonu na pracovnej ploche
+CreateQuickLaunchIcon=Vytvori pre rıchle spustenie
+ProgramOnTheWeb=%1 on the Web
+UninstallProgram=Odinštalova program %1
+LaunchProgram=Spusti program %1
+AssocFileExtension=Príponu súboru %2 priradi k programu %1
+AssocingFileExtension=Priraïuje sa prípona súboru %2 k programu %1...
