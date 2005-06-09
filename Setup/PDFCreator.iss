@@ -2073,7 +2073,7 @@ begin
     '/?'#9#9#9#9'- this help screen'#13#10 +
     '/ForceInstall'#9#9#9'- force the installation'#13#10 +
     '/Printername=<PrinterName>'#9'- set a different printername'#13#10 +
-    '/PPDFile=<PPDFile>'#9#9'- use a own ppd file'
+    '/PPDFile=<PPDFile>'#9#9'- use an own ppd file'
     ,mbInformation,MB_OK);
    exit;
   end;
