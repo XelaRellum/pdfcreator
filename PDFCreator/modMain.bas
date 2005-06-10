@@ -71,7 +71,7 @@ On Error GoTo ErrPtnr_OnError
 50570  End If
 50580
 50590  If ProgramIsRunning(PDFCreator_GUID) Then
-50600     MsgBox "A"
+50600
 50610     If Not NoAbortIfRunning Then
 50620     Exit Sub
 50630    End If
