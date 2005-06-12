@@ -11,6 +11,15 @@ Begin VB.Form frmText
    StartUpPosition =   3  'Windows-Standard
    Begin VB.TextBox txt 
       BackColor       =   &H00C0FFFF&
+      BeginProperty Font 
+         Name            =   "Courier New"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Height          =   2295
       Left            =   120
       MultiLine       =   -1  'True

@@ -1257,6 +1257,28 @@ Private Sub CreateModOptions()
    End Select
    ma = True
   End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Then
+   Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
+   If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If CDbl(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "   Else"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "  End If"
+    ma = True
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
+    Print #fn, "  If CDbl(tStr) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "   Else"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "  End If"
+    ma = True
+   End If
+  End If
   If ma = False Then
    MsgBox "Typ not Set"
    Stop
@@ -2165,7 +2187,10 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "RunProgramBeforeSavingProgramParameters"
   .Add "RunProgramBeforeSavingWindowstyle"
   .Add "OptionsDesign"
- End With
+  .Add "Papersize"
+  .Add "DeviceHeightPoints"
+  .Add "DeviceWidthPoints"
+End With
  IsSpecialString = False
  For i = 1 To ss.Count
   If UCase$(ss(i)) = UCase$(specialString) Then
