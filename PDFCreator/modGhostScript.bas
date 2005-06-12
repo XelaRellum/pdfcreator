@@ -285,67 +285,79 @@ On Error GoTo ErrPtnr_OnError
 50290   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
 50300   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
 50310   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50320  End If
-50330  tEnc = False
-50340  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And _
+50320   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50330   If LenB(Trim$(Options.Papersize)) > 0 Then
+50340    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50350    AddParams "-dFIXEDMEDIA"
+50360    AddParams "-dNORANGEPAGESIZE"
+50370   End If
+50380   If Options.DeviceWidthPoints >= 0 Then
+50390    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50400   End If
+50410   If Options.DeviceHeightPoints >= 0 Then
+50420    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50430   End If
+50440 End If
+50450  tEnc = False
+50460  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And _
     SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
-50360    If SetEncryptionParams(encPDF, "", "") = True Then
-50370     tEnc = True
-50380    If Len(encPDF.OwnerPass) > 0 Then
-50390      AddParams "-sOwnerPassword=" & encPDF.OwnerPass & ""
-50400     End If
-50410     If Len(encPDF.UserPass) > 0 Then
-50420      AddParams "-sUserPassword=" & encPDF.UserPass
-50430     End If
-50440     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50450     If GS_COMPATIBILITY = "1.4" Then
-50460       AddParams "-dEncryptionR=3"
-50470      Else
-50480       AddParams "-dEncryptionR=2"
-50490     End If
-50500     If encPDF.EncryptionLevel = encLow Then
-50510       AddParams "-dKeyLength=40"
-50520      Else
-50530       AddParams "-dKeyLength=128"
-50540     End If
-50550    Else
-50560     If Options.UseAutosave = 0 Then
-50570      MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50580     End If
-50590   End If
-50600  End If
-50610  AddParams "-sOutputFile=" & GSOutputFile
-50620
-50630  If Options.DontUseDocumentSettings = 0 Then
-50640   SetColorParams
-50650   SetGreyParams
-50660   SetMonoParams
-50670
-50680   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50690   AddParams "-dUCRandBGInfo=/Preserve"
-50700   AddParams "-dUseFlateCompression=true"
-50710   AddParams "-dParseDSCCommentsForDocInfo=true"
-50720   AddParams "-dParseDSCComments=true"
-50730   AddParams "-dOPM=" & GS_OVERPRINT
-50740   AddParams "-dOffOptimizations=0"
-50750   AddParams "-dLockDistillerParams=false"
-50760   AddParams "-dGrayImageDepth=-1"
-50770   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50780   AddParams "-dDefaultRenderingIntent=/Default"
-50790   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50800   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50810   AddParams "-dDetectBlends=true"
-50820   AddParamCommands
-50830  End If
-50840
-50850  AddParams "-f"
-50860  AddParams GSInputFile
-50870  ShowParams
-50880  If tEnc = True Then
-50890    CallGhostscript "PDF with encryption"
-50900   Else
-50910    CallGhostscript "PDF without encryption"
-50920  End If
+50480    If SetEncryptionParams(encPDF, "", "") = True Then
+50490     tEnc = True
+50500    If Len(encPDF.OwnerPass) > 0 Then
+50510      AddParams "-sOwnerPassword=" & encPDF.OwnerPass & ""
+50520     End If
+50530     If Len(encPDF.UserPass) > 0 Then
+50540      AddParams "-sUserPassword=" & encPDF.UserPass
+50550     End If
+50560     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
+50570     If GS_COMPATIBILITY = "1.4" Then
+50580       AddParams "-dEncryptionR=3"
+50590      Else
+50600       AddParams "-dEncryptionR=2"
+50610     End If
+50620     If encPDF.EncryptionLevel = encLow Then
+50630       AddParams "-dKeyLength=40"
+50640      Else
+50650       AddParams "-dKeyLength=128"
+50660     End If
+50670    Else
+50680     If Options.UseAutosave = 0 Then
+50690      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50700     End If
+50710   End If
+50720  End If
+50730  AddParams "-sOutputFile=" & GSOutputFile
+50740
+50750  If Options.DontUseDocumentSettings = 0 Then
+50760   SetColorParams
+50770   SetGreyParams
+50780   SetMonoParams
+50790
+50800   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50810   AddParams "-dUCRandBGInfo=/Preserve"
+50820   AddParams "-dUseFlateCompression=true"
+50830   AddParams "-dParseDSCCommentsForDocInfo=true"
+50840   AddParams "-dParseDSCComments=true"
+50850   AddParams "-dOPM=" & GS_OVERPRINT
+50860   AddParams "-dOffOptimizations=0"
+50870   AddParams "-dLockDistillerParams=false"
+50880   AddParams "-dGrayImageDepth=-1"
+50890   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50900   AddParams "-dDefaultRenderingIntent=/Default"
+50910   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50920   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50930   AddParams "-dDetectBlends=true"
+50940   AddParamCommands
+50950  End If
+50960
+50970  AddParams "-f"
+50980  AddParams GSInputFile
+50990  ShowParams
+51000  If tEnc = True Then
+51010    CallGhostscript "PDF with encryption"
+51020   Else
+51030    CallGhostscript "PDF without encryption"
+51040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -396,14 +408,25 @@ On Error GoTo ErrPtnr_OnError
 50320  AddParams "-sDEVICE=" & GS_PNGColorscount
 50330
 50340  If Options.DontUseDocumentSettings = 0 Then
-50350   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50360   AddParams "-sOutputFile=" & GSOutputFile
-50370  End If
-50380
-50390  AddParams "-f"
-50400  AddParams GSInputFile
-50410  ShowParams
-50420  CallGhostscript "PNG"
+50350   If LenB(Trim$(Options.Papersize)) > 0 Then
+50360    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50370    AddParams "-dFIXEDMEDIA"
+50380    AddParams "-dNORANGEPAGESIZE"
+50390   End If
+50400   If Options.DeviceWidthPoints >= 0 Then
+50410    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50420   End If
+50430   If Options.DeviceHeightPoints >= 0 Then
+50440    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50450   End If
+50460   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50470   AddParams "-sOutputFile=" & GSOutputFile
+50480  End If
+50490
+50500  AddParams "-f"
+50510  AddParams GSInputFile
+50520  ShowParams
+50530  CallGhostscript "PNG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -454,14 +477,25 @@ On Error GoTo ErrPtnr_OnError
 50320  AddParams "-sDEVICE=" & GS_JPEGColorscount
 50330  If Options.DontUseDocumentSettings = 0 Then
 50340   AddParams "-dJPEGQ=" & GS_JPEGQuality
-50350   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50360   AddParams "-sOutputFile=" & GSOutputFile
-50370  End If
-50380
-50390  AddParams "-f"
-50400  AddParams GSInputFile
-50410  ShowParams
-50420  CallGhostscript "JPEG"
+50350   If LenB(Trim$(Options.Papersize)) > 0 Then
+50360    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50370    AddParams "-dFIXEDMEDIA"
+50380    AddParams "-dNORANGEPAGESIZE"
+50390   End If
+50400   If Options.DeviceWidthPoints >= 0 Then
+50410    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50420   End If
+50430   If Options.DeviceHeightPoints >= 0 Then
+50440    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50450   End If
+50460   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50470   AddParams "-sOutputFile=" & GSOutputFile
+50480  End If
+50490
+50500  AddParams "-f"
+50510  AddParams GSInputFile
+50520  ShowParams
+50530  CallGhostscript "JPEG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -511,14 +545,25 @@ On Error GoTo ErrPtnr_OnError
 50310
 50320  AddParams "-sDEVICE=" & GS_BMPColorscount
 50330  If Options.DontUseDocumentSettings = 0 Then
-50340   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50350  End If
-50360  AddParams "-sOutputFile=" & GSOutputFile
-50370
-50380  AddParams "-f"
-50390  AddParams GSInputFile
-50400  ShowParams
-50410  CallGhostscript "BMP"
+50340   If LenB(Trim$(Options.Papersize)) > 0 Then
+50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50360    AddParams "-dFIXEDMEDIA"
+50370    AddParams "-dNORANGEPAGESIZE"
+50380   End If
+50390   If Options.DeviceWidthPoints >= 0 Then
+50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50410   End If
+50420   If Options.DeviceHeightPoints >= 0 Then
+50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50440   End If
+50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddParams "-f"
+50500  AddParams GSInputFile
+50510  ShowParams
+50520  CallGhostscript "BMP"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -568,14 +613,25 @@ On Error GoTo ErrPtnr_OnError
 50310
 50320  AddParams "-sDEVICE=" & GS_PCXColorscount
 50330  If Options.DontUseDocumentSettings = 0 Then
-50340   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50350  End If
-50360  AddParams "-sOutputFile=" & GSOutputFile
-50370
-50380  AddParams "-f"
-50390  AddParams GSInputFile
-50400  ShowParams
-50410  CallGhostscript "PCX"
+50340   If LenB(Trim$(Options.Papersize)) > 0 Then
+50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50360    AddParams "-dFIXEDMEDIA"
+50370    AddParams "-dNORANGEPAGESIZE"
+50380   End If
+50390   If Options.DeviceWidthPoints >= 0 Then
+50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50410   End If
+50420   If Options.DeviceHeightPoints >= 0 Then
+50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50440   End If
+50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddParams "-f"
+50500  AddParams GSInputFile
+50510  ShowParams
+50520  CallGhostscript "PCX"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -625,14 +681,25 @@ On Error GoTo ErrPtnr_OnError
 50310
 50320  AddParams "-sDEVICE=" & GS_TIFFColorscount
 50330  If Options.DontUseDocumentSettings = 0 Then
-50340   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50350  End If
-50360  AddParams "-sOutputFile=" & GSOutputFile
-50370
-50380  AddParams "-f"
-50390  AddParams GSInputFile
-50400  ShowParams
-50410  CallGhostscript "TIFF"
+50340   If LenB(Trim$(Options.Papersize)) > 0 Then
+50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50360    AddParams "-dFIXEDMEDIA"
+50370    AddParams "-dNORANGEPAGESIZE"
+50380   End If
+50390   If Options.DeviceWidthPoints >= 0 Then
+50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50410   End If
+50420   If Options.DeviceHeightPoints >= 0 Then
+50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50440   End If
+50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddParams "-f"
+50500  AddParams GSInputFile
+50510  ShowParams
+50520  CallGhostscript "TIFF"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -677,14 +744,25 @@ On Error GoTo ErrPtnr_OnError
 50260
 50270  AddParams "-sDEVICE=pswrite"
 50280  If Options.DontUseDocumentSettings = 0 Then
-50290   AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
-50300  End If
-50310  AddParams "-sOutputFile=" & GSOutputFile
-50320
-50330  AddParams "-f"
-50340  AddParams GSInputFile
-50350  ShowParams
-50360  CallGhostscript "PS"
+50290   If LenB(Trim$(Options.Papersize)) > 0 Then
+50300    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310    AddParams "-dFIXEDMEDIA"
+50320    AddParams "-dNORANGEPAGESIZE"
+50330   End If
+50340   If Options.DeviceWidthPoints >= 0 Then
+50350    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50360   End If
+50370   If Options.DeviceHeightPoints >= 0 Then
+50380    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50390   End If
+50400   AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
+50410  End If
+50420  AddParams "-sOutputFile=" & GSOutputFile
+50430
+50440  AddParams "-f"
+50450  AddParams GSInputFile
+50460  ShowParams
+50470  CallGhostscript "PS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -734,14 +812,25 @@ On Error GoTo ErrPtnr_OnError
 50310
 50320  AddParams "-sDEVICE=epswrite"
 50330  If Options.DontUseDocumentSettings = 0 Then
-50340   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
-50350  End If
-50360  AddParams "-sOutputFile=" & GSOutputFile
-50370
-50380  AddParams "-f"
-50390  AddParams GSInputFile
-50400  ShowParams
-50410  CallGhostscript "EPS"
+50340   If LenB(Trim$(Options.Papersize)) > 0 Then
+50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50360    AddParams "-dFIXEDMEDIA"
+50370    AddParams "-dNORANGEPAGESIZE"
+50380   End If
+50390   If Options.DeviceWidthPoints >= 0 Then
+50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50410   End If
+50420   If Options.DeviceHeightPoints >= 0 Then
+50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50440   End If
+50450   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddParams "-f"
+50500  AddParams GSInputFile
+50510  ShowParams
+50520  CallGhostscript "EPS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1553,7 +1642,7 @@ Public Sub CheckForStamping(Filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim StampPage As String, tstr As String, R As String, G As String, b As String, _
+50010  Dim StampPage As String, tstr As String, R As String, G As String, B As String, _
   Stampfile As String, Path As String, ff As Long, Files As Collection, _
   StampString As String, StampFontsize As Double, _
   StampOutlineFontthickness As Double
@@ -1587,8 +1676,8 @@ On Error GoTo ErrPtnr_OnError
 50320     If IsNumeric(tstr) = True Then
 50330       R = Replace$(Format(CDbl((CLng(tstr) And CLng("&HFF0000")) / 65536) / 255#, "0.00"), ",", ".", , 1)
 50340       G = Replace$(Format(CDbl((CLng(tstr) And CLng("&H00FF00")) / 256) / 255#, "0.00"), ",", ".", , 1)
-50350       b = Replace$(Format(CDbl(CLng(tstr) And CLng("&H0000FF")) / 255#, "0.00"), ",", ".", , 1)
-50360       StampPage = Replace(StampPage, "[FONTCOLOR]", R & " " & G & " " & b, , , vbTextCompare)
+50350       B = Replace$(Format(CDbl(CLng(tstr) And CLng("&H0000FF")) / 255#, "0.00"), ",", ".", , 1)
+50360       StampPage = Replace(StampPage, "[FONTCOLOR]", R & " " & G & " " & B, , , vbTextCompare)
 50370      Else
 50380       StampPage = Replace(StampPage, "[FONTCOLOR]", "1 0 0", , , vbTextCompare)
 50390     End If

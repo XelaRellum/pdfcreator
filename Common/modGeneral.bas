@@ -12,6 +12,21 @@ Public Enum eSortModeFiles
  SortedByName = 2
 End Enum
 
+Public Type InfoSpoolFile
+ REDMON_PORT As String
+ REDMON_JOB As String
+ REDMON_PRINTER As String
+ REDMON_MACHINE As String
+ REDMON_USER As String
+ REDMON_DOCNAME As String
+ REDMON_FILENAME As String
+ REDMON_SESSIONID As String
+ Spoolfilename As String
+ LoggedOnUser As String
+ Computer As String
+ Created As String
+End Type
+
 Public Function ANSItoASCII(ByVal AnsiString As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1715,28 +1730,28 @@ Public Sub WriteInfoSpoolfile(Spoolfilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim pbg As PropertyBag, fn As Long, Path As String, File As String, _
+50010  Dim isf As InfoSpoolFile, fn As Long, Path As String, File As String, _
   infFile As String
-50030  Set pbg = New PropertyBag
-50040  With pbg
-50050   .WriteProperty "REDMON_PORT", Environ$("REDMON_PORT")
-50060   .WriteProperty "REDMON_JOB", Environ$("REDMON_JOB")
-50070   .WriteProperty "REDMON_PRINTER", Environ$("REDMON_PRINTER")
-50080   .WriteProperty "REDMON_MACHINE", Environ$("REDMON_MACHINE")
-50090   .WriteProperty "REDMON_USER", Environ$("REDMON_USER")
-50100   .WriteProperty "REDMON_DOCNAME", Environ$("REDMON_DOCNAME")
-50110   .WriteProperty "REDMON_FILENAME", Environ$("REDMON_FILENAME")
-50120   .WriteProperty "REDMON_SESSIONID", Environ$("REDMON_SESSIONID")
-50130   .WriteProperty "SpoolFilename", Spoolfilename
-50140   .WriteProperty "LoggedOnUser", GetUsername
-50150   .WriteProperty "Computer", GetComputerName
-50160   .WriteProperty "Created", Now
+50030
+50040  With isf
+50050   .REDMON_PORT = Environ$("REDMON_PORT")
+50060   .REDMON_JOB = Environ$("REDMON_JOB")
+50070   .REDMON_PRINTER = Environ$("REDMON_PRINTER")
+50080   .REDMON_MACHINE = Environ$("REDMON_MACHINE")
+50090   .REDMON_USER = Environ$("REDMON_USER")
+50100   .REDMON_DOCNAME = Environ$("REDMON_DOCNAME")
+50110   .REDMON_FILENAME = Environ$("REDMON_FILENAME")
+50120   .REDMON_SESSIONID = Environ$("REDMON_SESSIONID")
+50130   .Spoolfilename = Spoolfilename
+50140   .LoggedOnUser = GetUsername
+50150   .Computer = GetComputerName
+50160   .Created = Now
 50170  End With
 50180  fn = FreeFile
 50190  SplitPath Spoolfilename, , Path, , File
 50200  infFile = CompletePath(Path) & File & ".inf"
 50210  Open infFile For Binary As #fn
-50220  Put #fn, , pbg.Contents
+50220  Put #fn, , isf
 50230  Close #fn
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1749,50 +1764,18 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-Public Function InitPropertyBag(Optional Spoolfilename As String = "") As PropertyBag
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Set InitPropertyBag = New PropertyBag
-50020  With InitPropertyBag
-50030   .WriteProperty "REDMON_PORT", Environ$("REDMON_PORT")
-50040   .WriteProperty "REDMON_JOB", Environ$("REDMON_JOB")
-50050   .WriteProperty "REDMON_PRINTER", Environ$("REDMON_PRINTER")
-50060   .WriteProperty "REDMON_MACHINE", Environ$("REDMON_MACHINE")
-50070   .WriteProperty "REDMON_USER", Environ$("REDMON_USER")
-50080   .WriteProperty "REDMON_DOCNAME", Environ$("REDMON_DOCNAME")
-50090   .WriteProperty "REDMON_FILENAME", Environ$("REDMON_FILENAME")
-50100   .WriteProperty "REDMON_SESSIONID", Environ$("REDMON_SESSIONID")
-50110   .WriteProperty "SpoolFilename", Spoolfilename
-50120   .WriteProperty "LoggedOnUser", GetUsername
-50130   .WriteProperty "Computer", GetComputerName
-50140   .WriteProperty "Created", Now
-50150  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "InitPropertyBag")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
 
-Public Function ReadInfoSpoolfile(Spoolfilename As String) As PropertyBag
+Public Function ReadInfoSpoolfile(Spoolfilename As String) As InfoSpoolFile
  On Error Resume Next
  Dim tVar As Variant, fn As Long, infFile As String, _
   Path As String, File As String
- Set ReadInfoSpoolfile = InitPropertyBag(Spoolfilename)
  SplitPath Spoolfilename, , Path, , File
  infFile = CompletePath(Path) & File & ".inf"
  If FileExists(infFile) And Not FileInUse(infFile) Then
   fn = FreeFile
   Open infFile For Binary As #fn
-  Get #fn, , tVar
+  Get #fn, , ReadInfoSpoolfile
   Close #fn
-  ReadInfoSpoolfile.Contents = tVar
  End If
 End Function
 
