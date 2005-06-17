@@ -22,17 +22,23 @@
         purposes. These features can be found in the PDFCreator.ini file.</p>
       <p><strong>AdditionalGhostscriptSearchpath:</strong> This setting is for 
         the user to add additional paths where Ghostscript should looking for 
-        ressources. For example, you can add paths to more fonts.</p>
+        resources. For example, you can add paths to more fonts.</p>
       <p><strong>AddWindowsFontpath:</strong> This setting allows the user to 
         all the Windows font path to the Ghostscript font paths. This setting 
         is on by default.<br>
         <em>Properties:</em><br>
         0 - off<br>
         1 - on (Default)</p>
+      <p><strong>DeviceWidthPoints, DeviceHeightPoints:</strong> These two settings 
+        set the desired width and height of the paper in points (units of 1/72 
+        of an inch). This is used as an alternative to the Papersize setting, 
+        not in combination with.<br>
+        <em>Properties:</em> <br>
+        By default, -1 means that PDFCreator doesn't use this setting.</p>
       <p><strong>NoProcessingAtStartup:</strong> When you use this setting, PDFCreator 
         will start without processing any documents. You can manually start processing 
-        by going to the <em><strong>Document</em></strong> menu and selecting <em><strong>Print</em></strong> 
-        or by unchecking the <em><strong>Printer Stop</em></strong> option in the <em><strong>Printer</em></strong> 
+        by going to the <em><strong>Document</strong></em> menu and selecting <em><strong>Print</strong></em> 
+        or by unchecking the <em><strong>Printer Stop</strong></em> option in the <em><strong>Printer</strong></em> 
         menu. The setting is useful if you want collect some files first, then 
         combine the files into one and create a pdf.<br>
         <em>Properties:</em><br>
@@ -44,11 +50,22 @@
         <em>Properties: </em><br>
         0 - Off (Default)<br>
         1 - On</p>
+      <p><strong>OptionsDesign:</strong> With this setting you can change the 
+        colors of the frames in the options dialog. This can be helpful for people 
+        with sensitive eyes or people with poor eyesight.<br>
+        <em>Properties:</em> <br>
+        1 - Red and blue gradient (Default)<br>
+        2 - Simple red and blue color</p>
+      <p><strong>Papersize:</strong> Use this setting to can set the default paper 
+        size.<br>
+        <em>Properties:</em> <br>
+        This setting is empty by default. To use this setting, use paper 
+        size known to Ghostscript. </p>
       <p><strong>PDFOptimize:</strong> When this setting is used, PDFCreator will 
         optimize its PDF's for fast web viewing. Instead of the entire PDF document 
         being downloaded before being displayed, it will display it as it is downloaded. 
-        Encryption cannont be used when this setting is enabled. If you do use 
-        encryption, the PDF is not optimized..<br>
+        Encryption cannot be used when this setting is enabled. If you do use 
+        encryption, the PDF is not optimized.<br>
         <em>Properties:</em><br>
         0 - Off (Default)<br>
         1 - On </p>
@@ -106,7 +123,8 @@
       <p><strong>RunProgramBeforeSaving:</strong> This setting allows the user 
         to launch a separate program before a document is saved using PDFCreator. 
         This is used in conjunction with the RunProgramBeforeSavingProgramname 
-        setting. PDFCreator waits until the program is ready.<br>
+        setting. PDFCreator waits until the program 
+is ready.<br>
         <em>Properties:</em><br>
         0 - Off (Default)<br>
         1 - On</p>
