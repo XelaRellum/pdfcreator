@@ -28,6 +28,12 @@
         <em>Eigenschaften:</em><br>
         0 - aus<br>
         1 - an (Standard)</p>
+      <p><strong>DeviceWidthPoints, DeviceHeightPoints:</strong> Diese beiden Einstellungen 
+        legen eine fest vorgegebene Breite und Höhe für das zu verwendene Papierformat fest.
+        Die Einheit ist 1/72 eines Zolls und kann als Alternative für die Einstellung <strong>Papersize</strong>
+        verwendet werden, aber nicht in Kombination damit.<br>
+        <em>Eigenschaften:</em> <br>
+        Der Standardwert ist -1 und bedeuted, dass PDFCreator diese Einstellung ignoriert.</p>
       <p><strong>NoProcessingAtStartup:</strong> Wird diese Einstellung aktiviert, beginnt PDFCreator nach
         dem Start nicht mit der Verarbeitung. Die Verarbeitung kann manuell gestartet werden, wenn &uuml;ber
         das Men&uuml; <em><strong>Dokument</em></strong> der Men&uuml;punkt <em><strong>Drucken</em></strong>
@@ -45,6 +51,13 @@
         <em>Eigenschaften: </em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
+      <strong>Papersize:</strong> Diese Einstellung kann verwendet werden, um eine Standardpapiergröße
+        vorzugeben.<br>
+        <em>Eigenschaften: </em><br>
+        Standardmäßig ist dieser Wert leer. Ansonsten können die in der Ghostscript Dokumentation
+        angegebenen Papergrößen verwendet werden.
+        (<a href="http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes">http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes)</a>
+        </p>
       <p><strong>PDFOptimize:</strong> Die Einstellung optimiert die erstellte
         PDF-Datei f&uuml;r die Darstellung im Web. Dadurch kann die erste Seite bereits
         angezeigt werden, bevor das gesamte Dokument geladen ist.<br>
