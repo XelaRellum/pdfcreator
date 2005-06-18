@@ -34,13 +34,14 @@
         of an inch). This is used as an alternative to the Papersize setting, 
         not in combination with.<br>
         <em>Properties:</em> <br>
-        By default, -1 means that PDFCreator doesn't use this setting.</p>
+        By default, -1 means that PDFCreator doesn't use this setting. </p>
       <p><strong>NoProcessingAtStartup:</strong> When you use this setting, PDFCreator 
         will start without processing any documents. You can manually start processing 
-        by going to the <em><strong>Document</strong></em> menu and selecting <em><strong>Print</strong></em> 
-        or by unchecking the <em><strong>Printer Stop</strong></em> option in the <em><strong>Printer</strong></em> 
-        menu. The setting is useful if you want collect some files first, then 
-        combine the files into one and create a pdf.<br>
+        by going to the <em><strong>Document</strong></em> menu and selecting 
+        <em><strong>Print</strong></em> or by unchecking the <em><strong>Printer 
+        Stop</strong></em> option in the <em><strong>Printer</strong></em> menu. 
+        The setting is useful if you want collect some files first, then combine 
+        the files into one and create a pdf.<br>
         <em>Properties:</em><br>
         0 - Off (Default)<br>
         1 - On</p>
@@ -60,7 +61,16 @@
         size.<br>
         <em>Properties:</em> <br>
         This setting is empty by default. To use this setting, use paper 
-        size known to Ghostscript. </p>
+        size known to Ghostscript.
+      <blockquote>
+        <p>The following are some of the available paper sizes that can be used 
+          in the Papersize setting:<br>
+          11x17, ledger, legal, letter, lettersmall, archE, archD, archC, archB, 
+          archAa0, a1, a2, a3, a4, a4small, a5, a6, a7, a8, a9, a10, isob0, isob1, 
+          isob2, isob3, isob4, isob5, isob6, c0, c1, c2, c3, c4, c5, c6</p>
+      </blockquote>
+        (<a href="http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes">http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes)</a>
+      </p>
       <p><strong>PDFOptimize:</strong> When this setting is used, PDFCreator will 
         optimize its PDF's for fast web viewing. Instead of the entire PDF document 
         being downloaded before being displayed, it will display it as it is downloaded. 
@@ -123,8 +133,7 @@
       <p><strong>RunProgramBeforeSaving:</strong> This setting allows the user 
         to launch a separate program before a document is saved using PDFCreator. 
         This is used in conjunction with the RunProgramBeforeSavingProgramname 
-        setting. PDFCreator waits until the program 
-is ready.<br>
+        setting. PDFCreator waits until the program is ready.<br>
         <em>Properties:</em><br>
         0 - Off (Default)<br>
         1 - On</p>
@@ -135,11 +144,12 @@ is ready.<br>
       <p><strong>RunProgramBeforeSavingProgramParameters:</strong> This setting 
         is used in conjunction with the RunProgramBeforeSaving setting. This allows 
         the user to specify any parameters for the new program that is being launched 
-        with the RunProgramBeforeSaving and RunProgramBeforeSavingProgramname settings.</p>
+        with the RunProgramBeforeSaving and RunProgramBeforeSavingProgramname 
+        settings.</p>
       <p><strong>RunProgramBeforeSavingWindowstyle:</strong> This setting is used 
-        in conjunction with the RunProgramBeforeSaving setting. It allows the user 
-        to specify the window style of the new program that is launched before a 
-        document is created using PDFCreator.<br>
+        in conjunction with the RunProgramBeforeSaving setting. It allows the 
+        user to specify the window style of the new program that is launched before 
+        a document is created using PDFCreator.<br>
         <em>Properties:</em><br>
         0 - Hide<br>
         1 - NormalFocus<br>
@@ -200,8 +210,7 @@ is ready.<br>
       <p><strong>StandardSubject:</strong> This setting enables the user to place 
         a standard subject on all documents created by PDFCreator.</p>
       <p><strong>StandardTitle:</strong> This setting enables the user to place 
-        a standard title on all documents created by PDFCreator.</p>
-   </td>
+        a standard title on all documents created by PDFCreator.</p></td>
   </tr>
 </table>
 </body>
