@@ -25,7 +25,7 @@ On Error GoTo ErrPtnr_OnError
 50020    CheckMutex = App.PrevInstance
 50030   Else
 50040    hMutex = CreateMutexA(ByVal 0&, 1, Mutexname)
-50050    If (Err.LastDllError = ERROR_ALREADY_EXISTS) Then
+50050    If (Err.LastDllError = ERROR_ALREADY_EXISTS) Or (Err.LastDllError = ERROR_ACCESS_DENIED) Then
 50060      CheckMutex = True
 50070     Else
 50080      CheckMutex = False

@@ -21,10 +21,20 @@
     <td class="main"><p class="header">Command Line Parameters</p>
       <p>PDFCreator enables you to create documents via the command line interface. 
         Here are the different commands that PDFCreator supports:</p>
+      <p> <strong>/CheckInstance </strong><br>
+        If you use this switch PDFCreaor shows a message box with the information about
+        running instances of PDFCreator, PDFSpooler and Transtool. You can combine this
+        parameter with the switch /NoStart. If you see the property "Local" there exists
+        a local instance. Please check the desktop, Systray or the Task Manager to find
+        the local instance. If you see only the property "Global" than there exists at
+        least one instance in one of your terminal server sessions. This switch is usefull
+        for debugging and for administrators to check if there is a running instance of
+        PDFCreator on a terminal server.<br>
+        <em>Example:</em> PDFCreator.exe /CheckInstance </p>
       <p><strong>/ClearCache</strong><br>
         Clears all PDFCreator temporary files. This is useful if PDFCreator will 
         not start because of a corrupt temp file.<br>
-        <em>Example:</em> pdfcreator.exe /CLEARCACHE</p>
+        <em>Example:</em> pdfcreator.exe /ClearCache</p>
       <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br>
         </strong>Convert a postscript file to a PDF or bitmap. The /OF parameter 
         must be used in conjunction with the /IF parameter. To set the output 
@@ -46,7 +56,7 @@
         <em>Example:</em> pdfcreator.exe /NoProcessing</p>
       <p><strong>/NoStart</strong><br>
         When you use the /PF parameter, PDFCreator stays open after it's done 
-        its task. The /NOSTART parameter automatically closes PDFCreator after 
+        its task. The /NoStart parameter automatically closes PDFCreator after 
         it is done.<br>
         <em>Example:</em> pdfcreator.exe /NOSTART /PF&quot;C:\help.doc&quot;</p>
       <p><strong>/OptionsFile&lt;option-filename&gt;</strong><br>
@@ -68,7 +78,7 @@
       <p><strong>/ShowOnlyOptions</strong><br>
         Opens PDFCreator in the Options Panel. No other windows are opened.<br>
         <em>Example:</em> pdfcreator.exe /ShowOnlyOptions</p>
-      </td>
+    </td>
   </tr>
 </table>
 </body>

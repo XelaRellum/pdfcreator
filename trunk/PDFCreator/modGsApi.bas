@@ -120,13 +120,13 @@ On Error GoTo ErrPtnr_OnError
 50090       ' Then we copy the buffer to the byte array
 50100       MoveMemoryLong ptrByte, strz, intBytes
 50110       ' Then we copy the byte array to a string, character by character
-50120       Dim tStr As String
+50120       Dim tstr As String
 50130       Dim i As Long
 50140       For i = 0 To intBytes - 1
-50150           tStr = tStr + Chr(aByte(i))
+50150           tstr = tstr + Chr(aByte(i))
 50160       Next
 50170       ' Finally we output the message
-50180       ReturnValue tStr
+50180       ReturnValue tstr
 50190       gsdll_stdout = intBytes
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function

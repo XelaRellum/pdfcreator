@@ -10,13 +10,13 @@ Begin VB.Form frmEdit
    ScaleWidth      =   6330
    StartUpPosition =   2  'Bildschirmmitte
    Begin VB.CommandButton cmd 
+      Caption         =   "&Cancel"
       Height          =   435
       Index           =   1
       Left            =   3990
       TabIndex        =   2
       Top             =   1155
       Width           =   1065
-      Caption         =   "&Cancel"
    End
    Begin TransTool.dmFrame dmFra 
       Height          =   975
@@ -28,7 +28,7 @@ Begin VB.Form frmEdit
       _ExtentX        =   5318
       _ExtentY        =   1720
       BarColorFrom    =   255
-      BarColorTo      =   64
+      BarColorTo      =   128
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -58,6 +58,7 @@ Begin VB.Form frmEdit
       Width           =   3060
       _ExtentX        =   5398
       _ExtentY        =   1693
+      BarColorTo      =   16711680
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -81,13 +82,13 @@ Begin VB.Form frmEdit
       End
    End
    Begin VB.CommandButton cmd 
+      Caption         =   "&Save"
       Height          =   435
       Index           =   0
       Left            =   5145
       TabIndex        =   1
       Top             =   1155
       Width           =   1065
-      Caption         =   "&Save"
    End
 End
 Attribute VB_Name = "frmEdit"

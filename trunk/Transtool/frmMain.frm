@@ -19,19 +19,11 @@ Begin VB.Form frmMain
       Top             =   735
       Visible         =   0   'False
       Width           =   540
-      _ExtentX        =   953
-      _ExtentY        =   503
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BrushStyle      =   0
-      Color           =   65280
+      _extentx        =   953
+      _extenty        =   503
+      font            =   "frmMain.frx":548A
+      brushstyle      =   0
+      color           =   65280
    End
    Begin VB.PictureBox picAbout 
       Appearance      =   0  '2D
@@ -89,23 +81,23 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   5
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":548A
+            Picture         =   "frmMain.frx":54B6
             Key             =   "open"
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5824
+            Picture         =   "frmMain.frx":5850
             Key             =   "save"
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5BBE
+            Picture         =   "frmMain.frx":5BEA
             Key             =   "search"
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5F58
+            Picture         =   "frmMain.frx":5F84
             Key             =   "empty"
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":62F2
+            Picture         =   "frmMain.frx":631E
             Key             =   "unmark"
          EndProperty
       EndProperty
@@ -137,11 +129,11 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   2
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":668C
+            Picture         =   "frmMain.frx":66B8
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6ADE
+            Picture         =   "frmMain.frx":6B0A
             Key             =   ""
          EndProperty
       EndProperty
@@ -232,7 +224,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   0
-      Picture         =   "frmMain.frx":6F30
+      Picture         =   "frmMain.frx":6F5C
       Top             =   840
       Width           =   930
    End
@@ -372,8 +364,7 @@ Option Explicit
 
 Private Const mnFileRecentFilesStart = 6
 
-Private TSWidth As Long, mutex As clsMutex, SaveFilename As String, _
- OldString As String, ChangedListitem As Boolean
+Private TSWidth As Long, SaveFilename As String, OldString As String, ChangedListitem As Boolean
 
 Public LastAboutTop As Long, LastAboutLeft As Long
 
@@ -486,12 +477,13 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Set mutex = New clsMutex
-50020  InitForm
-50030  ShowPaypalMenuimage
-50040  RecentfileslistLocation = ApplicationDatapath
-50050  ShowRecentFiles
-50060  Timer2.Enabled = True
+50010  Set mutexLocal = New clsMutex
+50020  Set mutexGlobal = New clsMutex
+50030  InitForm
+50040  ShowPaypalMenuimage
+50050  RecentfileslistLocation = ApplicationDatapath
+50060  ShowRecentFiles
+50070  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -543,8 +535,10 @@ On Error GoTo ErrPtnr_OnError
 50130  RemovePanelControl cmbCharset
 50140  RemovePanelControl cmbFonts
 50150  RemovePanelControl xpPgb
-50160  mutex.CloseMutex
-50170  Set mutex = Nothing
+50160  mutexLocal.CloseMutex
+50170  mutexGlobal.CloseMutex
+50180  Set mutexLocal = Nothing
+50190  Set mutexGlobal = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -889,11 +883,15 @@ Private Sub Timer1_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  ' Create a mutex if possible
-50020  If mutex.CheckMutex(TransTool_GUID) = False Then
-50030   mutex.CreateMutex TransTool_GUID
+50010  ' Create a local mutex if possible
+50020  If mutexLocal.CheckMutex(TransTool_GUID) = False Then
+50030   mutexLocal.CreateMutex TransTool_GUID
 50040  End If
-50050  DoEvents
+50050  ' Create a global mutex if possible
+50060  If mutexGlobal.CheckMutex("Global\" & TransTool_GUID) = False Then
+50070   mutexGlobal.CreateMutex "Global\" & TransTool_GUID
+50080  End If
+50090  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

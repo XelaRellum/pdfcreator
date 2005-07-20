@@ -35,11 +35,14 @@ Public PDFCreatorINIFile As String, _
        NoProcessing As Boolean, _
        PDFCreatorPrinter As Boolean, _
        SleepTime As Long, _
-       StartPDFcreatorProgram As Boolean, _
+       StartPDFCreatorProgram As Boolean, _
        PrintFilename As String, _
        Optionsfile As String, _
        CancelPrintfiles As Boolean
-Public HelpFile As String
+
+Public HelpFile As String, LanguagePath As String, Languagefile As String, IFIsPS As Boolean, _
+ mutexLocal As clsMutex, mutexGlobal As clsMutex, CheckInstance As Boolean, NoStart As Boolean
+
 Public Function GetPDFCreatorApplicationPath() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -68,11 +71,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetPDFCreatorTempfolder() As String
+Public Function GetPDFCreatorTempfolder(Optional Preview As Boolean = False, Optional Temppath As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetPDFCreatorTempfolder = Options.PrinterTemppath
+50010  GetPDFCreatorTempfolder = ResolveEnvironment(GetSubstFilename2(Options.PrinterTemppath, Preview, Temppath))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -171,4 +174,232 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Sub WriteEnvironmentToSpecialLogfile()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim FName As String, fn As Long, Path As String, Drive As String, i As Long
+50020  If enableSpecialLogging = True Then
+50030   Path = LTrim(Environ$("Systemdrive"))
+50040   If LenB(Path) = 0 Then
+50050    SplitPath LTrim(Environ$("Windir")), Drive
+50060    Path = Drive
+50070    If LenB(Path) < 2 Then
+50080     Path = "c:\"
+50090    End If
+50100   End If
+50110   FName = CompletePath(Path) & "PDFCreator-Errorlog.txt"
+50120   fn = FreeFile
+50130   i = 1
+50140   Open FName For Append As #fn
+50150   Print #fn, "Environment:"
+50160   While Environ$(i) <> ""
+50170    Print #fn, Environ$(i)
+50180    DoEvents
+50190    i = i + 1
+50200   Wend
+50210   Close #fn
+50220  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal", "WriteEnvironmentToSpecialLogfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function GetDocDate(Optional StandardDate As String = "", Optional StandardDateformat As String = "", Optional UseThisdate As String = "") As String
+ On Error Resume Next
+ Dim tstr As String, DateFormat As String, Usingdate As String
+
+ If LenB(Trim$(StandardDate)) = 0 Then ' No standard date
+   Usingdate = UseThisdate
+  Else
+   If LenB(RemoveLeadingAndTrailingQuotes(Trim$(StandardDate))) = 0 Then 'Empty date
+     Usingdate = ""
+    Else
+     Usingdate = StandardDate
+   End If
+ End If
+
+ If Len(StandardDateformat) > 0 Then
+   DateFormat = StandardDateformat
+  Else
+   DateFormat = "YYYYMMDDHHNNSS"
+ End If
+
+ tstr = Format$(Usingdate, DateFormat)
+ If LenB(tstr) = 0 Then
+  tstr = Usingdate
+ End If
+ GetDocDate = tstr
+End Function
+
+Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim DateTime As String, Author As String, ClientComputer As String, UserName As String, _
+  Computername As String, MyFiles As String, MyDesktop As String, Filename As String, _
+  Title As String, tstr As String
+50040
+50050  If Len(TokenFilename) = 0 Then
+50060   Exit Function
+50070  End If
+50080
+50090  DateTime = GetDocDate("", Options.StandardDateformat, CStr(Now))
+50100  If Preview Then
+50110   Author = "'Preview Author'"
+50120   ClientComputer = "'Preview ClientComputer'"
+50130  End If
+50140
+50150  UserName = GetUsername
+50160
+50170  Computername = GetComputerName
+50180  MyFiles = GetMyFiles
+50190  MyDesktop = GetDesktop
+50200
+50210  Filename = TokenFilename
+50220  Filename = Replace(Filename, "<DateTime>", DateTime, , , vbTextCompare)
+50230  Filename = Replace(Filename, "<Computername>", Computername, , , vbTextCompare)
+50240
+50250  Filename = Replace(Filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
+50260  Filename = Replace(Filename, "<Username>", UserName, , , vbTextCompare)
+50270  Filename = Replace(Filename, "<Title>", Title, , , vbTextCompare)
+50280
+50290  Filename = Replace(Filename, "<Author>", Author, , , vbTextCompare)
+50300
+50310  Filename = Replace(Filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
+50320  Filename = Replace(Filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
+50330  If LenB(Temppath) > 0 Then
+50340    Filename = Replace(Filename, "<Temp>", CompletePath(Temppath), , , vbTextCompare)
+50350   Else
+50360    Filename = Replace(Filename, "<Temp>", CompletePath(GetTempPathReg(HKEY_CURRENT_USER)), , , vbTextCompare)
+50370  End If
+50380
+50390  tstr = "DOCNAME"
+50400  If Preview Then
+50410    Filename = Replace(Filename, "<REDMON_" & tstr & ">", "'Preview REDMON_" & tstr & "'", , , vbTextCompare)
+50420   Else
+50430    Filename = Replace(Filename, "<REDMON_" & tstr & ">", Environ$("REDMON_DOCNAME"), , , vbTextCompare)
+50440  End If
+50450  tstr = "JOB"
+50460  If Preview Then
+50470    Filename = Replace(Filename, "<REDMON_" & tstr & ">", "'Preview REDMON_" & tstr & "'", , , vbTextCompare)
+50480   Else
+50490    Filename = Replace(Filename, "<REDMON_" & tstr & ">", Environ$("REDMON_JOB"), , , vbTextCompare)
+50500  End If
+50510  tstr = "MACHINE"
+50520  If Preview Then
+50530    Filename = Replace(Filename, "<REDMON_" & tstr & ">", "'Preview REDMON_" & tstr & "'", , , vbTextCompare)
+50540   Else
+50550    Filename = Replace(Filename, "<REDMON_" & tstr & ">", Environ$("REDMON_MACHINE"), , , vbTextCompare)
+50560  End If
+50570  tstr = "PORT"
+50580  If Preview Then
+50590    Filename = Replace(Filename, "<REDMON_" & tstr & ">", "'Preview REDMON_" & tstr & "'", , , vbTextCompare)
+50600   Else
+50610    Filename = Replace(Filename, "<REDMON_" & tstr & ">", Environ$("REDMON_PORT"), , , vbTextCompare)
+50620  End If
+50630  tstr = "PRINTER"
+50640  If Preview Then
+50650    Filename = Replace(Filename, "<REDMON_" & tstr & ">", "'Preview REDMON_" & tstr & "'", , , vbTextCompare)
+50660   Else
+50670    Filename = Replace(Filename, "<REDMON_" & tstr & ">", Environ$("REDMON_PRINTER"), , , vbTextCompare)
+50680  End If
+50690  tstr = "SESSIONID"
+50700  If Preview Then
+50710    Filename = Replace(Filename, "<REDMON_" & tstr & ">", "'Preview REDMON_" & tstr & "'", , , vbTextCompare)
+50720   Else
+50730    Filename = Replace(Filename, "<REDMON_" & tstr & ">", Environ$("REDMON_SESSIONID"), , , vbTextCompare)
+50740  End If
+50750  tstr = "USER"
+50760  If Preview Then
+50770    Filename = Replace(Filename, "<REDMON_" & tstr & ">", "'Preview REDMON_" & tstr & "'", , , vbTextCompare)
+50780   Else
+50790    Filename = Replace(Filename, "<REDMON_" & tstr & ">", Environ$("REDMON_USER"), , , vbTextCompare)
+50800  End If
+50810
+50820  If Options.RemoveSpaces = 1 Then
+50830   Filename = Trim$(Filename)
+50840  End If
+50850  If Len(Filename) > 4 Then
+50860   If InStr(2, Filename, "\\") > 0 Then
+50870    Filename = Mid$(Filename, 1, 1) & Replace$(Mid(Filename, 2), "\\", "\")
+50880   End If
+50890  End If
+50900  GetSubstFilename2 = Filename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal", "GetSubstFilename2")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub CheckProgramInstances()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tstr As String
+50020  tstr = "Check program instances" & vbCrLf & vbCrLf
+50030  tstr = tstr & "PDFCreator:" & vbTab & GetCheckProgramInstancesStr(PDFCreator_GUID) & vbCrLf
+50040  tstr = tstr & "PDFSpooler:" & vbTab & GetCheckProgramInstancesStr(PDFSpooler_GUID) & vbCrLf
+50050  tstr = tstr & "TransTool:" & vbTab & GetCheckProgramInstancesStr(TransTool_GUID) & vbCrLf
+50060  MsgBox tstr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal", "CheckProgramInstances")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function GetCheckProgramInstancesStr(MutexName As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tstr As String
+50020  tstr = ""
+50030  Set mutexLocal = New clsMutex
+50040  If mutexLocal.CheckMutex(MutexName) = True Then
+50050   tstr = "Local"
+50060  End If
+50070  Set mutexGlobal = New clsMutex
+50080  If mutexGlobal.CheckMutex("Global\" & MutexName) = True Then
+50090   If LenB(tstr) > 0 Then
+50100     tstr = tstr & ", Global"
+50110    Else
+50120     tstr = "Global"
+50130   End If
+50140  End If
+50150  If LenB(tstr) = 0 Then
+50160   tstr = "No instances found."
+50170  End If
+50180  GetCheckProgramInstancesStr = tstr
+50190  Set mutexLocal = Nothing
+50200  Set mutexGlobal = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal", "GetCheckProgramInstancesStr")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
 

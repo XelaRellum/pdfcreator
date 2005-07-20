@@ -16,6 +16,355 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin PDFCreator.dmFrame dmFraProgDirectories 
+      Height          =   1410
+      Left            =   2640
+      TabIndex        =   43
+      Top             =   1320
+      Visible         =   0   'False
+      Width           =   6495
+      _ExtentX        =   11456
+      _ExtentY        =   2487
+      Caption         =   "Directories"
+      Caption3D       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
+      Begin VB.TextBox txtTemppathPreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   171
+         Top             =   945
+         Width           =   5910
+      End
+      Begin VB.CommandButton cmdGetTemppath 
+         Caption         =   "..."
+         Height          =   300
+         Left            =   5154
+         TabIndex        =   166
+         Top             =   600
+         Width           =   375
+      End
+      Begin VB.TextBox txtTemppath 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   44
+         Top             =   600
+         Width           =   4965
+      End
+      Begin VB.CommandButton cmdUsertempPath 
+         Height          =   300
+         Left            =   5640
+         Picture         =   "frmOptions.frx":548A
+         Style           =   1  'Grafisch
+         TabIndex        =   167
+         Top             =   600
+         Width           =   375
+      End
+      Begin VB.Label lblPrintTempPath 
+         AutoSize        =   -1  'True
+         Caption         =   "Temppath"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   45
+         Top             =   360
+         Width           =   720
+      End
+   End
+   Begin PDFCreator.dmFrame dmfraProgSave 
+      Height          =   1935
+      Left            =   2640
+      TabIndex        =   52
+      Top             =   2160
+      Visible         =   0   'False
+      Width           =   6375
+      _ExtentX        =   11245
+      _ExtentY        =   3413
+      Caption         =   "Save"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.CheckBox chkSpaces 
+         Appearance      =   0  '2D
+         Caption         =   "Remove leading and trailing spaces"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   56
+         Top             =   1440
+         Value           =   1  'Aktiviert
+         Width           =   6015
+      End
+      Begin VB.TextBox txtSaveFilename 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   55
+         Text            =   "<Title>"
+         Top             =   600
+         Width           =   3495
+      End
+      Begin VB.ComboBox cmbSaveFilenameTokens 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":5A14
+         Left            =   3720
+         List            =   "frmOptions.frx":5A16
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   54
+         Top             =   600
+         Width           =   2415
+      End
+      Begin VB.TextBox txtSavePreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   53
+         Top             =   960
+         Width           =   6015
+      End
+      Begin VB.Label lblSaveFilename 
+         AutoSize        =   -1  'True
+         Caption         =   "Filename"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   58
+         Top             =   360
+         Width           =   630
+      End
+      Begin VB.Label lblSaveFilenameTokens 
+         AutoSize        =   -1  'True
+         Caption         =   "Add a Filename-Token"
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   57
+         Top             =   360
+         Width           =   1605
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraProgDocument 
+      Height          =   1935
+      Left            =   2640
+      TabIndex        =   46
+      Top             =   1800
+      Visible         =   0   'False
+      Width           =   6375
+      _ExtentX        =   11245
+      _ExtentY        =   3413
+      Caption         =   "Document"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.ComboBox cmbAuthorTokens 
+         Appearance      =   0  '2D
+         Enabled         =   0   'False
+         Height          =   315
+         ItemData        =   "frmOptions.frx":5A18
+         Left            =   3720
+         List            =   "frmOptions.frx":5A1A
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   51
+         Top             =   840
+         Width           =   2415
+      End
+      Begin VB.CheckBox chkUseStandardAuthor 
+         Appearance      =   0  '2D
+         Caption         =   "Use Standardauthor"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   50
+         Top             =   360
+         Width           =   6000
+      End
+      Begin VB.TextBox txtStandardAuthor 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   120
+         TabIndex        =   49
+         Top             =   840
+         Width           =   3495
+      End
+      Begin VB.CheckBox chkUseCreationDateNow 
+         Appearance      =   0  '2D
+         Caption         =   "Use the current Date/Time for 'Creation Date'"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   48
+         Top             =   1440
+         Width           =   6000
+      End
+      Begin VB.Label lblAuthorTokens 
+         AutoSize        =   -1  'True
+         Caption         =   "Add a Author-Token"
+         Enabled         =   0   'False
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   47
+         Top             =   600
+         Width           =   1440
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraProgAutosave 
+      Height          =   3855
+      Left            =   2640
+      TabIndex        =   31
+      Top             =   1200
+      Visible         =   0   'False
+      Width           =   6375
+      _ExtentX        =   11245
+      _ExtentY        =   6800
+      Caption         =   "Autosave"
+      Caption3D       =   2
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
+      Begin VB.CommandButton cmdGetAutosaveDirectory 
+         Caption         =   "..."
+         Height          =   300
+         Left            =   5760
+         TabIndex        =   168
+         Top             =   3120
+         Width           =   375
+      End
+      Begin VB.ComboBox cmbAutosaveFormat 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   39
+         Top             =   960
+         Width           =   1935
+      End
+      Begin VB.ComboBox cmbAutoSaveFilenameTokens 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":5A1C
+         Left            =   3690
+         List            =   "frmOptions.frx":5A1E
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   38
+         Top             =   1785
+         Width           =   2460
+      End
+      Begin VB.TextBox txtAutosaveFilename 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   37
+         Text            =   "<DateTime>"
+         Top             =   1800
+         Width           =   3495
+      End
+      Begin VB.TextBox txtAutosaveDirectory 
+         Appearance      =   0  '2D
+         Enabled         =   0   'False
+         Height          =   285
+         Left            =   120
+         TabIndex        =   36
+         Top             =   3120
+         Width           =   5535
+      End
+      Begin VB.CheckBox chkUseAutosaveDirectory 
+         Appearance      =   0  '2D
+         Caption         =   "For autosave use this directory"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   35
+         Top             =   2760
+         Width           =   5895
+      End
+      Begin VB.CheckBox chkUseAutosave 
+         Appearance      =   0  '2D
+         Caption         =   "Use Autosave"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   34
+         Top             =   360
+         Width           =   6015
+      End
+      Begin VB.TextBox txtAutoSaveFilenamePreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   33
+         Top             =   2145
+         Width           =   6015
+      End
+      Begin VB.TextBox txtAutoSaveDirectoryPreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   32
+         Top             =   3450
+         Width           =   6015
+      End
+      Begin VB.Label lblAutosaveFilenameTokens 
+         AutoSize        =   -1  'True
+         Caption         =   "Add a Filename-Token"
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   42
+         Top             =   1560
+         Width           =   1605
+      End
+      Begin VB.Label lblAutosaveformat 
+         Caption         =   "Autosaveformat"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   41
+         Top             =   720
+         Width           =   3495
+      End
+      Begin VB.Label lblAutosaveFilename 
+         AutoSize        =   -1  'True
+         Caption         =   "Filename"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   40
+         Top             =   1560
+         Width           =   630
+      End
+   End
    Begin PDFCreator.dmFrame dmFraProgFont 
       Height          =   4695
       Left            =   2640
@@ -125,64 +474,6 @@ Begin VB.Form frmOptions
          Width           =   855
       End
    End
-   Begin PDFCreator.dmFrame dmFraProgDirectories 
-      Height          =   1095
-      Left            =   2640
-      TabIndex        =   43
-      Top             =   1320
-      Visible         =   0   'False
-      Width           =   6495
-      _ExtentX        =   11456
-      _ExtentY        =   1931
-      Caption         =   "Directories"
-      Caption3D       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
-      Begin VB.CommandButton cmdGetTemppath 
-         Caption         =   "..."
-         Height          =   300
-         Left            =   5154
-         TabIndex        =   166
-         Top             =   600
-         Width           =   375
-      End
-      Begin VB.TextBox txtTemppath 
-         Appearance      =   0  '2D
-         BackColor       =   &H00C0FFFF&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   44
-         Top             =   600
-         Width           =   4965
-      End
-      Begin VB.CommandButton cmdUsertempPath 
-         Height          =   300
-         Left            =   5640
-         Picture         =   "frmOptions.frx":548A
-         Style           =   1  'Grafisch
-         TabIndex        =   167
-         Top             =   600
-         Width           =   375
-      End
-      Begin VB.Label lblPrintTempPath 
-         AutoSize        =   -1  'True
-         Caption         =   "Temppath"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   45
-         Top             =   360
-         Width           =   720
-      End
-   End
    Begin PDFCreator.dmFrame dmFraPDFGeneral 
       Height          =   2895
       Left            =   2730
@@ -215,9 +506,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFOverprint 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":5A14
+         ItemData        =   "frmOptions.frx":5A20
          Left            =   2400
-         List            =   "frmOptions.frx":5A16
+         List            =   "frmOptions.frx":5A22
          Style           =   2  'Dropdown-Liste
          TabIndex        =   95
          Top             =   1980
@@ -236,9 +527,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFCompat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":5A18
+         ItemData        =   "frmOptions.frx":5A24
          Left            =   2400
-         List            =   "frmOptions.frx":5A1A
+         List            =   "frmOptions.frx":5A26
          Style           =   2  'Dropdown-Liste
          TabIndex        =   93
          Top             =   480
@@ -247,9 +538,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFRotate 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":5A1C
+         ItemData        =   "frmOptions.frx":5A28
          Left            =   2400
-         List            =   "frmOptions.frx":5A1E
+         List            =   "frmOptions.frx":5A2A
          Style           =   2  'Dropdown-Liste
          TabIndex        =   92
          Tag             =   "None|All|PageByPage"
@@ -542,9 +833,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFEncryptor 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":5A20
+            ItemData        =   "frmOptions.frx":5A2C
             Left            =   120
-            List            =   "frmOptions.frx":5A22
+            List            =   "frmOptions.frx":5A2E
             Style           =   2  'Dropdown-Liste
             TabIndex        =   140
             Top             =   360
@@ -612,9 +903,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFMonoComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":5A24
+            ItemData        =   "frmOptions.frx":5A30
             Left            =   120
-            List            =   "frmOptions.frx":5A26
+            List            =   "frmOptions.frx":5A32
             Style           =   2  'Dropdown-Liste
             TabIndex        =   122
             Top             =   660
@@ -633,9 +924,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFMonoResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":5A28
+            ItemData        =   "frmOptions.frx":5A34
             Left            =   2520
-            List            =   "frmOptions.frx":5A2A
+            List            =   "frmOptions.frx":5A36
             Style           =   2  'Dropdown-Liste
             TabIndex        =   120
             Tag             =   "Bicubic|Subsample|Average"
@@ -689,9 +980,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFGreyResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":5A2C
+            ItemData        =   "frmOptions.frx":5A38
             Left            =   2520
-            List            =   "frmOptions.frx":5A2E
+            List            =   "frmOptions.frx":5A3A
             Style           =   2  'Dropdown-Liste
             TabIndex        =   115
             Tag             =   "Bicubic|Subsample|Average"
@@ -711,9 +1002,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFGreyComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":5A30
+            ItemData        =   "frmOptions.frx":5A3C
             Left            =   120
-            List            =   "frmOptions.frx":5A32
+            List            =   "frmOptions.frx":5A3E
             Style           =   2  'Dropdown-Liste
             TabIndex        =   113
             Top             =   660
@@ -768,9 +1059,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFColorResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":5A34
+            ItemData        =   "frmOptions.frx":5A40
             Left            =   2520
-            List            =   "frmOptions.frx":5A36
+            List            =   "frmOptions.frx":5A42
             Style           =   2  'Dropdown-Liste
             TabIndex        =   108
             Tag             =   "Bicubic|Subsample|Average"
@@ -790,9 +1081,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFColorComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":5A38
+            ItemData        =   "frmOptions.frx":5A44
             Left            =   120
-            List            =   "frmOptions.frx":5A3A
+            List            =   "frmOptions.frx":5A46
             Style           =   2  'Dropdown-Liste
             TabIndex        =   106
             Top             =   660
@@ -851,9 +1142,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFColorModel 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":5A3C
+         ItemData        =   "frmOptions.frx":5A48
          Left            =   120
-         List            =   "frmOptions.frx":5A3E
+         List            =   "frmOptions.frx":5A4A
          Style           =   2  'Dropdown-Liste
          TabIndex        =   132
          Tag             =   "RGB|CMYK|GRAY"
@@ -1018,71 +1309,71 @@ Begin VB.Form frmOptions
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   17
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":5A40
+               Picture         =   "frmOptions.frx":5A4C
                Key             =   ""
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":5FDA
+               Picture         =   "frmOptions.frx":5FE6
                Key             =   ""
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":6574
+               Picture         =   "frmOptions.frx":6580
                Key             =   ""
             EndProperty
             BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":6B0E
+               Picture         =   "frmOptions.frx":6B1A
                Key             =   ""
             EndProperty
             BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":70A8
+               Picture         =   "frmOptions.frx":70B4
                Key             =   ""
             EndProperty
             BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":7442
+               Picture         =   "frmOptions.frx":744E
                Key             =   ""
             EndProperty
             BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":79DC
+               Picture         =   "frmOptions.frx":79E8
                Key             =   ""
             EndProperty
             BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":7F76
+               Picture         =   "frmOptions.frx":7F82
                Key             =   ""
             EndProperty
             BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":8510
+               Picture         =   "frmOptions.frx":851C
                Key             =   ""
             EndProperty
             BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":8AAA
+               Picture         =   "frmOptions.frx":8AB6
                Key             =   ""
             EndProperty
             BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":9044
+               Picture         =   "frmOptions.frx":9050
                Key             =   ""
             EndProperty
             BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":95DE
+               Picture         =   "frmOptions.frx":95EA
                Key             =   ""
             EndProperty
             BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":9B78
+               Picture         =   "frmOptions.frx":9B84
                Key             =   ""
             EndProperty
             BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":A112
+               Picture         =   "frmOptions.frx":A11E
                Key             =   ""
             EndProperty
             BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":A6AC
+               Picture         =   "frmOptions.frx":A6B8
                Key             =   ""
             EndProperty
             BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":AC46
+               Picture         =   "frmOptions.frx":AC52
                Key             =   ""
             EndProperty
             BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":B520
+               Picture         =   "frmOptions.frx":B52C
                Key             =   ""
             EndProperty
          EndProperty
@@ -1136,7 +1427,7 @@ Begin VB.Form frmOptions
          Height          =   435
          Index           =   0
          Left            =   120
-         Picture         =   "frmOptions.frx":BDFA
+         Picture         =   "frmOptions.frx":BE06
          Style           =   1  'Grafisch
          TabIndex        =   161
          Top             =   915
@@ -1194,7 +1485,7 @@ Begin VB.Form frmOptions
          Height          =   435
          Index           =   1
          Left            =   120
-         Picture         =   "frmOptions.frx":C184
+         Picture         =   "frmOptions.frx":C190
          Style           =   1  'Grafisch
          TabIndex        =   162
          Top             =   1440
@@ -1237,7 +1528,7 @@ Begin VB.Form frmOptions
       _ExtentY        =   1879
       Caption         =   ""
       BarColorFrom    =   8421631
-      BarColorTo      =   128
+      BarColorTo      =   192
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -1458,289 +1749,6 @@ Begin VB.Form frmOptions
          TabIndex        =   82
          Top             =   480
          Width           =   1695
-      End
-   End
-   Begin PDFCreator.dmFrame dmfraProgSave 
-      Height          =   1935
-      Left            =   2640
-      TabIndex        =   52
-      Top             =   2160
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   3413
-      Caption         =   "Save"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.CheckBox chkSpaces 
-         Appearance      =   0  '2D
-         Caption         =   "Remove leading and trailing spaces"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   56
-         Top             =   1440
-         Value           =   1  'Aktiviert
-         Width           =   6015
-      End
-      Begin VB.TextBox txtSaveFilename 
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   120
-         TabIndex        =   55
-         Text            =   "<Title>"
-         Top             =   600
-         Width           =   3495
-      End
-      Begin VB.ComboBox cmbSaveFilenameTokens 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":C50E
-         Left            =   3720
-         List            =   "frmOptions.frx":C510
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   54
-         Top             =   600
-         Width           =   2415
-      End
-      Begin VB.TextBox txtSavePreview 
-         Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   53
-         Top             =   960
-         Width           =   6015
-      End
-      Begin VB.Label lblSaveFilename 
-         AutoSize        =   -1  'True
-         Caption         =   "Filename"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   58
-         Top             =   360
-         Width           =   630
-      End
-      Begin VB.Label lblSaveFilenameTokens 
-         AutoSize        =   -1  'True
-         Caption         =   "Add a Filename-Token"
-         Height          =   195
-         Left            =   3720
-         TabIndex        =   57
-         Top             =   360
-         Width           =   1605
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraProgDocument 
-      Height          =   1935
-      Left            =   2640
-      TabIndex        =   46
-      Top             =   1800
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   3413
-      Caption         =   "Document"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.ComboBox cmbAuthorTokens 
-         Appearance      =   0  '2D
-         Enabled         =   0   'False
-         Height          =   315
-         ItemData        =   "frmOptions.frx":C512
-         Left            =   3720
-         List            =   "frmOptions.frx":C514
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   51
-         Top             =   840
-         Width           =   2415
-      End
-      Begin VB.CheckBox chkUseStandardAuthor 
-         Appearance      =   0  '2D
-         Caption         =   "Use Standardauthor"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   50
-         Top             =   360
-         Width           =   6000
-      End
-      Begin VB.TextBox txtStandardAuthor 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   120
-         TabIndex        =   49
-         Top             =   840
-         Width           =   3495
-      End
-      Begin VB.CheckBox chkUseCreationDateNow 
-         Appearance      =   0  '2D
-         Caption         =   "Use the current Date/Time for 'Creation Date'"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   48
-         Top             =   1440
-         Width           =   6000
-      End
-      Begin VB.Label lblAuthorTokens 
-         AutoSize        =   -1  'True
-         Caption         =   "Add a Author-Token"
-         Enabled         =   0   'False
-         Height          =   195
-         Left            =   3720
-         TabIndex        =   47
-         Top             =   600
-         Width           =   1440
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraProgAutosave 
-      Height          =   3855
-      Left            =   2640
-      TabIndex        =   31
-      Top             =   1200
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   6800
-      Caption         =   "Autosave"
-      Caption3D       =   2
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
-      Begin VB.CommandButton cmdGetAutosaveDirectory 
-         Caption         =   "..."
-         Height          =   300
-         Left            =   5760
-         TabIndex        =   168
-         Top             =   3120
-         Width           =   375
-      End
-      Begin VB.ComboBox cmbAutosaveFormat 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   120
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   39
-         Top             =   960
-         Width           =   1935
-      End
-      Begin VB.ComboBox cmbAutoSaveFilenameTokens 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":C516
-         Left            =   3690
-         List            =   "frmOptions.frx":C518
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   38
-         Top             =   1785
-         Width           =   2460
-      End
-      Begin VB.TextBox txtAutosaveFilename 
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   120
-         TabIndex        =   37
-         Text            =   "<DateTime>"
-         Top             =   1800
-         Width           =   3495
-      End
-      Begin VB.TextBox txtAutosaveDirectory 
-         Appearance      =   0  '2D
-         Enabled         =   0   'False
-         Height          =   285
-         Left            =   120
-         TabIndex        =   36
-         Top             =   3120
-         Width           =   5535
-      End
-      Begin VB.CheckBox chkUseAutosaveDirectory 
-         Appearance      =   0  '2D
-         Caption         =   "For autosave use this directory"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   35
-         Top             =   2760
-         Width           =   5895
-      End
-      Begin VB.CheckBox chkUseAutosave 
-         Appearance      =   0  '2D
-         Caption         =   "Use Autosave"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   34
-         Top             =   360
-         Width           =   6015
-      End
-      Begin VB.TextBox txtAutoSaveFilenamePreview 
-         Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   33
-         Top             =   2145
-         Width           =   6015
-      End
-      Begin VB.TextBox txtAutoSaveDirectoryPreview 
-         Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   32
-         Top             =   3450
-         Width           =   6015
-      End
-      Begin VB.Label lblAutosaveFilenameTokens 
-         AutoSize        =   -1  'True
-         Caption         =   "Add a Filename-Token"
-         Height          =   195
-         Left            =   3720
-         TabIndex        =   42
-         Top             =   1560
-         Width           =   1605
-      End
-      Begin VB.Label lblAutosaveformat 
-         Caption         =   "Autosaveformat"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   41
-         Top             =   720
-         Width           =   3495
-      End
-      Begin VB.Label lblAutosaveFilename 
-         AutoSize        =   -1  'True
-         Caption         =   "Filename"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   40
-         Top             =   1560
-         Width           =   630
       End
    End
    Begin PDFCreator.dmFrame dmFraProgGeneral 
@@ -2888,7 +2896,7 @@ On Error GoTo ErrPtnr_OnError
 50020  strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsGhostscriptFontsDirectoryPrompt)
 50030  If Len(strFolder) = 0 Then Exit Sub
 50040  strFolder = CompletePath(strFolder)
-50050  If Len(Dir(strFolder & "*.afm", vbNormal)) = 0 And Len(Dir(strFolder & "*.pfb", vbNormal)) = 0 Then
+50050  If LenB(Dir(strFolder & "*.afm", vbNormal)) = 0 And LenB(Dir(strFolder & "*.pfb", vbNormal)) = 0 Then
 50060   MsgBox LanguageStrings.MessagesMsg16
 50070   Exit Sub
 50080  End If
@@ -2916,7 +2924,7 @@ On Error GoTo ErrPtnr_OnError
 50020  strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsGhostscriptLibrariesDirectoryPrompt)
 50030  If Len(strFolder) = 0 Then Exit Sub
 50040  strFolder = CompletePath(strFolder)
-50050  If Len(Dir(strFolder & "*.*", vbNormal)) = 0 Then
+50050  If LenB(Dir(strFolder & "*.*", vbNormal)) = 0 Then
 50060   MsgBox LanguageStrings.MessagesMsg17
 50070   Exit Sub
 50080  End If
@@ -3224,7 +3232,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -4461,12 +4468,15 @@ Private Sub txtAutosaveDirectory_Change()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  txtAutosaveDirectory.ToolTipText = txtAutosaveDirectory.Text
-50020  txtAutoSaveDirectoryPreview.Text = GetSubstFilename("B:\dummy.dum", txtAutosaveDirectory.Text, , True)
-50030  If IsValidPath(txtAutoSaveDirectoryPreview.Text) = False Then
-50040    txtAutoSaveDirectoryPreview.ForeColor = vbRed
-50050   Else
-50060    txtAutoSaveDirectoryPreview.ForeColor = &H80000008
-50070  End If
+50020  With txtAutoSaveDirectoryPreview
+50030   .Text = GetSubstFilename2(txtAutosaveDirectory.Text)
+50040   .ToolTipText = .Text
+50050   If IsValidPath(.Text) = False Then
+50060     .ForeColor = vbRed
+50070    Else
+50080     .ForeColor = &H80000008
+50090   End If
+50100  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -4485,13 +4495,15 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String
 50020  txtAutosaveFilename.ToolTipText = txtAutosaveFilename.Text
-50030  txtAutoSaveFilenamePreview.Text = GetSubstFilename("B:\dummy.dum", txtAutosaveFilename.Text, , True) & _
-  GetAutosaveFormatExtension
-50050  If IsValidPath("C:\" & txtAutoSaveFilenamePreview.Text) = False Then
-50060    txtAutoSaveFilenamePreview.ForeColor = vbRed
-50070   Else
-50080    txtAutoSaveFilenamePreview.ForeColor = &H80000008
-50090  End If
+50030  With txtAutoSaveFilenamePreview
+50040   .Text = GetSubstFilename("B:\dummy.dum", txtAutosaveFilename.Text, , True) & GetAutosaveFormatExtension
+50050   .ToolTipText = .Text
+50060   If IsValidPath("C:\" & .Text) = False Then
+50070     .ForeColor = vbRed
+50080    Else
+50090     .ForeColor = &H80000008
+50100   End If
+50110  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -5014,7 +5026,10 @@ Private Sub txtSaveFilename_Change()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  txtSaveFilename.ToolTipText = txtSaveFilename.Text
-50020  txtSavePreview.Text = GetSubstFilename("C:\test.pdf", txtSaveFilename.Text, , True) & ".pdf"
+50020  With txtSavePreview
+50030   .Text = GetSubstFilename("C:\test.pdf", txtSaveFilename.Text, , True) & ".pdf"
+50040   .ToolTipText = .Text
+50050  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -5092,6 +5107,44 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmOptions", "CorrectCmbCharset")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtStandardAuthor_Change()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  txtStandardAuthor.ToolTipText = txtStandardAuthor.Text
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "txtStandardAuthor_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtTemppath_Change()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  txtTemppath.ToolTipText = txtTemppath.Text
+50020  With txtTemppathPreview
+50030   .Text = ResolveEnvironment(GetSubstFilename2(txtTemppath.Text))
+50040   .ToolTipText = .Text
+50050  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "txtTemppath_Change")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

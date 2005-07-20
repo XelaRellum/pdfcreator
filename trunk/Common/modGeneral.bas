@@ -88,7 +88,7 @@ On Error GoTo ErrPtnr_OnError
 50180  For i = 1 To Files.Count
 50190   DoEvents
 50200   If FileExists(Files.Item(i)) = False Then
-50210    MsgBox "Not found: " & Files.Item(i)
+50210    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & Files.Item(i)
 50220   End If
 50230   If FileLen(Files.Item(i)) > 0 Then
 50240    fnSource = FreeFile
@@ -118,11 +118,13 @@ On Error GoTo ErrPtnr_OnError
 50480    Close #fnSource
 50490   End If
 50500   DoEvents
-50510   KillFile Files.Item(i)
-50520   KillInfoSpoolfile Files.Item(i)
-50530   DoEvents
-50540  Next i
-50550  Close #fnDest
+50510  Next i
+50520  For i = 1 To Files.Count
+50530   KillFile Files.Item(i)
+50540   KillInfoSpoolfile Files.Item(i)
+50550   DoEvents
+50560  Next i
+50570  Close #fnDest
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -316,10 +318,10 @@ Public Function GetComputerName() As String
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Const MAX_COMPUTERNAME_LENGTH As Long = 31
-50020  Dim tstr As String
-50030  tstr = String(MAX_COMPUTERNAME_LENGTH + 1, Chr$(0))
-50040  GetComputerNameA tstr, MAX_COMPUTERNAME_LENGTH + 1
-50050  GetComputerName = Left$(tstr, InStr(tstr, Chr$(0)) - 1)
+50020  Dim tStr As String
+50030  tStr = String(MAX_COMPUTERNAME_LENGTH + 1, Chr$(0))
+50040  GetComputerNameA tStr, MAX_COMPUTERNAME_LENGTH + 1
+50050  GetComputerName = Left$(tStr, InStr(tStr, Chr$(0)) - 1)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -471,6 +473,53 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function GetDefaultAppData() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim res As Long, TempDefaultAppData As String
+50020  TempDefaultAppData = Space$(MAX_PATH)
+50030  If SHGetFolderPath(0, ssfAPPDATA Or CSIDL_FLAG_CREATE, -1, SHGFP_TYPE_DEFAULT, TempDefaultAppData) = 0 Then
+50040   GetDefaultAppData = Left$(TempDefaultAppData, InStr(1, TempDefaultAppData, vbNullChar) - 1)
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetDefaultAppData")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetCommonAppData() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim TempCommonAppData As String, reg As clsRegistry
+50020  Set reg = New clsRegistry
+50030  reg.hkey = HKEY_LOCAL_MACHINE
+50040  reg.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
+50050  TempCommonAppData = reg.GetRegistryValue("Common AppData")
+50060  Set reg = Nothing
+50070  If Trim$(TempCommonAppData) = vbNullString Then
+50080   TempCommonAppData = "C:\"
+50090  End If
+50100  GetCommonAppData = TempCommonAppData
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetCommonAppData")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function GetMyAppData() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -527,19 +576,19 @@ Public Function GetFontsDirectory() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim TempMyFiles, reg As clsRegistry, tstr As String
+50010  Dim TempMyFiles, reg As clsRegistry, tStr As String
 50020  Set reg = New clsRegistry
 50030  With reg
 50040   .hkey = HKEY_CURRENT_USER
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer"
 50060   .Subkey = "Shell Folders"
-50070   tstr = .GetRegistryValue("Fonts")
+50070   tStr = .GetRegistryValue("Fonts")
 50080  End With
 50090  Set reg = Nothing
-50100  If LenB(tstr) = 0 Then
-50110   tstr = CompletePath(GetWindowsDirectory) & "Fonts"
+50100  If LenB(tStr) = 0 Then
+50110   tStr = CompletePath(GetWindowsDirectory) & "Fonts"
 50120  End If
-50130  GetFontsDirectory = tstr
+50130  GetFontsDirectory = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -721,14 +770,39 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function GetTempPathReg(hProfile As hkey) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry
+50020  Set reg = New clsRegistry
+50030  With reg
+50040   .hkey = hProfile
+50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
+50060   GetTempPathReg = CompletePath(.GetRegistryValue("Local Settings")) & "Temp\"
+50070  End With
+50080  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetTempPathReg")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+
 Public Function GetTempPathApi() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim res As Long, TempDir As String
-50020
-50030  TempDir = Space$(MAX_PATH)
-50040  res = GetTempPathA(MAX_PATH, TempDir)
+50020  res = GetTempPathA(0, "")
+50030  TempDir = Space$(res)
+50040  res = GetTempPathA(res, TempDir)
 50050  If res > 0 Then
 50060    GetTempPathApi = Left$(TempDir, res)
 50070   Else
@@ -751,10 +825,10 @@ Public Function GetUsername() As String
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Const MAX_USERNAME_LENGTH = 128
-50020  Dim tstr As String
-50030  tstr = String(MAX_USERNAME_LENGTH, Chr$(0))
-50040  GetUserNameA tstr, MAX_USERNAME_LENGTH
-50050  GetUsername = Left$(tstr, InStr(tstr, Chr$(0)) - 1)
+50020  Dim tStr As String
+50030  tStr = String(MAX_USERNAME_LENGTH, Chr$(0))
+50040  GetUserNameA tStr, MAX_USERNAME_LENGTH
+50050  GetUsername = Left$(tStr, InStr(tStr, Chr$(0)) - 1)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -928,7 +1002,7 @@ Public Function MakePath(Path As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim dirs() As String, tstr As String, i As Long
+50010  Dim dirs() As String, tStr As String, i As Long
 50020  MakePath = False
 50030  Path = LTrim$(Path)
 50040  If Len(Path) <= 3 Then
@@ -943,12 +1017,12 @@ On Error GoTo ErrPtnr_OnError
 50130   If UCase$(Mid$(Path, 1, 1)) < "A" Or UCase$(Mid$(Path, 1, 1)) > "Z" Then
 50140    Exit Function
 50150   End If
-50160   tstr = dirs(0)
+50160   tStr = dirs(0)
 50170   For i = 1 To UBound(dirs)
-50180    tstr = tstr & "\" & dirs(i)
-50190    If DirExists(tstr) = False Then
-50200     Call CreateDir(tstr)
-50210     If DirExists(tstr) = False Then
+50180    tStr = tStr & "\" & dirs(i)
+50190    If DirExists(tStr) = False Then
+50200     Call CreateDir(tStr)
+50210     If DirExists(tStr) = False Then
 50220      Exit Function
 50230     End If
 50240    End If
@@ -959,12 +1033,12 @@ On Error GoTo ErrPtnr_OnError
 50290   If UBound(dirs) < 4 Then
 50300    Exit Function
 50310   End If
-50320   tstr = "\\" & dirs(2) & "\" & dirs(3)
+50320   tStr = "\\" & dirs(2) & "\" & dirs(3)
 50330   For i = 4 To UBound(dirs)
-50340    tstr = tstr & "\" & dirs(i)
-50350    If DirExists(tstr) = False Then
-50360     Call CreateDir(tstr)
-50370     If DirExists(tstr) = False Then
+50340    tStr = tStr & "\" & dirs(i)
+50350    If DirExists(tStr) = False Then
+50360     Call CreateDir(tStr)
+50370     If DirExists(tStr) = False Then
 50380      Exit Function
 50390     End If
 50400    End If
@@ -1042,13 +1116,13 @@ Public Function ReplaceForbiddenChars(chkStr As String, Optional ReplaceChar As 
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tstr As String, i As Long, Forbiddenchars As String
+50010  Dim tStr As String, i As Long, Forbiddenchars As String
 50020  Forbiddenchars = "\/:*?<>|""" & AdditionalForbiddenChars
-50030  tstr = chkStr
+50030  tStr = chkStr
 50040  For i = 1 To Len(Forbiddenchars)
-50050   tstr = Replace$(tstr, Mid$(Forbiddenchars, i, 1), ReplaceChar)
+50050   tStr = Replace$(tStr, Mid$(Forbiddenchars, i, 1), ReplaceChar)
 50060  Next i
-50070  ReplaceForbiddenChars = tstr
+50070  ReplaceForbiddenChars = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1205,7 +1279,7 @@ Public Function IsValidPath(Path As String, Optional ByVal TestUNCPaths As Boole
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, c As Long, nBytes() As Byte, nChar As String, nOK As Boolean, _
+50010  Dim i As Long, c As Long, nbytes() As Byte, nChar As String, nOK As Boolean, _
   nParentPath As String, nPos As Long, nRoot As String, nPath As String, _
   nPathParts() As String, nStart As Long
 50040
@@ -1242,9 +1316,9 @@ On Error GoTo ErrPtnr_OnError
 50350      nStart = 1
 50360    End If
 50370    For i = nStart To UBound(nPathParts)
-50380     nBytes = StrConv(nPathParts(i), vbFromUnicode)
-50390     For c = 0 To UBound(nBytes)
-50401      Select Case nBytes(c)
+50380     nbytes = StrConv(nPathParts(i), vbFromUnicode)
+50390     For c = 0 To UBound(nbytes)
+50401      Select Case nbytes(c)
             Case Is < 32, Is > 255, kCharAsterisk, kCharBackSlash, kCharColon, kCharGreaterThan, kCharLowerThan, kCharPipe, kCharQuestion, kCharQuote, kCharSlash
 50420        nOK = False
 50430        Exit For
@@ -1358,21 +1432,21 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function RemoveLeadingAndTrailingQuotes(tstr As String) As String
+Public Function RemoveLeadingAndTrailingQuotes(tStr As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If Len(tstr) > 0 Then
-50020   If Mid$(tstr, 1, 1) = """" Then
-50030    tstr = Mid$(tstr, 2)
+50010  If Len(tStr) > 0 Then
+50020   If Mid$(tStr, 1, 1) = """" Then
+50030    tStr = Mid$(tStr, 2)
 50040   End If
-50050   If Len(tstr) > 0 Then
-50060    If Mid$(tstr, Len(tstr), 1) = """" Then
-50070     tstr = Mid$(tstr, 1, Len(tstr) - 1)
+50050   If Len(tStr) > 0 Then
+50060    If Mid$(tStr, Len(tStr), 1) = """" Then
+50070     tStr = Mid$(tStr, 1, Len(tStr) - 1)
 50080    End If
 50090   End If
 50100  End If
-50110  RemoveLeadingAndTrailingQuotes = tstr
+50110  RemoveLeadingAndTrailingQuotes = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1558,8 +1632,8 @@ Public Function StringInCollection(coll As Collection, Str1 As String, Optional 
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tstr As String
-50020  StringInCollection = False: tstr = UCase$(Str1)
+50010  Dim i As Long, tStr As String
+50020  StringInCollection = False: tStr = UCase$(Str1)
 50030  If Not coll Is Nothing And Len(Str1) > 0 Then
 50040   For i = 1 To coll.Count
 50050    If CaseSensitive = True Then
@@ -1796,7 +1870,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-
 Public Sub KillInfoSpoolfile(Spoolfilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1833,3 +1906,54 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function ResolveEnvironmentApi(ByVal Str1 As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim expStr As String, Length As Long
+50020  expStr = ""
+50030  Length = ExpandEnvironmentStrings(Str1, expStr, 0)
+50040  expStr = String$(Length - 1, 0)
+50050  Length = ExpandEnvironmentStrings(Str1, expStr, Length)
+50060  ResolveEnvironmentApi = expStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "ResolveEnvironmentApi")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function ResolveEnvironment(ByVal Str1 As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, envStr As String, tStr As String
+50020  i = 1
+50030  Do
+50040   envStr = Environ$(i)
+50050   If InStr(1, envStr, "=") > 1 Then
+50060    tStr = UCase$(Mid(envStr, 1, InStr(1, envStr, "=") - 1))
+50070    Str1 = Replace$(Str1, "%" & tStr & "%", Mid(envStr, InStr(1, envStr, "=") + 1), , , vbTextCompare)
+50080   End If
+50090   DoEvents
+50100   i = i + 1
+50110  Loop Until envStr = ""
+50120  ResolveEnvironment = Str1
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "ResolveEnvironment")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+

@@ -69,13 +69,19 @@ Private Function ReadToString(Filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim FNr As Integer, s As String
-50020  FNr = FreeFile
-50030  s = Space$(FileLen(Filename))
-50040  Open Filename For Binary Access Read Shared As #FNr
-50050  Get #FNr, , s
-50060  Close #FNr
-50070  ReadToString = s
+50010  Dim fn As Integer, fl As Long, s As String
+50020  s = ""
+50030  If FileExists(Filename) Then
+50040   fn = FreeFile
+50050   Open Filename For Binary Access Read Shared As #fn
+50060   fl = LOF(fn)
+50070   If fl > 0 Then
+50080    s = Space$(fl)
+50090    Get #fn, , s
+50100   End If
+50110   Close #fn
+50120  End If
+50130  ReadToString = s
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

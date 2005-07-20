@@ -179,7 +179,7 @@ Private Function VBMapiEmail(Filename As String, Optional Subject As String = ""
  Exit Function
 ErrorHandler:
  MsgBox LanguageStrings.MessagesMsg20 & vbCrLf & vbCrLf & _
-  "Line " & Erl & ": [" & Err.number & "] " & Err.Description
+  "Line " & Erl & ": [" & Err.Number & "] " & Err.Description
  Err.Clear
 End Function
 

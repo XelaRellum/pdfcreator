@@ -131,7 +131,7 @@ On Error GoTo ErrPtnr_OnError
 50040  If Len(tFilename) = 0 Then
 50050   Exit Function
 50060  End If
-50070  If LenB(Dir(tFilename)) = 0 Then
+50070  If Not FileExists(tFilename) Then
 50080   Exit Function
 50090  End If
 50100  CheckIniFile = True
@@ -152,7 +152,7 @@ Public Function GetAllSectionsFromInifile(Optional ByVal Filename As String, Opt
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tFilename As String, i As Long, j As Long, nBuffer As String, _
-  res As Long, tStr As String, nItems() As String
+  res As Long, tstr As String, nItems() As String
 50030
 50040  Const kBufferSize = 32767
 50050
@@ -170,7 +170,7 @@ On Error GoTo ErrPtnr_OnError
 50170    For i = LBound(nItems) To UBound(nItems) - 1
 50180     For j = i To UBound(nItems)
 50190      If StrComp(nItems(i), nItems(j), vbTextCompare) = 1 Then
-50200       tStr = nItems(i): nItems(i) = nItems(j): nItems(j) = tStr
+50200       tstr = nItems(i): nItems(i) = nItems(j): nItems(j) = tstr
 50210      End If
 50220     Next j
 50230    Next i
@@ -229,7 +229,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Const kBufferSize = 32767
 50020  Dim tFilename As String, tSection As String, nBuffer As String, res As Long, _
   nItems() As String, nItem() As String, i As Long, tColl As Collection, _
-  ts(1) As String, j As Long, tStr As String
+  ts(1) As String, j As Long, tstr As String
 50050
 50060  tFilename = GetFilename(Filename)
 50070  tSection = GetSectionname(Section)
@@ -247,7 +247,7 @@ On Error GoTo ErrPtnr_OnError
 50190    For i = LBound(nItems) To UBound(nItems) - 1
 50200     For j = i To UBound(nItems)
 50210      If StrComp(nItems(i), nItems(j), vbTextCompare) = 1 Then
-50220       tStr = nItems(i): nItems(i) = nItems(j): nItems(j) = tStr
+50220       tstr = nItems(i): nItems(i) = nItems(j): nItems(j) = tstr
 50230      End If
 50240     Next j
 50250    Next i

@@ -92,6 +92,11 @@
 		<param name="Local" value="html\bmpsettings.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Einstellungen">
+		<param name="Name" value="PDFCreator Einstellungen">
+		<param name="Local" value="html\settings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Farben">
 		<param name="Name" value="PDF-Einstellungen: Farben">
 		<param name="Local" value="html\pdfcolors.htm">
@@ -272,6 +277,11 @@
 		<param name="Name" value="PS">
 		<param name="Name" value="PS-Einstellungen">
 		<param name="Local" value="html\pssettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Registry">
+		<param name="Name" value="PDFCreator Einstellungen">
+		<param name="Local" value="html\settings.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Speichern-Einstellungen">

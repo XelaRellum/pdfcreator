@@ -7,22 +7,33 @@ Begin VB.Form frmInfo
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   6000
+   FillColor       =   &H00FFFFFF&
    Icon            =   "frmInfo.frx":0000
    LinkTopic       =   "Form1"
+   MaxButton       =   0   'False
+   MinButton       =   0   'False
    Picture         =   "frmInfo.frx":548A
    ScaleHeight     =   6015
    ScaleWidth      =   6000
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.Timer Timer1 
+      Interval        =   100
+      Left            =   105
+      Top             =   105
+   End
    Begin VB.CommandButton cmdCancel 
+      Appearance      =   0  '2D
       Cancel          =   -1  'True
       Caption         =   "Cancel"
-      Height          =   375
-      Left            =   120
+      DownPicture     =   "frmInfo.frx":7001
+      Height          =   660
+      Left            =   630
+      Style           =   1  'Grafisch
       TabIndex        =   5
-      Top             =   120
+      Top             =   105
       Visible         =   0   'False
-      Width           =   1095
+      Width           =   660
    End
    Begin VB.PictureBox picPDF 
       Appearance      =   0  '2D
@@ -31,7 +42,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   1035
       Left            =   345
-      Picture         =   "frmInfo.frx":6B53
+      Picture         =   "frmInfo.frx":8303
       ScaleHeight     =   1035
       ScaleWidth      =   2085
       TabIndex        =   2
@@ -42,20 +53,21 @@ Begin VB.Form frmInfo
       Appearance      =   0  '2D
       BackColor       =   &H80000005&
       BorderStyle     =   0  'Kein
+      FillColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
-      Height          =   4575
+      Height          =   4050
       Left            =   1470
-      ScaleHeight     =   4575
+      ScaleHeight     =   4050
       ScaleWidth      =   4350
       TabIndex        =   3
-      Top             =   1260
+      Top             =   1785
       Width           =   4350
       Begin VB.CommandButton cmdPaypal 
          Appearance      =   0  '2D
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":7D1A
+         Picture         =   "frmInfo.frx":94CA
          Style           =   1  'Grafisch
          TabIndex        =   0
          Top             =   4080
@@ -64,7 +76,7 @@ Begin VB.Form frmInfo
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":807F
+         Picture         =   "frmInfo.frx":982F
          Top             =   4020
          Width           =   4380
       End
@@ -73,14 +85,15 @@ Begin VB.Form frmInfo
       Appearance      =   0  '2D
       BackColor       =   &H80000005&
       BorderStyle     =   0  'Kein
+      FillColor       =   &H00FFFFFF&
       ForeColor       =   &H80000008&
-      Height          =   16000
+      Height          =   15480
       Left            =   1470
-      Picture         =   "frmInfo.frx":89ED
-      ScaleHeight     =   16005
+      Picture         =   "frmInfo.frx":A19D
+      ScaleHeight     =   15480
       ScaleWidth      =   4350
       TabIndex        =   4
-      Top             =   1260
+      Top             =   630
       Visible         =   0   'False
       Width           =   4350
    End
@@ -92,7 +105,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   375
       Left            =   2310
-      Picture         =   "frmInfo.frx":EA94
+      Picture         =   "frmInfo.frx":10244
       ScaleHeight     =   25
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   127
@@ -101,11 +114,10 @@ Begin VB.Form frmInfo
       Width           =   1905
    End
    Begin VB.Image imgClose 
-      Height          =   600
+      Height          =   285
       Left            =   1575
-      Picture         =   "frmInfo.frx":F15C
       Top             =   210
-      Width           =   600
+      Width           =   285
    End
 End
 Attribute VB_Name = "frmInfo"
@@ -120,6 +132,7 @@ Private Const HTCAPTION = 2
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Function ReleaseCapture Lib "user32" () As Long
 Private m_blnUnloading As Boolean
+Private m_MouseOverImgClose As Boolean
 
 Private Sub AnimateScroller()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -260,6 +273,8 @@ On Error GoTo ErrPtnr_OnError
 50190   .CurrentY = 35
 50200   picTitle.Print Version
 50210  End With
+50220
+50230  imgClose.Picture = LoadResPicture(101, vbResBitmap)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -307,15 +322,59 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub imgClose_Click()
+Private Sub imgClose_DragDrop(Source As Control, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Unload Me
+50010  If Source Is imgClose Then
+50020   Unload Me
+50030  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmInfo", "imgClose_Click")
+Select Case ErrPtnr.OnError("frmInfo", "imgClose_DragDrop")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub imgClose_DragOver(Source As Control, x As Single, Y As Single, State As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If State = vbLeave Then
+50020   With imgClose
+50030    .Drag vbEndDrag
+50040    .Picture = LoadResPicture(101, vbResBitmap)
+50050   End With
+50060  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "imgClose_DragOver")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub imgClose_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With imgClose
+50020   .Picture = LoadResPicture(102, vbResBitmap)
+50030   .Drag vbBeginDrag
+50040  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmInfo", "imgClose_MouseMove")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

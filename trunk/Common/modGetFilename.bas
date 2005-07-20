@@ -8,7 +8,7 @@ Public Function GetFilename(Defaultfilename As String, InitPath As String, _
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
-50020  Dim sFilter() As String, tStr As String, Files As Collection, _
+50020  Dim sFilter() As String, tstr As String, Files As Collection, _
   Filename As String, Ext As String
 50040
 50050  If LenB(InitPath) = 0 Then
@@ -16,15 +16,15 @@ On Error GoTo ErrPtnr_OnError
 50070  End If
 50080
 50090  If SaveOpenType = SaveFile Then
-50100   tStr = "*.*"
+50100   tstr = "*.*"
 50110   If InStr(Filter, "|") > 0 Then
 50120    sFilter = Split(Filter, "|")
 50130    If (FilterIndex * 2 + 1) <= UBound(sFilter) Then
-50140     tStr = sFilter(FilterIndex * 2 + 1)
+50140     tstr = sFilter(FilterIndex * 2 + 1)
 50150    End If
 50160   End If
 50170   FilterIndex = SaveFileDialog(Filename, Defaultfilename, _
-   Filter, tStr, InitPath, LanguageStrings.SaveOpenSaveTitle, _
+   Filter, tstr, InitPath, LanguageStrings.SaveOpenSaveTitle, _
     OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + _
     OFN_OVERWRITEPROMPT, OwnerForm.hwnd, FilterIndex)
 50210   If FilterIndex < 0 Then
@@ -54,7 +54,7 @@ On Error GoTo ErrPtnr_OnError
 50450  End If
 50460  If SaveOpenType = OpenFile Then
 50470   FilterIndex = OpenFileDialog(Files, Defaultfilename, _
-   Filter, tStr, InitPath, _
+   Filter, tstr, InitPath, _
    LanguageStrings.SaveOpenOpenTitle, _
     OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, _
     OwnerForm.hwnd)

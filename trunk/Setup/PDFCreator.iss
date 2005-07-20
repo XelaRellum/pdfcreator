@@ -1,12 +1,12 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.0.8 (with ISPP) and ISTool 5.0.8
+; Setup created with Inno Setup QuickStart Pack 5.1.4 (with ISPP) and ISTool 5.0.8
 ; Installation from Frank Heindörfer
 
 ;#define Test
 ;#define FastCompilation
 #define CompileHelp
-;#define UseUPX
 #define IncludeGhostscript
+#define Localization
 
 #define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
@@ -31,14 +31,42 @@
 #ENDIF
 #ENDIF
 
+#if (fileexists("..\PDFCreator\PDFCreator.exe")==0)
+ #error Compile PDFCreator first!
+#endif
+#if (fileexists("..\PDFSpooler\PDFSpooler.exe")==0)
+ #error Compile PDFSpooler first!
+#endif
+#if (fileexists("..\TransTool\TransTool.exe")==0)
+ #error Compile TransTool first!
+#endif
+
 ;remove the german localization
 #IFNDEF Test
- #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
- #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
- #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+ #IFDEF Localization
+  #if (fileexists("C:\IPDK\VBLOCAL.EXE")==0)
+   #error Please install the IPDK!
+  #endif
+  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
+  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
+  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+ #endif
+#endif
+
+;add manifest to exe files
+#IFNDEF Test
+ #if (fileexists("..\ManifestManager\ManifestManager.exe")==0)
+  #error Compile ManifestManager first!
+ #endif
+ #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreator\PDFCreator.exe""","..\ManifestManager\")
+ #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFSpooler\PDFSpooler.exe""","..\ManifestManager\")
+ #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\TransTool\TransTool.exe""","..\ManifestManager\")
 #endif
 
 #ifdef CompileHelp
+ #if (fileexists("C:\Program Files\HTML Help Workshop\HHC.EXE")==0)
+  #error Compile install first!
+ #endif
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
 #endif
@@ -110,6 +138,7 @@ AppPublisherURL={#Homepage}
 AppSupportURL={#Homepage}
 AppUpdatesURL={#Homepage}
 AppVersion={#AppVersion}
+ArchitecturesAllowed=x86 x64
 ChangesAssociations=true
 Compression={#CompressionMode}
 CreateUninstallRegKey=false
@@ -118,7 +147,6 @@ DefaultGroupName={#AppName}
 DisableDirPage=false
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
-
 LicenseFile=.\License\Program license - english.rtf
 #Ifdef IncludeGhostscript
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_{#GhostscriptSetupString}
@@ -152,36 +180,36 @@ Name: {app}\unload.tmp; Type: files; Components: program
 #IFNDEF Test
 ;We sort all files by extension for a maximal compression
 ;Systemfiles
-Source: ..\SystemFiles\ASYCFILT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall
+Source: ..\SystemFiles\ASYCFILT.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall
 
 ;psapi.dll - only for NT4 to enum processes
-Source: ..\SystemFiles\PSAPI.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall; MinVersion: 0,4.0.1381; OnlyBelowVersion: 0,5.0.2195
+Source: ..\SystemFiles\PSAPI.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall; MinVersion: 0,4.0.1381; OnlyBelowVersion: 0,5.0.2195
 
 ;Please use newest MSVBVM60.DLL
 ;http://support.microsoft.com/default.aspx?scid=kb;en-us;823746
-Source: ..\SystemFiles\MSVBVM60.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
+Source: ..\SystemFiles\MSVBVM60.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
 
-Source: ..\SystemFiles\MSMPIDE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt
-Source: ..\SystemFiles\OLEPRO32.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
-Source: ..\SystemFiles\OLEAUT32.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
+Source: ..\SystemFiles\MSMPIDE.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt
+Source: ..\SystemFiles\OLEPRO32.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
+Source: ..\SystemFiles\OLEAUT32.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
 
 ;Language satellite system files
 ;http://msdn.microsoft.com/vbasic/downloads/tools/ipdk.aspx
 ;Language: German
 ;Source: C:\IPDK\German\CMCT3DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
-Source: C:\IPDK\German\MSCC2DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
-Source: C:\IPDK\German\MSCMCDE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
-Source: C:\IPDK\German\VB6DE.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
+Source: C:\IPDK\German\MSCC2DE.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
+Source: C:\IPDK\German\MSCMCDE.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
+Source: C:\IPDK\German\VB6DE.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('german')
 ;Language: Italian
 ;Source: C:\IPDK\Italian\CMCT3IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
-Source: C:\IPDK\Italian\MSCC2IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
-Source: C:\IPDK\Italian\MSCMCIT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
-Source: C:\IPDK\Italian\VB6IT.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
+Source: C:\IPDK\Italian\MSCC2IT.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
+Source: C:\IPDK\Italian\MSCMCIT.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
+Source: C:\IPDK\Italian\VB6IT.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('italian')
 ;Language: French
 ;Source: C:\IPDK\French\CMCT3FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
-Source: C:\IPDK\French\MSCC2FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
-Source: C:\IPDK\French\MSCMCFR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
-Source: C:\IPDK\French\VB6FR.DLL; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
+Source: C:\IPDK\French\MSCC2FR.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
+Source: C:\IPDK\French\MSCMCFR.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
+Source: C:\IPDK\French\VB6FR.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt; Check: IsLanguage('french')
 
 ;Printerdriver files
 ;PPD-File
@@ -189,10 +217,14 @@ Source: C:\IPDK\French\VB6FR.DLL; DestDir: {sys}; Components: program; Flags: sh
 Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND IsLanguage('german') AND NOT UseOwnPPDFile
 Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
 Source: {code:GetExternalPPDFile}; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
-; WinNt4, Win2k, WinXP, Win2k3
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver) AND IsLanguage('german') AND NOT UseOwnPPDFile
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+; WinNt4, Win2k, WinXP, Win2k3 - 32bit
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND IsLanguage('german') AND NOT UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
 Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
+; WinXP, Win2k3 - 64bit
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinXP2k3Printerdriver64bit) AND IsLanguage('german') AND NOT UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinXP2k3Printerdriver64bit) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
 
 ;Driver files
 ; Win9x/Me
@@ -208,16 +240,21 @@ Source: ..\Printer\Adobe\WinNT\AdobePSu.dll; DestDir: {code:PrinterDriverDirecto
 Source: ..\Printer\Adobe\WinNT\ADOBEPSU.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\AdobePS5.ntf; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 ; Win2000
-Source: ..\Printer\Adobe\Win2000\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-Source: ..\Printer\Adobe\Win2000\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-Source: ..\Printer\Adobe\Win2000\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-Source: ..\Printer\Adobe\Win2000\PSCRPTFE.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-;WinXP, Win2003
-Source: ..\Printer\Adobe\Win2kXP2k3\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\Win2kXP2k3\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\Win2kXP2k3\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\Win2kXP2k3\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\Win2000\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRPTFE.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+; WinXP, Win2003 - x86 (32bit)
+Source: ..\Printer\Adobe\WinXP2k3-x86\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+; WinXP, Win2003 - x64 (64bit)
+Source: ..\Printer\Adobe\WinXP2k3-x64\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
 
 ;Ghostscript
 #IFDEF GhostscriptVersion
@@ -226,28 +263,24 @@ Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; Dest
 #ENDIF
 
 ;Redmon files
-Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll
 Source: ..\Printer\Redmon\redmon95.dll; Components: program; DestDir: {sys}; MinVersion: 4.00.950,0; DestName: pdfcmn95.dll
+Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll; Check: Not IsWin64; Flags: 32bit
+Source: ..\Printer\Redmon\redmonnt-x64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmnnt.dll; Check: IsX64; Flags: 64bit
 
 ;Source: ..\SystemFiles\COMCT332.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
-Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
-Source: ..\SystemFiles\MSCOMCTL.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
-Source: ..\SystemFiles\MSMAPI32.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
+Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
+Source: ..\SystemFiles\MSCOMCTL.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
+Source: ..\SystemFiles\MSMAPI32.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
 
-Source: ..\SystemFiles\STDOLE2.TLB; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall regtypelib
+Source: ..\SystemFiles\STDOLE2.TLB; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall regtypelib
 
 ;Program files
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Components: program; Flags: comparetimestamp
-Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {sys}; Components: program; Flags: comparetimestamp
+Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
 
 ;vblocal.exe from IPDK
 Source: C:\IPDK\vblocal.exe; DestDir: {app}; Components: program; Flags: deleteafterinstall overwritereadonly onlyifdoesntexist ignoreversion
-
-;upx for compressing
-#ifdef UseUPX
-; Source: UPX\upx.exe; DestDir: {app}; Components: program; Flags: deleteafterinstall overwritereadonly ignoreversion
-#ENDIF
 
 ;ShFolder for older systems
 ;http://www.microsoft.com/downloads/release.asp?releaseid=30340
@@ -300,11 +333,10 @@ Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Component
 Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\ukrainian; Flags: ignoreversion
 
 ;Ini file
-Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall
-
-;Manifest files
-Source: ..\PDFCreator\PDFCreator.exe.manifest; DestDir: {app}; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Transtool\TransTool.exe.manifest; DestDir: {app}\languages; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
+Source: {code:GetExternalINIFile}; DestName: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; Flags: ignoreversion  external; Check: UseOwnINIFile AND UseINI
+Source: PDFCreator.ini; DestDir: {code:GetDefaultIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
+Source: {code:GetExternalINIFile}; DestName: PDFCreator.ini; DestDir: {code:GetDefaultIniPath}; Components: program; Flags: ignoreversion  external; Check: UseOwnINIFile AND UseINI
 
 ;Ghostscript
 #IFDEF IncludeGhostscript
@@ -314,8 +346,22 @@ Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir
 #ENDIF
 #ENDIF
 
+; Scripts
+; Scripts: RunProgramAfterSaving
+Source: ..\Scripts\RunProgramAfterSaving\AddWatermarkToPDF.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\FTPUpload.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\Logger.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\Watermark.pdf; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\NetSend.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
+; Scripts: RunProgramBeforSaving
+Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
+
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
+Name: {app}\Scripts
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; Flags: createonlyiffileexists
@@ -327,7 +373,7 @@ Name: {group}\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
 ;#ENDIF
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
-Name: {group}\{cm:UninstallProgram,{#Appname}}; Filename: {uninstallexe}; WorkingDir: {app}; Flags: createonlyiffileexists
+;Name: {group}\{cm:UninstallProgram,{#Appname}}; Filename: {uninstallexe}; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: Not german
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_german.chm; WorkingDir: {app}; Languages: german
@@ -346,17 +392,16 @@ Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: Iconindex; Strin
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program
 
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryJava; String: {sys}; Components: program; Flags: createkeyifdoesntexist
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Language; String: {code:GetActiveLanguage}; Flags: createkeyifdoesntexist
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: {code:GetPrinterTemppath}; Flags: createkeyifdoesntexist
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Language; String: {code:GetActiveLanguage}; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: {code:GetPrinterTemppath}; Flags: createkeyifdoesntexist; Check: UseINI
 
 #Ifdef GhostscriptVersion
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptBinaries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: program; Flags: createkeyifdoesntexist
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptFonts; String: {app}\Gs{#GhostscriptVersion}\Fonts; Components: program; Flags: createkeyifdoesntexist
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptLibraries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: program; Flags: createkeyifdoesntexist
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptResource; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: program; Flags: createkeyifdoesntexist
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptBinaries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptFonts; String: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptLibraries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptResource; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
 #ENDIF
 
 [Registry]
@@ -364,7 +409,7 @@ Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhos
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Arguments; ValueData: -PPDFCREATORPRINTER; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Command; ValueData: {code:GetShortname|{sys}\{#SpoolerExename}}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Command; ValueData: {code:GetShortname|{syswow64}\{#SpoolerExename}}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Delay; ValueData: 300; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Description; ValueData: PDFCreator Redirected Port; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileDebug; ValueData: 0; Flags: uninsdeletevalue
@@ -441,36 +486,63 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup: SetupLanguage; Valuedata: {code:GetActiveLanguage}; Flags: uninsdeletevalue
 
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFServer; Valuedata: 1; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UseINI; Valuedata: 1; Flags: uninsdeletevalue; Check: UseINI
 
 ; Remove keys and/or values on uninstall
 Root: HKLM; Subkey: SOFTWARE\Classes\Applications\PDFCreator.exe; Flags: uninsdeletekey noerror dontcreatekey deletekey
 Root: HKCU; Subkey: Printers\Settings; ValueName: {code:GetPrintername}; Flags: uninsdeletevalue noerror dontcreatekey
 Root: HKCU; Subkey: Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder\Start Menu\Programs\PDFCreator; Flags: uninsdeletekey noerror dontcreatekey
 
-;CustomMessages for uninstall. InnoSetop doesn't support custom messages for uninstalling at the moment.
+;CustomMessages for uninstall. InnoSetup doesn't support custom messages for uninstalling at the moment.
 Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueName: UninstallOptions; Valuedata: {cm:UninstallOptions}; Flags: uninsdeletevalue
+
+; Application
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; Flags: uninsdeletevalue; Check: IsServerInstallation
+
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: {userdocs}; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: {userdocs}; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+
+#Ifdef GhostscriptVersion
+Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
+
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: uninsdeletevalue; MinVersion: 0,5.0.2195; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+
+Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+#ENDIF
 
 [Run]
 #IFNDEF Test
 ;german localization
-Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
+Filename: {app}\vblocal.Exe; WorkingDir: {syswow64}; Parameters: pdfspooler.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
 ;italian localization
-Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
+Filename: {app}\vblocal.Exe; WorkingDir: {syswow64}; Parameters: pdfspooler.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
 ;french localization
-Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
+Filename: {app}\vblocal.Exe; WorkingDir: {syswow64}; Parameters: pdfspooler.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
-
-;compress exe files with upx
-#ifdef UseUPX
-; Filename: {app}\upx.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe -7 --compress-icons=0 --crp-ms=999999; Components: program; Flags: runhidden
-; Filename: {app}\upx.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe -7 --compress-icons=0 --crp-ms=999999; Components: program; Flags: runhidden
-; Filename: {app}\upx.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe -7 --compress-icons=0 --crp-ms=999999; Components: program; Flags: runhidden
-#ENDIF
 
 Filename: {app}\ShFolder.Exe; WorkingDir: {app}; Parameters: /Q:A; Flags: runminimized; Components: program; MinVersion: 4.0.950,4.0.1381; OnlyBelowVersion: 4.1.2222,5.0.2195
 Filename: {app}\PDFCreator.exe; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
@@ -583,6 +655,10 @@ const
  PRINTER_ACCESS_USE = $8;
  PRINTER_ALL_ACCESS = (STANDARD_RIGHTS_REQUIRED Or PRINTER_ACCESS_ADMINISTER Or PRINTER_ACCESS_USE);
 
+ SC_MANAGER_ALL_ACCESS = $f003f;
+ SERVICE_QUERY_STATUS  = $4;
+ SERVICE_RUNNING       = $4;
+
 type
  TAInt = Array of Integer; TAStr = Array of String;
  TPrinterDefaults = record
@@ -640,6 +716,16 @@ type
   cJobs : LongInt;
   AveragePPM : LongInt;
  end;
+ SERVICE_STATUS = record
+  dwServiceType             : cardinal;
+  dwCurrentState            : cardinal;
+  dwControlsAccepted        : cardinal;
+  dwWin32ExitCode           : cardinal;
+  dwServiceSpecificExitCode : cardinal;
+  dwCheckPoint              : cardinal;
+  dwWaitHint                : cardinal;
+ end;
+ HANDLE = cardinal;
 
 function GetWindow (hWnd : LongInt; wCmd : LongInt) : LongInt;
  external 'GetWindow@user32.dll';
@@ -710,17 +796,27 @@ function DeletePort(pName : String; pHwnd: Longint; pPortName : String): LongInt
 function DeleteMonitor(pName : String;  pEnviroment: String; pMonitorName : String): LongInt;
  external 'DeleteMonitorA@winspool.drv stdcall';
 
+function OpenSCManager(lpMachineName, lpDatabaseName: string; dwDesiredAccess :cardinal): HANDLE;
+ external 'OpenSCManagerA@advapi32.dll stdcall';
+function OpenService(hSCManager :HANDLE;lpServiceName: string; dwDesiredAccess :cardinal): HANDLE;
+ external 'OpenServiceA@advapi32.dll stdcall';
+function CloseServiceHandle(hSCObject :HANDLE): boolean;
+ external 'CloseServiceHandle@advapi32.dll stdcall';
+function QueryServiceStatus(hService :HANDLE;var ServiceStatus :SERVICE_STATUS) : boolean;
+ external 'QueryServiceStatus@advapi32.dll stdcall';
+
 var progTitel, progHandle: TArrayOfString;
     msg : TAStr;
     FullInstallation : boolean;
     Printername, Printerdrivername, Printerportname, Printermonitorname,
      LogFile, UninstallLogfile,
-     PrintSystem, Win9x, WinNT, Win2000, WinXP, Win2003 : String;
+     PrintSystem, Win9x, WinNT, Win2000, WinXP, Win2003,
+     WinXP2003_32bit, WinXP2003_64bit : String;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
 
-    cmdlPrintername, cmdlPPDFile: String;
-    cmdlSilent, cmdlVerysilent, cmdlForceInstall: Boolean;
+    cmdlPrintername, cmdlPPDFile, cmdlINIFile: String;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlUseINI: Boolean;
 
     SCPage:TWizardPage;
     PrinternamePage: TInputQueryWizardpage;
@@ -728,6 +824,11 @@ var progTitel, progHandle: TArrayOfString;
     Standardmodus: TRadioButton;
     ServerDescriptionPage: TOutputMsgWizardPage;
     PrinterInstallationSuccessfully: Boolean;
+
+function IsX64: Boolean;
+begin
+ Result:=(ProcessorArchitecture=paX64);
+end;
 
 function GetDateString(Default:String):String;
 begin
@@ -819,12 +920,30 @@ begin
  RegWriteStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'PDFCreatorRestart', '');
 end;
 
+function UseINI(): Boolean;
+begin
+ Result:=cmdlUseINI;
+end;
+
+function UseOwnINIFile(): Boolean;
+begin
+ if Length(cmdlINIFile)>0 then
+  Result:=True
+ else
+  Result:=False;
+end;
+
 function UseOwnPPDFile(): Boolean;
 begin
  if Length(cmdlPPDFile)>0 then
   Result:=True
  else
   Result:=False;
+end;
+
+function GetExternalINIFile(Default:string): String;
+begin
+ Result:=cmdlINIFile
 end;
 
 function GetExternalPPDFile(Default:string): String;
@@ -847,15 +966,24 @@ begin
  Result:=False;
  If (InstallOnThisVersion('0,4.0.1381','0,5.0.2195')=irInstall) then
   Result:=True;
- If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
-  If PrinterdriverPage.Values[1] then
-   Result:=True
+ If (InstallOnThisVersion('0,5.0.2195','0,0')=irInstall) and PrinterdriverPage.Values[1] then
+  Result:=True
 end;
 
-function InstallWin2kXP2k3Printerdriver(): Boolean;
+function InstallWin2kXP2k3Printerdriver32bit(): Boolean;
 begin
  Result:=False;
- If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
+ If (InstallOnThisVersion('0,5.0.2195','0,0')=irInstall) and Not IsWin64 then
+  Result:=True;
+ If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and
+  IsWin64 and PrinterdriverPage.Values[2] then
+  Result:=True
+end;
+
+function InstallWinXP2k3Printerdriver64bit(): Boolean;
+begin
+ Result:=False;
+ If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and IsWin64 then
   Result:=True
 end;
 
@@ -1086,8 +1214,11 @@ function InstallMonitor(MonitorName: String):Boolean;
 var M2:TMonitorInfo2; res:LongInt;
 begin
  M2.pName:=MonitorName;
- If UsingWinNT=True then Begin
-   M2.pEnvironment:='Windows NT x86';
+ If UsingWinNT then Begin
+   If IsWin64 then
+     M2.pEnvironment:='Windows x64'
+    else
+     M2.pEnvironment:='Windows NT x86';
    M2.pDLLName:='pdfcmnnt.dll'
   end else Begin
    M2.pEnvironment:='Windows 4.0';
@@ -1096,6 +1227,7 @@ begin
 
  SaveStringToFile(LogFile, 'InstallMonitor:' + #13#10, True)
  SaveStringToFile(LogFile, ' Monitorname : ' + M2.pName  + #13#10, True)
+ SaveStringToFile(LogFile, ' Environment : ' + M2.pEnvironment  + #13#10, True)
 
  res := AddMonitor(Chr(0), 2, M2);
  if res=0 then begin
@@ -1119,7 +1251,7 @@ begin
  res:=true;
  tres:=RegWriteStringValue(HKLM,SubKeyName,'Arguments','-PPDFCREATORPRINTER');
  res:=res and tres;
- tres:=RegWriteStringValue(HKLM,SubKeyName,'Command',GetShortname(ExpandConstant('{sys}')+'\{#SpoolerExename}'));
+ tres:=RegWriteStringValue(HKLM,SubKeyName,'Command',GetShortname(ExpandConstant('{app}')+'\{#SpoolerExename}'));
  res:=res and tres;
  tres:=RegWriteDWordValue(HKLM,SubKeyName,'Delay',300);
  res:=res and tres;
@@ -1172,6 +1304,7 @@ begin
 
   SaveStringToFile(LogFile, 'Install printerdriver for Win95/98/Me:' + #13#10, True)
   SaveStringToFile(LogFile, ' Drivername : ' + DI3.pName  + #13#10, True)
+  SaveStringToFile(LogFile, ' Environment : ' + DI3.pEnvironment  + #13#10, True)
 
   res := AddPrinterDriver(Chr(0), 3, DI3);
 
@@ -1200,6 +1333,7 @@ begin
 
   SaveStringToFile(LogFile, 'Install printerdriver for WinNt:' + #13#10, True)
   SaveStringToFile(LogFile, ' Drivername : ' + DI3.pName  + #13#10, True)
+  SaveStringToFile(LogFile, ' Environment : ' + DI3.pEnvironment  + #13#10, True)
 
   res := AddPrinterDriver(Chr(0), 3, DI3);
 
@@ -1208,17 +1342,21 @@ begin
     SaveStringToFile(LogFile, ' Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
    end else
     SaveStringToFile(LogFile, ' Result: Success' + #13#10#13#10, True);
-  If UsingWinNT=false then
-   SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
  end;
-// Win2000, WinXP, Win2003
- If InstallWin2kXP2k3Printerdriver then begin
+// Win2000, WinXP, Win2003 - 32bit
+ If InstallWin2kXP2k3Printerdriver32bit then begin
   If InstallOnThisVersion('0,5.0.2195','0,5.01.2600')=irInstall then
     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),Win2000)
    else If InstallOnThisVersion('0,5.0.2600','0,5.02.3790')=irInstall then
-     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),WinXP)
+     If IsWin64 then
+       ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),WinXP2003_32bit)
+      else
+       ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),WinXP)
     else
-     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),Win2003);
+     If IsWin64 then
+       ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),WinXP2003_32bit)
+      else
+       ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),Win2003);
   AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
   ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
   DI3.cVersion:=3;
@@ -1234,8 +1372,9 @@ begin
   DI3.pDefaultDataType :='RAW';
   DI3.pMonitorName :='';
 
-  SaveStringToFile(LogFile, 'Install printerdriver for Win2kXP2k3:' + #13#10, True)
+  SaveStringToFile(LogFile, 'Install printerdriver for Win2kXP2k3 (32bit):' + #13#10, True)
   SaveStringToFile(LogFile, ' Drivername : ' + DI3.pName  + #13#10, True)
+  SaveStringToFile(LogFile, ' Environment : ' + DI3.pEnvironment  + #13#10, True)
 
   res := AddPrinterDriver(Chr(0), 3, DI3);
 
@@ -1244,8 +1383,33 @@ begin
     SaveStringToFile(LogFile, ' Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
    end else
     SaveStringToFile(LogFile, ' Result: Success' + #13#10#13#10, True);
-  If UsingWinNT=false then
-   SendMessage(65535, 26, 0, CastStringToInteger(PrintSystem)); // Ini-Refresh !!! Important for Win9x/Me
+ end;
+// WinXP, Win2003 - 64bit
+ If InstallWinXP2k3Printerdriver64bit then begin
+  ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'),WinXP2003_64bit);
+  AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
+  ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+  DI3.cVersion:=3;
+  DI3.pDependentFiles :='PSCRIPT.NTF'#0#0;
+  DI3.pConfigFile :='PS5UI.DLL';
+  DI3.pDriverPath := 'PSCRIPT5.DLL';
+  DI3.pEnvironment:='Windows x64';
+  DI3.pHelpFile :='PSCRIPT.HLP';
+  DI3.pDataFile :='PDFCREAT.PPD';
+  DI3.pDefaultDataType :='RAW';
+  DI3.pMonitorName :='';
+
+  SaveStringToFile(LogFile, 'Install printerdriver for WinXP2k3:' + #13#10, True)
+  SaveStringToFile(LogFile, ' Drivername : ' + DI3.pName  + #13#10, True)
+  SaveStringToFile(LogFile, ' Environment : ' + DI3.pEnvironment  + #13#10, True)
+
+  res := AddPrinterDriver(Chr(0), 3, DI3);
+
+  if res=0 then begin
+    Result:=False;
+    SaveStringToFile(LogFile, ' Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
+   end else
+    SaveStringToFile(LogFile, ' Result: Success' + #13#10#13#10, True);
  end;
 end;
 
@@ -1356,6 +1520,41 @@ begin
   end
 end;
 
+function OpenServiceManager() : HANDLE;
+begin
+ Result:=0;
+ if UsingWinNT() = true then begin
+  Result := OpenSCManager('','ServicesActive',SC_MANAGER_ALL_ACCESS);
+ end
+end;
+
+function IsServiceRunning(ServiceName: string) : boolean;
+var
+ hSCM, hService	: HANDLE;
+ Status	: SERVICE_STATUS;
+begin
+ hSCM := OpenServiceManager();
+ Result := false;
+ if hSCM <> 0 then begin
+  hService := OpenService(hSCM,ServiceName,SERVICE_QUERY_STATUS);
+  if hService <> 0 then begin
+   if QueryServiceStatus(hService,Status) then
+    Result :=(Status.dwCurrentState = SERVICE_RUNNING);
+   CloseServiceHandle(hService)
+  end
+  CloseServiceHandle(hSCM)
+ end
+end;
+
+procedure SaveSpoolerServiceInformation(LogFile : String);
+begin
+ if UsingWinNT then
+  if IsServiceRunning('Spooler') then
+    SaveStringToFile(LogFile, 'Spooler service: is running'#13#10, True)
+   else
+    SaveStringToFile(LogFile, 'Spooler service: is NOT running'#13#10, True)
+end;
+
 procedure UninstallCompletePrinter(PrinterMonitorname:String; PrinterPortname: String; PrinterDrivername: String; Printername:String; LogFile: String);
 var
  res, resUI, c, i: LongInt;
@@ -1364,6 +1563,7 @@ var
 begin
  SaveStringToFile(LogFile, #13#10, True)
 
+ SaveSpoolerServiceInformation(LogFile);
  c:=GetPDFCreatorPrinters(PDFCreatorPrinters);
  For i:=0 to c-1 do
   resUI:=DeleteWindowsPrinter(PDFCreatorPrinters[i].pPrinterName, UninstallLogfile);
@@ -1424,12 +1624,22 @@ begin
  Result:=PrinterInstallationSuccessfully
 end;
 
+function GetDefaultIniPath(Default:String):String;
+var
+ AppData: String;
+begin
+ if Not RegQueryStringValue(HKEY_USERS, '.DEFAULT\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders',     'AppData', AppData) then
+   AppData:=ExpandConstant('{commonappdata}');
+ If Not DirExists(Appdata) Then
+  ForceDirectories(AppData);
+end;
+
 function GetIniPath(Default:String):String;
 begin
  if Standardmodus.Checked = True then
    Result:=ExpandConstant('{userappdata}')+'\PDFCreator'
   else
-   Result:=ExpandConstant('{app}');
+   Result:=ExpandConstant('{commonappdata}');
 end;
 
 function IsServerInstallation: Boolean;
@@ -1666,6 +1876,22 @@ begin
  SaveStringToFile(LogFile, '--------------------------------------'#13#10#13#10, True);
  SaveStringToFile(LogFile, 'Windowsversion: '+GetWindowsVersionString+#13#10, True);
  SaveStringToFile(LogFile, 'WinDir: '+GetWinDir+#13#10, True);
+ If IsWin64 then
+   SaveStringToFile(LogFile, 'Win64: true'+#13#10, True)
+  else
+   SaveStringToFile(LogFile, 'Win64: false'+#13#10, True);
+
+ Case ProcessorArchitecture of
+  paUnknown:
+   SaveStringToFile(LogFile, 'ProcessorArchitecture: Unknown'+#13#10, True);
+  paX86:
+   SaveStringToFile(LogFile, 'ProcessorArchitecture: X86'+#13#10, True);
+  paX64:
+   SaveStringToFile(LogFile, 'ProcessorArchitecture: X64'+#13#10, True);
+  paIA64:
+   SaveStringToFile(LogFile, 'ProcessorArchitecture: IA64'+#13#10, True);
+ end;
+
  SaveStringToFile(LogFile, 'SystemDir: '+GetSystemDir+#13#10, True);
  SaveStringToFile(LogFile, 'TempDir: '+GetTempDir+#13#10, True);
  SaveStringToFile(LogFile, 'CurrentDir: '+GetCurrentDir+#13#10, True);
@@ -1688,14 +1914,26 @@ begin
  end;
 end;
 
+procedure SavePrinterdriverInformations(Environment :String);
+var
+ i,c:Longint;
+ PrinterDrivers: Array of TDriverInfo3;
+begin
+ c:=GetPrinterdrivers(PrinterDrivers, Environment);
+ SaveStringToFile(LogFile, 'Printerdrivers (' + Environment + ') ['+IntToStr(c)+']:'#13#10, True);
+ for i:=0 to c-1 do
+  SaveStringToFile(LogFile,' '+PrinterDrivers[i].pName+#13#10, True);
+ SaveStringToFile(LogFile, #13#10, True);
+end;
+
 procedure SavePrinterInformations;
 var
  i,c:Longint;
  Monitors: Array of TMonitorInfo1;
  Ports: Array of TPortInfo2;
- PrinterDrivers: Array of TDriverInfo3;
  Printers: Array of TPrinterInfo2;
 begin
+ SaveSpoolerServiceInformation(LogFile);
  c:=GetMonitors(Monitors);
  SaveStringToFile(LogFile, 'Printermonitors ['+IntToStr(c)+']:'#13#10, True);
  for i:=0 to c-1 do
@@ -1708,17 +1946,11 @@ begin
   SaveStringToFile(LogFile,' '+Ports[i].pPortname+#13#10, True);
  SaveStringToFile(LogFile, #13#10, True);
 
- c:=GetPrinterdrivers(PrinterDrivers,'Windows NT x86');
- SaveStringToFile(LogFile, 'Printerdrivers (Windows NT x86) ['+IntToStr(c)+']:'#13#10, True);
- for i:=0 to c-1 do
-  SaveStringToFile(LogFile,' '+PrinterDrivers[i].pName+#13#10, True);
- SaveStringToFile(LogFile, #13#10, True);
-
- c:=GetPrinterdrivers(PrinterDrivers,'Windows 4.0');
- SaveStringToFile(LogFile, 'Printerdrivers (Windows 4.0) ['+IntToStr(c)+']:'#13#10, True);
- for i:=0 to c-1 do
-  SaveStringToFile(LogFile,' '+PrinterDrivers[i].pName+#13#10, True);
- SaveStringToFile(LogFile, #13#10, True);
+ SavePrinterdriverInformations('Windows 4.0');
+ SavePrinterdriverInformations('Windows NT x86');
+ SavePrinterdriverInformations('Windows x64');
+ SavePrinterdriverInformations('Windows IA64');
+ SavePrinterdriverInformations('Windows NT Alpha_AXP');
 
  c:=GetPrinters(Printers);
  SaveStringToFile(LogFile, 'Printers ['+IntToStr(c)+']:'#13#10, True);
@@ -2073,7 +2305,9 @@ begin
     '/?'#9#9#9#9'- this help screen'#13#10 +
     '/ForceInstall'#9#9#9'- force the installation'#13#10 +
     '/Printername=<PrinterName>'#9'- set a different printername'#13#10 +
-    '/PPDFile=<PPDFile>'#9#9'- use an own ppd file'
+    '/PPDFile=<PPDFile>'#9#9'- use an own ppd-file'#13#10 +
+    '/UseINI'#9#9#9#9'- use an ini-file instead of registry settings'#13#10 +
+    '/INIFile=<INIFile>'#9#9#9'- use an own ini-file'
     ,mbInformation,MB_OK);
    exit;
   end;
@@ -2084,7 +2318,17 @@ begin
    cmdlSilent:=true;
   if uppercase(paramstr(i))='/FORCEINSTALL' then
    cmdlForceInstall:=true;
+  if uppercase(paramstr(i))='/INI' then
+   cmdlUseINI:=true;
 
+  cmdParam:='/INIFile';
+  pStr:=Copy(paramstr(i),1,Length(cmdParam));
+  if uppercase(pstr)=uppercase(cmdParam) then begin
+   if Copy(paramstr(i),Length(cmdParam)+1,1)='=' then
+     cmdlINIFile:=Copy(paramstr(i),Length(cmdParam)+2,Length(paramstr(i)))
+    else
+     cmdlINIFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
+  end;
   cmdParam:='/PPDFile';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
   if uppercase(pstr)=uppercase(cmdParam) then begin
@@ -2136,6 +2380,8 @@ begin
  Win2000:= 'Windows 2000';
  WinXP:=   'Windows XP';
  Win2003:= 'Windows 2003';
+ WinXP2003_32bit:= 'Windows XP/2003 - 32bit';
+ WinXP2003_64bit:= 'Windows XP/2003 - 64bit';
  PrinterMonitorname:= 'PDFCreator';
  PrinterPortname:=    'PDFCreator:';
  PrinterDrivername:=  'PDFCreator';
@@ -2313,6 +2559,8 @@ begin
  PrinterdriverPage.Add('Windows 95, Windows 98, Windows Me');
  if InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
   PrinterdriverPage.Add('Windows NT 4.0');
+ if IsWin64 then
+  PrinterdriverPage.Add('Windows 2000/XP/2003 - 32bit');
 
  ProgressPage := CreateOutputProgressPage(ExpandConstant('{cm:InstallPrinter}'),
   ExpandConstant('{cm:InstallPrinterDescription}'));
@@ -2343,11 +2591,20 @@ begin
    If InstallOnThisVersion('0,4.0.1381','0,5.0.2195')=irInstall then
     If PrinterdriverPage.Values[0] then
      S := S + Space + Win9x + NewLine;
-   If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then begin
+   If InstallOnThisVersion('0,5.0.2195','0,5.01.2600,0')=irInstall then begin
     If PrinterdriverPage.Values[0] then
      S := S + Space + Win9x + NewLine;
     If PrinterdriverPage.Values[1] then
      S := S + Space + WinNt + NewLine;
+   end
+   If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) then begin
+    If PrinterdriverPage.Values[0] then
+     S := S + Space + Win9x + NewLine;
+    If PrinterdriverPage.Values[1] then
+     S := S + Space + WinNt + NewLine;
+    If IsWin64 then
+     If PrinterdriverPage.Values[2] then
+      S := S + Space + WinXP2003_32bit + NewLine;
    end
    S := S + NewLine;
   end;
@@ -2372,20 +2629,26 @@ begin
     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
    If InstallWinNtPrinterdriver then
     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
-   If InstallWin2kXP2k3Printerdriver then
+   If InstallWin2kXP2k3Printerdriver32bit then
+    AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
+   If InstallWinXP2k3Printerdriver64bit then
     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
    ProgressPage.SetProgress(0, 0);
    ProgressPage.Show;
 
    try
      PrintSystem:='windows';
-     SaveStringToFile(LogFile, 'Printerstatus before installing:' + #13#10, True)
-     SavePrinterInformations
+     SaveStringToFile(LogFile, 'Printerstatus before installing:' + #13#10, True);
+     SavePrinterInformations;
      PrinterDriverDirectoryLog('Windows 4.0');
      If UsingWinNT then
       PrinterDriverDirectoryLog('Windows NT x86');
-
+     If IsWin64 then begin
+      PrinterDriverDirectoryLog('Windows x64');
+      PrinterDriverDirectoryLog('Windows IA64');
+     end;
      res:=true;
+
      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
      ProgressPage.SetText(ExpandConstant('{cm:InstallPrintermonitor}'), GetPrinterMonitorname(''));
@@ -2420,6 +2683,7 @@ begin
      ProgressPage.SetText(ExpandConstant('{cm:InstallPrinter}'), GetPrintername(''));
      GetPrinterdrivers(PrinterDrivers,'Windows 4.0');
      GetPrinterdrivers(PrinterDrivers,'Windows NT x86');
+     GetPrinterdrivers(PrinterDrivers,'Windows x64');
      tres:=InstallPrinter;
      res:=res and tres;
      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
@@ -2463,6 +2727,9 @@ begin
  DelTree(iniPath,true,true,true);
  iniPath:=ExpandConstant('{app}')+'\PDFCreator.ini';
  DelTree(iniPath,false,true,false);
+ RegDeleteKeyIncludingSubkeys(HKEY_USERS, '.DEFAULT\Software\PDFCreator');
+ RegDeleteKeyIncludingSubkeys(HKEY_CURRENT_USER, 'Software\PDFCreator');
+ RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\PDFCreator');
 end;
 
 procedure RemoveExplorerIntegretation();
@@ -2525,5 +2792,3 @@ begin
       end;
   end;
 end;
-
-//#expr SaveToFile("C:\test.iss")

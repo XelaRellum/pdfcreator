@@ -21,6 +21,16 @@
     <td class="main"><p class="header">Kommandozeilenparameter</p>
       <p>PDFCreator bietet die M&ouml;glichkeit, Dokumente &uuml;ber Kommandozeilenparameter 
         zu erstellen. Folgende Parameter werden unterst&uuml;tzt:</p>
+      <p> <strong>/CheckInstance </strong><br>
+        Wird dieser Parameter verwendet, zeigt PDFCreator die laufende Instanzen der Programme
+        PDFCreator, PDFSpooler und Transtool an. Dieser Parameter kann mit dem Parameter /NoStart
+        kombiniert werden. Wird die Eigenschaft "Local" angezeigt existiert eine lokale Instanz.
+        Bitte überprüfen Sie den Desktop, den SysTray und den Task-Manager um diese lokale Instanz
+        zu finden. Wird nur die Eigenschaft "Global" angezeigt, exisitiert mindestens eine Instanz
+        in einer Sitzung auf einem Terminalserver.
+        Dieser Parameter kann für Administratoren nützlich sein, falls überprüft werden muss, ob 
+        noch eine Instanz von PDFCreator gestartet ist.<br>
+        <em>Beispiel:</em> PDFCreator.exe /CheckInstance</p>
       <p><strong>/ClearCache</strong><br>
         Entfernt alle tempor&auml;ren Dateien. Das ist hilfreich, wenn PDFCreator 
         aufgrund defekter Dateien nicht mehr starten sollte.<br>

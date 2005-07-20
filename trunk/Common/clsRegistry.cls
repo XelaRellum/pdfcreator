@@ -214,19 +214,19 @@ Public Function CreateKey(Optional Keyname As Variant) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim handle As Long, disp As Long, retVal As Long, tStr As String
+50010  Dim handle As Long, disp As Long, RetVal As Long, tstr As String
 50020  Keyname = IIf(IsMissing(Keyname), mvarSubKey, CStr(Keyname))
 50030  If mvarKeyRoot = vbNullString Then
-50040    tStr = Keyname
+50040    tstr = Keyname
 50050   Else
-50060    tStr = mvarKeyRoot & "\" & Keyname
+50060    tstr = mvarKeyRoot & "\" & Keyname
 50070  End If
-50080  retVal = RegCreateKeyEx(mvarhKeySet, tStr, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, Security, handle, disp)
-50090  tStr = String(64, Chr$(0))
-50100  mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
-50110  If retVal Then Exit Function
+50080  RetVal = RegCreateKeyEx(mvarhKeySet, tstr, 0, "", REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, Security, handle, disp)
+50090  tstr = String(64, Chr$(0))
+50100  mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
+50110  If RetVal Then Exit Function
 50120  RegCloseKey (handle)
-50130  CreateKey = retVal
+50130  CreateKey = RetVal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -243,13 +243,13 @@ Public Function DeleteKey(Keyname As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim retVal As Long, handle As Long, tStr As String
-50020  retVal = RegDeleteKey(mvarhKeySet, mvarKeyRoot & "\" & Keyname)
-50030  tStr = String(64, Chr$(0))
-50040  mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
-50050  If retVal Then Exit Function
+50010  Dim RetVal As Long, handle As Long, tstr As String
+50020  RetVal = RegDeleteKey(mvarhKeySet, mvarKeyRoot & "\" & Keyname)
+50030  tstr = String(64, Chr$(0))
+50040  mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
+50050  If RetVal Then Exit Function
 50060  RegCloseKey (handle)
-50070  DeleteKey = retVal
+50070  DeleteKey = RetVal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -266,12 +266,12 @@ Public Function DeleteValue(ValueName As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim retVal As Long, handle As Long, tStr As String
-50020  retVal = RegOpenKeyEx(mvarhKeySet, GetCompleteKey(mvarKeyRoot & "\" & mvarSubKey), REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, handle)
-50030  tStr = String(64, Chr$(0))
-50040  mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
-50050  If retVal <> 0 Then
-50060   DeleteValue = retVal
+50010  Dim RetVal As Long, handle As Long, tstr As String
+50020  RetVal = RegOpenKeyEx(mvarhKeySet, GetCompleteKey(mvarKeyRoot & "\" & mvarSubKey), REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, handle)
+50030  tstr = String(64, Chr$(0))
+50040  mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
+50050  If RetVal <> 0 Then
+50060   DeleteValue = RetVal
 50070   Exit Function
 50080  End If
 50090  DeleteValue = RegDeleteValue(handle, ValueName)
@@ -293,26 +293,26 @@ Public Function EnumRegistryKeys(ByVal hkey As hkey, ByVal Keyname As String) As
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50060  Dim handle As Long, Length As Long, Index As Long, subkeyName As String, _
+50010  Dim handle As Long, Length As Long, Index As Long, subkeyName As String, _
   fFiletime As FILETIME
-50080  Set EnumRegistryKeys = New Collection
+50030  Set EnumRegistryKeys = New Collection
+50040
+50050  If Len(Keyname) Then
+50060   If RegOpenKeyEx(hkey, Keyname, 0, KEY_READ, handle) Then Exit Function
+50070   hkey = handle
+50080  End If
 50090
-50100  If Len(Keyname) Then
-50110   If RegOpenKeyEx(hkey, Keyname, 0, KEY_READ, handle) Then Exit Function
-50120   hkey = handle
-50130  End If
-50140
-50150  Do
-50160   Length = 260
-50170   subkeyName = Space$(Length)
-50180   If RegEnumKeyEx(hkey, Index, subkeyName, Length, 0, "", vbNull, fFiletime) = ERROR_NO_MORE_ITEMS Then Exit Do
-50190   subkeyName = Left$(subkeyName, InStr(subkeyName, vbNullChar) - 1)
-50200   'ErrPtnr.CallStackParam "subKeyname", subkeyName '
-50210   EnumRegistryKeys.Add subkeyName, subkeyName
-50220   Index = Index + 1
-50230  Loop
-50240
-50250  If handle Then RegCloseKey handle
+50100  Do
+50110   Length = 260
+50120   subkeyName = Space$(Length)
+50130   If RegEnumKeyEx(hkey, Index, subkeyName, Length, 0, "", vbNull, fFiletime) = ERROR_NO_MORE_ITEMS Then Exit Do
+50140   subkeyName = Left$(subkeyName, InStr(subkeyName, vbNullChar) - 1)
+50150   'ErrPtnr.CallStackParam "subKeyname", subkeyName '
+50160   EnumRegistryKeys.Add subkeyName, subkeyName
+50170   Index = Index + 1
+50180  Loop
+50190
+50200  If handle Then RegCloseKey handle
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -339,7 +339,7 @@ On Error GoTo ErrPtnr_OnError
 50070     Dim resString As String
 50080     Dim Length As Long
 50090     Dim valueInfo(0 To 1) As Variant
-50100     Dim retVal As Long
+50100     Dim RetVal As Long
 50110     Dim i As Integer
 50120     Dim vTemp As Variant
 50130
@@ -356,15 +356,15 @@ On Error GoTo ErrPtnr_OnError
 50240         Length = 4096
 50250         ReDim resBinary(0 To Length - 1) As Byte
 50260
-50270         retVal = RegEnumValue(hkey, Index, Name, nameLen, ByVal 0&, valueType, _
+50270         RetVal = RegEnumValue(hkey, Index, Name, nameLen, ByVal 0&, valueType, _
             resBinary(0), Length)
 50290
-50300         If retVal = ERROR_MORE_DATA Then
+50300         If RetVal = ERROR_MORE_DATA Then
 50310             ReDim resBinary(0 To Length - 1) As Byte
-50320             retVal = RegEnumValue(hkey, Index, Name, nameLen, ByVal 0&, _
+50320             RetVal = RegEnumValue(hkey, Index, Name, nameLen, ByVal 0&, _
                 valueType, resBinary(0), Length)
 50340         End If
-50350         If retVal Then Exit Do
+50350         If RetVal Then Exit Do
 50360
 50370         valueInfo(0) = Left$(Name, nameLen)
 50380
@@ -441,49 +441,49 @@ Public Function GetRegistryValue(ByVal ValueName As String, Optional DefaultValu
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim handle As Long, resLong As Long, resString As String, _
-  TestString As String, resBinary() As Byte, Length As Long, retVal As Long, _
-  valueType As Long
+  TestString As String, resBinary() As Byte, Length As Long, RetVal As Long, _
+  valueType As Long, expStr As String
 50040
 50050  GetRegistryValue = IIf(IsMissing(DefaultValue), Empty, DefaultValue)
-50060
-50070  If RegOpenKeyEx(mvarhKeySet, GetCompleteKey(mvarKeyRoot & "\" & mvarSubKey), REG_OPTION_NON_VOLATILE, KEY_READ, handle) Then
-50080   Exit Function
-50090  End If
-50100
-50110  Length = 1024
-50120  ReDim resBinary(0 To Length - 1) As Byte
-50130
-50140  retVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), Length)
-50150  If retVal = ERROR_MORE_DATA Then
-50160   ReDim resBinary(0 To Length - 1) As Byte
-50170   retVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), Length)
-50180  End If
-50190
-50200         If retVal = ERROR_KEY_NOT_FOUND Then
-50210                  RegCloseKey (handle)
-50220                  Exit Function
-50230         End If
-50240
-50251         Select Case valueType
+50060  If RegOpenKeyEx(mvarhKeySet, GetCompleteKey(mvarKeyRoot & "\" & mvarSubKey), REG_OPTION_NON_VOLATILE, KEY_READ, handle) Then
+50070   Exit Function
+50080  End If
+50090
+50100  Length = 1024
+50110  ReDim resBinary(0 To Length - 1) As Byte
+50120
+50130  RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), Length)
+50140  If RetVal = ERROR_MORE_DATA Then
+50150   ReDim resBinary(0 To Length - 1) As Byte
+50160   RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), Length)
+50170  End If
+50180
+50190         If RetVal = ERROR_KEY_NOT_FOUND Then
+50200                  RegCloseKey (handle)
+50210                  Exit Function
+50220         End If
+50230
+50241         Select Case valueType
                   Case REG_DWORD
-50270                 CopyMemory resLong, resBinary(0), 4
-50280                 GetRegistryValue = resLong
-50290
-50300             Case REG_SZ
-50310                 If Length <> 0 Then
-50320                     resString = Space$(Length - 1)
-50330                     CopyMemory ByVal resString, resBinary(0), Length - 1
-50340                     GetRegistryValue = resString
-50350                 End If
-50360
-50370             Case REG_EXPAND_SZ
-50380                 If Length <> 0 Then
-50390                     resString = Space$(Length - 1)
-50400                     CopyMemory ByVal resString, resBinary(0), Length - 1
-50410
-50420                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString) + 2)
-50430                     GetRegistryValue = Left$(resString, Length)
-50440
+50260                 CopyMemory resLong, resBinary(0), 4
+50270                 GetRegistryValue = resLong
+50280
+50290             Case REG_SZ
+50300                 If Length <> 0 Then
+50310                     resString = Space$(Length - 1)
+50320                     CopyMemory ByVal resString, resBinary(0), Length - 1
+50330                     GetRegistryValue = resString
+50340                 End If
+50350
+50360             Case REG_EXPAND_SZ
+50370                 If Length <> 0 Then
+50380                     resString = Space$(Length - 1)
+50390                     CopyMemory ByVal resString, resBinary(0), Length - 1
+50400                     expStr = ""
+50410                     Length = ExpandEnvironmentStrings(resString, expStr, 0)
+50420                     expStr = String$(Length - 1, 0)
+50430                     Length = ExpandEnvironmentStrings(resString, expStr, Length)
+50440                     GetRegistryValue = expStr
 50450                 End If
 50460
 50470             Case REG_BINARY
@@ -524,7 +524,7 @@ On Error GoTo ErrPtnr_OnError
 50030     Dim strValue As String
 50040     Dim binValue() As Byte
 50050     Dim Length As Long
-50060     Dim retVal As Long, tStr As String
+50060     Dim RetVal As Long, tstr As String
 50070
 50080     If RegOpenKeyEx(hkey, GetCompleteKey(mvarKeyRoot & "\" & mvarSubKey), REG_OPTION_NON_VOLATILE, KEY_WRITE, handle) Then
 50090        SetRegistryValue = False 'CVar("Error!")
@@ -534,39 +534,39 @@ On Error GoTo ErrPtnr_OnError
 50131     Select Case DType
               Case REG_DWORD
 50150             lngValue = Value
-50160             retVal = RegSetValueEx(handle, ValueName, 0, REG_DWORD, lngValue, 4)
-50170             tStr = String(64, Chr$(0))
-50180             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50160             RetVal = RegSetValueEx(handle, ValueName, 0, REG_DWORD, lngValue, 4)
+50170             tstr = String(64, Chr$(0))
+50180             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50190         Case REG_SZ
 50200             strValue = Value
-50210             retVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, _
+50210             RetVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, _
                 Len(strValue))
-50230             tStr = String(64, Chr$(0))
-50240             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50230             tstr = String(64, Chr$(0))
+50240             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50250         Case REG_BINARY
 50260             binValue = Value
 50270             Length = UBound(binValue) - LBound(binValue) + 1
-50280             retVal = RegSetValueEx(handle, ValueName, 0, REG_BINARY, _
+50280             RetVal = RegSetValueEx(handle, ValueName, 0, REG_BINARY, _
                                    binValue(LBound(binValue)), Length)
-50300             tStr = String(64, Chr$(0))
-50310             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50300             tstr = String(64, Chr$(0))
+50310             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50320         Case REG_EXPAND_SZ
 50330             strValue = Value
-50340             retVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, _
+50340             RetVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, _
                 Len(strValue))
-50360             tStr = String(64, Chr$(0))
-50370             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50360             tstr = String(64, Chr$(0))
+50370             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50380         Case REG_MULTI_SZ
 50390             strValue = Value
-50400             retVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, _
+50400             RetVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, _
                 Len(strValue))
-50420             tStr = String(64, Chr$(0))
-50430             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50420             tstr = String(64, Chr$(0))
+50430             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50440         Case Else
 50450     End Select
 50460
 50470      RegCloseKey (handle)
-50480     SetRegistryValue = (retVal = 0)
+50480     SetRegistryValue = (RetVal = 0)
 50490
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -593,8 +593,8 @@ On Error GoTo ErrPtnr_OnError
 50070     Dim TestString As String
 50080     Dim resBinary() As Byte
 50090     Dim Length As Long
-50100     Dim retVal As Long
-50110     Dim RegPath As String, tStr As String
+50100     Dim RetVal As Long
+50110     Dim RegPath As String, tstr As String, expStr As String
 50120
 50130
 50140         RegPath = IIf(IsMissing(KeyPath), GetCompleteKey(mvarKeyRoot & "\" & mvarSubKey), KeyPath)
@@ -608,18 +608,18 @@ On Error GoTo ErrPtnr_OnError
 50220         Length = 1024
 50230         ReDim resBinary(0 To Length - 1) As Byte
 50240
-50250         retVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
+50250         RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
             Length)
 50270
-50280         If retVal = ERROR_MORE_DATA Then
+50280         If RetVal = ERROR_MORE_DATA Then
 50290             ReDim resBinary(0 To Length - 1) As Byte
-50300             retVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
+50300             RetVal = RegQueryValueEx(handle, ValueName, 0, valueType, resBinary(0), _
                 Length)
-50320             tStr = String(64, Chr$(0))
-50330             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50320             tstr = String(64, Chr$(0))
+50330             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50340         End If
 50350
-50360         If retVal = ERROR_KEY_NOT_FOUND Then
+50360         If RetVal = ERROR_KEY_NOT_FOUND Then
 50370             RegCloseKey (handle)
 50380             Exit Function
 50390         End If
@@ -640,29 +640,30 @@ On Error GoTo ErrPtnr_OnError
 50540                 If Length <> 0 Then
 50550                     resString = Space$(Length - 1)
 50560                     CopyMemory ByVal resString, resBinary(0), Length - 1
-50570
-50580                     Length = ExpandEnvironmentStrings(resString, resString, Len(resString) + 2)
-50590                     ReadRemoteRegistryValue = Left$(resString, Length)
-50600
-50610                 End If
-50620
-50630             Case REG_BINARY
-50640                 If Length <> UBound(resBinary) + 1 Then
-50650                     ReDim Preserve resBinary(0 To Length - 1) As Byte
-50660                 End If
-50670                 ReadRemoteRegistryValue = resBinary()
-50680
-50690             Case REG_MULTI_SZ
-50700                 resString = Space$(Length - 2)
-50710                 CopyMemory ByVal resString, resBinary(0), Length - 2
-50720                 TestString = resString
-50730                 If Len(TrimNull(TestString)) > 0 Then ReadRemoteRegistryValue = resString
-50740
-50750             Case Else
-50760         End Select
-50770
-50780         RegCloseKey (handle)
-50790
+50570                     expStr = ""
+50580                     Length = ExpandEnvironmentStrings(resString, expStr, 0)
+50590                     expStr = String$(Length - 1, 0)
+50600                     Length = ExpandEnvironmentStrings(resString, expStr, Length)
+50610                     ReadRemoteRegistryValue = expStr
+50620                 End If
+50630
+50640             Case REG_BINARY
+50650                 If Length <> UBound(resBinary) + 1 Then
+50660                     ReDim Preserve resBinary(0 To Length - 1) As Byte
+50670                 End If
+50680                 ReadRemoteRegistryValue = resBinary()
+50690
+50700             Case REG_MULTI_SZ
+50710                 resString = Space$(Length - 2)
+50720                 CopyMemory ByVal resString, resBinary(0), Length - 2
+50730                 TestString = resString
+50740                 If Len(TrimNull(TestString)) > 0 Then ReadRemoteRegistryValue = resString
+50750
+50760             Case Else
+50770         End Select
+50780
+50790         RegCloseKey (handle)
+50800
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -684,10 +685,10 @@ On Error GoTo ErrPtnr_OnError
 50030     Dim strValue As String
 50040     Dim binValue() As Byte
 50050     Dim Length As Long
-50060     Dim retVal As Long
+50060     Dim RetVal As Long
 50070     Dim RegPath As String
 50080     Dim lhRemoteRegistry As Long
-50090     Dim lReturnCode     As Long, tStr As String
+50090     Dim lReturnCode     As Long, tstr As String
 50100
 50110
 50120         RegPath = IIf(IsMissing(KeyPath), GetCompleteKey(mvarKeyRoot & "\" & mvarSubKey), KeyPath)
@@ -701,39 +702,39 @@ On Error GoTo ErrPtnr_OnError
 50201     Select Case DType
               Case REG_DWORD
 50220             lngValue = Value
-50230             retVal = RegSetValueEx(handle, ValueName, 0, REG_DWORD, lngValue, 4)
-50240             tStr = String(64, Chr$(0))
-50250             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50230             RetVal = RegSetValueEx(handle, ValueName, 0, REG_DWORD, lngValue, 4)
+50240             tstr = String(64, Chr$(0))
+50250             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50260         Case REG_SZ
 50270             strValue = Value
-50280             retVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, _
+50280             RetVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, _
                 Len(strValue))
-50300             tStr = String(64, Chr$(0))
-50310             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50300             tstr = String(64, Chr$(0))
+50310             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50320         Case REG_BINARY
 50330             binValue = Value
 50340             Length = UBound(binValue) - LBound(binValue) + 1
-50350             retVal = RegSetValueEx(handle, ValueName, 0, REG_BINARY, _
+50350             RetVal = RegSetValueEx(handle, ValueName, 0, REG_BINARY, _
                                    binValue(LBound(binValue)), Length)
-50370             tStr = String(64, Chr$(0))
-50380             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50370             tstr = String(64, Chr$(0))
+50380             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50390         Case REG_EXPAND_SZ
 50400             strValue = Value
-50410             retVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, _
+50410             RetVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, _
                 Len(strValue))
-50430             tStr = String(64, Chr$(0))
-50440             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50430             tstr = String(64, Chr$(0))
+50440             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50450         Case REG_MULTI_SZ
 50460             strValue = Value
-50470             retVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, _
+50470             RetVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, _
                 Len(strValue))
-50490             tStr = String(64, Chr$(0))
-50500             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, retVal, 0&, tStr, Len(tStr), ByVal 0))
+50490             tstr = String(64, Chr$(0))
+50500             mvarErrorMsg = Left$(tstr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tstr, Len(tstr), ByVal 0))
 50510         Case Else
 50520     End Select
 50530
 50540      RegCloseKey (handle)
-50550     WriteRemoteRegistryValue = (retVal = 0)
+50550     WriteRemoteRegistryValue = (RetVal = 0)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -770,15 +771,15 @@ Private Function GetCompleteKey(KeyString As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String
+50010  Dim tstr As String
 50020  GetCompleteKey = KeyString
 50030  If LenB(KeyString) > 0 Then
-50040   tStr = KeyString
-50050   Do While Right$(tStr, 1) = "\"
-50060    tStr = Mid$(tStr, 1, Len(tStr) - 1)
+50040   tstr = KeyString
+50050   Do While Right$(tstr, 1) = "\"
+50060    tstr = Mid$(tstr, 1, Len(tstr) - 1)
 50070    DoEvents
 50080   Loop
-50090   GetCompleteKey = tStr
+50090   GetCompleteKey = tstr
 50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function

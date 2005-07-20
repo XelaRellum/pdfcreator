@@ -7,6 +7,7 @@ Public Const ERROR_MORE_DATA                 As Long = 234
 Public Const ERROR_NO_MORE_ITEMS             As Long = &H103
 Public Const ERROR_KEY_NOT_FOUND             As Long = &H2
 Public Const ERROR_ALREADY_EXISTS            As Long = 183&
+Public Const ERROR_ACCESS_DENIED             As Long = 5&
 
 Public Const GENERIC_READ                    As Long = &H80000000
 Public Const INVALID_HANDLE_VALUE            As Long = -1
@@ -484,3 +485,13 @@ Public Const NIN_BALLOONUSERCLICK            As Long = (WM_USER + 5)
 Public Const TIME_ZONE_ID_UNKNOWN            As Long = &H0&
 Public Const TIME_ZONE_ID_STANDARD           As Long = &H1&
 Public Const TIME_ZONE_ID_DAYLIGHT           As Long = &H2&
+
+Public Const WSADescription_Len              As Long = 256
+Public Const WSASYS_Status_Len               As Long = 128
+Public Const WS_VERSION_REQD                 As Long = &H101
+Public Const IP_SUCCESS                      As Long = 0
+Public Const SOCKET_ERROR                    As Long = -1
+Public Const AF_INET                         As Long = 2
+
+Public Const ssfAPPDATA                      As Long = &H1A
+Public Const CSIDL_FLAG_CREATE               As Long = &H8000&

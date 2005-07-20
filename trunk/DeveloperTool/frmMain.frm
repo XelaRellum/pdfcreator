@@ -820,9 +820,9 @@ Private Sub cmdOptions_Click(Index As Integer)
  
  With lsvOptions
   .SortOrder = lvwAscending
-  .SortKey = 1
+  .SortKey = 2
   .Sorted = True
-  .SortKey = 0
+  .SortKey = 1
   .Sorted = True
   .Sorted = False
  End With
@@ -1162,13 +1162,44 @@ Private Sub CreateModOptions()
  Print #fn, "End Function"
  Print #fn, ""
 
- Print #fn, "Public Function ReadOptions() As tOptions"
- Print #fn, " Dim ini As clsINI, myOptions As tOptions, tStr as String, hOpt As New clsHash"
+ Print #fn, "Public Function ReadOptions(Optional NoMsg As Boolean = False, Optional hProfile As hkey = HKEY_CURRENT_USER) As tOptions"
+ Print #fn, " Dim myOptions As tOptions"
+ Print #fn, " If InstalledAsServer Then"
+ Print #fn, "   If UseINI Then"
+ Print #fn, "     myOptions = ReadOptionsINI(myOptions, Completepath(GetCommonAppData) & ""PDFCreator.ini"", NoMsg)"
+ Print #fn, "    Else"
+ Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg)"
+ Print #fn, "   End If"
+ Print #fn, "  Else"
+ Print #fn, "   If UseINI Then"
+ Print #fn, "     If Not IsWin9xMe Then"
+ Print #fn, "       myOptions = ReadOptionsINI(myOptions, Completepath(GetDefaultAppData) & ""PDFCreator.ini"", NoMsg)"
+ Print #fn, "       myOptions = ReadOptionsINI(myOptions, PDFCreatorINIFile, NoMsg, False)"
+ Print #fn, "      Else"
+ Print #fn, "       myOptions = ReadOptionsINI(myOptions, PDFCreatorINIFile, NoMsg)"
+ Print #fn, "     End If"
+ Print #fn, "     myOptions = ReadOptionsINI(myOptions, Completepath(GetCommonAppData) & ""PDFCreator.ini"", NoMsg, False)"
+ Print #fn, "    Else"
+ Print #fn, "     If Not IsWin9xMe Then"
+ Print #fn, "       myOptions = ReadOptionsReg(myOptions, "".DEFAULT\Software\PDFCreator"", HKEY_USERS, NoMsg)"
+ Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", hProfile, NoMsg, False)"
+ Print #fn, "      Else"
+ Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", hProfile, NoMsg)"
+ Print #fn, "     End If"
+ Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg, False)"
+ Print #fn, "   End If"
+ Print #fn, " End If"
+ Print #fn, " ReadOptions = myOptions"
+ Print #fn, "End Function"
+ Print #fn, ""
+
+ Print #fn, "Public Function ReadOptionsINI(myOptions As tOptions, PDFCreatorINIFile As String, Optional NoMsg as Boolean = False, Optional UseStandard as Boolean = True) As tOptions"
+ Print #fn, " Dim ini As clsINI, tStr as String, hOpt As New clsHash"
  Print #fn, " Set ini = New clsINI"
  Print #fn, " ini.Filename = PDFCreatorINIFile"
  Print #fn, " ini.Section = ""Options"""
  Print #fn, " If ini.Checkinifile = False Then"
- Print #fn, "  ReadOptions = StandardOptions"
+ Print #fn, "  ReadOptionsINI = StandardOptions"
  Print #fn, "  Exit Function"
  Print #fn, " End If"
  Print #fn, " ReadINISection PDFCreatorINIFile, ""Options"", hOpt"
@@ -1177,104 +1208,178 @@ Private Sub CreateModOptions()
   ma = False
   If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
    Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
-   Print #fn, "  If CLng(tStr) = 0 Or CLng(tStr) = 1 Then"
-   Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+   Print #fn, "  If IsNumeric(tStr) Then"
+   Print #fn, "    If CLng(tStr) = 0 Or CLng(tStr) = 1 Then"
+   Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+   Print #fn, "     Else"
+   Print #fn, "      If UseStandard Then"
+   Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+   Print #fn, "      End If"
+   Print #fn, "    End If"
    Print #fn, "   Else"
-   Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+   Print #fn, "    If UseStandard Then"
+   Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+   Print #fn, "    End If"
    Print #fn, "  End If"
    ma = True
   End If
   If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "LONG" Then
    Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
    If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
-   End If
-   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
-    Print #fn, "  If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "  If IsNumeric(tStr) Then"
     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
     Print #fn, "   Else"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
    End If
    If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
-    Print #fn, "  If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CLng(lsvOptions.ListItems(i).SubItems(6)) & " Then"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CLng(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
     Print #fn, "   Else"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
    End If
   End If
   If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "STRING" Then
+   Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
    Select Case UCase$(lsvOptions.ListItems(i).SubItems(1))
-    Case UCase$("AutoSaveDirectory")
-     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, GetMyFiles)"
-     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
-    Case UCase$("LastSaveDirectory")
-     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, GetMyFiles)"
-     Print #fn, "  If DirExists(tStr) = True Then"
+    Case UCase$("AutoSaveDirectory"), UCase$("LastSaveDirectory")
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
      Print #fn, "   Else"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = GetMyFiles"
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = GetMyFiles"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
      Print #fn, "  End If"
     Case UCase$("DirectoryGhostscriptBinaries")
-     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, App.Path)"
-     Print #fn, "  If DirExists(tStr) = True Then"
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
      Print #fn, "   Else"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = """""
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = App.Path"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
      Print #fn, "  End If"
     Case UCase$("DirectoryGhostscriptLibraries")
-     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, App.Path & ""\lib"")"
-     Print #fn, "  If DirExists(tStr) = True Then"
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
      Print #fn, "   Else"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = """""
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = App.Path & ""\lib"""
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
      Print #fn, "  End If"
     Case UCase$("DirectoryGhostscriptFonts")
-     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, App.Path & ""\fonts"")"
-     Print #fn, "  If DirExists(tStr) = True Then"
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
      Print #fn, "   Else"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = """""
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = App.Path & ""\fonts"""
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
      Print #fn, "  End If"
     Case UCase$("Printertemppath")
-     Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, GetTempPath)"
-     Print #fn, "  If DirExists(tStr) = True Then"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
-     Print #fn, "   Else"
-     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath"
+     Print #fn, "  If LenB(Trim$(tstr)) > 0 Then"
+     Print #fn, "   If DirExists(GetSubstFilename2(tstr, False)) = True Then"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
+     Print #fn, "    Else"
+     Print #fn, "     MakePath ResolveEnvironment(GetSubstFilename2(tstr, False))"
+     Print #fn, "     If DirExists(ResolveEnvironment(GetSubstFilename2(tstr, False))) = False Then"
+     Print #fn, "       If UseStandard Then"
+     Print #fn, "         ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath"
+     Print #fn, "        Else"
+     Print #fn, "         ." & lsvOptions.ListItems(i).SubItems(1) & " = """""
+     Print #fn, "         If NoMsg = False Then"
+     Print #fn, "          MsgBox ""PrinterTemppath: '"" & tstr & ""' = '"" & ResolveEnvironment(GetSubstFilename2(tstr, False)) & ""'"" & _"
+     Print #fn, "           vbCrLf & vbCrLf & LanguageStrings.MessagesMsg07"
+     Print #fn, "         End If"
+     Print #fn, "       End If"
+     Print #fn, "      Else"
+     Print #fn, "       .PrinterTemppath = tstr"
+     Print #fn, "     End If"
+     Print #fn, "   End If"
      Print #fn, "  End If"
     Case Else
-     If Len(lsvOptions.ListItems(i).SubItems(4)) > 0 Then
-       Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, """ & lsvOptions.ListItems(i).SubItems(4) & """)"
-      Else
-       Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """, """")"
-'       MsgBox "No standard value for this string: " & s(0)
-     End If
-     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
+     Print #fn, "  If LenB(tStr) = 0 And LenB(""" & Trim$(lsvOptions.ListItems(i).SubItems(4)) & """)>0 Then"
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & lsvOptions.ListItems(i).SubItems(4) & """"
+     Print #fn, "    End If"
+     Print #fn, "   Else"
+     Print #fn, "    If LenB(tStr) > 0 Then"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
+     Print #fn, "    End If"
+     Print #fn, "  End If"
    End Select
    ma = True
   End If
   If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Then
    Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
    If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
-   End If
-   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
-    Print #fn, "  If CDbl(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "  If IsNumeric(tStr) Then"
     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
     Print #fn, "   Else"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CDbl(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
    End If
    If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
-    Print #fn, "  If CDbl(tStr) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CDbl(tStr) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
     Print #fn, "   Else"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
    End If
@@ -1286,10 +1391,20 @@ Private Sub CreateModOptions()
  Next i
  Print #fn, " End With"
  Print #fn, " Set ini = Nothing"
- Print #fn, " ReadOptions = myOptions"
+ Print #fn, " ReadOptionsINI = myOptions"
  Print #fn, "End Function"
  Print #fn, ""
+ 
  Print #fn, "Public Sub SaveOptions(sOptions as tOptions)"
+ Print #fn, " If UseINI Then"
+ Print #fn, "   SaveOptionsINI sOptions"
+ Print #fn, "  Else"
+ Print #fn, "   SaveOptionsReg sOptions"
+ Print #fn, " End If"
+ Print #fn, "End Sub"
+ Print #fn, ""
+ 
+ Print #fn, "Public Sub SaveOptionsINI(sOptions as tOptions)"
  Print #fn, " Dim ini As clsINI"
  Print #fn, " Set ini = New clsINI"
  Print #fn, " ini.Filename = PDFCreatorINIFile"
@@ -1309,6 +1424,256 @@ Private Sub CreateModOptions()
  Print #fn, " Set ini = Nothing"
  Print #fn, "End Sub"
  Print #fn, ""
+  
+ With lsvOptions
+  .SortOrder = lvwAscending
+  .SortKey = 1
+  .Sorted = True
+  .SortKey = 0
+  .Sorted = True
+ End With
+
+ Print #fn, "Public Function ReadOptionsReg(myOptions As tOptions, KeyRoot as String, Optional hkey1 as hkey = HKEY_CURRENT_USER, Optional NoMsg as Boolean = False, Optional UseStandard as Boolean = True) As tOptions"
+ Print #fn, " Dim reg As clsRegistry, tStr as String"
+ Print #fn, " Set reg = New clsRegistry"
+ Print #fn, " reg.hkey = hkey1"
+ Print #fn, " reg.KeyRoot = KeyRoot"
+ Print #fn, " With myOptions"
+ For i = 1 To lsvOptions.ListItems.Count
+  ma = False
+  If i = 1 Then
+    Print #fn, "  reg.Subkey = """ & Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\") & """"
+   Else
+    If UCase$(Replace(Trim$(lsvOptions.ListItems(i - 1).Text), " ", "\")) <> UCase$(Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\")) Then
+     Print #fn, "  reg.Subkey = """ & Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\") & """"
+    End If
+  End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
+   Print #fn, "  tStr = reg.GetRegistryValue(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
+   Print #fn, "  If IsNumeric(tStr) Then"
+   Print #fn, "    If CLng(tStr) = 0 Or CLng(tStr) = 1 Then"
+   Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+   Print #fn, "     Else"
+   Print #fn, "      If UseStandard Then"
+   Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+   Print #fn, "      End If"
+   Print #fn, "    End If"
+   Print #fn, "   Else"
+   Print #fn, "    If UseStandard Then"
+   Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+   Print #fn, "    End If"
+   Print #fn, "  End If"
+   ma = True
+  End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "LONG" Then
+   Print #fn, "  tStr = reg.GetRegistryValue(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
+   If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If Isnumeric(tStr) Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If Isnumeric(tStr) Then"
+    Print #fn, "    If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
+    Print #fn, "  If Isnumeric(tStr) Then"
+    Print #fn, "    If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CLng(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+  End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "STRING" Then
+   Print #fn, "  tStr = reg.GetRegistryValue(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
+   Select Case UCase$(lsvOptions.ListItems(i).SubItems(1))
+    Case UCase$("AutoSaveDirectory"), UCase$("LastSaveDirectory")
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
+     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "   Else"
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = GetMyFiles"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
+     Print #fn, "  End If"
+    Case UCase$("DirectoryGhostscriptBinaries")
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
+     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "   Else"
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = App.Path"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
+     Print #fn, "  End If"
+    Case UCase$("DirectoryGhostscriptLibraries")
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
+     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "   Else"
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = App.Path & ""\lib"""
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
+     Print #fn, "  End If"
+    Case UCase$("DirectoryGhostscriptFonts")
+     Print #fn, "  If LenB(Trim$(tStr)) > 0 Then"
+     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "   Else"
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     tStr = App.Path & ""\fonts"""
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "    End If"
+     Print #fn, "  End If"
+    Case UCase$("Printertemppath")
+     Print #fn, "  If LenB(Trim$(tstr)) > 0 Then"
+     Print #fn, "   If DirExists(GetSubstFilename2(tstr, False)) = True Then"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
+     Print #fn, "    Else"
+     Print #fn, "     MakePath ResolveEnvironment(GetSubstFilename2(tstr, False))"
+     Print #fn, "     If DirExists(ResolveEnvironment(GetSubstFilename2(tstr, False))) = False Then"
+     Print #fn, "       If UseStandard Then"
+     Print #fn, "         ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath"
+     Print #fn, "        Else"
+     Print #fn, "         ." & lsvOptions.ListItems(i).SubItems(1) & " = """""
+     Print #fn, "         If NoMsg = False Then"
+     Print #fn, "          MsgBox ""PrinterTemppath: '"" & tstr & ""' = '"" & ResolveEnvironment(GetSubstFilename2(tstr, False)) & ""'"" & _"
+     Print #fn, "           vbCrLf & vbCrLf & LanguageStrings.MessagesMsg07"
+     Print #fn, "         End If"
+     Print #fn, "       End If"
+     Print #fn, "      Else"
+     Print #fn, "       .PrinterTemppath = tstr"
+     Print #fn, "     End If"
+     Print #fn, "   End If"
+     Print #fn, "  End If"
+    Case Else
+     Print #fn, "  If LenB(tStr) = 0 And LenB(""" & Trim$(lsvOptions.ListItems(i).SubItems(4)) & """)>0 Then"
+     Print #fn, "    If UseStandard Then"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & lsvOptions.ListItems(i).SubItems(4) & """"
+     Print #fn, "    End If"
+     Print #fn, "   Else"
+     Print #fn, "    If LenB(tStr) > 0 Then"
+     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
+     Print #fn, "    End If"
+     Print #fn, "  End If"
+   End Select
+   ma = True
+  End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Then
+   Print #fn, "  tStr = reg.GetRegistryValue(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
+   If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CDbl(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CDbl(tStr) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+  End If
+  If ma = False Then
+   MsgBox "Typ not Set"
+   Stop
+  End If
+ Next i
+ Print #fn, " End With"
+ Print #fn, " Set reg = Nothing"
+ Print #fn, " ReadOptionsReg = MyOptions"
+ Print #fn, "End Function"
+ Print #fn, ""
+ Print #fn, "Public Sub SaveOptionsREG(sOptions as tOptions, Optional hkey1 as hkey = HKEY_CURRENT_USER)"
+ Print #fn, " Dim reg As clsRegistry"
+ Print #fn, " Set reg = New clsRegistry"
+ Print #fn, " reg.hkey = hkey1"
+ Print #fn, " reg.KeyRoot = ""Software\PDFCreator"""
+ Print #fn, " If Not reg.KeyExists Then"
+ Print #fn, "  reg.CreateKey"
+ Print #fn, " End If"
+ Print #fn, " With sOptions"
+ For i = 1 To lsvOptions.ListItems.Count
+  If i = 1 Then
+    Print #fn, "  reg.Subkey = """ & Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\") & """"
+    Print #fn, "  If Not reg.KeyExists Then"
+    Print #fn, "   reg.CreateKey"
+    Print #fn, "  End If"
+   Else
+    If UCase$(Replace(Trim$(lsvOptions.ListItems(i - 1).Text), " ", "\")) <> UCase$(Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\")) Then
+     Print #fn, "  reg.Subkey = """ & Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\") & """"
+     Print #fn, "  If Not reg.KeyExists Then"
+     Print #fn, "   reg.CreateKey"
+     Print #fn, "  End If"
+    End If
+  End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
+    Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """,CStr(Abs(." & lsvOptions.ListItems(i).SubItems(1) & ")), REG_SZ"
+   Else
+    Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """,CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), REG_SZ"
+  End If
+ Next i
+ Print #fn, " End With"
+ Print #fn, " Set reg = Nothing"
+ Print #fn, "End Sub"
+ Print #fn, ""
+ With lsvOptions
+  .SortOrder = lvwAscending
+  .SortKey = 1
+  .Sorted = True
+ End With
  Print #fn, "Public Sub ShowOptions(Frm as Form, sOptions as tOptions)"
  Print #fn, " On Error Resume Next"
  Print #fn, " Dim i as Long, tList() as String, tStrA() As String, lsv As ListView"
@@ -1417,6 +1782,54 @@ Private Sub CreateModOptions()
  Print #fn, " Options.Language = Language"
  Print #fn, " SaveOptions Options"
  Print #fn, "End Sub"
+ Print #fn, ""
+ Print #fn, "Public Sub ReadLanguageFromOptions(Optional hProfile As hkey = HKEY_CURRENT_USER)"
+ Print #fn, " If UseINI Then"
+ Print #fn, "   ReadLanguageFromOptionsINI"
+ Print #fn, "  Else"
+ Print #fn, "   ReadLanguageFromOptionsReg hProfile"
+ Print #fn, "  End If"
+ Print #fn, "End Sub"
+ Print #fn, ""
+ Print #fn, "Public Sub ReadLanguageFromOptionsINI()"
+ Print #fn, " Dim hOpt As clsHash"
+ Print #fn, " Set hOpt = New clsHash"
+ Print #fn, " ReadINISection PDFCreatorINIFile, ""Options"", hOpt"
+ Print #fn, " Options.Language = hOpt.Retrieve(""Language"", ""english"")"
+ Print #fn, " Set hOpt = Nothing"
+ Print #fn, "End Sub"
+ Print #fn, ""
+ Print #fn, "Public Sub ReadLanguageFromOptionsReg(Optional hProfile as hkey = HKEY_CURRENT_USER)"
+ Print #fn, " Dim reg As clsRegistry, tStr as String"
+ Print #fn, " Set reg = New clsRegistry"
+ Print #fn, " With reg"
+ Print #fn, "  .KeyRoot = ""Software\PDFCreator"""
+ Print #fn, "  .Subkey = ""Program"""
+ Print #fn, "  .hkey = HKEY_LOCAL_MACHINE"
+ Print #fn, "  Options.Language = Trim$(reg.GetRegistryValue(""Language"", ""english""))"
+ Print #fn, "  .hkey = hProfile"
+ Print #fn, "  tStr = Trim$(reg.GetRegistryValue(""Language"", """"))"
+ Print #fn, " End With"
+ Print #fn, " If LenB(Trim$(tStr))>0 Then"
+ Print #fn, "  Options.Language = Trim$(tStr)"
+ Print #fn, " End If"
+ Print #fn, " Set reg = Nothing"
+ Print #fn, "End Sub"
+ Print #fn, ""
+ Print #fn, "Public Function UseINI() As Boolean"
+ Print #fn, " Dim reg As clsRegistry, tStr as String"
+ Print #fn, " Set reg = New clsRegistry"
+ Print #fn, " UseINI = False"
+ Print #fn, " With reg"
+ Print #fn, "  .hkey = HKEY_LOCAL_MACHINE"
+ Print #fn, "  .KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
+ Print #fn, "  tStr = Trim$(.GetRegistryValue(""UseINI""))"
+ Print #fn, "  If tStr = ""1"" Then"
+ Print #fn, "   UseINI = True"
+ Print #fn, "  End If"
+ Print #fn, " End With"
+ Print #fn, " Set reg = Nothing"
+ Print #fn, "End Function"
  Print #fn, ""
  Close #fn
 
@@ -2190,7 +2603,16 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "Papersize"
   .Add "DeviceHeightPoints"
   .Add "DeviceWidthPoints"
-End With
+  .Add "ClientComputerResolveIPAddress"
+  .Add "AdditionalGhostscriptParameters"
+  .Add "DisableEmail"
+  .Add "PrintAfterSaving"
+  .Add "PrintAfterSavingPrinter"
+  .Add "PrintAfterSavingNoCancel"
+  .Add "PrintAfterSavingQueryUser"
+  .Add "PrintAfterSavingDuplex"
+  .Add "PrintAfterSavingTumble"
+ End With
  IsSpecialString = False
  For i = 1 To ss.Count
   If UCase$(ss(i)) = UCase$(specialString) Then

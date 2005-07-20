@@ -1,22 +1,81 @@
 'Optionname|OptionControlvalue|Type|Standard|LeftLimit|RightLimit
 
-' <Bitmap Colors>
+' <Program>
+AdditionalGhostscriptParameters||String|||
+AdditionalGhostscriptSearchpath||String|||
+AddWindowsFontpath||Boolean|1||
+AutosaveDirectory|txtAutosaveDirectory.Text|String|||
+AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
+AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|7
+
+' <Printing Formats Bitmap Colors>
 BitmapResolution|txtBitmapResolution.Text|Long|150|1|<
 BMPColorscount|cmbBMPColors.Listindex|Long|1|0|6
+
+' <Program>
+ClientComputerResolveIPAddress||Boolean|0||
+
+' <Printing>
+DeviceHeightPoints||Double|-1|-1|<
+DeviceWidthPoints||Double|-1|-1|<
+
+' <Ghostscript>
+DirectoryGhostscriptBinaries|txtGSbin.text|String|||
+DirectoryGhostscriptFonts|txtGSfonts.text|String|||
+DirectoryGhostscriptLibraries|txtGSlib.text|String|||
+DirectoryGhostscriptResource|txtGSResource.text|String|||
+
+' <Program>
+DisableEmail||Boolean|0||
+DontUseDocumentSettings||Boolean|0||
+
+' <Printing Formats PS LanguageLevel>
+EPSLanguageLevel|cmbEPSLanguageLevel.Listindex|Long|2|0|3
+
+' <Program>
+FilenameSubstitutions||String|Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt||
+FilenameSubstitutionsOnlyInTitle|chkFilenameSubst.Value|Boolean|1||
+
+' <Printing Formats Bitmap Colors>
 JPEGColorscount|cmbJPEGColors.Listindex|Long|0|0|1
 JPEGQuality|txtJPEGQuality.Text|Long|75|0|100
-PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
-PNGColorscount|cmbPNGColors.Listindex|Long|0|0|4
-TIFFColorscount|cmbTIFFColors.Listindex|Long|0|0|7
 
-' <PDF Colors>
+' <Program>
+Language|Language|String|english||
+LastSaveDirectory|LastSaveDirectory|String|||
+Logging|Logging|Boolean|0||
+LogLines|LogLines|Long|100|100|1000
+NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
+NoProcessingAtStartup||Boolean|0||
+
+' <Printing>
+OnePagePerFile||Boolean|0||
+
+' <Program>
+OptionsDesign||Long|1|1|2
+OptionsEnabled||Boolean|1||
+OptionsVisible||Boolean|1||
+
+' <Printing>
+Papersize||String|||
+
+' <Printing Formats Bitmap Colors>
+PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
+
+' <Printing Formats PDF Security>
+PDFAllowAssembly|chkAllowAssembly.Value|Boolean|0||
+PDFAllowDegradedPrinting|chkAllowDegradedPrinting.Value|Boolean|0||
+PDFAllowFillIn|chkAllowFillIn.Value|Boolean|0||
+PDFAllowScreenReaders|chkAllowScreenReaders.Value|Boolean|0||
+
+' <Printing Formats PDF Colors>
 PDFColorsCMYKToRGB|chkPDFCMYKtoRGB.Value|Boolean|1||
 PDFColorsColorModel|cmbPDFColorModel.Listindex|Long|1|0|2
 PDFColorsPreserveHalftone|chkPDFPreserveHalftone.Value|Boolean|0||
 PDFColorsPreserveOverprint|chkPDFPreserveOverprint.Value|Boolean|1||
 PDFColorsPreserveTransfer|chkPDFPreserveTransfer.Value|Boolean|1||
 
-' <PDF Compression>
+' <Printing Formats PDF Compression>
 PDFCompressionColorCompression|chkPDFColorComp.Value|Boolean|1||
 PDFCompressionColorCompressionChoice|cmbPDFColorComp.Listindex|Long|0|0|7
 PDFCompressionColorResample|chkPDFColorResample.Value|Boolean|0||
@@ -34,75 +93,60 @@ PDFCompressionMonoResampleChoice|cmbPDFMonoResample.Listindex|Long|0|0|2
 PDFCompressionMonoResolution|txtPDFMonoRes.Text|Long|1200|0|<
 PDFCompressionTextCompression|chkPDFTextComp.Value|Boolean|1||
 
-' <PDF Fonts>
-PDFFontsEmbedAll|chkPDFEmbedAll.Value|Boolean|1||
-PDFFontsSubSetFonts|chkPDFSubSetFonts.Value|Boolean|1||
-PDFFontsSubSetFontsPercent|txtPDFSubSetPerc.Text|Long|100|0|<
-
-' <Program>
-DeviceHeightPoints||Double|-1|-1|<
-DeviceWidthPoints||Double|-1|-1|<
-
-' <PDF General>
-PDFGeneralASCII85|chkPDFASCII85.Value|Boolean|0||
-PDFGeneralAutorotate|cmbPDFRotate.Listindex|Long|2|0|2
-PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|1|0|2
-PDFGeneralOverprint|cmbPDFOverprint.Listindex|Long|0|0|1
-PDFGeneralResolution|txtPDFRes.Text|Long|600|0|<
-PDFOptimize||Boolean|0||
-
-' <Program>
-Papersize||String|||
-
-' <PDF Security>
-PDFAllowAssembly|chkAllowAssembly.Value|Boolean|0||
-PDFAllowDegradedPrinting|chkAllowDegradedPrinting.Value|Boolean|0||
-PDFAllowFillIn|chkAllowFillIn.Value|Boolean|0||
-PDFAllowScreenReaders|chkAllowScreenReaders.Value|Boolean|0||
+' <Printing Formats PDF Security>
 PDFDisallowCopy|chkAllowCopy.Value|Boolean|1||
 PDFDisallowModifyAnnotations|chkAllowModifyAnnotations.Value|Boolean|0||
 PDFDisallowModifyContents|chkAllowModifyContents.Value|Boolean|0||
 PDFDisallowPrinting|chkAllowPrinting.Value|Boolean|0||
 PDFEncryptor|cmbPDFEncryptor.Itemdata(Frm.cmbPDFEncryptor.Listindex)|Long|0|0|1
+
+' <Printing Formats PDF Fonts>
+PDFFontsEmbedAll|chkPDFEmbedAll.Value|Boolean|1||
+PDFFontsSubSetFonts|chkPDFSubSetFonts.Value|Boolean|1||
+PDFFontsSubSetFontsPercent|txtPDFSubSetPerc.Text|Long|100|0|<
+
+' <Printing Formats PDF General>
+PDFGeneralASCII85|chkPDFASCII85.Value|Boolean|0||
+PDFGeneralAutorotate|cmbPDFRotate.Listindex|Long|2|0|2
+PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|1|0|2
+PDFGeneralOverprint|cmbPDFOverprint.Listindex|Long|0|0|1
+PDFGeneralResolution|txtPDFRes.Text|Long|600|0|<
+
+' <Printing Formats PDF Security>
 PDFHighEncryption|optEncHigh.Value|Boolean|0||
 PDFLowEncryption|optEncLow.Value|Boolean|1||
+
+' <Printing Formats PDF General>
+PDFOptimize||Boolean|0||
+
+' <Printing Formats PDF Security>
 PDFOwnerPass|chkOwnerPass.Value|Boolean|0||
 PDFOwnerPasswordString||String|||
 PDFUserPass|chkUserPass.Value|Boolean|0||
 PDFUserPasswordString||String|||
 PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
 
-' <Printing>
-OnePagePerFile||Boolean|0||
+' <Printing Formats Bitmap Colors>
+PNGColorscount|cmbPNGColors.Listindex|Long|0|0|4
 
 ' <Program>
-AdditionalGhostscriptSearchpath||String|||
-AddWindowsFontpath||Boolean|1||
-AutosaveDirectory|txtAutosaveDirectory.Text|String|||
-AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
-AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|7
-DirectoryGhostscriptBinaries|txtGSbin.text|String|||
-DirectoryGhostscriptFonts|txtGSfonts.text|String|||
-DirectoryGhostscriptLibraries|txtGSlib.text|String|||
-DirectoryGhostscriptResource|txtGSResource.text|String|||
-DontUseDocumentSettings||Boolean|0||
-FilenameSubstitutions||String|Microsoft Word - \.doc||
-FilenameSubstitutionsOnlyInTitle|chkFilenameSubst.Value|Boolean|1||
-Language|Language|String|english||
-LastSaveDirectory|LastSaveDirectory|String|||
-Logging|Logging|Boolean|0||
-LogLines|LogLines|Long|100|100|1000
-NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
-NoProcessingAtStartup||Boolean|0||
-OptionsDesign||Long|1|1|2
-OptionsEnabled||Boolean|1||
-OptionsVisible||Boolean|1||
+PrintAfterSaving||Boolean|0||
+PrintAfterSavingDuplex||Boolean|0||
+PrintAfterSavingNoCancel||Boolean|0||
+PrintAfterSavingPrinter||String|||
+PrintAfterSavingQueryUser||Long|0|0|3
+PrintAfterSavingTumble||Boolean|0||
 PrinterStop|PrinterStop|Boolean|0||
 PrinterTemppath|txtTemppath.text|String|||
 ProcessPriority|sldProcessPriority.value|Long|1|0|3
 ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
 ProgramFontSize|cmbProgramFontSize.text|Long|8|1|72
+
+' <Printing Formats PS LanguageLevel>
+PSLanguageLevel|cmbPSLanguageLevel.Listindex|Long|2|0|3
+
+' <Program>
 RemoveAllKnownFileExtensions||Boolean|1||
 RemoveSpaces|chkSpaces.Value|Boolean|1||
 RunProgramAfterSaving||Boolean|0||
@@ -117,6 +161,8 @@ RunProgramBeforeSavingWindowstyle||Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
 SendMailMethod||Long|0|0|<
 ShowAnimation||Boolean|1||
+
+' <Printing>
 StampFontColor||String|#FF0000||
 StampFontname||String|Arial||
 StampFontsize||Long|48|1|<
@@ -132,13 +178,18 @@ StandardModifydate||String|||
 StandardSaveformat||String|pdf||
 StandardSubject||String|||
 StandardTitle||String|||
+
+' <Program>
 StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
+
+' <Printing Formats Bitmap Colors>
+TIFFColorscount|cmbTIFFColors.Listindex|Long|0|0|7
+
+' <Program>
 Toolbars||Long|1|0|<
 UseAutosave|chkUseAutosave.Value|Boolean|0||
 UseAutosaveDirectory|chkUseAutosaveDirectory.Value|Boolean|1||
+
+' <Printing>
 UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||
 UseStandardAuthor|chkUseStandardAuthor.Value|Boolean|0||
-
-' <PS LanguageLevel>
-EPSLanguageLevel|cmbEPSLanguageLevel.Listindex|Long|2|0|3
-PSLanguageLevel|cmbPSLanguageLevel.Listindex|Long|2|0|3

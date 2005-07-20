@@ -254,19 +254,19 @@ Private Function CreatePDF(GSInputFile As String, GSOutputFile As String, Option
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim FName As String, tstr As String, encPDF As EncryptData, tEnc As Boolean
+50010  Dim FName As String, tStr As String, encPDF As EncryptData, tEnc As Boolean
 50020
 50030  InitParams
 50040  Set ParamCommands = New Collection
 50050
-50060  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50060  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50070  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50080   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50080   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50090  End If
 50100  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50110   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50110   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50120  End If
-50130  AddParams "-I" & tstr
+50130  AddParams "-I" & tStr
 50140  AddParams "-q"
 50150  AddParams "-dNOPAUSE"
 50160  AddParams "-dSAFER"
@@ -285,79 +285,81 @@ On Error GoTo ErrPtnr_OnError
 50290   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
 50300   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
 50310   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50320   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50330   If LenB(Trim$(Options.Papersize)) > 0 Then
-50340    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50350    AddParams "-dFIXEDMEDIA"
-50360    AddParams "-dNORANGEPAGESIZE"
-50370   End If
-50380   If Options.DeviceWidthPoints >= 0 Then
-50390    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50400   End If
-50410   If Options.DeviceHeightPoints >= 0 Then
-50420    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50430   End If
-50440 End If
-50450  tEnc = False
-50460  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And _
+50320   If LenB(Trim$(Options.Papersize)) > 0 Then
+50330    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50340    AddParams "-dFIXEDMEDIA"
+50350    AddParams "-dNORANGEPAGESIZE"
+50360   End If
+50370   If Options.DeviceWidthPoints >= 0 Then
+50380    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50390   End If
+50400   If Options.DeviceHeightPoints >= 0 Then
+50410    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50420   End If
+50430 End If
+50440  tEnc = False
+50450  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And _
     SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
-50480    If SetEncryptionParams(encPDF, "", "") = True Then
-50490     tEnc = True
-50500    If Len(encPDF.OwnerPass) > 0 Then
-50510      AddParams "-sOwnerPassword=" & encPDF.OwnerPass & ""
-50520     End If
-50530     If Len(encPDF.UserPass) > 0 Then
-50540      AddParams "-sUserPassword=" & encPDF.UserPass
-50550     End If
-50560     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50570     If GS_COMPATIBILITY = "1.4" Then
-50580       AddParams "-dEncryptionR=3"
-50590      Else
-50600       AddParams "-dEncryptionR=2"
-50610     End If
-50620     If encPDF.EncryptionLevel = encLow Then
-50630       AddParams "-dKeyLength=40"
-50640      Else
-50650       AddParams "-dKeyLength=128"
-50660     End If
-50670    Else
-50680     If Options.UseAutosave = 0 Then
-50690      MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50700     End If
-50710   End If
-50720  End If
-50730  AddParams "-sOutputFile=" & GSOutputFile
-50740
-50750  If Options.DontUseDocumentSettings = 0 Then
-50760   SetColorParams
-50770   SetGreyParams
-50780   SetMonoParams
-50790
-50800   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50810   AddParams "-dUCRandBGInfo=/Preserve"
-50820   AddParams "-dUseFlateCompression=true"
-50830   AddParams "-dParseDSCCommentsForDocInfo=true"
-50840   AddParams "-dParseDSCComments=true"
-50850   AddParams "-dOPM=" & GS_OVERPRINT
-50860   AddParams "-dOffOptimizations=0"
-50870   AddParams "-dLockDistillerParams=false"
-50880   AddParams "-dGrayImageDepth=-1"
-50890   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50900   AddParams "-dDefaultRenderingIntent=/Default"
-50910   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50920   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50930   AddParams "-dDetectBlends=true"
-50940   AddParamCommands
-50950  End If
-50960
-50970  AddParams "-f"
-50980  AddParams GSInputFile
-50990  ShowParams
-51000  If tEnc = True Then
-51010    CallGhostscript "PDF with encryption"
-51020   Else
-51030    CallGhostscript "PDF without encryption"
-51040  End If
+50470    If SetEncryptionParams(encPDF, "", "") = True Then
+50480     tEnc = True
+50490    If Len(encPDF.OwnerPass) > 0 Then
+50500      AddParams "-sOwnerPassword=" & encPDF.OwnerPass & ""
+50510     End If
+50520     If Len(encPDF.UserPass) > 0 Then
+50530      AddParams "-sUserPassword=" & encPDF.UserPass
+50540     End If
+50550     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
+50560     If GS_COMPATIBILITY = "1.4" Then
+50570       AddParams "-dEncryptionR=3"
+50580      Else
+50590       AddParams "-dEncryptionR=2"
+50600     End If
+50610     If encPDF.EncryptionLevel = encLow Then
+50620       AddParams "-dKeyLength=40"
+50630      Else
+50640       AddParams "-dKeyLength=128"
+50650     End If
+50660    Else
+50670     If Options.UseAutosave = 0 Then
+50680      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50690     End If
+50700   End If
+50710  End If
+50720  AddParams "-sOutputFile=" & GSOutputFile
+50730
+50740  If Options.DontUseDocumentSettings = 0 Then
+50750   SetColorParams
+50760   SetGreyParams
+50770   SetMonoParams
+50780
+50790   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50800   AddParams "-dUCRandBGInfo=/Preserve"
+50810   AddParams "-dUseFlateCompression=true"
+50820   AddParams "-dParseDSCCommentsForDocInfo=true"
+50830   AddParams "-dParseDSCComments=true"
+50840   AddParams "-dOPM=" & GS_OVERPRINT
+50850   AddParams "-dOffOptimizations=0"
+50860   AddParams "-dLockDistillerParams=false"
+50870   AddParams "-dGrayImageDepth=-1"
+50880   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50890   AddParams "-dDefaultRenderingIntent=/Default"
+50900   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50910   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50920   AddParams "-dDetectBlends=true"
+50930
+50940   AddAdditionalGhostscriptParameters
+50950
+50960   AddParamCommands
+50970  End If
+50980
+50990  AddParams "-f"
+51000  AddParams GSInputFile
+51010  ShowParams
+51020  If tEnc = True Then
+51030    CallGhostscript "PDF with encryption"
+51040   Else
+51050    CallGhostscript "PDF without encryption"
+51060  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -374,7 +376,7 @@ Private Function CreatePNG(GSInputFile As String, GSOutputFile As String, Option
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tstr As String
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
 50020
 50030  GSInit Options
 50040  InitParams
@@ -384,14 +386,14 @@ On Error GoTo ErrPtnr_OnError
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
-50110  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50140  End If
 50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50170  End If
-50180  AddParams "-I" & tstr
+50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
 50210  AddParams "-dSAFER"
@@ -400,33 +402,30 @@ On Error GoTo ErrPtnr_OnError
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
 50250  End If
 50260
-50270  If Options.OnePagePerFile = 1 Then
-50280   SplitPath GSOutputFile, , Path, , FName, Ext
-50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50300  End If
-50310
-50320  AddParams "-sDEVICE=" & GS_PNGColorscount
-50330
-50340  If Options.DontUseDocumentSettings = 0 Then
-50350   If LenB(Trim$(Options.Papersize)) > 0 Then
-50360    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50370    AddParams "-dFIXEDMEDIA"
-50380    AddParams "-dNORANGEPAGESIZE"
-50390   End If
-50400   If Options.DeviceWidthPoints >= 0 Then
-50410    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50420   End If
-50430   If Options.DeviceHeightPoints >= 0 Then
-50440    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50450   End If
-50460   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50470   AddParams "-sOutputFile=" & GSOutputFile
-50480  End If
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "PNG"
+50270  AddParams "-sDEVICE=" & GS_PNGColorscount
+50280
+50290  If Options.DontUseDocumentSettings = 0 Then
+50300   If LenB(Trim$(Options.Papersize)) > 0 Then
+50310    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50320    AddParams "-dFIXEDMEDIA"
+50330    AddParams "-dNORANGEPAGESIZE"
+50340   End If
+50350   If Options.DeviceWidthPoints >= 0 Then
+50360    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370   End If
+50380   If Options.DeviceHeightPoints >= 0 Then
+50390    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400   End If
+50410   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50420   AddParams "-sOutputFile=" & GSOutputFile
+50430  End If
+50440
+50450  AddAdditionalGhostscriptParameters
+50460
+50470  AddParams "-f"
+50480  AddParams GSInputFile
+50490  ShowParams
+50500  CallGhostscript "PNG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -443,7 +442,7 @@ Private Function CreateJPEG(GSInputFile As String, GSOutputFile As String, Optio
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tstr As String
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
 50020
 50030  GSInit Options
 50040  InitParams
@@ -453,14 +452,14 @@ On Error GoTo ErrPtnr_OnError
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
-50110  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50140  End If
 50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50170  End If
-50180  AddParams "-I" & tstr
+50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
 50210  AddParams "-dSAFER"
@@ -469,33 +468,30 @@ On Error GoTo ErrPtnr_OnError
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
 50250  End If
 50260
-50270  If Options.OnePagePerFile = 1 Then
-50280   SplitPath GSOutputFile, , Path, , FName, Ext
-50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50300  End If
-50310
-50320  AddParams "-sDEVICE=" & GS_JPEGColorscount
-50330  If Options.DontUseDocumentSettings = 0 Then
-50340   AddParams "-dJPEGQ=" & GS_JPEGQuality
-50350   If LenB(Trim$(Options.Papersize)) > 0 Then
-50360    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50370    AddParams "-dFIXEDMEDIA"
-50380    AddParams "-dNORANGEPAGESIZE"
-50390   End If
-50400   If Options.DeviceWidthPoints >= 0 Then
-50410    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50420   End If
-50430   If Options.DeviceHeightPoints >= 0 Then
-50440    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50450   End If
-50460   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50470   AddParams "-sOutputFile=" & GSOutputFile
-50480  End If
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "JPEG"
+50270  AddParams "-sDEVICE=" & GS_JPEGColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   AddParams "-dJPEGQ=" & GS_JPEGQuality
+50300   If LenB(Trim$(Options.Papersize)) > 0 Then
+50310    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50320    AddParams "-dFIXEDMEDIA"
+50330    AddParams "-dNORANGEPAGESIZE"
+50340   End If
+50350   If Options.DeviceWidthPoints >= 0 Then
+50360    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370   End If
+50380   If Options.DeviceHeightPoints >= 0 Then
+50390    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400   End If
+50410   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50420   AddParams "-sOutputFile=" & GSOutputFile
+50430  End If
+50440
+50450  AddAdditionalGhostscriptParameters
+50460
+50470  AddParams "-f"
+50480  AddParams GSInputFile
+50490  ShowParams
+50500  CallGhostscript "JPEG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -512,7 +508,7 @@ Private Function CreateBMP(GSInputFile As String, GSOutputFile As String, Option
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tstr As String
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
 50020
 50030  GSInit Options
 50040  InitParams
@@ -522,14 +518,14 @@ On Error GoTo ErrPtnr_OnError
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
-50110  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50140  End If
 50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50170  End If
-50180  AddParams "-I" & tstr
+50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
 50210  AddParams "-dSAFER"
@@ -538,32 +534,29 @@ On Error GoTo ErrPtnr_OnError
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
 50250  End If
 50260
-50270  If Options.OnePagePerFile = 1 Then
-50280   SplitPath GSOutputFile, , Path, , FName, Ext
-50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50300  End If
-50310
-50320  AddParams "-sDEVICE=" & GS_BMPColorscount
-50330  If Options.DontUseDocumentSettings = 0 Then
-50340   If LenB(Trim$(Options.Papersize)) > 0 Then
-50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50360    AddParams "-dFIXEDMEDIA"
-50370    AddParams "-dNORANGEPAGESIZE"
-50380   End If
-50390   If Options.DeviceWidthPoints >= 0 Then
-50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50410   End If
-50420   If Options.DeviceHeightPoints >= 0 Then
-50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddParams "-f"
-50500  AddParams GSInputFile
-50510  ShowParams
-50520  CallGhostscript "BMP"
+50270  AddParams "-sDEVICE=" & GS_BMPColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If LenB(Trim$(Options.Papersize)) > 0 Then
+50300    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310    AddParams "-dFIXEDMEDIA"
+50320    AddParams "-dNORANGEPAGESIZE"
+50330   End If
+50340   If Options.DeviceWidthPoints >= 0 Then
+50350    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50360   End If
+50370   If Options.DeviceHeightPoints >= 0 Then
+50380    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50390   End If
+50400   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50410  End If
+50420  AddParams "-sOutputFile=" & GSOutputFile
+50430
+50440  AddAdditionalGhostscriptParameters
+50450
+50460  AddParams "-f"
+50470  AddParams GSInputFile
+50480  ShowParams
+50490  CallGhostscript "BMP"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -580,7 +573,7 @@ Private Function CreatePCX(GSInputFile As String, GSOutputFile As String, Option
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tstr As String
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
 50020
 50030  GSInit Options
 50040  InitParams
@@ -590,14 +583,14 @@ On Error GoTo ErrPtnr_OnError
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
-50110  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50140  End If
 50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50170  End If
-50180  AddParams "-I" & tstr
+50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
 50210  AddParams "-dSAFER"
@@ -606,32 +599,29 @@ On Error GoTo ErrPtnr_OnError
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
 50250  End If
 50260
-50270  If Options.OnePagePerFile = 1 Then
-50280   SplitPath GSOutputFile, , Path, , FName, Ext
-50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50300  End If
-50310
-50320  AddParams "-sDEVICE=" & GS_PCXColorscount
-50330  If Options.DontUseDocumentSettings = 0 Then
-50340   If LenB(Trim$(Options.Papersize)) > 0 Then
-50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50360    AddParams "-dFIXEDMEDIA"
-50370    AddParams "-dNORANGEPAGESIZE"
-50380   End If
-50390   If Options.DeviceWidthPoints >= 0 Then
-50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50410   End If
-50420   If Options.DeviceHeightPoints >= 0 Then
-50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddParams "-f"
-50500  AddParams GSInputFile
-50510  ShowParams
-50520  CallGhostscript "PCX"
+50270  AddParams "-sDEVICE=" & GS_PCXColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If LenB(Trim$(Options.Papersize)) > 0 Then
+50300    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310    AddParams "-dFIXEDMEDIA"
+50320    AddParams "-dNORANGEPAGESIZE"
+50330   End If
+50340   If Options.DeviceWidthPoints >= 0 Then
+50350    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50360   End If
+50370   If Options.DeviceHeightPoints >= 0 Then
+50380    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50390   End If
+50400   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50410  End If
+50420  AddParams "-sOutputFile=" & GSOutputFile
+50430
+50440  AddAdditionalGhostscriptParameters
+50450
+50460  AddParams "-f"
+50470  AddParams GSInputFile
+50480  ShowParams
+50490  CallGhostscript "PCX"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -648,7 +638,7 @@ Private Function CreateTIFF(GSInputFile As String, GSOutputFile As String, Optio
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tstr As String
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
 50020
 50030  GSInit Options
 50040  InitParams
@@ -658,14 +648,14 @@ On Error GoTo ErrPtnr_OnError
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
-50110  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50140  End If
 50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50170  End If
-50180  AddParams "-I" & tstr
+50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
 50210  AddParams "-dSAFER"
@@ -674,32 +664,29 @@ On Error GoTo ErrPtnr_OnError
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
 50250  End If
 50260
-50270  If Options.OnePagePerFile = 1 Then
-50280   SplitPath GSOutputFile, , Path, , FName, Ext
-50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50300  End If
-50310
-50320  AddParams "-sDEVICE=" & GS_TIFFColorscount
-50330  If Options.DontUseDocumentSettings = 0 Then
-50340   If LenB(Trim$(Options.Papersize)) > 0 Then
-50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50360    AddParams "-dFIXEDMEDIA"
-50370    AddParams "-dNORANGEPAGESIZE"
-50380   End If
-50390   If Options.DeviceWidthPoints >= 0 Then
-50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50410   End If
-50420   If Options.DeviceHeightPoints >= 0 Then
-50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddParams "-f"
-50500  AddParams GSInputFile
-50510  ShowParams
-50520  CallGhostscript "TIFF"
+50270  AddParams "-sDEVICE=" & GS_TIFFColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If LenB(Trim$(Options.Papersize)) > 0 Then
+50300    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310    AddParams "-dFIXEDMEDIA"
+50320    AddParams "-dNORANGEPAGESIZE"
+50330   End If
+50340   If Options.DeviceWidthPoints >= 0 Then
+50350    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50360   End If
+50370   If Options.DeviceHeightPoints >= 0 Then
+50380    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50390   End If
+50400   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50410  End If
+50420  AddParams "-sOutputFile=" & GSOutputFile
+50430
+50440  AddAdditionalGhostscriptParameters
+50450
+50460  AddParams "-f"
+50470  AddParams GSInputFile
+50480  ShowParams
+50490  CallGhostscript "TIFF"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -716,7 +703,7 @@ Private Function CreatePS(GSInputFile As String, GSOutputFile As String, Options
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tstr As String
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
 50020
 50030  GSInit Options
 50040  InitParams
@@ -726,14 +713,14 @@ On Error GoTo ErrPtnr_OnError
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
-50110  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50140  End If
 50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50170  End If
-50180  AddParams "-I" & tstr
+50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
 50210  AddParams "-dSAFER"
@@ -759,10 +746,12 @@ On Error GoTo ErrPtnr_OnError
 50410  End If
 50420  AddParams "-sOutputFile=" & GSOutputFile
 50430
-50440  AddParams "-f"
-50450  AddParams GSInputFile
-50460  ShowParams
-50470  CallGhostscript "PS"
+50440  AddAdditionalGhostscriptParameters
+50450
+50460  AddParams "-f"
+50470  AddParams GSInputFile
+50480  ShowParams
+50490  CallGhostscript "PS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -779,7 +768,7 @@ Private Function CreateEPS(GSInputFile As String, GSOutputFile As String, Option
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tstr As String
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
 50020
 50030  GSInit Options
 50040  InitParams
@@ -789,14 +778,14 @@ On Error GoTo ErrPtnr_OnError
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
-50110  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50140  End If
 50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50170  End If
-50180  AddParams "-I" & tstr
+50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
 50210  AddParams "-dSAFER"
@@ -805,32 +794,29 @@ On Error GoTo ErrPtnr_OnError
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
 50250  End If
 50260
-50270  If Options.OnePagePerFile = 1 Then
-50280   SplitPath GSOutputFile, , Path, , FName, Ext
-50290   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50300  End If
-50310
-50320  AddParams "-sDEVICE=epswrite"
-50330  If Options.DontUseDocumentSettings = 0 Then
-50340   If LenB(Trim$(Options.Papersize)) > 0 Then
-50350    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50360    AddParams "-dFIXEDMEDIA"
-50370    AddParams "-dNORANGEPAGESIZE"
-50380   End If
-50390   If Options.DeviceWidthPoints >= 0 Then
-50400    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50410   End If
-50420   If Options.DeviceHeightPoints >= 0 Then
-50430    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50440   End If
-50450   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
-50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddParams "-f"
-50500  AddParams GSInputFile
-50510  ShowParams
-50520  CallGhostscript "EPS"
+50270  AddParams "-sDEVICE=epswrite"
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If LenB(Trim$(Options.Papersize)) > 0 Then
+50300    AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310    AddParams "-dFIXEDMEDIA"
+50320    AddParams "-dNORANGEPAGESIZE"
+50330   End If
+50340   If Options.DeviceWidthPoints >= 0 Then
+50350    AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50360   End If
+50370   If Options.DeviceHeightPoints >= 0 Then
+50380    AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50390   End If
+50400   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
+50410  End If
+50420  AddParams "-sOutputFile=" & GSOutputFile
+50430
+50440  AddAdditionalGhostscriptParameters
+50450
+50460  AddParams "-f"
+50470  AddParams GSInputFile
+50480  ShowParams
+50490  CallGhostscript "EPS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -918,16 +904,16 @@ Public Function OptimizePDF(PDFInputFilename As String, PDFOutputFilename As Str
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim LastStop As Currency, tstr As String
+50010  Dim LastStop As Currency, tStr As String
 50020  InitParams
-50030  tstr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50030  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50040  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50050   tstr = tstr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50050   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
 50060  End If
 50070  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50080   tstr = tstr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50080   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
 50090  End If
-50100  AddParams "-I" & tstr
+50100  AddParams "-I" & tStr
 50110  AddParams "-q"
 50120  AddParams "-dNODISPLAY"
 50130  AddParams "-dSAFER"
@@ -1124,13 +1110,13 @@ Private Function ShowParams() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tstr As String
-50020  tstr = GSParams(LBound(GSParams))
+50010  Dim i As Long, tStr As String
+50020  tStr = GSParams(LBound(GSParams))
 50030  For i = LBound(GSParams) + 1 To UBound(GSParams)
-50040   tstr = tstr & vbCrLf & GSParams(i)
+50040   tStr = tStr & vbCrLf & GSParams(i)
 50050  Next i
-50060  IfLoggingWriteLogfile "Ghostscriptparameter:" & vbCrLf & tstr
-50070  ShowParams = "Ghostscriptparameter:" & vbCrLf & tstr
+50060  IfLoggingWriteLogfile "Ghostscriptparameter:" & vbCrLf & tStr
+50070  ShowParams = "Ghostscriptparameter:" & vbCrLf & tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1531,7 +1517,7 @@ Public Function GetAllGhostscriptversions() As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, tstr As String, tColl As Collection, i As Long, _
+50010  Dim reg As clsRegistry, tStr As String, tColl As Collection, i As Long, _
   tf() As String, GS_DLL As String, GS_LIB As String, tB As Boolean, j As Long
 50030  Set reg = New clsRegistry
 50040  Set GetAllGhostscriptversions = New Collection
@@ -1539,15 +1525,15 @@ On Error GoTo ErrPtnr_OnError
 50060   .hkey = HKEY_LOCAL_MACHINE
 50070   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 50080   If .KeyExists = True Then
-50090    tstr = Trim$(.GetRegistryValue("GhostscriptCopyright"))
-50100    If LenB(tstr) > 0 Then
-50110     tstr = Replace$(LanguageStrings.OptionsGhostscriptInternal, "%1", tstr)
-50120     tstr = Replace$(tstr, "%2", Trim$(.GetRegistryValue("GhostscriptVersion")))
-50130     GetAllGhostscriptversions.Add tstr
+50090    tStr = Trim$(.GetRegistryValue("GhostscriptCopyright"))
+50100    If LenB(tStr) > 0 Then
+50110     tStr = Replace$(LanguageStrings.OptionsGhostscriptInternal, "%1", tStr)
+50120     tStr = Replace$(tStr, "%2", Trim$(.GetRegistryValue("GhostscriptVersion")))
+50130     GetAllGhostscriptversions.Add tStr
 50140    End If
 50150   End If
-50160   tstr = "AFPL Ghostscript"
-50170   .KeyRoot = "SOFTWARE\" & tstr
+50160   tStr = "AFPL Ghostscript"
+50170   .KeyRoot = "SOFTWARE\" & tStr
 50180   Set tColl = .EnumRegistryKeys(HKEY_LOCAL_MACHINE, .KeyRoot)
 50190   For i = 1 To tColl.Count
 50200    .Subkey = tColl.Item(i)
@@ -1565,15 +1551,15 @@ On Error GoTo ErrPtnr_OnError
 50320         End If
 50330        Next j
 50340        If tB = False Then
-50350         GetAllGhostscriptversions.Add tstr & " " & tColl.Item(i)
+50350         GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
 50360        End If
 50370       End If
 50380      End If
 50390     End If
 50400    End If
 50410   Next i
-50420   tstr = "GNU Ghostscript"
-50430   .KeyRoot = "SOFTWARE\" & tstr
+50420   tStr = "GNU Ghostscript"
+50430   .KeyRoot = "SOFTWARE\" & tStr
 50440   Set tColl = .EnumRegistryKeys(HKEY_LOCAL_MACHINE, .KeyRoot)
 50450   For i = 1 To tColl.Count
 50460    .Subkey = tColl.Item(i)
@@ -1591,15 +1577,15 @@ On Error GoTo ErrPtnr_OnError
 50580         End If
 50590        Next j
 50600        If tB = False Then
-50610         GetAllGhostscriptversions.Add tstr & " " & tColl.Item(i)
+50610         GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
 50620        End If
 50630       End If
 50640      End If
 50650     End If
 50660    End If
 50670   Next i
-50680   tstr = "GPL Ghostscript"
-50690   .KeyRoot = "SOFTWARE\" & tstr
+50680   tStr = "GPL Ghostscript"
+50690   .KeyRoot = "SOFTWARE\" & tStr
 50700   Set tColl = .EnumRegistryKeys(HKEY_LOCAL_MACHINE, .KeyRoot)
 50710   For i = 1 To tColl.Count
 50720    .Subkey = tColl.Item(i)
@@ -1617,7 +1603,7 @@ On Error GoTo ErrPtnr_OnError
 50840         End If
 50850        Next j
 50860        If tB = False Then
-50870         GetAllGhostscriptversions.Add tstr & " " & tColl.Item(i)
+50870         GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
 50880        End If
 50890       End If
 50900      End If
@@ -1642,7 +1628,7 @@ Public Sub CheckForStamping(Filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim StampPage As String, tstr As String, R As String, G As String, B As String, _
+50010  Dim StampPage As String, tStr As String, R As String, G As String, B As String, _
   Stampfile As String, Path As String, ff As Long, Files As Collection, _
   StampString As String, StampFontsize As Double, _
   StampOutlineFontthickness As Double
@@ -1672,11 +1658,11 @@ On Error GoTo ErrPtnr_OnError
 50280     StampPage = Replace(StampPage, "[USEOUTLINEFONT]", "true charpath stroke", , , vbTextCompare)
 50290   End If
 50300   If Len(Options.StampFontColor) > 0 Then
-50310     tstr = Replace$(Options.StampFontColor, "#", "&H")
-50320     If IsNumeric(tstr) = True Then
-50330       R = Replace$(Format(CDbl((CLng(tstr) And CLng("&HFF0000")) / 65536) / 255#, "0.00"), ",", ".", , 1)
-50340       G = Replace$(Format(CDbl((CLng(tstr) And CLng("&H00FF00")) / 256) / 255#, "0.00"), ",", ".", , 1)
-50350       B = Replace$(Format(CDbl(CLng(tstr) And CLng("&H0000FF")) / 255#, "0.00"), ",", ".", , 1)
+50310     tStr = Replace$(Options.StampFontColor, "#", "&H")
+50320     If IsNumeric(tStr) = True Then
+50330       R = Replace$(Format(CDbl((CLng(tStr) And CLng("&HFF0000")) / 65536) / 255#, "0.00"), ",", ".", , 1)
+50340       G = Replace$(Format(CDbl((CLng(tStr) And CLng("&H00FF00")) / 256) / 255#, "0.00"), ",", ".", , 1)
+50350       B = Replace$(Format(CDbl(CLng(tStr) And CLng("&H0000FF")) / 255#, "0.00"), ",", ".", , 1)
 50360       StampPage = Replace(StampPage, "[FONTCOLOR]", R & " " & G & " " & B, , , vbTextCompare)
 50370      Else
 50380       StampPage = Replace(StampPage, "[FONTCOLOR]", "1 0 0", , , vbTextCompare)
@@ -1770,3 +1756,97 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Private Sub AddAdditionalGhostscriptParameters()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tStr As String, tStrf() As String, i As Long
+50020  tStr = Trim$(Options.AdditionalGhostscriptParameters)
+50030  If LenB(tStr) > 0 Then
+50040   If InStr(1, tStr, "|") > 0 Then
+50050     tStrf = Split(tStr, "|")
+50060     For i = LBound(tStrf) To UBound(tStrf)
+50070      tStr = Trim$(tStrf(i))
+50080      If LenB(tStr) > 0 Then
+50090       AddParams tStr
+50100      End If
+50110     Next i
+50120    Else
+50130     AddParams tStr
+50140   End If
+50150  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "AddAdditionalGhostscriptParameters")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub CheckForPrintingAfterSaving(GSInputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tStr As String
+50020
+50030  If Options.PrintAfterSaving = 0 Then
+50040   Exit Sub
+50050  End If
+50060
+50070  GSInit Options
+50080  InitParams
+50090  Set ParamCommands = New Collection
+50100
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFONTPATH=" & GetFontsDirectory
+50250  End If
+50260
+50270  AddParams "-sDEVICE=mswinpr2"
+50280  If Options.PrintAfterSavingNoCancel = 1 Then
+50290   AddParams "-dNoCancel"
+50300  End If
+50310  If Options.PrintAfterSavingQueryUser > 0 Then
+50320   AddParams "-QueryUser=" & Options.PrintAfterSavingQueryUser
+50330  End If
+50340  AddParams "-sOutputFile=" & Options.PrintAfterSavingPrinter
+50350  If Options.PrintAfterSavingDuplex = 1 Then
+50360   If Options.PrintAfterSavingTumble = 1 Then
+50370     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"
+50380    Else
+50390     AddParamCommand "<< /Duplex true /Tumble false >> setpagedevice"
+50400   End If
+50410  End If
+50420  AddParamCommands
+50430  AddParams "-f"
+50440  AddParams GSInputFile
+50450  ShowParams
+50460  CallGhostscript "mswinpr2"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CheckForPrintingAfterSaving")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+

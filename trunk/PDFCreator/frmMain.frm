@@ -604,11 +604,15 @@ On Error GoTo ErrPtnr_OnError
 50340
 50350  InitToolbar
 50360
-50370  txtEmailAddress.ToolTipText = LanguageStrings.DialogEmailAddress
-50380
-50390  Form_Resize
-50400
-50410  DoEvents
+50370  If Options.DisableEmail <> 0 Then
+50380   txtEmailAddress.Enabled = False
+50390   txtEmailAddress.BackColor = Me.BackColor
+50400  End If
+50410  txtEmailAddress.ToolTipText = LanguageStrings.DialogEmailAddress
+50420
+50430  Form_Resize
+50440
+50450  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -625,32 +629,36 @@ Private Sub TerminateProgram()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim PDFSpoolerPath As String, Files As Collection, i As Long, _
-  tStrf() As String
-50030  Timer1.Enabled = False
-50040  Timer2.Enabled = False
-50050
-50060  Set Printjobs = Nothing
-50070
-50080  If Not mutex Is Nothing Then
-50090   mutex.CloseMutex
-50100   Set mutex = Nothing
-50110  End If
-50120
-50130  UnloadDLLComplete GsDllLoaded
-50140
-50150  FindFiles CompletePath(GetPDFCreatorTempfolder), Files, "*.pdf", , False, True
-50160  For i = 1 To Files.Count
-50170   tStrf = Split(Files(i), "|")
-50180   KillFile tStrf(1)
-50190  Next i
-50200
-50210  IfLoggingWriteLogfile "PDFCreator Program End"
-50220  SysTrayLeave
-50230  PDFSpoolerPath = CompletePath(GetSystemDirectory) & "PDFSpooler.exe"
-50240  If Restart = True And FileExists(PDFSpoolerPath) = True Then
-50250   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", App.Path, 1
-50260  End If
+50010  Dim PDFSpoolerPath As String, Files As Collection, i As Long, tStrf() As String
+50020  Timer1.Enabled = False
+50030  Timer2.Enabled = False
+50040
+50050  Set Printjobs = Nothing
+50060
+50070  If Not mutexLocal Is Nothing Then
+50080   mutexLocal.CloseMutex
+50090   Set mutexLocal = Nothing
+50100  End If
+50110
+50120  If Not mutexGlobal Is Nothing Then
+50130   mutexGlobal.CloseMutex
+50140   Set mutexGlobal = Nothing
+50150  End If
+50160
+50170  UnloadDLLComplete GsDllLoaded
+50180
+50190  FindFiles CompletePath(GetPDFCreatorTempfolder), Files, "*.pdf", , False, True
+50200  For i = 1 To Files.Count
+50210   tStrf = Split(Files(i), "|")
+50220   KillFile tStrf(1)
+50230  Next i
+50240
+50250  IfLoggingWriteLogfile "PDFCreator Program End"
+50260  SysTrayLeave
+50270  PDFSpoolerPath = CompletePath(GetSystemDirectory) & "PDFSpooler.exe"
+50280  If Restart = True And FileExists(PDFSpoolerPath) = True Then
+50290   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", App.Path, 1
+50300  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1359,7 +1367,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Temppath As String, LItem As ListItem, Files As Collection, tColl As Collection, _
   tFile() As String, i As Long, j As Long, kB As Long, MB As Long, GB As Long, _
-  ind As Long, tstr As String, tB As Boolean
+  ind As Long, tStr As String, tB As Boolean
 50040  kB = 1024: MB = kB * 1024: GB = MB * 1024
 50050  Set Files = New Collection
 50060  Temppath = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
@@ -1448,12 +1456,12 @@ On Error GoTo ErrPtnr_OnError
 50890   End If
 50900  Next j
 50910  If lsv.ListItems.Count = 1 Then
-50920    tstr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
+50920    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
 50930   Else
-50940    tstr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
+50940    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
 50950  End If
-50960  If tstr <> stb.Panels("Status").Text Then
-50970   stb.Panels("Status").Text = tstr
+50960  If tStr <> stb.Panels("Status").Text Then
+50970   stb.Panels("Status").Text = tStr
 50980  End If
 50990  If tB = True Then
 51000   SetDocMenuAndToolbar
@@ -1606,7 +1614,7 @@ On Error GoTo ErrPtnr_OnError
 50510     If (Options.Toolbars And 2) = 2 Then
 50520      .Item(14).Enabled = False
 50530      .Item(15).Enabled = False
-50540      If LenB(txtEmailAddress.Text) = 0 Then
+50540      If LenB(txtEmailAddress.Text) = 0 Or Options.DisableEmail <> 0 Then
 50550       .Item(16).Enabled = False
 50560      End If
 50570     End If
@@ -1641,7 +1649,7 @@ On Error GoTo ErrPtnr_OnError
 50860     If LvwGetCountSelectedItems(lsv, True) > 1 Then
 50870      .Item(12).Enabled = False
 50880     End If
-50890     If (Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0 Then
+50890     If ((Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0) Or Options.DisableEmail <> 0 Then
 50900      .Item(15).Enabled = False
 50910      .Item(16).Enabled = False
 50920     End If
@@ -1686,7 +1694,7 @@ Private Sub Autosave(Optional Filename As String = vbNullString)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tColl As Collection, i As Long, tFile() As String, Pathname As String, _
-  OutputFilename As String, PDFDocInfo As tPDFDocInfo, tstr As String, _
+  OutputFilename As String, PDFDocInfo As tPDFDocInfo, tStr As String, _
   PSHeader As tPSHeader, tDate As Date
 50040
 50050  Set tColl = New Collection
@@ -1701,9 +1709,9 @@ On Error GoTo ErrPtnr_OnError
 50140 '   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~P*.tmp")
 50150  End If
 50160
-50170  tstr = "Autosavemodus: " & tColl.Count & "files"
-50180  IfLoggingWriteLogfile tstr
-50190  WriteToSpecialLogfile tstr
+50170  tStr = "Autosavemodus: " & tColl.Count & "files"
+50180  IfLoggingWriteLogfile tStr
+50190  WriteToSpecialLogfile tStr
 50200  Do While tColl.Count > 0
 50210   For i = 1 To tColl.Count
 50220    tFile = Split(tColl.Item(i), "|")
@@ -1713,9 +1721,9 @@ On Error GoTo ErrPtnr_OnError
 50260      If DirExists(Pathname) = False Then
 50270       MakePath (Pathname)
 50280      End If
-50290      tstr = "Autosavemodus: Create File '" & OutputFilename & "'"
-50300      IfLoggingWriteLogfile tstr
-50310      WriteToSpecialLogfile tstr
+50290      tStr = "Autosavemodus: Create File '" & OutputFilename & "'"
+50300      IfLoggingWriteLogfile tStr
+50310      WriteToSpecialLogfile tStr
 50320      PSHeader = GetPSHeader(tFile(1))
 50330      tDate = Now
 50340      With PDFDocInfo
@@ -1725,15 +1733,15 @@ On Error GoTo ErrPtnr_OnError
 50380         .Author = GetDocUsername(tFile(1), False)
 50390       End If
 50400       If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50410         tstr = PSHeader.CreationDate.Comment
+50410         tStr = PSHeader.CreationDate.Comment
 50420        Else
-50430         tstr = CStr(tDate)
+50430         tStr = CStr(tDate)
 50440       End If
-50450       .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tstr))
+50450       .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
 50460       .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
 50470       .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)))
 50480       'tStr = CStr(tDate)
-50490       .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tstr))
+50490       .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
 50500       .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)))
 50510       If Len(Options.StandardTitle) > 0 Then
 50520         .Title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)))
@@ -1744,33 +1752,34 @@ On Error GoTo ErrPtnr_OnError
 50570      AppendPDFDocInfo tFile(1), PDFDocInfo
 50580      CheckForStamping tFile(1)
 50590      If Options.RunProgramBeforeSaving = 1 Then
-50600       RunProgramBeforeSaving Me.hwnd, GetShortName(tFile(1)), _
+50600       RunProgramBeforeSaving Me.hwnd, tFile(1), _
        Options.RunProgramBeforeSavingProgramParameters, _
        Options.RunProgramBeforeSavingWindowstyle
 50630      End If
 50640      CallGScript tFile(1), OutputFilename, Options, Options.AutosaveFormat
 50650      If FileExists(OutputFilename) = True Then
-50660        tstr = "Autosavemodus: Create File '" & OutputFilename & "' success"
-50670        IfLoggingWriteLogfile tstr
-50680        WriteToSpecialLogfile tstr
+50660        tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
+50670        IfLoggingWriteLogfile tStr
+50680        WriteToSpecialLogfile tStr
 50690        If Options.RunProgramAfterSaving = 1 Then
-50700         RunProgramAfterSaving Me.hwnd, GetShortName(OutputFilename), _
+50700         RunProgramAfterSaving Me.hwnd, OutputFilename, _
         Options.RunProgramAfterSavingProgramParameters, _
-        Options.RunProgramAfterSavingWindowstyle
+        Options.RunProgramAfterSavingWindowstyle, tFile(1)
 50730        End If
 50740       Else
-50750        tstr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-50760        IfLoggingWriteLogfile tstr
-50770        WriteToSpecialLogfile tstr
+50750        tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+50760        IfLoggingWriteLogfile tStr
+50770        WriteToSpecialLogfile tStr
 50780      End If
 50790     Else
 50800      IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
 50810    End If
-50820    KillFile tFile(1)
-50830    KillInfoSpoolfile tFile(1)
-50840   Next i
-50850   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
-50860  Loop
+50820    CheckForPrintingAfterSaving tFile(1), Options
+50830    KillFile tFile(1)
+50840    KillInfoSpoolfile tFile(1)
+50850   Next i
+50860   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
+50870  Loop
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1883,12 +1892,14 @@ Private Sub Timer2_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim mutex As clsMutex
-50020  Set mutex = New clsMutex
-50030  If mutex.CheckMutex(PDFCreator_GUID) = False Then
-50040  ' Create a mutex
-50050    mutex.CreateMutex PDFCreator_GUID
-50060  End If
+50010  If mutexLocal.CheckMutex(PDFCreator_GUID) = False Then
+50020  ' Create a lokal mutex
+50030    mutexLocal.CreateMutex PDFCreator_GUID
+50040  End If
+50050  If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+50060  ' Create a global mutex
+50070    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50080  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2414,19 +2425,19 @@ On Error GoTo ErrPtnr_OnError
     Options.RunProgramBeforeSavingWindowstyle
 50140    End If
 50150    ConvertPostscriptFile InputFilename, OutputFilename
-50160    KillFile InputFilename
-50170    If Len(OutputFilename) > 0 And FileExists(OutputFilename) = True Then
-50180     If Options.RunProgramAfterSaving = 1 Then
-50190      RunProgramAfterSaving Me.hwnd, GetShortName(OutputFilename), _
+50160    If Len(OutputFilename) > 0 And FileExists(OutputFilename) = True Then
+50170     If Options.RunProgramAfterSaving = 1 Then
+50180      RunProgramAfterSaving Me.hwnd, OutputFilename, _
       Options.RunProgramAfterSavingProgramParameters, _
-      Options.RunProgramAfterSavingWindowstyle
-50220     End If
-50230     Set mail = New clsPDFCreatorMail
-50240     If mail.Send(OutputFilename, Options.StandardSubject, Options.SendMailMethod, rec) <> 0 Then
-50250      MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
-50260     End If
-50270     Set mail = Nothing
-50280    End If
+      Options.RunProgramAfterSavingWindowstyle, InputFilename
+50210     End If
+50220     Set mail = New clsPDFCreatorMail
+50230     If mail.Send(OutputFilename, Options.StandardSubject, Options.SendMailMethod, rec) <> 0 Then
+50240      MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+50250     End If
+50260     Set mail = Nothing
+50270    End If
+50280    KillFile InputFilename
 50290   End If
 50300  End If
 50310  Timer1.Enabled = True

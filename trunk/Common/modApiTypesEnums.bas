@@ -306,7 +306,7 @@ Public Type Rect
 End Type
 
 Public Type BrowseInfo
- hWndOwner As Long
+ hwndOwner As Long
  pIDLRoot As Long
  pszDisplayName As Long
  lpszTitle As Long
@@ -352,7 +352,7 @@ End Type
 
 Public Type OPENFILENAME
  nStructSize    As Long
- hWndOwner      As Long
+ hwndOwner      As Long
  hInstance      As Long
  sFilter        As String
  sCustomFilter  As String
@@ -375,7 +375,7 @@ End Type
 
 Public Type PAGESETUPDLG
  lStructSize As Long
- hWndOwner As Long
+ hwndOwner As Long
  hDevMode As Long
  hDevNames As Long
  Flags As Long
@@ -392,7 +392,7 @@ End Type
 
 Public Type CHOOSECOLOR
  lStructSize As Long
- hWndOwner As Long
+ hwndOwner As Long
  hInstance As Long
  rgbResult As Long
  lpCustColors As String
@@ -421,7 +421,7 @@ End Type
 
 Public Type CHOOSEFONT
  lStructSize As Long
- hWndOwner As Long
+ hwndOwner As Long
  hdc As Long
  lpLogFont As Long
  iPointSize As Long
@@ -440,7 +440,7 @@ End Type
 
 Public Type PRINTDLG_TYPE
  lStructSize As Long
- hWndOwner As Long
+ hwndOwner As Long
  hDevMode As Long
  hDevNames As Long
  hdc As Long
@@ -790,3 +790,17 @@ Public Type TIME_ZONE_INFORMATION
  DaylightBias As Long
 End Type
 
+Public Type WSADATA
+ wVersion As Integer
+ wHighVersion As Integer
+ szDescription(0 To WSADescription_Len) As Byte
+ szSystemStatus(0 To WSASYS_Status_Len) As Byte
+ imaxsockets As Integer
+ imaxudp As Integer
+ lpszvenderinfo As Long
+End Type
+
+Public Enum SHGFP_TYPE
+ SHGFP_TYPE_CURRENT = 0
+ SHGFP_TYPE_DEFAULT = 1
+End Enum

@@ -25,7 +25,7 @@ CustomRootFolderPath=
 DefaultInstallationPath=%ProductName%
 DefaultShortcutFolderName=%ProductName%
 ShortcutsInCommonProgramGroups=Yes
-CreateUninstallerIcon=Yes
+CreateUninstallerIcon=No
 UninstallerIconDescription=Uninstall %ProductName%
 ForceRestart=No
 
@@ -110,7 +110,6 @@ File=%AppDir%&bs;Languages&bs;suomi.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Langua
 File=%AppDir%&bs;Languages&bs;svenska.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;svenska.ini,1,0
 File=%AppDir%&bs;Languages&bs;turkish.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;turkish.ini,1,0
 File=%AppDir%&bs;Languages&bs;TransTool.exe,C:&bs;PDFCreator&bs;Transtool&bs;TransTool.exe,1,2
-File=%AppDir%&bs;Languages&bs;TransTool.exe.manifest,C:&bs;PDFCreator&bs;Transtool&bs;TransTool.exe.manifest,1,0
 File=%AppDir%&bs;Languages&bs;spanish.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;spanish.ini,1,0
 Folder=%AppDir%&bs;gs8.50
 Folder=%AppDir%&bs;gs8.50&bs;fonts
@@ -254,7 +253,6 @@ File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;cdj690.upp,C:&bs;gs8.50&bs;gs8.50&bs
 File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;cdj690ec.upp,C:&bs;gs8.50&bs;gs8.50&bs;lib&bs;cdj690ec.upp,1,0
 File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;cid2code.ps,C:&bs;gs8.50&bs;gs8.50&bs;lib&bs;cid2code.ps,1,0
 File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;cidfmap,C:&bs;gs8.50&bs;gs8.50&bs;lib&bs;cidfmap,1,0
-File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;cidfmap.bak,C:&bs;gs8.50&bs;gs8.50&bs;lib&bs;cidfmap.bak,1,0
 File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;decrypt.ps,C:&bs;gs8.50&bs;gs8.50&bs;lib&bs;decrypt.ps,1,0
 File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;dnj750c.upp,C:&bs;gs8.50&bs;gs8.50&bs;lib&bs;dnj750c.upp,1,0
 File=%AppDir%&bs;gs8.50&bs;gs8.50&bs;lib&bs;dnj750m.upp,C:&bs;gs8.50&bs;gs8.50&bs;lib&bs;dnj750m.upp,1,0
@@ -691,9 +689,9 @@ File=%AppDir%&bs;Homepage.url,C:&bs;PDFCreator&bs;Setup&bs;MSI&bs;Installer2Go&b
 File=%AppDir%&bs;Donation.url,C:&bs;PDFCreator&bs;Setup&bs;MSI&bs;Installer2Go&bs;Donation.url,1,0
 File=%AppDir%&bs;history.txt,C:&bs;PDFCreator&bs;Setup&bs;history.txt,1,0
 File=%AppDir%&bs;SetupLog.txt,C:&bs;PDFCreator&bs;Setup&bs;MSI&bs;Installer2Go&bs;SetupLog.txt,1,0
-File=%AppDir%&bs;PDFCreator.exe.manifest,C:&bs;PDFCreator&bs;PDFCreator&bs;PDFCreator.exe.manifest,1,0
 File=%AppDir%&bs;PDFCreator_english.chm,C:&bs;PDFCreator&bs;Help&bs;english&bs;PDFCreator_english.chm,1,0
 File=%AppDir%&bs;PDFCreator_german.chm,C:&bs;PDFCreator&bs;Help&bs;german&bs;PDFCreator_german.chm,1,0
+File=%AppDir%&bs;PDFSpooler.exe,C:&bs;PDFCreator&bs;PDFSpooler&bs;PDFSpooler.exe,1,2
 Folder=%WinSysDir%&bs;spool
 Folder=%WinSysDir%&bs;spool&bs;drivers
 Folder=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86
@@ -706,10 +704,11 @@ File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;AdobePS5.dll,C:&bs;PDFCreator&
 File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;AdobePS5.ntf,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;WinNT&bs;AdobePS5.ntf,0,0
 File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;AdobePSu.dll,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;WinNT&bs;AdobePSu.dll,0,2
 File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;PDFCREAT.PPD,C:&bs;PDFCreator&bs;Setup&bs;MSI&bs;Installer2Go&bs;PDFCREAT.PPD,0,0
-File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;pscript.hlp,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;WinXP2k3&bs;pscript.hlp,13,0
-File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;pscript.ntf,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;WinXP2k3&bs;pscript.ntf,13,0
-File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;ps5ui.dll,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;WinXP2k3&bs;ps5ui.dll,13,2
-File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;pscript5.dll,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;WinXP2k3&bs;pscript5.dll,13,2
+File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;ps5ui.dll,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;Win2000&bs;ps5ui.dll,0,2
+File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;pscript5.dll,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;Win2000&bs;pscript5.dll,0,2
+File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;pscript.hlp,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;Win2000&bs;pscript.hlp,0,0
+File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;pscript.ntf,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;Win2000&bs;pscript.ntf,0,0
+File=%WinSysDir%&bs;spool&bs;drivers&bs;w32x86&bs;pscrptfe.ntf,C:&bs;PDFCreator&bs;Printer&bs;Adobe&bs;Win2000&bs;pscrptfe.ntf,0,0
 File=%WinSysDir%&bs;stdole2.tlb,C:&bs;PDFCreator&bs;SystemFiles&bs;stdole2.tlb,12,2
 File=%WinSysDir%&bs;asycfilt.dll,C:&bs;PDFCreator&bs;SystemFiles&bs;asycfilt.dll,13,2
 File=%WinSysDir%&bs;mscomct2.ocx,C:&bs;PDFCreator&bs;SystemFiles&bs;mscomct2.ocx,14,2
@@ -719,7 +718,6 @@ File=%WinSysDir%&bs;MSMPIDE.DLL,C:&bs;PDFCreator&bs;SystemFiles&bs;MSMPIDE.DLL,1
 File=%WinSysDir%&bs;msvbvm60.dll,C:&bs;PDFCreator&bs;SystemFiles&bs;msvbvm60.dll,13,2
 File=%WinSysDir%&bs;oleaut32.dll,C:&bs;PDFCreator&bs;SystemFiles&bs;oleaut32.dll,13,2
 File=%WinSysDir%&bs;olepro32.dll,C:&bs;PDFCreator&bs;SystemFiles&bs;olepro32.dll,13,2
-File=%WinSysDir%&bs;PDFSpooler.exe,C:&bs;PDFCreator&bs;PDFSpooler&bs;PDFSpooler.exe,13,2
 File=%WinSysDir%&bs;pdfcmnnt.dll,C:&bs;PDFCreator&bs;Setup&bs;MSI&bs;Installer2Go&bs;pdfcmnnt.dll,0,0
 
 [SHORTCUTS]
@@ -769,8 +767,8 @@ STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersi
 [ENVIRONMENT]
 
 [CUSTOM_ACTIONS]
-C:&bs;PDFCreator&bs;InstallPrinter&bs;InstallPrinter.exe,/Install,2,1,
-C:&bs;PDFCreator&bs;InstallPrinter&bs;InstallPrinter.exe,/Uninstall,2,2,
+C:&bs;PDFCreator&bs;InstallPrinter&bs;InstallPrinter.exe,/Install /LogPath"%AppDir%" /AppDir"%AppDir%",2,1,
+C:&bs;PDFCreator&bs;InstallPrinter&bs;InstallPrinter.exe,/Uninstall /LogPath"C:&bs;",2,2,
 
 [SERVICES]
 

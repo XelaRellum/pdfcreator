@@ -20,14 +20,32 @@
     <td class="main"><p class="header">Versteckte Einstellungen</p>
       <p>PDFCreator hat einige Einstellungen, die f&uuml;r Testzwecke gedacht 
         sind. Diese k&ouml;nnen in der PDFCreator.ini Datei gefunden werden.</p>
+      <p><strong>AdditionalGhostscriptParameters:</strong> Mit Hilfe dieser Einstellung 
+        k&ouml;nnen zus&auml;tzlich Ghostscriptparameter festgelegt werden. Zum Trennen der Parameter
+        muss das Pipe Symbol | verwendet werden. Standardm&auml;&szlig;ig ist Wert leer.<br>
+        <em>Beispiel:</em><br>
+        AdditionalGhostscriptParameters=-dTextAlphaBits=4|-dGraphicsAlphaBits=4|-dDOINTERPOLATE 
+      </p>
       <p><strong>AdditionalGhostscriptSearchpath:</strong> Diese Einstellung erlaubt
         zus&auml;tzliche Verzeichnisse zum Ghostscript-Suchpfad hinzuzuf&uuml;gen. Dies kann verwendet
         werden, um zus&auml;tzliche Verzeichnisse mit Schriftarten hinzuzuf&uuml;gen.</p>
       <p><strong>AddWindowsFontpath:</strong> Wird diese Einstellung aktiviert, durchsucht
         Ghostscript das Windows-Schriftarten Verzeichnis nach m&ouml;glichen Schriftarten.<br>
         <em>Eigenschaften:</em><br>
-        0 - aus<br>
-        1 - an (Standard)</p>
+        0 - Aus<br>
+        1 - Ein (Standard)</p>
+      <p><strong>ClientComputerResolveIPAddress:</strong> In speziellen F&auml;llen ist es m&ouml;glich,
+        dass der Token <em>&lt;ClientComputer&gt;</em>eine IP-Adresse an Stelle eines Hostnamen
+        enth&auml;lt. Wird diese Einstellung auf 1 gesetzt, versucht PDFCreator die IP-Adresse in einen
+        Hostnamen aufzul&ouml;sen.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein </p>
+      <p><strong>DisableEmail:</strong> Diese Einstellung deaktiviert den Email-Button 
+        in PDFCreator.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Email-Button ist aktiviert (Standard)<br>
+        1 - Email-Button ist deaktviert</p>
       <p><strong>DeviceWidthPoints, DeviceHeightPoints:</strong> Diese beiden Einstellungen 
         legen eine fest vorgegebene Breite und H&ouml;he f&uuml;r das zu verwendene Papierformat fest.
         Die Einheit ist 1/72 eines Zolls und kann als Alternative f&uuml;r die Einstellung <strong>Papersize</strong>
@@ -43,7 +61,7 @@
         werden sollen.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
-        1 - An</p>
+        1 - Ein</p>
       <p><strong>OnePagePerFile:</strong> Die Einstellung erlaubt Benutzern eine 
         neue Datei f&uuml;r jede Seite des Originals zu erstellen. Aufgrund von 
         Einschr&auml;nkungen in Ghostscript funktioniert das nicht mit PDF und 
@@ -51,8 +69,7 @@
         <em>Eigenschaften: </em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <strong>Papersize:</strong> Diese Einstellung kann verwendet werden, um eine Standardpapiergr&ouml;&szlig;e
-        vorzugeben.<br>
+      <strong>Papersize:</strong> Diese Einstellung kann verwendet werden, um eine Standardpapiergr&ouml;&szlig;e        vorzugeben.<br>
         <em>Eigenschaften: </em><br>
         Standardm&auml;&szlig;ig ist dieser Wert leer. Ansonsten k&ouml;nnen die in der Ghostscript Dokumentation
         angegebenen Papergr&ouml;&szlig;en verwendet werden.
@@ -83,6 +100,15 @@
         &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em> 
         Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
         diese Option auf eigene Gefahr.</p>
+      <p><strong>RemoveAllKnownFileExtensions:</strong> Wird diese Einstellung aktiviert, 
+        entfernt PDFCretor alle bekannten Erweiterungen von rechts beginnend, bis eine
+        unbekannte Erweiterung gefunden wurde.
+        Beispiel: Wenn der interne Titel einer Postscriptdatei 'Pic.jpg.-12.31.2005.pcx'
+        lautet, ver&auml;nert PDFCreator diesen zu 'Pic.jpg.-12.31.2005'. 
+        Dies erleichert das Speichern wesentlich.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus<br>
+        1 - Ein (Standard)</p>
       <p><strong>RunProgramAfterSaving:</strong> Diese Einstellung legt fest, 
         ob das unter RunProgramAfterSavingProgramname angegebene Programm ausgef&uuml;hrt 
         wird, wenn PDFCreator das Dokument gespeichert hat. Der Name Dokumentes
@@ -186,15 +212,13 @@
         einen Standardbetreff f&uuml;r alle Dokumente anzugeben.</p>
       <p><strong>StandardTitle:</strong> Diese Einstellung erlaubt dem Benutzer, 
         ein Standardtitel f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>RemoveAllKnownFileExtensions:</strong> Wird diese Einstellung aktiviert, 
-        entfernt PDFCretor alle bekannten Erweiterungen von rechts beginnend, bis eine
-        unbekannte Erweiterung gefunden wurde.
-        Beispiel: Wenn der interne Titel einer Postscriptdatei 'Pic.jpg.-12.31.2005.pcx'
-        lautet, ver&auml;nert PDFCreator diesen zu 'Pic.jpg.-12.31.2005'. 
-        Dies erleichert das Speichern wesentlich.<br>
+      <p> <strong>ToolBars:</strong> Mit diese Einstellung können die Werkzeugleisten in 
+        PDFCreator aktiviert bzw. deaktiviert werden.<br>
         <em>Eigenschaften:</em><br>
-        0 - aus<br>
-        1 - an (Standard)</p>
+        1 - Zeigt die Standardwerkzeugleiste (Standard).<br>
+        2 - Zeigt eine sepziellle Werkzeugleiste, die den schnellen Versand eines Dokumentes
+        per Email gestattet.<br>
+        3 - Zeigt beide Werkzeugleisten.</p></td>
       </td>
   </tr>
 </table>
