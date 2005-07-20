@@ -432,11 +432,11 @@ Private Sub stringToArray(ByVal sString As String, bArray() As Byte, _
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim b() As Byte, i As Long, j As Long
+50010  Dim B() As Byte, i As Long, j As Long
 50020  If Len(sString) > 0 Then
-50030   b = sString
-50040   For i = LBound(b) To UBound(b)
-50050    bArray(i) = b(i)
+50030   B = sString
+50040   For i = LBound(B) To UBound(B)
+50050    bArray(i) = B(i)
 50060    If (i = (lMaxSize - 2)) Then
 50070     Exit For
 50080    End If

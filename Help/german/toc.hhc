@@ -60,6 +60,10 @@
 			<param name="Local" value="html\changelang.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="PDFCreator Einstellungen">
+			<param name="Local" value="html\settings.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Versteckte Einstellungen">
 			<param name="Local" value="html\hiddensettings.htm">
 			</OBJECT>

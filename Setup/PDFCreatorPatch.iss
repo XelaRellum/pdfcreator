@@ -1,5 +1,5 @@
 ; PDFCreator-Patch Installation
-; Setup created with Inno Setup QuickStart Pack 5.0.8 (with ISPP) and ISTool 5.0.8
+; Setup created with Inno Setup QuickStart Pack 5.1.4 (with ISPP) and ISTool 5.0.8
 ; Installation from Frank Heindörfer, Philip Chinery
 
 ;#define FastCompilation
@@ -18,6 +18,11 @@
 #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
 #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
 #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+
+;add manifest to exe files
+#expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreator\PDFCreator.exe""","..\ManifestManager\")
+#expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFSpooler\PDFSpooler.exe""","..\ManifestManager\")
+#expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\TransTool\TransTool.exe""","..\ManifestManager\")
 
 #ifdef CompileHelp
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
@@ -107,10 +112,7 @@ Uninstallable=false
 ;Program files
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
-Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {sys}; Flags: comparetimestamp
-
-Source: ..\PDFCreator\PDFCreator.exe.manifest; DestDir: {app}; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Transtool\TransTool.exe.manifest; DestDir: {app}\languages; Flags: comparetimestamp; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Flags: comparetimestamp
 
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Flags: ignoreversion
@@ -128,6 +130,21 @@ Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversi
 #ENDIF
 #Endif
 
+; Scripts
+; Scripts: RunProgramAfterSaving
+Source: ..\Scripts\RunProgramAfterSaving\AddWatermarkToPDF.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\FTPUpload.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\Logger.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\Watermark.pdf; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\NetSend.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+; Scripts: RunProgramBeforSaving
+Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Flags: ignoreversion
+
+[InstallDelete]
+Name: {sys}\PDFSpooler.exe; Type: files
 
 [INI]
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Toolbars; String: 3; Flags: createkeyifdoesntexist

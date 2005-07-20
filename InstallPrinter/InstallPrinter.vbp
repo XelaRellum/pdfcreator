@@ -38,6 +38,7 @@ MinorVer=0
 RevisionVer=0
 AutoIncrementVer=0
 ServerSupportFiles=0
+VersionCompanyName="WM"
 VersionFileDescription="Install-program for a pdfcreator printer."
 VersionLegalCopyright="Frank Heindörfer, Philip Chinery (c) 2005"
 VersionProductName="InstallPrinter"
@@ -56,3 +57,6 @@ Unattended=0
 Retained=0
 ThreadPerObject=0
 MaxNumberOfThreads=1
+
+[MS Transaction Server]
+AutoRefresh=1

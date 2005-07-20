@@ -19,7 +19,19 @@
   <tr> 
     <td class="main"><p class="header">Hidden Settings</p>
       <p>PDFCreator includes several hidden settings that are used for testing 
-        purposes. These features can be found in the PDFCreator.ini file.</p>
+        purposes. These default storage area for these features is in the registry. 
+        It is possible to store these settins in an .ini file. To store settings 
+        in an .ini file, you must start a new installation and use the /useINI 
+        parameter. If you need to use settings other than the default, use the /INIfile= parameters on the installation program. For more information 
+        on the parameters that can be used on installation program, use the /? 
+        parameter. </p>
+      <p><strong>AdditionalGhostscriptParameters:</strong> With this parameter 
+        you can add your parameters list to PDFCreator if you need some missing 
+        ghostscript parameters. To separate the parameters, use the pipe symbol 
+        |. This setting is empty by default.<br>
+        <em>Example:</em><br>
+        AdditionalGhostscriptParameters=-dTextAlphaBits=4|-dGraphicsAlphaBits=4|-dDOINTERPOLATE 
+      </p>
       <p><strong>AdditionalGhostscriptSearchpath:</strong> This setting is for 
         the user to add additional paths where Ghostscript should looking for 
         resources. For example, you can add paths to more fonts.</p>
@@ -29,12 +41,24 @@
         <em>Properties:</em><br>
         0 - off<br>
         1 - on (Default)</p>
+      <p><strong>ClientComputerResolveIPAddress:</strong> In special cases is 
+        it possible that the token <em>&lt;ClientComputer&gt;</em> contains an 
+        IP-address instead a hostname. If you enable this feature, PDFCreator 
+        will try to resolve the IP-address into a hostname.<br>
+        <em>Properties:</em><br>
+        0 - Off (Default)<br>
+        1 - On </p>
       <p><strong>DeviceWidthPoints, DeviceHeightPoints:</strong> These two settings 
         set the desired width and height of the paper in points (units of 1/72 
         of an inch). This is used as an alternative to the Papersize setting, 
         not in combination with.<br>
         <em>Properties:</em> <br>
-        By default, -1 means that PDFCreator doesn't use this setting. </p>
+        By default, -1 means that PDFCreator doesn't use this setting.</p>
+      <p><strong>DisableEmail:</strong> This setting deactivates the email button 
+        in PDFCreator.<br>
+        <em>Properties:</em><br>
+        0 - Email button is enabled (Default)<br>
+        1 - Email button is disabled </p>
       <p><strong>NoProcessingAtStartup:</strong> When you use this setting, PDFCreator 
         will start without processing any documents. You can manually start processing 
         by going to the <em><strong>Document</strong></em> menu and selecting 
@@ -58,10 +82,8 @@
         1 - Red and blue gradient (Default)<br>
         2 - Simple red and blue color</p>
       <p><strong>Papersize:</strong> Use this setting to can set the default paper 
-        size.<br>
-        <em>Properties:</em> <br>
-        This setting is empty by default. To use this setting, use paper 
-        size known to Ghostscript.
+        size. This setting is empty by default. To use this setting, use paper 
+        size known to Ghostscript.</p>
       <blockquote>
         <p>The following are some of the available paper sizes that can be used 
           in the Papersize setting:<br>
@@ -69,8 +91,6 @@
           archAa0, a1, a2, a3, a4, a4small, a5, a6, a7, a8, a9, a10, isob0, isob1, 
           isob2, isob3, isob4, isob5, isob6, c0, c1, c2, c3, c4, c5, c6</p>
       </blockquote>
-        (<a href="http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes">http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes)</a>
-      </p>
       <p><strong>PDFOptimize:</strong> When this setting is used, PDFCreator will 
         optimize its PDF's for fast web viewing. Instead of the entire PDF document 
         being downloaded before being displayed, it will display it as it is downloaded. 
@@ -210,7 +230,12 @@
       <p><strong>StandardSubject:</strong> This setting enables the user to place 
         a standard subject on all documents created by PDFCreator.</p>
       <p><strong>StandardTitle:</strong> This setting enables the user to place 
-        a standard title on all documents created by PDFCreator.</p></td>
+        a standard title on all documents created by PDFCreator.</p>
+      <p> <strong>ToolBars:</strong> This setting enables the user to activate or deactivate the toolbars in PDFCreator. <br>
+        <em>Properties: </em><br>
+        1 - Shows the standard toolbar (Default) <br>
+        2 - Shows a special toolbar for quickly sending documents as email <br>
+        3 - Shows both toolbars</p></td>
   </tr>
 </table>
 </body>

@@ -25,7 +25,19 @@
         Verzeichnisse zu &auml;ndern.</strong> Hier ist ein Auflistung, welches 
         Verzeichnis was f&uuml;r eine Aufgabe hat:</p>
       <p><strong>Tempor&auml;re Dateien:</strong> In diesem Verzeichnis erstellt 
-        PDFCreator kurzzeitig Dateien.</p>
+        PDFCreator kurzzeitig Dateien. Es ist m&ouml;glich 'PDFCreator Tokens' und
+        Umgebungsvariablen zu verwenden. Jedoch sollte damit sehr sorgf&auml;ltig 
+        umgegangen werden, denn nicht jeder Token bzw. jede Umgebungsvariable ist sinnvoll.
+        Es wird empfohlen nur die folgenden Tokens zu verwenden:
+        &lt;Temp&gt;, &lt;Redmon_User&gt;, &lt;Redmon_Machine&gt;, &lt;Clientcomputername&gt;
+        und &lt;Computername&gt;. Es d&uuml;rfen nur System-Umgebungsvariablen verwendet werden und
+        nach dem Setzen einer System-Umgebungsvariablen ist ein Neustart des Rechners notwendig.</p>
+      <p><strong><em>Beispiel:</em></strong><br>
+        1.) Setzen der System-Umgebungsvariablen PTPath: PTPath=C:\PDFCreator-Temp\<br>
+        2.) Neustart des Rechners!<br>
+        3.) Nun wird PDFCreator gestartet, Einstellungen/Verzeichnisse gew&auml;hlt und 
+            %PTPath%&lt;Redmon_User&gt; als tempor&auml;res Verzeichnis eingetragen. 
+        In der Vorschau sollte nun zu sehen sein: C:\PDFCreator-Temp\'Preview REDMON_USER'\</p>
       </td>
   </tr>
 </table>

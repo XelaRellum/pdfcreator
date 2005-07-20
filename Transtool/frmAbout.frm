@@ -114,10 +114,10 @@ Begin VB.Form frmAbout
       Top             =   7410
       Width           =   735
    End
-   Begin VB.Timer Timer3 
+   Begin VB.Timer Timer2 
       Enabled         =   0   'False
-      Left            =   3360
-      Top             =   7290
+      Left            =   2625
+      Top             =   7455
    End
    Begin VB.PictureBox picAbout 
       Appearance      =   0  '2D
@@ -135,16 +135,11 @@ Begin VB.Form frmAbout
       Visible         =   0   'False
       Width           =   6000
    End
-   Begin VB.Timer Timer2 
+   Begin VB.Timer Timer1 
       Enabled         =   0   'False
       Interval        =   250
-      Left            =   2760
-      Top             =   7290
-   End
-   Begin VB.Timer Timer1 
-      Interval        =   100
-      Left            =   2160
-      Top             =   7290
+      Left            =   2100
+      Top             =   7455
    End
    Begin VB.Frame fraDescription 
       Caption         =   "Description"
@@ -197,8 +192,8 @@ Option Explicit
 
 Private Const border = 50, picBorder = 5
 
-Private MOver3 As Boolean, MOver4 As Boolean, sCol1 As OLE_COLOR, sCol2 As OLE_COLOR, _
- AboutText As Collection, yOffs As Long, fontColl As Collection
+Private sCol1 As OLE_COLOR, sCol2 As OLE_COLOR, AboutText As Collection, _
+ yOffs As Long, fontColl As Collection
 
 Private Sub cmd_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -221,46 +216,44 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010
-50020  lbl(0).Caption = App.ProductName & " " & App.Major & "." & App.Minor & "." & App.Revision
-50030  lbl(1).Caption = "License: GNU GENERAL PUBLIC LICENSE"
-50040  lbl(2).Caption = "Author: Frank Heindörfer, Philip Chinery (c) 2004"
-50050  lbl(3).Caption = "http://www.pdfcreator.de.vu"
-50060  lbl(3).MouseIcon = LoadResPicture(2001, vbResCursor)
-50070  lbl(4).Caption = "http://www.sf.net/projects/pdfcreator"
-50080  lbl(4).MouseIcon = LoadResPicture(2001, vbResCursor)
-50090  txtDescription.Text = "TransTool is a part from PDFCreator. With TransTool you can create and edit language files for PDFCreator. Language files are normal ini files."
-50100  MOver3 = False: MOver4 = False
-50110  sCol1 = lbl(3).ForeColor
-50120  sCol2 = lbl(4).ForeColor
-50130
-50140  With picAbout
-50150   .AutoRedraw = True
-50160   .ScaleMode = vbPixels
-50170
-50180   .Visible = True
-50190  End With
-50200  SetAboutText
-50210  With picBuffer
-50220   .Width = picAbout.Width
-50230   .Height = picAbout.Height
-50240   .ScaleMode = vbPixels
-50250   .AutoRedraw = True
-50260   .Visible = False
-50270   yOffs = .Height \ Screen.TwipsPerPixelY
-50280  End With
-50290  With picBackground
-50300   .Width = picAbout.Width
-50310   .Height = picAbout.Height
-50320   .ScaleMode = vbPixels
-50330   .AutoRedraw = True
-50340   .Visible = False
-50350   Set .Picture = picAbout.Picture
-50360  End With
-50370
+50010  lbl(0).Caption = App.ProductName & " " & App.Major & "." & App.Minor & "." & App.Revision
+50020  lbl(1).Caption = "License: GNU GENERAL PUBLIC LICENSE"
+50030  lbl(2).Caption = "Author: Frank Heindörfer, Philip Chinery (c) 2004"
+50040  lbl(3).Caption = "http://www.pdfcreator.de.vu"
+50050  lbl(3).DragIcon = LoadResPicture(2001, vbResCursor)
+50060  lbl(4).Caption = "http://www.sf.net/projects/pdfcreator"
+50070  lbl(4).DragIcon = LoadResPicture(2001, vbResCursor)
+50080  txtDescription.Text = "TransTool is a part from PDFCreator. With TransTool you can create and edit language files for PDFCreator. Language files are normal ini files."
+50090  sCol1 = lbl(3).ForeColor
+50100  sCol2 = lbl(4).ForeColor
+50110
+50120  With picAbout
+50130   .AutoRedraw = True
+50140   .ScaleMode = vbPixels
+50150
+50160   .Visible = True
+50170  End With
+50180  SetAboutText
+50190  With picBuffer
+50200   .Width = picAbout.Width
+50210   .Height = picAbout.Height
+50220   .ScaleMode = vbPixels
+50230   .AutoRedraw = True
+50240   .Visible = False
+50250   yOffs = .Height \ Screen.TwipsPerPixelY
+50260  End With
+50270  With picBackground
+50280   .Width = picAbout.Width
+50290   .Height = picAbout.Height
+50300   .ScaleMode = vbPixels
+50310   .AutoRedraw = True
+50320   .Visible = False
+50330   Set .Picture = picAbout.Picture
+50340  End With
+50350
+50360  Timer1.Enabled = True
+50370  Timer2.Interval = 50
 50380  Timer2.Enabled = True
-50390  Timer3.Interval = 50
-50400  Timer3.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -323,8 +316,8 @@ On Error GoTo ErrPtnr_OnError
 50440  Me.Height = cmd.Top + cmd.Height + (Me.Height - Me.ScaleHeight) + 100
 50450  imgPaypal.Top = lbl(0).Top
 50460  imgPaypal.Left = fraAbout.Width - imgPaypal.Width - lbl(0).Left
-50470  Timer3.Interval = 40
-50480  Timer3.Enabled = True
+50470  Timer2.Interval = 40
+50480  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -405,7 +398,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-
 Private Sub lbl_Click(Index As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -426,19 +418,25 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub lbl_MouseDown(Index As Integer, Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub lbl_DragDrop(Index As Integer, Source As Control, X As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case Index
         Case 3, 4
-50030    lbl(Index).ForeColor = RGB(0, 160, 160)
-50040    lbl(Index).Tag = "1"
-50050  End Select
+50030    If Source Is lbl(Index) Then
+50040     With lbl(Index)
+50050      Call ShellExecute(Me.hwnd, "Open", lbl(Index).Caption, "", App.Path, 1)
+50060 '     .Font.Underline = False
+50070      .ForeColor = &H808000
+50080      .Tag = 1
+50090     End With
+50100    End If
+50110  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmAbout", "lbl_MouseDown")
+Select Case ErrPtnr.OnError("frmAbout", "lbl_DragDrop")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -447,32 +445,54 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub lbl_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub lbl_DragOver(Index As Integer, Source As Control, X As Single, Y As Single, State As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case Index
-        Case 3
+        Case 3, 4
+50030    If State = vbLeave Then
+50040     With lbl(Index)
+50050      .Drag vbEndDrag
+50060      If .Tag = "1" Then
+50070        .Font.Underline = True
+50080        .ForeColor = &H808000
+50090       Else
+50100        .Font.Underline = False
+50110        .ForeColor = &H8000&
+50120      End If
+50130     End With
+50140    End If
+50150  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmAbout", "lbl_DragOver")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub lbl_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case Index
+        Case 3, 4
 50030    With lbl(Index)
-50040     If .Tag <> "1" Then
-50050      If MOver3 = False Then
-50060       .FontUnderline = True
-50070       .ForeColor = RGB(0, 0, 255)
-50080       MOver3 = True
-50090      End If
-50100     End If
-50110    End With
-50120  Case 4
-50130    With lbl(Index)
-50140     If .Tag <> "1" Then
-50150      If MOver4 = False Then
-50160       .FontUnderline = True
-50170       .ForeColor = RGB(0, 0, 255)
-50180       MOver4 = True
-50190      End If
-50200     End If
-50210    End With
-50220  End Select
+50040      If .Tag = "1" Then
+50050        .Font.Underline = True
+50060        .ForeColor = &H808000
+50070       Else
+50080        .ForeColor = vbBlue
+50090        .Font.Underline = True
+50100      End If
+50110     .Drag vbBeginDrag
+50120    End With
+50130  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -485,69 +505,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub lbl_MouseUp(Index As Integer, Button As Integer, Shift As Integer, x As Single, Y As Single)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case Index
-        Case 3, 4
-50030    lbl(Index).ForeColor = RGB(0, 80, 80)
-50040  End Select
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmAbout", "lbl_MouseUp")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Sub Timer1_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim X1 As Long, Y1 As Long, X2 As Long, Y2 As Long, p As POINTAPI
-50020  If MOver3 = True Then
-50030   With lbl(3)
-50040    If .Tag <> "1" Then
-50050     Call ClientToScreen(Me.hwnd, p)
-50060     X1 = p.x + .Left / Screen.TwipsPerPixelX
-50070     Y1 = p.Y + .Top / Screen.TwipsPerPixelX
-50080     X2 = X1 + .Width / Screen.TwipsPerPixelX
-50090     Y2 = Y1 + .Height / Screen.TwipsPerPixelX
-50100     Call GetCursorPos(p)
-50110     If p.x < X1 Or p.x > X2 Or p.Y < Y1 Or p.Y > Y2 Then
-50120      .FontUnderline = False
-50130      If .ForeColor <> RGB(0, 80, 80) Then
-50140       .ForeColor = sCol1
-50150      End If
-50160      MOver3 = False
-50170     End If
-50180    End If
-50190   End With
-50200  End If
-50210  If MOver4 = True Then
-50220   With lbl(4)
-50230    If .Tag <> "1" Then
-50240     Call ClientToScreen(Me.hwnd, p)
-50250     X1 = p.x + .Left / Screen.TwipsPerPixelX
-50260     Y1 = p.Y + .Top / Screen.TwipsPerPixelX
-50270     X2 = X1 + .Width / Screen.TwipsPerPixelX
-50280     Y2 = Y1 + .Height / Screen.TwipsPerPixelX
-50290     Call GetCursorPos(p)
-50300     If p.x < X1 Or p.x > X2 Or p.Y < Y1 Or p.Y > Y2 Then
-50310      .FontUnderline = False
-50320      If .ForeColor <> RGB(0, 80, 80) Then
-50330       .ForeColor = sCol1
-50340      End If
-50350      MOver4 = False
-50360     End If
-50370    End If
-50380   End With
-50390  End If
+50010  Timer1.Enabled = False
+50020  MoveMouseToCommandButton cmd
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -564,28 +527,10 @@ Private Sub Timer2_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Timer2.Enabled = False
-50020  MoveMouseToCommandButton cmd
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmAbout", "Timer2_Timer")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub Timer3_Timer()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long, l As Long, tL As Long, tLine As clsTextLine
 50020
 50030 ' On Error Resume Next
-50040  Timer3.Enabled = False
+50040  Timer2.Enabled = False
 50050  With picBuffer
 50060
 50070 '  Set .Picture = LoadResPicture(1001, vbResBitmap)
@@ -624,11 +569,11 @@ On Error GoTo ErrPtnr_OnError
 50400    yOffs = .Height \ Screen.TwipsPerPixelY
 50410   End If
 50420  End With
-50430  Timer3.Enabled = True
+50430  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmAbout", "Timer3_Timer")
+Select Case ErrPtnr.OnError("frmAbout", "Timer2_Timer")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

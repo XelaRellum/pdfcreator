@@ -7,7 +7,8 @@ Private Enum eInstallAction
  UnInstall = 2
 End Enum
 
-Private InstallAction As eInstallAction, InstallSpecialPrinter As Boolean
+Private InstallAction As eInstallAction, InstallSpecialPrinter As Boolean, LogPath As String, _
+ AppDir As String
 
 Private Portname As String, Monitorname As String, Drivername As String, Printername As String
 
@@ -21,33 +22,35 @@ On Error GoTo ErrPtnr_OnError
 50040  Portname = "PDFCreator:"
 50050  Drivername = "PDFCreator"
 50060  Printername = "PDFCreator"
-50070  AnalyzeCommandlineParameters
-50080  If InstallAction = Install Then
-50090   LogFile = CompletePath(App.Path) & "SetupLog.txt"
-50100   If InstallSpecialPrinter = False Then
-50110     InstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile
-50120     WriteInstalldate2Registry
-50130    Else
-50140     InstallAdditionalWindowsPrinter Printername, LogFile
-50150   End If
-50160  End If
-50170
-50180  If InstallAction = UnInstall Then
-50190   LogFile = CompletePath(GetTempPathApi) & "PDFCreatorUninstall.txt"
-50200   UnInstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile
-50210  End If
-50220  If InstallAction = Install Or InstallAction = UnInstall Then
-50230   WriteToLog "--------------------------------------------------", LogFile
-50240   WriteToLog "MSI-Installer: Installer2Go", LogFile
-50250   WriteToLog "Computername: " & GetComputerName, LogFile
-50260   WriteToLog "Username: " & GetUsername, LogFile
-50270   WriteToLog "WinDir: " & GetWindowsDirectory, LogFile
-50280   WriteToLog "SysDir: " & GetSystemDirectory, LogFile
-50290   WriteToLog "TempDir: " & GetTempPathApi, LogFile
-50300   WriteToLog "CurrentDir: " & CurDir, LogFile
-50310   WriteToLog "Path: " & Environ$("Path"), LogFile
-50320   WriteToLog "Internet Explorer version: " & GetIExplorerVersion, LogFile
-50330  End If
+50070  LogPath = CompletePath(App.Path)
+50080  AppDir = CompletePath(AppDir)
+50090  AnalyzeCommandlineParameters
+50100  If InstallAction = Install Then
+50110   LogFile = AppDir & "SetupLog.txt"
+50120   If InstallSpecialPrinter = False Then
+50130     InstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile, AppDir
+50140     WriteInstalldate2Registry
+50150    Else
+50160     InstallAdditionalWindowsPrinter Printername, LogFile, AppDir
+50170   End If
+50180  End If
+50190
+50200  If InstallAction = UnInstall Then
+50210   LogFile = CompletePath(GetTempPathApi) & "PDFCreatorUninstall.txt"
+50220   UnInstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile
+50230  End If
+50240  If InstallAction = Install Or InstallAction = UnInstall Then
+50250   WriteToLog "--------------------------------------------------", LogFile
+50260   WriteToLog "MSI-Installer: Installer2Go", LogFile
+50270   WriteToLog "Computername: " & GetComputerName, LogFile
+50280   WriteToLog "Username: " & GetUsername, LogFile
+50290   WriteToLog "WinDir: " & GetWindowsDirectory, LogFile
+50300   WriteToLog "SysDir: " & GetSystemDirectory, LogFile
+50310   WriteToLog "TempDir: " & GetTempPathApi, LogFile
+50320   WriteToLog "CurrentDir: " & CurDir, LogFile
+50330   WriteToLog "Path: " & Environ$("Path"), LogFile
+50340   WriteToLog "Internet Explorer version: " & GetIExplorerVersion, LogFile
+50350  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -64,24 +67,36 @@ Private Sub AnalyzeCommandlineParameters()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If Len(VBA.Command$) > 0 Then
-50020   If UCase$(CommandSwitch("IN", False)) = "STALL" And _
-     UCase$(CommandSwitch("UNIN", False)) = "STALL" Then
-50040    MsgBox "Don't use INSTALL and UNINSTALL at the same time!" & vbCrLf & _
+50010  Dim csInstall As String, csUninstall As String, csPrintername As String, csLogPath As String, _
+  csAppDir As String
+50030  If Len(VBA.Command$) > 0 Then
+50040   csInstall = CommandSwitch("IN", False)
+50050   csUninstall = CommandSwitch("UNIN", False)
+50060   csPrintername = CommandSwitch("PRINTERNAME", True)
+50070   csLogPath = CommandSwitch("LOGPATH", True)
+50080   csAppDir = CommandSwitch("APPDIR", True)
+50090   If UCase$(csInstall) = "STALL" And UCase$(csUninstall) = "STALL" Then
+50100    MsgBox "Don't use INSTALL and UNINSTALL at the same time!" & vbCrLf & _
     "Program canceled!"
-50060   End If
-50070   InstallAction = Nil
-50080   If UCase$(CommandSwitch("IN", False)) = "STALL" Then
-50090    InstallAction = Install
-50100   End If
-50110   If UCase$(CommandSwitch("UNIN", False)) = "STALL" Then
-50120    InstallAction = UnInstall
-50130   End If
-50140   If LenB(CommandSwitch("PRINTERNAME", True)) > 0 Then
-50150    InstallSpecialPrinter = True
-50160    Printername = CommandSwitch("PRINTERNAME", True)
-50170   End If
-50180  End If
+50120   End If
+50130   InstallAction = Nil
+50140   If UCase$(csInstall) = "STALL" Then
+50150    InstallAction = Install
+50160   End If
+50170   If UCase$(csUninstall) = "STALL" Then
+50180    InstallAction = UnInstall
+50190   End If
+50200   If LenB(csPrintername) > 0 Then
+50210    InstallSpecialPrinter = True
+50220    Printername = csPrintername
+50230   End If
+50240   If LenB(csLogPath) > 0 Then
+50250    LogPath = CompletePath(csLogPath)
+50260   End If
+50270   If LenB(csAppDir) > 0 Then
+50280    AppDir = CompletePath(csAppDir)
+50290   End If
+50300  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

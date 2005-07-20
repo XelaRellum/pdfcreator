@@ -22,9 +22,22 @@
         where PDFCreator accesses or stores information and files. By default, 
         PDFCreator sets these directories for you, but you may change them to 
         fit your system better. <strong>It is not recommended to change these 
-        directories.</strong> Here is a list of what each directory connects to:</p>
+        directories.</strong></p>
       <p><strong>Temporary Files:</strong> The directory where PDFCreator temporally 
-        creates files when making documents.</p>
+        creates files when making documents. It is possible to use 'PDFCreator 
+        Tokens' and environment variables in this setting, but please be carefull 
+        with this option. Not every token and environment variable made sense 
+        for this setting. It is recommend that you use only the following tokens: 
+        &lt;Temp&gt;, &lt;Redmon_User&gt;, &lt;Redmon_Machine&gt;, &lt;Clientcomputername&gt;
+
+        and &lt;Computername&gt;. 
+        If you use environment variables, please use only system environment variables 
+        and reboot your computer after you set a system environment variable.</p>
+      <p><strong><em>Example:</em></strong><br>
+        1.) Set the system environment variable PTPath: PTPath=C:\PDFCreator-Temp\<br>
+        2.) Reboot the computer!<br>
+        3.) Start PDFCreator and choose options/directories and and type %PTPath%&lt;Redmon_User&gt;. 
+        You should now see in the preview: C:\PDFCreator-Temp\'Preview REDMON_USER'\</p>
       </td>
   </tr>
 </table>

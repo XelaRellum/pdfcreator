@@ -31,13 +31,14 @@ End Type
 
 Public DLLName As String, Environment As String
 
-Public Sub InstallWindowsPrinter(Monitorname As String, Portname As String, Drivername As String, Printername As String, LogFile As String)
+Public Sub InstallWindowsPrinter(Monitorname As String, Portname As String, Drivername As String, _
+ Printername As String, LogFile As String, AppDir As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim RedmonCommand As String
 50020  WriteToLog "Start: Installation printer """ & Printername & """", LogFile, True
-50030  RedmonCommand = GetShortName(CompletePath(GetSystemDirectory)) & "PDFSpooler.exe"
+50030  RedmonCommand = CompletePath(AppDir) & "PDFSpooler.exe"
 50040  If IsWin9xMe Then
 50050    Environment = Win9xEnvironment
 50060    DLLName = Win9xDLLName
@@ -639,7 +640,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set coll = GetPorts
 50030  PortIsInstalled = False
 50040  For i = 1 To coll.Count
-50050   If UCase$(Portname) = UCase$(coll.item(i)) Then
+50050   If UCase$(Portname) = UCase$(coll.Item(i)) Then
 50060    PortIsInstalled = True
 50070    Exit For
 50080   End If
@@ -664,7 +665,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set coll = GetMonitors
 50030  MonitorIsInstalled = False
 50040  For i = 1 To coll.Count
-50050   If UCase$(Monitorname) = UCase$(coll.item(i)) Then
+50050   If UCase$(Monitorname) = UCase$(coll.Item(i)) Then
 50060    MonitorIsInstalled = True
 50070    Exit For
 50080   End If
@@ -689,7 +690,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set coll = GetDrivers
 50030  DriverIsInstalled = False
 50040  For i = 1 To coll.Count
-50050   If UCase$(Drivername) = UCase$(coll.item(i)) Then
+50050   If UCase$(Drivername) = UCase$(coll.Item(i)) Then
 50060    DriverIsInstalled = True
 50070    Exit For
 50080   End If
@@ -736,7 +737,7 @@ Public Function GetFreePDFCreatorPort() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ports As Collection, tStr As String, foundFreePort As Boolean, _
+50010  Dim ports As Collection, tstr As String, foundFreePort As Boolean, _
   i As Long, j As Long
 50030  Set ports = GetPorts
 50040  If ports.Count = 0 Then
@@ -744,10 +745,10 @@ On Error GoTo ErrPtnr_OnError
 50060   Exit Function
 50070  End If
 50080  For i = 1 To 999
-50090   tStr = "PDFCreator" & Format$(i, "000") & ":"
+50090   tstr = "PDFCreator" & Format$(i, "000") & ":"
 50100   foundFreePort = False
 50110   For j = 1 To ports.Count
-50120    If UCase$(tStr) <> UCase$(ports(j)) Then
+50120    If UCase$(tstr) <> UCase$(ports(j)) Then
 50130     foundFreePort = True
 50140     Exit For
 50150    End If
@@ -757,7 +758,7 @@ On Error GoTo ErrPtnr_OnError
 50190   End If
 50200  Next i
 50210  If foundFreePort = True Then
-50220    GetFreePDFCreatorPort = tStr
+50220    GetFreePDFCreatorPort = tstr
 50230   Else
 50240    MsgBox "Cannot find a free printer port!", vbExclamation
 50250  End If
@@ -773,7 +774,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub InstallAdditionalWindowsPrinter(Printername As String, LogFile As String)
+Public Sub InstallAdditionalWindowsPrinter(Printername As String, LogFile As String, AppDir As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -782,7 +783,7 @@ On Error GoTo ErrPtnr_OnError
 50030   MsgBox "Printer '" & Printername & "' is already installed!", vbExclamation
 50040   Exit Sub
 50050  End If
-50060  InstallWindowsPrinter "PDFCreator", GetFreePDFCreatorPort, "PDFCreator", Printername, LogFile
+50060  InstallWindowsPrinter "PDFCreator", GetFreePDFCreatorPort, "PDFCreator", Printername, LogFile, AppDir
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

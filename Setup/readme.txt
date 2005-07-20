@@ -1,6 +1,6 @@
 Setupprograms:
 
-Setup created with Inno Setup QuickStart Pack 5.0.8 (with ISPP) and ISTool 5.0.6.1
+Setup created with Inno Setup QuickStart Pack 5.1.4 (with ISPP) and ISTool 5.0.8
 http://www.jrsoftware.org/isinfo.php
 http://www.istool.org/default.aspx/
 

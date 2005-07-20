@@ -26,9 +26,9 @@ On Error GoTo ErrPtnr_OnError
 50050
 50060  lStdInHandle = GetStdHandle(STD_INPUT_HANDLE)
 50070  StdIn = vbNullString
-50080  WriteToSpecialLogfile "TempDir: " & TempDir
+50080
 50090  Path = CompletePath(TempDir) & PDFCreatorSpoolDirectory & "\"
-50100  WriteToSpecialLogfile "TempPath: " & Path
+50100  WriteToSpecialLogfile "Complete-TempPath: " & Path
 50110  If DirExists(Path) = False Then
 50120   WriteToSpecialLogfile "Makepath Path: " & Path
 50130   MakePath Path

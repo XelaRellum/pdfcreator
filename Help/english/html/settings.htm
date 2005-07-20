@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Settings in PDFCreator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Help</td>
+  </tr>
+  <tr>
+    <td background="../images/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Settings in PDFCreator</p>
+      <p>Since version 0.8.1 RC8, PDFCreator saves all settings in the registry. 
+        If you choose the "Standard installation" PDFCreator saves settings to 
+        the following registry location: <em><strong>HKCU\Software\PDFCreator</strong></em>
+      <p>If your operating system is Windows 2000 and above, the setup saves some settings
+        for the default user in the following registry location:
+        <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em> <br>
+        <br>
+        In a "Server installation" of PDFcreator,  the settings are saved to the following
+        registry location: <em><strong>HKLM\Software\PDFCreator</strong></em> <br>
+        <br>
+        While the default location for settings is in the registry, it is also possible to
+        store the settings in the the old .ini files mode. In this case PDFCreator save all
+        settings to ini files. It is also possible to add an external ini file as default file.
+        For more information use the commandswitch /? on the setup program. <br>
+        <strong>Attention:</strong> There exists some problems with server based profiles and
+        if the application data path is on a network drive. Because of this case server installations
+        can't use the old ini-mode. <br>
+        <br>
+        If you choose the "Standard installation" and are saving to ini files, the settings are saved
+        to the application data path of user: <br>
+        <em>Example:</em> C:\Documents and Settings\[user profile]\Application Data\PDFCreator <br>
+        <br>
+        If your operating system is Windows 2000 and above, the setup saves some settings for the
+        default user in the following directory: <br>
+        <em>Example: </em>C:\Documents and Settings\Default User\Application Data\PDFCreator <br>
+        <br>
+        In a "Server installation" of PDFCreator, settings are saved in the followind directory:<br>
+        C:\Documents and Settings\All User\Application Data\PDFCreator <br>
+        <br>
+        <strong>Procedure of reading the settings</strong>      
+      <p>On Windows 2000 and above, PDFCreator reads the settings from the default user first. If there
+        are no settings, PDFCreator will use its internal default settings. Next, PDFCreator reads
+        the settings from the user. Only the user settings PDFCreator finds will overwrite the settings
+        from the default user. Finally, PDFCreator looks for machine settings in <br>
+        <em>HKLM\Software\PDFCreator</em> <br>
+        or <br>
+        <em>C:\Documents and Settings\All User\Application Data\PDFCreator</em>.<br>
+        Only the machine settings PDFCreator finds will overwrite the settings from the user. With this
+        behaivour it is possible for administrators to define settings for all users.<br>
+        <br>
+        <strong>Procedure of saveing the settings </strong>     
+      <p>If you choose the "Standard installation" of PDFCreator, settings are saved to either of the following: <br>
+        <em>HKCU\Software\PDFCreator</em> <br>
+        or <br>
+        <em>C:\Documents and Settings\[user profile]\Application Data\PDFCreator </em><br>
+        <br>
+        If you choose the "Server installation" of PDFCreator, settings are saved to either of the following: <br>
+        <em>HKLM\Software\PDFCreator </em><br>
+        or <br>
+        <em>C:\Documents and Settings\All User\Application Data\PDFCreator
+      </em>        
+      <p></td>
+  </tr>
+</table>
+</body>
+</html>

@@ -285,9 +285,9 @@ On Error GoTo ErrPtnr_OnError
 50150
 50160  If Len(PDFFile) > 0 And FileExists(PDFFile) = True Then
 50170   If Options.RunProgramAfterSaving = 1 Then
-50180    RunProgramAfterSaving Me.hwnd, GetShortName(PDFFile), _
+50180    RunProgramAfterSaving Me.hwnd, PDFFile, _
    Options.RunProgramAfterSavingProgramParameters, _
-   Options.RunProgramAfterSavingWindowstyle
+   Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50210   End If
 50220   Set mail = New clsPDFCreatorMail
 50230   If mail.Send(PDFFile, txtSubject.Text, Options.SendMailMethod) <> 0 Then
@@ -296,8 +296,11 @@ On Error GoTo ErrPtnr_OnError
 50260   Set mail = Nothing
 50270  End If
 50280
-50290  Me.Visible = False
-50300  Unload Me
+50290  KillFile PDFSpoolfile
+50300  KillInfoSpoolfile PDFSpoolfile
+50310
+50320  Me.Visible = False
+50330  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -356,6 +359,8 @@ Private Sub cmdSave_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  SaveEDoc
+50020  Me.Visible = False
+50030  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -417,13 +422,13 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tDate As Date, tstr As String
+50010  Dim tDate As Date, tStr As String
 50020  Me.KeyPreview = True
 50030  Caption = App.EXEName
 50040
 50050  Caption = App.Title & " " & GetProgramReleaseStr ' & " " & LanguageStrings.CommonTitle
 50060  Printing = True
-50070  RemoveX Me
+50070 ' RemoveX Me
 50080
 50090  With anmProcess
 50100   .Top = 0
@@ -483,13 +488,13 @@ On Error GoTo ErrPtnr_OnError
 50640
 50650   tDate = Now
 50660   If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50670     tstr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50670     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
 50680    Else
-50690     tstr = CStr(tDate)
+50690     tStr = CStr(tDate)
 50700   End If
-50710   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, FormatPrintDocumentDate(tstr))
+50710   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
 50720   'tStr = CStr(tDate)
-50730   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, FormatPrintDocumentDate(tstr))
+50730   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
 50740  End With
 50750  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
 50760   cmdOptions.Enabled = False
@@ -497,14 +502,36 @@ On Error GoTo ErrPtnr_OnError
 50780  If Options.OptionsVisible = 0 Then
 50790   cmdOptions.Visible = False
 50800  End If
-50810  Height = cmdWaiting.Top + cmdWaiting.Height + (Height - ScaleHeight) + 100
-50820  SetTopMost Me, True, True
-50830  SetTopMost Me, False, True
-50840  SetActiveWindow hwnd
+50810  If Options.DisableEmail = 1 Then
+50820   cmdEMail.Enabled = False
+50830  End If
+50840  Height = cmdWaiting.Top + cmdWaiting.Height + (Height - ScaleHeight) + 100
+50850  SetTopMost Me, True, True
+50860  SetTopMost Me, False, True
+50870  SetActiveWindow hwnd
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If UnloadMode = vbFormControlMenu Then
+50020   KillFile PDFSpoolfile
+50030  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "Form_QueryUnload")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -777,56 +804,61 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub SaveEDoc()
+Private Function SaveEDoc() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim PDFFile As String
 50020
-50030  If GsDllLoaded = 0 Then
-50040   MsgBox LanguageStrings.MessagesMsg08
-50050   SetPrinterStop True
-50060   frmMain.Visible = True
-50070   Unload Me
-50080   Exit Sub
-50090  End If
-50100
-50110  PDFFile = Trim$(Create_eDoc)
-50120  If PDFFile <> vbNullString Then
-50130   If Options.RunProgramAfterSaving = 1 Then
-50140    If Options.OnePagePerFile = 1 Then
-50150     PDFFile = Replace$(PDFFile, "%d", "1", , , vbTextCompare)
-50160    End If
-50170    If Options.RunProgramAfterSaving = 1 Then
-50180     RunProgramAfterSaving Me.hwnd, GetShortName(PDFFile), _
+50030  SaveEDoc = False
+50040
+50050  If GsDllLoaded = 0 Then
+50060   MsgBox LanguageStrings.MessagesMsg08
+50070   SetPrinterStop True
+50080   frmMain.Visible = True
+50090   Unload Me
+50100   Exit Function
+50110  End If
+50120
+50130  PDFFile = Trim$(Create_eDoc)
+50140
+50150  If PDFFile <> vbNullString Then
+50160   SaveEDoc = True
+50170   If Options.RunProgramAfterSaving = 1 Then
+50180    If Options.OnePagePerFile = 1 Then
+50190     PDFFile = Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50200    End If
+50210    If Options.RunProgramAfterSaving = 1 Then
+50220     RunProgramAfterSaving Me.hwnd, PDFFile, _
      Options.RunProgramAfterSavingProgramParameters, _
-     Options.RunProgramAfterSavingWindowstyle
-50210    End If
-50220   End If
-50230   If chkStartStandardProgram.Value = 1 Then
-50240    If Options.OnePagePerFile = 1 Then
-50250      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
-50260     Else
-50270      OpenDocument PDFFile
-50280    End If
-50290   End If
-50300   Unload Me
-50310  End If
+     Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
+50250    End If
+50260   End If
+50270   If chkStartStandardProgram.Value = 1 Then
+50280    If Options.OnePagePerFile = 1 Then
+50290      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50300     Else
+50310      OpenDocument PDFFile
+50320    End If
+50330   End If
+50340   KillFile PDFSpoolfile
+50350   KillInfoSpoolfile PDFSpoolfile
+50360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
+Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "SaveEDoc")
 Case 0: Resume
 Case 1: Resume Next
-Case 2: Exit Sub
+Case 2: Exit Function
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
+End Function
 
 Private Function Create_eDoc() As String
  On Error GoTo ErrorHandler
- Dim OutputFile As String, Path As String, tstr As String, Filter As String, _
+ Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
   tErrNumber As Long, Filename As String, FilterIndex As Long, _
   Cancel As Boolean, PDFDocInfo As tPDFDocInfo, Files As Collection, _
   tStrf() As String, i As Long, Ext As String, Ext2 As String
@@ -922,7 +954,7 @@ Private Function Create_eDoc() As String
  CheckForStamping PDFSpoolfile
  
  If Options.RunProgramBeforeSaving = 1 Then
-  RunProgramBeforeSaving Me.hwnd, GetShortName(PDFSpoolfile), _
+  RunProgramBeforeSaving Me.hwnd, PDFSpoolfile, _
   Options.RunProgramBeforeSavingProgramParameters, _
   Options.RunProgramBeforeSavingWindowstyle
  End If
@@ -945,8 +977,7 @@ Private Function Create_eDoc() As String
    CallGScript PDFSpoolfile, OutputFile, Options, EPSWriter
  End Select
  Create_eDoc = OutputFile
- KillFile PDFSpoolfile
- KillInfoSpoolfile PDFSpoolfile
+ CheckForPrintingAfterSaving PDFSpoolfile, Options
  Screen.MousePointer = vbNormal
  Me.Visible = False
  If Options.ShowAnimation = 1 Then
@@ -958,14 +989,14 @@ Private Function Create_eDoc() As String
 ErrorHandler:
  Screen.MousePointer = vbNormal
  tErrNumber = Err.Number
- tstr = Err.Number & ", " & Err.Description
+ tStr = Err.Number & ", " & Err.Description
  On Error GoTo 0
  On Error Resume Next
  Me.Hide
  If tErrNumber <> 32755 Then
   MsgBox Err.Description
   KillFile PDFSpoolfile
-  IfLoggingWriteLogfile "Error: " & tstr
+  IfLoggingWriteLogfile "Error: " & tStr
   IfLoggingShowLogfile frmLog, frmMain
  End If
  frmMain.Timer1.Enabled = True
