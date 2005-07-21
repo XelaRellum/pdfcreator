@@ -11,7 +11,7 @@ Option Explicit
 Const AppTitle = "PDFCreator - Logger"
 Const LogFile = "PDFCreator-Logfile.csv"
 
-Dim objArgs, sep, fso
+Dim objArgs, sep, fso, f
 
 
 Set objArgs = WScript.Arguments
@@ -24,13 +24,14 @@ End If
 Set fso = CreateObject("Scripting.FileSystemObject")
 
 If Not fso.FileExists(LogFile) Then
- WriteToFile LogFile, "Time", "File", "User", "Machine"
+ WriteToFile LogFile, "Time", "File", "Filsize", "User", "Machine"
 ENd If
 
-WriteToFile LogFile, Now, objArgs(0), objArgs(1), Replace(objArgs(2),"\\","")
+Set f = fso.GetFile(objArgs(0))
+WriteToFile LogFile, Now, objArgs(0), f.Size, objArgs(1), Replace(objArgs(2),"\\","")
 
 
-Private Sub WriteToFile(File, Str1, Str2, Str3, Str4)
+Private Sub WriteToFile(File, Str1, Str2, Str3, Str4, Str5)
  Const ForAppending = 8
  Dim fso, f
  Set fso = CreateObject("Scripting.FileSystemObject")
@@ -39,7 +40,8 @@ Private Sub WriteToFile(File, Str1, Str2, Str3, Str4)
  f.WriteLine ReplaceForbiddenChars(Str1, sep) & sep & _
   ReplaceForbiddenChars(Str2, sep) & sep & _
   ReplaceForbiddenChars(Str3, sep) & sep & _
-  ReplaceForbiddenChars(Str4, sep)
+  ReplaceForbiddenChars(Str4, sep) & sep & _
+  ReplaceForbiddenChars(Str5, sep)
  f.Close
 End Sub
 

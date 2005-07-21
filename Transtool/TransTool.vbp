@@ -1,6 +1,6 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\WINDOWS\system32\STDOLE2.TLB#OLE Automation
-Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
+Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; mscomctl.ocx
 Class=clsHash; ..\Common\clsHash.cls
 Class=clsMutex; ..\Common\clsMutex.cls
 Class=clsINI; ..\Common\clsINI.cls
@@ -45,7 +45,7 @@ Startup="Sub Main"
 HelpFile=""
 Title="TransTool"
 ExeName32="TransTool.exe"
-Command32="/checkinstance"
+Command32=""
 Name="TransTool"
 HelpContextID="0"
 CompatibleMode="0"
