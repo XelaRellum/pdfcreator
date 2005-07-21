@@ -45,10 +45,13 @@ End If
 
 Set objCharacter = objAgent.Characters.Character(AgentName)
 
-objCharacter.Show
-objCharacter.Play "GetAttention"
-objCharacter.Speak TextToSpeech
-Set HideID = objCharacter.Hide
+With objCharacter
+ .Show
+ .LanguageID = &H0409 ' English
+ .Play "GetAttention"
+ .Speak TextToSpeech
+ Set HideID = .Hide
+End With
 
 c = 150 ' Don't wait more than 15 seconds
 Do While (c > 0) and (LastID <> HideID)
