@@ -16,6 +16,371 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin PDFCreator.dmFrame dmFraPDFGeneral 
+      Height          =   2895
+      Left            =   2730
+      TabIndex        =   91
+      Top             =   1785
+      Visible         =   0   'False
+      Width           =   6195
+      _ExtentX        =   10927
+      _ExtentY        =   5106
+      Caption         =   "General Options"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.CheckBox chkPDFASCII85 
+         Appearance      =   0  '2D
+         Caption         =   "Convert binary data to ASCII85"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   2400
+         TabIndex        =   96
+         Top             =   2520
+         Width           =   3675
+      End
+      Begin VB.ComboBox cmbPDFOverprint 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":548A
+         Left            =   2400
+         List            =   "frmOptions.frx":548C
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   95
+         Top             =   1980
+         Width           =   2655
+      End
+      Begin VB.TextBox txtPDFRes 
+         Alignment       =   1  'Rechts
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   2400
+         TabIndex        =   94
+         Text            =   "600"
+         Top             =   1440
+         Width           =   615
+      End
+      Begin VB.ComboBox cmbPDFCompat 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":548E
+         Left            =   2400
+         List            =   "frmOptions.frx":5490
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   93
+         Top             =   480
+         Width           =   2655
+      End
+      Begin VB.ComboBox cmbPDFRotate 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":5492
+         Left            =   2400
+         List            =   "frmOptions.frx":5494
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   92
+         Tag             =   "None|All|PageByPage"
+         Top             =   960
+         Width           =   2655
+      End
+      Begin VB.Label lblPDFDPI 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "dpi"
+         Height          =   195
+         Left            =   3120
+         TabIndex        =   101
+         Top             =   1485
+         Width           =   210
+      End
+      Begin VB.Label lblPDFOverprint 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         Caption         =   "Overprint:"
+         Height          =   195
+         Left            =   1605
+         TabIndex        =   100
+         Top             =   2040
+         Width           =   690
+      End
+      Begin VB.Label lblPDFResolution 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Resolution:"
+         Height          =   195
+         Left            =   1500
+         TabIndex        =   99
+         Top             =   1485
+         Width           =   795
+      End
+      Begin VB.Label lblPDFCompat 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Compatibility:"
+         Height          =   195
+         Left            =   1380
+         TabIndex        =   98
+         Top             =   540
+         Width           =   915
+      End
+      Begin VB.Label lblPDFAutoRotate 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Auto-Rotate Pages:"
+         Height          =   195
+         Left            =   900
+         TabIndex        =   97
+         Top             =   1020
+         Width           =   1395
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraBitmapGeneral 
+      Height          =   1935
+      Left            =   2640
+      TabIndex        =   74
+      Top             =   1680
+      Visible         =   0   'False
+      Width           =   6375
+      _ExtentX        =   11245
+      _ExtentY        =   3413
+      Caption         =   "Bitmap"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.ComboBox cmbTIFFColors 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   3480
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   81
+         Top             =   1440
+         Width           =   2175
+      End
+      Begin VB.ComboBox cmbPCXColors 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   3240
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   80
+         Top             =   1320
+         Width           =   2175
+      End
+      Begin VB.ComboBox cmbBMPColors 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   3000
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   79
+         Top             =   1200
+         Width           =   2175
+      End
+      Begin VB.ComboBox cmbJPEGColors 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   2880
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   78
+         Top             =   1080
+         Width           =   2175
+      End
+      Begin VB.TextBox txtJPEGQuality 
+         Alignment       =   1  'Rechts
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   1920
+         TabIndex        =   77
+         Text            =   "75"
+         Top             =   1440
+         Width           =   495
+      End
+      Begin VB.ComboBox cmbPNGColors 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   1920
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   76
+         Top             =   960
+         Width           =   4215
+      End
+      Begin VB.TextBox txtBitmapResolution 
+         Alignment       =   1  'Rechts
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   1920
+         TabIndex        =   75
+         Text            =   "72"
+         Top             =   480
+         Width           =   495
+      End
+      Begin VB.Label lblJPEQQualityProzent 
+         AutoSize        =   -1  'True
+         Caption         =   "%"
+         Height          =   195
+         Left            =   2520
+         TabIndex        =   86
+         Top             =   1485
+         Width           =   120
+      End
+      Begin VB.Label lblJPEGQuality 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         Caption         =   "Quality:"
+         Height          =   195
+         Left            =   1290
+         TabIndex        =   85
+         Top             =   1485
+         Width           =   525
+      End
+      Begin VB.Label lblBitmapColors 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         Caption         =   "Colors:"
+         Height          =   195
+         Left            =   1335
+         TabIndex        =   84
+         Top             =   1020
+         Width           =   480
+      End
+      Begin VB.Label lblBitmapDPI 
+         AutoSize        =   -1  'True
+         Caption         =   "dpi"
+         Height          =   195
+         Left            =   2520
+         TabIndex        =   83
+         Top             =   525
+         Width           =   210
+      End
+      Begin VB.Label lblBitmapResolution 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         Caption         =   "Resolution:"
+         Height          =   195
+         Left            =   1020
+         TabIndex        =   82
+         Top             =   525
+         Width           =   795
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraPSGeneral 
+      Height          =   1095
+      Left            =   2640
+      TabIndex        =   87
+      Top             =   1920
+      Visible         =   0   'False
+      Width           =   6375
+      _ExtentX        =   11245
+      _ExtentY        =   1931
+      Caption         =   "Postscript"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.ComboBox cmbEPSLanguageLevel 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   2280
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   89
+         Top             =   600
+         Width           =   735
+      End
+      Begin VB.ComboBox cmbPSLanguageLevel 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   2040
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   88
+         Top             =   480
+         Width           =   735
+      End
+      Begin VB.Label lblLangLevel 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         Caption         =   "Language Level:"
+         Height          =   195
+         Left            =   735
+         TabIndex        =   90
+         Top             =   510
+         Width           =   1200
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraPDFFonts 
+      Height          =   1695
+      Left            =   2760
+      TabIndex        =   125
+      Top             =   2400
+      Visible         =   0   'False
+      Width           =   6195
+      _ExtentX        =   10927
+      _ExtentY        =   2990
+      Caption         =   "Font options"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.CheckBox chkPDFEmbedAll 
+         Appearance      =   0  '2D
+         Caption         =   "Embed all Fonts"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   128
+         Top             =   360
+         Width           =   5955
+      End
+      Begin VB.CheckBox chkPDFSubSetFonts 
+         Appearance      =   0  '2D
+         Caption         =   "Subset Fonts, when percentage of used characters below:"
+         ForeColor       =   &H80000008&
+         Height          =   495
+         Left            =   120
+         TabIndex        =   127
+         Top             =   780
+         Width           =   5955
+      End
+      Begin VB.TextBox txtPDFSubSetPerc 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   400
+         TabIndex        =   126
+         Top             =   1320
+         Width           =   495
+      End
+      Begin VB.Label lblPDFPerc 
+         AutoSize        =   -1  'True
+         Caption         =   "%"
+         Height          =   195
+         Left            =   960
+         TabIndex        =   129
+         Top             =   1365
+         Width           =   120
+      End
+   End
    Begin PDFCreator.dmFrame dmFraProgDirectories 
       Height          =   1410
       Left            =   2640
@@ -66,7 +431,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdUsertempPath 
          Height          =   300
          Left            =   5640
-         Picture         =   "frmOptions.frx":548A
+         Picture         =   "frmOptions.frx":5496
          Style           =   1  'Grafisch
          TabIndex        =   167
          Top             =   600
@@ -124,9 +489,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":5A14
+         ItemData        =   "frmOptions.frx":5A20
          Left            =   3720
-         List            =   "frmOptions.frx":5A16
+         List            =   "frmOptions.frx":5A22
          Style           =   2  'Dropdown-Liste
          TabIndex        =   54
          Top             =   600
@@ -184,9 +549,9 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "frmOptions.frx":5A18
+         ItemData        =   "frmOptions.frx":5A24
          Left            =   3720
-         List            =   "frmOptions.frx":5A1A
+         List            =   "frmOptions.frx":5A26
          Style           =   2  'Dropdown-Liste
          TabIndex        =   51
          Top             =   840
@@ -272,9 +637,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":5A1C
+         ItemData        =   "frmOptions.frx":5A28
          Left            =   3690
-         List            =   "frmOptions.frx":5A1E
+         List            =   "frmOptions.frx":5A2A
          Style           =   2  'Dropdown-Liste
          TabIndex        =   38
          Top             =   1785
@@ -472,129 +837,6 @@ Begin VB.Form frmOptions
          TabIndex        =   70
          Top             =   360
          Width           =   855
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraPDFGeneral 
-      Height          =   2895
-      Left            =   2730
-      TabIndex        =   91
-      Top             =   1785
-      Visible         =   0   'False
-      Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   5106
-      Caption         =   "General Options"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.CheckBox chkPDFASCII85 
-         Appearance      =   0  '2D
-         Caption         =   "Convert binary data to ASCII85"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   2400
-         TabIndex        =   96
-         Top             =   2520
-         Width           =   3675
-      End
-      Begin VB.ComboBox cmbPDFOverprint 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":5A20
-         Left            =   2400
-         List            =   "frmOptions.frx":5A22
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   95
-         Top             =   1980
-         Width           =   2655
-      End
-      Begin VB.TextBox txtPDFRes 
-         Alignment       =   1  'Rechts
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   2400
-         TabIndex        =   94
-         Text            =   "600"
-         Top             =   1440
-         Width           =   615
-      End
-      Begin VB.ComboBox cmbPDFCompat 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":5A24
-         Left            =   2400
-         List            =   "frmOptions.frx":5A26
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   93
-         Top             =   480
-         Width           =   2655
-      End
-      Begin VB.ComboBox cmbPDFRotate 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":5A28
-         Left            =   2400
-         List            =   "frmOptions.frx":5A2A
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   92
-         Tag             =   "None|All|PageByPage"
-         Top             =   960
-         Width           =   2655
-      End
-      Begin VB.Label lblPDFDPI 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "dpi"
-         Height          =   195
-         Left            =   3120
-         TabIndex        =   101
-         Top             =   1440
-         Width           =   210
-      End
-      Begin VB.Label lblPDFOverprint 
-         Alignment       =   1  'Rechts
-         Caption         =   "Overprint:"
-         Height          =   375
-         Left            =   120
-         TabIndex        =   100
-         Top             =   2040
-         Width           =   2175
-      End
-      Begin VB.Label lblPDFResolution 
-         Alignment       =   1  'Rechts
-         BackStyle       =   0  'Transparent
-         Caption         =   "Resolution:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   99
-         Top             =   1500
-         Width           =   2175
-      End
-      Begin VB.Label lblPDFCompat 
-         Alignment       =   1  'Rechts
-         BackStyle       =   0  'Transparent
-         Caption         =   "Compatibility:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   98
-         Top             =   540
-         Width           =   2175
-      End
-      Begin VB.Label lblPDFAutoRotate 
-         Alignment       =   1  'Rechts
-         BackStyle       =   0  'Transparent
-         Caption         =   "Auto-Rotate Pages:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   97
-         Top             =   1020
-         Width           =   2175
       End
    End
    Begin PDFCreator.dmFrame dmFraPDFSecurity 
@@ -1213,63 +1455,6 @@ Begin VB.Form frmOptions
          Width           =   5910
       End
    End
-   Begin PDFCreator.dmFrame dmFraPDFFonts 
-      Height          =   1695
-      Left            =   2760
-      TabIndex        =   125
-      Top             =   2400
-      Visible         =   0   'False
-      Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2990
-      Caption         =   "Font options"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.CheckBox chkPDFEmbedAll 
-         Appearance      =   0  '2D
-         Caption         =   "Embed all Fonts"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   128
-         Top             =   360
-         Width           =   5955
-      End
-      Begin VB.CheckBox chkPDFSubSetFonts 
-         Appearance      =   0  '2D
-         Caption         =   "Subset Fonts, when percentage of used characters below:"
-         ForeColor       =   &H80000008&
-         Height          =   495
-         Left            =   120
-         TabIndex        =   127
-         Top             =   780
-         Width           =   5955
-      End
-      Begin VB.TextBox txtPDFSubSetPerc 
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   360
-         TabIndex        =   126
-         Top             =   1320
-         Width           =   495
-      End
-      Begin VB.Label lblPDFPerc 
-         AutoSize        =   -1  'True
-         Caption         =   "%"
-         Height          =   195
-         Left            =   960
-         TabIndex        =   129
-         Top             =   1320
-         Width           =   120
-      End
-   End
    Begin VB.CommandButton cmdCancel 
       Cancel          =   -1  'True
       Caption         =   "&Cancel"
@@ -1575,181 +1760,6 @@ Begin VB.Form frmOptions
             ImageVarType    =   2
          EndProperty
       EndProperty
-   End
-   Begin PDFCreator.dmFrame dmFraPSGeneral 
-      Height          =   1095
-      Left            =   2640
-      TabIndex        =   87
-      Top             =   1920
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   1931
-      Caption         =   "Postscript"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.ComboBox cmbEPSLanguageLevel 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   2280
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   89
-         Top             =   600
-         Width           =   735
-      End
-      Begin VB.ComboBox cmbPSLanguageLevel 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   2040
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   88
-         Top             =   480
-         Width           =   735
-      End
-      Begin VB.Label lblLangLevel 
-         Alignment       =   1  'Rechts
-         Caption         =   "Language Level:"
-         Height          =   255
-         Left            =   240
-         TabIndex        =   90
-         Top             =   480
-         Width           =   1695
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraBitmapGeneral 
-      Height          =   1935
-      Left            =   2640
-      TabIndex        =   74
-      Top             =   1680
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   3413
-      Caption         =   "Bitmap"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.ComboBox cmbTIFFColors 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   3480
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   81
-         Top             =   1440
-         Width           =   2175
-      End
-      Begin VB.ComboBox cmbPCXColors 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   3240
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   80
-         Top             =   1320
-         Width           =   2175
-      End
-      Begin VB.ComboBox cmbBMPColors 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   3000
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   79
-         Top             =   1200
-         Width           =   2175
-      End
-      Begin VB.ComboBox cmbJPEGColors 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   2880
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   78
-         Top             =   1080
-         Width           =   2175
-      End
-      Begin VB.TextBox txtJPEGQuality 
-         Alignment       =   1  'Rechts
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   1920
-         TabIndex        =   77
-         Text            =   "75"
-         Top             =   1440
-         Width           =   495
-      End
-      Begin VB.ComboBox cmbPNGColors 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   1920
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   76
-         Top             =   960
-         Width           =   4215
-      End
-      Begin VB.TextBox txtBitmapResolution 
-         Alignment       =   1  'Rechts
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   1920
-         TabIndex        =   75
-         Text            =   "72"
-         Top             =   480
-         Width           =   495
-      End
-      Begin VB.Label lblJPEQQualityProzent 
-         Caption         =   "%"
-         Height          =   255
-         Left            =   2520
-         TabIndex        =   86
-         Top             =   1440
-         Width           =   255
-      End
-      Begin VB.Label lblJPEGQuality 
-         Alignment       =   1  'Rechts
-         Caption         =   "Quality:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   85
-         Top             =   1440
-         Width           =   1695
-      End
-      Begin VB.Label lblBitmapColors 
-         Alignment       =   1  'Rechts
-         Caption         =   "Colors:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   84
-         Top             =   960
-         Width           =   1695
-      End
-      Begin VB.Label lblBitmapDPI 
-         Caption         =   "dpi"
-         Height          =   255
-         Left            =   2520
-         TabIndex        =   83
-         Top             =   480
-         Width           =   495
-      End
-      Begin VB.Label lblBitmapResolution 
-         Alignment       =   1  'Rechts
-         Caption         =   "Resolution:"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   82
-         Top             =   480
-         Width           =   1695
-      End
    End
    Begin PDFCreator.dmFrame dmFraProgGeneral 
       Height          =   4215
@@ -2499,10 +2509,10 @@ Private Sub cmbCharset_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tstr As String
+50010  Dim allow As String, tStr As String
 50020  allow = "0123456789" & Chr$(8) & Chr$(13)
-50030  tstr = Chr$(KeyAscii)
-50040  If InStr(1, allow, tstr) = 0 Then
+50030  tStr = Chr$(KeyAscii)
+50040  If InStr(1, allow, tStr) = 0 Then
 50050    KeyAscii = 0
 50060  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2521,19 +2531,19 @@ Private Sub cmbCharset_Validate(Cancel As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tstr As String
-50020  tstr = ""
+50010  Dim i As Long, tStr As String
+50020  tStr = ""
 50030  For i = 1 To Len(cmbCharset.Text)
 50040   If InStr("0123456789", Mid(cmbCharset.Text, i, 1)) > 0 Then
-50050     tstr = tstr & Mid(cmbCharset.Text, i, 1)
+50050     tStr = tStr & Mid(cmbCharset.Text, i, 1)
 50060    Else
 50070     Exit For
 50080   End If
 50090  Next i
-50100  If Len(Trim$(tstr)) = 0 Then
+50100  If Len(Trim$(tStr)) = 0 Then
 50110    cmbCharset.Text = 0
 50120   Else
-50130    cmbCharset.Text = tstr
+50130    cmbCharset.Text = tStr
 50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2568,7 +2578,7 @@ Private Sub cmbGhostscript_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, gsv As String, tsf() As String, Path As String, tstr As String
+50010  Dim reg As clsRegistry, gsv As String, tsf() As String, Path As String, tStr As String
 50020
 50030  gsv = cmbGhostscript.List(cmbGhostscript.ListIndex)
 50040  Set reg = New clsRegistry: reg.hkey = HKEY_LOCAL_MACHINE
@@ -2586,8 +2596,8 @@ On Error GoTo ErrPtnr_OnError
 50160     If InStr(gsv, " ") > 0 Then
 50170      tsf = Split(gsv, " ")
 50180      reg.KeyRoot = "SOFTWARE\AFPL Ghostscript\" & tsf(UBound(tsf))
-50190      tstr = reg.GetRegistryValue("GS_DLL")
-50200      SplitPath tstr, , Path
+50190      tStr = reg.GetRegistryValue("GS_DLL")
+50200      SplitPath tStr, , Path
 50210      txtGSbin.Text = CompletePath(Path)
 50220      If InStrRev(Path, "\") > 0 Then
 50230       txtGSlib.Text = CompletePath(Mid(Path, 1, InStrRev(Path, "\") - 1)) & "lib"
@@ -2602,8 +2612,8 @@ On Error GoTo ErrPtnr_OnError
 50320     If InStr(gsv, " ") > 0 Then
 50330      tsf = Split(gsv, " ")
 50340      reg.KeyRoot = "SOFTWARE\GNU Ghostscript\" & tsf(UBound(tsf))
-50350      tstr = reg.GetRegistryValue("GS_DLL")
-50360      SplitPath tstr, , Path
+50350      tStr = reg.GetRegistryValue("GS_DLL")
+50360      SplitPath tStr, , Path
 50370      txtGSbin.Text = CompletePath(Path)
 50380      If InStrRev(Path, "\") > 0 Then
 50390       txtGSlib.Text = CompletePath(Mid(Path, 1, InStrRev(Path, "\") - 1)) & "lib"
@@ -2616,8 +2626,8 @@ On Error GoTo ErrPtnr_OnError
 50460     If InStr(gsv, " ") > 0 Then
 50470      tsf = Split(gsv, " ")
 50480      reg.KeyRoot = "SOFTWARE\GPL Ghostscript\" & tsf(UBound(tsf))
-50490      tstr = reg.GetRegistryValue("GS_DLL")
-50500      SplitPath tstr, , Path
+50490      tStr = reg.GetRegistryValue("GS_DLL")
+50500      SplitPath tStr, , Path
 50510      txtGSbin.Text = CompletePath(Path)
 50520      If InStrRev(Path, "\") > 0 Then
 50530       txtGSlib.Text = CompletePath(Mid(Path, 1, InStrRev(Path, "\") - 1)) & "lib"
@@ -3092,30 +3102,30 @@ Private Sub cmdTest_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tCharset As Long, tstr As String, tFontSize As Long, tFontname As String, _
+50010  Dim tCharset As Long, tStr As String, tFontSize As Long, tFontname As String, _
   tFontCharset As Long
 50030  If InStr(1, cmbCharset.Text, ",", vbTextCompare) > 0 Then
-50040    tstr = Trim$(Mid$(cmbCharset.Text, 1, InStr(1, cmbCharset.Text, ",", vbTextCompare) - 1))
+50040    tStr = Trim$(Mid$(cmbCharset.Text, 1, InStr(1, cmbCharset.Text, ",", vbTextCompare) - 1))
 50050   Else
-50060    tstr = Trim$(cmbCharset.Text)
+50060    tStr = Trim$(cmbCharset.Text)
 50070  End If
-50080  If Len(tstr) = 0 Then
+50080  If Len(tStr) = 0 Then
 50090   cmbCharset.Text = 0
 50100   Exit Sub
 50110  End If
-50120  If IsNumeric(tstr) = False Then
+50120  If IsNumeric(tStr) = False Then
 50130   cmbCharset.Text = 0
 50140   Exit Sub
 50150  End If
-50160  tCharset = tstr
+50160  tCharset = tStr
 50170  With cmdTest.Font
 50180   tFontname = .Name
 50190   tFontSize = .Size
 50200   tFontCharset = .Charset
 50210  End With
-50220  SetFont Me, cmbFonts.List(cmbFonts.ListIndex), CLng(tstr), cmbProgramFontsize.Text
+50220  SetFont Me, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), cmbProgramFontsize.Text
 50230  cmbCharset.Text = tCharset
-50240  SetFont frmMain, cmbFonts.List(cmbFonts.ListIndex), CLng(tstr), cmbProgramFontsize.Text
+50240  SetFont frmMain, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), cmbProgramFontsize.Text
 50250  ieb.Refresh
 50260  With cmdTest.Font
 50270   .Name = tFontname
@@ -3144,7 +3154,7 @@ Private Sub cmdTestpage_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim TestPSPage As String, fn As Long, Filename As String, tstr As String, _
+50010  Dim TestPSPage As String, fn As Long, Filename As String, tStr As String, _
   c As Collection
 50030  frmMain.Timer1.Enabled = False
 50040  TestPSPage = GetTestpageFromRessource
@@ -3153,44 +3163,44 @@ On Error GoTo ErrPtnr_OnError
 50070  TestPSPage = Replace(TestPSPage, "[INFODATE]", Now, , 1, vbTextCompare)
 50080  TestPSPage = Replace(TestPSPage, "[INFOAUTHORS]", "Philip Chinery, Frank Heind\224rfer", , 1, vbTextCompare)
 50090  TestPSPage = Replace(TestPSPage, "[INFOHOMEPAGE]", Homepage, , 1, vbTextCompare)
-50100  tstr = CompletePath(App.Path) & "PDFCreator.exe"
-50110  If FileExists(tstr) = True Then
-50120    Set c = GetFileVersion(tstr)
-50130    tstr = "Version: " & c(2) & "; Size: " & Format(FileLen(tstr), "###,###,###,### Bytes")
+50100  tStr = CompletePath(App.Path) & "PDFCreator.exe"
+50110  If FileExists(tStr) = True Then
+50120    Set c = GetFileVersion(tStr)
+50130    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
 50140   Else
-50150    tstr = ""
+50150    tStr = ""
 50160  End If
-50170  TestPSPage = Replace(TestPSPage, "[INFOPDFCREATOR]", tstr, , 1, vbTextCompare)
+50170  TestPSPage = Replace(TestPSPage, "[INFOPDFCREATOR]", tStr, , 1, vbTextCompare)
 50180
-50190  tstr = CompletePath(GetSystemDirectory()) & "PDFSpooler.exe"
-50200  If FileExists(tstr) = True Then
-50210    Set c = GetFileVersion(tstr)
-50220    tstr = "Version: " & c(2) & "; Size: " & Format(FileLen(tstr), "###,###,###,### Bytes")
+50190  tStr = CompletePath(GetSystemDirectory()) & "PDFSpooler.exe"
+50200  If FileExists(tStr) = True Then
+50210    Set c = GetFileVersion(tStr)
+50220    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
 50230   Else
-50240    tstr = ""
+50240    tStr = ""
 50250  End If
-50260  TestPSPage = Replace(TestPSPage, "[INFOPDFSPOOLER]", tstr, , 1, vbTextCompare)
+50260  TestPSPage = Replace(TestPSPage, "[INFOPDFSPOOLER]", tStr, , 1, vbTextCompare)
 50270
-50280  tstr = CompletePath(App.Path) & "Languages\Transtool.exe"
-50290  If FileExists(tstr) = True Then
-50300    Set c = GetFileVersion(tstr)
-50310    tstr = "Version: " & c(2) & "; Size: " & Format(FileLen(tstr), "###,###,###,### Bytes")
+50280  tStr = CompletePath(App.Path) & "Languages\Transtool.exe"
+50290  If FileExists(tStr) = True Then
+50300    Set c = GetFileVersion(tStr)
+50310    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
 50320   Else
-50330    tstr = ""
+50330    tStr = ""
 50340  End If
-50350  TestPSPage = Replace(TestPSPage, "[INFOTRANSTOOL]", tstr, , 1, vbTextCompare)
+50350  TestPSPage = Replace(TestPSPage, "[INFOTRANSTOOL]", tStr, , 1, vbTextCompare)
 50360
 50370  TestPSPage = Replace(TestPSPage, "[INFOCOMPUTER]", GetComputerName, , 1, vbTextCompare)
-50380  tstr = GetWinVersionStr
+50380  tStr = GetWinVersionStr
 50390  TestPSPage = Replace(TestPSPage, "[INFOWINDOWS]", _
-  Mid(tstr, 1, IIf(InStr(1, tstr, "[") > 0, InStr(1, tstr, "[") - 1, Len(tstr))), 1, vbTextCompare)
+  Mid(tStr, 1, IIf(InStr(1, tStr, "[") > 0, InStr(1, tStr, "[") - 1, Len(tStr))), 1, vbTextCompare)
 50410
 50420  fn = FreeFile
-50430  tstr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
-50440  If DirExists(tstr) = False Then
-50450   MakePath tstr
+50430  tStr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
+50440  If DirExists(tStr) = False Then
+50450   MakePath tStr
 50460  End If
-50470  Filename = GetTempFile(tstr, "~PS")
+50470  Filename = GetTempFile(tStr, "~PS")
 50480  Open Filename For Output As fn
 50490  Print #fn, TestPSPage
 50500  Close #fn
@@ -3315,7 +3325,7 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Const fraPDFTop = 1360, fraPDFLeft = 2960
-50020  Dim pic As New StdPicture, i As Long, tstr As String, gsvers As Collection, _
+50020  Dim pic As New StdPicture, i As Long, tStr As String, gsvers As Collection, _
   fc As Long, reg As clsRegistry, tsf() As String, tStr2 As String, _
   ctl As Control
 50050
@@ -3923,7 +3933,7 @@ On Error GoTo ErrPtnr_OnError
 56070    Next i
 56080    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
 56090    For i = 0 To cmbGhostscript.ListCount - 1
-56100     tstr = ""
+56100     tStr = ""
 56110     If InStr(cmbGhostscript.List(i), ":") Then
 56120       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 56130       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
@@ -3936,8 +3946,8 @@ On Error GoTo ErrPtnr_OnError
 56200        If InStr(cmbGhostscript.List(i), " ") > 0 Then
 56210         tsf = Split(cmbGhostscript.List(i), " ")
 56220         reg.Subkey = tsf(UBound(tsf))
-56230         tstr = reg.GetRegistryValue("GS_DLL")
-56240         If tStr2 & "GSDLL32.DLL" = UCase$(tstr) Then
+56230         tStr = reg.GetRegistryValue("GS_DLL")
+56240         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
 56250          cmbGhostscript.ListIndex = i
 56260          Exit For
 56270         End If
@@ -3948,8 +3958,8 @@ On Error GoTo ErrPtnr_OnError
 56320        If InStr(cmbGhostscript.List(i), " ") > 0 Then
 56330         tsf = Split(cmbGhostscript.List(i), " ")
 56340         reg.Subkey = tsf(UBound(tsf))
-56350         tstr = reg.GetRegistryValue("GS_DLL")
-56360         If tStr2 & "GSDLL32.DLL" = UCase$(tstr) Then
+56350         tStr = reg.GetRegistryValue("GS_DLL")
+56360         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
 56370          cmbGhostscript.ListIndex = i
 56380          Exit For
 56390         End If
@@ -3960,8 +3970,8 @@ On Error GoTo ErrPtnr_OnError
 56440        If InStr(cmbGhostscript.List(i), " ") > 0 Then
 56450         tsf = Split(cmbGhostscript.List(i), " ")
 56460         reg.Subkey = tsf(UBound(tsf))
-56470         tstr = reg.GetRegistryValue("GS_DLL")
-56480         If tStr2 & "GSDLL32.DLL" = UCase$(tstr) Then
+56470         tStr = reg.GetRegistryValue("GS_DLL")
+56480         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
 56490          cmbGhostscript.ListIndex = i
 56500          Exit For
 56510         End If
@@ -4357,7 +4367,7 @@ Private Sub Timer1_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, fi As Long, tstr As String, SMF As Collection, _
+50010  Dim i As Long, fi As Long, tStr As String, SMF As Collection, _
   cSystem As clsSystem, ctl As Control
 50030  Timer1.Enabled = False
 50040  Set cSystem = New clsSystem
@@ -4370,9 +4380,9 @@ On Error GoTo ErrPtnr_OnError
 50110  With cmbFonts
 50120   .Clear
 50130   For i = 1 To Screen.FontCount
-50140    tstr = Trim$(Screen.Fonts(i))
-50150    If Len(tstr) > 0 Then
-50160     cmbFonts.AddItem tstr
+50140    tStr = Trim$(Screen.Fonts(i))
+50150    If Len(tStr) > 0 Then
+50160     cmbFonts.AddItem tStr
 50170    End If
 50180   Next i
 50190   If .ListCount > 0 Then
@@ -4549,13 +4559,13 @@ Private Sub cmbProgramFontSize_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tstr As String
+50010  Dim allow As String, tStr As String
 50020
 50030  allow = "0123456789" & Chr$(8) & Chr$(13)
 50040
-50050  tstr = Chr$(KeyAscii)
+50050  tStr = Chr$(KeyAscii)
 50060
-50070  If InStr(1, allow, tstr) = 0 Then
+50070  If InStr(1, allow, tStr) = 0 Then
 50080    KeyAscii = 0
 50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
