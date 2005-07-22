@@ -8,3 +8,4 @@ Name: hungarian; MessagesFile: compiler:Languages\hungarian.isl
 Name: french;    MessagesFile: compiler:Languages\french.isl
 Name: slovensko; MessagesFile: compiler:Languages\Slovenian.isl
 Name: spanish;   MessagesFile: Spanish.isl
+Name: greek;     MessagesFile: Greek.isl
