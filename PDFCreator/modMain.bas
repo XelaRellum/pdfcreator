@@ -205,7 +205,7 @@ Private Sub InitProgram()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim INIFilename As String, tstr As String
+50010  Dim INIFilename As String, tStr As String
 50020  ShellAndWaitingIsRunning = False
 50030  ChangeDefaultprinter = False
 50040  PrintSelectedJobs = False
@@ -214,58 +214,60 @@ On Error GoTo ErrPtnr_OnError
 50070  ShowAnimationWindow = False
 50080  PDFCreatorLogfilePath = CompletePath(GetTempPath) & "PDFCreator\"
 50090  ErrPtnr.SetProgInfo App.EXEName & " " & GetProgramReleaseStr
-50100  INIFilename = App.EXEName & ".ini"
-50110  If InstalledAsServer = True Then
-50120    PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
-50130   Else
-50140    If DirExists(GetMyAppData) = True Then
-50150      tstr = CompletePath(GetMyAppData) & "PDFCreator"
-50160      If DirExists(tstr) = False Then
-50170       MakePath tstr
-50180      End If
-50190      PDFCreatorINIFile = CompletePath(tstr) & INIFilename
-50200     Else
-50210      PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
-50220    End If
-50230  End If
-50240
-50250  If LenB(Optionsfile) > 0 Then
-50260   PDFCreatorINIFile = Optionsfile
-50270  End If
-50280
-50290  InitLanguagesStrings
-50300  ReadLanguageFromOptions
-50310  LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
-50320  Languagefile = LanguagePath & Options.Language & ".ini"
-50330  If UCase$(Options.Language) = "ESPANOL" And FileExists(Languagefile) = False And _
+50100
+50110  If UseINI Then
+50120   INIFilename = App.EXEName & ".ini"
+50130   If InstalledAsServer = True Then
+50140     PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
+50150    Else
+50160     If DirExists(GetMyAppData) = True Then
+50170       tStr = CompletePath(GetMyAppData) & "PDFCreator"
+50180       If DirExists(tStr) = False Then
+50190        MakePath tStr
+50200       End If
+50210       PDFCreatorINIFile = CompletePath(tStr) & INIFilename
+50220      Else
+50230       PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
+50240     End If
+50250   End If
+50260   If LenB(Optionsfile) > 0 Then
+50270    PDFCreatorINIFile = Optionsfile
+50280   End If
+50290  End If
+50300
+50310  InitLanguagesStrings
+50320  ReadLanguageFromOptions
+50330  LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
+50340  Languagefile = LanguagePath & Options.Language & ".ini"
+50350  If UCase$(Options.Language) = "ESPANOL" And FileExists(Languagefile) = False And _
    FileExists(LanguagePath & "spanish.ini") = True Then
-50350   Languagefile = LanguagePath & "spanish.ini"
-50360   Options.Language = "spanish"
-50370  End If
-50380  If FileExists(Languagefile) = True Then
-50390    LoadLanguage Languagefile
-50400   Else
-50410    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
-50420 '   Options.Language = "english"
-50430  End If
-50440
-50450  Options = ReadOptions
+50370   Languagefile = LanguagePath & "spanish.ini"
+50380   Options.Language = "spanish"
+50390  End If
+50400  If FileExists(Languagefile) = True Then
+50410    LoadLanguage Languagefile
+50420   Else
+50430    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
+50440 '   Options.Language = "english"
+50450  End If
 50460
-50470  If IsWin9xMe = False Then
-50481   Select Case Options.ProcessPriority
+50470  Options = ReadOptions
+50480
+50490  If IsWin9xMe = False Then
+50501   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50500     SetProcessPriority Idle
-50510    Case 1: 'Normal
-50520     SetProcessPriority Normal
-50530    Case 2: 'High
-50540     SetProcessPriority High
-50550    Case 3: 'Realtime
-50560     SetProcessPriority RealTime
-50570   End Select
-50580  End If
-50590
-50600  CreatePDFCreatorTempfolder
-50610  ComputerScreenResolution = ScreenResolution
+50520     SetProcessPriority Idle
+50530    Case 1: 'Normal
+50540     SetProcessPriority Normal
+50550    Case 2: 'High
+50560     SetProcessPriority High
+50570    Case 3: 'Realtime
+50580     SetProcessPriority RealTime
+50590   End Select
+50600  End If
+50610
+50620  CreatePDFCreatorTempfolder
+50630  ComputerScreenResolution = ScreenResolution
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -282,11 +284,11 @@ Private Sub CreateUnloadFile()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, tstr As String
+50010  Dim fn As Long, tStr As String
 50020  fn = FreeFile
-50030  tstr = CompletePath(App.Path) & "Unload.tmp"
-50040  If FileExists(tstr) = False Then
-50050   Open tstr For Output As #fn
+50030  tStr = CompletePath(App.Path) & "Unload.tmp"
+50040  If FileExists(tStr) = False Then
+50050   Open tStr For Output As #fn
 50060   Close #fn
 50070  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -307,7 +309,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim PDFCreatorPrintername As String, DefaultPrintername As String, _
   Files As Collection, i As Long, tStrf() As String, tFilename As String, _
-  kB As Long, MB As Long, GB As Long, tstr As String
+  kB As Long, MB As Long, GB As Long, tStr As String
 50040  kB = 1024: MB = kB * 1024: GB = MB * 1024
 50050  If Len(Filename) > 0 Then
 50060    If UCase$(Printer.DeviceName) <> UCase$(GetPDFCreatorPrintername) Then
@@ -336,19 +338,19 @@ On Error GoTo ErrPtnr_OnError
 50290       SplitPath tStrf(1), , , tFilename
 50300       lblFilename.Caption = LanguageStrings.ListFilename & ": " & tFilename
 50310       If CLng(tStrf(2)) > GB Then
-50320         tstr = Format$(CDbl(tStrf(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
+50320         tStr = Format$(CDbl(tStrf(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
 50330        Else
 50340         If CLng(tStrf(2)) > MB Then
-50350           tstr = Format$(CDbl(tStrf(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
+50350           tStr = Format$(CDbl(tStrf(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
 50360          Else
 50370           If CLng(tStrf(2)) > kB Then
-50380             tstr = Format$(CDbl(tStrf(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
+50380             tStr = Format$(CDbl(tStrf(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
 50390            Else
-50400             tstr = Format$(tStrf(2), "0 " & LanguageStrings.ListBytes)
+50400             tStr = Format$(tStrf(2), "0 " & LanguageStrings.ListBytes)
 50410         End If
 50420        End If
 50430       End If
-50440       lblSize.Caption = LanguageStrings.ListSize & ": " & tstr
+50440       lblSize.Caption = LanguageStrings.ListSize & ": " & tStr
 50450       xpPgb.Value = i
 50460       lblCount.Caption = CStr(i) & " (" & CStr(Files.Count) & ")"
 50470       lblCount.Left = (Frm.Width - lblCount.Width) / 2
@@ -382,7 +384,7 @@ Private Sub LoadGhostscriptDLL()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim gsvers As Collection, reg As clsRegistry, tsf() As String, tstr As String, _
+50010  Dim gsvers As Collection, reg As clsRegistry, tsf() As String, tStr As String, _
   Path As String
 50030  GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
 50040
@@ -410,8 +412,8 @@ On Error GoTo ErrPtnr_OnError
 50260         If InStr(gsvers.Item(1), " ") > 0 Then
 50270          tsf = Split(gsvers.Item(1), " ")
 50280          reg.KeyRoot = "SOFTWARE\AFPL Ghostscript\" & tsf(UBound(tsf))
-50290          tstr = reg.GetRegistryValue("GS_DLL")
-50300          SplitPath tstr, , Path
+50290          tStr = reg.GetRegistryValue("GS_DLL")
+50300          SplitPath tStr, , Path
 50310          Options.DirectoryGhostscriptBinaries = CompletePath(Path)
 50320          Options.DirectoryGhostscriptFonts = CompletePath(reg.GetRegistryValue("GhostscriptDirectoryFonts"))
 50330          Options.DirectoryGhostscriptLibraries = CompletePath(Mid(Path, 1, InStrRev(Path, "\") - 1)) & "lib"
@@ -425,8 +427,8 @@ On Error GoTo ErrPtnr_OnError
 50410         If InStr(gsvers.Item(1), " ") > 0 Then
 50420          tsf = Split(gsvers.Item(1), " ")
 50430          reg.KeyRoot = "SOFTWARE\GNU Ghostscript\" & tsf(UBound(tsf))
-50440          tstr = reg.GetRegistryValue("GS_DLL")
-50450          SplitPath tstr, , Path
+50440          tStr = reg.GetRegistryValue("GS_DLL")
+50450          SplitPath tStr, , Path
 50460          Options.DirectoryGhostscriptBinaries = CompletePath(Path)
 50470          Options.DirectoryGhostscriptLibraries = CompletePath(Mid(Path, 1, InStrRev(Path, "\") - 1)) & "lib"
 50480          Options.DirectoryGhostscriptFonts = CompletePath(Mid(Mid(Path, 1, InStrRev(Path, "\") - 1), 1, InStrRev(Mid(Path, 1, InStrRev(Path, "\") - 1), "\"))) & "fonts"
@@ -436,8 +438,8 @@ On Error GoTo ErrPtnr_OnError
 50520         If InStr(gsvers.Item(1), " ") > 0 Then
 50530          tsf = Split(gsvers.Item(1), " ")
 50540          reg.KeyRoot = "SOFTWARE\GPL Ghostscript\" & tsf(UBound(tsf))
-50550          tstr = reg.GetRegistryValue("GS_DLL")
-50560          SplitPath tstr, , Path
+50550          tStr = reg.GetRegistryValue("GS_DLL")
+50560          SplitPath tStr, , Path
 50570          Options.DirectoryGhostscriptBinaries = CompletePath(Path)
 50580          Options.DirectoryGhostscriptLibraries = CompletePath(Mid(Path, 1, InStrRev(Path, "\") - 1)) & "lib"
 50590          Options.DirectoryGhostscriptFonts = CompletePath(Mid(Mid(Path, 1, InStrRev(Path, "\") - 1), 1, InStrRev(Mid(Path, 1, InStrRev(Path, "\") - 1), "\"))) & "fonts"
