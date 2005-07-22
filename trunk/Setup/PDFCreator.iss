@@ -65,7 +65,7 @@
 
 #ifdef CompileHelp
  #if (fileexists("C:\Program Files\HTML Help Workshop\HHC.EXE")==0)
-  #error Compile install first!
+  #error Please install the "HTML Help Workshop" first!
  #endif
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
@@ -240,15 +240,27 @@ Source: ..\Printer\Adobe\WinNT\AdobePSu.dll; DestDir: {code:PrinterDriverDirecto
 Source: ..\Printer\Adobe\WinNT\ADOBEPSU.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 Source: ..\Printer\Adobe\WinNT\AdobePS5.ntf; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
 ; Win2000
-Source: ..\Printer\Adobe\Win2000\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-Source: ..\Printer\Adobe\Win2000\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-Source: ..\Printer\Adobe\Win2000\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+; Win2000: english files
+Source: ..\Printer\Adobe\Win2000\English\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
+Source: ..\Printer\Adobe\Win2000\English\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
+Source: ..\Printer\Adobe\Win2000\English\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
+; Win2000: german files
+Source: ..\Printer\Adobe\Win2000\German\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
+Source: ..\Printer\Adobe\Win2000\German\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
+Source: ..\Printer\Adobe\Win2000\German\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
+; Win2000: common files
 Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
 Source: ..\Printer\Adobe\Win2000\PSCRPTFE.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
 ; WinXP, Win2003 - x86 (32bit)
-Source: ..\Printer\Adobe\WinXP2k3-x86\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+; WinXP, Win2003 - x86 (32bit): english files
+Source: ..\Printer\Adobe\WinXP2k3-x86\English\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
+Source: ..\Printer\Adobe\WinXP2k3-x86\English\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
+Source: ..\Printer\Adobe\WinXP2k3-x86\English\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
+; WinXP, Win2003 - x86 (32bit): german files
+Source: ..\Printer\Adobe\WinXP2k3-x86\German\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
+Source: ..\Printer\Adobe\WinXP2k3-x86\German\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
+Source: ..\Printer\Adobe\WinXP2k3-x86\German\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
+; WinXP, Win2003 - x86 (32bit): common files
 Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
 ; WinXP, Win2003 - x64 (64bit)
 Source: ..\Printer\Adobe\WinXP2k3-x64\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
@@ -308,14 +320,13 @@ Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components:
 Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\eesti.ini; DestDir: {app}\languages; Components: languages\eesti; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\korean.ini; DestDir: {app}\languages; Components: languages\korean; Flags: ignoreversion
@@ -327,6 +338,7 @@ Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Componen
 Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovensko.ini; DestDir: {app}\languages; Components: languages\slovensko; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\suomi.ini; DestDir: {app}\languages; Components: languages\suomi; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\svenska.ini; DestDir: {app}\languages; Components: languages\svenska; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
@@ -337,6 +349,9 @@ Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestNam
 Source: {code:GetExternalINIFile}; DestName: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; Flags: ignoreversion  external; Check: UseOwnINIFile AND UseINI
 Source: PDFCreator.ini; DestDir: {code:GetDefaultIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
 Source: {code:GetExternalINIFile}; DestName: PDFCreator.ini; DestDir: {code:GetDefaultIniPath}; Components: program; Flags: ignoreversion  external; Check: UseOwnINIFile AND UseINI
+
+;Reg file
+Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {%tmp}; Components: program; Flags: ignoreversion  external deleteafterinstall; Check: UseOwnREGFile AND (Not UseINI)
 
 ;Ghostscript
 #IFDEF IncludeGhostscript
@@ -546,8 +561,9 @@ Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.
 
 Filename: {app}\ShFolder.Exe; WorkingDir: {app}; Parameters: /Q:A; Flags: runminimized; Components: program; MinVersion: 4.0.950,4.0.1381; OnlyBelowVersion: 4.1.2222,5.0.2195
 Filename: {app}\PDFCreator.exe; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
-;Filename: {app}\PDFCreator.exe; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
 Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shellexec skipifsilent; Check: Not IsPrinterInstallationSuccessfully
+
+Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile AND (Not UseINI)
 #ENDIF
 
 [UninstallDelete]
@@ -597,16 +613,19 @@ Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('d
 Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch')
 
 Name: languages\eesti; Description: Eesti; Types: full
+
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed
 
-Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish')
-Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish')
+Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french')
+Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french')
 
-Name: languages\french; Description: French; Types: full
 Name: languages\galician; Description: Galician; Types: full
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german')
 Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german')
+
+Name: languages\greek; Description: Greek; Types: full; Check: Not IsLanguage('greek')
+Name: languages\greek; Description: Greek; Types: full custom; Check: IsLanguage('greek')
 
 Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian')
 Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian')
@@ -625,7 +644,12 @@ Name: languages\russian; Description: Russian; Types: full
 Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak')
 Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak')
 
-Name: languages\slovensko; Description: Slovensko; Types: full
+Name: languages\slovensko; Description: Slovensko; Types: full; Check: Not IsLanguage('slovensko')
+Name: languages\slovensko; Description: Slovensko; Types: full custom; Check: IsLanguage('slovensko')
+
+Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish')
+Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish')
+
 Name: languages\suomi; Description: Suomi; Types: full
 Name: languages\svenska; Description: Svenska; Types: full
 Name: languages\turkish; Description: Turkish; Types: full
@@ -815,7 +839,7 @@ var progTitel, progHandle: TArrayOfString;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
 
-    cmdlPrintername, cmdlPPDFile, cmdlINIFile: String;
+    cmdlPrintername, cmdlPPDFile, cmdlREGFile, cmdlINIFile: String;
     cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlUseINI: Boolean;
 
     SCPage:TWizardPage;
@@ -925,6 +949,14 @@ begin
  Result:=cmdlUseINI;
 end;
 
+function UseOwnREGFile(): Boolean;
+begin
+ if Length(cmdlREGFile)>0 then
+  Result:=True
+ else
+  Result:=False;
+end;
+
 function UseOwnINIFile(): Boolean;
 begin
  if Length(cmdlINIFile)>0 then
@@ -939,6 +971,11 @@ begin
   Result:=True
  else
   Result:=False;
+end;
+
+function GetExternalREGFile(Default:string): String;
+begin
+ Result:=cmdlREGFile
 end;
 
 function GetExternalINIFile(Default:string): String;
@@ -2306,6 +2343,7 @@ begin
     '/ForceInstall'#9#9#9'- force the installation'#13#10 +
     '/Printername=<PrinterName>'#9'- set a different printername'#13#10 +
     '/PPDFile=<PPDFile>'#9#9'- use an own ppd-file'#13#10 +
+    '/REGFile=<REGFile>'#9#9'- use an own registry-file'#13#10 +
     '/UseINI'#9#9#9#9'- use an ini-file instead of registry settings'#13#10 +
     '/INIFile=<INIFile>'#9#9#9'- use an own ini-file'
     ,mbInformation,MB_OK);
@@ -2321,6 +2359,14 @@ begin
   if uppercase(paramstr(i))='/INI' then
    cmdlUseINI:=true;
 
+  cmdParam:='/REGFile';
+  pStr:=Copy(paramstr(i),1,Length(cmdParam));
+  if uppercase(pstr)=uppercase(cmdParam) then begin
+   if Copy(paramstr(i),Length(cmdParam)+1,1)='=' then
+     cmdlREGFile:=Copy(paramstr(i),Length(cmdParam)+2,Length(paramstr(i)))
+    else
+     cmdlREGFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
+  end;
   cmdParam:='/INIFile';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
   if uppercase(pstr)=uppercase(cmdParam) then begin
