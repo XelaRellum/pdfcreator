@@ -109,6 +109,33 @@
         put in the password supplied in the PDFCreator.ini file for the user password. 
         <em> <strong>WARNING:</strong></em> Text in the PDFCreator.ini file is 
         not encrypted. Use this feature at your own risk.</p>
+      <p><strong>PrintAfterSaving:</strong> Automatically print a document after saving it.<br>
+        <em>Properties:</em><br>
+        0 - Off (Default) <br>
+        1 - On</p>
+        <p><strong>PrintAfterSavingPrinter:</strong> The name of printer if you use the setting PrintAfterSaving. If this setting is empty or the printer doesn't exist,  a dialog will appear
+        to choose a printer. You can use a local printer and a network printer by using the prefix "\\spool\". This setting is empty by default.<br>
+        <em>Examples:</em><br>
+         PrintAfterSavingPrinter="\\spool\HP4300"<br>
+         PrintAfterSavingPrinter="\\spool\\\printserver\HP4300"</p>
+      <p><strong>PrintAfterSavingQueryUser:</strong> This setting is used in conjunction with the PrintAfterSaving setting. This setting enables the user to show or hide a printer dialog.<br>
+        <em>Properties:</em><br>
+         0 - Off (Default)<br>
+         1 - Shows the standard printer dialog<br>
+         2 - Shows the printer setup dialog<br>
+         3 - Select the default Windows printer without any user interaction</p>
+      <p><strong>PrintAfterSavingNoCancel:</strong> If you use the PrintAfterSaving setting, this setting disables or hides the progress dialog when set to on.<br>
+        <em>Properties:</em><br>
+         0 - Off (Default)<br>
+         1 - On</p>
+      <p><strong>PrintAfterSavingDuplex:</strong> If you use the  PrintAfterSaving setting, you can use this setting to switch the duplex printing.<br>
+        <em>Properties:</em><br>
+         0 - no duplex printing (Default) <br>
+         1 - use duplex printing if supported by the printer</p>
+      <p><strong>PrintAfterSavingTumble:</strong> If you use the setting PrintAfterSaving and PrintAfterSavingDuplex is on you can use this setting to choose the duplex tumble.<br>
+        <em>Properties:</em><br>
+         0 - don't use  tumble (Default)<br>
+         1 - use  tumble </p>
       <p><strong>RemoveAllKnownFileExtensions:</strong> This setting enables PDFCreator 
         to remove all known file extensions beginning, from the right, until there 
         is no known file extension. For example, the internal title of postscript 
@@ -120,10 +147,10 @@
       <p><strong>RunProgramAfterSaving:</strong> This setting allows the user 
         to launch a separate program after a document is saved using PDFCreator. 
         This is used in conjunction with the RunProgramAfterSavingProgramname 
-        setting.<br>
+        setting. There are some test scripts in the application folder of PDFCreator that can be used with this setting. <br>
         <em>Properties:</em><br>
         0 - Off (Default)<br>
-        1 - On</p>
+      1 - On</p>
       <p><strong>RunProgramAfterSavingProgramname:</strong> This setting specifies 
         the program to be used when the RunProgramAfterSaving setting is enabled.<br>
         <em>Example:</em> RunProgramAfterSavingProgramname=&quot;C:\program files\my 
@@ -153,7 +180,7 @@
       <p><strong>RunProgramBeforeSaving:</strong> This setting allows the user 
         to launch a separate program before a document is saved using PDFCreator. 
         This is used in conjunction with the RunProgramBeforeSavingProgramname 
-        setting. PDFCreator waits until the program is ready.<br>
+        setting. PDFCreator waits until the program is ready. There are some test scripts in the application folder of PDFCreator that can be used with this setting. <br>
         <em>Properties:</em><br>
         0 - Off (Default)<br>
         1 - On</p>
@@ -235,7 +262,7 @@
         <em>Properties: </em><br>
         1 - Shows the standard toolbar (Default) <br>
         2 - Shows a special toolbar for quickly sending documents as email <br>
-        3 - Shows both toolbars</p></td>
+      3 - Shows both toolbars</p></td>
   </tr>
 </table>
 </body>

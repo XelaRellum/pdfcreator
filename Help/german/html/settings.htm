@@ -19,50 +19,50 @@
   <tr>
     <td class="main"><p class="header">PDFCreator Einstellungen</p>
       <p>Seit Version 0.8.1 RC8 verwendet PDFCreator zum Speichern der Einstellungen die Registry. 
-         Wird die "Standardinstallation" gewählt speichert PDFCreator alle Einstellungen unter den
-        folgendem Schlüssel: <em><strong>HKCU\Software\PDFCreator</strong></em>
-      <p>Bei einem Betriebssystem von Windows 2000 und darüber, speichert das Setup einige Einstellungen
-         für den Standardbenutzer unter dem Schlüssel: <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em><br>
+         Wird die "Standardinstallation" gew&auml;hlt speichert PDFCreator alle Einstellungen unter den
+        folgendem Schl&uuml;ssel: <em><strong>HKCU\Software\PDFCreator</strong></em>
+      <p>Bei einem Betriebssystem von Windows 2000 und dar&uuml;ber, speichert das Setup einige Einstellungen
+         f&uuml;r den Standardbenutzer unter dem Schl&uuml;ssel: <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em><br>
         <br>
-        Bei der "Serverinstallation" werden die Einstellungen unter dem Schlüssel: <em><strong>HKLM\Software\PDFCreator</strong></em> gespeichert.<br>
+        Bei der "Serverinstallation" werden die Einstellungen unter dem Schl&uuml;ssel: <em><strong>HKLM\Software\PDFCreator</strong></em> gespeichert.<br>
         <br>
-        Unter Umständen kann es sinvoll sein, die Einstellungen nicht in der Registry zu speichern, sonder den alten INI-Datei Modus zu verwenden.
-        In diesem fall verwendet PDFCreator ini-Dateien zum Speichern seiner Einstellungen. Während des Setups kann sogar eine Standard-INI-Datei
-        mit übergeben werden. Für mehr Informationen verwenden Sie bitte den Setup-Parameter /?. <br>
+        Unter Umst&auml;nden kann es sinvoll sein, die Einstellungen nicht in der Registry zu speichern, sonder den alten INI-Datei Modus zu verwenden.
+        In diesem fall verwendet PDFCreator ini-Dateien zum Speichern seiner Einstellungen. W&auml;hrend des Setups kann sogar eine Standard-INI-Datei
+        mit &uuml;bergeben werden. F&uuml;r mehr Informationen verwenden Sie bitte den Setup-Parameter /?. <br>
         <strong>Achtung:</strong> Es gibt Probleme beim Verwenden von servergespeicherten Profilen und wenn der Anwendungsdaten-Pfad sich auf einem
         Netzlaufwerk befindet. In diesem fall kann nicht der alte INI-Datei-Modus verwendet werden. <br> <br>
-        Wird die "Standardinstallation" zusammen mit dem alten INI-Datei-Modus gewählt, speichert PDFCreator alle Einstellungen unter dem 
+        Wird die "Standardinstallation" zusammen mit dem alten INI-Datei-Modus gew&auml;hlt, speichert PDFCreator alle Einstellungen unter dem 
         Anwendungsdatenpfad des Benutzers gespeichert: <br>
         <em>Beispiel:</em> C:\Dokumente und Einstellungen\[Benutzerprofil]\Anwendungsdaten\PDFCreator <br>
-        <br>Bei einem Betriebssystem von Windows 2000 und darüber, speichert das Setup einige Einstellungen
-        für den Standardbenutzer in das folgende Verzeichnis: <br>
+        <br>Bei einem Betriebssystem von Windows 2000 und dar&uuml;ber, speichert das Setup einige Einstellungen
+        f&uuml;r den Standardbenutzer in das folgende Verzeichnis: <br>
         <em>Beispiel: </em>C:\Dokumente und Einstellungen\Default User\Anwendungsdaten\PDFCreator <br>
         <br>Bei der "Serverinstallation" werden die Einstellungen in das folgende Verzeichnis gespeichert:<br>
         C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator <br>
         <br>
       <strong>Vorgehensweise beim Lesen der Einstellungen</strong>      
-      <p>Bei einem Betriebssystem von Windows 2000 und darüber liest PDFCreator zuerst die Einstellungen des Standardbenutzers.
+      <p>Bei einem Betriebssystem von Windows 2000 und dar&uuml;ber liest PDFCreator zuerst die Einstellungen des Standardbenutzers.
         Sind dort keine Einstellungen vorhanden, verwendet PDFCreator interne Standardeinstellungen. Danach liest PDFCreator die Einstellungen des Benutzer.
-        Alle gefundenen Einstellungen überschreiben die Standardeinstellungen. Abschließend überprüft PDFCreator ob Rechnereinstellungen in<br> 
+        Alle gefundenen Einstellungen &uuml;berschreiben die Standardeinstellungen. Abschlie&szlig;end &uuml;berpr&uuml;ft PDFCreator ob Rechnereinstellungen in<br> 
         <em>HKLM\Software\PDFCreator</em><br>
         oder<br>
         <em>C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator</em><br>
-        vorhanden sind.  Gefundenen Rechnereinstellungen überschreiben die Einstellungen des Benutzers.
-        Damit wird es Administratoren ermöglicht, Einstellungen für alle Benutzer festzulegen.<br>
+        vorhanden sind.  Gefundenen Rechnereinstellungen &uuml;berschreiben die Einstellungen des Benutzers.
+        Damit wird es Administratoren erm&ouml;glicht, Einstellungen f&uuml;r alle Benutzer festzulegen.<br>
         <br>
         <strong>Vorgehensweise beim Speichern der Einstellungen</strong>     
-      <p>Wurde die "Standardinstallation" gewählt, speichert PDFCreator die Einstellungen entweder unter: <br>
+      <p>Wurde die "Standardinstallation" gew&auml;hlt, speichert PDFCreator die Einstellungen entweder unter: <br>
         <em>HKCU\Software\PDFCreator</em> <br>
         oder unter <br>
         <em>C:\Dokumente und Einstellungen\[Benutzerprofil]\Anwendungsdaten\PDFCreator </em><br>
         <br>
-        Wurde die "Serverinstallation" gewählt, speichert PDFCreator die Einstellungen entweder unter: <br>
+        Wurde die "Serverinstallation" gew&auml;hlt, speichert PDFCreator die Einstellungen entweder unter: <br>
         <em>HKLM\Software\PDFCreator </em><br>
         oder unter<br>
         <em>C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator
       </em></p><br>
-      <p> <strong>Hinweis:</strong> Werden andere Einstellungen als Standradwerte benötigt, können die Kommandozeilenparameter
-        /REGFile= oder /INIfile= des Setupprogrammes verwendet werden (gilt nicht für das MSI-Installationspaket!). Für weitere
+      <p> <strong>Hinweis:</strong> Werden andere Einstellungen als Standradwerte ben&ouml;tigt, k&ouml;nnen die Kommandozeilenparameter
+        /REGFile= oder /INIfile= des Setupprogrammes verwendet werden (gilt nicht f&uuml;r das MSI-Installationspaket!). F&uuml;r weitere
         Informationen verwenden Sie den Kommandozeilenparameter /?.</p></td>
   </tr>
 </table>

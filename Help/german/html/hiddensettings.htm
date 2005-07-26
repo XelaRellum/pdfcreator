@@ -100,6 +100,38 @@
         &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em> 
         Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
         diese Option auf eigene Gefahr.</p>
+      <p><strong>PrintAfterSaving:</strong> Druckt automatisch ein Dokument nach dem Speichern.<br>
+        <em>Properties:</em><br>
+        0 - Aus (Standard) <br>
+        1 - Ein</p>
+        <p><strong>PrintAfterSavingPrinter:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann hier der Name des Druckers vorgegeben werden.
+         Wird diese Einstellung leer gelassen oder existiert der Drucker nicht, erscheint ein Druckerauswahl-Dialog. Es kann ein lokaler Drucker wie auch ein
+         Netzwerkdrucker ausgew&auml;hlt werden. Dabei ist immer der Pr&auml;fix "\\spool\" zu verwenden. Standardm&auml;&szlig;ig ist diese Einstellung leer.<br>
+        <em>Beispiele:</em><br>
+         PrintAfterSavingPrinter="\\spool\HP4300"<br>
+         PrintAfterSavingPrinter="\\spool\\\printserver\HP4300"</p>
+      <p><strong>PrintAfterSavingQueryUser:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit dieser Einstellung vorgegeben werden, ob dem 
+         Benutzer ein Druckerdialog angezeigt werden soll.<br>
+        <em>Eigenschaften:</em><br>
+         0 - Aus (Standard)<br>
+         1 - Zeigt den Standard-Druckerdialog<br>
+         2 - Zeigt den Installations-Druckerdialog<br>
+         3 - W&auml;hlt den Standarddrucker ohne eine Benutzerauswahl.</p>
+      <p><strong>PrintAfterSavingNoCancel:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit Hilfe dieser Einstellung die Anzeige des
+        Druckfortschrittes aktiviert bzw. deaktiert werden.<br>
+        <em>Eigenschaften:</em><br>
+         0 - Aus (Standard)<br>
+         1 - Ein</p>
+      <p><strong>PrintAfterSavingDuplex:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit dieser Einstellung der Duplexdruck,
+        falls vom Drucker unterst&uuml;tzt, aktiviert werden.<br>
+        <em>Eigenschaften:</em><br>
+         0 - Kein Duplexdruck (Standard) <br>
+         1 - Verwendet Duplexdruck, falls vom Drucker unterst&uuml;tzt</p>
+      <p><strong>PrintAfterSavingTumble:</strong> Ist die Einstellung PrintAfterSaving und die Einstellung PrintAfterSavingDuplex aktiviert,
+        kann mit dieser Einstellung festgelegt werden, an welcher Kante der Duplexdruck zu erfolgen hat.<br>
+        <em>Properties:</em><br>
+         0 - Lange Kante (Standard)<br>
+         1 - Kurze kante</p>
       <p><strong>RemoveAllKnownFileExtensions:</strong> Wird diese Einstellung aktiviert, 
         entfernt PDFCretor alle bekannten Erweiterungen von rechts beginnend, bis eine
         unbekannte Erweiterung gefunden wurde.
@@ -212,7 +244,7 @@
         einen Standardbetreff f&uuml;r alle Dokumente anzugeben.</p>
       <p><strong>StandardTitle:</strong> Diese Einstellung erlaubt dem Benutzer, 
         ein Standardtitel f&uuml;r alle Dokumente anzugeben.</p>
-      <p> <strong>ToolBars:</strong> Mit diese Einstellung können die Werkzeugleisten in 
+      <p> <strong>ToolBars:</strong> Mit diese Einstellung k&ouml;nnen die Werkzeugleisten in 
         PDFCreator aktiviert bzw. deaktiviert werden.<br>
         <em>Eigenschaften:</em><br>
         1 - Zeigt die Standardwerkzeugleiste (Standard).<br>
