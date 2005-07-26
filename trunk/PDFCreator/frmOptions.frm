@@ -3425,577 +3425,555 @@ On Error GoTo ErrPtnr_OnError
 50990  ieb.DisableUpdates True
 51000  ieb.ClearStructure
 51010  ieb.SetImageList imlIeb
-51020 ' trv.Nodes.Clear
-51030 ' trv.Indentation = 200
-51040  With LanguageStrings
-51050   ieb.AddGroup "Program", .OptionsTreeProgram, 0
-51060   ieb.AddItem "Program", "General", .OptionsProgramGeneralSymbol, 1
-51070   ieb.AddItem "Program", "Ghostscript", .OptionsProgramGhostscriptSymbol, 2
-51080   ieb.AddItem "Program", "Document", .OptionsProgramDocumentSymbol, 3
-51090   ieb.AddItem "Program", "Save", .OptionsProgramSaveSymbol, 4
-51100   ieb.AddItem "Program", "AutoSave", .OptionsProgramAutosaveSymbol, 5
-51110   ieb.AddItem "Program", "Directories", .OptionsProgramDirectoriesSymbol, 6
-51120   ieb.AddItem "Program", "Fonts", .OptionsProgramFontSymbol, 7
-51130   ieb.AddGroup "Formats", .OptionsTreeFormats, 0
-51140   ieb.AddItem "Formats", "PDF", .OptionsPDFSymbol, 8
-51150   ieb.AddItem "Formats", "PNG", .OptionsPNGSymbol, 9
-51160   ieb.AddItem "Formats", "JPEG", .OptionsJPEGSymbol, 10
-51170   ieb.AddItem "Formats", "BMP", .OptionsBMPSymbol, 11
-51180   ieb.AddItem "Formats", "PCX", .OptionsPCXSymbol, 12
-51190   ieb.AddItem "Formats", "TIFF", .OptionsTIFFSymbol, 13
-51200   ieb.AddItem "Formats", "PS", .OptionsPSSymbol, 14
-51210   ieb.AddItem "Formats", "EPS", .OptionsEPSSymbol, 15
-51220   ieb.DisableUpdates False
-51230 '  trv.Nodes.Add , , "Program", .OptionsTreeProgram
-51240 '  trv.Nodes.Add "Program", tvwChild, "ProgramGeneral", .OptionsProgramGeneralSymbol
-51250 '  trv.Nodes.Add "Program", tvwChild, "ProgramGhostscript", .OptionsProgramGhostscriptSymbol
-51260 '  trv.Nodes.Add "Program", tvwChild, "ProgramDocument", .OptionsProgramDocumentSymbol
-51270 '  trv.Nodes.Add "Program", tvwChild, "ProgramSave", .OptionsProgramSaveSymbol
-51280 '  trv.Nodes.Add "Program", tvwChild, "ProgramAutosave", .OptionsProgramAutosaveSymbol
-51290 '  trv.Nodes.Add "Program", tvwChild, "ProgramDirectories", .OptionsProgramDirectoriesSymbol
-51300 '  trv.Nodes.Add "Program", tvwChild, "ProgramFonts", .OptionsProgramFontSymbol
-51310 '  trv.Nodes.Add , , "Formats", .OptionsTreeFormats
-51320 '  trv.Nodes.Add "Formats", tvwChild, "FormatsPDF", .OptionsPDFSymbol
-51330 '  trv.Nodes.Add "Formats", tvwChild, "FormatsPNG", .OptionsPNGSymbol
-51340 '  trv.Nodes.Add "Formats", tvwChild, "FormatsJPEG", .OptionsJPEGSymbol
-51350 '  trv.Nodes.Add "Formats", tvwChild, "FormatsBMP", .OptionsBMPSymbol
-51360 '  trv.Nodes.Add "Formats", tvwChild, "FormatsPCX", .OptionsPCXSymbol
-51370 '  trv.Nodes.Add "Formats", tvwChild, "FormatsTIFF", .OptionsTIFFSymbol
-51380 '  trv.Nodes.Add "Formats", tvwChild, "FormatsPS", .OptionsPSSymbol
-51390 '  trv.Nodes.Add "Formats", tvwChild, "FormatsEPS", .OptionsEPSSymbol
-51400 '
-51410 '  trv.Nodes("ProgramFonts").EnsureVisible
-51420 '  trv.Nodes("FormatsPDF").EnsureVisible
-51430
-51440   Set picOptions = LoadResPicture(2101, vbResIcon)
-51450   dmFraProgGeneral.Visible = True
-51460
-51470   dmFraProgGeneral.Caption = .OptionsProgramGeneralSymbol
-51480   dmFraShellIntegration.Caption = .OptionsShellIntegration
-51490   dmFraProgGhostscript.Caption = .OptionsProgramGhostscriptSymbol
-51500   dmFraProgAutosave.Caption = .OptionsProgramAutosaveSymbol
-51510   dmFraProgDirectories.Caption = .OptionsProgramDirectoriesSymbol
-51520   dmFraProgDocument.Caption = .OptionsProgramDocumentSymbol
-51530   dmFraProgFont.Caption = .OptionsProgramFontSymbol
-51540   dmfraProgSave.Caption = .OptionsProgramSaveSymbol
-51550
-51560   cmdShellintegration(0).Caption = .OptionsShellIntegrationAdd
-51570   cmdShellintegration(1).Caption = .OptionsShellIntegrationRemove
-51580   If IsWin9xMe = False Then
-51590    If IsAdmin = False Then
-51600     cmdShellintegration(0).Enabled = False
-51610     cmdShellintegration(1).Enabled = False
-51620    End If
-51630   End If
-51640
-51650   lblGhostscriptversion.Caption = .OptionsGhostscriptversion
-51660
-51670   lblSaveFilename.Caption = .OptionsSaveFilename
-51680   lblSaveFilenameTokens.Caption = .OptionsSaveFilenameTokens
-51690   dmfraFilenameSubstitutions.Caption = .OptionsSaveFilenameSubstitutions
-51700   chkFilenameSubst.Caption = .OptionsSaveFilenameSubstitutionsTitle
-51710   cmdFilenameSubst(0).Caption = .OptionsSaveFilenameAdd
-51720   cmdFilenameSubst(1).Caption = .OptionsSaveFilenameChange
-51730   cmdFilenameSubst(2).Caption = .OptionsSaveFilenameDelete
-51740
-51750   chkSpaces.Caption = .OptionsRemoveSpaces
-51760   chkNoConfirmMessageSwitchingDefaultprinter.Caption = .OptionsProgramSwitchingDefaultprinter
-51770   lblGSbin.Caption = .OptionsDirectoriesGSBin
-51780   lblGSlib.Caption = .OptionsDirectoriesGSLibraries
-51790   lblGSfonts.Caption = .OptionsDirectoriesGSFonts
-51800   lblPrintTempPath.Caption = .OptionsDirectoriesTempPath
-51810
-51820   lblOptions = .OptionsProgramGeneralDescription
-51830   lblAutosaveformat.Caption = .OptionsAutosaveFormat
-51840   chkUseStandardAuthor.Caption = .OptionsUseStandardauthor
-51850   chkUseCreationDateNow.Caption = .OptionsUseCreationDateNow
-51860   chkUseAutosave.Caption = .OptionsUseAutosave
-51870   cmdTestpage.Caption = .OptionsPrintTestpage
-51880   lblAutosaveFilename.Caption = .OptionsAutosaveFilename
-51890   lblAutosaveFilenameTokens.Caption = .OptionsAutosaveFilenameTokens
-51900   chkUseAutosaveDirectory.Caption = .OptionsUseAutosaveDirectory
-51910   lblAuthorTokens.Caption = .OptionsStandardAuthorToken
-51920
-51930   With cmbAutosaveFormat
-51940    .AddItem "PDF"
-51950    .AddItem "PNG"
-51960    .AddItem "JPEG"
-51970    .AddItem "BMP"
-51980    .AddItem "PCX"
-51990    .AddItem "TIFF"
-52000    .AddItem "PS"
-52010    .AddItem "EPS"
-52020   End With
-52030   With cmbSaveFilenameTokens
-52040    .AddItem "<Author>"
-52050    .AddItem "<Computername>"
-52060    .AddItem "<DateTime>"
-52070    .AddItem "<Title>"
-52080    .AddItem "<Username>"
-52090    .AddItem "<REDMON_DOCNAME>"
-52100    .AddItem "<REDMON_JOB>"
-52110    .AddItem "<REDMON_MACHINE>"
-52120    .AddItem "<REDMON_PORT>"
-52130    .AddItem "<REDMON_PRINTER>"
-52140    .AddItem "<REDMON_SESSIONID>"
-52150    .AddItem "<REDMON_USER>"
-52160    .ListIndex = 0
-52170   End With
-52180   With cmbAuthorTokens
-52190    .AddItem "<Computername>"
-52200    .AddItem "<ClientComputer>"
-52210    .AddItem "<DateTime>"
-52220    .AddItem "<Title>"
-52230    .AddItem "<Username>"
-52240    .AddItem "<REDMON_DOCNAME>"
-52250    .AddItem "<REDMON_JOB>"
-52260    .AddItem "<REDMON_MACHINE>"
-52270    .AddItem "<REDMON_PORT>"
-52280    .AddItem "<REDMON_PRINTER>"
-52290    .AddItem "<REDMON_SESSIONID>"
-52300    .AddItem "<REDMON_USER>"
-52310    .ListIndex = 0
-52320   End With
-52330   With cmbAutoSaveFilenameTokens
-52340    .AddItem "<Author>"
-52350    .AddItem "<Computername>"
-52360    .AddItem "<ClientComputer>"
-52370    .AddItem "<DateTime>"
-52380    .AddItem "<Title>"
-52390    .AddItem "<Username>"
-52400    .AddItem "<REDMON_DOCNAME>"
-52410    .AddItem "<REDMON_JOB>"
-52420    .AddItem "<REDMON_MACHINE>"
-52430    .AddItem "<REDMON_PORT>"
-52440    .AddItem "<REDMON_PRINTER>"
-52450    .AddItem "<REDMON_SESSIONID>"
-52460    .AddItem "<REDMON_USER>"
-52470    .ListIndex = 0
-52480   End With
-52490   Me.Caption = .DialogPrinterOptions
-52500   cmdCancel.Caption = .OptionsCancel
-52510   cmdReset.Caption = .OptionsReset
-52520   cmdSave.Caption = .OptionsSave
-52530   tbstrPDFOptions.Tabs.Clear
-52540   tbstrPDFOptions.Tabs.Add , "General", .OptionsPDFGeneral
-52550   tbstrPDFOptions.Tabs.Add , "Compression", .OptionsPDFCompression
-52560   tbstrPDFOptions.Tabs.Add , "Fonts", .OptionsPDFFonts
-52570   tbstrPDFOptions.Tabs.Add , "Colors", .OptionsPDFColors
-52580   tbstrPDFOptions.Tabs.Add , "Security", .OptionsPDFSecurity
-52590   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
-52600   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
-52610   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
-52620   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
-52630   lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
-52640   lblProgfont.Caption = .OptionsProgramFont
-52650   lblProgcharset.Caption = .OptionsProgramFontcharset
-52660   lblSize.Caption = .OptionsProgramFontSize
-52670   lblTesttext = .OptionsProgramFontTestdescription
-52680   cmdTest.Caption = .OptionsProgramFontTest
-52690   cmdCancelTest.Caption = .OptionsProgramFontCancelTest
-52700   chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
-52710   cmbPDFCompat.Clear
-52720   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility01
-52730   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility02
-52740   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility03
-52750   cmbPDFRotate.Clear
-52760   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate01
-52770   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate02
-52780   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate03
-52790   cmbPDFOverprint.Clear
-52800   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint01
-52810   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint02
-52820
-52830   dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
-52840   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
-52850   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
-52860   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
-52870   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
-52880   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
-52890   cmbPDFColorComp.Clear
-52900   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp01
-52910   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp02
-52920   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp03
-52930   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp04
-52940   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp05
-52950   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp06
-52960   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp07
-52970   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp08
-52980   cmbPDFColorResample.Clear
-52990   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample01
-53000   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample02
-53010   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample03
-53020   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
-53030   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
-53040   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
-53050   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
-53060   cmbPDFGreyComp.Clear
-53070   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp01
-53080   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp02
-53090   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp03
-53100   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp04
-53110   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp05
-53120   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp06
-53130   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp07
-53140   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp08
-53150   cmbPDFGreyResample.Clear
-53160   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample01
-53170   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample02
-53180   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample03
-53190   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
-53200   chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
-53210   chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
-53220   lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
-53230   cmbPDFMonoComp.Clear
-53240   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp01
-53250   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp02
-53260   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp03
-53270   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp04
-53280   cmbPDFMonoResample.Clear
-53290   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample01
-53300   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample02
-53310   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample03
-53320
-53330   dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
-53340   chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
-53350   chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
-53360
-53370   dmFraPDFColors.Caption = .OptionsPDFColorsCaption
-53380   chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
-53390   dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
-53400   chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
-53410   chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
-53420   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
-53430   cmbPDFColorModel.Clear
-53440   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel01
-53450   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel02
-53460   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel03
-53470
-53480   dmFraPDFEncryptor.Caption = .OptionsPDFEncryptor
-53490   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
-53500   chkUseSecurity.Caption = .OptionsPDFUseSecurity
-53510   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
-53520   optEncHigh.Caption = .OptionsPDFEncryptionHigh
-53530   optEncLow.Caption = .OptionsPDFEncryptionLow
-53540   dmFraSecurityPass.Caption = .OptionsPDFPasswords
-53550   chkUserPass.Caption = .OptionsPDFUserPass
-53560   chkOwnerPass.Caption = .OptionsPDFOwnerPass
-53570   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
-53580   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
-53590   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
-53600   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
-53610   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
-53620   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
-53630   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
-53640   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
-53650   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
-53660   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
-53670
-53680   cmbPNGColors.AddItem .OptionsPNGColorscount01
-53690   cmbPNGColors.AddItem .OptionsPNGColorscount02
-53700   cmbPNGColors.AddItem .OptionsPNGColorscount03
-53710   cmbPNGColors.AddItem .OptionsPNGColorscount04
-53720   cmbJPEGColors.Left = cmbPNGColors.Left
-53730   cmbJPEGColors.Width = cmbPNGColors.Width
-53740   cmbJPEGColors.Top = cmbPNGColors.Top
-53750   cmbJPEGColors.AddItem .OptionsJPEGColorscount01
-53760   cmbJPEGColors.AddItem .OptionsJPEGColorscount02
-53770   cmbBMPColors.Left = cmbPNGColors.Left
-53780   cmbBMPColors.Width = cmbPNGColors.Width
-53790   cmbBMPColors.Top = cmbPNGColors.Top
-53800   cmbBMPColors.AddItem .OptionsBMPColorscount01
-53810   cmbBMPColors.AddItem .OptionsBMPColorscount02
-53820   cmbBMPColors.AddItem .OptionsBMPColorscount03
-53830   cmbBMPColors.AddItem .OptionsBMPColorscount04
-53840   cmbBMPColors.AddItem .OptionsBMPColorscount05
-53850   cmbBMPColors.AddItem .OptionsBMPColorscount06
-53860   cmbBMPColors.AddItem .OptionsBMPColorscount07
-53870   cmbPCXColors.Left = cmbPNGColors.Left
-53880   cmbPCXColors.Width = cmbPNGColors.Width
-53890   cmbPCXColors.Top = cmbPNGColors.Top
-53900   cmbPCXColors.AddItem .OptionsPCXColorscount01
-53910   cmbPCXColors.AddItem .OptionsPCXColorscount02
-53920   cmbPCXColors.AddItem .OptionsPCXColorscount03
-53930   cmbPCXColors.AddItem .OptionsPCXColorscount04
-53940   cmbPCXColors.AddItem .OptionsPCXColorscount05
-53950   cmbPCXColors.AddItem .OptionsPCXColorscount06
-53960   cmbTIFFColors.Left = cmbPNGColors.Left
-53970   cmbTIFFColors.Width = cmbPNGColors.Width
-53980   cmbTIFFColors.Top = cmbPNGColors.Top
-53990   cmbTIFFColors.AddItem .OptionsTIFFColorscount01
-54000   cmbTIFFColors.AddItem .OptionsTIFFColorscount02
-54010   cmbTIFFColors.AddItem .OptionsTIFFColorscount03
-54020   cmbTIFFColors.AddItem .OptionsTIFFColorscount04
-54030   cmbTIFFColors.AddItem .OptionsTIFFColorscount05
-54040   cmbTIFFColors.AddItem .OptionsTIFFColorscount06
-54050   cmbTIFFColors.AddItem .OptionsTIFFColorscount07
-54060   cmbTIFFColors.AddItem .OptionsTIFFColorscount08
+51020  With LanguageStrings
+51030   ieb.AddGroup "Program", .OptionsTreeProgram, 0
+51040   ieb.AddItem "Program", "General", .OptionsProgramGeneralSymbol, 1
+51050   ieb.AddItem "Program", "Ghostscript", .OptionsProgramGhostscriptSymbol, 2
+51060   ieb.AddItem "Program", "Document", .OptionsProgramDocumentSymbol, 3
+51070   ieb.AddItem "Program", "Save", .OptionsProgramSaveSymbol, 4
+51080   ieb.AddItem "Program", "AutoSave", .OptionsProgramAutosaveSymbol, 5
+51090   ieb.AddItem "Program", "Directories", .OptionsProgramDirectoriesSymbol, 6
+51100   ieb.AddItem "Program", "Fonts", .OptionsProgramFontSymbol, 7
+51110   ieb.AddGroup "Formats", .OptionsTreeFormats, 0
+51120   ieb.AddItem "Formats", "PDF", .OptionsPDFSymbol, 8
+51130   ieb.AddItem "Formats", "PNG", .OptionsPNGSymbol, 9
+51140   ieb.AddItem "Formats", "JPEG", .OptionsJPEGSymbol, 10
+51150   ieb.AddItem "Formats", "BMP", .OptionsBMPSymbol, 11
+51160   ieb.AddItem "Formats", "PCX", .OptionsPCXSymbol, 12
+51170   ieb.AddItem "Formats", "TIFF", .OptionsTIFFSymbol, 13
+51180   ieb.AddItem "Formats", "PS", .OptionsPSSymbol, 14
+51190   ieb.AddItem "Formats", "EPS", .OptionsEPSSymbol, 15
+51200   ieb.DisableUpdates False
+51210
+51220   Set picOptions = LoadResPicture(2101, vbResIcon)
+51230   dmFraProgGeneral.Visible = True
+51240
+51250   dmFraProgGeneral.Caption = .OptionsProgramGeneralSymbol
+51260   dmFraShellIntegration.Caption = .OptionsShellIntegration
+51270   dmFraProgGhostscript.Caption = .OptionsProgramGhostscriptSymbol
+51280   dmFraProgAutosave.Caption = .OptionsProgramAutosaveSymbol
+51290   dmFraProgDirectories.Caption = .OptionsProgramDirectoriesSymbol
+51300   dmFraProgDocument.Caption = .OptionsProgramDocumentSymbol
+51310   dmFraProgFont.Caption = .OptionsProgramFontSymbol
+51320   dmfraProgSave.Caption = .OptionsProgramSaveSymbol
+51330
+51340   cmdShellintegration(0).Caption = .OptionsShellIntegrationAdd
+51350   cmdShellintegration(1).Caption = .OptionsShellIntegrationRemove
+51360   If IsWin9xMe = False Then
+51370    If IsAdmin = False Then
+51380     cmdShellintegration(0).Enabled = False
+51390     cmdShellintegration(1).Enabled = False
+51400    End If
+51410   End If
+51420
+51430   lblGhostscriptversion.Caption = .OptionsGhostscriptversion
+51440
+51450   lblSaveFilename.Caption = .OptionsSaveFilename
+51460   lblSaveFilenameTokens.Caption = .OptionsSaveFilenameTokens
+51470   dmfraFilenameSubstitutions.Caption = .OptionsSaveFilenameSubstitutions
+51480   chkFilenameSubst.Caption = .OptionsSaveFilenameSubstitutionsTitle
+51490   cmdFilenameSubst(0).Caption = .OptionsSaveFilenameAdd
+51500   cmdFilenameSubst(1).Caption = .OptionsSaveFilenameChange
+51510   cmdFilenameSubst(2).Caption = .OptionsSaveFilenameDelete
+51520
+51530   chkSpaces.Caption = .OptionsRemoveSpaces
+51540   chkNoConfirmMessageSwitchingDefaultprinter.Caption = .OptionsProgramSwitchingDefaultprinter
+51550   lblGSbin.Caption = .OptionsDirectoriesGSBin
+51560   lblGSlib.Caption = .OptionsDirectoriesGSLibraries
+51570   lblGSfonts.Caption = .OptionsDirectoriesGSFonts
+51580   lblPrintTempPath.Caption = .OptionsDirectoriesTempPath
+51590
+51600   lblOptions = .OptionsProgramGeneralDescription
+51610   lblAutosaveformat.Caption = .OptionsAutosaveFormat
+51620   chkUseStandardAuthor.Caption = .OptionsUseStandardauthor
+51630   chkUseCreationDateNow.Caption = .OptionsUseCreationDateNow
+51640   chkUseAutosave.Caption = .OptionsUseAutosave
+51650   cmdTestpage.Caption = .OptionsPrintTestpage
+51660   lblAutosaveFilename.Caption = .OptionsAutosaveFilename
+51670   lblAutosaveFilenameTokens.Caption = .OptionsAutosaveFilenameTokens
+51680   chkUseAutosaveDirectory.Caption = .OptionsUseAutosaveDirectory
+51690   lblAuthorTokens.Caption = .OptionsStandardAuthorToken
+51700
+51710   With cmbAutosaveFormat
+51720    .AddItem "PDF"
+51730    .AddItem "PNG"
+51740    .AddItem "JPEG"
+51750    .AddItem "BMP"
+51760    .AddItem "PCX"
+51770    .AddItem "TIFF"
+51780    .AddItem "PS"
+51790    .AddItem "EPS"
+51800   End With
+51810   With cmbSaveFilenameTokens
+51820    .AddItem "<Author>"
+51830    .AddItem "<Computername>"
+51840    .AddItem "<DateTime>"
+51850    .AddItem "<Title>"
+51860    .AddItem "<Username>"
+51870    .AddItem "<REDMON_DOCNAME>"
+51880    .AddItem "<REDMON_JOB>"
+51890    .AddItem "<REDMON_MACHINE>"
+51900    .AddItem "<REDMON_PORT>"
+51910    .AddItem "<REDMON_PRINTER>"
+51920    .AddItem "<REDMON_SESSIONID>"
+51930    .AddItem "<REDMON_USER>"
+51940    .ListIndex = 0
+51950   End With
+51960   With cmbAuthorTokens
+51970    .AddItem "<Computername>"
+51980    .AddItem "<ClientComputer>"
+51990    .AddItem "<DateTime>"
+52000    .AddItem "<Title>"
+52010    .AddItem "<Username>"
+52020    .AddItem "<REDMON_DOCNAME>"
+52030    .AddItem "<REDMON_JOB>"
+52040    .AddItem "<REDMON_MACHINE>"
+52050    .AddItem "<REDMON_PORT>"
+52060    .AddItem "<REDMON_PRINTER>"
+52070    .AddItem "<REDMON_SESSIONID>"
+52080    .AddItem "<REDMON_USER>"
+52090    .ListIndex = 0
+52100   End With
+52110   With cmbAutoSaveFilenameTokens
+52120    .AddItem "<Author>"
+52130    .AddItem "<Computername>"
+52140    .AddItem "<ClientComputer>"
+52150    .AddItem "<DateTime>"
+52160    .AddItem "<Title>"
+52170    .AddItem "<Username>"
+52180    .AddItem "<REDMON_DOCNAME>"
+52190    .AddItem "<REDMON_JOB>"
+52200    .AddItem "<REDMON_MACHINE>"
+52210    .AddItem "<REDMON_PORT>"
+52220    .AddItem "<REDMON_PRINTER>"
+52230    .AddItem "<REDMON_SESSIONID>"
+52240    .AddItem "<REDMON_USER>"
+52250    .ListIndex = 0
+52260   End With
+52270   Me.Caption = .DialogPrinterOptions
+52280   cmdCancel.Caption = .OptionsCancel
+52290   cmdReset.Caption = .OptionsReset
+52300   cmdSave.Caption = .OptionsSave
+52310   tbstrPDFOptions.Tabs.Clear
+52320   tbstrPDFOptions.Tabs.Add , "General", .OptionsPDFGeneral
+52330   tbstrPDFOptions.Tabs.Add , "Compression", .OptionsPDFCompression
+52340   tbstrPDFOptions.Tabs.Add , "Fonts", .OptionsPDFFonts
+52350   tbstrPDFOptions.Tabs.Add , "Colors", .OptionsPDFColors
+52360   tbstrPDFOptions.Tabs.Add , "Security", .OptionsPDFSecurity
+52370   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
+52380   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
+52390   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
+52400   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
+52410   lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
+52420   lblProgfont.Caption = .OptionsProgramFont
+52430   lblProgcharset.Caption = .OptionsProgramFontcharset
+52440   lblSize.Caption = .OptionsProgramFontSize
+52450   lblTesttext = .OptionsProgramFontTestdescription
+52460   cmdTest.Caption = .OptionsProgramFontTest
+52470   cmdCancelTest.Caption = .OptionsProgramFontCancelTest
+52480   chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
+52490   cmbPDFCompat.Clear
+52500   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility01
+52510   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility02
+52520   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility03
+52530   cmbPDFRotate.Clear
+52540   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate01
+52550   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate02
+52560   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate03
+52570   cmbPDFOverprint.Clear
+52580   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint01
+52590   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint02
+52600
+52610   dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
+52620   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
+52630   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
+52640   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
+52650   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
+52660   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
+52670   cmbPDFColorComp.Clear
+52680   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp01
+52690   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp02
+52700   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp03
+52710   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp04
+52720   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp05
+52730   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp06
+52740   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp07
+52750   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp08
+52760   cmbPDFColorResample.Clear
+52770   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample01
+52780   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample02
+52790   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample03
+52800   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
+52810   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
+52820   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
+52830   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
+52840   cmbPDFGreyComp.Clear
+52850   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp01
+52860   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp02
+52870   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp03
+52880   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp04
+52890   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp05
+52900   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp06
+52910   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp07
+52920   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp08
+52930   cmbPDFGreyResample.Clear
+52940   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample01
+52950   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample02
+52960   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample03
+52970   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
+52980   chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
+52990   chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
+53000   lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
+53010   cmbPDFMonoComp.Clear
+53020   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp01
+53030   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp02
+53040   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp03
+53050   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp04
+53060   cmbPDFMonoResample.Clear
+53070   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample01
+53080   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample02
+53090   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample03
+53100
+53110   dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
+53120   chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
+53130   chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
+53140
+53150   dmFraPDFColors.Caption = .OptionsPDFColorsCaption
+53160   chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
+53170   dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
+53180   chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
+53190   chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
+53200   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
+53210   cmbPDFColorModel.Clear
+53220   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel01
+53230   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel02
+53240   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel03
+53250
+53260   dmFraPDFEncryptor.Caption = .OptionsPDFEncryptor
+53270   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
+53280   chkUseSecurity.Caption = .OptionsPDFUseSecurity
+53290   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
+53300   optEncHigh.Caption = .OptionsPDFEncryptionHigh
+53310   optEncLow.Caption = .OptionsPDFEncryptionLow
+53320   dmFraSecurityPass.Caption = .OptionsPDFPasswords
+53330   chkUserPass.Caption = .OptionsPDFUserPass
+53340   chkOwnerPass.Caption = .OptionsPDFOwnerPass
+53350   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
+53360   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
+53370   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
+53380   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
+53390   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
+53400   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
+53410   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
+53420   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
+53430   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
+53440   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
+53450
+53460   cmbPNGColors.AddItem .OptionsPNGColorscount01
+53470   cmbPNGColors.AddItem .OptionsPNGColorscount02
+53480   cmbPNGColors.AddItem .OptionsPNGColorscount03
+53490   cmbPNGColors.AddItem .OptionsPNGColorscount04
+53500   cmbJPEGColors.Left = cmbPNGColors.Left
+53510   cmbJPEGColors.Width = cmbPNGColors.Width
+53520   cmbJPEGColors.Top = cmbPNGColors.Top
+53530   cmbJPEGColors.AddItem .OptionsJPEGColorscount01
+53540   cmbJPEGColors.AddItem .OptionsJPEGColorscount02
+53550   cmbBMPColors.Left = cmbPNGColors.Left
+53560   cmbBMPColors.Width = cmbPNGColors.Width
+53570   cmbBMPColors.Top = cmbPNGColors.Top
+53580   cmbBMPColors.AddItem .OptionsBMPColorscount01
+53590   cmbBMPColors.AddItem .OptionsBMPColorscount02
+53600   cmbBMPColors.AddItem .OptionsBMPColorscount03
+53610   cmbBMPColors.AddItem .OptionsBMPColorscount04
+53620   cmbBMPColors.AddItem .OptionsBMPColorscount05
+53630   cmbBMPColors.AddItem .OptionsBMPColorscount06
+53640   cmbBMPColors.AddItem .OptionsBMPColorscount07
+53650   cmbPCXColors.Left = cmbPNGColors.Left
+53660   cmbPCXColors.Width = cmbPNGColors.Width
+53670   cmbPCXColors.Top = cmbPNGColors.Top
+53680   cmbPCXColors.AddItem .OptionsPCXColorscount01
+53690   cmbPCXColors.AddItem .OptionsPCXColorscount02
+53700   cmbPCXColors.AddItem .OptionsPCXColorscount03
+53710   cmbPCXColors.AddItem .OptionsPCXColorscount04
+53720   cmbPCXColors.AddItem .OptionsPCXColorscount05
+53730   cmbPCXColors.AddItem .OptionsPCXColorscount06
+53740   cmbTIFFColors.Left = cmbPNGColors.Left
+53750   cmbTIFFColors.Width = cmbPNGColors.Width
+53760   cmbTIFFColors.Top = cmbPNGColors.Top
+53770   cmbTIFFColors.AddItem .OptionsTIFFColorscount01
+53780   cmbTIFFColors.AddItem .OptionsTIFFColorscount02
+53790   cmbTIFFColors.AddItem .OptionsTIFFColorscount03
+53800   cmbTIFFColors.AddItem .OptionsTIFFColorscount04
+53810   cmbTIFFColors.AddItem .OptionsTIFFColorscount05
+53820   cmbTIFFColors.AddItem .OptionsTIFFColorscount06
+53830   cmbTIFFColors.AddItem .OptionsTIFFColorscount07
+53840   cmbTIFFColors.AddItem .OptionsTIFFColorscount08
+53850
+53860   dmFraBitmapGeneral.Caption = .OptionsImageSettings
+53870   lblBitmapResolution = .OptionsBitmapResolution
+53880   lblJPEGQuality = .OptionsJPEGQuality
+53890   lblBitmapColors = .OptionsPDFColors
+53900   lblProcessPriority.Caption = .OptionsProcesspriority
+53910   lblLangLevel.Caption = .OptionsPSLanguageLevel
+53920
+53930   cmdAsso.Caption = .OptionsAssociatePSFiles
+53940  End With
+53950
+53960  If IsPsAssociate = False Then
+53970    cmdAsso.Enabled = True
+53980   Else
+53990    cmdAsso.Enabled = False
+54000  End If
+54010
+54020  txtPDFRes.Text = 600
+54030  cmbPDFCompat.ListIndex = 1
+54040  cmbPDFRotate.ListIndex = 0
+54050  cmbPDFOverprint.ListIndex = 0
+54060  chkPDFASCII85.Value = 0
 54070
-54080   dmFraBitmapGeneral.Caption = .OptionsImageSettings
-54090   lblBitmapResolution = .OptionsBitmapResolution
-54100   lblJPEGQuality = .OptionsJPEGQuality
-54110   lblBitmapColors = .OptionsPDFColors
-54120   lblProcessPriority.Caption = .OptionsProcesspriority
-54130   lblLangLevel.Caption = .OptionsPSLanguageLevel
-54140
-54150   cmdAsso.Caption = .OptionsAssociatePSFiles
-54160  End With
-54170
-54180  If IsPsAssociate = False Then
-54190    cmdAsso.Enabled = True
-54200   Else
-54210    cmdAsso.Enabled = False
-54220  End If
-54230
-54240  txtPDFRes.Text = 600
-54250  cmbPDFCompat.ListIndex = 1
-54260  cmbPDFRotate.ListIndex = 0
-54270  cmbPDFOverprint.ListIndex = 0
-54280  chkPDFASCII85.Value = 0
-54290
-54300  chkPDFTextComp.Value = 1
+54080  chkPDFTextComp.Value = 1
+54090
+54100  chkPDFColorComp.Value = 1
+54110  chkPDFColorResample.Value = 0
+54120  cmbPDFColorComp.ListIndex = 0
+54130  cmbPDFColorResample.ListIndex = 0
+54140  txtPDFColorRes.Text = 300
+54150
+54160  chkPDFGreyComp.Value = 1
+54170  chkPDFGreyResample.Value = 0
+54180  cmbPDFGreyComp.ListIndex = 0
+54190  cmbPDFGreyResample.ListIndex = 0
+54200  txtPDFGreyRes.Text = 300
+54210
+54220  chkPDFMonoComp.Value = 1
+54230  chkPDFMonoResample.Value = 0
+54240  cmbPDFMonoComp.ListIndex = 0
+54250  cmbPDFMonoResample.ListIndex = 0
+54260  txtPDFMonoRes.Text = 1200
+54270
+54280  chkPDFEmbedAll.Value = 1
+54290  chkPDFSubSetFonts.Value = 1
+54300  txtPDFSubSetPerc.Text = 100
 54310
-54320  chkPDFColorComp.Value = 1
-54330  chkPDFColorResample.Value = 0
-54340  cmbPDFColorComp.ListIndex = 0
-54350  cmbPDFColorResample.ListIndex = 0
-54360  txtPDFColorRes.Text = 300
+54320  cmbPDFColorModel.ListIndex = 1
+54330  chkPDFCMYKtoRGB.Value = 1
+54340  chkPDFPreserveOverprint.Value = 1
+54350  chkPDFPreserveTransfer.Value = 1
+54360  chkPDFPreserveHalftone.Value = 0
 54370
-54380  chkPDFGreyComp.Value = 1
-54390  chkPDFGreyResample.Value = 0
-54400  cmbPDFGreyComp.ListIndex = 0
-54410  cmbPDFGreyResample.ListIndex = 0
-54420  txtPDFGreyRes.Text = 300
-54430
-54440  chkPDFMonoComp.Value = 1
-54450  chkPDFMonoResample.Value = 0
-54460  cmbPDFMonoComp.ListIndex = 0
-54470  cmbPDFMonoResample.ListIndex = 0
-54480  txtPDFMonoRes.Text = 1200
-54490
-54500  chkPDFEmbedAll.Value = 1
-54510  chkPDFSubSetFonts.Value = 1
-54520  txtPDFSubSetPerc.Text = 100
-54530
-54540  cmbPDFColorModel.ListIndex = 1
-54550  chkPDFCMYKtoRGB.Value = 1
-54560  chkPDFPreserveOverprint.Value = 1
-54570  chkPDFPreserveTransfer.Value = 1
-54580  chkPDFPreserveHalftone.Value = 0
-54590
-54600  cmbPNGColors.ListIndex = 0
-54610  cmbJPEGColors.ListIndex = 0
-54620  cmbBMPColors.ListIndex = 0
-54630  cmbPCXColors.ListIndex = 0
-54640  cmbTIFFColors.ListIndex = 0
-54650  txtBitmapResolution.Text = 150
-54660
-54670 ' chkUseStandardAuthor.Value = 1
-54680  txtStandardAuthor.Text = vbNullString
-54690
-54700  With cmbPSLanguageLevel
-54710   .AddItem "1"
-54720   .AddItem "1.5"
-54730   .AddItem "2"
-54740   .AddItem "3"
-54750  End With
-54760  With cmbEPSLanguageLevel
-54770   .AddItem "1"
-54780   .AddItem "1.5"
-54790   .AddItem "2"
-54800   .AddItem "3"
-54810  End With
+54380  cmbPNGColors.ListIndex = 0
+54390  cmbJPEGColors.ListIndex = 0
+54400  cmbBMPColors.ListIndex = 0
+54410  cmbPCXColors.ListIndex = 0
+54420  cmbTIFFColors.ListIndex = 0
+54430  txtBitmapResolution.Text = 150
+54440
+54450 ' chkUseStandardAuthor.Value = 1
+54460  txtStandardAuthor.Text = vbNullString
+54470
+54480  With cmbPSLanguageLevel
+54490   .AddItem "1"
+54500   .AddItem "1.5"
+54510   .AddItem "2"
+54520   .AddItem "3"
+54530  End With
+54540  With cmbEPSLanguageLevel
+54550   .AddItem "1"
+54560   .AddItem "1.5"
+54570   .AddItem "2"
+54580   .AddItem "3"
+54590  End With
+54600
+54610  With lsvFilenameSubst
+54620   .Appearance = ccFlat
+54630   .ColumnHeaders.Clear
+54640   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
+54650   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
+54660   .HideColumnHeaders = True
+54670   .GridLines = True
+54680   .FullRowSelect = True
+54690   .HideSelection = False
+54700  End With
+54710
+54720  With cmbPDFEncryptor
+54730   .Clear
+54740   .AddItem "Ghostscript (>= 8.14)"
+54750   .ItemData(.NewIndex) = 0
+54760   .AddItem "PDFEnc"
+54770   .ItemData(.NewIndex) = 1
+54780
+54790 '  ShowOptions Me, Options
+54800
+54810   SecurityIsPossible = True
 54820
-54830  With lsvFilenameSubst
-54840   .Appearance = ccFlat
-54850   .ColumnHeaders.Clear
-54860   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
-54870   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
-54880   .HideColumnHeaders = True
-54890   .GridLines = True
-54900   .FullRowSelect = True
-54910   .HideSelection = False
-54920  End With
-54930
-54940  With cmbPDFEncryptor
-54950   .Clear
-54960   .AddItem "Ghostscript (>= 8.14)"
-54970   .ItemData(.NewIndex) = 0
-54980   .AddItem "PDFEnc"
-54990   .ItemData(.NewIndex) = 1
-55000
-55010 '  ShowOptions Me, Options
-55020
-55030   SecurityIsPossible = True
-55040
-55050   If FileExists(CompletePath(App.Path) & "pdfenc.exe") = False Then
-55060    .RemoveItem 1
-55070    .ListIndex = 0
-55080    Options.PDFEncryptor = .ItemData(.ListIndex)
-55090   End If
-55100   If GhostScriptSecurity = False Then
-55110    .RemoveItem 0
-55120   End If
-55130   If .ListCount = 0 Then
-55140     chkUseSecurity.Value = 0
-55150     chkUseSecurity.Enabled = False
-55160     SecurityIsPossible = False
-55170    Else
-55180     For i = 0 To .ListCount - 1
-55190      If .ItemData(i) = Options.PDFEncryptor Then
-55200       .ListIndex = i
-55210       Exit For
-55220      End If
-55230     Next i
-55240     If .ListIndex = -1 Then
-55250      .ListIndex = 0
-55260      Options.PDFEncryptor = .ItemData(.ListIndex)
-55270     End If
-55280   End If
-55290  End With
-55300
-55310  If Options.PDFHighEncryption <> 0 Then
-55320    optEncHigh.Value = True
-55330   Else
-55340    optEncLow.Value = True
-55350  End If
-55360
-55370  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-55380  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-55390  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-55400
-55410  If chkUseStandardAuthor.Value = 1 Then
-55420    txtStandardAuthor.Enabled = True
-55430    txtStandardAuthor.BackColor = &H80000005
-55440   Else
-55450    txtStandardAuthor.Enabled = False
-55460    txtStandardAuthor.BackColor = &H8000000F
-55470  End If
-55480  With Options
-55490   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-55500  End With
-55510  ieb.Refresh
-55520  If chkUseAutosave.Value = 1 Then
-55530    ViewAutosave True
-55540   Else
-55550    ViewAutosave False
-55560  End If
-55570
-55580  With txtGSbin
-55590   .ToolTipText = .Text
-55600  End With
-55610  With txtGSlib
-55620   .ToolTipText = .Text
-55630  End With
-55640  With txtGSfonts
-55650   .ToolTipText = .Text
-55660  End With
-55670  With txtTemppath
-55680   .ToolTipText = .Text
-55690  End With
-55700
-55710  With sldProcessPriority
-55720   .TextPosition = sldBelowRight
-55730   .TickFrequency = 1
-55740   .TickStyle = sldTopLeft
-55751   Select Case .Value
+54830   If FileExists(CompletePath(App.Path) & "pdfenc.exe") = False Then
+54840    .RemoveItem 1
+54850    .ListIndex = 0
+54860    Options.PDFEncryptor = .ItemData(.ListIndex)
+54870   End If
+54880   If GhostScriptSecurity = False Then
+54890    .RemoveItem 0
+54900   End If
+54910   If .ListCount = 0 Then
+54920     chkUseSecurity.Value = 0
+54930     chkUseSecurity.Enabled = False
+54940     SecurityIsPossible = False
+54950    Else
+54960     For i = 0 To .ListCount - 1
+54970      If .ItemData(i) = Options.PDFEncryptor Then
+54980       .ListIndex = i
+54990       Exit For
+55000      End If
+55010     Next i
+55020     If .ListIndex = -1 Then
+55030      .ListIndex = 0
+55040      Options.PDFEncryptor = .ItemData(.ListIndex)
+55050     End If
+55060   End If
+55070  End With
+55080
+55090  If Options.PDFHighEncryption <> 0 Then
+55100    optEncHigh.Value = True
+55110   Else
+55120    optEncLow.Value = True
+55130  End If
+55140
+55150  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+55160  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+55170  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+55180
+55190  If chkUseStandardAuthor.Value = 1 Then
+55200    txtStandardAuthor.Enabled = True
+55210    txtStandardAuthor.BackColor = &H80000005
+55220   Else
+55230    txtStandardAuthor.Enabled = False
+55240    txtStandardAuthor.BackColor = &H8000000F
+55250  End If
+55260  With Options
+55270   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+55280  End With
+55290  ieb.Refresh
+55300  If chkUseAutosave.Value = 1 Then
+55310    ViewAutosave True
+55320   Else
+55330    ViewAutosave False
+55340  End If
+55350
+55360  With txtGSbin
+55370   .ToolTipText = .Text
+55380  End With
+55390  With txtGSlib
+55400   .ToolTipText = .Text
+55410  End With
+55420  With txtGSfonts
+55430   .ToolTipText = .Text
+55440  End With
+55450  With txtTemppath
+55460   .ToolTipText = .Text
+55470  End With
+55480
+55490  With sldProcessPriority
+55500   .TextPosition = sldBelowRight
+55510   .TickFrequency = 1
+55520   .TickStyle = sldTopLeft
+55531   Select Case .Value
          Case 0: 'Idle
-55770     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
-55780    Case 1: 'Normal
-55790     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
-55800    Case 2: 'High
-55810     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
-55820    Case 3: 'Realtime
-55830     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
-55840   End Select
-55850  End With
-55860
-55870  If IsWin9xMe = False Then
-55880    lblProcessPriority.Enabled = True
-55890    sldProcessPriority.Enabled = True
-55900   Else
-55910    lblProcessPriority.Enabled = False
-55920    sldProcessPriority.Enabled = False
-55930  End If
-55940  UpdateSecurityFields
-55950
-55960  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
+55550     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
+55560    Case 1: 'Normal
+55570     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
+55580    Case 2: 'High
+55590     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
+55600    Case 3: 'Realtime
+55610     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
+55620   End Select
+55630  End With
+55640
+55650  If IsWin9xMe = False Then
+55660    lblProcessPriority.Enabled = True
+55670    sldProcessPriority.Enabled = True
+55680   Else
+55690    lblProcessPriority.Enabled = False
+55700    sldProcessPriority.Enabled = False
+55710  End If
+55720  UpdateSecurityFields
+55730
+55740  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
  cmbGhostscript.Clear: Set reg = New clsRegistry
-55980  reg.hkey = HKEY_LOCAL_MACHINE
-55990
-56000  Set gsvers = GetAllGhostscriptversions
-56010
-56020  If gsvers.Count = 0 Then
-56030    cmbGhostscript.Enabled = False
-56040   Else
-56050    For i = 1 To gsvers.Count
-56060     cmbGhostscript.AddItem gsvers.Item(i)
-56070    Next i
-56080    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
-56090    For i = 0 To cmbGhostscript.ListCount - 1
-56100     tStr = ""
-56110     If InStr(cmbGhostscript.List(i), ":") Then
-56120       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-56130       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
-56140        cmbGhostscript.ListIndex = i
-56150        Exit For
-56160       End If
-56170      Else
-56180       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
-56190        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
-56200        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-56210         tsf = Split(cmbGhostscript.List(i), " ")
-56220         reg.Subkey = tsf(UBound(tsf))
-56230         tStr = reg.GetRegistryValue("GS_DLL")
-56240         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56250          cmbGhostscript.ListIndex = i
-56260          Exit For
-56270         End If
-56280        End If
-56290       End If
-56300       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
-56310        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
-56320        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-56330         tsf = Split(cmbGhostscript.List(i), " ")
-56340         reg.Subkey = tsf(UBound(tsf))
-56350         tStr = reg.GetRegistryValue("GS_DLL")
-56360         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56370          cmbGhostscript.ListIndex = i
-56380          Exit For
-56390         End If
-56400        End If
-56410       End If
-56420       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
-56430        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
-56440        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-56450         tsf = Split(cmbGhostscript.List(i), " ")
-56460         reg.Subkey = tsf(UBound(tsf))
-56470         tStr = reg.GetRegistryValue("GS_DLL")
-56480         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56490          cmbGhostscript.ListIndex = i
-56500          Exit For
-56510         End If
-56520        End If
-56530       End If
-56540     End If
-56550    Next i
-56560  End If
-56570  Set reg = Nothing
-56580  With cmbGhostscript
-56590   If .ListCount = 0 Then
-56600    .Enabled = False
-56610    .BackColor = &H8000000F
-56620   End If
-56630  End With
-56640
-56650  tbstrPDFOptions.ZOrder 1
-56660  'cmdStyle.ZOrder 1
-56670  If ShowOnlyOptions = True Then
-56680   FormInTaskbar Me, True, True
-56690   Caption = "PDFCreator - " & Caption
-56700  End If
-56710  Timer1.Enabled = True
-56720  Screen.MousePointer = vbNormal
+55760  reg.hkey = HKEY_LOCAL_MACHINE
+55770
+55780  Set gsvers = GetAllGhostscriptversions
+55790
+55800  If gsvers.Count = 0 Then
+55810    cmbGhostscript.Enabled = False
+55820   Else
+55830    For i = 1 To gsvers.Count
+55840     cmbGhostscript.AddItem gsvers.Item(i)
+55850    Next i
+55860    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
+55870    For i = 0 To cmbGhostscript.ListCount - 1
+55880     tStr = ""
+55890     If InStr(cmbGhostscript.List(i), ":") Then
+55900       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+55910       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
+55920        cmbGhostscript.ListIndex = i
+55930        Exit For
+55940       End If
+55950      Else
+55960       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
+55970        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
+55980        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+55990         tsf = Split(cmbGhostscript.List(i), " ")
+56000         reg.Subkey = tsf(UBound(tsf))
+56010         tStr = reg.GetRegistryValue("GS_DLL")
+56020         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56030          cmbGhostscript.ListIndex = i
+56040          Exit For
+56050         End If
+56060        End If
+56070       End If
+56080       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
+56090        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
+56100        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+56110         tsf = Split(cmbGhostscript.List(i), " ")
+56120         reg.Subkey = tsf(UBound(tsf))
+56130         tStr = reg.GetRegistryValue("GS_DLL")
+56140         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56150          cmbGhostscript.ListIndex = i
+56160          Exit For
+56170         End If
+56180        End If
+56190       End If
+56200       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
+56210        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
+56220        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+56230         tsf = Split(cmbGhostscript.List(i), " ")
+56240         reg.Subkey = tsf(UBound(tsf))
+56250         tStr = reg.GetRegistryValue("GS_DLL")
+56260         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56270          cmbGhostscript.ListIndex = i
+56280          Exit For
+56290         End If
+56300        End If
+56310       End If
+56320     End If
+56330    Next i
+56340  End If
+56350  Set reg = Nothing
+56360  With cmbGhostscript
+56370   If .ListCount = 0 Then
+56380    .Enabled = False
+56390    .BackColor = &H8000000F
+56400   End If
+56410  End With
+56420
+56430  tbstrPDFOptions.ZOrder 1
+56440  'cmdStyle.ZOrder 1
+56450  If ShowOnlyOptions = True Then
+56460   FormInTaskbar Me, True, True
+56470   Caption = "PDFCreator - " & Caption
+56480  End If
+56490  Timer1.Enabled = True
+56500  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
