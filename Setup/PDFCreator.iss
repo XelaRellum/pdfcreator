@@ -2356,7 +2356,7 @@ begin
    cmdlSilent:=true;
   if uppercase(paramstr(i))='/FORCEINSTALL' then
    cmdlForceInstall:=true;
-  if uppercase(paramstr(i))='/INI' then
+  if uppercase(paramstr(i))='/USEINI' then
    cmdlUseINI:=true;
 
   cmdParam:='/REGFile';
