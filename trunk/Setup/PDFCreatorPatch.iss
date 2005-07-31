@@ -132,22 +132,19 @@ Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversi
 
 ; Scripts
 ; Scripts: RunProgramAfterSaving
-Source: ..\Scripts\RunProgramAfterSaving\AddWatermarkToPDF.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
-Source: ..\Scripts\RunProgramAfterSaving\FTPUpload.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
-Source: ..\Scripts\RunProgramAfterSaving\Logger.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
-Source: ..\Scripts\RunProgramAfterSaving\Watermark.pdf; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
-Source: ..\Scripts\RunProgramAfterSaving\NetSend.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
-Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
-Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
-Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramAfterSaving\AddWatermarkToPDF.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\FTPUpload.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\Logger.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\Watermark.pdf; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\NetSend.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
 ; Scripts: RunProgramBeforSaving
-Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Flags: ignoreversion
+Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Flags: ignoreversion comparetimestamp
 
 [InstallDelete]
 Name: {sys}\PDFSpooler.exe; Type: files
-
-[INI]
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Toolbars; String: 3; Flags: createkeyifdoesntexist
 
 [Run]
 #IFNDEF Test
@@ -163,13 +160,6 @@ Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.
 Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
-
-;compress exe files with upx
-#ifdef UseUPX
- ; Filename: {app}\upx.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe -7 --compress-icons=0 --crp-ms=999999; Flags: runhidden
- ; Filename: {app}\upx.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe -7 --compress-icons=0 --crp-ms=999999; Flags: runhidden
- ; Filename: {app}\upx.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe -7 --compress-icons=0 --crp-ms=999999; Flags: runhidden
-#ENDIF
 #ENDIF
 
 [Languages]
