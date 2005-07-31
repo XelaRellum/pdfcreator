@@ -512,13 +512,20 @@ End Sub
 
 Private Sub Form_Resize()
  On Error Resume Next
+ 
+ Static isInTaskBar As Boolean
+ 
  If Me.WindowState = vbMinimized Then
+  isInTaskBar = True
   FormInTaskbar Me, False, False, False
   SystrayEnter
   Exit Sub
  End If
  SysTrayLeave
- FormInTaskbar Me, True, False, True
+ If isInTaskBar Then
+   isInTaskBar = False
+   FormInTaskbar Me, True, False, True
+ End If
  If Me.Height < 3000 Then
   Me.Height = 3000
   Exit Sub
