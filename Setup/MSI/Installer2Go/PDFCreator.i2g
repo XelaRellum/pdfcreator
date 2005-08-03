@@ -731,6 +731,10 @@ Shortcut=0,%AppSCFolder%&bs;TransTool,%AppDir%&bs;Languages&bs;TransTool.exe,,,,
 Shortcut=0,%AppSCFolder%&bs;PDFCreator help,%AppDir%&bs;PDFCreator_english.chm,,,,0,1,%AppDir%,
 
 [REGISTRY_ENTRIES]
+KEY=%HKEY_CURRENT_USER%&bs;Software
+KEY=%HKEY_CURRENT_USER%&bs;Software&bs;PDFCreator
+KEY=%HKEY_CURRENT_USER%&bs;Software&bs;PDFCreator&bs;Program
+STRING2=%HKEY_CURRENT_USER%&bs;Software&bs;PDFCreator&bs;Program,PrinterTemppath,<Temp>PDFCreator&bs;
 KEY=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE
 KEY=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft
 KEY=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows
