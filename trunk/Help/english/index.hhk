@@ -96,6 +96,11 @@
 		<param name="Local" value="html\pdfcolors.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="COM Interface">
+		<param name="Name" value="COM Interface">
+		<param name="Local" value="html\cominterface.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Combine">
 		<param name="Name" value="Combine Documents">
 		<param name="Local" value="html\combine.htm">
@@ -271,6 +276,26 @@
 		<param name="Name" value="PS">
 		<param name="Name" value="PS Settings">
 		<param name="Local" value="html\pssettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Public classes">
+		<param name="Name" value="Public classes of the COM Interface">
+		<param name="Local" value="html\comclasses.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Public events">
+		<param name="Name" value="Public events of the COM Interface">
+		<param name="Local" value="html\comevents.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Public methods">
+		<param name="Name" value="Public methods of the COM Interface">
+		<param name="Local" value="html\commethods.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Public properties">
+		<param name="Name" value="Public properties of the COM Interface">
+		<param name="Local" value="html\comproperties.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Registry">

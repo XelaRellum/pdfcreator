@@ -1,6 +1,6 @@
 Type=Exe
 Form=frmMain.frm
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\WINDOWS\system32\STDOLE2.TLB#OLE Automation
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\WINDOWS\system32\STDOLE2.TLB#OLE Automation
 IconForm="frmMain"
 Startup="frmMain"
 HelpFile=""
@@ -15,6 +15,9 @@ MinorVer=1
 RevisionVer=0
 AutoIncrementVer=0
 ServerSupportFiles=0
+VersionCompanyName="-"
+VersionFileDescription="LangInstall: Install additional language files. Part of PDFCreator."
+VersionLegalCopyright="Frank Heindörfer, Philip Chinery (c) 2005"
 CompilationType=0
 OptimizationType=0
 FavorPentiumPro(tm)=0

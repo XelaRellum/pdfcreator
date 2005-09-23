@@ -19,11 +19,19 @@ Begin VB.Form frmMain
       Top             =   735
       Visible         =   0   'False
       Width           =   540
-      _extentx        =   953
-      _extenty        =   503
-      font            =   "frmMain.frx":548A
-      brushstyle      =   0
-      color           =   65280
+      _ExtentX        =   953
+      _ExtentY        =   503
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BrushStyle      =   0
+      Color           =   65280
    End
    Begin VB.PictureBox picAbout 
       Appearance      =   0  '2D
@@ -81,23 +89,23 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   5
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":54B6
+            Picture         =   "frmMain.frx":548A
             Key             =   "open"
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5850
+            Picture         =   "frmMain.frx":5824
             Key             =   "save"
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5BEA
+            Picture         =   "frmMain.frx":5BBE
             Key             =   "search"
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5F84
+            Picture         =   "frmMain.frx":5F58
             Key             =   "empty"
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":631E
+            Picture         =   "frmMain.frx":62F2
             Key             =   "unmark"
          EndProperty
       EndProperty
@@ -129,11 +137,11 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   2
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":66B8
+            Picture         =   "frmMain.frx":668C
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6B0A
+            Picture         =   "frmMain.frx":6ADE
             Key             =   ""
          EndProperty
       EndProperty
@@ -224,7 +232,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   0
-      Picture         =   "frmMain.frx":6F5C
+      Picture         =   "frmMain.frx":6F30
       Top             =   840
       Width           =   930
    End
@@ -1277,7 +1285,7 @@ On Error GoTo ErrPtnr_OnError
 50200    End If
 50210   End If
 50220  End If
-50230  If res > 0 Then
+50230  If res > 0 Or SaveAs = False Then
 50240   mnFileMain.Enabled = False
 50250   mnEditMain.Enabled = False
 50260   mnHelpMain.Enabled = False

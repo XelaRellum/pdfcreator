@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.1.4 (with ISPP) and ISTool 5.0.8
+; Setup created with Inno Setup QuickStart Pack 5.1.5 (with ISPP) and ISTool 5.1.5
 ; Installation from Frank Heindörfer
 
 ;#define Test
@@ -26,7 +26,7 @@
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 #If (GhostscriptLicense=="AFPL")
- #define GhostscriptVersion "8.50"
+ #define GhostscriptVersion "8.51"
  #define GhostscriptSetupString "AFPLGhostscript"
 #ENDIF
 #ENDIF
@@ -126,10 +126,10 @@
 #define UpdateIsPossibleMinVersion "0.8.1"
 
 [Setup]
-AllowNoIcons=false
+AllowNoIcons=true
 AlwaysRestart=false
 AppContact={#Homepage}
-AppCopyright=© 2002 - 2004 Philip Chinery, Frank Heindörfer
+AppCopyright=© 2002 - 2005 Philip Chinery, Frank Heindörfer
 AppID={#AppIDStr}
 AppName={#AppName}
 AppVerName={#AppName} {#AppVersionStr}
@@ -147,6 +147,7 @@ DefaultGroupName={#AppName}
 DisableDirPage=false
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
+InternalCompressLevel={#SetupLZMACompressionMode}
 LicenseFile=.\License\Program license - english.rtf
 #Ifdef IncludeGhostscript
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_{#GhostscriptSetupString}
@@ -155,6 +156,7 @@ OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_WithoutGhostscript
 #ENDIF
 OutputDir=Installation
 RestartIfNeededByRun=true
+ShowLanguageDialog=yes
 ShowTasksTreeLines=false
 SolidCompression=true
 UsePreviousAppDir=true
@@ -373,10 +375,60 @@ Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunPr
 Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
 ; Scripts: RunProgramBeforSaving
 Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
+Source: ..\Scripts\RunProgramBeforeSaving\AddPDFDocview.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
+; Samples: Com
+Source: ..\COM\Samples\VB6\Sample1\Form1.frm; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Form1.frx; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Sample1.RES; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Sample1.vbp; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Sample1.vbw; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample2\Form1.frm; DestDir: {app}\COM\VB6\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample2\Sample2.vbp; DestDir: {app}\COM\VB6\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample2\Sample2.vbw; DestDir: {app}\COM\VB6\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\DOTNET Scripting Host\readme.txt; DestDir: {app}\COM\DOTNET Scripting Host; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\DOTNET Scripting Host\Sample1.dsh; DestDir: {app}\COM\DOTNET Scripting Host; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+;Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+;Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+;Source: ..\COM\Samples\MS Office\frmPDFCreatorPowerpoint.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+;Source: ..\COM\Samples\MS Office\frmPDFCreatorPowerpoint.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2TIFF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2TXT.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\GUI.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\SaveOptionsToFile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\ShowLogfile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\ShowOptions.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\ShowPrintjobInfos.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression1.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression2.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression3.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
-Name: {app}\Scripts
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; Flags: createonlyiffileexists
@@ -407,10 +459,13 @@ Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: Iconindex; Strin
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; String: 1; Components: program
 
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist; Check: UseINI
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: {userdocs}; Components: program; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: <MyFiles>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI  And (Not IsServerInstallation)
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI And IsServerInstallation
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: <MyFiles>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI And (Not IsServerInstallation)
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI And IsServerInstallation
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Language; String: {code:GetActiveLanguage}; Flags: createkeyifdoesntexist; Check: UseINI
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: {code:GetPrinterTemppath}; Flags: createkeyifdoesntexist; Check: UseINI
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: <Temp>PDFCreator\; Flags: createkeyifdoesntexist; Check: UseINI And (Not IsServerInstallation)
+Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: {app}\Temp\; Flags: createkeyifdoesntexist; Check: UseINI And IsServerInstallation
 
 #Ifdef GhostscriptVersion
 Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptBinaries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
@@ -512,20 +567,20 @@ Root: HKCU; Subkey: Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder
 Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueName: UninstallOptions; Valuedata: {cm:UninstallOptions}; Flags: uninsdeletevalue
 
 ; Application
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: IsServerInstallation
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: IsServerInstallation
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: uninsdeletevalue; Check: IsServerInstallation
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; Flags: uninsdeletevalue; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Check: IsServerInstallation; Flags: createvalueifdoesntexist
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Flags: createvalueifdoesntexist; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: createvalueifdoesntexist; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: {app}\Temp\; Flags: createvalueifdoesntexist; Check: IsServerInstallation
 
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: {userdocs}; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: {userdocs}; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: <MyFiles>; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: <MyFiles>; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 
-Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: {userdocs}; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: <MyFiles>; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: <MyFiles>; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 
 #Ifdef GhostscriptVersion
 Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
@@ -533,10 +588,10 @@ Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueNam
 Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
 Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
 
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: uninsdeletevalue; MinVersion: 0,5.0.2195; Check: Not IsServerInstallation
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; MinVersion: 0,5.0.2195; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; MinVersion: 0,4.0.1381; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; MinVersion: 0,4.0.1381; Flags: uninsdeletevalue; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; MinVersion: 0,4.0.1381; Flags: uninsdeletevalue; Check: Not IsServerInstallation
 
 Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
 Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
@@ -560,11 +615,15 @@ Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6fr
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
 
 Filename: {app}\ShFolder.Exe; WorkingDir: {app}; Parameters: /Q:A; Flags: runminimized; Components: program; MinVersion: 4.0.950,4.0.1381; OnlyBelowVersion: 4.1.2222,5.0.2195
-Filename: {app}\PDFCreator.exe; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
+Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: /RegServer; Flags: nowait
+Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
 Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shellexec skipifsilent; Check: Not IsPrinterInstallationSuccessfully
 
 Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile AND (Not UseINI)
 #ENDIF
+
+[UninstallRun]
+Filename: {app}\PDFCreator.exe; Parameters: /UnRegServer; Flags: skipifdoesntexist runhidden
 
 [UninstallDelete]
 Name: {app}\SetupLog.txt; Type: files
@@ -572,6 +631,7 @@ Name: {app}\Unload.tmp; Type: files
 Name: {app}\PDFCreator.url; Type: files
 Name: {app}\{cm:Donation}.url; Type: files
 Name: {app}\PDFCreatorSpool; Type: filesandordirs
+Name: {app}\Temp; Type: filesandordirs
 Name: {app}\languages; Type: filesandordirs
 Name: {app}; Type: dirifempty
 ;User temp directories
@@ -1665,10 +1725,12 @@ function GetDefaultIniPath(Default:String):String;
 var
  AppData: String;
 begin
- if Not RegQueryStringValue(HKEY_USERS, '.DEFAULT\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders',     'AppData', AppData) then
+ if Not RegQueryStringValue(HKEY_USERS, '.DEFAULT\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders',
+     'AppData', AppData) then
    AppData:=ExpandConstant('{commonappdata}');
  If Not DirExists(Appdata) Then
   ForceDirectories(AppData);
+ Result:=AppData
 end;
 
 function GetIniPath(Default:String):String;
@@ -2838,3 +2900,6 @@ begin
       end;
   end;
 end;
+
+//Only for debugging.
+//#expr savetofile("PDFCreator-debug.ini")

@@ -7,27 +7,27 @@
 </head>
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr> 
+  <tr>
     <td class="title">PDFCreator Hilfe</td>
   </tr>
-  <tr> 
+  <tr>
     <td background="../images/grad.gif" height="20">&nbsp;</td>
   </tr>
-  <tr> 
+  <tr>
     <td>&nbsp;</td>
   </tr>
-  <tr> 
+  <tr>
     <td class="main"><p class="header">Versteckte Einstellungen</p>
-      <p>PDFCreator hat einige Einstellungen, die f&uuml;r Testzwecke gedacht 
+      <p>PDFCreator hat einige Einstellungen, die f&uuml;r Testzwecke gedacht
         sind. Standardm&auml;&szlig;ig werden die Einstellungen in der Registry gespeichert.
         Es ist auch m&ouml;glich die Einstellungen in einer Datei PDFCreator.ini zu speichern.
         Soll eine INI-Datei verwendet werden, muss das Programm neu installiert werden
         und dabei der Parameter /UseINI verwendet werden. N&auml;heres dazu unter Einstellungen.</p>
-      <p><strong>AdditionalGhostscriptParameters:</strong> Mit Hilfe dieser Einstellung 
+      <p><strong>AdditionalGhostscriptParameters:</strong> Mit Hilfe dieser Einstellung
         k&ouml;nnen zus&auml;tzlich Ghostscriptparameter festgelegt werden. Zum Trennen der Parameter
         muss das Pipe Symbol | verwendet werden. Standardm&auml;&szlig;ig ist Wert leer.<br>
         <em>Beispiel:</em><br>
-        AdditionalGhostscriptParameters=-dTextAlphaBits=4|-dGraphicsAlphaBits=4|-dDOINTERPOLATE 
+        AdditionalGhostscriptParameters=-dTextAlphaBits=4|-dGraphicsAlphaBits=4|-dDOINTERPOLATE
       </p>
       <p><strong>AdditionalGhostscriptSearchpath:</strong> Diese Einstellung erlaubt
         zus&auml;tzliche Verzeichnisse zum Ghostscript-Suchpfad hinzuzuf&uuml;gen. Dies kann verwendet
@@ -44,12 +44,12 @@
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein </p>
-      <p><strong>DisableEmail:</strong> Diese Einstellung deaktiviert den Email-Button 
+      <p><strong>DisableEmail:</strong> Diese Einstellung deaktiviert den Email-Button
         in PDFCreator.<br>
         <em>Eigenschaften:</em><br>
         0 - Email-Button ist aktiviert (Standard)<br>
         1 - Email-Button ist deaktviert</p>
-      <p><strong>DeviceWidthPoints, DeviceHeightPoints:</strong> Diese beiden Einstellungen 
+      <p><strong>DeviceWidthPoints, DeviceHeightPoints:</strong> Diese beiden Einstellungen
         legen eine fest vorgegebene Breite und H&ouml;he f&uuml;r das zu verwendene Papierformat fest.
         Die Einheit ist 1/72 eines Zolls und kann als Alternative f&uuml;r die Einstellung <strong>Papersize</strong>
         verwendet werden, aber nicht in Kombination damit.<br>
@@ -65,9 +65,9 @@
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <p><strong>OnePagePerFile:</strong> Die Einstellung erlaubt Benutzern eine 
-        neue Datei f&uuml;r jede Seite des Originals zu erstellen. Aufgrund von 
-        Einschr&auml;nkungen in Ghostscript funktioniert das nicht mit PDF und 
+      <p><strong>OnePagePerFile:</strong> Die Einstellung erlaubt Benutzern eine
+        neue Datei f&uuml;r jede Seite des Originals zu erstellen. Aufgrund von
+        Einschr&auml;nkungen in Ghostscript funktioniert das nicht mit PDF und
         EPS Dateien.<br>
         <em>Eigenschaften: </em><br>
         0 - Aus (Standard)<br>
@@ -78,12 +78,26 @@
         angegebenen Papergr&ouml;&szlig;en verwendet werden.
       <blockquote>
         <p>Nachfolgend sind einige m&ouml;gliche Papierformate aufgelistet:<br>
-          11x17, ledger, legal, letter, lettersmall, archE, archD, archC, archB, 
-          archAa0, a1, a2, a3, a4, a4small, a5, a6, a7, a8, a9, a10, isob0, isob1, 
+          11x17, ledger, legal, letter, lettersmall, archE, archD, archC, archB,
+          archAa0, a1, a2, a3, a4, a4small, a5, a6, a7, a8, a9, a10, isob0, isob1,
           isob2, isob3, isob4, isob5, isob6, c0, c1, c2, c3, c4, c5, c6</p>
       </blockquote>
         (<a href="http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes">http://www.ghostscript.com/doc/AFPL/8.50/Use.htm#Known_paper_sizes)</a>
         </p>
+      <p><strong>PDFCompressionColorCompression*, PDFCompressionGreyCompression*:</strong> Mit Hilfe dieser Parameter
+        lassen sich individuelle Kompressionsfaktoren f&uuml;r die einzelnen Kompressionsgrade vorgeben, um so die
+        Komprimierung von Farb- und Graustufenbildern besser steuern zu k&ouml;nnen. Die Werte m&uuml;ssen gr&ouml;&szlig;er 0 sein.<br>
+        <em>Standardwerte:</em><br>
+         PDFCompressionColorCompressionJPEGMaximumFactor=2<br>
+         PDFCompressionColorCompressionJPEGHighFactor=0.9<br>
+         PDFCompressionColorCompressionJPEGMediumFactor=0.5<br>
+         PDFCompressionColorCompressionJPEGLowFactor=0.25<br>
+         PDFCompressionColorCompressionJPEGMinimumFactor=0.1<br>
+         PDFCompressionGreyCompressionJPEGMaximumFactor=2<br>
+         PDFCompressionGreyCompressionJPEGHighFactor=0.9<br>
+         PDFCompressionGreyCompressionJPEGMediumFactor=0.5<br>
+         PDFCompressionGreyCompressionJPEGLowFactor=0.25<br>
+         PDFCompressionGreyCompressionJPEGMinimumFactor=0.1</p>
       <p><strong>PDFOptimize:</strong> Die Einstellung optimiert die erstellte
         PDF-Datei f&uuml;r die Darstellung im Web. Dadurch kann die erste Seite bereits
         angezeigt werden, bevor das gesamte Dokument geladen ist.<br>
@@ -93,18 +107,18 @@
         <em>Eigenschaften: </em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <p><strong>PDFOwnerPasswordString:</strong> Diese Einstellung kann in Verbindung 
-        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
-        &uuml;bernimmt das Passwort automatisch als Besitzerpasswort. <em><strong>ACHTUNG:</strong></em> 
-        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
+      <p><strong>PDFOwnerPasswordString:</strong> Diese Einstellung kann in Verbindung
+        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator
+        &uuml;bernimmt das Passwort automatisch als Besitzerpasswort. <em><strong>ACHTUNG:</strong></em>
+        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen
         diese Option auf eigene Gefahr.</p>
-      <p><strong>PDFUserPasswordString:</strong> Diese Einstellung kann in Verbindung 
-        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator 
-        &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em> 
-        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen 
+      <p><strong>PDFUserPasswordString:</strong> Diese Einstellung kann in Verbindung
+        mit den Sicherheitseinstellungen von PDF Dateien benutzt werden. PDFCreator
+        &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em>
+        Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen
         diese Option auf eigene Gefahr.</p>
       <p><strong>PrintAfterSaving:</strong> Druckt automatisch ein Dokument nach dem Speichern.<br>
-        <em>Properties:</em><br>
+        <em>Eigenschaften:</em><br>
         0 - Aus (Standard) <br>
         1 - Ein</p>
         <p><strong>PrintAfterSavingPrinter:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann hier der Name des Druckers vorgegeben werden.
@@ -113,7 +127,7 @@
         <em>Beispiele:</em><br>
          PrintAfterSavingPrinter="\\spool\HP4300"<br>
          PrintAfterSavingPrinter="\\spool\\\printserver\HP4300"</p>
-      <p><strong>PrintAfterSavingQueryUser:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit dieser Einstellung vorgegeben werden, ob dem 
+      <p><strong>PrintAfterSavingQueryUser:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit dieser Einstellung vorgegeben werden, ob dem
          Benutzer ein Druckerdialog angezeigt werden soll.<br>
         <em>Eigenschaften:</em><br>
          0 - Aus (Standard)<br>
@@ -132,40 +146,40 @@
          1 - Verwendet Duplexdruck, falls vom Drucker unterst&uuml;tzt</p>
       <p><strong>PrintAfterSavingTumble:</strong> Ist die Einstellung PrintAfterSaving und die Einstellung PrintAfterSavingDuplex aktiviert,
         kann mit dieser Einstellung festgelegt werden, an welcher Kante der Duplexdruck zu erfolgen hat.<br>
-        <em>Properties:</em><br>
+        <em>Eigenschaften:</em><br>
          0 - Lange Kante (Standard)<br>
          1 - Kurze kante</p>
-      <p><strong>RemoveAllKnownFileExtensions:</strong> Wird diese Einstellung aktiviert, 
+      <p><strong>RemoveAllKnownFileExtensions:</strong> Wird diese Einstellung aktiviert,
         entfernt PDFCretor alle bekannten Erweiterungen von rechts beginnend, bis eine
         unbekannte Erweiterung gefunden wurde.
         Beispiel: Wenn der interne Titel einer Postscriptdatei 'Pic.jpg.-12.31.2005.pcx'
-        lautet, ver&auml;nert PDFCreator diesen zu 'Pic.jpg.-12.31.2005'. 
+        lautet, ver&auml;nert PDFCreator diesen zu 'Pic.jpg.-12.31.2005'.
         Dies erleichert das Speichern wesentlich.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus<br>
         1 - Ein (Standard)</p>
-      <p><strong>RunProgramAfterSaving:</strong> Diese Einstellung legt fest, 
-        ob das unter RunProgramAfterSavingProgramname angegebene Programm ausgef&uuml;hrt 
+      <p><strong>RunProgramAfterSaving:</strong> Diese Einstellung legt fest,
+        ob das unter RunProgramAfterSavingProgramname angegebene Programm ausgef&uuml;hrt
         wird, wenn PDFCreator das Dokument gespeichert hat. Der Name Dokumentes
         wird als Parameter &uuml;bergeben.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <p><strong>RunProgramAfterSavingProgramname:</strong> Hier wird der Pfad 
+      <p><strong>RunProgramAfterSavingProgramname:</strong> Hier wird der Pfad
         zu dem auszuf&uuml;hrenden Programm festgelegt.<br>
-        <em>Beispiel:</em> RunProgramAfterSavingProgramname=&quot;C:\Programme\Mein 
+        <em>Beispiel:</em> RunProgramAfterSavingProgramname=&quot;C:\Programme\Mein
         Programm\Mein Programm.exe&quot;</p>
-      <p><strong>RunProgramAfterSavingProgramParameters:</strong> Diese Einstellung 
-        wird in Verbindung mit RunProgramAfterSaving benutzt. Sie gibt die Parameter 
+      <p><strong>RunProgramAfterSavingProgramParameters:</strong> Diese Einstellung
+        wird in Verbindung mit RunProgramAfterSaving benutzt. Sie gibt die Parameter
         an, mit denen das Programm aufgerufen wird.</p>
-      <p><strong>RunProgramAfterSavingWaitUntilReady:</strong> Diese Einstellung 
+      <p><strong>RunProgramAfterSavingWaitUntilReady:</strong> Diese Einstellung
         legt fest, ob PDFCreator wartet, bis das Programm die Verarbeitung des Dokumentes
         abgeschlossen hat.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <p><strong>RunProgramAfterSavingWindowstyle:</strong> Diese Einstellung legt 
-        die Erscheinung des Fensters des Programmes fest, das nach dem Speichern 
+      <p><strong>RunProgramAfterSavingWindowstyle:</strong> Diese Einstellung legt
+        die Erscheinung des Fensters des Programmes fest, das nach dem Speichern
         ausgef&uuml;hrt wird.<br>
         <em>Eigenschaften:</em><br>
         0 - Das Programm wird versteckt ausgef&uuml;hrt.<br>
@@ -174,23 +188,23 @@
         3 - Das Programm wird maximiert ausgef&uuml;hrt und aktiviert.<br>
         4 - Das Programm wird normal ausgef&uuml;hrt und nicht aktiviert.<br>
         6 - Das Programm wird minimiert ausgef&uuml;hrt und nicht aktiviert.</p>
-      <p><strong>RunProgramBeforeSaving:</strong> Diese Einstellung legt fest, 
-        ob das unter RunProgramBeforeSavingProgramname angegebene Programm ausgef&uuml;hrt 
+      <p><strong>RunProgramBeforeSaving:</strong> Diese Einstellung legt fest,
+        ob das unter RunProgramBeforeSavingProgramname angegebene Programm ausgef&uuml;hrt
         wird, bevor PDFCreator das Dokument gespeichert hat. PDFCreator wartet, bis das
         Programm die Verarbeitung des Dokumentes abgeschlossen hat. Der Name Dokumentes
         wird als Parameter &uuml;bergeben.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <p><strong>RunProgramBeforeSavingProgramname:</strong> Hier wird der Pfad 
+      <p><strong>RunProgramBeforeSavingProgramname:</strong> Hier wird der Pfad
         zu dem auszuf&uuml;hrenden Programm festgelegt.<br>
-        <em>Beispiel:</em> RunProgramBeforeSavingProgramname=&quot;C:\Programme\Mein 
+        <em>Beispiel:</em> RunProgramBeforeSavingProgramname=&quot;C:\Programme\Mein
         Programm\Mein Programm.exe&quot;</p>
-      <p><strong>RunProgramBeforeSavingProgramParameters:</strong> Diese Einstellung 
-        wird in Verbindung mit RunProgramBeforeSaving benutzt. Sie gibt die Parameter 
+      <p><strong>RunProgramBeforeSavingProgramParameters:</strong> Diese Einstellung
+        wird in Verbindung mit RunProgramBeforeSaving benutzt. Sie gibt die Parameter
         an, mit denen das Programm aufgerufen wird.</p>
-      <p><strong>RunProgramBeforeSavingWindowstyle:</strong> Diese Einstellung legt 
-        die Erscheinung des Fensters des Programmes fest, das vor dem Speichern 
+      <p><strong>RunProgramBeforeSavingWindowstyle:</strong> Diese Einstellung legt
+        die Erscheinung des Fensters des Programmes fest, das vor dem Speichern
         ausgef&uuml;hrt wird.<br>
         <em>Eigenschaften:</em><br>
         0 - Das Programm wird versteckt ausgef&uuml;hrt.<br>
@@ -210,44 +224,44 @@
         <em>Eigenschaften:</em><br>
         0 - Zeigt keine Animation.<br>
         1 - Zeigt eine Animation. (Standard)</p>
-      <p><strong>StampFontColor:</strong> Legt die Farbe f&uuml;r den Stempeltext 
+      <p><strong>StampFontColor:</strong> Legt die Farbe f&uuml;r den Stempeltext
         fest. Verwenden Sie daf&uuml;r HTML-Farben.<br>
-        <em>Beispiel f&uuml;r Rot:</em> StampFontColor=#FF0000 
+        <em>Beispiel f&uuml;r Rot:</em> StampFontColor=#FF0000
       </p>
-      <p><strong>StampFontname:</strong> Legt die Schriftart f&uuml;r den Stempeltext 
+      <p><strong>StampFontname:</strong> Legt die Schriftart f&uuml;r den Stempeltext
         fest. </p>
-      <p><strong>StampFontsize:</strong> Legt die Schriftgr&ouml;&szlig;e f&uuml;r 
+      <p><strong>StampFontsize:</strong> Legt die Schriftgr&ouml;&szlig;e f&uuml;r
         den Stempeltext fest. </p>
-      <p><strong>StampOutlineFontthickness:</strong> Legt die Breite der Umrandung 
+      <p><strong>StampOutlineFontthickness:</strong> Legt die Breite der Umrandung
         f&uuml;r den Stempeltext fest. </p>
-      <p><strong>StampString:</strong> Wenn diese Einstellung gesetzt ist, legt 
-        PDFCreator einen Stempel &uuml;ber das Dokument. Sie k&ouml;nnen die Schriftart, 
-        Farbe, Gr&ouml;&szlig;e und Umrandung des Stempels mit den folgenden Einstellungen 
+      <p><strong>StampString:</strong> Wenn diese Einstellung gesetzt ist, legt
+        PDFCreator einen Stempel &uuml;ber das Dokument. Sie k&ouml;nnen die Schriftart,
+        Farbe, Gr&ouml;&szlig;e und Umrandung des Stempels mit den folgenden Einstellungen
         festlegen. Diese Einstellung ist noch sehr experimentell. Bitte kontrollieren Sie
         die erstellten Dokumente.</p>
-      <p><strong>StampUseOutlineFont:</strong> Diese Einstellung legt fest, ob 
+      <p><strong>StampUseOutlineFont:</strong> Diese Einstellung legt fest, ob
         eine Umrandung f&uuml;r den Stempeltext benutzt wird.<br>
         <em>Eigenschaften:</em><br>
         0 - Aus (Standard)<br>
         1 - Ein</p>
-      <p><strong>StandardCreationdate:</strong> Diese Einstellung erlaubt dem 
+      <p><strong>StandardCreationdate:</strong> Diese Einstellung erlaubt dem
         Benutzer, ein Standarderstellungsdatum f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StandardDateformat:</strong> Diese Einstellung erlaubt dem Benutzer, 
+      <p><strong>StandardDateformat:</strong> Diese Einstellung erlaubt dem Benutzer,
         das Format f&uuml;r das Erstellungs- und &Auml;nderungsdatum festzulegen.</p>
-      <p><strong>StandardKeywords:</strong> Diese Einstellung erlaubt dem Benutzer, 
+      <p><strong>StandardKeywords:</strong> Diese Einstellung erlaubt dem Benutzer,
         Schl&uuml;sselw&ouml;rter f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StandardModifydate:</strong> Diese Einstellung erlaubt dem Benutzer, 
+      <p><strong>StandardModifydate:</strong> Diese Einstellung erlaubt dem Benutzer,
         ein Standarddatum der letzten &Auml;nderung f&uuml;r alle Dokumente anzugeben.</p>
       <p><strong>StandardSaveformat:</strong> Diese Einstellung erlaubt das Standardformat im
        <em>Speichern unter</em> Dialog festzulegen. Das Standardformat ist pdf. Die folgenden
         Formate sind erlaubt: pdf, png, jpg, bmp, pcx, tif, ps, eps.<br>
         <em>Beispiel</em>:<br>
         StandardSaveformat=tif</p>
-      <p><strong>StandardSubject:</strong> Diese Einstellung erlaubt dem Benutzer, 
+      <p><strong>StandardSubject:</strong> Diese Einstellung erlaubt dem Benutzer,
         einen Standardbetreff f&uuml;r alle Dokumente anzugeben.</p>
-      <p><strong>StandardTitle:</strong> Diese Einstellung erlaubt dem Benutzer, 
+      <p><strong>StandardTitle:</strong> Diese Einstellung erlaubt dem Benutzer,
         ein Standardtitel f&uuml;r alle Dokumente anzugeben.</p>
-      <p> <strong>ToolBars:</strong> Mit diese Einstellung k&ouml;nnen die Werkzeugleisten in 
+      <p> <strong>ToolBars:</strong> Mit diese Einstellung k&ouml;nnen die Werkzeugleisten in
         PDFCreator aktiviert bzw. deaktiviert werden.<br>
         <em>Eigenschaften:</em><br>
         1 - Zeigt die Standardwerkzeugleiste (Standard).<br>

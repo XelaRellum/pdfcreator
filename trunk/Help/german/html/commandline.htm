@@ -50,12 +50,29 @@
         konvertieren.
         Dies kann zu unerw&uuml;nschten Nebeneffekten f&uuml;hren.<br>
         <em>Beispiel:</em> pdfcreator.exe /NoAbortIfRunning</p>
+      <p><strong>/NoPSCheck</strong><br>
+        Wird PDFCreator mit diesem Parameter gestartet, erfogt keine Pr&uuml;fung ob hinzugef&uuml;gte Dateien
+        (Dokument\Hinzuf&uuml;gen oder durch Drag'n Drop im Programm) wirklich Postscriptdateien sind.
+        Jedoch m&uuml;ssen diese Dateien die Erweiterung .ps oder .eps besitzen. Die Pr&uuml;fung ob diese Dateien die
+        Erweiterung .ps oder .eps haben, entf&auml;llt bei der Verwendung des Kommandozeilenparameters /IF, um
+        gr&ouml;&szlig;tm&ouml;glichste Kompatibilit&auml;t zu anderen Anwendungen zu bieten, die PDFCreator steuern.<br>
+        <em>Beispiel:</em> pdfcreator.exe /NoPSCheck</p>
       <p><strong>/NoProcessing</strong><br>
         Wenn PDFCreator mit diesem Parameter gestartet wird, werden 
         die Dokumente nicht automatisch verarbeitet, sondern in die Warteschlange 
         eingereiht. Die Dokumente werden erst verarbeitet, wenn PDFcreator ohne 
         den Parameter aufgerufen wird.<br>
         <em>Beispiel:</em> pdfcreator.exe /NoProcessing</p>
+      <p><strong>/NoProcessingAtStartup:</strong> Wird dieser Parameter verwendet, beginnt PDFCreator nach
+        dem Start nicht mit der Verarbeitung. Die Verarbeitung kann manuell gestartet werden, wenn &uuml;ber
+        das Men&uuml; <em><strong>Dokument</em></strong> der Men&uuml;punkt <em><strong>Drucken</em></strong>
+        gew&auml;hlt wird oder durch die Deaktivierung des Men&uuml;punktes <em><strong>Drucker anhalten</em></strong>
+        im Men&uuml; <em><strong>Drucker</em></strong>. Diese Einstellung ist sinnvoll, wenn zun&auml;chst Dokumente
+        im Druckmonitor gesammelt und diese dann sp&auml;ter verbunden bzw. einzeln verarbeitet
+        werden sollen.<br>
+        <em>Eigenschaften:</em><br>
+        0 - Aus (Standard)<br>
+        1 - Ein</p>
       <p><strong>/NoStart</strong><br>
         Wenn der Parameter /PF benutzt wird, bleibt PDFCreator ge&ouml;ffnet nachdem 
         die Aufgabe erledigt wurde. Der /NOSTART Parameter l&auml;sst PDFCreator 

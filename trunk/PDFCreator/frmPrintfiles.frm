@@ -191,7 +191,7 @@ Private Sub Timer1_Timer()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Timer1.Enabled = False
-50020  PrintFile Me, PrintFilename, xpPgb, lbl(0), lbl(1), lbl(2)
+50020  PrintFile PrintFilename, Me, xpPgb, lbl(0), lbl(1), lbl(2)
 50030  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

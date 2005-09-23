@@ -361,6 +361,15 @@ Public Sub ClearCache()
     End If
    End If
   Next i
+  Call FindFiles(tStr, cFiles, "~P*.inf", , True)
+  For i = 1 To cFiles.Count
+   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
+    tStrf = Split(cFiles(i), "|")
+    If UBound(tStrf) >= 1 Then
+     Kill tStrf(1)
+    End If
+   End If
+  Next i
  End If
 End Sub
 

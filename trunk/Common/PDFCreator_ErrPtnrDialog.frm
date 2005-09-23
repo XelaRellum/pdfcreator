@@ -495,7 +495,7 @@ Private Sub BuildProtocol(a$)
 '.  Function :  concatenate and append the error protocol
 '.------------------------------------------------------------------------------
 
-Dim t$, R$, f%, e&, b$
+Dim t$, R$, f%, e&, B$
 Dim v As OSVERSIONINFO
 
 t$ = String$(70, "-") + vbCrLf

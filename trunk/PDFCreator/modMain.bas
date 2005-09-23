@@ -4,96 +4,17 @@ Option Explicit
 Public InputFilename As String, ShowAnimationWindow As Boolean, ComputerScreenResolution As Long
 
 Private UnLoadFile As Boolean, ClearCacheDir As Boolean, _
- OutputFilename As String, InitSettings As Boolean
+ OutputFilename As String, InitSettings As Boolean, frmMainSUP As Long
 
 Public Sub Main()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Files As Collection, Filename As String
-50020
-50030  ' Reduce the working size of used memory
-50040  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
-50050
-50060  AnalyzeCommandlineParameters
-50070
-50080  If CheckInstance Then
-50090   CheckProgramInstances
-50100  End If
-50110
-50120  InitProgram
-50130
-50140  IfLoggingWriteLogfile "PDFCreator Program Start"
-50150  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
-50160  IfLoggingWriteLogfile "PDFCreatorINIFile: " & PDFCreatorINIFile
-50170
-50180  If UnLoadFile Then
-50190   CreateUnloadFile
-50200   Exit Sub
-50210  End If
-50220
-50230  If ClearCacheDir Then
-50240   ClearCache
-50250  End If
-50260
-50270  If LenB(PrintFilename) > 0 Then
-50280   Set Files = GetFiles(PrintFilename, "", SortedByName)
-50290   If Files.Count > 0 Then
-50300     Load frmPrintfiles
-50310    Else
-50320     MsgBox LanguageStrings.MessagesMsg14
-50330   End If
-50340  End If
-50350
-50360  If InitSettings Then
-50370   SaveOptions Options
-50380  End If
-50390
-50400  If NoStart Then
-50410   Exit Sub
-50420  End If
-50430
-50440  If ShowOnlyOptions Then
-50450   frmOptions.Show vbModal
-50460   Exit Sub
-50470  End If
-50480
-50490  If ShowOnlyLogfile Then
-50500   frmLog.Show vbModal
-50510   Exit Sub
-50520  End If
-50530
-50540  LoadGhostscriptDLL
-50550
-50560  If PDFCreatorPrinter = False And FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
-50570    Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-50580    KillFile Filename
-50590    FileCopy InputFilename, Filename
-50600   Else
-50610    ConvertPostscriptFile InputFilename, OutputFilename
-50620  End If
-50630
-50640  If ProgramIsRunning(PDFCreator_GUID) Then
-50650    ' There is a local running instance
-50660    If Not NoAbortIfRunning Then
-50670     Exit Sub
-50680    End If
-50690   Else
-50700  ' Create a mutex
-50710    Set mutexLocal = New clsMutex
-50720    mutexLocal.CreateMutex PDFCreator_GUID
-50730    Set mutexGlobal = New clsMutex
-50740    ' Check for a global running instance
-50750    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-50760     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-50770    End If
-50780  End If
-50790
-50800  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-50810   InitCommonControls
-50820  End If
-50830
-50840  Load frmMain
+50010  If App.StartMode = vbSModeStandalone Or IsInIDE Then
+50020   InstanceCounter = InstanceCounter + 1
+50030   ProgramIsVisible = True
+50040   StartProgram
+50050  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -106,89 +27,205 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub AnalyzeCommandlineParameters()
+Public Sub StartProgram(Optional Params As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Filename As String
+50020
+50030  ' Reduce the working size of used memory
+50040  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
+50050
+50060  AnalyzeCommandlineParameters Params
+50070
+50080  If CheckInstance Then
+50090   CheckProgramInstances
+50100  End If
+50110
+50120
+50130  InitProgram
+50140
+50150  IfLoggingWriteLogfile "PDFCreator Program Start"
+50160  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
+50170  IfLoggingWriteLogfile "PDFCreatorINIFile: " & PDFCreatorINIFile
+50180
+50190  If UnLoadFile Then
+50200   CreateUnloadFile
+50210   InstanceCounter = InstanceCounter - 1
+50220   Exit Sub
+50230  End If
+50240
+50250  If ClearCacheDir Then
+50260   ClearCache
+50270  End If
+50280
+50290  PrintFiles
+50300
+50310  If InitSettings Then
+50320   SaveOptions Options
+50330  End If
+50340
+50350  If NoStart Then
+50360   InstanceCounter = InstanceCounter - 1
+50370   Exit Sub
+50380  End If
+50390
+50400  If ShowOnlyOptions Then
+50410   frmOptions.Show vbModal
+50420   InstanceCounter = InstanceCounter - 1
+50430   Exit Sub
+50440  End If
+50450
+50460  If ShowOnlyLogfile Then
+50470   frmLog.Show vbModal
+50480   InstanceCounter = InstanceCounter - 1
+50490   Exit Sub
+50500  End If
+50510
+50520  LoadGhostscriptDLL
+50530
+50540  If PDFCreatorPrinter = False Then
+50550   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
+50560     Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+50570     KillFile Filename
+50580     FileCopy InputFilename, Filename
+50590    Else
+50600     ConvertPostscriptFile InputFilename, OutputFilename
+50610   End If
+50620  End If
+50630
+50640  If ProgramIsRunning(PDFCreator_GUID) Then
+50650    ' There is a local running instance
+50660    If Not NoAbortIfRunning Then
+50670     InstanceCounter = InstanceCounter - 1
+50680     Exit Sub
+50690    End If
+50700   Else
+50710  ' Create a mutex
+50720    Set mutexLocal = New clsMutex
+50730    mutexLocal.CreateMutex PDFCreator_GUID
+50740    Set mutexGlobal = New clsMutex
+50750    ' Check for a global running instance
+50760    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+50770     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50780    End If
+50790  End If
+50800
+50810  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+50820   InitCommonControls
+50830  End If
+50840
+50850  Load frmMain
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "StartProgram")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub AnalyzeCommandlineParameters(Optional Params As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim cSwitch As String
-50020  If Len(VBA.Command$) > 0 Then
-50030   If UCase$(CommandSwitch("NO", False)) = "ABORTIFRUNNING" Then
-50040     NoAbortIfRunning = True
-50050    Else
-50060     NoAbortIfRunning = False
-50070   End If
-50080   If UCase$(CommandSwitch("NO", False)) = "PROCESSING" Then
-50090     NoProcessing = True
+50020  If IsMissing(Params) = False Then
+50030    CommandLine = Params & " " & VBA.Command$
+50040   Else
+50050    CommandLine = VBA.Command$
+50060  End If
+50070  If Len(CommandLine) > 0 Then
+50080   If UCase$(CommandSwitch("NO", False)) = "ABORTIFRUNNING" Then
+50090     NoAbortIfRunning = True
 50100    Else
-50110     NoProcessing = False
+50110     NoAbortIfRunning = False
 50120   End If
-50130   If UCase$(CommandSwitch("L", False)) = "OG" Then
-50140     enableSpecialLogging = True
+50130   If UCase$(CommandSwitch("NO", False)) = "PROCESSING" Then
+50140     NoProcessing = True
 50150    Else
-50160     enableSpecialLogging = False
+50160     NoProcessing = False
 50170   End If
-50180   If UCase$(CommandSwitch("SHOW", False)) = "ONLYOPTIONS" Then
-50190     ShowOnlyOptions = True
-50200     NoAbortIfRunning = True
-50210     NoProcessing = True
-50220    Else
-50230     ShowOnlyOptions = False
-50240   End If
-50250   If UCase$(CommandSwitch("SHOW", False)) = "ONLYLOGFILE" Then
-50260     ShowOnlyLogfile = True
-50270     NoAbortIfRunning = True
-50280     NoProcessing = True
-50290    Else
-50300     ShowOnlyLogfile = False
-50310   End If
-50320   If UCase$(CommandSwitch("P", False)) = "PDFCREATORPRINTER" Then
-50330     PDFCreatorPrinter = True
-50340    Else
-50350     PDFCreatorPrinter = False
-50360   End If
-50370   ' Initialize unload running program
-50380   If UCase$(CommandSwitch("UL", False)) = "TRUE" Then
-50390     UnLoadFile = True
-50400    Else
-50410     UnLoadFile = False
-50420   End If
-50430
-50440   ' Clear the cache
-50450   If UCase$(CommandSwitch("CLEAR", False)) = "CACHE" Then
-50460     ClearCacheDir = True
-50470    Else
-50480     ClearCacheDir = False
-50490   End If
-50500
-50510   ' Init settings
-50520   If UCase$(CommandSwitch("IN", False)) = "IT" Then
-50530     InitSettings = True
-50540    Else
-50550     InitSettings = False
-50560   End If
-50570
-50580   ' Check running instance
-50590   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
-50600     CheckInstance = True
-50610    Else
-50620     CheckInstance = False
-50630   End If
-50640
-50650   PrintFilename = CommandSwitch("PF", True)
-50660   InputFilename = CommandSwitch("IF", True)
-50670   OutputFilename = CommandSwitch("OF", True)
-50680   cSwitch = CommandSwitch("OPTIONSFILE", True)
-50690   If LenB(cSwitch) > 0 Then
-50700    If FileExists(cSwitch) = True Then
-50710     Optionsfile = cSwitch
-50720    End If
+50180   If UCase$(CommandSwitch("NO", False)) = "PROCESSINGATSTARTUP" Then
+50190     NoProcessingAtStartup = True
+50200    Else
+50210     NoProcessingAtStartup = False
+50220   End If
+50230   If UCase$(CommandSwitch("L", False)) = "OG" Then
+50240     enableSpecialLogging = True
+50250    Else
+50260     enableSpecialLogging = False
+50270   End If
+50280   If UCase$(CommandSwitch("SHOW", False)) = "ONLYOPTIONS" Then
+50290     ShowOnlyOptions = True
+50300     NoAbortIfRunning = True
+50310     NoProcessing = True
+50320    Else
+50330     ShowOnlyOptions = False
+50340   End If
+50350   If UCase$(CommandSwitch("SHOW", False)) = "ONLYLOGFILE" Then
+50360     ShowOnlyLogfile = True
+50370     NoAbortIfRunning = True
+50380     NoProcessing = True
+50390    Else
+50400     ShowOnlyLogfile = False
+50410   End If
+50420   If UCase$(CommandSwitch("P", False)) = "PDFCREATORPRINTER" Then
+50430     PDFCreatorPrinter = True
+50440    Else
+50450     PDFCreatorPrinter = False
+50460   End If
+50470   ' Initialize unload running program
+50480   If UCase$(CommandSwitch("UL", False)) = "TRUE" Then
+50490     UnLoadFile = True
+50500    Else
+50510     UnLoadFile = False
+50520   End If
+50530
+50540   ' Clear the cache
+50550   If UCase$(CommandSwitch("CLEAR", False)) = "CACHE" Then
+50560     ClearCacheDir = True
+50570    Else
+50580     ClearCacheDir = False
+50590   End If
+50600
+50610   ' Init settings
+50620   If UCase$(CommandSwitch("IN", False)) = "IT" Then
+50630     InitSettings = True
+50640    Else
+50650     InitSettings = False
+50660   End If
+50670
+50680   ' Check running instance
+50690   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
+50700     CheckInstance = True
+50710    Else
+50720     CheckInstance = False
 50730   End If
-50740   If UCase$(CommandSwitch("NO", False)) = "START" Then
-50750     NoStart = True
-50760    Else
-50770     NoStart = False
-50780   End If
-50790  End If
+50740
+50750   PrintFilename = CommandSwitch("PF", True)
+50760   InputFilename = CommandSwitch("IF", True)
+50770   OutputFilename = CommandSwitch("OF", True)
+50780   cSwitch = CommandSwitch("OPTIONSFILE", True)
+50790   If LenB(cSwitch) > 0 Then
+50800    If FileExists(cSwitch) = True Then
+50810     Optionsfile = cSwitch
+50820    End If
+50830   End If
+50840   If UCase$(CommandSwitch("NO", False)) = "START" Then
+50850     NoStart = True
+50860    Else
+50870     NoStart = False
+50880   End If
+50890   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
+50900     NoPSCheck = True
+50910    Else
+50920     NoPSCheck = False
+50930   End If
+50940  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -206,68 +243,71 @@ Private Sub InitProgram()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim INIFilename As String, tStr As String
-50020  ShellAndWaitingIsRunning = False
-50030  ChangeDefaultprinter = False
-50040  PrintSelectedJobs = False
-50050  Restart = False
-50060  SavePasswordsForThisSession = False
-50070  ShowAnimationWindow = False
-50080  PDFCreatorLogfilePath = CompletePath(GetTempPath) & "PDFCreator\"
-50090  ErrPtnr.SetProgInfo App.EXEName & " " & GetProgramReleaseStr
+50020
+50030  ShellAndWaitingIsRunning = False
+50040  ChangeDefaultprinter = False
+50050  PrintSelectedJobs = False
+50060  Restart = False
+50070  SavePasswordsForThisSession = False
+50080  ShowAnimationWindow = False
+50090
 50100
-50110  If UseINI Then
-50120   INIFilename = App.EXEName & ".ini"
-50130   If InstalledAsServer = True Then
-50140     PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
-50150    Else
-50160     If DirExists(GetMyAppData) = True Then
-50170       tStr = CompletePath(GetMyAppData) & "PDFCreator"
-50180       If DirExists(tStr) = False Then
-50190        MakePath tStr
-50200       End If
-50210       PDFCreatorINIFile = CompletePath(tStr) & INIFilename
-50220      Else
-50230       PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
-50240     End If
-50250   End If
-50260   If LenB(Optionsfile) > 0 Then
-50270    PDFCreatorINIFile = Optionsfile
+50110  PDFCreatorLogfilePath = CompletePath(GetTempPath) & "PDFCreator\"
+50120  ErrPtnr.SetProgInfo App.EXEName & " " & GetProgramReleaseStr
+50130
+50140  If UseINI Then
+50150   INIFilename = App.EXEName & ".ini"
+50160   If InstalledAsServer = True Then
+50170     PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
+50180    Else
+50190     If DirExists(GetMyAppData) = True Then
+50200       tStr = CompletePath(GetMyAppData) & "PDFCreator"
+50210       If DirExists(tStr) = False Then
+50220        MakePath tStr
+50230       End If
+50240       PDFCreatorINIFile = CompletePath(tStr) & INIFilename
+50250      Else
+50260       PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & INIFilename
+50270     End If
 50280   End If
-50290  End If
-50300
-50310  InitLanguagesStrings
-50320  ReadLanguageFromOptions
-50330  LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
-50340  Languagefile = LanguagePath & Options.Language & ".ini"
-50350  If UCase$(Options.Language) = "ESPANOL" And FileExists(Languagefile) = False And _
+50290   If LenB(Optionsfile) > 0 Then
+50300    PDFCreatorINIFile = Optionsfile
+50310   End If
+50320  End If
+50330
+50340  InitLanguagesStrings
+50350  ReadLanguageFromOptions
+50360  LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
+50370  Languagefile = LanguagePath & Options.Language & ".ini"
+50380  If UCase$(Options.Language) = "ESPANOL" And FileExists(Languagefile) = False And _
    FileExists(LanguagePath & "spanish.ini") = True Then
-50370   Languagefile = LanguagePath & "spanish.ini"
-50380   Options.Language = "spanish"
-50390  End If
-50400  If FileExists(Languagefile) = True Then
-50410    LoadLanguage Languagefile
-50420   Else
-50430    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
-50440 '   Options.Language = "english"
-50450  End If
-50460
-50470  Options = ReadOptions
-50480
-50490  If IsWin9xMe = False Then
-50501   Select Case Options.ProcessPriority
+50400   Languagefile = LanguagePath & "spanish.ini"
+50410   Options.Language = "spanish"
+50420  End If
+50430  If FileExists(Languagefile) = True Then
+50440    LoadLanguage Languagefile
+50450   Else
+50460    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
+50470 '   Options.Language = "english"
+50480  End If
+50490
+50500  Options = ReadOptions
+50510
+50520  If IsWin9xMe = False Then
+50531   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50520     SetProcessPriority Idle
-50530    Case 1: 'Normal
-50540     SetProcessPriority Normal
-50550    Case 2: 'High
-50560     SetProcessPriority High
-50570    Case 3: 'Realtime
-50580     SetProcessPriority RealTime
-50590   End Select
-50600  End If
-50610
-50620  CreatePDFCreatorTempfolder
-50630  ComputerScreenResolution = ScreenResolution
+50550     SetProcessPriority Idle
+50560    Case 1: 'Normal
+50570     SetProcessPriority Normal
+50580    Case 2: 'High
+50590     SetProcessPriority High
+50600    Case 3: 'Realtime
+50610     SetProcessPriority RealTime
+50620   End Select
+50630  End If
+50640
+50650  CreatePDFCreatorTempfolder
+50660  ComputerScreenResolution = ScreenResolution
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -303,7 +343,8 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub PrintFile(Frm As Form, Filename As String, xpPgb As XP_ProgressBar, lblFilename As Label, lblSize As Label, lblCount As Label)
+Public Sub PrintFile(Filename As String, Optional Frm As Form, Optional xpPgb As XP_ProgressBar, _
+ Optional lblFilename As Label, Optional lblSize As Label, Optional lblCount As Label)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -332,42 +373,52 @@ On Error GoTo ErrPtnr_OnError
 50230    Set Files = GetFiles(Filename, "", SortedByName)
 50240    If Files.Count > 0 Then
 50250      DoEvents
-50260      SetTopMost Frm, True, True
-50270      For i = 1 To Files.Count
-50280       tStrf = Split(Files(i), "|")
-50290       SplitPath tStrf(1), , , tFilename
-50300       lblFilename.Caption = LanguageStrings.ListFilename & ": " & tFilename
-50310       If CLng(tStrf(2)) > GB Then
-50320         tStr = Format$(CDbl(tStrf(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
-50330        Else
-50340         If CLng(tStrf(2)) > MB Then
-50350           tStr = Format$(CDbl(tStrf(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
-50360          Else
-50370           If CLng(tStrf(2)) > kB Then
-50380             tStr = Format$(CDbl(tStrf(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
-50390            Else
-50400             tStr = Format$(tStrf(2), "0 " & LanguageStrings.ListBytes)
-50410         End If
-50420        End If
-50430       End If
-50440       lblSize.Caption = LanguageStrings.ListSize & ": " & tStr
-50450       xpPgb.Value = i
-50460       lblCount.Caption = CStr(i) & " (" & CStr(Files.Count) & ")"
-50470       lblCount.Left = (Frm.Width - lblCount.Width) / 2
-50480       If CancelPrintfiles = True Then
-50490        Exit For
+50260      If Not Frm Is Nothing Then
+50270       SetTopMost Frm, True, True
+50280      End If
+50290      For i = 1 To Files.Count
+50300       tStrf = Split(Files(i), "|")
+50310       SplitPath tStrf(1), , , tFilename
+50320       If Not lblFilename Is Nothing Then
+50330        lblFilename.Caption = LanguageStrings.ListFilename & ": " & tFilename
+50340       End If
+50350       If Not lblSize Is Nothing Then
+50360        If CLng(tStrf(2)) > GB Then
+50370          tStr = Format$(CDbl(tStrf(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
+50380         Else
+50390          If CLng(tStrf(2)) > MB Then
+50400            tStr = Format$(CDbl(tStrf(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
+50410           Else
+50420            If CLng(tStrf(2)) > kB Then
+50430              tStr = Format$(CDbl(tStrf(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
+50440             Else
+50450              tStr = Format$(tStrf(2), "0 " & LanguageStrings.ListBytes)
+50460          End If
+50470         End If
+50480        End If
+50490        lblSize.Caption = LanguageStrings.ListSize & ": " & tStr
 50500       End If
-50510       DoEvents
-50520       ShellAndWait 0, "print", tStrf(1), "", tStrf(0), wHidden, WCTermination, 0, True
-50530       DoEvents
-50540      Next i
-50550     Else
-50560      MsgBox LanguageStrings.MessagesMsg14
-50570    End If
-50580    If DefaultPrintername <> vbNullString Then
-50590     SetDefaultprinterInProg DefaultPrintername
-50600    End If
-50610   End If
+50510       If Not xpPgb Is Nothing Then
+50520        xpPgb.Value = i
+50530       End If
+50540       If Not lblCount Is Nothing Then
+50550        lblCount.Caption = CStr(i) & " (" & CStr(Files.Count) & ")"
+50560        lblCount.Left = (Frm.Width - lblCount.Width) / 2
+50570       End If
+50580       If CancelPrintfiles = True Then
+50590        Exit For
+50600       End If
+50610       DoEvents
+50620       ShellAndWait 0, "print", tStrf(1), "", tStrf(0), wHidden, WCTermination, 0, True
+50630       DoEvents
+50640      Next i
+50650     Else
+50660      MsgBox LanguageStrings.MessagesMsg14
+50670    End If
+50680    If DefaultPrintername <> vbNullString Then
+50690     SetDefaultprinterInProg DefaultPrintername
+50700    End If
+50710   End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -488,8 +539,12 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ctl As Control, eB As isExplorerBar
 50020
-50030  For Each ctl In Frm.Controls
-50040   If TypeOf ctl Is Label Or _
+50030  If LenB(Trim$(Fontname)) = 0 Then
+50040   Exit Sub
+50050  End If
+50060
+50070  For Each ctl In Frm.Controls
+50080   If TypeOf ctl Is Label Or _
      TypeOf ctl Is Form Or _
      TypeOf ctl Is ComboBox Or _
      TypeOf ctl Is CheckBox Or _
@@ -498,21 +553,21 @@ On Error GoTo ErrPtnr_OnError
      TypeOf ctl Is StatusBar Or _
      TypeOf ctl Is TextBox Or _
      TypeOf ctl Is Frame Then
-50130    With ctl
-50140     .Font = Fontname
-50150     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
-50160      .Fontsize = Fontsize
-50170     End If
-50180     .Font.Charset = Charset
-50190    End With
-50200   End If
-50210   If TypeOf ctl Is isExplorerBar Then
-50220    Set eB = ctl
-50230    eB.Font.Name = Fontname
-50240    eB.Font.Size = Fontsize
-50250    eB.Font.Charset = Charset
-50260   End If
-50270  Next ctl
+50170    With ctl
+50180     .Font = Fontname
+50190     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
+50200      .Fontsize = Fontsize
+50210     End If
+50220     .Font.Charset = Charset
+50230    End With
+50240   End If
+50250   If TypeOf ctl Is isExplorerBar Then
+50260    Set eB = ctl
+50270    eB.Font.Name = Fontname
+50280    eB.Font.Size = Fontsize
+50290    eB.Font.Charset = Charset
+50300   End If
+50310  Next ctl
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -524,3 +579,56 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Sub PrintFiles()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Files As Collection
+50020  If LenB(PrintFilename) > 0 Then
+50030   Set Files = GetFiles(PrintFilename, "", SortedByName)
+50040   If Files.Count > 0 Then
+50050     Load frmPrintfiles
+50060    Else
+50070     MsgBox LanguageStrings.MessagesMsg14
+50080   End If
+50090   Set Files = Nothing
+50100  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "PrintFiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub PrintFile2(PrintFilename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Files As Collection
+50020  If LenB(PrintFilename) > 0 Then
+50030   Set Files = GetFiles(PrintFilename, "", SortedByName)
+50040   If Files.Count > 0 Then
+50050     Load frmPrintfiles
+50060    Else
+50070     MsgBox LanguageStrings.MessagesMsg14
+50080   End If
+50090   Set Files = Nothing
+50100  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "PrintFile2")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+

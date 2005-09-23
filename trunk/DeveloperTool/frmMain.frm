@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -659,7 +659,7 @@ ErrorHandler:
 End Sub
 
 Private Sub cmdLanguages_Click(Index As Integer)
- Dim aw As Long, tstr As String, i As Long
+ Dim aw As Long, tStr As String, i As Long
  Select Case Index
   Case 0: 'Add
    EditItem = False
@@ -670,11 +670,11 @@ Private Sub cmdLanguages_Click(Index As Integer)
       .cmbSection.Text = lsvLanguages.SelectedItem.Text
     End If
     If lsvLanguages.ListItems.Count > 0 Then
-     tstr = UCase$(lsvLanguages.ListItems(1).Text)
+     tStr = UCase$(lsvLanguages.ListItems(1).Text)
      .cmbSection.AddItem lsvLanguages.ListItems(1).Text
      For i = 2 To lsvLanguages.ListItems.Count
-      If UCase$(lsvLanguages.ListItems(i).Text) <> tstr Then
-       tstr = UCase$(lsvLanguages.ListItems(i).Text)
+      If UCase$(lsvLanguages.ListItems(i).Text) <> tStr Then
+       tStr = UCase$(lsvLanguages.ListItems(i).Text)
        .cmbSection.AddItem lsvLanguages.ListItems(i).Text
       End If
      Next i
@@ -732,7 +732,7 @@ Private Sub cmdLanguages_Click(Index As Integer)
 End Sub
 
 Private Sub cmdOptions_Click(Index As Integer)
- Dim aw As Long, tstr As String, i As Long
+ Dim aw As Long, tStr As String, i As Long
  
  On Error GoTo ErrorHandler
  
@@ -746,11 +746,11 @@ Private Sub cmdOptions_Click(Index As Integer)
       .cmbComment.Text = lsvOptions.SelectedItem.Text
     End If
     If lsvOptions.ListItems.Count > 0 Then
-     tstr = UCase$(lsvOptions.ListItems(1).Text)
+     tStr = UCase$(lsvOptions.ListItems(1).Text)
      .cmbComment.AddItem lsvOptions.ListItems(1).Text
      For i = 2 To lsvOptions.ListItems.Count
-      If UCase$(lsvOptions.ListItems(i).Text) <> tstr Then
-       tstr = UCase$(lsvOptions.ListItems(i).Text)
+      If UCase$(lsvOptions.ListItems(i).Text) <> tStr Then
+       tStr = UCase$(lsvOptions.ListItems(i).Text)
        .cmbComment.AddItem lsvOptions.ListItems(i).Text
       End If
      Next i
@@ -992,7 +992,7 @@ End Function
 
 Private Sub CreateModLanguages()
  Dim fn As Long, ini As New clsINI, Secs As Collection, keys As Collection, _
-  i As Long, j As Long, tstr As String, Filename As String
+  i As Long, j As Long, tStr As String, Filename As String
 
  fn = FreeFile
 
@@ -1083,7 +1083,7 @@ Private Sub CreateModLanguages()
 End Sub
 
 Private Sub CreateModOptions()
- Dim fn As Long, Filename As String, i As Long, ma As Boolean
+ Dim fn As Long, Filename As String, i As Long, ma As Boolean, Filename2 As String
 
  With lsvOptions
   .SortOrder = lvwAscending
@@ -1119,8 +1119,6 @@ Private Sub CreateModOptions()
  Print #fn, " With myOptions"
  For i = 1 To lsvOptions.ListItems.Count
   Select Case UCase$(lsvOptions.ListItems(i).SubItems(1))
-   Case UCase$("LastSaveDirectory")
-    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = GetMyFiles"
    Case UCase$("DirectoryGhostscriptBinaries")
     Print #fn, "  Set reg = New clsRegistry"
     Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
@@ -1148,16 +1146,39 @@ Private Sub CreateModOptions()
    Case UCase$("DirectoryJava")
     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(GetSpecialFolder(ssfSYSTEM))"
    Case UCase$("Printertemppath")
-    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = GetTempPath "
+    Print #fn, "  If InstalledAsServer Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = completepath(GetPDFCreatorApplicationPath) & ""Temp\"""
+    Print #fn, "   Else"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<Temp>PDFCreator\"""
+    Print #fn, "  End If"
+   Case UCase$("AutoSaveDirectory"), UCase$("LastSaveDirectory")
+    Print #fn, "  If InstalledAsServer Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"""
+    Print #fn, "   Else"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<MyFiles>"""
+    Print #fn, "  End If"
    Case Else
     If Len(lsvOptions.ListItems(i).SubItems(4)) = 0 Then
       Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = vbNullString"
      Else
-      Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & lsvOptions.ListItems(i).SubItems(4) & """"
+      If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Then
+        Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
+       Else
+        Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & Replace$(lsvOptions.ListItems(i).SubItems(4), """", """""") & """"
+      End If
     End If
   End Select
  Next i
  Print #fn, " End With"
+ Print #fn, " If UseINI Then"
+ Print #fn, "   If Not IsWin9xMe Then"
+ Print #fn, "    myOptions = ReadOptionsINI(myOptions, CompletePath(GetDefaultAppData) & ""PDFCreator.ini"", False, False)"
+ Print #fn, "   End If"
+ Print #fn, "  Else"
+ Print #fn, "   If Not IsWin9xMe Then"
+ Print #fn, "    myOptions = ReadOptionsReg(myOptions, "".DEFAULT\Software\PDFCreator"", HKEY_USERS, False, False)"
+ Print #fn, "   End If"
+ Print #fn, " End If"
  Print #fn, " StandardOptions = myOptions"
  Print #fn, "End Function"
  Print #fn, ""
@@ -1195,11 +1216,14 @@ Private Sub CreateModOptions()
 
  Print #fn, "Public Function ReadOptionsINI(myOptions As tOptions, PDFCreatorINIFile As String, Optional NoMsg as Boolean = False, Optional UseStandard as Boolean = True) As tOptions"
  Print #fn, " Dim ini As clsINI, tStr as String, hOpt As New clsHash"
+ Print #fn, " ReadOptionsINI = myOptions"
  Print #fn, " Set ini = New clsINI"
  Print #fn, " ini.Filename = PDFCreatorINIFile"
  Print #fn, " ini.Section = ""Options"""
  Print #fn, " If ini.Checkinifile = False Then"
- Print #fn, "  ReadOptionsINI = StandardOptions"
+ Print #fn, "  If UseStandard Then"
+ Print #fn, "   ReadOptionsINI = StandardOptions"
+ Print #fn, "  End If"
  Print #fn, "  Exit Function"
  Print #fn, " End If"
  Print #fn, " ReadINISection PDFCreatorINIFile, ""Options"", hOpt"
@@ -1275,8 +1299,11 @@ Private Sub CreateModOptions()
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
      Print #fn, "   Else"
      Print #fn, "    If UseStandard Then"
-     Print #fn, "     tStr = GetMyFiles"
-     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "     If InstalledAsServer Then"
+     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"""
+     Print #fn, "      Else"
+     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<MyFiles>"""
+     Print #fn, "     End If"
      Print #fn, "    End If"
      Print #fn, "  End If"
     Case UCase$("DirectoryGhostscriptBinaries")
@@ -1328,10 +1355,8 @@ Private Sub CreateModOptions()
      Print #fn, "   End If"
      Print #fn, "  End If"
     Case Else
-     Print #fn, "  If LenB(tStr) = 0 And LenB(""" & Trim$(lsvOptions.ListItems(i).SubItems(4)) & """)>0 Then"
-     Print #fn, "    If UseStandard Then"
-     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & lsvOptions.ListItems(i).SubItems(4) & """"
-     Print #fn, "    End If"
+     Print #fn, "  If LenB(tStr) = 0 And LenB(""" & Trim$(Replace$(lsvOptions.ListItems(i).SubItems(4), """", """""")) & """) > 0 And UseStandard Then"
+     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & Replace$(lsvOptions.ListItems(i).SubItems(4), """", """""") & """"
      Print #fn, "   Else"
      Print #fn, "    If LenB(tStr) > 0 Then"
      Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
@@ -1343,42 +1368,42 @@ Private Sub CreateModOptions()
   If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Then
    Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
    If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
-    Print #fn, "  If IsNumeric(tStr) Then"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "  If IsNumeric(Replace$(tStr, ""."", GetDecimalChar)) Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(Replace$(tStr, ""."", GetDecimalChar))"
     Print #fn, "   Else"
     Print #fn, "    If UseStandard Then"
-    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "    End If"
     Print #fn, "  End If"
    End If
    If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
-    Print #fn, "  If IsNumeric(tStr) Then"
-    Print #fn, "    If CDbl(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
-    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "  If IsNumeric(Replace$(tStr, ""."", GetDecimalChar)) Then"
+    Print #fn, "    If CDbl(Replace$(tStr, ""."", GetDecimalChar)) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(Replace$(tStr, ""."", GetDecimalChar))"
     Print #fn, "     Else"
     Print #fn, "      If UseStandard Then"
-    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "      End If"
     Print #fn, "    End If"
     Print #fn, "   Else"
     Print #fn, "    If UseStandard Then"
-    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
    End If
    If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
-    Print #fn, "  If IsNumeric(tStr) Then"
-    Print #fn, "    If CDbl(tStr) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
-    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "  If IsNumeric(Replace$(tStr, ""."", GetDecimalChar)) Then"
+    Print #fn, "    If CDbl(Replace$(tStr, ""."", GetDecimalChar)) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(Replace$(tStr, ""."", GetDecimalChar))"
     Print #fn, "     Else"
     Print #fn, "      If UseStandard Then"
-    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "      End If"
     Print #fn, "    End If"
     Print #fn, "   Else"
     Print #fn, "    If UseStandard Then"
-    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
@@ -1410,6 +1435,44 @@ Private Sub CreateModOptions()
  Print #fn, " End If"
  Print #fn, "End Sub"
  Print #fn, ""
+ Print #fn, "Public Sub SaveOption(sOptions As tOptions, OptionName As String)"
+ Print #fn, " If InstalledAsServer Then"
+ Print #fn, "   If UseINI Then"
+ Print #fn, "     SaveOptionINI sOptions, OptionName, Completepath(GetCommonAppData) & ""PDFCreator.ini"""
+ Print #fn, "    Else"
+ Print #fn, "     SaveOptionReg sOptions, OptionName, HKEY_LOCAL_MACHINE"
+ Print #fn, "   End If"
+ Print #fn, "  Else"
+ Print #fn, "   If UseINI Then"
+ Print #fn, "     SaveOptionINI sOptions, OptionName, PDFCreatorINIFile"
+ Print #fn, "    Else"
+ Print #fn, "     SaveOptionReg sOptions, OptionName"
+ Print #fn, "   End If"
+ Print #fn, " End If"
+ Print #fn, "End Sub"
+ Print #fn, ""
+ Print #fn, "Public Sub SaveOptionINI(sOptions As tOptions, OptionName As String, PDFCreatorINIFile As String)"
+ Print #fn, " Dim ini As clsINI"
+ Print #fn, " Set ini = New clsINI"
+ Print #fn, " ini.Filename = PDFCreatorINIFile"
+ Print #fn, " ini.Section = ""Options"""
+ Print #fn, " If ini.CheckIniFile = False Then"
+ Print #fn, "  ini.CreateIniFile"
+ Print #fn, " End If"
+ Print #fn, " With sOptions"
+ Print #fn, "  Select Case UCase$(OptionName)"
+ For i = 1 To lsvOptions.ListItems.Count
+  Select Case UCase$(lsvOptions.ListItems(i).SubItems(3))
+   Case "BOOLEAN": Print #fn, "  Case """ & UCase$(lsvOptions.ListItems(i).SubItems(1)) & """:ini.SaveKey CStr(Abs(." & lsvOptions.ListItems(i).SubItems(1) & ")), """ & lsvOptions.ListItems(i).SubItems(1) & """"
+   Case "DOUBLE": Print #fn, "  Case """ & UCase$(lsvOptions.ListItems(i).SubItems(1)) & """:ini.SaveKey Replace$(CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), GetDecimalChar, "".""), """ & lsvOptions.ListItems(i).SubItems(1) & """"
+   Case Else: Print #fn, "  Case """ & UCase$(lsvOptions.ListItems(i).SubItems(1)) & """:ini.SaveKey CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), """ & lsvOptions.ListItems(i).SubItems(1) & """"
+  End Select
+ Next i
+ Print #fn, "  End Select"
+ Print #fn, " End With"
+ Print #fn, " Set ini = Nothing"
+ Print #fn, "End Sub"
+ Print #fn, ""
  Print #fn, "Public Sub SaveOptionsINI(sOptions as tOptions, PDFCreatorINIFile As String)"
  Print #fn, " Dim ini As clsINI"
  Print #fn, " Set ini = New clsINI"
@@ -1420,11 +1483,11 @@ Private Sub CreateModOptions()
  Print #fn, " End If"
  Print #fn, " With sOptions"
  For i = 1 To lsvOptions.ListItems.Count
-  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
-    Print #fn, "  ini.SaveKey CStr(Abs(." & lsvOptions.ListItems(i).SubItems(1) & ")), """ & lsvOptions.ListItems(i).SubItems(1) & """"
-   Else
-    Print #fn, "  ini.SaveKey CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), """ & lsvOptions.ListItems(i).SubItems(1) & """"
-  End If
+  Select Case UCase$(lsvOptions.ListItems(i).SubItems(3))
+   Case "BOOLEAN": Print #fn, "  ini.SaveKey CStr(Abs(." & lsvOptions.ListItems(i).SubItems(1) & ")), """ & lsvOptions.ListItems(i).SubItems(1) & """"
+   Case "DOUBLE": Print #fn, "  ini.SaveKey Replace$(CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), GetDecimalChar, "".""), """ & lsvOptions.ListItems(i).SubItems(1) & """"
+   Case Else: Print #fn, "  ini.SaveKey CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), """ & lsvOptions.ListItems(i).SubItems(1) & """"
+  End Select
  Next i
  Print #fn, " End With"
  Print #fn, " Set ini = Nothing"
@@ -1523,8 +1586,11 @@ Private Sub CreateModOptions()
      Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
      Print #fn, "   Else"
      Print #fn, "    If UseStandard Then"
-     Print #fn, "     tStr = GetMyFiles"
-     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(tStr)"
+     Print #fn, "     If InstalledAsServer Then"
+     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"""
+     Print #fn, "      Else"
+     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<MyFiles>"""
+     Print #fn, "     End If"
      Print #fn, "    End If"
      Print #fn, "  End If"
     Case UCase$("DirectoryGhostscriptBinaries")
@@ -1576,10 +1642,8 @@ Private Sub CreateModOptions()
      Print #fn, "   End If"
      Print #fn, "  End If"
     Case Else
-     Print #fn, "  If LenB(tStr) = 0 And LenB(""" & Trim$(lsvOptions.ListItems(i).SubItems(4)) & """)>0 Then"
-     Print #fn, "    If UseStandard Then"
-     Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & lsvOptions.ListItems(i).SubItems(4) & """"
-     Print #fn, "    End If"
+     Print #fn, "  If LenB(tStr) = 0 And LenB(""" & Trim$(Replace$(lsvOptions.ListItems(i).SubItems(4), """", """""")) & """) > 0 And UseStandard Then"
+     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = """ & Replace$(lsvOptions.ListItems(i).SubItems(4), """", """""") & """"
      Print #fn, "   Else"
      Print #fn, "    If LenB(tStr) > 0 Then"
      Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
@@ -1592,10 +1656,10 @@ Private Sub CreateModOptions()
    Print #fn, "  tStr = reg.GetRegistryValue(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
    If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
     Print #fn, "  If IsNumeric(tStr) Then"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(Replace$(tStr, ""."", GetDecimalChar))"
     Print #fn, "   Else"
     Print #fn, "    If UseStandard Then"
-    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "    End If"
     Print #fn, "  End If"
    End If
@@ -1642,6 +1706,37 @@ Private Sub CreateModOptions()
  Print #fn, " ReadOptionsReg = MyOptions"
  Print #fn, "End Function"
  Print #fn, ""
+ Print #fn, "Public Sub SaveOptionREG(sOptions as tOptions, OptionName as String, Optional hkey1 as hkey = HKEY_CURRENT_USER)"
+ Print #fn, " Dim reg As clsRegistry"
+ Print #fn, " Set reg = New clsRegistry"
+ Print #fn, " reg.hkey = hkey1"
+ Print #fn, " reg.KeyRoot = ""Software\PDFCreator"""
+ Print #fn, " With sOptions"
+ For i = 1 To lsvOptions.ListItems.Count
+  If i = 1 Then
+    Print #fn, "  reg.Subkey = """ & Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\") & """"
+   Else
+    If UCase$(Replace(Trim$(lsvOptions.ListItems(i - 1).Text), " ", "\")) <> UCase$(Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\")) Then
+     Print #fn, "  reg.Subkey = """ & Replace(Trim$(lsvOptions.ListItems(i).Text), " ", "\") & """"
+    End If
+  End If
+  Print #fn, "  If UCase$(OptionName) = """ & UCase$(lsvOptions.ListItems(i).SubItems(1)) & """ Then"
+  Print #fn, "   If Not reg.KeyExists Then"
+  Print #fn, "    reg.CreateKey"
+  Print #fn, "   End If"
+  Select Case UCase$(lsvOptions.ListItems(i).SubItems(3))
+   Case "BOOLEAN": Print #fn, "   reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """,CStr(Abs(." & lsvOptions.ListItems(i).SubItems(1) & ")), REG_SZ"
+   Case "DOUBLE": Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """, Replace$(CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), GetDecimalChar, "".""), REG_SZ"
+   Case Else: Print #fn, "   reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """,CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), REG_SZ"
+  End Select
+ Print #fn, "   Set reg = Nothing"
+ Print #fn, "   Exit Sub"
+ Print #fn, "  End If"
+ Next i
+ Print #fn, " End With"
+ Print #fn, " Set reg = Nothing"
+ Print #fn, "End Sub"
+ Print #fn, ""
  Print #fn, "Public Sub SaveOptionsREG(sOptions as tOptions, Optional hkey1 as hkey = HKEY_CURRENT_USER)"
  Print #fn, " Dim reg As clsRegistry"
  Print #fn, " Set reg = New clsRegistry"
@@ -1665,11 +1760,11 @@ Private Sub CreateModOptions()
      Print #fn, "  End If"
     End If
   End If
-  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
-    Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """,CStr(Abs(." & lsvOptions.ListItems(i).SubItems(1) & ")), REG_SZ"
-   Else
-    Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """,CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), REG_SZ"
-  End If
+  Select Case UCase$(lsvOptions.ListItems(i).SubItems(3))
+   Case "BOOLEAN": Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """, CStr(Abs(." & lsvOptions.ListItems(i).SubItems(1) & ")), REG_SZ"
+   Case "DOUBLE": Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """, Replace$(CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), GetDecimalChar, "".""), REG_SZ"
+   Case Else: Print #fn, "  reg.SetRegistryValue """ & lsvOptions.ListItems(i).SubItems(1) & """,CStr(." & lsvOptions.ListItems(i).SubItems(1) & "), REG_SZ"
+  End Select
  Next i
  Print #fn, " End With"
  Print #fn, " Set reg = Nothing"
@@ -1772,7 +1867,7 @@ Private Sub CreateModOptions()
  Print #fn, "   Options.PrinterStop = 0"
  Print #fn, "   PrinterStop = False"
  Print #fn, " End If"
- Print #fn, " SaveOptions Options"
+ Print #fn, " SaveOption Options, ""Printerstop"""
  Print #fn, "End Sub"
  Print #fn, ""
  Print #fn, "Public Sub SetLogging(Logging as Boolean)"
@@ -1781,7 +1876,7 @@ Private Sub CreateModOptions()
  Print #fn, "  Else"
  Print #fn, "   Options.Logging = 0"
  Print #fn, " End If"
- Print #fn, " SaveOptions Options"
+ Print #fn, " SaveOption Options, ""Logging"""
  Print #fn, "End Sub"
  Print #fn, ""
  Print #fn, "Public Sub SetLanguage(Language as String)"
@@ -1820,7 +1915,15 @@ Private Sub CreateModOptions()
  Print #fn, "End Sub"
  Print #fn, ""
  Print #fn, "Public Function ReadLanguageFromOptionsINI(Language As String, PDFCreatorINIFile As String, Optional UseStandard as Boolean = True) As String"
- Print #fn, " Dim hOpt As clsHash, tStr"
+ Print #fn, " Dim hOpt As clsHash, tStr as String, opt as tOptions"
+ Print #fn, " ReadLanguageFromOptionsINI = Language"
+ Print #fn, " If FileExists(PDFCreatorINIFile) = False Then"
+ Print #fn, "  If UseStandard Then"
+ Print #fn, "   opt = StandardOptions"
+ Print #fn, "   ReadLanguageFromOptionsINI = opt.Language"
+ Print #fn, "  End If"
+ Print #fn, "  Exit Function"
+ Print #fn, " End If"
  Print #fn, " Set hOpt = New clsHash"
  Print #fn, " ReadINISection PDFCreatorINIFile, ""Options"", hOpt"
  Print #fn, " tStr = Trim$(hOpt.Retrieve(""Language""))"
@@ -1874,6 +1977,156 @@ Private Sub CreateModOptions()
  Print #fn, ""
  Close #fn
 
+ Dim inStrF As String, outStrF As String, replStr As String, _
+  tStr1 As String, tStr2 As String
+ Filename2 = App.Path & "\..\PDFCreator\clsPDFCreator.cls"
+ If FileExists(Filename2) = False Then
+  MsgBox "File: 'clsPDFCreator' doesn't exist!", vbCritical
+  Exit Sub
+ End If
+ 
+ fn = FreeFile
+ Open Filename2 For Binary As #fn
+ inStrF = Space$(LOF(fn))
+ Get #fn, , inStrF
+ Close #fn
+ tStr1 = "Private Function cGetOptions(sOptions As tOptions) As clsPDFCreatorOptions"
+  
+ replStr = "VERSION 1.0 CLASS"
+ replStr = replStr & vbCrLf & "BEGIN"
+ replStr = replStr & vbCrLf & "  MultiUse = -1  'True"
+ replStr = replStr & vbCrLf & "  Persistable = 0  'NotPersistable"
+ replStr = replStr & vbCrLf & "  DataBindingBehavior = 0  'vbNone"
+ replStr = replStr & vbCrLf & "  DataSourceBehavior = 0   'vbNone"
+ replStr = replStr & vbCrLf & "  MTSTransactionMode = 0   'NotAnMTSObject"
+ replStr = replStr & vbCrLf & "End"
+ replStr = replStr & vbCrLf & "Attribute VB_Name = ""clsPDFCreatorOptions"""
+ replStr = replStr & vbCrLf & "Attribute VB_GlobalNameSpace = False"
+ replStr = replStr & vbCrLf & "Attribute VB_Creatable = True"
+ replStr = replStr & vbCrLf & "Attribute VB_PredeclaredId = False"
+ replStr = replStr & vbCrLf & "Attribute VB_Exposed = True"
+ replStr = replStr & vbCrLf & "Option Explicit"
+ 
+ For i = 1 To lsvOptions.ListItems.Count
+  Select Case UCase$(lsvOptions.ListItems(i).SubItems(3))
+   Case "BOOLEAN":
+    replStr = replStr & vbCrLf & "Public " & lsvOptions.ListItems(i).SubItems(1) & " As Long"
+   Case Else:
+    replStr = replStr & vbCrLf & "Public " & lsvOptions.ListItems(i).SubItems(1) & " As " & lsvOptions.ListItems(i).SubItems(3)
+  End Select
+ Next i
+ fn = FreeFile
+ Open App.Path & "\..\PDFCreator\clsPDFCreatorOptions.cls" For Output As #fn
+ Print #fn, replStr
+ Close #fn
+
+ tStr1 = "Private Function cLetOptions(sOptions As Variant) As tOptions"
+ tStr2 = "End Function"
+ replStr = tStr1
+ replStr = replStr & vbCrLf & " With cLetOptions"
+ For i = 1 To lsvOptions.ListItems.Count
+  replStr = replStr & vbCrLf & "  ." & lsvOptions.ListItems(i).SubItems(1) & " = sOptions." & lsvOptions.ListItems(i).SubItems(1)
+ Next i
+ replStr = replStr & vbCrLf & " End With"
+' inStrF = outStrF
+ If InStr(1, inStrF, tStr1, vbTextCompare) > 0 And InStr(1, inStrF, tStr2, vbTextCompare) > 0 Then
+   outStrF = Mid(inStrF, 1, InStr(1, inStrF, tStr1, vbTextCompare) - 1) & _
+    replStr & vbCrLf & Mid(inStrF, InStr(InStr(1, inStrF, tStr1, vbTextCompare), inStrF, _
+    tStr2, vbTextCompare))
+  Else
+   MsgBox "Error 2 !!!", vbCritical
+   Exit Sub
+ End If
+
+ tStr1 = "Private Function cGetOptions(sOptions As tOptions) As clsPDFCreatorOptions"
+ tStr2 = "End Function"
+ replStr = tStr1
+ replStr = replStr & vbCrLf & " Set cGetOptions = New clsPDFCreatorOptions"
+ replStr = replStr & vbCrLf & " With cGetOptions"
+ For i = 1 To lsvOptions.ListItems.Count
+  replStr = replStr & vbCrLf & "  ." & lsvOptions.ListItems(i).SubItems(1) & " = sOptions." & lsvOptions.ListItems(i).SubItems(1)
+ Next i
+ replStr = replStr & vbCrLf & " End With"
+ inStrF = outStrF
+ If InStr(1, inStrF, tStr1, vbTextCompare) > 0 And InStr(1, inStrF, tStr2, vbTextCompare) Then
+   outStrF = Mid(inStrF, 1, InStr(1, inStrF, tStr1, vbTextCompare) - 1) & _
+    replStr & vbCrLf & Mid(inStrF, InStr(InStr(1, inStrF, tStr1, vbTextCompare), inStrF, _
+    tStr2, vbTextCompare))
+  Else
+   MsgBox "Error 3 !!!", vbCritical
+   Exit Sub
+ End If
+
+ tStr1 = "Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions, FunctionName As String) As Variant"
+ tStr2 = "End Function"
+ replStr = tStr1
+ replStr = replStr & vbCrLf & " Select Case UCase$(PropertyName)"
+ For i = 1 To lsvOptions.ListItems.Count
+  With lsvOptions.ListItems(i)
+   replStr = replStr & vbCrLf & "  Case """ & UCase$(.SubItems(1)) & """: cGetOptionFromOptions = Options." & .SubItems(1)
+  End With
+ Next i
+ replStr = replStr & vbCrLf & " End Select"
+ inStrF = outStrF
+ If InStr(1, inStrF, tStr1, vbTextCompare) > 0 And InStr(1, inStrF, tStr2, vbTextCompare) Then
+   outStrF = Mid(inStrF, 1, InStr(1, inStrF, tStr1, vbTextCompare) - 1) & _
+    replStr & vbCrLf & Mid(inStrF, InStr(InStr(1, inStrF, tStr1, vbTextCompare), inStrF, _
+    tStr2, vbTextCompare))
+  Else
+   MsgBox "Error 4 !!!", vbCritical
+   Exit Sub
+ End If
+ 
+ tStr1 = "Private Sub cLetOption(PropertyName As String, Value As Variant)"
+ tStr2 = "End Sub"
+ replStr = tStr1
+ replStr = replStr & vbCrLf & " Select Case UCase$(PropertyName)"
+ For i = 1 To lsvOptions.ListItems.Count
+  With lsvOptions.ListItems(i)
+   replStr = replStr & vbCrLf & "  Case """ & UCase$(.SubItems(1)) & """: Options." & .SubItems(1) & " = Value"
+  End With
+ Next i
+ replStr = replStr & vbCrLf & "  Case Else:"
+ replStr = replStr & vbCrLf & "   mError.Number = 3"
+ replStr = replStr & vbCrLf & "   mError.Description = Replace$(Replace$(ErrDescr3, ""%1"", PropertyName), ""%2"", ""in cLetOption"")"
+ replStr = replStr & vbCrLf & "   RaiseEvent eError"
+ replStr = replStr & vbCrLf & " End Select"
+ inStrF = outStrF
+ If InStr(1, inStrF, tStr1, vbTextCompare) > 0 And InStr(1, inStrF, tStr2, vbTextCompare) Then
+   outStrF = Mid(inStrF, 1, InStr(1, inStrF, tStr1, vbTextCompare) - 1) & _
+    replStr & vbCrLf & Mid(inStrF, InStr(InStr(1, inStrF, tStr1, vbTextCompare), inStrF, _
+    tStr2, vbTextCompare))
+  Else
+   MsgBox "Error 5 !!!", vbCritical
+   Exit Sub
+ End If
+ 
+ tStr1 = "Public Property Get cOptionsNames() As Collection"
+ tStr2 = "End Property"
+ replStr = tStr1
+ replStr = replStr & vbCrLf & " Set cOptionsNames = New Collection"
+ replStr = replStr & vbCrLf & " With cOptionsNames"
+ For i = 1 To lsvOptions.ListItems.Count
+  With lsvOptions.ListItems(i)
+   replStr = replStr & vbCrLf & "  .Add """ & .SubItems(1) & """"
+  End With
+ Next i
+ replStr = replStr & vbCrLf & " End With"
+ inStrF = outStrF
+ If InStr(1, inStrF, tStr1, vbTextCompare) > 0 And InStr(1, inStrF, tStr2, vbTextCompare) Then
+   outStrF = Mid(inStrF, 1, InStr(1, inStrF, tStr1, vbTextCompare) - 1) & _
+    replStr & vbCrLf & Mid(inStrF, InStr(InStr(1, inStrF, tStr1, vbTextCompare), inStrF, _
+    tStr2, vbTextCompare))
+  Else
+   MsgBox "Error 6 !!!", vbCritical
+   Exit Sub
+ End If
+ 
+ fn = FreeFile
+ Open Filename2 For Output As #fn
+ Print #fn, outStrF
+ Close #fn
+ 
  With frmText
   .Filename = Filename
   .Show vbModal, Me
@@ -2022,7 +2275,7 @@ Private Function GerCount() As Long
 End Function
 
 Private Sub LoadOptions(Filename As String)
- Dim fn As Long, tstr As String, tStrf() As String, i As Long, _
+ Dim fn As Long, tStr As String, tStrf() As String, i As Long, _
   Item As ListItem, j As Long, c As Long, aw As Long, Comment As String, flag As Long
  c = 0: flag = 0
  fn = FreeFile
@@ -2031,12 +2284,12 @@ Private Sub LoadOptions(Filename As String)
  Do While Not EOF(fn)
   aw = vbOK
   c = c + 1
-  Line Input #fn, tstr
-  tstr = Trim$(tstr)
-  If Len(tstr) > 0 Then
-   If Mid(tstr, 1, 1) <> "'" Then
-     If InStr(tstr, "|") > 0 Then
-       tStrf = Split(tstr, "|")
+  Line Input #fn, tStr
+  tStr = Trim$(tStr)
+  If Len(tStr) > 0 Then
+   If Mid(tStr, 1, 1) <> "'" Then
+     If InStr(tStr, "|") > 0 Then
+       tStrf = Split(tStr, "|")
        Set Item = lsvOptions.ListItems.Add(, , Comment)
        For i = LBound(tStrf) To UBound(tStrf)
         If i = 2 Then
@@ -2080,12 +2333,12 @@ Private Sub LoadOptions(Filename As String)
        Next i
       Else
        Set Item = lsvOptions.ListItems.Add(, , Comment)
-       Item.SubItems(1) = tstr
+       Item.SubItems(1) = tStr
      End If
     Else
-     i = InStr(tstr, "<"): j = InStr(tstr, ">")
+     i = InStr(tStr, "<"): j = InStr(tStr, ">")
      If i > 0 And j > 0 And j > i Then
-      Comment = Mid(tstr, i + 1, j - i - 1)
+      Comment = Mid(tStr, i + 1, j - i - 1)
      End If
    End If
   End If
@@ -2359,7 +2612,7 @@ Private Sub tbstr_Click()
 End Sub
 
 Private Sub SaveOptions(Filename As String)
- Dim i As Long, j As Long, fn As Long, tstr As String, tStrC As String
+ Dim i As Long, j As Long, fn As Long, tStr As String, tStrC As String
  fn = FreeFile
  Open Filename For Output As #fn
  tStrC = lsvOptions.ListItems(1).Text
@@ -2371,11 +2624,11 @@ Private Sub SaveOptions(Filename As String)
    tStrC = Trim$(lsvOptions.ListItems(i).Text)
    Print #fn, vbCrLf & "' <" & tStrC & ">"
   End If
-  tstr = lsvOptions.ListItems(i).SubItems(1)
+  tStr = lsvOptions.ListItems(i).SubItems(1)
   For j = 2 To lsvOptions.ColumnHeaders.Count - 1
-   tstr = tstr & "|" & Trim$(lsvOptions.ListItems(i).SubItems(j))
+   tStr = tStr & "|" & Trim$(lsvOptions.ListItems(i).SubItems(j))
   Next j
-  Print #fn, tstr
+  Print #fn, tStr
  Next i
  Close fn
 End Sub
@@ -2388,11 +2641,11 @@ Private Sub SaveFile(Filename As String, txtStr As String)
  Close #fn
 End Sub
 
-Private Sub SaveCompressedFile(Filename As String, b() As Byte)
+Private Sub SaveCompressedFile(Filename As String, B() As Byte)
  Dim fn As Long
  fn = FreeFile
  Open Filename For Binary As #fn
- Put #fn, , b
+ Put #fn, , B
  Close #fn
 End Sub
 
@@ -2426,15 +2679,15 @@ Private Sub SaveTemplate()
 End Sub
 
 Private Sub ShowOption()
- Dim Item As ListItem, tstr As String, i As Long
+ Dim Item As ListItem, tStr As String, i As Long
  With frmOption
   .cmbComment.Text = lsvOptions.SelectedItem.Text
   If lsvOptions.ListItems.Count > 0 Then
-   tstr = UCase$(lsvOptions.ListItems(1).Text)
+   tStr = UCase$(lsvOptions.ListItems(1).Text)
    .cmbComment.AddItem lsvOptions.ListItems(1).Text
    For i = 2 To lsvOptions.ListItems.Count
-    If UCase$(lsvOptions.ListItems(i).Text) <> tstr Then
-     tstr = UCase$(lsvOptions.ListItems(i).Text)
+    If UCase$(lsvOptions.ListItems(i).Text) <> tStr Then
+     tStr = UCase$(lsvOptions.ListItems(i).Text)
      .cmbComment.AddItem lsvOptions.ListItems(i).Text
     End If
    Next i
@@ -2466,16 +2719,16 @@ Private Sub ShowOption()
 End Sub
 
 Private Sub ShowLanguage()
- Dim Item As ListItem, tstr As String, i As Long
+ Dim Item As ListItem, tStr As String, i As Long
  With frmLanguage
   .cmbSection.Text = lsvLanguages.SelectedItem.Text
 
   If lsvLanguages.ListItems.Count > 0 Then
-   tstr = UCase$(lsvLanguages.ListItems(1).Text)
+   tStr = UCase$(lsvLanguages.ListItems(1).Text)
    .cmbSection.AddItem lsvLanguages.ListItems(1).Text
    For i = 2 To lsvLanguages.ListItems.Count
-    If UCase$(lsvLanguages.ListItems(i).Text) <> tstr Then
-     tstr = UCase$(lsvLanguages.ListItems(i).Text)
+    If UCase$(lsvLanguages.ListItems(i).Text) <> tStr Then
+     tStr = UCase$(lsvLanguages.ListItems(i).Text)
      .cmbSection.AddItem lsvLanguages.ListItems(i).Text
     End If
    Next i
@@ -2521,7 +2774,7 @@ Private Sub txtTestpage_Change()
 End Sub
 
 Private Function LoadAndConvert(RegFilename As String, os As eOSTyp) As Boolean
- Dim fn As Long, found As Boolean, resStr As String, tstr As String, sa() As String, _
+ Dim fn As Long, found As Boolean, resStr As String, tStr As String, sa() As String, _
   i As Long, j As Long, regStr As String
 
  LoadAndConvert = True
@@ -2534,16 +2787,16 @@ Private Function LoadAndConvert(RegFilename As String, os As eOSTyp) As Boolean
  found = False: fn = FreeFile
  Open RegFilename For Input As #fn
  Do While Not EOF(fn)
-  Line Input #fn, tstr
-  If InStr(UCase$(tstr), regStr) > 0 Then
+  Line Input #fn, tStr
+  If InStr(UCase$(tStr), regStr) > 0 Then
    found = True
-   resStr = Mid(tstr, Len(regStr) + 1)
+   resStr = Mid(tStr, Len(regStr) + 1)
    Do While Not EOF(fn)
-    Line Input #fn, tstr
-    If InStr(tstr, """") Or LenB(Trim$(tstr)) = 0 Or Mid$(Trim$(tstr), 1, 1) = "[" Then
+    Line Input #fn, tStr
+    If InStr(tStr, """") Or LenB(Trim$(tStr)) = 0 Or Mid$(Trim$(tStr), 1, 1) = "[" Then
      Exit Do
     End If
-    resStr = resStr & tstr
+    resStr = resStr & tStr
     DoEvents
    Loop
   End If
@@ -2563,35 +2816,35 @@ Private Function LoadAndConvert(RegFilename As String, os As eOSTyp) As Boolean
    resStr = Replace$(resStr, vbCr, "")
    resStr = Replace$(resStr, vbLf, "")
    sa = Split(resStr, ",")
-   tstr = "": resStr = ""
+   tStr = "": resStr = ""
    j = 0
    For i = 0 To UBound(sa)
     j = j + 1
     If j = 1 Then
-     tstr = tstr + "''"
+     tStr = tStr + "''"
     End If
-    tstr = tstr + GetHStr(sa(i))
+    tStr = tStr + GetHStr(sa(i))
     If j = 32 Then
-     tstr = tstr + vbCrLf
+     tStr = tStr + vbCrLf
      j = 0
     End If
    Next i
  End If
- If LenB(tstr) >= 3 Then
-  If Mid(tstr, Len(tstr) - 1) = vbCrLf Then
-   tstr = Mid(tstr, 1, Len(tstr) - 1)
+ If LenB(tStr) >= 3 Then
+  If Mid(tStr, Len(tStr) - 1) = vbCrLf Then
+   tStr = Mid(tStr, 1, Len(tStr) - 1)
   End If
  End If
- txtPrintRegData.Text = tstr
+ txtPrintRegData.Text = tStr
 End Function
 
 Private Function GetHStr(NumberStr As String) As String
- Dim tstr As String, i As Long
- tstr = CStr(CLng("&h" + NumberStr))
- For i = 1 To 3 - Len(tstr)
-  tstr = "0" & tstr
+ Dim tStr As String, i As Long
+ tStr = CStr(CLng("&h" + NumberStr))
+ For i = 1 To 3 - Len(tStr)
+  tStr = "0" & tStr
  Next i
- GetHStr = "#" + tstr
+ GetHStr = "#" + tStr
 End Function
 
 Private Function IsSpecialString(specialString As String) As Boolean
@@ -2653,6 +2906,17 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "PrintAfterSavingQueryUser"
   .Add "PrintAfterSavingDuplex"
   .Add "PrintAfterSavingTumble"
+  .Add "NoPSCheck"
+  .Add "PDFCompressionColorCompressionJPEGMaximumFactor"
+  .Add "PDFCompressionColorCompressionJPEGHighFactor"
+  .Add "PDFCompressionColorCompressionJPEGMediumFactor"
+  .Add "PDFCompressionColorCompressionJPEGLowFactor"
+  .Add "PDFCompressionColorCompressionJPEGMinimumFactor"
+  .Add "PDFCompressionGreyCompressionJPEGMaximumFactor"
+  .Add "PDFCompressionGreyCompressionJPEGHighFactor"
+  .Add "PDFCompressionGreyCompressionJPEGMediumFactor"
+  .Add "PDFCompressionGreyCompressionJPEGLowFactor"
+  .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
  End With
  IsSpecialString = False
  For i = 1 To ss.Count
@@ -2666,26 +2930,26 @@ End Function
 
 Private Function GetKeysAndValuesFromInifile(Section As String, Filename As String) As String
  Dim ini As New clsINI, keys As Collection, _
-  i As Long, tstr As String, File As String
+  i As Long, tStr As String, File As String
  ini.Filename = Filename
  SplitPath Filename, , , , File
  Set keys = ini.GetAllKeysFromSection(Section)
  For i = 1 To keys.Count
-  If Len(tstr) = 0 Then
-    tstr = LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
+  If Len(tStr) = 0 Then
+    tStr = LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
    Else
-    tstr = tstr & vbCrLf & LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
+    tStr = tStr & vbCrLf & LCase$(File) & "." & keys(i)(0) & "=" & keys(i)(1)
   End If
  Next i
  Set ini = Nothing
  LastIncFile = File
- If Len(tstr) > 0 Then
-  GetKeysAndValuesFromInifile = GetSortedText(tstr)
+ If Len(tStr) > 0 Then
+  GetKeysAndValuesFromInifile = GetSortedText(tStr)
  End If
 End Function
 
 Private Function GetSortedText(txt As String) As String
- Dim tStrf() As String, coll As Collection, i As Long, j As Long, tstr As String
+ Dim tStrf() As String, coll As Collection, i As Long, j As Long, tStr As String
  GetSortedText = txt
  If InStr(1, txt, vbCrLf, vbTextCompare) Then
   tStrf = Split(txt, vbCrLf)
@@ -2702,12 +2966,12 @@ Private Function GetSortedText(txt As String) As String
     coll.Add tStrf(i)
    End If
   Next i
-  tstr = coll(1)
+  tStr = coll(1)
   For j = 2 To coll.Count
-   tstr = tstr & vbCrLf & coll(j)
+   tStr = tStr & vbCrLf & coll(j)
   Next j
   Set coll = Nothing
-  GetSortedText = tstr
+  GetSortedText = tStr
  End If
 End Function
 

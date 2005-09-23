@@ -161,19 +161,37 @@ End Sub
 '   LocalTemp - local temp directory absolute path
 ' Last modification:
 '   09/07/2004 Gergely Matefi
+'   08/31/2005 Frank Heindörfer: Support für Win9x/WinNT added
 Public Sub GetUserLocalDirs(hProfile As Long, AppData As String, LocalTemp As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tmp As String, reg As clsRegistry
+50010  Dim tStr As String, reg As clsRegistry
 50020  Set reg = New clsRegistry
 50030  With reg
 50040   .hkey = hProfile
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
 50060   AppData = CompletePath(.GetRegistryValue("AppData"))
-50070   LocalTemp = CompletePath(.GetRegistryValue("Local Settings")) & "Temp\"
+50070   tStr = CompletePath(.GetRegistryValue("Local Settings"))
 50080  End With
 50090  Set reg = Nothing
+50100  If LenB(tStr) = 0 Then
+50110    If IsWin9xMe = True Then
+50120      tStr = CompletePath(GetTempPathApi)
+50130     Else
+50140      If IsWinNT4 = True Then
+50150       tStr = CompletePath(GetTempPathApi)
+50160       If LenB(Environ$("Redmon_User")) > 0 Then
+50170         tStr = tStr & Environ$("Redmon_User")
+50180        Else
+50190         tStr = tStr & GetUsername
+50200       End If
+50210      End If
+50220    End If
+50230   Else
+50240    tStr = CompletePath(tStr) & "Temp\"
+50250  End If
+50260  LocalTemp = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

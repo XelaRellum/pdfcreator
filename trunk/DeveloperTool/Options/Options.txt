@@ -4,7 +4,7 @@
 AdditionalGhostscriptParameters||String|||
 AdditionalGhostscriptSearchpath||String|||
 AddWindowsFontpath||Boolean|1||
-AutosaveDirectory|txtAutosaveDirectory.Text|String|||
+AutosaveDirectory|txtAutosaveDirectory.Text|String|<MyFiles>||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
 AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|7
 
@@ -42,11 +42,12 @@ JPEGQuality|txtJPEGQuality.Text|Long|75|0|100
 
 ' <Program>
 Language|Language|String|english||
-LastSaveDirectory|LastSaveDirectory|String|||
+LastSaveDirectory|LastSaveDirectory|String|<MyFiles>||
 Logging|Logging|Boolean|0||
 LogLines|LogLines|Long|100|100|1000
 NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
 NoProcessingAtStartup||Boolean|0||
+NoPSCheck||Boolean|0||
 
 ' <Printing>
 OnePagePerFile||Boolean|0||
@@ -69,7 +70,7 @@ PDFAllowFillIn|chkAllowFillIn.Value|Boolean|0||
 PDFAllowScreenReaders|chkAllowScreenReaders.Value|Boolean|0||
 
 ' <Printing Formats PDF Colors>
-PDFColorsCMYKToRGB|chkPDFCMYKtoRGB.Value|Boolean|1||
+PDFColorsCMYKToRGB|chkPDFCMYKtoRGB.Value|Boolean|0||
 PDFColorsColorModel|cmbPDFColorModel.Listindex|Long|1|0|2
 PDFColorsPreserveHalftone|chkPDFPreserveHalftone.Value|Boolean|0||
 PDFColorsPreserveOverprint|chkPDFPreserveOverprint.Value|Boolean|1||
@@ -77,19 +78,29 @@ PDFColorsPreserveTransfer|chkPDFPreserveTransfer.Value|Boolean|1||
 
 ' <Printing Formats PDF Compression>
 PDFCompressionColorCompression|chkPDFColorComp.Value|Boolean|1||
-PDFCompressionColorCompressionChoice|cmbPDFColorComp.Listindex|Long|0|0|7
+PDFCompressionColorCompressionChoice|cmbPDFColorComp.Listindex|Long|0|0|5
+PDFCompressionColorCompressionJPEGHighFactor||Double|0.9|0|<
+PDFCompressionColorCompressionJPEGLowFactor||Double|0.25|0|<
+PDFCompressionColorCompressionJPEGMaximumFactor||Double|2|0|<
+PDFCompressionColorCompressionJPEGMediumFactor||Double|0.5|0|<
+PDFCompressionColorCompressionJPEGMinimumFactor||Double|0.1|0|<
 PDFCompressionColorResample|chkPDFColorResample.Value|Boolean|0||
-PDFCompressionColorResampleChoice|cmbPDFColorResample.Listindex|Long|0|0|2
+PDFCompressionColorResampleChoice|cmbPDFColorResample.Listindex|Long|0|0|1
 PDFCompressionColorResolution|txtPDFColorRes.Text|Long|300|0|<
 PDFCompressionGreyCompression|chkPDFGreyComp.Value|Boolean|1||
-PDFCompressionGreyCompressionChoice|cmbPDFGreyComp.Listindex|Long|0|0|7
+PDFCompressionGreyCompressionChoice|cmbPDFGreyComp.Listindex|Long|0|0|5
+PDFCompressionGreyCompressionJPEGHighFactor||Double|0.9|0|<
+PDFCompressionGreyCompressionJPEGLowFactor||Double|0.25|0|<
+PDFCompressionGreyCompressionJPEGMaximumFactor||Double|2|0|<
+PDFCompressionGreyCompressionJPEGMediumFactor||Double|0.5|0|<
+PDFCompressionGreyCompressionJPEGMinimumFactor||Double|0.1|0|<
 PDFCompressionGreyResample|chkPDFGreyResample.Value|Boolean|0||
-PDFCompressionGreyResampleChoice|cmbPDFGreyResample.Listindex|Long|0|0|2
+PDFCompressionGreyResampleChoice|cmbPDFGreyResample.Listindex|Long|0|0|1
 PDFCompressionGreyResolution|txtPDFGreyRes.Text|Long|300|0|<
 PDFCompressionMonoCompression|chkPDFMonoComp.Value|Boolean|1||
 PDFCompressionMonoCompressionChoice|cmbPDFMonoComp.Listindex|Long|0|0|3
 PDFCompressionMonoResample|chkPDFMonoResample.Value|Boolean|0||
-PDFCompressionMonoResampleChoice|cmbPDFMonoResample.Listindex|Long|0|0|2
+PDFCompressionMonoResampleChoice|cmbPDFMonoResample.Listindex|Long|0|0|1
 PDFCompressionMonoResolution|txtPDFMonoRes.Text|Long|1200|0|<
 PDFCompressionTextCompression|chkPDFTextComp.Value|Boolean|1||
 
@@ -137,7 +148,7 @@ PrintAfterSavingPrinter||String|||
 PrintAfterSavingQueryUser||Long|0|0|3
 PrintAfterSavingTumble||Boolean|0||
 PrinterStop|PrinterStop|Boolean|0||
-PrinterTemppath|txtTemppath.text|String|||
+PrinterTemppath|txtTemppath.text|String|<Temp>PDFCreator\||
 ProcessPriority|sldProcessPriority.value|Long|1|0|3
 ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
@@ -151,12 +162,12 @@ RemoveAllKnownFileExtensions||Boolean|1||
 RemoveSpaces|chkSpaces.Value|Boolean|1||
 RunProgramAfterSaving||Boolean|0||
 RunProgramAfterSavingProgramname||String|||
-RunProgramAfterSavingProgramParameters||String|||
+RunProgramAfterSavingProgramParameters||String|"<OutputFilename>"||
 RunProgramAfterSavingWaitUntilReady||Boolean|1||
 RunProgramAfterSavingWindowstyle||Long|1|0|6
 RunProgramBeforeSaving||Boolean|0||
 RunProgramBeforeSavingProgramname||String|||
-RunProgramBeforeSavingProgramParameters||String|||
+RunProgramBeforeSavingProgramParameters||String|"<TempFilename>"||
 RunProgramBeforeSavingWindowstyle||Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
 SendMailMethod||Long|0|0|<
