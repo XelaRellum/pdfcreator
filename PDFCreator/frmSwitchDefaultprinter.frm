@@ -82,18 +82,40 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub Form_Initialize()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim f As Form
+50020  For Each f In Forms
+50030   If UCase$(f.Name) = "FRMMAIN" Then
+50040    f.ShowFrmMain
+50050    Exit Sub
+50060   End If
+50070  Next
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmSwitchDefaultprinter", "Form_Initialize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Caption = App.EXEName
-50020
-50030  ChangeDefaultprinter = False
-50040  With LanguageStrings
-50050   lblSwitchDefaultprinter.Caption = .MessagesMsg35
-50060   chkAskAgain.Caption = .MessagesMsg36
-50070  End With
-50080  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
+50020  ChangeDefaultprinter = False
+50030  With LanguageStrings
+50040   lblSwitchDefaultprinter.Caption = .MessagesMsg35
+50050   chkAskAgain.Caption = .MessagesMsg36
+50060  End With
+50070  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

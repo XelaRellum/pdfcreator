@@ -9,6 +9,7 @@ Begin VB.Form frmSysTray
    LinkTopic       =   "Form1"
    ScaleHeight     =   1920
    ScaleWidth      =   4680
+   Visible         =   0   'False
    Begin VB.Menu mnuPopup 
       Caption         =   "&Popup"
       Begin VB.Menu mnuSysTray 

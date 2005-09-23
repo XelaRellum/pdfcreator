@@ -179,19 +179,19 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetAutosaveFilename(Postscriptfile As String) As String
+Public Function GetAutosaveFilename(PostscriptFile As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Filename As String, Pathname As String
 50020
 50030  If Options.UseAutosaveDirectory = 1 Then
-50040    Pathname = Options.AutosaveDirectory
+50040    Pathname = GetSubstFilename2(Options.AutosaveDirectory, False, , PostscriptFile)
 50050   Else
-50060    Pathname = Options.LastSaveDirectory
+50060    Pathname = GetSubstFilename2(Options.LastSaveDirectory, False)
 50070  End If
 50080
-50090  Filename = GetSubstFilename(Postscriptfile, Options.AutosaveFilename)
+50090  Filename = GetSubstFilename(PostscriptFile, Options.AutosaveFilename)
 50100
 50110  If Len(Filename) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
 50120   Filename = RemoveAllKnownFileExtensions(Filename)
@@ -214,8 +214,10 @@ On Error GoTo ErrPtnr_OnError
 50290    Filename = Filename & ".ps"
 50300   Case 7: 'EPS
 50310    Filename = Filename & ".eps"
-50320  End Select
-50330  GetAutosaveFilename = CompletePath(GetSubstFilename2(Pathname, False)) & ReplaceForbiddenChars(Filename)
+50320   Case 8: 'TXT
+50330    Filename = Filename & ".txt"
+50340  End Select
+50350  GetAutosaveFilename = CompletePath(GetSubstFilename2(Pathname, False)) & ReplaceForbiddenChars(Filename)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -228,7 +230,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetSubstFilename(Postscriptfile As String, TokenFilename As String, _
+Public Function GetSubstFilename(PostscriptFile As String, TokenFilename As String, _
  Optional WithoutAuthor As Boolean = False, Optional Preview As Boolean = False) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -245,9 +247,9 @@ On Error GoTo ErrPtnr_OnError
 50100
 50110  DateTime = GetDocDate("", Options.StandardDateformat, CStr(Now))
 50120  If Preview = False Then
-50130    If FileExists(Postscriptfile) = True Then
-50140     PSHeader = GetPSHeader(Postscriptfile)
-50150     isf = ReadInfoSpoolfile(Postscriptfile)
+50130    If FileExists(PostscriptFile) = True Then
+50140     PSHeader = GetPSHeader(PostscriptFile)
+50150     isf = ReadInfoSpoolfile(PostscriptFile)
 50160    End If
 50170    If Options.UseStandardAuthor = 1 Then
 50180      Author = Options.StandardAuthor
@@ -291,7 +293,7 @@ On Error GoTo ErrPtnr_OnError
 50560   End If
 50570  End If
 50580
-50590  UserName = GetDocUsername(Postscriptfile, Preview)
+50590  UserName = GetDocUsername(PostscriptFile, Preview)
 50600
 50610  Computername = GetComputerName
 50620  MyFiles = GetMyFiles
@@ -388,11 +390,15 @@ Public Function IsPostscriptFile(ByVal Filename As String) As Boolean
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim lHeader As tPSHeader
-50020  IsPostscriptFile = False
-50030  lHeader = GetPSHeader(Filename)
-50040  If InStr(1, lHeader.StartComment.Comment, "PS", vbTextCompare) > 0 Then
-50050   IsPostscriptFile = True
-50060  End If
+50020  If NoPSCheck Or Options.NoPSCheck = 1 Then
+50030   IsPostscriptFile = True
+50040   Exit Function
+50050  End If
+50060  IsPostscriptFile = False
+50070  lHeader = GetPSHeader(Filename)
+50080  If InStr(1, lHeader.StartComment.Comment, "PS", vbTextCompare) > 0 Then
+50090   IsPostscriptFile = True
+50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -470,36 +476,36 @@ End Sub
 
 Public Function ReplaceEncodingChars(Str1 As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo 0
+On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
- Dim i As Integer, tStr As String
- tStr = ""
- ' First we look for oct encoding chars
- For i = 127 To 255
-  Str1 = Replace$(Str1, "\" & Oct$(i), Chr$(i))
- Next i
- ReplaceEncodingChars = Str1
- ' Second we look for hex encoding chars
- If Len(Str1) >= 4 Then
-  If Mid$(Str1, 1, 1) = "<" And Mid$(Str1, Len(Str1), 1) = ">" Then
-   If Len(Str1) Mod 2 = 0 Then
-    For i = 2 To Len(Str1) - 1 Step 2
-     If IsNumeric("&H" & Mid$(Str1, i, 2)) = True Then
-       If CByte("&H" & Mid$(Str1, i, 2)) > 255 Then
-         Exit Function
-        Else
-         tStr = tStr & Chr$(CByte("&H" & Mid$(Str1, i, 2)))
-       End If
-      Else
-       Exit Function
-     End If
-    Next i
-   End If
-  End If
- End If
- If Len(tStr) > 0 Then
-  ReplaceEncodingChars = tStr
- End If
+50010  Dim i As Integer, tStr As String
+50020  tStr = ""
+50030  ' First we look for oct encoding chars
+50040  For i = 127 To 255
+50050   Str1 = Replace$(Str1, "\" & Oct$(i), Chr$(i))
+50060  Next i
+50070  ReplaceEncodingChars = Str1
+50080  ' Second we look for hex encoding chars
+50090  If Len(Str1) >= 4 Then
+50100   If Mid$(Str1, 1, 1) = "<" And Mid$(Str1, Len(Str1), 1) = ">" Then
+50110    If Len(Str1) Mod 2 = 0 Then
+50120     For i = 2 To Len(Str1) - 1 Step 2
+50130      If IsNumeric("&H" & Mid$(Str1, i, 2)) = True Then
+50140        If CByte("&H" & Mid$(Str1, i, 2)) > 255 Then
+50150          Exit Function
+50160         Else
+50170          tStr = tStr & Chr$(CByte("&H" & Mid$(Str1, i, 2)))
+50180        End If
+50190       Else
+50200        Exit Function
+50210      End If
+50220     Next i
+50230    End If
+50240   End If
+50250  End If
+50260  If Len(tStr) > 0 Then
+50270   ReplaceEncodingChars = tStr
+50280  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -512,21 +518,21 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetDocUsername(Postscriptfile As String, NoFile As Boolean) As String
+Public Function GetDocUsername(PostscriptFile As String, NoFile As Boolean) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim UserName As String, Path As String, i As Long, PSHeader As tPSHeader, _
   isf As InfoSpoolFile
 50030  If NoFile = False Then
-50040   If Len(Postscriptfile) > 0 Then
-50050    If FileExists(Postscriptfile) = True Then
-50060     isf = ReadInfoSpoolfile(Postscriptfile)
+50040   If Len(PostscriptFile) > 0 Then
+50050    If FileExists(PostscriptFile) = True Then
+50060     isf = ReadInfoSpoolfile(PostscriptFile)
 50070     If LenB(isf.REDMON_USER) > 0 Then
 50080      UserName = isf.REDMON_USER
 50090     End If
 50100     If LenB(UserName) = 0 Then
-50110      PSHeader = GetPSHeader(Postscriptfile)
+50110      PSHeader = GetPSHeader(PostscriptFile)
 50120      If Len(PSHeader.CreateFor.Comment) > 0 Then
 50130       UserName = PSHeader.CreateFor.Comment
 50140      End If
@@ -553,16 +559,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetClientMachine(Postscriptfile As String, NoFile As Boolean) As String
+Public Function GetClientMachine(PostscriptFile As String, NoFile As Boolean) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ClientMachine As String, Path As String, i As Long, PSHeader As tPSHeader, _
   isf As InfoSpoolFile
 50030  If NoFile = False Then
-50040   If Len(Postscriptfile) > 0 Then
-50050    If FileExists(Postscriptfile) = True Then
-50060     isf = ReadInfoSpoolfile(Postscriptfile)
+50040   If Len(PostscriptFile) > 0 Then
+50050    If FileExists(PostscriptFile) = True Then
+50060     isf = ReadInfoSpoolfile(PostscriptFile)
 50070     If LenB(isf.REDMON_MACHINE) > 0 Then
 50080      ClientMachine = isf.REDMON_MACHINE
 50090     End If
@@ -666,56 +672,64 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String, Tempfile As String
 50020  IFIsPS = False
-50030  If LenB(InputFilename) > 0 Then
-50040   If FileExists(InputFilename) = True Then
-50050     If LenB(OutputFilename) > 0 Then
-50060       If IsPostscriptFile(InputFilename) = True Then
-50070        If GsDllLoaded = 0 Then
-50080         Exit Sub
-50090        End If
-50100        SplitPath OutputFilename, , , , , Ext
-50110        GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
-50120        If GsDllLoaded = 0 Then
-50130         MsgBox LanguageStrings.MessagesMsg08
-50140        End If
-50151        Select Case UCase$(Ext)
-              Case "PDF"
-50170          CallGScript InputFilename, OutputFilename, Options, PDFWriter
-50180         Case "PNG"
-50190          CallGScript InputFilename, OutputFilename, Options, PNGWriter
-50200         Case "JPG"
-50210          CallGScript InputFilename, OutputFilename, Options, JPEGWriter
-50220         Case "BMP"
-50230          CallGScript InputFilename, OutputFilename, Options, BMPWriter
-50240         Case "PCX"
-50250          CallGScript InputFilename, OutputFilename, Options, PCXWriter
-50260         Case "TIF"
-50270          CallGScript InputFilename, OutputFilename, Options, TIFFWriter
-50280         Case "PS"
-50290          CallGScript InputFilename, OutputFilename, Options, PSWriter
-50300         Case "EPS"
-50310          CallGScript InputFilename, OutputFilename, Options, EPSWriter
-50320        End Select
-50330       End If
-50340       If GsDllLoaded <> 0 Then
-50350        UnloadDLLComplete GsDllLoaded
-50360       End If
-50370       Exit Sub
-50380      Else
-50390       If IsPostscriptFile(InputFilename) = True Then
-50400         IFIsPS = True
-50410        Else
-50420         MsgBox LanguageStrings.MessagesMsg06
-50430       End If
-50440       DoEvents
-50450     End If
-50460    Else
-50470     If LenB(InputFilename) > 0 Then
-50480      MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
-      "InputFile -IF" & vbCrLf & ">" & InputFilename & "<", vbExclamation + vbOKOnly
-50500     End If
-50510   End If
-50520  End If
+50030  If LenB(InputFilename) = 0 Then
+50040   Exit Sub
+50050  End If
+50060  If FileExists(InputFilename) = False Then
+50070   If LenB(InputFilename) > 0 Then
+50080    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
+    "InputFile -IF" & vbCrLf & ">" & InputFilename & "<", vbExclamation + vbOKOnly
+50100   End If
+50110   Exit Sub
+50120  End If
+50130
+50140  If LenB(OutputFilename) > 0 Then
+50150    If IsPostscriptFile(InputFilename) = True Then
+50160     If GsDllLoaded = 0 Then
+50170      Exit Sub
+50180     End If
+50190     SplitPath OutputFilename, , , , , Ext
+50200     GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+50210     If GsDllLoaded = 0 Then
+50220      MsgBox LanguageStrings.MessagesMsg08
+50230     End If
+50241     Select Case UCase$(Ext)
+           Case "PDF"
+50260       CallGScript InputFilename, OutputFilename, Options, PDFWriter
+50270      Case "PNG"
+50280       CallGScript InputFilename, OutputFilename, Options, PNGWriter
+50290      Case "JPG"
+50300       CallGScript InputFilename, OutputFilename, Options, JPEGWriter
+50310      Case "BMP"
+50320       CallGScript InputFilename, OutputFilename, Options, BMPWriter
+50330      Case "PCX"
+50340       CallGScript InputFilename, OutputFilename, Options, PCXWriter
+50350      Case "TIF"
+50360       CallGScript InputFilename, OutputFilename, Options, TIFFWriter
+50370      Case "PS"
+50380       CallGScript InputFilename, OutputFilename, Options, PSWriter
+50390      Case "EPS"
+50400       CallGScript InputFilename, OutputFilename, Options, EPSWriter
+50410      Case "TXT"
+50420       CallGScript InputFilename, OutputFilename, Options, TXTWriter
+50430     End Select
+50440    End If
+50450 '   If GsDllLoaded <> 0 Then
+50460 '    UnloadDLLComplete GsDllLoaded
+50470 '   End If
+50480    ConvertedOutputFilename = OutputFilename
+50490    ReadyConverting = True
+50500    Exit Sub
+50510   Else
+50520    If FileExists(InputFilename) = True Then
+50530     If IsPostscriptFile(InputFilename) = True Then
+50540       IFIsPS = True
+50550      Else
+50560       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
+50570     End If
+50580    End If
+50590  End If
+50600  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

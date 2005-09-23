@@ -8,7 +8,7 @@ Display compile progress=Yes
 Error log file=buildlog.txt
 Full-text search=Yes
 Index file=index.hhk
-Language=0x409 English (United States)
+Language=0x409 Englisch (USA)
 Title=PDFCreator Help
 
 [WINDOWS]
@@ -59,6 +59,11 @@ html\welcome.htm
 html\whatis.htm
 html\whatislang.htm
 html\whatsnew.htm
+html\comclasses.htm
+html\comevents.htm
+html\cominterface.htm
+html\commethods.htm
+html\comproperties.htm
 
 [INFOTYPES]
 

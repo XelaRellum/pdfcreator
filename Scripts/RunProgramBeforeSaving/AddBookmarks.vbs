@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.0.0.0
-' Date: July, 18. 2005
+' Version: 1.1.0.0
+' Date: September, 1. 2005
 ' Author: Frank Heindörfer
 ' Comment: This script adds simple bookmarks to a postscript file.
 
@@ -17,7 +17,7 @@ Dim objArgs, fname, fso, f, pages, i
 Set objArgs = WScript.Arguments
 
 If objArgs.Count = 0 Then
- MsgBox "You can't call the script from commandline!", vbExclamation, AppTitle
+ MsgBox "This script needs a parameter!", vbExclamation, AppTitle
  WScript.Quit
 End If
 

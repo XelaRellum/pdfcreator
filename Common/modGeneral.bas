@@ -22,10 +22,15 @@ Public Type InfoSpoolFile
  REDMON_FILENAME As String
  REDMON_SESSIONID As String
  Spoolfilename As String
- LoggedOnUser As String
+ SpoolerAccount As String
  Computer As String
  Created As String
 End Type
+
+Public Enum RelativePathErrors
+ rpErrTooManySteps = 50001
+ rpErrDifferentRoot = 50011
+End Enum
 
 Public Function ANSItoASCII(ByVal AnsiString As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -774,14 +779,31 @@ Public Function GetTempPathReg(hProfile As hkey) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry
+50010  Dim reg As clsRegistry, tStr As String
 50020  Set reg = New clsRegistry
 50030  With reg
 50040   .hkey = hProfile
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
-50060   GetTempPathReg = CompletePath(.GetRegistryValue("Local Settings")) & "Temp\"
+50060   tStr = CompletePath(.GetRegistryValue("Local Settings"))
 50070  End With
 50080  Set reg = Nothing
+50090  If LenB(tStr) = 0 Then
+50100    If IsWin9xMe = True Then
+50110      tStr = CompletePath(GetTempPathApi)
+50120     Else
+50130      If IsWinNT4 = True Then
+50140       tStr = CompletePath(GetTempPathApi)
+50150       If LenB(Environ$("Redmon_User")) > 0 Then
+50160         tStr = tStr & Environ$("Redmon_User")
+50170        Else
+50180         tStr = tStr & GetUsername
+50190       End If
+50200      End If
+50210    End If
+50220   Else
+50230    tStr = CompletePath(tStr) & "Temp\"
+50240  End If
+50250  GetTempPathReg = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -793,7 +815,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
 
 Public Function GetTempPathApi() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1817,7 +1838,7 @@ On Error GoTo ErrPtnr_OnError
 50110   .REDMON_FILENAME = Environ$("REDMON_FILENAME")
 50120   .REDMON_SESSIONID = Environ$("REDMON_SESSIONID")
 50130   .Spoolfilename = Spoolfilename
-50140   .LoggedOnUser = GetUsername
+50140   .SpoolerAccount = GetUsername
 50150   .Computer = GetComputerName
 50160   .Created = Now
 50170  End With
@@ -1957,3 +1978,180 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function ExistsAnModalForm() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim f As Form
+50020  For Each f In Forms
+50030   If f.Enabled Then
+50040    Exit Function
+50050   End If
+50060  Next
+50070  ExistsAnModalForm = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "ExistsAnModalForm")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function ResolveRelativePath(RelativePath As String, Optional BasePath As String, Optional PathSeparator As String = "\") As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim nBasePath As String, nBaseParts As Variant, nPathParts As Variant, _
+  i As Integer, p As Integer, nPath As String, nResolvedPath As String, _
+  nServerRoot As String
+50040
+50050  If Len(BasePath) Then
+50060    nBasePath = BasePath
+50070   Else
+50080    nBasePath = CurDir
+50090  End If
+50100  If Right$(nBasePath, 1) = PathSeparator Then
+50110   nBasePath = Left$(nBasePath, Len(nBasePath) - 1)
+50120  End If
+50130  If Left$(nBasePath, 2) = "\\" Then
+50140   nBasePath = Mid$(nBasePath, 3)
+50150   nServerRoot = "\\"
+50160  End If
+50170  nPathParts = Split(RelativePath, PathSeparator)
+50180  If nPathParts(0) = ".." Then
+50190    nBaseParts = Split(nBasePath, PathSeparator)
+50200    For i = 0 To UBound(nPathParts)
+50210     If nPathParts(i) = ".." Then
+50220       p = p + 1
+50230      Else
+50240       If p Then
+50250        nPath = nPath & PathSeparator & nPathParts(i)
+50260       End If
+50270      End If
+50280     Next
+50290     If p > UBound(nBaseParts) Then
+50300       Err.Raise rpErrTooManySteps, "modRelativePaths.ResolvePath", "rpErrTooManySteps"
+50310      Else
+50320       For i = 0 To UBound(nBaseParts) - p
+50330        nResolvedPath = nResolvedPath & nBaseParts(i) & PathSeparator
+50340       Next i
+50350       ResolveRelativePath = nServerRoot & nResolvedPath & Mid$(nPath, 2)
+50360     End If
+50370    Else
+50380     ResolveRelativePath = nServerRoot & nBasePath & PathSeparator & RelativePath
+50390  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "ResolveRelativePath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function MakeRelativePath(Path As String, Optional BasePath As String, Optional PathSeparator As String = "\") As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim nPath As String, nPathParts As Variant, nBasePath As String, nBaseParts As Variant, i As Integer, _
+  nRelative As Boolean, nRelativePath As String, p As Integer
+50030
+50040  If Left$(Path, 2) = "\\" Then
+50050    nPath = Mid$(Path, 3)
+50060   Else
+50070    nPath = Path
+50080  End If
+50090  nPathParts = Split(nPath, PathSeparator)
+50100  If Len(BasePath) Then
+50110    nBasePath = BasePath
+50120   Else
+50130    nBasePath = CurDir
+50140  End If
+50150  If Right$(nBasePath, 1) = PathSeparator Then
+50160   nBasePath = Left$(nBasePath, Len(nBasePath) - 1)
+50170  End If
+50180  If Left$(nBasePath, 2) = "\\" Then
+50190   nBasePath = Mid$(nBasePath, 3)
+50200  End If
+50210  nBaseParts = Split(nBasePath, PathSeparator)
+50220  If LCase$(nBaseParts(0)) <> LCase(nPathParts(0)) Then
+50230   Err.Raise rpErrDifferentRoot, "modRelativePaths.MakeRelativePath", "rpErrDifferentRoot"
+50240  End If
+50250  For i = 1 To UBound(nBaseParts)
+50260   If nRelative Then
+50270     nRelativePath = "..\" & nRelativePath
+50280    Else
+50290     If LCase$(nBaseParts(i)) <> LCase(nPathParts(i)) Then
+50300      nRelative = True
+50310      nRelativePath = ".."
+50320      For p = i To UBound(nPathParts)
+50330       nRelativePath = nRelativePath & PathSeparator & nPathParts(p)
+50340      Next p
+50350     End If
+50360   End If
+50370  Next i
+50380  If Len(nRelativePath) Then
+50390    MakeRelativePath = nRelativePath
+50400   Else
+50410    MakeRelativePath = nPathParts(UBound(nPathParts))
+50420  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "MakeRelativePath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetDecimalChar() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  GetDecimalChar = Mid$(CStr(1.5), 2, 1)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetDecimalChar")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub CreateTextFile(Filename As String, Str1 As String, Optional OpenmodeAppend As Boolean = False)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim fn As Long
+50020  fn = FreeFile
+50030  If OpenmodeAppend Then
+50040    Open Filename For Append As #fn
+50050   Else
+50060    Open Filename For Output As #fn
+50070  End If
+50080  Print #fn, Str1
+50090  Close #fn
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "CreateTextFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub

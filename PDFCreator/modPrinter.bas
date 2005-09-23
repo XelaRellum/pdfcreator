@@ -108,10 +108,10 @@ Private Sub PrinterMonitor(InstallTyp As eInstall)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim res As Long, Monitor2 As MONITOR_INFO_2, tstr As String
+50010  Dim res As Long, Monitor2 As MONITOR_INFO_2, tStr As String
 50021  Select Case InstallTyp
         Case 0: ' Install
-50040    tstr = "Install"
+50040    tStr = "Install"
 50050    If IsPrinterMonitorInstalled(Monitorname) = False Then
 50060      With Monitor2
 50070       .pName = Monitorname & Chr$(0)
@@ -125,22 +125,22 @@ On Error GoTo ErrPtnr_OnError
 50150      End With
 50160      res = AddMonitor(vbNullString, 2, Monitor2)
 50170     Else
-50180      WriteLogfile "PrinterMonitor [" & tstr & "]: Printermonitor is already installed."
+50180      WriteLogfile "PrinterMonitor [" & tStr & "]: Printermonitor is already installed."
 50190      Exit Sub
 50200     End If
 50210   Case 1: ' UnInstall
-50220    tstr = "UnInstall"
+50220    tStr = "UnInstall"
 50230    If IsPrinterMonitorInstalled(Monitorname) = True Then
 50240      res = DeleteMonitor(vbNullString, vbNullString, Monitorname & vbNullString)
 50250     Else
-50260      WriteLogfile "PrinterMonitor [" & tstr & "]: Printermonitor is not installed."
+50260      WriteLogfile "PrinterMonitor [" & tStr & "]: Printermonitor is not installed."
 50270      Exit Sub
 50280    End If
 50290  End Select
 50300  If res = 0 Then
-50310    WriteLogfile "PrinterMonitor [" & tstr & "]: Error -> " & RaiseAPIError
+50310    WriteLogfile "PrinterMonitor [" & tStr & "]: Error -> " & RaiseAPIError
 50320   Else
-50330    WriteLogfile "PrinterMonitor [" & tstr & "]: Success"
+50330    WriteLogfile "PrinterMonitor [" & tStr & "]: Success"
 50340  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -158,11 +158,11 @@ Private Sub PrinterPort(InstallTyp As eInstall)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, B() As Byte, tstr As String, i As Integer, res As Long
+50010  Dim reg As clsRegistry, B() As Byte, tStr As String, i As Integer, res As Long
 50020  Set reg = New clsRegistry
 50031  Select Case InstallTyp
         Case 0: ' Install
-50050    tstr = "Install"
+50050    tStr = "Install"
 50060    If IsPrinterPortInstalled(Portname) = False Then
 50070      reg.hkey = HKEY_LOCAL_MACHINE
 50080      reg.KeyRoot = "System\CurrentControlSet\Control\Print\Monitors"
@@ -186,16 +186,16 @@ On Error GoTo ErrPtnr_OnError
 50260      reg.KeyRoot = vbNullString
 50270      reg.CreateKey "System\CurrentControlSet\Control\Print\Ports\" & Portname
 50280     Else
-50290      WriteLogfile "PrinterPort [" & tstr & "]: Printerport is already installed."
+50290      WriteLogfile "PrinterPort [" & tStr & "]: Printerport is already installed."
 50300      Exit Sub
 50310    End If
 50320    res = 1
 50330   Case 1: ' UnInstall
-50340    tstr = "UnInstall"
+50340    tStr = "UnInstall"
 50350    If IsPrinterPortInstalled(Portname) = True Then
 50360      res = DeletePort(vbNullString, 0, Portname & vbNullString)
 50370     Else
-50380      WriteLogfile "PrinterPort [" & tstr & "]: Printerport is not installed."
+50380      WriteLogfile "PrinterPort [" & tStr & "]: Printerport is not installed."
 50390      Exit Sub
 50400    End If
 50410 '   reg.hkey = HKEY_LOCAL_MACHINE
@@ -204,9 +204,9 @@ On Error GoTo ErrPtnr_OnError
 50440  End Select
 50450  Set reg = Nothing
 50460  If res = 0 Then
-50470    WriteLogfile "PrinterPort [" & tstr & "]: Error -> " & RaiseAPIError
+50470    WriteLogfile "PrinterPort [" & tStr & "]: Error -> " & RaiseAPIError
 50480   Else
-50490    WriteLogfile "PrinterPort [" & tstr & "]: Success"
+50490    WriteLogfile "PrinterPort [" & tStr & "]: Success"
 50500  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -230,10 +230,10 @@ On Error GoTo ErrPtnr_OnError
 50040  Dim bytDriverDirectoryBuffer() As Byte
 50050  Dim strDriverDirectory         As String * 512
 50060  Dim lngWin32apiResultCode      As Long
-50070  Dim tstr As String
+50070  Dim tStr As String
 50081  Select Case InstallTyp
         Case 0: ' Install
-50100    tstr = "Install"
+50100    tStr = "Install"
 50110    If IsPrinterDriverInstalled(DriverName) = False Then
 50120      lngDriverDirectoryLevel = 1
 50130      lngWin32apiResultCode = GetPrinterDriverDirectory(vbNullString, vbNullString, lngDriverDirectoryLevel, ByVal vbNullString, 0, lngDriverDirectoryNeeded)
@@ -270,22 +270,22 @@ On Error GoTo ErrPtnr_OnError
 50440
 50450      res = AddPrinterDriver(vbNullString, 3, DI3)
 50460     Else
-50470      WriteLogfile "PrinterDriver [" & tstr & "]: Printerdriver is already installed."
+50470      WriteLogfile "PrinterDriver [" & tStr & "]: Printerdriver is already installed."
 50480      Exit Sub
 50490    End If
 50500   Case 1: ' UnInstall
-50510    tstr = "UnInstall"
+50510    tStr = "UnInstall"
 50520    If IsPrinterDriverInstalled(DriverName) = True Then
 50530      res = DeletePrinterDriver(vbNullString, vbNullString, DriverName & vbNullString)
 50540     Else
-50550      WriteLogfile "PrinterDriver [" & tstr & "]: Printerdriver is not installed."
+50550      WriteLogfile "PrinterDriver [" & tStr & "]: Printerdriver is not installed."
 50560      Exit Sub
 50570    End If
 50580  End Select
 50590  If res = 0 Then
-50600    WriteLogfile "PrinterDriver [" & tstr & "]: Error -> " & RaiseAPIError
+50600    WriteLogfile "PrinterDriver [" & tStr & "]: Error -> " & RaiseAPIError
 50610   Else
-50620    WriteLogfile "PrinterDriver [" & tstr & "]: Success"
+50620    WriteLogfile "PrinterDriver [" & tStr & "]: Success"
 50630  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -304,10 +304,10 @@ Private Sub WindowsPrinter(InstallTyp As eInstall)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim res As Long, PI As PRINTER_INFO_2, pHandle As Long, _
-  pd As PRINTER_DEFAULTS, tstr As String, ini As clsINI
+  pd As PRINTER_DEFAULTS, tStr As String, ini As clsINI
 50031  Select Case InstallTyp
         Case 0: ' Install
-50050    tstr = "Install"
+50050    tStr = "Install"
 50060    If IsPrinterInstalled(Printername) = False Then
 50070      With PI
 50080       .pPrinterName = Printername & vbNullString
@@ -346,11 +346,11 @@ On Error GoTo ErrPtnr_OnError
 50410       Set ini = Nothing
 50420      End If
 50430     Else
-50440      WriteLogfile "Printer [" & tstr & "]: Printer is already installed."
+50440      WriteLogfile "Printer [" & tStr & "]: Printer is already installed."
 50450      Exit Sub
 50460    End If
 50470   Case 1: ' UnInstall
-50480    tstr = "UnInstall"
+50480    tStr = "UnInstall"
 50490    If IsPrinterInstalled(Printername) = True Then
 50500      With pd
 50510       .pDatatype = 0
@@ -367,14 +367,14 @@ On Error GoTo ErrPtnr_OnError
 50620       res = ClosePrinter(pHandle)
 50630      End If
 50640     Else
-50650      WriteLogfile "Printer [" & tstr & "]: Printer is not installed."
+50650      WriteLogfile "Printer [" & tStr & "]: Printer is not installed."
 50660      Exit Sub
 50670    End If
 50680  End Select
 50690  If res = 0 Then
-50700    WriteLogfile "Printer [" & tstr & "]: Error -> " & RaiseAPIError
+50700    WriteLogfile "Printer [" & tStr & "]: Error -> " & RaiseAPIError
 50710   Else
-50720    WriteLogfile "Printer [" & tstr & "]: Success"
+50720    WriteLogfile "Printer [" & tStr & "]: Success"
 50730  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -541,3 +541,35 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function GetPDFCreatorPrinters() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Printers As Collection, reg As clsRegistry, SubKeys As Collection, _
+  i As Long, j As Long
+50030  Set GetPDFCreatorPrinters = New Collection
+50040  Set Printers = GetAvailablePrinters2
+50050  Set reg = New clsRegistry
+50060  Set SubKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
+50070  For i = 1 To Printers.Count
+50080   For j = 1 To SubKeys.Count
+50090    If SubKeys(j) = Printers(i)(1) Then
+50100     GetPDFCreatorPrinters.Add Printers(i)(0)
+50110     Exit Function
+50120     End If
+50130    Next j
+50140  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPrinter", "GetPDFCreatorPrinters")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+

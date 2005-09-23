@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Public methods of the COM Interface</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Help</td>
+  </tr>
+  <tr>
+    <td background="../images/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Public methods of the COM Interface</p>
+      <p>The following public methods of the COM Interface are available.
+      <p>
+<table border="1" cellpadding="4" style="border-collapse:collapse;empty-cells:show;">
+<tr><th>Functions</th></tr><tr><td nowrap>
+Public Function cClose() As Boolean<br>
+Public Function cCloseRunningSession() As Boolean<br>
+Public Function cGetLogfile() As String<br>
+Public Function cGetPDFCreatorPrinters() As Collection<br>
+Public Function cIsPrintable(ByVal Filename As String) As Boolean<br>
+Public Function cReadOptions() As clsPDFCreatorOptions<br>
+Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions<br>
+Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean<br>
+</td></tr></table></p>
+<p>
+<table border="1" cellpadding="4" style="border-collapse:collapse;empty-cells:show;">
+<tr><th>Subroutines</th></tr><tr><td nowrap>
+Public Sub cClearCache()<br>
+Public Sub cClearLogfile()<br>
+Public Sub cCombineAll()<br>
+Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String)<br>
+Public Sub cDeletePrintjob(ByVal JobNumber As Long)<br>
+Public Sub cMovePrintjobBottom(ByVal JobNumber As Long)<br>
+Public Sub cMovePrintjobDown(ByVal JobNumber As Long)<br>
+Public Sub cMovePrintjobTop(ByVal JobNumber As Long)<br>
+Public Sub cMovePrintjobUp(ByVal JobNumber As Long)<br>
+Public Sub cPrintFile(ByVal Filename As String)<br>
+Public Sub cPrintPDFCreatorTestpage()<br>
+Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)<br>
+Public Sub cSaveOptions(ByVal Options1 As Variant) '<span style="color:green"> Options1 must be a clsPDFCreatorOptions type<br></span>
+Public Sub cSaveOptionsToFile(ByVal Options1 As Variant, ByVal INIFilename As String) '<span style="color:green"> Options1 must be a clsPDFCreatorOptions type<br></span>
+Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)<br>
+Public Sub cShowLogfileDialog(ByVal Value As Boolean)<br>
+Public Sub cShowOptionsDialog(ByVal Value As Boolean)<br>
+Public Sub cTestEvent(ByVal EventName As String)<br>
+Public Sub cWriteToLogfile(ByVal LogStr As String)<br>
+</td></tr></table></p>
+      </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

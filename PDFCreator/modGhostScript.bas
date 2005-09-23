@@ -12,6 +12,7 @@ Public Enum tGhostscriptDevice
  TIFFWriter = 5
  PSWriter = 6
  EPSWriter = 7
+ TXTWriter = 8
 End Enum
 
 Private GSParams() As String
@@ -113,6 +114,8 @@ Public Type EncryptData
  EncryptionLevel As EncryptionStrength
 End Type
 '** End Declarations for Encrypt PDF
+
+Public GS_OutStr As String
 
 Private ParamCommands As Collection
 
@@ -829,6 +832,48 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Private Function CreateTXT(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50080  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50090   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50100  End If
+50110  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50120   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50130  End If
+50140  AddParams "-I" & tStr
+50150  AddParams "-q"
+50160  AddParams "-dNOPAUSE"
+50170  AddParams "-dSAFER"
+50180  AddParams "-dBATCH"
+50190  AddParams "-dNODISPLAY"
+50200  AddParams "-dDELAYBIND"
+50210  AddParams "-dWRITESYSTEMDICT"
+50220  AddParams "-dSIMPLE"
+50230  AddParams "ps2ascii.ps"
+50240  AddParams GSInputFile
+50250  ShowParams
+50260  CallGhostscript "TXT"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateTXT")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function CallGScript(GSInputFile As String, GSOutputFile As String, _
  Options As tOptions, Ghostscriptdevice As tGhostscriptDevice)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -887,7 +932,10 @@ On Error GoTo ErrPtnr_OnError
 50510    CreatePS GSInputFile, GSOutputFile, Options
 50520   Case 7: 'EPS
 50530    CreateEPS GSInputFile, GSOutputFile, Options
-50540  End Select
+50540   Case 8: 'TXT
+50550    CreateTXT GSInputFile, GSOutputFile, Options
+50560    CreateTextFile GSOutputFile, GS_OutStr
+50570  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -938,26 +986,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
-Public Sub ReturnValue(Data As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim newData As String
-50020  newData = Replace(Data, vbLf, "; ")
-50030  IfLoggingWriteLogfile "Error: " & newData
-50040 ' IfLoggingShowLogfile frmLog, frmMain
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "ReturnValue")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
 
 Public Function Bool2Text(Number As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1072,9 +1100,9 @@ On Error GoTo ErrPtnr_OnError
 50040   Case 1
 50050    GS_COMPRESSMONOMETHOD = "FlateEncode"
 50060   Case 2
-50070    GS_COMPRESSMONOMETHOD = "LZWEncode"
+50070    GS_COMPRESSMONOMETHOD = "RunLengthEncode"
 50080   Case 3
-50090    GS_COMPRESSMONOMETHOD = "RunLengthEncode"
+50090    GS_COMPRESSMONOMETHOD = "LZWEncode"
 50100  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1320,11 +1348,11 @@ On Error GoTo ErrPtnr_OnError
 50080        AddParams "-dDownsampleColorImages=true"
 50091        Select Case Options.PDFCompressionColorResampleChoice
               Case 0:
-50110          AddParams "-dColorImageDownsampleType=/Bicubic"
+50110          AddParams "-dColorImageDownsampleType=/Subsample"
 50120         Case 1:
-50130          AddParams "-dColorImageDownsampleType=/Subsample"
+50130          AddParams "-dColorImageDownsampleType=/Average"
 50140         Case 2:
-50150          AddParams "-dColorImageDownsampleType=/Average"
+50150          AddParams "-dColorImageDownsampleType=/Bicubic"
 50160        End Select
 50170        AddParams "-dColorImageResolution=" & Options.PDFCompressionColorResolution
 50180       Else
@@ -1333,28 +1361,38 @@ On Error GoTo ErrPtnr_OnError
 50211      Select Case Options.PDFCompressionColorCompressionChoice
             Case 1:
 50230        AddParams "-dColorImageFilter=/DCTEncode"
-50240        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor 2 /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
-50250       Case 2:
-50260        AddParams "-dColorImageFilter=/DCTEncode"
-50270        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor 0.9 /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
-50280       Case 3:
-50290        AddParams "-dColorImageFilter=/DCTEncode"
-50300        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor 0.5 /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
-50310       Case 4:
-50320        AddParams "-dColorImageFilter=/DCTEncode"
-50330        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor 0.25 /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
-50340       Case 5:
-50350        AddParams "-dColorImageFilter=/DCTEncode"
-50360        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor 0.1 /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
-50370       Case 6:
-50380        AddParams "-dColorImageFilter=/FlateEncode"
-50390       Case 7:
-50400        AddParams "-dColorImageFilter=/LZWEncode"
-50410      End Select
-50420    End If
-50430   Else
-50440    AddParams "-dEncodeColorImages=false"
-50450  End If
+50240        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionColorCompressionJPEGMaximumFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50270       Case 2:
+50280        AddParams "-dColorImageFilter=/DCTEncode"
+50290        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionColorCompressionJPEGHighFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50320       Case 3:
+50330        AddParams "-dColorImageFilter=/DCTEncode"
+50340        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionColorCompressionJPEGMediumFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50370       Case 4:
+50380        AddParams "-dColorImageFilter=/DCTEncode"
+50390        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionColorCompressionJPEGLowFactor), GetDecimalChar, ".") & _
+        " /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
+50420       Case 5:
+50430        AddParams "-dColorImageFilter=/DCTEncode"
+50440        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor " & _
+       Replace$(CStr(Options.PDFCompressionColorCompressionJPEGMinimumFactor), GetDecimalChar, ".") & _
+       " /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
+50470       Case 6:
+50480        AddParams "-dColorImageFilter=/FlateEncode"
+50490       Case 7:
+50500        AddParams "-dColorImageFilter=/LZWEncode"
+50510      End Select
+50520    End If
+50530   Else
+50540    AddParams "-dEncodeColorImages=false"
+50550  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1381,11 +1419,11 @@ On Error GoTo ErrPtnr_OnError
 50080        AddParams "-dDownsampleGrayImages=true"
 50091        Select Case Options.PDFCompressionGreyResampleChoice
               Case 0:
-50110          AddParams "-dGrayImageDownsampleType=/Bicubic"
+50110          AddParams "-dGrayImageDownsampleType=/Subsample"
 50120         Case 1:
-50130          AddParams "-dGrayImageDownsampleType=/Subsample"
+50130          AddParams "-dGrayImageDownsampleType=/Average"
 50140         Case 2:
-50150          AddParams "-dGrayImageDownsampleType=/Average"
+50150          AddParams "-dGrayImageDownsampleType=/Bicubic"
 50160        End Select
 50170        AddParams "-dGrayImageResolution=" & Options.PDFCompressionGreyResolution
 50180       Else
@@ -1394,28 +1432,38 @@ On Error GoTo ErrPtnr_OnError
 50211      Select Case Options.PDFCompressionGreyCompressionChoice
             Case 1:
 50230        AddParams "-dGrayImageFilter=/DCTEncode"
-50240        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor 2 /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
-50250       Case 2:
-50260        AddParams "-dGrayImageFilter=/DCTEncode"
-50270        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor 0.9 /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
-50280       Case 3:
-50290        AddParams "-dGrayImageFilter=/DCTEncode"
-50300        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor 0.5 /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
-50310       Case 4:
-50320        AddParams "-dGrayImageFilter=/DCTEncode"
-50330        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor 0.25 /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
-50340       Case 5:
-50350        AddParams "-dGrayImageFilter=/DCTEncode"
-50360        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor 0.1 /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
-50370       Case 6:
-50380        AddParams "-dGrayImageFilter=/FlateEncode"
-50390       Case 7:
-50400        AddParams "-dGrayImageFilter=/LZWEncode"
-50410      End Select
-50420    End If
-50430   Else
-50440    AddParams "-dEncodeGrayImages=false"
-50450  End If
+50240        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionGreyCompressionJPEGMaximumFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50270       Case 2:
+50280        AddParams "-dGrayImageFilter=/DCTEncode"
+50290        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionGreyCompressionJPEGHighFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50320       Case 3:
+50330        AddParams "-dGrayImageFilter=/DCTEncode"
+50340        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionGreyCompressionJPEGMediumFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50370       Case 4:
+50380        AddParams "-dGrayImageFilter=/DCTEncode"
+50390        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionGreyCompressionJPEGLowFactor), GetDecimalChar, ".") & _
+        " /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
+50420       Case 5:
+50430        AddParams "-dGrayImageFilter=/DCTEncode"
+50440        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor " & _
+       Replace$(CStr(Options.PDFCompressionGreyCompressionJPEGMinimumFactor), GetDecimalChar, ".") & _
+       " /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
+50470       Case 6:
+50480        AddParams "-dGrayImageFilter=/FlateEncode"
+50490       Case 7:
+50500        AddParams "-dGrayImageFilter=/LZWEncode"
+50510      End Select
+50520    End If
+50530   Else
+50540    AddParams "-dEncodeGrayImages=false"
+50550  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1440,19 +1488,19 @@ On Error GoTo ErrPtnr_OnError
 50060     Case 1:
 50070      AddParams "-dMonoImageFilter=/FlateEncode"
 50080     Case 2:
-50090      AddParams "-dMonoImageFilter=/LZWEncode"
+50090      AddParams "-dMonoImageFilter=/RunLengthEncode"
 50100     Case 3:
-50110      AddParams "-dMonoImageFilter=/RunLengthEncode"
+50110      AddParams "-dMonoImageFilter=/LZWEncode"
 50120    End Select
 50130    If Options.PDFCompressionMonoResample = 1 Then
 50140      AddParams "-dDownsampleMonoImages=true"
 50151      Select Case Options.PDFCompressionMonoResampleChoice
             Case 0:
-50170        AddParams "-dMonoImageDownsampleType=/Bicubic"
+50170        AddParams "-dMonoImageDownsampleType=/Subsample"
 50180       Case 1:
-50190        AddParams "-dMonoImageDownsampleType=/Subsample"
+50190        AddParams "-dMonoImageDownsampleType=/Average"
 50200       Case 2:
-50210        AddParams "-dMonoImageDownsampleType=/Average"
+50210        AddParams "-dMonoImageDownsampleType=/Bicubic"
 50220      End Select
 50230      AddParams "-dMonoImageResolution=" & Options.PDFCompressionMonoResolution
 50240     Else
@@ -1738,24 +1786,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-
-Public Function GetTestpageFromRessource() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetTestpageFromRessource = _
-  Replace(StrConv(LoadResData(101, "TESTPAGE"), vbUnicode), vbCrLf, vbLf, , , vbBinaryCompare)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "GetTestpageFromRessource")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
 
 Private Sub AddAdditionalGhostscriptParameters()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

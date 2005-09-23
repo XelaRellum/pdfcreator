@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>&Ouml;ffentliche Eigenschaften der COM-Schnittstelle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Hilfe</td>
+  </tr>
+  <tr>
+    <td background="../images/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">&Ouml;ffentliche Eigenschaften der COM-Schnittstelle</p>
+      <p>Folgende &ouml;ffentlichen Eigenschaften der COM-Schnittstelle sind verf&uuml;gbar.
+<p>
+<table border="1" cellpadding="4" style="border-collapse:collapse;empty-cells:show;">
+<tr><th>Properties</th></tr><tr><td nowrap>
+Public Property Get cCountOfPrintjobs() As Long<br>
+Public Property Get cDefaultPrinter() As String<br>
+Public Property Let cDefaultPrinter(ByVal Printername As String)<br>
+Public Property Get cError() As clsPDFCreatorError<br>
+Public Property Get cErrorDetail(ByVal PropertyName As String) As Variant<br>
+Public Property Get cInstalledAsServer() As Boolean<br>
+Public Property Get cIsLogfileDialogDisplayed() As Boolean<br>
+Public Property Get cIsOptionsDialogDisplayed() As Boolean<br>
+Public Property Get cOption(ByVal PropertyName As String) As Variant<br>
+Public Property Let cOption(ByVal PropertyName As String, ByVal Value As Variant)<br>
+Public Property Get cOptions() As clsPDFCreatorOptions<br>
+Public Property Set cOptions(ByVal Options1 As clsPDFCreatorOptions)<br>
+Public Property Get cOptionsNames() As Collection<br>
+Public Property Get cOutputFilename() As String<br>
+Public Property Get cPDFCreatorApplicationPath() As String<br>
+Public Property Get cPrinterStop() As Boolean<br>
+Public Property Let cPrinterStop(ByVal Value As Boolean)<br>
+Public Property Get cPrintjobFilename(ByVal JobNumber As Long) As String<br>
+Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String<br>
+Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile<br>
+Public Property Get cProgramIsRunning() As Boolean<br>
+Public Property Get cProgramRelease(Optional ByVal WithBeta As Boolean = True) As String<br>
+Public Property Get cStandardOption(ByVal PropertyName As String) As Variant<br>
+Public Property Get cStandardOptions() As clsPDFCreatorOptions<br>
+Public Property Get cVisible() As Boolean<br>
+Public Property Let cVisible(ByVal Value As Boolean)<br>
+Public Property Get cWindowsVersion() As String<br>
+</td></tr></table></p>
+      </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

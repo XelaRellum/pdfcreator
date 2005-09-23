@@ -182,7 +182,7 @@ On Error GoTo ErrPtnr_OnError
 50170  End If
 50180
 50190  If Default = 0 Then
-50200    Retrieve = -1
+50200    Retrieve = ""
 50210   Else
 50220    Retrieve = Default
 50230  End If

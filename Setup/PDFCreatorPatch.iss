@@ -132,16 +132,16 @@ Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversi
 
 ; Scripts
 ; Scripts: RunProgramAfterSaving
-Source: ..\Scripts\RunProgramAfterSaving\AddWatermarkToPDF.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
-Source: ..\Scripts\RunProgramAfterSaving\FTPUpload.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
-Source: ..\Scripts\RunProgramAfterSaving\Logger.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
-Source: ..\Scripts\RunProgramAfterSaving\Watermark.pdf; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
-Source: ..\Scripts\RunProgramAfterSaving\NetSend.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
-Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
-Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
-Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramAfterSaving\AddWatermarkToPDF.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
+Source: ..\Scripts\RunProgramAfterSaving\FTPUpload.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
+Source: ..\Scripts\RunProgramAfterSaving\Logger.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
+Source: ..\Scripts\RunProgramAfterSaving\Watermark.pdf; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
+Source: ..\Scripts\RunProgramAfterSaving\NetSend.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
+Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
+Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
+Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
 ; Scripts: RunProgramBeforSaving
-Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Flags: ignoreversion comparetimestamp
+Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Flags: ignoreversion onlyifdoesntexist
 
 [InstallDelete]
 Name: {sys}\PDFSpooler.exe; Type: files
@@ -161,6 +161,7 @@ Filename: {app}\vblocal.Exe; WorkingDir: {sys}; Parameters: pdfspooler.exe vb6fr
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Check: IsLanguage('french')
 #ENDIF
+Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: /RegServer; Flags: nowait
 
 [Languages]
 #include "languages.inc"

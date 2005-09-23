@@ -222,7 +222,7 @@ Option Explicit
 
 Private SaveFilename As String, SaveFilterIndex As Long
 
-Private PSHeader As tPSHeader
+Private PSHeader As tPSHeader, FirstFormActivate As Boolean
 
 Private Sub chkStartStandardProgram_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -398,6 +398,26 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub Form_Activate()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If FirstFormActivate = False Then
+50020   txtTitle.SetFocus
+50030   FirstFormActivate = True
+50040  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "Form_Activate")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -506,9 +526,13 @@ On Error GoTo ErrPtnr_OnError
 50820   cmdEMail.Enabled = False
 50830  End If
 50840  Height = cmdWaiting.Top + cmdWaiting.Height + (Height - ScaleHeight) + 100
-50850  SetTopMost Me, True, True
-50860  SetTopMost Me, False, True
-50870  SetActiveWindow hwnd
+50850  With txtTitle
+50860   .SelStart = 0
+50870   .SelLength = Len(.Text)
+50880  End With
+50890  SetTopMost Me, True, True
+50900  SetTopMost Me, False, True
+50910  SetActiveWindow hwnd
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -841,9 +865,10 @@ On Error GoTo ErrPtnr_OnError
 50310      OpenDocument PDFFile
 50320    End If
 50330   End If
-50340   KillFile PDFSpoolfile
-50350   KillInfoSpoolfile PDFSpoolfile
-50360  End If
+50340
+50350   KillFile PDFSpoolfile
+50360   KillInfoSpoolfile PDFSpoolfile
+50370  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -873,6 +898,9 @@ Private Function Create_eDoc() As String
    .PrintingPSFiles & " (*.ps)|*.ps|" & _
    .PrintingEPSFiles & " (*.eps)|*.eps"
  End With
+ If IsInIDE Then
+  Filter = Filter & "|(*.txt)|*.txt"
+ End If
  FilterIndex = 1
  If InStr(1, Filter, "|", vbTextCompare) > 0 Then
   tStrf = Split(Filter, "|")
@@ -897,7 +925,7 @@ Private Function Create_eDoc() As String
    Else
     SaveFilename = ReplaceForbiddenChars(txtTitle.Text)
   End If
-  Set Files = GetFilename(SaveFilename, Options.LastSaveDirectory, FilterIndex, Filter, SaveFile, Cancel, Me)
+  Set Files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
   If SaveOpenCancel = True Then
    Exit Function
   End If
@@ -924,7 +952,7 @@ Private Function Create_eDoc() As String
  OutputFile = Trim$(SaveFilename)
  SplitPath OutputFile, , Path
  Options.LastSaveDirectory = Path
- SaveOptions Options
+ SaveOption Options, "LastSaveDirectory"
  frmMain.SetSystrayIcon 3
  If Options.ShowAnimation = 1 Then
    ShowAnimation True
@@ -975,6 +1003,8 @@ Private Function Create_eDoc() As String
    CallGScript PDFSpoolfile, OutputFile, Options, PSWriter
   Case 8:
    CallGScript PDFSpoolfile, OutputFile, Options, EPSWriter
+  Case 9:
+   CallGScript PDFSpoolfile, OutputFile, Options, TXTWriter
  End Select
  Create_eDoc = OutputFile
  CheckForPrintingAfterSaving PDFSpoolfile, Options
@@ -983,6 +1013,8 @@ Private Function Create_eDoc() As String
  If Options.ShowAnimation = 1 Then
   ShowAnimation False
  End If
+ ConvertedOutputFilename = OutputFile
+ ReadyConverting = True
  frmMain.SetSystrayIcon 2
  frmMain.Timer1.Enabled = True
  Exit Function

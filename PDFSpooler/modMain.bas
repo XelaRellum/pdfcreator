@@ -220,42 +220,41 @@ On Error GoTo ErrPtnr_OnError
 50170     enableSpecialLogging = True
 50180    Else
 50190     enableSpecialLogging = False
-50200     enableSpecialLogging = True
-50210   End If
-50220   cSwitch = CommandSwitch("SL", True)
-50230   If LenB(cSwitch) > 0 Then
-50240    If IsNumeric(cSwitch) = True Then
-50250     SleepTime = CLng(cSwitch)
-50260    End If
-50270   End If
-50280   If UCase$(CommandSwitch("ST", False)) = "TRUE" Then
-50290     StartPDFCreatorProgram = True
-50300    Else
-50310     StartPDFCreatorProgram = False
-50320   End If
-50330   If UCase$(CommandSwitch("P", False)) = "PDFCREATORPRINTER" Then
-50340     PDFCreatorPrinter = True
-50350    Else
-50360     PDFCreatorPrinter = False
-50370   End If
-50380   cSwitch = CommandSwitch("OPTIONSFILE", True)
-50390   If LenB(cSwitch) > 0 Then
-50400    If FileExists(cSwitch) = True Then
-50410     Optionsfile = cSwitch
-50420    End If
-50430   End If
-50440   ' Check running instance
-50450   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
-50460     CheckInstance = True
-50470    Else
-50480     CheckInstance = False
-50490   End If
-50500   If UCase$(CommandSwitch("NO", False)) = "START" Then
-50510     NoStart = True
-50520    Else
-50530     NoStart = False
-50540   End If
-50550  End If
+50200   End If
+50210   cSwitch = CommandSwitch("SL", True)
+50220   If LenB(cSwitch) > 0 Then
+50230    If IsNumeric(cSwitch) = True Then
+50240     SleepTime = CLng(cSwitch)
+50250    End If
+50260   End If
+50270   If UCase$(CommandSwitch("ST", False)) = "TRUE" Then
+50280     StartPDFCreatorProgram = True
+50290    Else
+50300     StartPDFCreatorProgram = False
+50310   End If
+50320   If UCase$(CommandSwitch("P", False)) = "PDFCREATORPRINTER" Then
+50330     PDFCreatorPrinter = True
+50340    Else
+50350     PDFCreatorPrinter = False
+50360   End If
+50370   cSwitch = CommandSwitch("OPTIONSFILE", True)
+50380   If LenB(cSwitch) > 0 Then
+50390    If FileExists(cSwitch) = True Then
+50400     Optionsfile = cSwitch
+50410    End If
+50420   End If
+50430   ' Check running instance
+50440   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
+50450     CheckInstance = True
+50460    Else
+50470     CheckInstance = False
+50480   End If
+50490   If UCase$(CommandSwitch("NO", False)) = "START" Then
+50500     NoStart = True
+50510    Else
+50520     NoStart = False
+50530   End If
+50540  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

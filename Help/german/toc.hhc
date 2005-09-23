@@ -174,6 +174,31 @@
 		</UL>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="COM-Schnittstelle">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Einleitung">
+			<param name="Local" value="html\cominterface.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Ouml;ffentliche Klassen">
+			<param name="Local" value="html\comclasses.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Ouml;ffentliche Eigenschaften">
+			<param name="Local" value="html\comproperties.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Ouml;ffentliche Methoden">
+			<param name="Local" value="html\commethods.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Ouml;ffentliche Ereignisse">
+			<param name="Local" value="html\comevents.htm">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Das &Uuml;bersetzungsprogramm &quot;TransTool&quot;">
 		</OBJECT>
 	<UL>
