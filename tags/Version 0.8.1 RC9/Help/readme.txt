@@ -1,0 +1,2 @@
+Use the Microsoft HTML Workshop 1.3 (or 1.4) from Microsoft to compile the source help files.
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
