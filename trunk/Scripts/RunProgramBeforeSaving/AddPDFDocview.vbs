@@ -41,7 +41,7 @@ f.WriteLine "[ /PageMode /UseNone /Page 1 /View [/Fit] /DOCVIEW pdfmark"
 ' f.writeline "[ {Catalog} << PageLayout /TwoColumnRight >> /PUT pdfmark"
 
 ' Define the viewer preferences (HideToolbar, HideMenubar, HideWindowUI, FitWindow, CenterWindow, NonFullScreenPageMode, DisplayDocTitle, Direction (L2R, R2L))
-f.writeline "[ {Catalog} << /ViewerPreferences << /HideToolbar true /HideWindowUI true  /HideMenubar true >> >> /PUT pdfmark"
+f.writeline "[ {Catalog} << /ViewerPreferences << /HideToolbar true /HideWindowUI true /HideMenubar true >> >> /PUT pdfmark"
 
 f.WriteLine "%%EOF"
 f.Close
