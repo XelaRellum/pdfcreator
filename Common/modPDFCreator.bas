@@ -352,21 +352,25 @@ Public Sub ClearCache()
  Dim cFiles As Collection, tStr As String, i As Long, tStrf() As String
  tStr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
  If DirExists(tStr) = True Then
-  Call FindFiles(tStr, cFiles, "~P*.tmp", , True)
+  Call FindFiles(tStr, cFiles, "~P*.tmp", , True, True)
   For i = 1 To cFiles.Count
    If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
     tStrf = Split(cFiles(i), "|")
     If UBound(tStrf) >= 1 Then
-     Kill tStrf(1)
+     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
+      Kill tStrf(1)
+     End If
     End If
    End If
   Next i
-  Call FindFiles(tStr, cFiles, "~P*.inf", , True)
+  Call FindFiles(tStr, cFiles, "~P*.inf", , True, True)
   For i = 1 To cFiles.Count
    If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
     tStrf = Split(cFiles(i), "|")
     If UBound(tStrf) >= 1 Then
-     Kill tStrf(1)
+     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
+      Kill tStrf(1)
+     End If
     End If
    End If
   Next i
