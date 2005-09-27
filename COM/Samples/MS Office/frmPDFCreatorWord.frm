@@ -6,6 +6,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmPDFCreator
    ClientTop       =   435
    ClientWidth     =   7485
    OleObjectBlob   =   "frmPDFCreatorWord.frx":0000
+   ShowModal       =   0   'False
    StartUpPosition =   1  'Fenstermitte
 End
 Attribute VB_Name = "frmPDFCreator"
@@ -18,20 +19,20 @@ Option Explicit
 Private Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 
 ' Add a reference to PDFCreator
-Private WithEvents _PDFCreator As PDFCreator.clsPDFCreator
-Attribute PDFCreator.VB_VarHelpID = -1
+Private WithEvents PDFCreator1 As PDFCreator.clsPDFCreator
+Attribute PDFCreator1.VB_VarHelpID = -1
 
 Private ReadyState As Boolean, DefaultPrinter As String
 
 Private Sub CommandButton1_Click()
  Dim outName As String
- AddStatus "Satus: Start ..."
+ AddStatus "Start ..."
  If InStr(1, ActiveDocument.Name, ".", vbTextCompare) > 1 Then
    outName = Mid(ActiveDocument.Name, 1, InStr(1, ActiveDocument.Name, ".", vbTextCompare) - 1)
   Else
    outName = ActiveDocument.Name
  End If
- With _PDFCreator
+ With PDFCreator1
   .cOption("UseAutosave") = 1
   .cOption("UseAutosaveDirectory") = 1
   .cOption("AutosaveDirectory") = ActiveDocument.Path
@@ -45,12 +46,12 @@ Private Sub CommandButton1_Click()
  End With
 End Sub
 
-Private Sub _PDFCreator_eError()
- AddStatus "ERROR [" & _PDFCreator.cErrorDetail("Number") & "]: " & _PDFCreator.cErrorDetail("Description")
+Private Sub PDFCreator1_eError()
+ AddStatus "ERROR [" & PDFCreator1.cErrorDetail("Number") & "]: " & PDFCreator1.cErrorDetail("Description")
 End Sub
 
-Private Sub _PDFCreator_eReady()
- AddStatus "File'" & _PDFCreator.cOutputFilename & "' was saved."
+Private Sub PDFCreator1_eReady()
+ AddStatus "File'" & PDFCreator1.cOutputFilename & "' was saved."
 End Sub
 
 Private Sub UserForm_Initialize()
@@ -58,8 +59,8 @@ Private Sub UserForm_Initialize()
   MsgBox "Please save the document first!", vbExclamation
   End
  End If
- Set _PDFCreator = New clsPDFCreator
- With _PDFCreator
+ Set PDFCreator1 = New clsPDFCreator
+ With PDFCreator1
   If .cStart("/NoProcessingAtStartup") = False Then
    CommandButton1.Enabled = False
    AddStatus "Can't initialize PDFCreator."
@@ -93,8 +94,8 @@ End Sub
 
 Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
  SetPrinter DefaultPrinter
- _PDFCreator.cClose
- Set _PDFCreator = Nothing
+ PDFCreator1.cClose
+ Set PDFCreator1 = Nothing
  Sleep 250
  DoEvents
 End Sub
