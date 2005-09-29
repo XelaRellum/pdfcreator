@@ -818,7 +818,7 @@ On Error GoTo ErrPtnr_OnError
 50320    Version = .GetRegistryValue("ApplicationVersion")
 50330   End With
 50340   Set reg = Nothing
-50350   Caption = App.Title & " " & GetProgramReleaseStr & " " & .CommonTitle
+50350   Caption = App.Title & " - " & .CommonTitle
 50360
 50370   mnPrinterMain.Caption = .DialogPrinter
 50380   mnPrinter(0).Caption = .DialogPrinterPrinterStop

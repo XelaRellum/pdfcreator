@@ -87,6 +87,8 @@
 #define PDFSpoolerVersion    GetFileVersionVBExe("..\PDFSpooler\PDFSpooler.exe")
 #define TransToolVersion     GetFileVersionVBExe("..\Transtool\Transtool.exe")
 
+#define ReleaseCandidate     "9"
+
 #define BetaVersion          ""
 
 #IF (BetaVersion!="")
@@ -526,7 +528,14 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: URLInfoAbo
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: URLUpdateInfo; Valuedata: {#SourceforgeHomepage}; Flags: uninsdeletevalue
 
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ApplicationVersion; Valuedata: {#AppVersion}; Flags: uninsdeletevalue
+#IF (BetaVersion!="")
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: BetaVersion; Valuedata: {#BetaVersion}; Flags: uninsdeletevalue
+#ENDIF
+#IF (ReleaseCandidate!="")
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ReleaseCandidate; Valuedata: {#ReleaseCandidate}; Flags: uninsdeletevalue
+#ENDIF
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PatchLevel; Valuedata: ; Flags: uninsdeletevalue
+
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFCreatorVersion; Valuedata: {#PDFCreatorVersion}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFSpoolerVersion; Valuedata: {#PDFSpoolerVersion}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: TranstoolVersion; Valuedata: {#TranstoolVersion}; Flags: uninsdeletevalue

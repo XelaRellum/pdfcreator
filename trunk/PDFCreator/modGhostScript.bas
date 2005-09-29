@@ -1285,43 +1285,45 @@ On Error GoTo ErrPtnr_OnError
 50050
 50060  If Len(Options.PDFOwnerPasswordString) > 0 Then
 50070    encData.OwnerPass = Options.PDFOwnerPasswordString
-50080    encData.UserPass = Options.PDFUserPasswordString
-50090    OwnerPassword = Options.PDFOwnerPasswordString
-50100    UserPassword = Options.PDFUserPasswordString
-50110    retPasswd = True
-50120   Else
-50130    If SavePasswordsForThisSession = False Then
-50140      If Options.UseAutosave = 0 Then
-50150        retPasswd = EnterPasswords(encData.UserPass, encData.OwnerPass, frmPassword)
-50160       Else
-50170        retPasswd = False
-50180      End If
-50190     Else
-50200      encData.OwnerPass = OwnerPassword: encData.UserPass = UserPassword
-50210    End If
-50220  End If
-50230  If retPasswd = True Or SavePasswordsForThisSession = True Then
-50240    With encData
-50250     .DisallowPrinting = Options.PDFDisallowPrinting
-50260     .DisallowModifyContents = Options.PDFDisallowModifyContents
-50270     .DisallowCopy = Options.PDFDisallowCopy
-50280     .DisallowModifyAnnotations = Options.PDFDisallowModifyAnnotations
-50290     .AllowFillIn = Options.PDFAllowFillIn
-50300     .AllowScreenReaders = Options.PDFAllowScreenReaders
-50310     .AllowAssembly = Options.PDFAllowAssembly
-50320     .AllowDegradedPrinting = Options.PDFAllowDegradedPrinting
-50330     If Options.PDFHighEncryption = 1 Then
-50340       .EncryptionLevel = encStrong
-50350      Else
-50360       .EncryptionLevel = encLow
-50370     End If
-50380    End With
-50390    SetEncryptionParams = True
-50400    encData.UserPass = UserPassword
-50410    encData.OwnerPass = OwnerPassword
-50420   Else
-50430    SetEncryptionParams = False
-50440  End If
+50080    OwnerPassword = Options.PDFOwnerPasswordString
+50090    If Options.PDFUserPass = 1 Then
+50100     encData.UserPass = Options.PDFUserPasswordString
+50110     UserPassword = Options.PDFUserPasswordString
+50120    End If
+50130    retPasswd = True
+50140   Else
+50150    If SavePasswordsForThisSession = False Then
+50160      If Options.UseAutosave = 0 Then
+50170        retPasswd = EnterPasswords(encData.UserPass, encData.OwnerPass, frmPassword)
+50180       Else
+50190        retPasswd = False
+50200      End If
+50210     Else
+50220      encData.OwnerPass = OwnerPassword: encData.UserPass = UserPassword
+50230    End If
+50240  End If
+50250  If retPasswd = True Or SavePasswordsForThisSession = True Then
+50260    With encData
+50270     .DisallowPrinting = Options.PDFDisallowPrinting
+50280     .DisallowModifyContents = Options.PDFDisallowModifyContents
+50290     .DisallowCopy = Options.PDFDisallowCopy
+50300     .DisallowModifyAnnotations = Options.PDFDisallowModifyAnnotations
+50310     .AllowFillIn = Options.PDFAllowFillIn
+50320     .AllowScreenReaders = Options.PDFAllowScreenReaders
+50330     .AllowAssembly = Options.PDFAllowAssembly
+50340     .AllowDegradedPrinting = Options.PDFAllowDegradedPrinting
+50350     If Options.PDFHighEncryption = 1 Then
+50360       .EncryptionLevel = encStrong
+50370      Else
+50380       .EncryptionLevel = encLow
+50390     End If
+50400    End With
+50410    SetEncryptionParams = True
+50420    encData.UserPass = UserPassword
+50430    encData.OwnerPass = OwnerPassword
+50440   Else
+50450    SetEncryptionParams = False
+50460  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

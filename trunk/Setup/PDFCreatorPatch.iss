@@ -48,6 +48,8 @@
 
 #define BetaVersion          "0"
 
+#define PatchLevel           "1"
+
 #define AppVersionStr        AppVersion
 #define SetupAppVersionStr   SetupAppVersion
 
@@ -114,8 +116,10 @@ Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
 Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Flags: comparetimestamp
 
-Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists
-Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+Source: ..\PDFCreator\Languages\portuguesept.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
 
 ;vblocal.exe from IPDK
 Source: C:\IPDK\vblocal.exe; DestDir: {app}; Flags: deleteafterinstall overwritereadonly onlyifdoesntexist ignoreversion
@@ -123,25 +127,11 @@ Source: C:\IPDK\vblocal.exe; DestDir: {app}; Flags: deleteafterinstall overwrite
 ; help files
 Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Flags: ignoreversion
 Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversion
-
-;upx for compressing
-#ifdef UseUPX
- ; Source: UPX\upx.exe; DestDir: {app}; Flags: deleteafterinstall overwritereadonly ignoreversion
 #ENDIF
-#Endif
 
-; Scripts
-; Scripts: RunProgramAfterSaving
-Source: ..\Scripts\RunProgramAfterSaving\AddWatermarkToPDF.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-Source: ..\Scripts\RunProgramAfterSaving\FTPUpload.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-Source: ..\Scripts\RunProgramAfterSaving\Logger.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-Source: ..\Scripts\RunProgramAfterSaving\Watermark.pdf; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-Source: ..\Scripts\RunProgramAfterSaving\NetSend.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Flags: ignoreversion onlyifdoesntexist
-; Scripts: RunProgramBeforSaving
-Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Flags: ignoreversion onlyifdoesntexist
+[Registry]
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PatchLevel; Valuedata: {#PatchLevel}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ReleaseCandidate; Valuedata: 9; Flags: uninsdeletevalue
 
 [InstallDelete]
 Name: {sys}\PDFSpooler.exe; Type: files
