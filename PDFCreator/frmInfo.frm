@@ -17,6 +17,22 @@ Begin VB.Form frmInfo
    ScaleWidth      =   6000
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.PictureBox picTitle 
+      Appearance      =   0  '2D
+      AutoRedraw      =   -1  'True
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'Kein
+      ForeColor       =   &H80000008&
+      Height          =   615
+      Left            =   2040
+      Picture         =   "frmInfo.frx":7001
+      ScaleHeight     =   41
+      ScaleMode       =   3  'Pixel
+      ScaleWidth      =   149
+      TabIndex        =   1
+      Top             =   210
+      Width           =   2235
+   End
    Begin VB.Timer Timer1 
       Interval        =   100
       Left            =   105
@@ -26,7 +42,7 @@ Begin VB.Form frmInfo
       Appearance      =   0  '2D
       Cancel          =   -1  'True
       Caption         =   "Cancel"
-      DownPicture     =   "frmInfo.frx":7001
+      DownPicture     =   "frmInfo.frx":76C9
       Height          =   660
       Left            =   630
       Style           =   1  'Grafisch
@@ -42,7 +58,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   1035
       Left            =   345
-      Picture         =   "frmInfo.frx":8303
+      Picture         =   "frmInfo.frx":89CB
       ScaleHeight     =   1035
       ScaleWidth      =   2085
       TabIndex        =   2
@@ -67,7 +83,7 @@ Begin VB.Form frmInfo
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":94CA
+         Picture         =   "frmInfo.frx":9B92
          Style           =   1  'Grafisch
          TabIndex        =   0
          Top             =   4080
@@ -76,7 +92,7 @@ Begin VB.Form frmInfo
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":982F
+         Picture         =   "frmInfo.frx":9EF7
          Top             =   4020
          Width           =   4380
       End
@@ -89,29 +105,13 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   15480
       Left            =   1470
-      Picture         =   "frmInfo.frx":A19D
+      Picture         =   "frmInfo.frx":A865
       ScaleHeight     =   15480
       ScaleWidth      =   4350
       TabIndex        =   4
       Top             =   630
       Visible         =   0   'False
       Width           =   4350
-   End
-   Begin VB.PictureBox picTitle 
-      Appearance      =   0  '2D
-      AutoRedraw      =   -1  'True
-      BackColor       =   &H80000005&
-      BorderStyle     =   0  'Kein
-      ForeColor       =   &H80000008&
-      Height          =   375
-      Left            =   2310
-      Picture         =   "frmInfo.frx":10244
-      ScaleHeight     =   25
-      ScaleMode       =   3  'Pixel
-      ScaleWidth      =   127
-      TabIndex        =   1
-      Top             =   210
-      Width           =   1905
    End
    Begin VB.Image imgClose 
       Height          =   285
@@ -269,9 +269,9 @@ On Error GoTo ErrPtnr_OnError
 50150
 50160  With picTitle
 50170   .ForeColor = RGB(7, 16, 127)
-50180   .CurrentX = 15
-50190   .CurrentY = 35
-50200   picTitle.Print Version
+50180   .CurrentX = 0
+50190   .CurrentY = 25
+50200   picTitle.Print "Version: " & Version
 50210  End With
 50220
 50230  imgClose.Picture = LoadResPicture(101, vbResBitmap)

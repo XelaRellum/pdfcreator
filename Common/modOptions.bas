@@ -157,8 +157,8 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim myOptions As tOptions, reg As clsRegistry
 50020  With myOptions
-50030   .AdditionalGhostscriptParameters = " "
-50040   .AdditionalGhostscriptSearchpath = " "
+50030   .AdditionalGhostscriptParameters = vbNullString
+50040   .AdditionalGhostscriptSearchpath = vbNullString
 50050   .AddWindowsFontpath = "1"
 50060   If InstalledAsServer Then
 50070     .AutosaveDirectory = "C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"
@@ -214,7 +214,7 @@ On Error GoTo ErrPtnr_OnError
 50570   .OptionsDesign = "1"
 50580   .OptionsEnabled = "1"
 50590   .OptionsVisible = "1"
-50600   .Papersize = " "
+50600   .Papersize = vbNullString
 50610   .PCXColorscount = "0"
 50620   .PDFAllowAssembly = "0"
 50630   .PDFAllowDegradedPrinting = "0"
@@ -268,15 +268,15 @@ On Error GoTo ErrPtnr_OnError
 51110   .PDFLowEncryption = "1"
 51120   .PDFOptimize = "0"
 51130   .PDFOwnerPass = "0"
-51140   .PDFOwnerPasswordString = " "
+51140   .PDFOwnerPasswordString = vbNullString
 51150   .PDFUserPass = "0"
-51160   .PDFUserPasswordString = " "
+51160   .PDFUserPasswordString = vbNullString
 51170   .PDFUseSecurity = "0"
 51180   .PNGColorscount = "0"
 51190   .PrintAfterSaving = "0"
 51200   .PrintAfterSavingDuplex = "0"
 51210   .PrintAfterSavingNoCancel = "0"
-51220   .PrintAfterSavingPrinter = " "
+51220   .PrintAfterSavingPrinter = vbNullString
 51230   .PrintAfterSavingQueryUser = "0"
 51240   .PrintAfterSavingTumble = "0"
 51250   .PrinterStop = "0"
@@ -293,12 +293,12 @@ On Error GoTo ErrPtnr_OnError
 51360   .RemoveAllKnownFileExtensions = "1"
 51370   .RemoveSpaces = "1"
 51380   .RunProgramAfterSaving = "0"
-51390   .RunProgramAfterSavingProgramname = " "
+51390   .RunProgramAfterSavingProgramname = vbNullString
 51400   .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
 51410   .RunProgramAfterSavingWaitUntilReady = "1"
 51420   .RunProgramAfterSavingWindowstyle = "1"
 51430   .RunProgramBeforeSaving = "0"
-51440   .RunProgramBeforeSavingProgramname = " "
+51440   .RunProgramBeforeSavingProgramname = vbNullString
 51450   .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
 51460   .RunProgramBeforeSavingWindowstyle = "1"
 51470   .SaveFilename = "<Title>"
@@ -308,17 +308,17 @@ On Error GoTo ErrPtnr_OnError
 51510   .StampFontname = "Arial"
 51520   .StampFontsize = "48"
 51530   .StampOutlineFontthickness = "0"
-51540   .StampString = " "
+51540   .StampString = vbNullString
 51550   .StampUseOutlineFont = "1"
-51560   .StandardAuthor = " "
-51570   .StandardCreationdate = " "
+51560   .StandardAuthor = vbNullString
+51570   .StandardCreationdate = vbNullString
 51580   .StandardDateformat = "YYYYMMDDHHNNSS"
-51590   .StandardKeywords = " "
-51600   .StandardMailDomain = " "
-51610   .StandardModifydate = " "
+51590   .StandardKeywords = vbNullString
+51600   .StandardMailDomain = vbNullString
+51610   .StandardModifydate = vbNullString
 51620   .StandardSaveformat = "pdf"
-51630   .StandardSubject = " "
-51640   .StandardTitle = " "
+51630   .StandardSubject = vbNullString
+51640   .StandardTitle = vbNullString
 51650   .StartStandardProgram = "1"
 51660   .TIFFColorscount = "0"
 51670   .Toolbars = "1"
@@ -396,7 +396,7 @@ Public Function ReadOptionsINI(myOptions As tOptions, PDFCreatorINIFile As Strin
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ini As clsINI, tstr As String, hOpt As New clsHash
+50010  Dim ini As clsINI, tStr As String, hOpt As New clsHash
 50020  ReadOptionsINI = myOptions
 50030  Set ini = New clsINI
 50040  ini.Filename = PDFCreatorINIFile
@@ -409,26 +409,26 @@ On Error GoTo ErrPtnr_OnError
 50110  End If
 50120  ReadINISection PDFCreatorINIFile, "Options", hOpt
 50130  With myOptions
-50140   tstr = hOpt.Retrieve("AdditionalGhostscriptParameters")
-50150   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-50160     .AdditionalGhostscriptParameters = " "
+50140   tStr = hOpt.Retrieve("AdditionalGhostscriptParameters")
+50150   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+50160     .AdditionalGhostscriptParameters = ""
 50170    Else
-50180     If LenB(tstr) > 0 Then
-50190      .AdditionalGhostscriptParameters = tstr
+50180     If LenB(tStr) > 0 Then
+50190      .AdditionalGhostscriptParameters = tStr
 50200     End If
 50210   End If
-50220   tstr = hOpt.Retrieve("AdditionalGhostscriptSearchpath")
-50230   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-50240     .AdditionalGhostscriptSearchpath = " "
+50220   tStr = hOpt.Retrieve("AdditionalGhostscriptSearchpath")
+50230   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+50240     .AdditionalGhostscriptSearchpath = ""
 50250    Else
-50260     If LenB(tstr) > 0 Then
-50270      .AdditionalGhostscriptSearchpath = tstr
+50260     If LenB(tStr) > 0 Then
+50270      .AdditionalGhostscriptSearchpath = tStr
 50280     End If
 50290   End If
-50300   tstr = hOpt.Retrieve("AddWindowsFontpath")
-50310   If IsNumeric(tstr) Then
-50320     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-50330       .AddWindowsFontpath = CLng(tstr)
+50300   tStr = hOpt.Retrieve("AddWindowsFontpath")
+50310   If IsNumeric(tStr) Then
+50320     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+50330       .AddWindowsFontpath = CLng(tStr)
 50340      Else
 50350       If UseStandard Then
 50360        .AddWindowsFontpath = 1
@@ -439,9 +439,9 @@ On Error GoTo ErrPtnr_OnError
 50410      .AddWindowsFontpath = 1
 50420     End If
 50430   End If
-50440   tstr = hOpt.Retrieve("AutosaveDirectory")
-50450   If LenB(Trim$(tstr)) > 0 Then
-50460     .AutosaveDirectory = CompletePath(tstr)
+50440   tStr = hOpt.Retrieve("AutosaveDirectory")
+50450   If LenB(Trim$(tStr)) > 0 Then
+50460     .AutosaveDirectory = CompletePath(tStr)
 50470    Else
 50480     If UseStandard Then
 50490      If InstalledAsServer Then
@@ -451,18 +451,18 @@ On Error GoTo ErrPtnr_OnError
 50530      End If
 50540     End If
 50550   End If
-50560   tstr = hOpt.Retrieve("AutosaveFilename")
-50570   If LenB(tstr) = 0 And LenB("<DateTime>") > 0 And UseStandard Then
+50560   tStr = hOpt.Retrieve("AutosaveFilename")
+50570   If LenB(tStr) = 0 And LenB("<DateTime>") > 0 And UseStandard Then
 50580     .AutosaveFilename = "<DateTime>"
 50590    Else
-50600     If LenB(tstr) > 0 Then
-50610      .AutosaveFilename = tstr
+50600     If LenB(tStr) > 0 Then
+50610      .AutosaveFilename = tStr
 50620     End If
 50630   End If
-50640   tstr = hOpt.Retrieve("AutosaveFormat")
-50650   If IsNumeric(tstr) Then
-50660     If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
-50670       .AutosaveFormat = CLng(tstr)
+50640   tStr = hOpt.Retrieve("AutosaveFormat")
+50650   If IsNumeric(tStr) Then
+50660     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+50670       .AutosaveFormat = CLng(tStr)
 50680      Else
 50690       If UseStandard Then
 50700        .AutosaveFormat = 0
@@ -473,10 +473,10 @@ On Error GoTo ErrPtnr_OnError
 50750      .AutosaveFormat = 0
 50760     End If
 50770   End If
-50780   tstr = hOpt.Retrieve("BitmapResolution")
-50790   If IsNumeric(tstr) Then
-50800     If CLng(tstr) >= 1 Then
-50810       .BitmapResolution = CLng(tstr)
+50780   tStr = hOpt.Retrieve("BitmapResolution")
+50790   If IsNumeric(tStr) Then
+50800     If CLng(tStr) >= 1 Then
+50810       .BitmapResolution = CLng(tStr)
 50820      Else
 50830       If UseStandard Then
 50840        .BitmapResolution = 150
@@ -487,10 +487,10 @@ On Error GoTo ErrPtnr_OnError
 50890      .BitmapResolution = 150
 50900     End If
 50910   End If
-50920   tstr = hOpt.Retrieve("BMPColorscount")
-50930   If IsNumeric(tstr) Then
-50940     If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
-50950       .BMPColorscount = CLng(tstr)
+50920   tStr = hOpt.Retrieve("BMPColorscount")
+50930   If IsNumeric(tStr) Then
+50940     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+50950       .BMPColorscount = CLng(tStr)
 50960      Else
 50970       If UseStandard Then
 50980        .BMPColorscount = 1
@@ -501,10 +501,10 @@ On Error GoTo ErrPtnr_OnError
 51030      .BMPColorscount = 1
 51040     End If
 51050   End If
-51060   tstr = hOpt.Retrieve("ClientComputerResolveIPAddress")
-51070   If IsNumeric(tstr) Then
-51080     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-51090       .ClientComputerResolveIPAddress = CLng(tstr)
+51060   tStr = hOpt.Retrieve("ClientComputerResolveIPAddress")
+51070   If IsNumeric(tStr) Then
+51080     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+51090       .ClientComputerResolveIPAddress = CLng(tStr)
 51100      Else
 51110       If UseStandard Then
 51120        .ClientComputerResolveIPAddress = 0
@@ -515,10 +515,10 @@ On Error GoTo ErrPtnr_OnError
 51170      .ClientComputerResolveIPAddress = 0
 51180     End If
 51190   End If
-51200   tstr = hOpt.Retrieve("DeviceHeightPoints")
-51210   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-51220     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= -1 Then
-51230       .DeviceHeightPoints = CDbl(Replace$(tstr, ".", GetDecimalChar))
+51200   tStr = hOpt.Retrieve("DeviceHeightPoints")
+51210   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+51220     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= -1 Then
+51230       .DeviceHeightPoints = CDbl(Replace$(tStr, ".", GetDecimalChar))
 51240      Else
 51250       If UseStandard Then
 51260        .DeviceHeightPoints = Replace$("-1", ".", GetDecimalChar)
@@ -529,10 +529,10 @@ On Error GoTo ErrPtnr_OnError
 51310      .DeviceHeightPoints = Replace$("-1", ".", GetDecimalChar)
 51320     End If
 51330   End If
-51340   tstr = hOpt.Retrieve("DeviceWidthPoints")
-51350   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-51360     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= -1 Then
-51370       .DeviceWidthPoints = CDbl(Replace$(tstr, ".", GetDecimalChar))
+51340   tStr = hOpt.Retrieve("DeviceWidthPoints")
+51350   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+51360     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= -1 Then
+51370       .DeviceWidthPoints = CDbl(Replace$(tStr, ".", GetDecimalChar))
 51380      Else
 51390       If UseStandard Then
 51400        .DeviceWidthPoints = Replace$("-1", ".", GetDecimalChar)
@@ -543,45 +543,45 @@ On Error GoTo ErrPtnr_OnError
 51450      .DeviceWidthPoints = Replace$("-1", ".", GetDecimalChar)
 51460     End If
 51470   End If
-51480   tstr = hOpt.Retrieve("DirectoryGhostscriptBinaries")
-51490   If LenB(Trim$(tstr)) > 0 Then
-51500     .DirectoryGhostscriptBinaries = CompletePath(tstr)
+51480   tStr = hOpt.Retrieve("DirectoryGhostscriptBinaries")
+51490   If LenB(Trim$(tStr)) > 0 Then
+51500     .DirectoryGhostscriptBinaries = CompletePath(tStr)
 51510    Else
 51520     If UseStandard Then
-51530      tstr = App.Path
-51540      .DirectoryGhostscriptBinaries = CompletePath(tstr)
+51530      tStr = App.Path
+51540      .DirectoryGhostscriptBinaries = CompletePath(tStr)
 51550     End If
 51560   End If
-51570   tstr = hOpt.Retrieve("DirectoryGhostscriptFonts")
-51580   If LenB(Trim$(tstr)) > 0 Then
-51590     .DirectoryGhostscriptFonts = CompletePath(tstr)
+51570   tStr = hOpt.Retrieve("DirectoryGhostscriptFonts")
+51580   If LenB(Trim$(tStr)) > 0 Then
+51590     .DirectoryGhostscriptFonts = CompletePath(tStr)
 51600    Else
 51610     If UseStandard Then
-51620      tstr = App.Path & "\fonts"
-51630      .DirectoryGhostscriptFonts = CompletePath(tstr)
+51620      tStr = App.Path & "\fonts"
+51630      .DirectoryGhostscriptFonts = CompletePath(tStr)
 51640     End If
 51650   End If
-51660   tstr = hOpt.Retrieve("DirectoryGhostscriptLibraries")
-51670   If LenB(Trim$(tstr)) > 0 Then
-51680     .DirectoryGhostscriptLibraries = CompletePath(tstr)
+51660   tStr = hOpt.Retrieve("DirectoryGhostscriptLibraries")
+51670   If LenB(Trim$(tStr)) > 0 Then
+51680     .DirectoryGhostscriptLibraries = CompletePath(tStr)
 51690    Else
 51700     If UseStandard Then
-51710      tstr = App.Path & "\lib"
-51720      .DirectoryGhostscriptLibraries = CompletePath(tstr)
+51710      tStr = App.Path & "\lib"
+51720      .DirectoryGhostscriptLibraries = CompletePath(tStr)
 51730     End If
 51740   End If
-51750   tstr = hOpt.Retrieve("DirectoryGhostscriptResource")
-51760   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-51770     .DirectoryGhostscriptResource = " "
+51750   tStr = hOpt.Retrieve("DirectoryGhostscriptResource")
+51760   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+51770     .DirectoryGhostscriptResource = ""
 51780    Else
-51790     If LenB(tstr) > 0 Then
-51800      .DirectoryGhostscriptResource = tstr
+51790     If LenB(tStr) > 0 Then
+51800      .DirectoryGhostscriptResource = tStr
 51810     End If
 51820   End If
-51830   tstr = hOpt.Retrieve("DisableEmail")
-51840   If IsNumeric(tstr) Then
-51850     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-51860       .DisableEmail = CLng(tstr)
+51830   tStr = hOpt.Retrieve("DisableEmail")
+51840   If IsNumeric(tStr) Then
+51850     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+51860       .DisableEmail = CLng(tStr)
 51870      Else
 51880       If UseStandard Then
 51890        .DisableEmail = 0
@@ -592,10 +592,10 @@ On Error GoTo ErrPtnr_OnError
 51940      .DisableEmail = 0
 51950     End If
 51960   End If
-51970   tstr = hOpt.Retrieve("DontUseDocumentSettings")
-51980   If IsNumeric(tstr) Then
-51990     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-52000       .DontUseDocumentSettings = CLng(tstr)
+51970   tStr = hOpt.Retrieve("DontUseDocumentSettings")
+51980   If IsNumeric(tStr) Then
+51990     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+52000       .DontUseDocumentSettings = CLng(tStr)
 52010      Else
 52020       If UseStandard Then
 52030        .DontUseDocumentSettings = 0
@@ -606,10 +606,10 @@ On Error GoTo ErrPtnr_OnError
 52080      .DontUseDocumentSettings = 0
 52090     End If
 52100   End If
-52110   tstr = hOpt.Retrieve("EPSLanguageLevel")
-52120   If IsNumeric(tstr) Then
-52130     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-52140       .EPSLanguageLevel = CLng(tstr)
+52110   tStr = hOpt.Retrieve("EPSLanguageLevel")
+52120   If IsNumeric(tStr) Then
+52130     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+52140       .EPSLanguageLevel = CLng(tStr)
 52150      Else
 52160       If UseStandard Then
 52170        .EPSLanguageLevel = 2
@@ -620,18 +620,18 @@ On Error GoTo ErrPtnr_OnError
 52220      .EPSLanguageLevel = 2
 52230     End If
 52240   End If
-52250   tstr = hOpt.Retrieve("FilenameSubstitutions")
-52260   If LenB(tstr) = 0 And LenB("Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt") > 0 And UseStandard Then
+52250   tStr = hOpt.Retrieve("FilenameSubstitutions")
+52260   If LenB(tStr) = 0 And LenB("Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt") > 0 And UseStandard Then
 52270     .FilenameSubstitutions = "Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt"
 52280    Else
-52290     If LenB(tstr) > 0 Then
-52300      .FilenameSubstitutions = tstr
+52290     If LenB(tStr) > 0 Then
+52300      .FilenameSubstitutions = tStr
 52310     End If
 52320   End If
-52330   tstr = hOpt.Retrieve("FilenameSubstitutionsOnlyInTitle")
-52340   If IsNumeric(tstr) Then
-52350     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-52360       .FilenameSubstitutionsOnlyInTitle = CLng(tstr)
+52330   tStr = hOpt.Retrieve("FilenameSubstitutionsOnlyInTitle")
+52340   If IsNumeric(tStr) Then
+52350     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+52360       .FilenameSubstitutionsOnlyInTitle = CLng(tStr)
 52370      Else
 52380       If UseStandard Then
 52390        .FilenameSubstitutionsOnlyInTitle = 1
@@ -642,10 +642,10 @@ On Error GoTo ErrPtnr_OnError
 52440      .FilenameSubstitutionsOnlyInTitle = 1
 52450     End If
 52460   End If
-52470   tstr = hOpt.Retrieve("JPEGColorscount")
-52480   If IsNumeric(tstr) Then
-52490     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-52500       .JPEGColorscount = CLng(tstr)
+52470   tStr = hOpt.Retrieve("JPEGColorscount")
+52480   If IsNumeric(tStr) Then
+52490     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+52500       .JPEGColorscount = CLng(tStr)
 52510      Else
 52520       If UseStandard Then
 52530        .JPEGColorscount = 0
@@ -656,10 +656,10 @@ On Error GoTo ErrPtnr_OnError
 52580      .JPEGColorscount = 0
 52590     End If
 52600   End If
-52610   tstr = hOpt.Retrieve("JPEGQuality")
-52620   If IsNumeric(tstr) Then
-52630     If CLng(tstr) >= 0 And CLng(tstr) <= 100 Then
-52640       .JPEGQuality = CLng(tstr)
+52610   tStr = hOpt.Retrieve("JPEGQuality")
+52620   If IsNumeric(tStr) Then
+52630     If CLng(tStr) >= 0 And CLng(tStr) <= 100 Then
+52640       .JPEGQuality = CLng(tStr)
 52650      Else
 52660       If UseStandard Then
 52670        .JPEGQuality = 75
@@ -670,17 +670,17 @@ On Error GoTo ErrPtnr_OnError
 52720      .JPEGQuality = 75
 52730     End If
 52740   End If
-52750   tstr = hOpt.Retrieve("Language")
-52760   If LenB(tstr) = 0 And LenB("english") > 0 And UseStandard Then
+52750   tStr = hOpt.Retrieve("Language")
+52760   If LenB(tStr) = 0 And LenB("english") > 0 And UseStandard Then
 52770     .Language = "english"
 52780    Else
-52790     If LenB(tstr) > 0 Then
-52800      .Language = tstr
+52790     If LenB(tStr) > 0 Then
+52800      .Language = tStr
 52810     End If
 52820   End If
-52830   tstr = hOpt.Retrieve("LastSaveDirectory")
-52840   If LenB(Trim$(tstr)) > 0 Then
-52850     .LastSaveDirectory = CompletePath(tstr)
+52830   tStr = hOpt.Retrieve("LastSaveDirectory")
+52840   If LenB(Trim$(tStr)) > 0 Then
+52850     .LastSaveDirectory = CompletePath(tStr)
 52860    Else
 52870     If UseStandard Then
 52880      If InstalledAsServer Then
@@ -690,10 +690,10 @@ On Error GoTo ErrPtnr_OnError
 52920      End If
 52930     End If
 52940   End If
-52950   tstr = hOpt.Retrieve("Logging")
-52960   If IsNumeric(tstr) Then
-52970     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-52980       .Logging = CLng(tstr)
+52950   tStr = hOpt.Retrieve("Logging")
+52960   If IsNumeric(tStr) Then
+52970     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+52980       .Logging = CLng(tStr)
 52990      Else
 53000       If UseStandard Then
 53010        .Logging = 0
@@ -704,10 +704,10 @@ On Error GoTo ErrPtnr_OnError
 53060      .Logging = 0
 53070     End If
 53080   End If
-53090   tstr = hOpt.Retrieve("LogLines")
-53100   If IsNumeric(tstr) Then
-53110     If CLng(tstr) >= 100 And CLng(tstr) <= 1000 Then
-53120       .LogLines = CLng(tstr)
+53090   tStr = hOpt.Retrieve("LogLines")
+53100   If IsNumeric(tStr) Then
+53110     If CLng(tStr) >= 100 And CLng(tStr) <= 1000 Then
+53120       .LogLines = CLng(tStr)
 53130      Else
 53140       If UseStandard Then
 53150        .LogLines = 100
@@ -718,10 +718,10 @@ On Error GoTo ErrPtnr_OnError
 53200      .LogLines = 100
 53210     End If
 53220   End If
-53230   tstr = hOpt.Retrieve("NoConfirmMessageSwitchingDefaultprinter")
-53240   If IsNumeric(tstr) Then
-53250     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-53260       .NoConfirmMessageSwitchingDefaultprinter = CLng(tstr)
+53230   tStr = hOpt.Retrieve("NoConfirmMessageSwitchingDefaultprinter")
+53240   If IsNumeric(tStr) Then
+53250     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+53260       .NoConfirmMessageSwitchingDefaultprinter = CLng(tStr)
 53270      Else
 53280       If UseStandard Then
 53290        .NoConfirmMessageSwitchingDefaultprinter = 0
@@ -732,10 +732,10 @@ On Error GoTo ErrPtnr_OnError
 53340      .NoConfirmMessageSwitchingDefaultprinter = 0
 53350     End If
 53360   End If
-53370   tstr = hOpt.Retrieve("NoProcessingAtStartup")
-53380   If IsNumeric(tstr) Then
-53390     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-53400       .NoProcessingAtStartup = CLng(tstr)
+53370   tStr = hOpt.Retrieve("NoProcessingAtStartup")
+53380   If IsNumeric(tStr) Then
+53390     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+53400       .NoProcessingAtStartup = CLng(tStr)
 53410      Else
 53420       If UseStandard Then
 53430        .NoProcessingAtStartup = 0
@@ -746,10 +746,10 @@ On Error GoTo ErrPtnr_OnError
 53480      .NoProcessingAtStartup = 0
 53490     End If
 53500   End If
-53510   tstr = hOpt.Retrieve("NoPSCheck")
-53520   If IsNumeric(tstr) Then
-53530     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-53540       .NoPSCheck = CLng(tstr)
+53510   tStr = hOpt.Retrieve("NoPSCheck")
+53520   If IsNumeric(tStr) Then
+53530     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+53540       .NoPSCheck = CLng(tStr)
 53550      Else
 53560       If UseStandard Then
 53570        .NoPSCheck = 0
@@ -760,10 +760,10 @@ On Error GoTo ErrPtnr_OnError
 53620      .NoPSCheck = 0
 53630     End If
 53640   End If
-53650   tstr = hOpt.Retrieve("OnePagePerFile")
-53660   If IsNumeric(tstr) Then
-53670     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-53680       .OnePagePerFile = CLng(tstr)
+53650   tStr = hOpt.Retrieve("OnePagePerFile")
+53660   If IsNumeric(tStr) Then
+53670     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+53680       .OnePagePerFile = CLng(tStr)
 53690      Else
 53700       If UseStandard Then
 53710        .OnePagePerFile = 0
@@ -774,10 +774,10 @@ On Error GoTo ErrPtnr_OnError
 53760      .OnePagePerFile = 0
 53770     End If
 53780   End If
-53790   tstr = hOpt.Retrieve("OptionsDesign")
-53800   If IsNumeric(tstr) Then
-53810     If CLng(tstr) >= 1 And CLng(tstr) <= 2 Then
-53820       .OptionsDesign = CLng(tstr)
+53790   tStr = hOpt.Retrieve("OptionsDesign")
+53800   If IsNumeric(tStr) Then
+53810     If CLng(tStr) >= 1 And CLng(tStr) <= 2 Then
+53820       .OptionsDesign = CLng(tStr)
 53830      Else
 53840       If UseStandard Then
 53850        .OptionsDesign = 1
@@ -788,10 +788,10 @@ On Error GoTo ErrPtnr_OnError
 53900      .OptionsDesign = 1
 53910     End If
 53920   End If
-53930   tstr = hOpt.Retrieve("OptionsEnabled")
-53940   If IsNumeric(tstr) Then
-53950     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-53960       .OptionsEnabled = CLng(tstr)
+53930   tStr = hOpt.Retrieve("OptionsEnabled")
+53940   If IsNumeric(tStr) Then
+53950     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+53960       .OptionsEnabled = CLng(tStr)
 53970      Else
 53980       If UseStandard Then
 53990        .OptionsEnabled = 1
@@ -802,10 +802,10 @@ On Error GoTo ErrPtnr_OnError
 54040      .OptionsEnabled = 1
 54050     End If
 54060   End If
-54070   tstr = hOpt.Retrieve("OptionsVisible")
-54080   If IsNumeric(tstr) Then
-54090     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54100       .OptionsVisible = CLng(tstr)
+54070   tStr = hOpt.Retrieve("OptionsVisible")
+54080   If IsNumeric(tStr) Then
+54090     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54100       .OptionsVisible = CLng(tStr)
 54110      Else
 54120       If UseStandard Then
 54130        .OptionsVisible = 1
@@ -816,18 +816,18 @@ On Error GoTo ErrPtnr_OnError
 54180      .OptionsVisible = 1
 54190     End If
 54200   End If
-54210   tstr = hOpt.Retrieve("Papersize")
-54220   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-54230     .Papersize = " "
+54210   tStr = hOpt.Retrieve("Papersize")
+54220   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+54230     .Papersize = ""
 54240    Else
-54250     If LenB(tstr) > 0 Then
-54260      .Papersize = tstr
+54250     If LenB(tStr) > 0 Then
+54260      .Papersize = tStr
 54270     End If
 54280   End If
-54290   tstr = hOpt.Retrieve("PCXColorscount")
-54300   If IsNumeric(tstr) Then
-54310     If CLng(tstr) >= 0 And CLng(tstr) <= 5 Then
-54320       .PCXColorscount = CLng(tstr)
+54290   tStr = hOpt.Retrieve("PCXColorscount")
+54300   If IsNumeric(tStr) Then
+54310     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+54320       .PCXColorscount = CLng(tStr)
 54330      Else
 54340       If UseStandard Then
 54350        .PCXColorscount = 0
@@ -838,10 +838,10 @@ On Error GoTo ErrPtnr_OnError
 54400      .PCXColorscount = 0
 54410     End If
 54420   End If
-54430   tstr = hOpt.Retrieve("PDFAllowAssembly")
-54440   If IsNumeric(tstr) Then
-54450     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54460       .PDFAllowAssembly = CLng(tstr)
+54430   tStr = hOpt.Retrieve("PDFAllowAssembly")
+54440   If IsNumeric(tStr) Then
+54450     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54460       .PDFAllowAssembly = CLng(tStr)
 54470      Else
 54480       If UseStandard Then
 54490        .PDFAllowAssembly = 0
@@ -852,10 +852,10 @@ On Error GoTo ErrPtnr_OnError
 54540      .PDFAllowAssembly = 0
 54550     End If
 54560   End If
-54570   tstr = hOpt.Retrieve("PDFAllowDegradedPrinting")
-54580   If IsNumeric(tstr) Then
-54590     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54600       .PDFAllowDegradedPrinting = CLng(tstr)
+54570   tStr = hOpt.Retrieve("PDFAllowDegradedPrinting")
+54580   If IsNumeric(tStr) Then
+54590     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54600       .PDFAllowDegradedPrinting = CLng(tStr)
 54610      Else
 54620       If UseStandard Then
 54630        .PDFAllowDegradedPrinting = 0
@@ -866,10 +866,10 @@ On Error GoTo ErrPtnr_OnError
 54680      .PDFAllowDegradedPrinting = 0
 54690     End If
 54700   End If
-54710   tstr = hOpt.Retrieve("PDFAllowFillIn")
-54720   If IsNumeric(tstr) Then
-54730     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54740       .PDFAllowFillIn = CLng(tstr)
+54710   tStr = hOpt.Retrieve("PDFAllowFillIn")
+54720   If IsNumeric(tStr) Then
+54730     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54740       .PDFAllowFillIn = CLng(tStr)
 54750      Else
 54760       If UseStandard Then
 54770        .PDFAllowFillIn = 0
@@ -880,10 +880,10 @@ On Error GoTo ErrPtnr_OnError
 54820      .PDFAllowFillIn = 0
 54830     End If
 54840   End If
-54850   tstr = hOpt.Retrieve("PDFAllowScreenReaders")
-54860   If IsNumeric(tstr) Then
-54870     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54880       .PDFAllowScreenReaders = CLng(tstr)
+54850   tStr = hOpt.Retrieve("PDFAllowScreenReaders")
+54860   If IsNumeric(tStr) Then
+54870     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54880       .PDFAllowScreenReaders = CLng(tStr)
 54890      Else
 54900       If UseStandard Then
 54910        .PDFAllowScreenReaders = 0
@@ -894,10 +894,10 @@ On Error GoTo ErrPtnr_OnError
 54960      .PDFAllowScreenReaders = 0
 54970     End If
 54980   End If
-54990   tstr = hOpt.Retrieve("PDFColorsCMYKToRGB")
-55000   If IsNumeric(tstr) Then
-55010     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-55020       .PDFColorsCMYKToRGB = CLng(tstr)
+54990   tStr = hOpt.Retrieve("PDFColorsCMYKToRGB")
+55000   If IsNumeric(tStr) Then
+55010     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+55020       .PDFColorsCMYKToRGB = CLng(tStr)
 55030      Else
 55040       If UseStandard Then
 55050        .PDFColorsCMYKToRGB = 0
@@ -908,10 +908,10 @@ On Error GoTo ErrPtnr_OnError
 55100      .PDFColorsCMYKToRGB = 0
 55110     End If
 55120   End If
-55130   tstr = hOpt.Retrieve("PDFColorsColorModel")
-55140   If IsNumeric(tstr) Then
-55150     If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
-55160       .PDFColorsColorModel = CLng(tstr)
+55130   tStr = hOpt.Retrieve("PDFColorsColorModel")
+55140   If IsNumeric(tStr) Then
+55150     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+55160       .PDFColorsColorModel = CLng(tStr)
 55170      Else
 55180       If UseStandard Then
 55190        .PDFColorsColorModel = 1
@@ -922,10 +922,10 @@ On Error GoTo ErrPtnr_OnError
 55240      .PDFColorsColorModel = 1
 55250     End If
 55260   End If
-55270   tstr = hOpt.Retrieve("PDFColorsPreserveHalftone")
-55280   If IsNumeric(tstr) Then
-55290     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-55300       .PDFColorsPreserveHalftone = CLng(tstr)
+55270   tStr = hOpt.Retrieve("PDFColorsPreserveHalftone")
+55280   If IsNumeric(tStr) Then
+55290     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+55300       .PDFColorsPreserveHalftone = CLng(tStr)
 55310      Else
 55320       If UseStandard Then
 55330        .PDFColorsPreserveHalftone = 0
@@ -936,10 +936,10 @@ On Error GoTo ErrPtnr_OnError
 55380      .PDFColorsPreserveHalftone = 0
 55390     End If
 55400   End If
-55410   tstr = hOpt.Retrieve("PDFColorsPreserveOverprint")
-55420   If IsNumeric(tstr) Then
-55430     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-55440       .PDFColorsPreserveOverprint = CLng(tstr)
+55410   tStr = hOpt.Retrieve("PDFColorsPreserveOverprint")
+55420   If IsNumeric(tStr) Then
+55430     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+55440       .PDFColorsPreserveOverprint = CLng(tStr)
 55450      Else
 55460       If UseStandard Then
 55470        .PDFColorsPreserveOverprint = 1
@@ -950,10 +950,10 @@ On Error GoTo ErrPtnr_OnError
 55520      .PDFColorsPreserveOverprint = 1
 55530     End If
 55540   End If
-55550   tstr = hOpt.Retrieve("PDFColorsPreserveTransfer")
-55560   If IsNumeric(tstr) Then
-55570     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-55580       .PDFColorsPreserveTransfer = CLng(tstr)
+55550   tStr = hOpt.Retrieve("PDFColorsPreserveTransfer")
+55560   If IsNumeric(tStr) Then
+55570     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+55580       .PDFColorsPreserveTransfer = CLng(tStr)
 55590      Else
 55600       If UseStandard Then
 55610        .PDFColorsPreserveTransfer = 1
@@ -964,10 +964,10 @@ On Error GoTo ErrPtnr_OnError
 55660      .PDFColorsPreserveTransfer = 1
 55670     End If
 55680   End If
-55690   tstr = hOpt.Retrieve("PDFCompressionColorCompression")
-55700   If IsNumeric(tstr) Then
-55710     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-55720       .PDFCompressionColorCompression = CLng(tstr)
+55690   tStr = hOpt.Retrieve("PDFCompressionColorCompression")
+55700   If IsNumeric(tStr) Then
+55710     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+55720       .PDFCompressionColorCompression = CLng(tStr)
 55730      Else
 55740       If UseStandard Then
 55750        .PDFCompressionColorCompression = 1
@@ -978,10 +978,10 @@ On Error GoTo ErrPtnr_OnError
 55800      .PDFCompressionColorCompression = 1
 55810     End If
 55820   End If
-55830   tstr = hOpt.Retrieve("PDFCompressionColorCompressionChoice")
-55840   If IsNumeric(tstr) Then
-55850     If CLng(tstr) >= 0 And CLng(tstr) <= 5 Then
-55860       .PDFCompressionColorCompressionChoice = CLng(tstr)
+55830   tStr = hOpt.Retrieve("PDFCompressionColorCompressionChoice")
+55840   If IsNumeric(tStr) Then
+55850     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+55860       .PDFCompressionColorCompressionChoice = CLng(tStr)
 55870      Else
 55880       If UseStandard Then
 55890        .PDFCompressionColorCompressionChoice = 0
@@ -992,10 +992,10 @@ On Error GoTo ErrPtnr_OnError
 55940      .PDFCompressionColorCompressionChoice = 0
 55950     End If
 55960   End If
-55970   tstr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGHighFactor")
-55980   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-55990     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-56000       .PDFCompressionColorCompressionJPEGHighFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+55970   tStr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGHighFactor")
+55980   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+55990     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56000       .PDFCompressionColorCompressionJPEGHighFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56010      Else
 56020       If UseStandard Then
 56030        .PDFCompressionColorCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
@@ -1006,10 +1006,10 @@ On Error GoTo ErrPtnr_OnError
 56080      .PDFCompressionColorCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
 56090     End If
 56100   End If
-56110   tstr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGLowFactor")
-56120   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-56130     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-56140       .PDFCompressionColorCompressionJPEGLowFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+56110   tStr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGLowFactor")
+56120   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56130     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56140       .PDFCompressionColorCompressionJPEGLowFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56150      Else
 56160       If UseStandard Then
 56170        .PDFCompressionColorCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
@@ -1020,10 +1020,10 @@ On Error GoTo ErrPtnr_OnError
 56220      .PDFCompressionColorCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
 56230     End If
 56240   End If
-56250   tstr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGMaximumFactor")
-56260   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-56270     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-56280       .PDFCompressionColorCompressionJPEGMaximumFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+56250   tStr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGMaximumFactor")
+56260   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56270     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56280       .PDFCompressionColorCompressionJPEGMaximumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56290      Else
 56300       If UseStandard Then
 56310        .PDFCompressionColorCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
@@ -1034,10 +1034,10 @@ On Error GoTo ErrPtnr_OnError
 56360      .PDFCompressionColorCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
 56370     End If
 56380   End If
-56390   tstr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGMediumFactor")
-56400   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-56410     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-56420       .PDFCompressionColorCompressionJPEGMediumFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+56390   tStr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGMediumFactor")
+56400   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56410     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56420       .PDFCompressionColorCompressionJPEGMediumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56430      Else
 56440       If UseStandard Then
 56450        .PDFCompressionColorCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
@@ -1048,10 +1048,10 @@ On Error GoTo ErrPtnr_OnError
 56500      .PDFCompressionColorCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
 56510     End If
 56520   End If
-56530   tstr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGMinimumFactor")
-56540   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-56550     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-56560       .PDFCompressionColorCompressionJPEGMinimumFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+56530   tStr = hOpt.Retrieve("PDFCompressionColorCompressionJPEGMinimumFactor")
+56540   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56550     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56560       .PDFCompressionColorCompressionJPEGMinimumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56570      Else
 56580       If UseStandard Then
 56590        .PDFCompressionColorCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
@@ -1062,10 +1062,10 @@ On Error GoTo ErrPtnr_OnError
 56640      .PDFCompressionColorCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
 56650     End If
 56660   End If
-56670   tstr = hOpt.Retrieve("PDFCompressionColorResample")
-56680   If IsNumeric(tstr) Then
-56690     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-56700       .PDFCompressionColorResample = CLng(tstr)
+56670   tStr = hOpt.Retrieve("PDFCompressionColorResample")
+56680   If IsNumeric(tStr) Then
+56690     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+56700       .PDFCompressionColorResample = CLng(tStr)
 56710      Else
 56720       If UseStandard Then
 56730        .PDFCompressionColorResample = 0
@@ -1076,10 +1076,10 @@ On Error GoTo ErrPtnr_OnError
 56780      .PDFCompressionColorResample = 0
 56790     End If
 56800   End If
-56810   tstr = hOpt.Retrieve("PDFCompressionColorResampleChoice")
-56820   If IsNumeric(tstr) Then
-56830     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-56840       .PDFCompressionColorResampleChoice = CLng(tstr)
+56810   tStr = hOpt.Retrieve("PDFCompressionColorResampleChoice")
+56820   If IsNumeric(tStr) Then
+56830     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+56840       .PDFCompressionColorResampleChoice = CLng(tStr)
 56850      Else
 56860       If UseStandard Then
 56870        .PDFCompressionColorResampleChoice = 0
@@ -1090,10 +1090,10 @@ On Error GoTo ErrPtnr_OnError
 56920      .PDFCompressionColorResampleChoice = 0
 56930     End If
 56940   End If
-56950   tstr = hOpt.Retrieve("PDFCompressionColorResolution")
-56960   If IsNumeric(tstr) Then
-56970     If CLng(tstr) >= 0 Then
-56980       .PDFCompressionColorResolution = CLng(tstr)
+56950   tStr = hOpt.Retrieve("PDFCompressionColorResolution")
+56960   If IsNumeric(tStr) Then
+56970     If CLng(tStr) >= 0 Then
+56980       .PDFCompressionColorResolution = CLng(tStr)
 56990      Else
 57000       If UseStandard Then
 57010        .PDFCompressionColorResolution = 300
@@ -1104,10 +1104,10 @@ On Error GoTo ErrPtnr_OnError
 57060      .PDFCompressionColorResolution = 300
 57070     End If
 57080   End If
-57090   tstr = hOpt.Retrieve("PDFCompressionGreyCompression")
-57100   If IsNumeric(tstr) Then
-57110     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-57120       .PDFCompressionGreyCompression = CLng(tstr)
+57090   tStr = hOpt.Retrieve("PDFCompressionGreyCompression")
+57100   If IsNumeric(tStr) Then
+57110     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+57120       .PDFCompressionGreyCompression = CLng(tStr)
 57130      Else
 57140       If UseStandard Then
 57150        .PDFCompressionGreyCompression = 1
@@ -1118,10 +1118,10 @@ On Error GoTo ErrPtnr_OnError
 57200      .PDFCompressionGreyCompression = 1
 57210     End If
 57220   End If
-57230   tstr = hOpt.Retrieve("PDFCompressionGreyCompressionChoice")
-57240   If IsNumeric(tstr) Then
-57250     If CLng(tstr) >= 0 And CLng(tstr) <= 5 Then
-57260       .PDFCompressionGreyCompressionChoice = CLng(tstr)
+57230   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionChoice")
+57240   If IsNumeric(tStr) Then
+57250     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+57260       .PDFCompressionGreyCompressionChoice = CLng(tStr)
 57270      Else
 57280       If UseStandard Then
 57290        .PDFCompressionGreyCompressionChoice = 0
@@ -1132,10 +1132,10 @@ On Error GoTo ErrPtnr_OnError
 57340      .PDFCompressionGreyCompressionChoice = 0
 57350     End If
 57360   End If
-57370   tstr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGHighFactor")
-57380   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-57390     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-57400       .PDFCompressionGreyCompressionJPEGHighFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+57370   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGHighFactor")
+57380   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+57390     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+57400       .PDFCompressionGreyCompressionJPEGHighFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 57410      Else
 57420       If UseStandard Then
 57430        .PDFCompressionGreyCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
@@ -1146,10 +1146,10 @@ On Error GoTo ErrPtnr_OnError
 57480      .PDFCompressionGreyCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
 57490     End If
 57500   End If
-57510   tstr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGLowFactor")
-57520   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-57530     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-57540       .PDFCompressionGreyCompressionJPEGLowFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+57510   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGLowFactor")
+57520   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+57530     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+57540       .PDFCompressionGreyCompressionJPEGLowFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 57550      Else
 57560       If UseStandard Then
 57570        .PDFCompressionGreyCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
@@ -1160,10 +1160,10 @@ On Error GoTo ErrPtnr_OnError
 57620      .PDFCompressionGreyCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
 57630     End If
 57640   End If
-57650   tstr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGMaximumFactor")
-57660   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-57670     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-57680       .PDFCompressionGreyCompressionJPEGMaximumFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+57650   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGMaximumFactor")
+57660   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+57670     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+57680       .PDFCompressionGreyCompressionJPEGMaximumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 57690      Else
 57700       If UseStandard Then
 57710        .PDFCompressionGreyCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
@@ -1174,10 +1174,10 @@ On Error GoTo ErrPtnr_OnError
 57760      .PDFCompressionGreyCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
 57770     End If
 57780   End If
-57790   tstr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGMediumFactor")
-57800   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-57810     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-57820       .PDFCompressionGreyCompressionJPEGMediumFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+57790   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGMediumFactor")
+57800   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+57810     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+57820       .PDFCompressionGreyCompressionJPEGMediumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 57830      Else
 57840       If UseStandard Then
 57850        .PDFCompressionGreyCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
@@ -1188,10 +1188,10 @@ On Error GoTo ErrPtnr_OnError
 57900      .PDFCompressionGreyCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
 57910     End If
 57920   End If
-57930   tstr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGMinimumFactor")
-57940   If IsNumeric(Replace$(tstr, ".", GetDecimalChar)) Then
-57950     If CDbl(Replace$(tstr, ".", GetDecimalChar)) >= 0 Then
-57960       .PDFCompressionGreyCompressionJPEGMinimumFactor = CDbl(Replace$(tstr, ".", GetDecimalChar))
+57930   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionJPEGMinimumFactor")
+57940   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+57950     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+57960       .PDFCompressionGreyCompressionJPEGMinimumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 57970      Else
 57980       If UseStandard Then
 57990        .PDFCompressionGreyCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
@@ -1202,10 +1202,10 @@ On Error GoTo ErrPtnr_OnError
 58040      .PDFCompressionGreyCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
 58050     End If
 58060   End If
-58070   tstr = hOpt.Retrieve("PDFCompressionGreyResample")
-58080   If IsNumeric(tstr) Then
-58090     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-58100       .PDFCompressionGreyResample = CLng(tstr)
+58070   tStr = hOpt.Retrieve("PDFCompressionGreyResample")
+58080   If IsNumeric(tStr) Then
+58090     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+58100       .PDFCompressionGreyResample = CLng(tStr)
 58110      Else
 58120       If UseStandard Then
 58130        .PDFCompressionGreyResample = 0
@@ -1216,10 +1216,10 @@ On Error GoTo ErrPtnr_OnError
 58180      .PDFCompressionGreyResample = 0
 58190     End If
 58200   End If
-58210   tstr = hOpt.Retrieve("PDFCompressionGreyResampleChoice")
-58220   If IsNumeric(tstr) Then
-58230     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-58240       .PDFCompressionGreyResampleChoice = CLng(tstr)
+58210   tStr = hOpt.Retrieve("PDFCompressionGreyResampleChoice")
+58220   If IsNumeric(tStr) Then
+58230     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+58240       .PDFCompressionGreyResampleChoice = CLng(tStr)
 58250      Else
 58260       If UseStandard Then
 58270        .PDFCompressionGreyResampleChoice = 0
@@ -1230,10 +1230,10 @@ On Error GoTo ErrPtnr_OnError
 58320      .PDFCompressionGreyResampleChoice = 0
 58330     End If
 58340   End If
-58350   tstr = hOpt.Retrieve("PDFCompressionGreyResolution")
-58360   If IsNumeric(tstr) Then
-58370     If CLng(tstr) >= 0 Then
-58380       .PDFCompressionGreyResolution = CLng(tstr)
+58350   tStr = hOpt.Retrieve("PDFCompressionGreyResolution")
+58360   If IsNumeric(tStr) Then
+58370     If CLng(tStr) >= 0 Then
+58380       .PDFCompressionGreyResolution = CLng(tStr)
 58390      Else
 58400       If UseStandard Then
 58410        .PDFCompressionGreyResolution = 300
@@ -1244,10 +1244,10 @@ On Error GoTo ErrPtnr_OnError
 58460      .PDFCompressionGreyResolution = 300
 58470     End If
 58480   End If
-58490   tstr = hOpt.Retrieve("PDFCompressionMonoCompression")
-58500   If IsNumeric(tstr) Then
-58510     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-58520       .PDFCompressionMonoCompression = CLng(tstr)
+58490   tStr = hOpt.Retrieve("PDFCompressionMonoCompression")
+58500   If IsNumeric(tStr) Then
+58510     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+58520       .PDFCompressionMonoCompression = CLng(tStr)
 58530      Else
 58540       If UseStandard Then
 58550        .PDFCompressionMonoCompression = 1
@@ -1258,10 +1258,10 @@ On Error GoTo ErrPtnr_OnError
 58600      .PDFCompressionMonoCompression = 1
 58610     End If
 58620   End If
-58630   tstr = hOpt.Retrieve("PDFCompressionMonoCompressionChoice")
-58640   If IsNumeric(tstr) Then
-58650     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-58660       .PDFCompressionMonoCompressionChoice = CLng(tstr)
+58630   tStr = hOpt.Retrieve("PDFCompressionMonoCompressionChoice")
+58640   If IsNumeric(tStr) Then
+58650     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+58660       .PDFCompressionMonoCompressionChoice = CLng(tStr)
 58670      Else
 58680       If UseStandard Then
 58690        .PDFCompressionMonoCompressionChoice = 0
@@ -1272,10 +1272,10 @@ On Error GoTo ErrPtnr_OnError
 58740      .PDFCompressionMonoCompressionChoice = 0
 58750     End If
 58760   End If
-58770   tstr = hOpt.Retrieve("PDFCompressionMonoResample")
-58780   If IsNumeric(tstr) Then
-58790     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-58800       .PDFCompressionMonoResample = CLng(tstr)
+58770   tStr = hOpt.Retrieve("PDFCompressionMonoResample")
+58780   If IsNumeric(tStr) Then
+58790     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+58800       .PDFCompressionMonoResample = CLng(tStr)
 58810      Else
 58820       If UseStandard Then
 58830        .PDFCompressionMonoResample = 0
@@ -1286,10 +1286,10 @@ On Error GoTo ErrPtnr_OnError
 58880      .PDFCompressionMonoResample = 0
 58890     End If
 58900   End If
-58910   tstr = hOpt.Retrieve("PDFCompressionMonoResampleChoice")
-58920   If IsNumeric(tstr) Then
-58930     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-58940       .PDFCompressionMonoResampleChoice = CLng(tstr)
+58910   tStr = hOpt.Retrieve("PDFCompressionMonoResampleChoice")
+58920   If IsNumeric(tStr) Then
+58930     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+58940       .PDFCompressionMonoResampleChoice = CLng(tStr)
 58950      Else
 58960       If UseStandard Then
 58970        .PDFCompressionMonoResampleChoice = 0
@@ -1300,10 +1300,10 @@ On Error GoTo ErrPtnr_OnError
 59020      .PDFCompressionMonoResampleChoice = 0
 59030     End If
 59040   End If
-59050   tstr = hOpt.Retrieve("PDFCompressionMonoResolution")
-59060   If IsNumeric(tstr) Then
-59070     If CLng(tstr) >= 0 Then
-59080       .PDFCompressionMonoResolution = CLng(tstr)
+59050   tStr = hOpt.Retrieve("PDFCompressionMonoResolution")
+59060   If IsNumeric(tStr) Then
+59070     If CLng(tStr) >= 0 Then
+59080       .PDFCompressionMonoResolution = CLng(tStr)
 59090      Else
 59100       If UseStandard Then
 59110        .PDFCompressionMonoResolution = 1200
@@ -1314,10 +1314,10 @@ On Error GoTo ErrPtnr_OnError
 59160      .PDFCompressionMonoResolution = 1200
 59170     End If
 59180   End If
-59190   tstr = hOpt.Retrieve("PDFCompressionTextCompression")
-59200   If IsNumeric(tstr) Then
-59210     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59220       .PDFCompressionTextCompression = CLng(tstr)
+59190   tStr = hOpt.Retrieve("PDFCompressionTextCompression")
+59200   If IsNumeric(tStr) Then
+59210     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59220       .PDFCompressionTextCompression = CLng(tStr)
 59230      Else
 59240       If UseStandard Then
 59250        .PDFCompressionTextCompression = 1
@@ -1328,10 +1328,10 @@ On Error GoTo ErrPtnr_OnError
 59300      .PDFCompressionTextCompression = 1
 59310     End If
 59320   End If
-59330   tstr = hOpt.Retrieve("PDFDisallowCopy")
-59340   If IsNumeric(tstr) Then
-59350     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59360       .PDFDisallowCopy = CLng(tstr)
+59330   tStr = hOpt.Retrieve("PDFDisallowCopy")
+59340   If IsNumeric(tStr) Then
+59350     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59360       .PDFDisallowCopy = CLng(tStr)
 59370      Else
 59380       If UseStandard Then
 59390        .PDFDisallowCopy = 1
@@ -1342,10 +1342,10 @@ On Error GoTo ErrPtnr_OnError
 59440      .PDFDisallowCopy = 1
 59450     End If
 59460   End If
-59470   tstr = hOpt.Retrieve("PDFDisallowModifyAnnotations")
-59480   If IsNumeric(tstr) Then
-59490     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59500       .PDFDisallowModifyAnnotations = CLng(tstr)
+59470   tStr = hOpt.Retrieve("PDFDisallowModifyAnnotations")
+59480   If IsNumeric(tStr) Then
+59490     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59500       .PDFDisallowModifyAnnotations = CLng(tStr)
 59510      Else
 59520       If UseStandard Then
 59530        .PDFDisallowModifyAnnotations = 0
@@ -1356,10 +1356,10 @@ On Error GoTo ErrPtnr_OnError
 59580      .PDFDisallowModifyAnnotations = 0
 59590     End If
 59600   End If
-59610   tstr = hOpt.Retrieve("PDFDisallowModifyContents")
-59620   If IsNumeric(tstr) Then
-59630     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59640       .PDFDisallowModifyContents = CLng(tstr)
+59610   tStr = hOpt.Retrieve("PDFDisallowModifyContents")
+59620   If IsNumeric(tStr) Then
+59630     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59640       .PDFDisallowModifyContents = CLng(tStr)
 59650      Else
 59660       If UseStandard Then
 59670        .PDFDisallowModifyContents = 0
@@ -1370,10 +1370,10 @@ On Error GoTo ErrPtnr_OnError
 59720      .PDFDisallowModifyContents = 0
 59730     End If
 59740   End If
-59750   tstr = hOpt.Retrieve("PDFDisallowPrinting")
-59760   If IsNumeric(tstr) Then
-59770     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59780       .PDFDisallowPrinting = CLng(tstr)
+59750   tStr = hOpt.Retrieve("PDFDisallowPrinting")
+59760   If IsNumeric(tStr) Then
+59770     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59780       .PDFDisallowPrinting = CLng(tStr)
 59790      Else
 59800       If UseStandard Then
 59810        .PDFDisallowPrinting = 0
@@ -1384,10 +1384,10 @@ On Error GoTo ErrPtnr_OnError
 59860      .PDFDisallowPrinting = 0
 59870     End If
 59880   End If
-59890   tstr = hOpt.Retrieve("PDFEncryptor")
-59900   If IsNumeric(tstr) Then
-59910     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-59920       .PDFEncryptor = CLng(tstr)
+59890   tStr = hOpt.Retrieve("PDFEncryptor")
+59900   If IsNumeric(tStr) Then
+59910     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+59920       .PDFEncryptor = CLng(tStr)
 59930      Else
 59940       If UseStandard Then
 59950        .PDFEncryptor = 0
@@ -1398,10 +1398,10 @@ On Error GoTo ErrPtnr_OnError
 60000      .PDFEncryptor = 0
 60010     End If
 60020   End If
-60030   tstr = hOpt.Retrieve("PDFFontsEmbedAll")
-60040   If IsNumeric(tstr) Then
-60050     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60060       .PDFFontsEmbedAll = CLng(tstr)
+60030   tStr = hOpt.Retrieve("PDFFontsEmbedAll")
+60040   If IsNumeric(tStr) Then
+60050     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60060       .PDFFontsEmbedAll = CLng(tStr)
 60070      Else
 60080       If UseStandard Then
 60090        .PDFFontsEmbedAll = 1
@@ -1412,10 +1412,10 @@ On Error GoTo ErrPtnr_OnError
 60140      .PDFFontsEmbedAll = 1
 60150     End If
 60160   End If
-60170   tstr = hOpt.Retrieve("PDFFontsSubSetFonts")
-60180   If IsNumeric(tstr) Then
-60190     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60200       .PDFFontsSubSetFonts = CLng(tstr)
+60170   tStr = hOpt.Retrieve("PDFFontsSubSetFonts")
+60180   If IsNumeric(tStr) Then
+60190     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60200       .PDFFontsSubSetFonts = CLng(tStr)
 60210      Else
 60220       If UseStandard Then
 60230        .PDFFontsSubSetFonts = 1
@@ -1426,10 +1426,10 @@ On Error GoTo ErrPtnr_OnError
 60280      .PDFFontsSubSetFonts = 1
 60290     End If
 60300   End If
-60310   tstr = hOpt.Retrieve("PDFFontsSubSetFontsPercent")
-60320   If IsNumeric(tstr) Then
-60330     If CLng(tstr) >= 0 Then
-60340       .PDFFontsSubSetFontsPercent = CLng(tstr)
+60310   tStr = hOpt.Retrieve("PDFFontsSubSetFontsPercent")
+60320   If IsNumeric(tStr) Then
+60330     If CLng(tStr) >= 0 Then
+60340       .PDFFontsSubSetFontsPercent = CLng(tStr)
 60350      Else
 60360       If UseStandard Then
 60370        .PDFFontsSubSetFontsPercent = 100
@@ -1440,10 +1440,10 @@ On Error GoTo ErrPtnr_OnError
 60420      .PDFFontsSubSetFontsPercent = 100
 60430     End If
 60440   End If
-60450   tstr = hOpt.Retrieve("PDFGeneralASCII85")
-60460   If IsNumeric(tstr) Then
-60470     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60480       .PDFGeneralASCII85 = CLng(tstr)
+60450   tStr = hOpt.Retrieve("PDFGeneralASCII85")
+60460   If IsNumeric(tStr) Then
+60470     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60480       .PDFGeneralASCII85 = CLng(tStr)
 60490      Else
 60500       If UseStandard Then
 60510        .PDFGeneralASCII85 = 0
@@ -1454,10 +1454,10 @@ On Error GoTo ErrPtnr_OnError
 60560      .PDFGeneralASCII85 = 0
 60570     End If
 60580   End If
-60590   tstr = hOpt.Retrieve("PDFGeneralAutorotate")
-60600   If IsNumeric(tstr) Then
-60610     If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
-60620       .PDFGeneralAutorotate = CLng(tstr)
+60590   tStr = hOpt.Retrieve("PDFGeneralAutorotate")
+60600   If IsNumeric(tStr) Then
+60610     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+60620       .PDFGeneralAutorotate = CLng(tStr)
 60630      Else
 60640       If UseStandard Then
 60650        .PDFGeneralAutorotate = 2
@@ -1468,10 +1468,10 @@ On Error GoTo ErrPtnr_OnError
 60700      .PDFGeneralAutorotate = 2
 60710     End If
 60720   End If
-60730   tstr = hOpt.Retrieve("PDFGeneralCompatibility")
-60740   If IsNumeric(tstr) Then
-60750     If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
-60760       .PDFGeneralCompatibility = CLng(tstr)
+60730   tStr = hOpt.Retrieve("PDFGeneralCompatibility")
+60740   If IsNumeric(tStr) Then
+60750     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+60760       .PDFGeneralCompatibility = CLng(tStr)
 60770      Else
 60780       If UseStandard Then
 60790        .PDFGeneralCompatibility = 1
@@ -1482,10 +1482,10 @@ On Error GoTo ErrPtnr_OnError
 60840      .PDFGeneralCompatibility = 1
 60850     End If
 60860   End If
-60870   tstr = hOpt.Retrieve("PDFGeneralOverprint")
-60880   If IsNumeric(tstr) Then
-60890     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-60900       .PDFGeneralOverprint = CLng(tstr)
+60870   tStr = hOpt.Retrieve("PDFGeneralOverprint")
+60880   If IsNumeric(tStr) Then
+60890     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+60900       .PDFGeneralOverprint = CLng(tStr)
 60910      Else
 60920       If UseStandard Then
 60930        .PDFGeneralOverprint = 0
@@ -1496,10 +1496,10 @@ On Error GoTo ErrPtnr_OnError
 60980      .PDFGeneralOverprint = 0
 60990     End If
 61000   End If
-61010   tstr = hOpt.Retrieve("PDFGeneralResolution")
-61020   If IsNumeric(tstr) Then
-61030     If CLng(tstr) >= 0 Then
-61040       .PDFGeneralResolution = CLng(tstr)
+61010   tStr = hOpt.Retrieve("PDFGeneralResolution")
+61020   If IsNumeric(tStr) Then
+61030     If CLng(tStr) >= 0 Then
+61040       .PDFGeneralResolution = CLng(tStr)
 61050      Else
 61060       If UseStandard Then
 61070        .PDFGeneralResolution = 600
@@ -1510,10 +1510,10 @@ On Error GoTo ErrPtnr_OnError
 61120      .PDFGeneralResolution = 600
 61130     End If
 61140   End If
-61150   tstr = hOpt.Retrieve("PDFHighEncryption")
-61160   If IsNumeric(tstr) Then
-61170     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61180       .PDFHighEncryption = CLng(tstr)
+61150   tStr = hOpt.Retrieve("PDFHighEncryption")
+61160   If IsNumeric(tStr) Then
+61170     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61180       .PDFHighEncryption = CLng(tStr)
 61190      Else
 61200       If UseStandard Then
 61210        .PDFHighEncryption = 0
@@ -1524,10 +1524,10 @@ On Error GoTo ErrPtnr_OnError
 61260      .PDFHighEncryption = 0
 61270     End If
 61280   End If
-61290   tstr = hOpt.Retrieve("PDFLowEncryption")
-61300   If IsNumeric(tstr) Then
-61310     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61320       .PDFLowEncryption = CLng(tstr)
+61290   tStr = hOpt.Retrieve("PDFLowEncryption")
+61300   If IsNumeric(tStr) Then
+61310     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61320       .PDFLowEncryption = CLng(tStr)
 61330      Else
 61340       If UseStandard Then
 61350        .PDFLowEncryption = 1
@@ -1538,10 +1538,10 @@ On Error GoTo ErrPtnr_OnError
 61400      .PDFLowEncryption = 1
 61410     End If
 61420   End If
-61430   tstr = hOpt.Retrieve("PDFOptimize")
-61440   If IsNumeric(tstr) Then
-61450     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61460       .PDFOptimize = CLng(tstr)
+61430   tStr = hOpt.Retrieve("PDFOptimize")
+61440   If IsNumeric(tStr) Then
+61450     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61460       .PDFOptimize = CLng(tStr)
 61470      Else
 61480       If UseStandard Then
 61490        .PDFOptimize = 0
@@ -1552,10 +1552,10 @@ On Error GoTo ErrPtnr_OnError
 61540      .PDFOptimize = 0
 61550     End If
 61560   End If
-61570   tstr = hOpt.Retrieve("PDFOwnerPass")
-61580   If IsNumeric(tstr) Then
-61590     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61600       .PDFOwnerPass = CLng(tstr)
+61570   tStr = hOpt.Retrieve("PDFOwnerPass")
+61580   If IsNumeric(tStr) Then
+61590     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61600       .PDFOwnerPass = CLng(tStr)
 61610      Else
 61620       If UseStandard Then
 61630        .PDFOwnerPass = 0
@@ -1566,18 +1566,18 @@ On Error GoTo ErrPtnr_OnError
 61680      .PDFOwnerPass = 0
 61690     End If
 61700   End If
-61710   tstr = hOpt.Retrieve("PDFOwnerPasswordString")
-61720   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-61730     .PDFOwnerPasswordString = " "
+61710   tStr = hOpt.Retrieve("PDFOwnerPasswordString")
+61720   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+61730     .PDFOwnerPasswordString = ""
 61740    Else
-61750     If LenB(tstr) > 0 Then
-61760      .PDFOwnerPasswordString = tstr
+61750     If LenB(tStr) > 0 Then
+61760      .PDFOwnerPasswordString = tStr
 61770     End If
 61780   End If
-61790   tstr = hOpt.Retrieve("PDFUserPass")
-61800   If IsNumeric(tstr) Then
-61810     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61820       .PDFUserPass = CLng(tstr)
+61790   tStr = hOpt.Retrieve("PDFUserPass")
+61800   If IsNumeric(tStr) Then
+61810     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61820       .PDFUserPass = CLng(tStr)
 61830      Else
 61840       If UseStandard Then
 61850        .PDFUserPass = 0
@@ -1588,18 +1588,18 @@ On Error GoTo ErrPtnr_OnError
 61900      .PDFUserPass = 0
 61910     End If
 61920   End If
-61930   tstr = hOpt.Retrieve("PDFUserPasswordString")
-61940   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-61950     .PDFUserPasswordString = " "
+61930   tStr = hOpt.Retrieve("PDFUserPasswordString")
+61940   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+61950     .PDFUserPasswordString = ""
 61960    Else
-61970     If LenB(tstr) > 0 Then
-61980      .PDFUserPasswordString = tstr
+61970     If LenB(tStr) > 0 Then
+61980      .PDFUserPasswordString = tStr
 61990     End If
 62000   End If
-62010   tstr = hOpt.Retrieve("PDFUseSecurity")
-62020   If IsNumeric(tstr) Then
-62030     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62040       .PDFUseSecurity = CLng(tstr)
+62010   tStr = hOpt.Retrieve("PDFUseSecurity")
+62020   If IsNumeric(tStr) Then
+62030     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62040       .PDFUseSecurity = CLng(tStr)
 62050      Else
 62060       If UseStandard Then
 62070        .PDFUseSecurity = 0
@@ -1610,10 +1610,10 @@ On Error GoTo ErrPtnr_OnError
 62120      .PDFUseSecurity = 0
 62130     End If
 62140   End If
-62150   tstr = hOpt.Retrieve("PNGColorscount")
-62160   If IsNumeric(tstr) Then
-62170     If CLng(tstr) >= 0 And CLng(tstr) <= 4 Then
-62180       .PNGColorscount = CLng(tstr)
+62150   tStr = hOpt.Retrieve("PNGColorscount")
+62160   If IsNumeric(tStr) Then
+62170     If CLng(tStr) >= 0 And CLng(tStr) <= 4 Then
+62180       .PNGColorscount = CLng(tStr)
 62190      Else
 62200       If UseStandard Then
 62210        .PNGColorscount = 0
@@ -1624,10 +1624,10 @@ On Error GoTo ErrPtnr_OnError
 62260      .PNGColorscount = 0
 62270     End If
 62280   End If
-62290   tstr = hOpt.Retrieve("PrintAfterSaving")
-62300   If IsNumeric(tstr) Then
-62310     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62320       .PrintAfterSaving = CLng(tstr)
+62290   tStr = hOpt.Retrieve("PrintAfterSaving")
+62300   If IsNumeric(tStr) Then
+62310     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62320       .PrintAfterSaving = CLng(tStr)
 62330      Else
 62340       If UseStandard Then
 62350        .PrintAfterSaving = 0
@@ -1638,10 +1638,10 @@ On Error GoTo ErrPtnr_OnError
 62400      .PrintAfterSaving = 0
 62410     End If
 62420   End If
-62430   tstr = hOpt.Retrieve("PrintAfterSavingDuplex")
-62440   If IsNumeric(tstr) Then
-62450     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62460       .PrintAfterSavingDuplex = CLng(tstr)
+62430   tStr = hOpt.Retrieve("PrintAfterSavingDuplex")
+62440   If IsNumeric(tStr) Then
+62450     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62460       .PrintAfterSavingDuplex = CLng(tStr)
 62470      Else
 62480       If UseStandard Then
 62490        .PrintAfterSavingDuplex = 0
@@ -1652,10 +1652,10 @@ On Error GoTo ErrPtnr_OnError
 62540      .PrintAfterSavingDuplex = 0
 62550     End If
 62560   End If
-62570   tstr = hOpt.Retrieve("PrintAfterSavingNoCancel")
-62580   If IsNumeric(tstr) Then
-62590     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62600       .PrintAfterSavingNoCancel = CLng(tstr)
+62570   tStr = hOpt.Retrieve("PrintAfterSavingNoCancel")
+62580   If IsNumeric(tStr) Then
+62590     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62600       .PrintAfterSavingNoCancel = CLng(tStr)
 62610      Else
 62620       If UseStandard Then
 62630        .PrintAfterSavingNoCancel = 0
@@ -1666,18 +1666,18 @@ On Error GoTo ErrPtnr_OnError
 62680      .PrintAfterSavingNoCancel = 0
 62690     End If
 62700   End If
-62710   tstr = hOpt.Retrieve("PrintAfterSavingPrinter")
-62720   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-62730     .PrintAfterSavingPrinter = " "
+62710   tStr = hOpt.Retrieve("PrintAfterSavingPrinter")
+62720   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+62730     .PrintAfterSavingPrinter = ""
 62740    Else
-62750     If LenB(tstr) > 0 Then
-62760      .PrintAfterSavingPrinter = tstr
+62750     If LenB(tStr) > 0 Then
+62760      .PrintAfterSavingPrinter = tStr
 62770     End If
 62780   End If
-62790   tstr = hOpt.Retrieve("PrintAfterSavingQueryUser")
-62800   If IsNumeric(tstr) Then
-62810     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-62820       .PrintAfterSavingQueryUser = CLng(tstr)
+62790   tStr = hOpt.Retrieve("PrintAfterSavingQueryUser")
+62800   If IsNumeric(tStr) Then
+62810     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+62820       .PrintAfterSavingQueryUser = CLng(tStr)
 62830      Else
 62840       If UseStandard Then
 62850        .PrintAfterSavingQueryUser = 0
@@ -1688,10 +1688,10 @@ On Error GoTo ErrPtnr_OnError
 62900      .PrintAfterSavingQueryUser = 0
 62910     End If
 62920   End If
-62930   tstr = hOpt.Retrieve("PrintAfterSavingTumble")
-62940   If IsNumeric(tstr) Then
-62950     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62960       .PrintAfterSavingTumble = CLng(tstr)
+62930   tStr = hOpt.Retrieve("PrintAfterSavingTumble")
+62940   If IsNumeric(tStr) Then
+62950     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62960       .PrintAfterSavingTumble = CLng(tStr)
 62970      Else
 62980       If UseStandard Then
 62990        .PrintAfterSavingTumble = 0
@@ -1702,10 +1702,10 @@ On Error GoTo ErrPtnr_OnError
 63040      .PrintAfterSavingTumble = 0
 63050     End If
 63060   End If
-63070   tstr = hOpt.Retrieve("PrinterStop")
-63080   If IsNumeric(tstr) Then
-63090     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-63100       .PrinterStop = CLng(tstr)
+63070   tStr = hOpt.Retrieve("PrinterStop")
+63080   If IsNumeric(tStr) Then
+63090     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63100       .PrinterStop = CLng(tStr)
 63110      Else
 63120       If UseStandard Then
 63130        .PrinterStop = 0
@@ -1716,31 +1716,31 @@ On Error GoTo ErrPtnr_OnError
 63180      .PrinterStop = 0
 63190     End If
 63200   End If
-63210   tstr = hOpt.Retrieve("PrinterTemppath")
-63220   If LenB(Trim$(tstr)) > 0 Then
-63230    If DirExists(GetSubstFilename2(tstr, False)) = True Then
-63240      .PrinterTemppath = tstr
+63210   tStr = hOpt.Retrieve("PrinterTemppath")
+63220   If LenB(Trim$(tStr)) > 0 Then
+63230    If DirExists(GetSubstFilename2(tStr, False)) = True Then
+63240      .PrinterTemppath = tStr
 63250     Else
-63260      MakePath ResolveEnvironment(GetSubstFilename2(tstr, False))
-63270      If DirExists(ResolveEnvironment(GetSubstFilename2(tstr, False))) = False Then
+63260      MakePath ResolveEnvironment(GetSubstFilename2(tStr, False))
+63270      If DirExists(ResolveEnvironment(GetSubstFilename2(tStr, False))) = False Then
 63280        If UseStandard Then
 63290          .PrinterTemppath = GetTempPath
 63300         Else
 63310          .PrinterTemppath = ""
 63320          If NoMsg = False Then
-63330           MsgBox "PrinterTemppath: '" & tstr & "' = '" & ResolveEnvironment(GetSubstFilename2(tstr, False)) & "'" & _
+63330           MsgBox "PrinterTemppath: '" & tStr & "' = '" & ResolveEnvironment(GetSubstFilename2(tStr, False)) & "'" & _
            vbCrLf & vbCrLf & LanguageStrings.MessagesMsg07
 63350          End If
 63360        End If
 63370       Else
-63380        .PrinterTemppath = tstr
+63380        .PrinterTemppath = tStr
 63390      End If
 63400    End If
 63410   End If
-63420   tstr = hOpt.Retrieve("ProcessPriority")
-63430   If IsNumeric(tstr) Then
-63440     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-63450       .ProcessPriority = CLng(tstr)
+63420   tStr = hOpt.Retrieve("ProcessPriority")
+63430   If IsNumeric(tStr) Then
+63440     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+63450       .ProcessPriority = CLng(tStr)
 63460      Else
 63470       If UseStandard Then
 63480        .ProcessPriority = 1
@@ -1751,18 +1751,18 @@ On Error GoTo ErrPtnr_OnError
 63530      .ProcessPriority = 1
 63540     End If
 63550   End If
-63560   tstr = hOpt.Retrieve("ProgramFont")
-63570   If LenB(tstr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
+63560   tStr = hOpt.Retrieve("ProgramFont")
+63570   If LenB(tStr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
 63580     .ProgramFont = "MS Sans Serif"
 63590    Else
-63600     If LenB(tstr) > 0 Then
-63610      .ProgramFont = tstr
+63600     If LenB(tStr) > 0 Then
+63610      .ProgramFont = tStr
 63620     End If
 63630   End If
-63640   tstr = hOpt.Retrieve("ProgramFontCharset")
-63650   If IsNumeric(tstr) Then
-63660     If CLng(tstr) >= 0 Then
-63670       .ProgramFontCharset = CLng(tstr)
+63640   tStr = hOpt.Retrieve("ProgramFontCharset")
+63650   If IsNumeric(tStr) Then
+63660     If CLng(tStr) >= 0 Then
+63670       .ProgramFontCharset = CLng(tStr)
 63680      Else
 63690       If UseStandard Then
 63700        .ProgramFontCharset = 0
@@ -1773,10 +1773,10 @@ On Error GoTo ErrPtnr_OnError
 63750      .ProgramFontCharset = 0
 63760     End If
 63770   End If
-63780   tstr = hOpt.Retrieve("ProgramFontSize")
-63790   If IsNumeric(tstr) Then
-63800     If CLng(tstr) >= 1 And CLng(tstr) <= 72 Then
-63810       .ProgramFontSize = CLng(tstr)
+63780   tStr = hOpt.Retrieve("ProgramFontSize")
+63790   If IsNumeric(tStr) Then
+63800     If CLng(tStr) >= 1 And CLng(tStr) <= 72 Then
+63810       .ProgramFontSize = CLng(tStr)
 63820      Else
 63830       If UseStandard Then
 63840        .ProgramFontSize = 8
@@ -1787,10 +1787,10 @@ On Error GoTo ErrPtnr_OnError
 63890      .ProgramFontSize = 8
 63900     End If
 63910   End If
-63920   tstr = hOpt.Retrieve("PSLanguageLevel")
-63930   If IsNumeric(tstr) Then
-63940     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-63950       .PSLanguageLevel = CLng(tstr)
+63920   tStr = hOpt.Retrieve("PSLanguageLevel")
+63930   If IsNumeric(tStr) Then
+63940     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+63950       .PSLanguageLevel = CLng(tStr)
 63960      Else
 63970       If UseStandard Then
 63980        .PSLanguageLevel = 2
@@ -1801,10 +1801,10 @@ On Error GoTo ErrPtnr_OnError
 64030      .PSLanguageLevel = 2
 64040     End If
 64050   End If
-64060   tstr = hOpt.Retrieve("RemoveAllKnownFileExtensions")
-64070   If IsNumeric(tstr) Then
-64080     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64090       .RemoveAllKnownFileExtensions = CLng(tstr)
+64060   tStr = hOpt.Retrieve("RemoveAllKnownFileExtensions")
+64070   If IsNumeric(tStr) Then
+64080     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64090       .RemoveAllKnownFileExtensions = CLng(tStr)
 64100      Else
 64110       If UseStandard Then
 64120        .RemoveAllKnownFileExtensions = 1
@@ -1815,10 +1815,10 @@ On Error GoTo ErrPtnr_OnError
 64170      .RemoveAllKnownFileExtensions = 1
 64180     End If
 64190   End If
-64200   tstr = hOpt.Retrieve("RemoveSpaces")
-64210   If IsNumeric(tstr) Then
-64220     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64230       .RemoveSpaces = CLng(tstr)
+64200   tStr = hOpt.Retrieve("RemoveSpaces")
+64210   If IsNumeric(tStr) Then
+64220     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64230       .RemoveSpaces = CLng(tStr)
 64240      Else
 64250       If UseStandard Then
 64260        .RemoveSpaces = 1
@@ -1829,10 +1829,10 @@ On Error GoTo ErrPtnr_OnError
 64310      .RemoveSpaces = 1
 64320     End If
 64330   End If
-64340   tstr = hOpt.Retrieve("RunProgramAfterSaving")
-64350   If IsNumeric(tstr) Then
-64360     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64370       .RunProgramAfterSaving = CLng(tstr)
+64340   tStr = hOpt.Retrieve("RunProgramAfterSaving")
+64350   If IsNumeric(tStr) Then
+64360     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64370       .RunProgramAfterSaving = CLng(tStr)
 64380      Else
 64390       If UseStandard Then
 64400        .RunProgramAfterSaving = 0
@@ -1843,26 +1843,26 @@ On Error GoTo ErrPtnr_OnError
 64450      .RunProgramAfterSaving = 0
 64460     End If
 64470   End If
-64480   tstr = hOpt.Retrieve("RunProgramAfterSavingProgramname")
-64490   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-64500     .RunProgramAfterSavingProgramname = " "
+64480   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramname")
+64490   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64500     .RunProgramAfterSavingProgramname = ""
 64510    Else
-64520     If LenB(tstr) > 0 Then
-64530      .RunProgramAfterSavingProgramname = tstr
+64520     If LenB(tStr) > 0 Then
+64530      .RunProgramAfterSavingProgramname = tStr
 64540     End If
 64550   End If
-64560   tstr = hOpt.Retrieve("RunProgramAfterSavingProgramParameters")
-64570   If LenB(tstr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
+64560   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramParameters")
+64570   If LenB(tStr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
 64580     .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
 64590    Else
-64600     If LenB(tstr) > 0 Then
-64610      .RunProgramAfterSavingProgramParameters = tstr
+64600     If LenB(tStr) > 0 Then
+64610      .RunProgramAfterSavingProgramParameters = tStr
 64620     End If
 64630   End If
-64640   tstr = hOpt.Retrieve("RunProgramAfterSavingWaitUntilReady")
-64650   If IsNumeric(tstr) Then
-64660     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64670       .RunProgramAfterSavingWaitUntilReady = CLng(tstr)
+64640   tStr = hOpt.Retrieve("RunProgramAfterSavingWaitUntilReady")
+64650   If IsNumeric(tStr) Then
+64660     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64670       .RunProgramAfterSavingWaitUntilReady = CLng(tStr)
 64680      Else
 64690       If UseStandard Then
 64700        .RunProgramAfterSavingWaitUntilReady = 1
@@ -1873,10 +1873,10 @@ On Error GoTo ErrPtnr_OnError
 64750      .RunProgramAfterSavingWaitUntilReady = 1
 64760     End If
 64770   End If
-64780   tstr = hOpt.Retrieve("RunProgramAfterSavingWindowstyle")
-64790   If IsNumeric(tstr) Then
-64800     If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
-64810       .RunProgramAfterSavingWindowstyle = CLng(tstr)
+64780   tStr = hOpt.Retrieve("RunProgramAfterSavingWindowstyle")
+64790   If IsNumeric(tStr) Then
+64800     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+64810       .RunProgramAfterSavingWindowstyle = CLng(tStr)
 64820      Else
 64830       If UseStandard Then
 64840        .RunProgramAfterSavingWindowstyle = 1
@@ -1887,10 +1887,10 @@ On Error GoTo ErrPtnr_OnError
 64890      .RunProgramAfterSavingWindowstyle = 1
 64900     End If
 64910   End If
-64920   tstr = hOpt.Retrieve("RunProgramBeforeSaving")
-64930   If IsNumeric(tstr) Then
-64940     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64950       .RunProgramBeforeSaving = CLng(tstr)
+64920   tStr = hOpt.Retrieve("RunProgramBeforeSaving")
+64930   If IsNumeric(tStr) Then
+64940     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64950       .RunProgramBeforeSaving = CLng(tStr)
 64960      Else
 64970       If UseStandard Then
 64980        .RunProgramBeforeSaving = 0
@@ -1901,26 +1901,26 @@ On Error GoTo ErrPtnr_OnError
 65030      .RunProgramBeforeSaving = 0
 65040     End If
 65050   End If
-65060   tstr = hOpt.Retrieve("RunProgramBeforeSavingProgramname")
-65070   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-65080     .RunProgramBeforeSavingProgramname = " "
+65060   tStr = hOpt.Retrieve("RunProgramBeforeSavingProgramname")
+65070   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+65080     .RunProgramBeforeSavingProgramname = ""
 65090    Else
-65100     If LenB(tstr) > 0 Then
-65110      .RunProgramBeforeSavingProgramname = tstr
+65100     If LenB(tStr) > 0 Then
+65110      .RunProgramBeforeSavingProgramname = tStr
 65120     End If
 65130   End If
-65140   tstr = hOpt.Retrieve("RunProgramBeforeSavingProgramParameters")
-65150   If LenB(tstr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
+65140   tStr = hOpt.Retrieve("RunProgramBeforeSavingProgramParameters")
+65150   If LenB(tStr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
 65160     .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
 65170    Else
-65180     If LenB(tstr) > 0 Then
-65190      .RunProgramBeforeSavingProgramParameters = tstr
+65180     If LenB(tStr) > 0 Then
+65190      .RunProgramBeforeSavingProgramParameters = tStr
 65200     End If
 65210   End If
-65220   tstr = hOpt.Retrieve("RunProgramBeforeSavingWindowstyle")
-65230   If IsNumeric(tstr) Then
-65240     If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
-65250       .RunProgramBeforeSavingWindowstyle = CLng(tstr)
+65220   tStr = hOpt.Retrieve("RunProgramBeforeSavingWindowstyle")
+65230   If IsNumeric(tStr) Then
+65240     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+65250       .RunProgramBeforeSavingWindowstyle = CLng(tStr)
 65260      Else
 65270       If UseStandard Then
 65280        .RunProgramBeforeSavingWindowstyle = 1
@@ -1931,18 +1931,18 @@ On Error GoTo ErrPtnr_OnError
 65330      .RunProgramBeforeSavingWindowstyle = 1
 65340     End If
 65350   End If
-65360   tstr = hOpt.Retrieve("SaveFilename")
-65370   If LenB(tstr) = 0 And LenB("<Title>") > 0 And UseStandard Then
+65360   tStr = hOpt.Retrieve("SaveFilename")
+65370   If LenB(tStr) = 0 And LenB("<Title>") > 0 And UseStandard Then
 65380     .SaveFilename = "<Title>"
 65390    Else
-65400     If LenB(tstr) > 0 Then
-65410      .SaveFilename = tstr
+65400     If LenB(tStr) > 0 Then
+65410      .SaveFilename = tStr
 65420     End If
 65430   End If
-65440   tstr = hOpt.Retrieve("SendMailMethod")
-65450   If IsNumeric(tstr) Then
-65460     If CLng(tstr) >= 0 Then
-65470       .SendMailMethod = CLng(tstr)
+65440   tStr = hOpt.Retrieve("SendMailMethod")
+65450   If IsNumeric(tStr) Then
+65460     If CLng(tStr) >= 0 Then
+65470       .SendMailMethod = CLng(tStr)
 65480      Else
 65490       If UseStandard Then
 65500        .SendMailMethod = 0
@@ -1953,10 +1953,10 @@ On Error GoTo ErrPtnr_OnError
 65550      .SendMailMethod = 0
 65560     End If
 65570   End If
-65580   tstr = hOpt.Retrieve("ShowAnimation")
-65590   If IsNumeric(tstr) Then
-65600     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-65610       .ShowAnimation = CLng(tstr)
+65580   tStr = hOpt.Retrieve("ShowAnimation")
+65590   If IsNumeric(tStr) Then
+65600     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65610       .ShowAnimation = CLng(tStr)
 65620      Else
 65630       If UseStandard Then
 65640        .ShowAnimation = 1
@@ -1967,26 +1967,26 @@ On Error GoTo ErrPtnr_OnError
 65690      .ShowAnimation = 1
 65700     End If
 65710   End If
-65720   tstr = hOpt.Retrieve("StampFontColor")
-65730   If LenB(tstr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
+65720   tStr = hOpt.Retrieve("StampFontColor")
+65730   If LenB(tStr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
 65740     .StampFontColor = "#FF0000"
 65750    Else
-65760     If LenB(tstr) > 0 Then
-65770      .StampFontColor = tstr
+65760     If LenB(tStr) > 0 Then
+65770      .StampFontColor = tStr
 65780     End If
 65790   End If
-65800   tstr = hOpt.Retrieve("StampFontname")
-65810   If LenB(tstr) = 0 And LenB("Arial") > 0 And UseStandard Then
+65800   tStr = hOpt.Retrieve("StampFontname")
+65810   If LenB(tStr) = 0 And LenB("Arial") > 0 And UseStandard Then
 65820     .StampFontname = "Arial"
 65830    Else
-65840     If LenB(tstr) > 0 Then
-65850      .StampFontname = tstr
+65840     If LenB(tStr) > 0 Then
+65850      .StampFontname = tStr
 65860     End If
 65870   End If
-65880   tstr = hOpt.Retrieve("StampFontsize")
-65890   If IsNumeric(tstr) Then
-65900     If CLng(tstr) >= 1 Then
-65910       .StampFontsize = CLng(tstr)
+65880   tStr = hOpt.Retrieve("StampFontsize")
+65890   If IsNumeric(tStr) Then
+65900     If CLng(tStr) >= 1 Then
+65910       .StampFontsize = CLng(tStr)
 65920      Else
 65930       If UseStandard Then
 65940        .StampFontsize = 48
@@ -1997,10 +1997,10 @@ On Error GoTo ErrPtnr_OnError
 65990      .StampFontsize = 48
 66000     End If
 66010   End If
-66020   tstr = hOpt.Retrieve("StampOutlineFontthickness")
-66030   If IsNumeric(tstr) Then
-66040     If CLng(tstr) >= 0 Then
-66050       .StampOutlineFontthickness = CLng(tstr)
+66020   tStr = hOpt.Retrieve("StampOutlineFontthickness")
+66030   If IsNumeric(tStr) Then
+66040     If CLng(tStr) >= 0 Then
+66050       .StampOutlineFontthickness = CLng(tStr)
 66060      Else
 66070       If UseStandard Then
 66080        .StampOutlineFontthickness = 0
@@ -2011,18 +2011,18 @@ On Error GoTo ErrPtnr_OnError
 66130      .StampOutlineFontthickness = 0
 66140     End If
 66150   End If
-66160   tstr = hOpt.Retrieve("StampString")
-66170   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66180     .StampString = " "
+66160   tStr = hOpt.Retrieve("StampString")
+66170   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66180     .StampString = ""
 66190    Else
-66200     If LenB(tstr) > 0 Then
-66210      .StampString = tstr
+66200     If LenB(tStr) > 0 Then
+66210      .StampString = tStr
 66220     End If
 66230   End If
-66240   tstr = hOpt.Retrieve("StampUseOutlineFont")
-66250   If IsNumeric(tstr) Then
-66260     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-66270       .StampUseOutlineFont = CLng(tstr)
+66240   tStr = hOpt.Retrieve("StampUseOutlineFont")
+66250   If IsNumeric(tStr) Then
+66260     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66270       .StampUseOutlineFont = CLng(tStr)
 66280      Else
 66290       If UseStandard Then
 66300        .StampUseOutlineFont = 1
@@ -2033,82 +2033,82 @@ On Error GoTo ErrPtnr_OnError
 66350      .StampUseOutlineFont = 1
 66360     End If
 66370   End If
-66380   tstr = hOpt.Retrieve("StandardAuthor")
-66390   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66400     .StandardAuthor = " "
+66380   tStr = hOpt.Retrieve("StandardAuthor")
+66390   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66400     .StandardAuthor = ""
 66410    Else
-66420     If LenB(tstr) > 0 Then
-66430      .StandardAuthor = tstr
+66420     If LenB(tStr) > 0 Then
+66430      .StandardAuthor = tStr
 66440     End If
 66450   End If
-66460   tstr = hOpt.Retrieve("StandardCreationdate")
-66470   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66480     .StandardCreationdate = " "
+66460   tStr = hOpt.Retrieve("StandardCreationdate")
+66470   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66480     .StandardCreationdate = ""
 66490    Else
-66500     If LenB(tstr) > 0 Then
-66510      .StandardCreationdate = tstr
+66500     If LenB(tStr) > 0 Then
+66510      .StandardCreationdate = tStr
 66520     End If
 66530   End If
-66540   tstr = hOpt.Retrieve("StandardDateformat")
-66550   If LenB(tstr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
+66540   tStr = hOpt.Retrieve("StandardDateformat")
+66550   If LenB(tStr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
 66560     .StandardDateformat = "YYYYMMDDHHNNSS"
 66570    Else
-66580     If LenB(tstr) > 0 Then
-66590      .StandardDateformat = tstr
+66580     If LenB(tStr) > 0 Then
+66590      .StandardDateformat = tStr
 66600     End If
 66610   End If
-66620   tstr = hOpt.Retrieve("StandardKeywords")
-66630   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66640     .StandardKeywords = " "
+66620   tStr = hOpt.Retrieve("StandardKeywords")
+66630   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66640     .StandardKeywords = ""
 66650    Else
-66660     If LenB(tstr) > 0 Then
-66670      .StandardKeywords = tstr
+66660     If LenB(tStr) > 0 Then
+66670      .StandardKeywords = tStr
 66680     End If
 66690   End If
-66700   tstr = hOpt.Retrieve("StandardMailDomain")
-66710   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66720     .StandardMailDomain = " "
+66700   tStr = hOpt.Retrieve("StandardMailDomain")
+66710   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66720     .StandardMailDomain = ""
 66730    Else
-66740     If LenB(tstr) > 0 Then
-66750      .StandardMailDomain = tstr
+66740     If LenB(tStr) > 0 Then
+66750      .StandardMailDomain = tStr
 66760     End If
 66770   End If
-66780   tstr = hOpt.Retrieve("StandardModifydate")
-66790   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66800     .StandardModifydate = " "
+66780   tStr = hOpt.Retrieve("StandardModifydate")
+66790   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66800     .StandardModifydate = ""
 66810    Else
-66820     If LenB(tstr) > 0 Then
-66830      .StandardModifydate = tstr
+66820     If LenB(tStr) > 0 Then
+66830      .StandardModifydate = tStr
 66840     End If
 66850   End If
-66860   tstr = hOpt.Retrieve("StandardSaveformat")
-66870   If LenB(tstr) = 0 And LenB("pdf") > 0 And UseStandard Then
+66860   tStr = hOpt.Retrieve("StandardSaveformat")
+66870   If LenB(tStr) = 0 And LenB("pdf") > 0 And UseStandard Then
 66880     .StandardSaveformat = "pdf"
 66890    Else
-66900     If LenB(tstr) > 0 Then
-66910      .StandardSaveformat = tstr
+66900     If LenB(tStr) > 0 Then
+66910      .StandardSaveformat = tStr
 66920     End If
 66930   End If
-66940   tstr = hOpt.Retrieve("StandardSubject")
-66950   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66960     .StandardSubject = " "
+66940   tStr = hOpt.Retrieve("StandardSubject")
+66950   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66960     .StandardSubject = ""
 66970    Else
-66980     If LenB(tstr) > 0 Then
-66990      .StandardSubject = tstr
+66980     If LenB(tStr) > 0 Then
+66990      .StandardSubject = tStr
 67000     End If
 67010   End If
-67020   tstr = hOpt.Retrieve("StandardTitle")
-67030   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-67040     .StandardTitle = " "
+67020   tStr = hOpt.Retrieve("StandardTitle")
+67030   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+67040     .StandardTitle = ""
 67050    Else
-67060     If LenB(tstr) > 0 Then
-67070      .StandardTitle = tstr
+67060     If LenB(tStr) > 0 Then
+67070      .StandardTitle = tStr
 67080     End If
 67090   End If
-67100   tstr = hOpt.Retrieve("StartStandardProgram")
-67110   If IsNumeric(tstr) Then
-67120     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67130       .StartStandardProgram = CLng(tstr)
+67100   tStr = hOpt.Retrieve("StartStandardProgram")
+67110   If IsNumeric(tStr) Then
+67120     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67130       .StartStandardProgram = CLng(tStr)
 67140      Else
 67150       If UseStandard Then
 67160        .StartStandardProgram = 1
@@ -2119,10 +2119,10 @@ On Error GoTo ErrPtnr_OnError
 67210      .StartStandardProgram = 1
 67220     End If
 67230   End If
-67240   tstr = hOpt.Retrieve("TIFFColorscount")
-67250   If IsNumeric(tstr) Then
-67260     If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
-67270       .TIFFColorscount = CLng(tstr)
+67240   tStr = hOpt.Retrieve("TIFFColorscount")
+67250   If IsNumeric(tStr) Then
+67260     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+67270       .TIFFColorscount = CLng(tStr)
 67280      Else
 67290       If UseStandard Then
 67300        .TIFFColorscount = 0
@@ -2133,10 +2133,10 @@ On Error GoTo ErrPtnr_OnError
 67350      .TIFFColorscount = 0
 67360     End If
 67370   End If
-67380   tstr = hOpt.Retrieve("Toolbars")
-67390   If IsNumeric(tstr) Then
-67400     If CLng(tstr) >= 0 Then
-67410       .Toolbars = CLng(tstr)
+67380   tStr = hOpt.Retrieve("Toolbars")
+67390   If IsNumeric(tStr) Then
+67400     If CLng(tStr) >= 0 Then
+67410       .Toolbars = CLng(tStr)
 67420      Else
 67430       If UseStandard Then
 67440        .Toolbars = 1
@@ -2147,10 +2147,10 @@ On Error GoTo ErrPtnr_OnError
 67490      .Toolbars = 1
 67500     End If
 67510   End If
-67520   tstr = hOpt.Retrieve("UseAutosave")
-67530   If IsNumeric(tstr) Then
-67540     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67550       .UseAutosave = CLng(tstr)
+67520   tStr = hOpt.Retrieve("UseAutosave")
+67530   If IsNumeric(tStr) Then
+67540     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67550       .UseAutosave = CLng(tStr)
 67560      Else
 67570       If UseStandard Then
 67580        .UseAutosave = 0
@@ -2161,10 +2161,10 @@ On Error GoTo ErrPtnr_OnError
 67630      .UseAutosave = 0
 67640     End If
 67650   End If
-67660   tstr = hOpt.Retrieve("UseAutosaveDirectory")
-67670   If IsNumeric(tstr) Then
-67680     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67690       .UseAutosaveDirectory = CLng(tstr)
+67660   tStr = hOpt.Retrieve("UseAutosaveDirectory")
+67670   If IsNumeric(tStr) Then
+67680     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67690       .UseAutosaveDirectory = CLng(tStr)
 67700      Else
 67710       If UseStandard Then
 67720        .UseAutosaveDirectory = 1
@@ -2175,10 +2175,10 @@ On Error GoTo ErrPtnr_OnError
 67770      .UseAutosaveDirectory = 1
 67780     End If
 67790   End If
-67800   tstr = hOpt.Retrieve("UseCreationDateNow")
-67810   If IsNumeric(tstr) Then
-67820     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67830       .UseCreationDateNow = CLng(tstr)
+67800   tStr = hOpt.Retrieve("UseCreationDateNow")
+67810   If IsNumeric(tStr) Then
+67820     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67830       .UseCreationDateNow = CLng(tStr)
 67840      Else
 67850       If UseStandard Then
 67860        .UseCreationDateNow = 0
@@ -2189,10 +2189,10 @@ On Error GoTo ErrPtnr_OnError
 67910      .UseCreationDateNow = 0
 67920     End If
 67930   End If
-67940   tstr = hOpt.Retrieve("UseStandardAuthor")
-67950   If IsNumeric(tstr) Then
-67960     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67970       .UseStandardAuthor = CLng(tstr)
+67940   tStr = hOpt.Retrieve("UseStandardAuthor")
+67950   If IsNumeric(tStr) Then
+67960     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67970       .UseStandardAuthor = CLng(tStr)
 67980      Else
 67990       If UseStandard Then
 68000        .UseStandardAuthor = 0
@@ -2616,52 +2616,52 @@ Public Function ReadOptionsReg(myOptions As tOptions, KeyRoot As String, Optiona
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, tstr As String
+50010  Dim reg As clsRegistry, tStr As String
 50020  Set reg = New clsRegistry
 50030  reg.hkey = hkey1
 50040  reg.KeyRoot = KeyRoot
 50050  With myOptions
 50060   reg.Subkey = "Ghostscript"
-50070   tstr = reg.GetRegistryValue("DirectoryGhostscriptBinaries")
-50080   If LenB(Trim$(tstr)) > 0 Then
-50090     .DirectoryGhostscriptBinaries = CompletePath(tstr)
+50070   tStr = reg.GetRegistryValue("DirectoryGhostscriptBinaries")
+50080   If LenB(Trim$(tStr)) > 0 Then
+50090     .DirectoryGhostscriptBinaries = CompletePath(tStr)
 50100    Else
 50110     If UseStandard Then
-50120      tstr = App.Path
-50130      .DirectoryGhostscriptBinaries = CompletePath(tstr)
+50120      tStr = App.Path
+50130      .DirectoryGhostscriptBinaries = CompletePath(tStr)
 50140     End If
 50150   End If
-50160   tstr = reg.GetRegistryValue("DirectoryGhostscriptFonts")
-50170   If LenB(Trim$(tstr)) > 0 Then
-50180     .DirectoryGhostscriptFonts = CompletePath(tstr)
+50160   tStr = reg.GetRegistryValue("DirectoryGhostscriptFonts")
+50170   If LenB(Trim$(tStr)) > 0 Then
+50180     .DirectoryGhostscriptFonts = CompletePath(tStr)
 50190    Else
 50200     If UseStandard Then
-50210      tstr = App.Path & "\fonts"
-50220      .DirectoryGhostscriptFonts = CompletePath(tstr)
+50210      tStr = App.Path & "\fonts"
+50220      .DirectoryGhostscriptFonts = CompletePath(tStr)
 50230     End If
 50240   End If
-50250   tstr = reg.GetRegistryValue("DirectoryGhostscriptLibraries")
-50260   If LenB(Trim$(tstr)) > 0 Then
-50270     .DirectoryGhostscriptLibraries = CompletePath(tstr)
+50250   tStr = reg.GetRegistryValue("DirectoryGhostscriptLibraries")
+50260   If LenB(Trim$(tStr)) > 0 Then
+50270     .DirectoryGhostscriptLibraries = CompletePath(tStr)
 50280    Else
 50290     If UseStandard Then
-50300      tstr = App.Path & "\lib"
-50310      .DirectoryGhostscriptLibraries = CompletePath(tstr)
+50300      tStr = App.Path & "\lib"
+50310      .DirectoryGhostscriptLibraries = CompletePath(tStr)
 50320     End If
 50330   End If
-50340   tstr = reg.GetRegistryValue("DirectoryGhostscriptResource")
-50350   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-50360     .DirectoryGhostscriptResource = " "
+50340   tStr = reg.GetRegistryValue("DirectoryGhostscriptResource")
+50350   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+50360     .DirectoryGhostscriptResource = ""
 50370    Else
-50380     If LenB(tstr) > 0 Then
-50390      .DirectoryGhostscriptResource = tstr
+50380     If LenB(tStr) > 0 Then
+50390      .DirectoryGhostscriptResource = tStr
 50400     End If
 50410   End If
 50420   reg.Subkey = "Printing"
-50430   tstr = reg.GetRegistryValue("DeviceHeightPoints")
-50440   If IsNumeric(tstr) Then
-50450     If CDbl(tstr) >= -1 Then
-50460       .DeviceHeightPoints = CDbl(tstr)
+50430   tStr = reg.GetRegistryValue("DeviceHeightPoints")
+50440   If IsNumeric(tStr) Then
+50450     If CDbl(tStr) >= -1 Then
+50460       .DeviceHeightPoints = CDbl(tStr)
 50470      Else
 50480       If UseStandard Then
 50490        .DeviceHeightPoints = -1
@@ -2672,10 +2672,10 @@ On Error GoTo ErrPtnr_OnError
 50540      .DeviceHeightPoints = -1
 50550     End If
 50560   End If
-50570   tstr = reg.GetRegistryValue("DeviceWidthPoints")
-50580   If IsNumeric(tstr) Then
-50590     If CDbl(tstr) >= -1 Then
-50600       .DeviceWidthPoints = CDbl(tstr)
+50570   tStr = reg.GetRegistryValue("DeviceWidthPoints")
+50580   If IsNumeric(tStr) Then
+50590     If CDbl(tStr) >= -1 Then
+50600       .DeviceWidthPoints = CDbl(tStr)
 50610      Else
 50620       If UseStandard Then
 50630        .DeviceWidthPoints = -1
@@ -2686,10 +2686,10 @@ On Error GoTo ErrPtnr_OnError
 50680      .DeviceWidthPoints = -1
 50690     End If
 50700   End If
-50710   tstr = reg.GetRegistryValue("OnePagePerFile")
-50720   If IsNumeric(tstr) Then
-50730     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-50740       .OnePagePerFile = CLng(tstr)
+50710   tStr = reg.GetRegistryValue("OnePagePerFile")
+50720   If IsNumeric(tStr) Then
+50730     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+50740       .OnePagePerFile = CLng(tStr)
 50750      Else
 50760       If UseStandard Then
 50770        .OnePagePerFile = 0
@@ -2700,34 +2700,34 @@ On Error GoTo ErrPtnr_OnError
 50820      .OnePagePerFile = 0
 50830     End If
 50840   End If
-50850   tstr = reg.GetRegistryValue("Papersize")
-50860   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-50870     .Papersize = " "
+50850   tStr = reg.GetRegistryValue("Papersize")
+50860   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+50870     .Papersize = ""
 50880    Else
-50890     If LenB(tstr) > 0 Then
-50900      .Papersize = tstr
+50890     If LenB(tStr) > 0 Then
+50900      .Papersize = tStr
 50910     End If
 50920   End If
-50930   tstr = reg.GetRegistryValue("StampFontColor")
-50940   If LenB(tstr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
+50930   tStr = reg.GetRegistryValue("StampFontColor")
+50940   If LenB(tStr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
 50950     .StampFontColor = "#FF0000"
 50960    Else
-50970     If LenB(tstr) > 0 Then
-50980      .StampFontColor = tstr
+50970     If LenB(tStr) > 0 Then
+50980      .StampFontColor = tStr
 50990     End If
 51000   End If
-51010   tstr = reg.GetRegistryValue("StampFontname")
-51020   If LenB(tstr) = 0 And LenB("Arial") > 0 And UseStandard Then
+51010   tStr = reg.GetRegistryValue("StampFontname")
+51020   If LenB(tStr) = 0 And LenB("Arial") > 0 And UseStandard Then
 51030     .StampFontname = "Arial"
 51040    Else
-51050     If LenB(tstr) > 0 Then
-51060      .StampFontname = tstr
+51050     If LenB(tStr) > 0 Then
+51060      .StampFontname = tStr
 51070     End If
 51080   End If
-51090   tstr = reg.GetRegistryValue("StampFontsize")
-51100   If IsNumeric(tstr) Then
-51110     If CLng(tstr) >= 1 Then
-51120       .StampFontsize = CLng(tstr)
+51090   tStr = reg.GetRegistryValue("StampFontsize")
+51100   If IsNumeric(tStr) Then
+51110     If CLng(tStr) >= 1 Then
+51120       .StampFontsize = CLng(tStr)
 51130      Else
 51140       If UseStandard Then
 51150        .StampFontsize = 48
@@ -2738,10 +2738,10 @@ On Error GoTo ErrPtnr_OnError
 51200      .StampFontsize = 48
 51210     End If
 51220   End If
-51230   tstr = reg.GetRegistryValue("StampOutlineFontthickness")
-51240   If IsNumeric(tstr) Then
-51250     If CLng(tstr) >= 0 Then
-51260       .StampOutlineFontthickness = CLng(tstr)
+51230   tStr = reg.GetRegistryValue("StampOutlineFontthickness")
+51240   If IsNumeric(tStr) Then
+51250     If CLng(tStr) >= 0 Then
+51260       .StampOutlineFontthickness = CLng(tStr)
 51270      Else
 51280       If UseStandard Then
 51290        .StampOutlineFontthickness = 0
@@ -2752,18 +2752,18 @@ On Error GoTo ErrPtnr_OnError
 51340      .StampOutlineFontthickness = 0
 51350     End If
 51360   End If
-51370   tstr = reg.GetRegistryValue("StampString")
-51380   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-51390     .StampString = " "
+51370   tStr = reg.GetRegistryValue("StampString")
+51380   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+51390     .StampString = ""
 51400    Else
-51410     If LenB(tstr) > 0 Then
-51420      .StampString = tstr
+51410     If LenB(tStr) > 0 Then
+51420      .StampString = tStr
 51430     End If
 51440   End If
-51450   tstr = reg.GetRegistryValue("StampUseOutlineFont")
-51460   If IsNumeric(tstr) Then
-51470     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-51480       .StampUseOutlineFont = CLng(tstr)
+51450   tStr = reg.GetRegistryValue("StampUseOutlineFont")
+51460   If IsNumeric(tStr) Then
+51470     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+51480       .StampUseOutlineFont = CLng(tStr)
 51490      Else
 51500       If UseStandard Then
 51510        .StampUseOutlineFont = 1
@@ -2774,82 +2774,82 @@ On Error GoTo ErrPtnr_OnError
 51560      .StampUseOutlineFont = 1
 51570     End If
 51580   End If
-51590   tstr = reg.GetRegistryValue("StandardAuthor")
-51600   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-51610     .StandardAuthor = " "
+51590   tStr = reg.GetRegistryValue("StandardAuthor")
+51600   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+51610     .StandardAuthor = ""
 51620    Else
-51630     If LenB(tstr) > 0 Then
-51640      .StandardAuthor = tstr
+51630     If LenB(tStr) > 0 Then
+51640      .StandardAuthor = tStr
 51650     End If
 51660   End If
-51670   tstr = reg.GetRegistryValue("StandardCreationdate")
-51680   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-51690     .StandardCreationdate = " "
+51670   tStr = reg.GetRegistryValue("StandardCreationdate")
+51680   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+51690     .StandardCreationdate = ""
 51700    Else
-51710     If LenB(tstr) > 0 Then
-51720      .StandardCreationdate = tstr
+51710     If LenB(tStr) > 0 Then
+51720      .StandardCreationdate = tStr
 51730     End If
 51740   End If
-51750   tstr = reg.GetRegistryValue("StandardDateformat")
-51760   If LenB(tstr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
+51750   tStr = reg.GetRegistryValue("StandardDateformat")
+51760   If LenB(tStr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
 51770     .StandardDateformat = "YYYYMMDDHHNNSS"
 51780    Else
-51790     If LenB(tstr) > 0 Then
-51800      .StandardDateformat = tstr
+51790     If LenB(tStr) > 0 Then
+51800      .StandardDateformat = tStr
 51810     End If
 51820   End If
-51830   tstr = reg.GetRegistryValue("StandardKeywords")
-51840   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-51850     .StandardKeywords = " "
+51830   tStr = reg.GetRegistryValue("StandardKeywords")
+51840   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+51850     .StandardKeywords = ""
 51860    Else
-51870     If LenB(tstr) > 0 Then
-51880      .StandardKeywords = tstr
+51870     If LenB(tStr) > 0 Then
+51880      .StandardKeywords = tStr
 51890     End If
 51900   End If
-51910   tstr = reg.GetRegistryValue("StandardMailDomain")
-51920   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-51930     .StandardMailDomain = " "
+51910   tStr = reg.GetRegistryValue("StandardMailDomain")
+51920   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+51930     .StandardMailDomain = ""
 51940    Else
-51950     If LenB(tstr) > 0 Then
-51960      .StandardMailDomain = tstr
+51950     If LenB(tStr) > 0 Then
+51960      .StandardMailDomain = tStr
 51970     End If
 51980   End If
-51990   tstr = reg.GetRegistryValue("StandardModifydate")
-52000   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-52010     .StandardModifydate = " "
+51990   tStr = reg.GetRegistryValue("StandardModifydate")
+52000   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+52010     .StandardModifydate = ""
 52020    Else
-52030     If LenB(tstr) > 0 Then
-52040      .StandardModifydate = tstr
+52030     If LenB(tStr) > 0 Then
+52040      .StandardModifydate = tStr
 52050     End If
 52060   End If
-52070   tstr = reg.GetRegistryValue("StandardSaveformat")
-52080   If LenB(tstr) = 0 And LenB("pdf") > 0 And UseStandard Then
+52070   tStr = reg.GetRegistryValue("StandardSaveformat")
+52080   If LenB(tStr) = 0 And LenB("pdf") > 0 And UseStandard Then
 52090     .StandardSaveformat = "pdf"
 52100    Else
-52110     If LenB(tstr) > 0 Then
-52120      .StandardSaveformat = tstr
+52110     If LenB(tStr) > 0 Then
+52120      .StandardSaveformat = tStr
 52130     End If
 52140   End If
-52150   tstr = reg.GetRegistryValue("StandardSubject")
-52160   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-52170     .StandardSubject = " "
+52150   tStr = reg.GetRegistryValue("StandardSubject")
+52160   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+52170     .StandardSubject = ""
 52180    Else
-52190     If LenB(tstr) > 0 Then
-52200      .StandardSubject = tstr
+52190     If LenB(tStr) > 0 Then
+52200      .StandardSubject = tStr
 52210     End If
 52220   End If
-52230   tstr = reg.GetRegistryValue("StandardTitle")
-52240   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-52250     .StandardTitle = " "
+52230   tStr = reg.GetRegistryValue("StandardTitle")
+52240   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+52250     .StandardTitle = ""
 52260    Else
-52270     If LenB(tstr) > 0 Then
-52280      .StandardTitle = tstr
+52270     If LenB(tStr) > 0 Then
+52280      .StandardTitle = tStr
 52290     End If
 52300   End If
-52310   tstr = reg.GetRegistryValue("UseCreationDateNow")
-52320   If IsNumeric(tstr) Then
-52330     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-52340       .UseCreationDateNow = CLng(tstr)
+52310   tStr = reg.GetRegistryValue("UseCreationDateNow")
+52320   If IsNumeric(tStr) Then
+52330     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+52340       .UseCreationDateNow = CLng(tStr)
 52350      Else
 52360       If UseStandard Then
 52370        .UseCreationDateNow = 0
@@ -2860,10 +2860,10 @@ On Error GoTo ErrPtnr_OnError
 52420      .UseCreationDateNow = 0
 52430     End If
 52440   End If
-52450   tstr = reg.GetRegistryValue("UseStandardAuthor")
-52460   If IsNumeric(tstr) Then
-52470     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-52480       .UseStandardAuthor = CLng(tstr)
+52450   tStr = reg.GetRegistryValue("UseStandardAuthor")
+52460   If IsNumeric(tStr) Then
+52470     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+52480       .UseStandardAuthor = CLng(tStr)
 52490      Else
 52500       If UseStandard Then
 52510        .UseStandardAuthor = 0
@@ -2875,10 +2875,10 @@ On Error GoTo ErrPtnr_OnError
 52570     End If
 52580   End If
 52590   reg.Subkey = "Printing\Formats\Bitmap\Colors"
-52600   tstr = reg.GetRegistryValue("BitmapResolution")
-52610   If IsNumeric(tstr) Then
-52620     If CLng(tstr) >= 1 Then
-52630       .BitmapResolution = CLng(tstr)
+52600   tStr = reg.GetRegistryValue("BitmapResolution")
+52610   If IsNumeric(tStr) Then
+52620     If CLng(tStr) >= 1 Then
+52630       .BitmapResolution = CLng(tStr)
 52640      Else
 52650       If UseStandard Then
 52660        .BitmapResolution = 150
@@ -2889,10 +2889,10 @@ On Error GoTo ErrPtnr_OnError
 52710      .BitmapResolution = 150
 52720     End If
 52730   End If
-52740   tstr = reg.GetRegistryValue("BMPColorscount")
-52750   If IsNumeric(tstr) Then
-52760     If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
-52770       .BMPColorscount = CLng(tstr)
+52740   tStr = reg.GetRegistryValue("BMPColorscount")
+52750   If IsNumeric(tStr) Then
+52760     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+52770       .BMPColorscount = CLng(tStr)
 52780      Else
 52790       If UseStandard Then
 52800        .BMPColorscount = 1
@@ -2903,10 +2903,10 @@ On Error GoTo ErrPtnr_OnError
 52850      .BMPColorscount = 1
 52860     End If
 52870   End If
-52880   tstr = reg.GetRegistryValue("JPEGColorscount")
-52890   If IsNumeric(tstr) Then
-52900     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-52910       .JPEGColorscount = CLng(tstr)
+52880   tStr = reg.GetRegistryValue("JPEGColorscount")
+52890   If IsNumeric(tStr) Then
+52900     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+52910       .JPEGColorscount = CLng(tStr)
 52920      Else
 52930       If UseStandard Then
 52940        .JPEGColorscount = 0
@@ -2917,10 +2917,10 @@ On Error GoTo ErrPtnr_OnError
 52990      .JPEGColorscount = 0
 53000     End If
 53010   End If
-53020   tstr = reg.GetRegistryValue("JPEGQuality")
-53030   If IsNumeric(tstr) Then
-53040     If CLng(tstr) >= 0 And CLng(tstr) <= 100 Then
-53050       .JPEGQuality = CLng(tstr)
+53020   tStr = reg.GetRegistryValue("JPEGQuality")
+53030   If IsNumeric(tStr) Then
+53040     If CLng(tStr) >= 0 And CLng(tStr) <= 100 Then
+53050       .JPEGQuality = CLng(tStr)
 53060      Else
 53070       If UseStandard Then
 53080        .JPEGQuality = 75
@@ -2931,10 +2931,10 @@ On Error GoTo ErrPtnr_OnError
 53130      .JPEGQuality = 75
 53140     End If
 53150   End If
-53160   tstr = reg.GetRegistryValue("PCXColorscount")
-53170   If IsNumeric(tstr) Then
-53180     If CLng(tstr) >= 0 And CLng(tstr) <= 5 Then
-53190       .PCXColorscount = CLng(tstr)
+53160   tStr = reg.GetRegistryValue("PCXColorscount")
+53170   If IsNumeric(tStr) Then
+53180     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+53190       .PCXColorscount = CLng(tStr)
 53200      Else
 53210       If UseStandard Then
 53220        .PCXColorscount = 0
@@ -2945,10 +2945,10 @@ On Error GoTo ErrPtnr_OnError
 53270      .PCXColorscount = 0
 53280     End If
 53290   End If
-53300   tstr = reg.GetRegistryValue("PNGColorscount")
-53310   If IsNumeric(tstr) Then
-53320     If CLng(tstr) >= 0 And CLng(tstr) <= 4 Then
-53330       .PNGColorscount = CLng(tstr)
+53300   tStr = reg.GetRegistryValue("PNGColorscount")
+53310   If IsNumeric(tStr) Then
+53320     If CLng(tStr) >= 0 And CLng(tStr) <= 4 Then
+53330       .PNGColorscount = CLng(tStr)
 53340      Else
 53350       If UseStandard Then
 53360        .PNGColorscount = 0
@@ -2959,10 +2959,10 @@ On Error GoTo ErrPtnr_OnError
 53410      .PNGColorscount = 0
 53420     End If
 53430   End If
-53440   tstr = reg.GetRegistryValue("TIFFColorscount")
-53450   If IsNumeric(tstr) Then
-53460     If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
-53470       .TIFFColorscount = CLng(tstr)
+53440   tStr = reg.GetRegistryValue("TIFFColorscount")
+53450   If IsNumeric(tStr) Then
+53460     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+53470       .TIFFColorscount = CLng(tStr)
 53480      Else
 53490       If UseStandard Then
 53500        .TIFFColorscount = 0
@@ -2974,10 +2974,10 @@ On Error GoTo ErrPtnr_OnError
 53560     End If
 53570   End If
 53580   reg.Subkey = "Printing\Formats\PDF\Colors"
-53590   tstr = reg.GetRegistryValue("PDFColorsCMYKToRGB")
-53600   If IsNumeric(tstr) Then
-53610     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-53620       .PDFColorsCMYKToRGB = CLng(tstr)
+53590   tStr = reg.GetRegistryValue("PDFColorsCMYKToRGB")
+53600   If IsNumeric(tStr) Then
+53610     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+53620       .PDFColorsCMYKToRGB = CLng(tStr)
 53630      Else
 53640       If UseStandard Then
 53650        .PDFColorsCMYKToRGB = 0
@@ -2988,10 +2988,10 @@ On Error GoTo ErrPtnr_OnError
 53700      .PDFColorsCMYKToRGB = 0
 53710     End If
 53720   End If
-53730   tstr = reg.GetRegistryValue("PDFColorsColorModel")
-53740   If IsNumeric(tstr) Then
-53750     If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
-53760       .PDFColorsColorModel = CLng(tstr)
+53730   tStr = reg.GetRegistryValue("PDFColorsColorModel")
+53740   If IsNumeric(tStr) Then
+53750     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+53760       .PDFColorsColorModel = CLng(tStr)
 53770      Else
 53780       If UseStandard Then
 53790        .PDFColorsColorModel = 1
@@ -3002,10 +3002,10 @@ On Error GoTo ErrPtnr_OnError
 53840      .PDFColorsColorModel = 1
 53850     End If
 53860   End If
-53870   tstr = reg.GetRegistryValue("PDFColorsPreserveHalftone")
-53880   If IsNumeric(tstr) Then
-53890     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-53900       .PDFColorsPreserveHalftone = CLng(tstr)
+53870   tStr = reg.GetRegistryValue("PDFColorsPreserveHalftone")
+53880   If IsNumeric(tStr) Then
+53890     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+53900       .PDFColorsPreserveHalftone = CLng(tStr)
 53910      Else
 53920       If UseStandard Then
 53930        .PDFColorsPreserveHalftone = 0
@@ -3016,10 +3016,10 @@ On Error GoTo ErrPtnr_OnError
 53980      .PDFColorsPreserveHalftone = 0
 53990     End If
 54000   End If
-54010   tstr = reg.GetRegistryValue("PDFColorsPreserveOverprint")
-54020   If IsNumeric(tstr) Then
-54030     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54040       .PDFColorsPreserveOverprint = CLng(tstr)
+54010   tStr = reg.GetRegistryValue("PDFColorsPreserveOverprint")
+54020   If IsNumeric(tStr) Then
+54030     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54040       .PDFColorsPreserveOverprint = CLng(tStr)
 54050      Else
 54060       If UseStandard Then
 54070        .PDFColorsPreserveOverprint = 1
@@ -3030,10 +3030,10 @@ On Error GoTo ErrPtnr_OnError
 54120      .PDFColorsPreserveOverprint = 1
 54130     End If
 54140   End If
-54150   tstr = reg.GetRegistryValue("PDFColorsPreserveTransfer")
-54160   If IsNumeric(tstr) Then
-54170     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54180       .PDFColorsPreserveTransfer = CLng(tstr)
+54150   tStr = reg.GetRegistryValue("PDFColorsPreserveTransfer")
+54160   If IsNumeric(tStr) Then
+54170     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54180       .PDFColorsPreserveTransfer = CLng(tStr)
 54190      Else
 54200       If UseStandard Then
 54210        .PDFColorsPreserveTransfer = 1
@@ -3045,10 +3045,10 @@ On Error GoTo ErrPtnr_OnError
 54270     End If
 54280   End If
 54290   reg.Subkey = "Printing\Formats\PDF\Compression"
-54300   tstr = reg.GetRegistryValue("PDFCompressionColorCompression")
-54310   If IsNumeric(tstr) Then
-54320     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-54330       .PDFCompressionColorCompression = CLng(tstr)
+54300   tStr = reg.GetRegistryValue("PDFCompressionColorCompression")
+54310   If IsNumeric(tStr) Then
+54320     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+54330       .PDFCompressionColorCompression = CLng(tStr)
 54340      Else
 54350       If UseStandard Then
 54360        .PDFCompressionColorCompression = 1
@@ -3059,10 +3059,10 @@ On Error GoTo ErrPtnr_OnError
 54410      .PDFCompressionColorCompression = 1
 54420     End If
 54430   End If
-54440   tstr = reg.GetRegistryValue("PDFCompressionColorCompressionChoice")
-54450   If IsNumeric(tstr) Then
-54460     If CLng(tstr) >= 0 And CLng(tstr) <= 5 Then
-54470       .PDFCompressionColorCompressionChoice = CLng(tstr)
+54440   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionChoice")
+54450   If IsNumeric(tStr) Then
+54460     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+54470       .PDFCompressionColorCompressionChoice = CLng(tStr)
 54480      Else
 54490       If UseStandard Then
 54500        .PDFCompressionColorCompressionChoice = 0
@@ -3073,10 +3073,10 @@ On Error GoTo ErrPtnr_OnError
 54550      .PDFCompressionColorCompressionChoice = 0
 54560     End If
 54570   End If
-54580   tstr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGHighFactor")
-54590   If IsNumeric(tstr) Then
-54600     If CDbl(tstr) >= 0 Then
-54610       .PDFCompressionColorCompressionJPEGHighFactor = CDbl(tstr)
+54580   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGHighFactor")
+54590   If IsNumeric(tStr) Then
+54600     If CDbl(tStr) >= 0 Then
+54610       .PDFCompressionColorCompressionJPEGHighFactor = CDbl(tStr)
 54620      Else
 54630       If UseStandard Then
 54640        .PDFCompressionColorCompressionJPEGHighFactor = 0.9
@@ -3087,10 +3087,10 @@ On Error GoTo ErrPtnr_OnError
 54690      .PDFCompressionColorCompressionJPEGHighFactor = 0.9
 54700     End If
 54710   End If
-54720   tstr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGLowFactor")
-54730   If IsNumeric(tstr) Then
-54740     If CDbl(tstr) >= 0 Then
-54750       .PDFCompressionColorCompressionJPEGLowFactor = CDbl(tstr)
+54720   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGLowFactor")
+54730   If IsNumeric(tStr) Then
+54740     If CDbl(tStr) >= 0 Then
+54750       .PDFCompressionColorCompressionJPEGLowFactor = CDbl(tStr)
 54760      Else
 54770       If UseStandard Then
 54780        .PDFCompressionColorCompressionJPEGLowFactor = 0.25
@@ -3101,10 +3101,10 @@ On Error GoTo ErrPtnr_OnError
 54830      .PDFCompressionColorCompressionJPEGLowFactor = 0.25
 54840     End If
 54850   End If
-54860   tstr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMaximumFactor")
-54870   If IsNumeric(tstr) Then
-54880     If CDbl(tstr) >= 0 Then
-54890       .PDFCompressionColorCompressionJPEGMaximumFactor = CDbl(tstr)
+54860   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMaximumFactor")
+54870   If IsNumeric(tStr) Then
+54880     If CDbl(tStr) >= 0 Then
+54890       .PDFCompressionColorCompressionJPEGMaximumFactor = CDbl(tStr)
 54900      Else
 54910       If UseStandard Then
 54920        .PDFCompressionColorCompressionJPEGMaximumFactor = 2
@@ -3115,10 +3115,10 @@ On Error GoTo ErrPtnr_OnError
 54970      .PDFCompressionColorCompressionJPEGMaximumFactor = 2
 54980     End If
 54990   End If
-55000   tstr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMediumFactor")
-55010   If IsNumeric(tstr) Then
-55020     If CDbl(tstr) >= 0 Then
-55030       .PDFCompressionColorCompressionJPEGMediumFactor = CDbl(tstr)
+55000   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMediumFactor")
+55010   If IsNumeric(tStr) Then
+55020     If CDbl(tStr) >= 0 Then
+55030       .PDFCompressionColorCompressionJPEGMediumFactor = CDbl(tStr)
 55040      Else
 55050       If UseStandard Then
 55060        .PDFCompressionColorCompressionJPEGMediumFactor = 0.5
@@ -3129,10 +3129,10 @@ On Error GoTo ErrPtnr_OnError
 55110      .PDFCompressionColorCompressionJPEGMediumFactor = 0.5
 55120     End If
 55130   End If
-55140   tstr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMinimumFactor")
-55150   If IsNumeric(tstr) Then
-55160     If CDbl(tstr) >= 0 Then
-55170       .PDFCompressionColorCompressionJPEGMinimumFactor = CDbl(tstr)
+55140   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMinimumFactor")
+55150   If IsNumeric(tStr) Then
+55160     If CDbl(tStr) >= 0 Then
+55170       .PDFCompressionColorCompressionJPEGMinimumFactor = CDbl(tStr)
 55180      Else
 55190       If UseStandard Then
 55200        .PDFCompressionColorCompressionJPEGMinimumFactor = 0.1
@@ -3143,10 +3143,10 @@ On Error GoTo ErrPtnr_OnError
 55250      .PDFCompressionColorCompressionJPEGMinimumFactor = 0.1
 55260     End If
 55270   End If
-55280   tstr = reg.GetRegistryValue("PDFCompressionColorResample")
-55290   If IsNumeric(tstr) Then
-55300     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-55310       .PDFCompressionColorResample = CLng(tstr)
+55280   tStr = reg.GetRegistryValue("PDFCompressionColorResample")
+55290   If IsNumeric(tStr) Then
+55300     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+55310       .PDFCompressionColorResample = CLng(tStr)
 55320      Else
 55330       If UseStandard Then
 55340        .PDFCompressionColorResample = 0
@@ -3157,10 +3157,10 @@ On Error GoTo ErrPtnr_OnError
 55390      .PDFCompressionColorResample = 0
 55400     End If
 55410   End If
-55420   tstr = reg.GetRegistryValue("PDFCompressionColorResampleChoice")
-55430   If IsNumeric(tstr) Then
-55440     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-55450       .PDFCompressionColorResampleChoice = CLng(tstr)
+55420   tStr = reg.GetRegistryValue("PDFCompressionColorResampleChoice")
+55430   If IsNumeric(tStr) Then
+55440     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+55450       .PDFCompressionColorResampleChoice = CLng(tStr)
 55460      Else
 55470       If UseStandard Then
 55480        .PDFCompressionColorResampleChoice = 0
@@ -3171,10 +3171,10 @@ On Error GoTo ErrPtnr_OnError
 55530      .PDFCompressionColorResampleChoice = 0
 55540     End If
 55550   End If
-55560   tstr = reg.GetRegistryValue("PDFCompressionColorResolution")
-55570   If IsNumeric(tstr) Then
-55580     If CLng(tstr) >= 0 Then
-55590       .PDFCompressionColorResolution = CLng(tstr)
+55560   tStr = reg.GetRegistryValue("PDFCompressionColorResolution")
+55570   If IsNumeric(tStr) Then
+55580     If CLng(tStr) >= 0 Then
+55590       .PDFCompressionColorResolution = CLng(tStr)
 55600      Else
 55610       If UseStandard Then
 55620        .PDFCompressionColorResolution = 300
@@ -3185,10 +3185,10 @@ On Error GoTo ErrPtnr_OnError
 55670      .PDFCompressionColorResolution = 300
 55680     End If
 55690   End If
-55700   tstr = reg.GetRegistryValue("PDFCompressionGreyCompression")
-55710   If IsNumeric(tstr) Then
-55720     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-55730       .PDFCompressionGreyCompression = CLng(tstr)
+55700   tStr = reg.GetRegistryValue("PDFCompressionGreyCompression")
+55710   If IsNumeric(tStr) Then
+55720     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+55730       .PDFCompressionGreyCompression = CLng(tStr)
 55740      Else
 55750       If UseStandard Then
 55760        .PDFCompressionGreyCompression = 1
@@ -3199,10 +3199,10 @@ On Error GoTo ErrPtnr_OnError
 55810      .PDFCompressionGreyCompression = 1
 55820     End If
 55830   End If
-55840   tstr = reg.GetRegistryValue("PDFCompressionGreyCompressionChoice")
-55850   If IsNumeric(tstr) Then
-55860     If CLng(tstr) >= 0 And CLng(tstr) <= 5 Then
-55870       .PDFCompressionGreyCompressionChoice = CLng(tstr)
+55840   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionChoice")
+55850   If IsNumeric(tStr) Then
+55860     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+55870       .PDFCompressionGreyCompressionChoice = CLng(tStr)
 55880      Else
 55890       If UseStandard Then
 55900        .PDFCompressionGreyCompressionChoice = 0
@@ -3213,10 +3213,10 @@ On Error GoTo ErrPtnr_OnError
 55950      .PDFCompressionGreyCompressionChoice = 0
 55960     End If
 55970   End If
-55980   tstr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGHighFactor")
-55990   If IsNumeric(tstr) Then
-56000     If CDbl(tstr) >= 0 Then
-56010       .PDFCompressionGreyCompressionJPEGHighFactor = CDbl(tstr)
+55980   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGHighFactor")
+55990   If IsNumeric(tStr) Then
+56000     If CDbl(tStr) >= 0 Then
+56010       .PDFCompressionGreyCompressionJPEGHighFactor = CDbl(tStr)
 56020      Else
 56030       If UseStandard Then
 56040        .PDFCompressionGreyCompressionJPEGHighFactor = 0.9
@@ -3227,10 +3227,10 @@ On Error GoTo ErrPtnr_OnError
 56090      .PDFCompressionGreyCompressionJPEGHighFactor = 0.9
 56100     End If
 56110   End If
-56120   tstr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGLowFactor")
-56130   If IsNumeric(tstr) Then
-56140     If CDbl(tstr) >= 0 Then
-56150       .PDFCompressionGreyCompressionJPEGLowFactor = CDbl(tstr)
+56120   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGLowFactor")
+56130   If IsNumeric(tStr) Then
+56140     If CDbl(tStr) >= 0 Then
+56150       .PDFCompressionGreyCompressionJPEGLowFactor = CDbl(tStr)
 56160      Else
 56170       If UseStandard Then
 56180        .PDFCompressionGreyCompressionJPEGLowFactor = 0.25
@@ -3241,10 +3241,10 @@ On Error GoTo ErrPtnr_OnError
 56230      .PDFCompressionGreyCompressionJPEGLowFactor = 0.25
 56240     End If
 56250   End If
-56260   tstr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMaximumFactor")
-56270   If IsNumeric(tstr) Then
-56280     If CDbl(tstr) >= 0 Then
-56290       .PDFCompressionGreyCompressionJPEGMaximumFactor = CDbl(tstr)
+56260   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMaximumFactor")
+56270   If IsNumeric(tStr) Then
+56280     If CDbl(tStr) >= 0 Then
+56290       .PDFCompressionGreyCompressionJPEGMaximumFactor = CDbl(tStr)
 56300      Else
 56310       If UseStandard Then
 56320        .PDFCompressionGreyCompressionJPEGMaximumFactor = 2
@@ -3255,10 +3255,10 @@ On Error GoTo ErrPtnr_OnError
 56370      .PDFCompressionGreyCompressionJPEGMaximumFactor = 2
 56380     End If
 56390   End If
-56400   tstr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMediumFactor")
-56410   If IsNumeric(tstr) Then
-56420     If CDbl(tstr) >= 0 Then
-56430       .PDFCompressionGreyCompressionJPEGMediumFactor = CDbl(tstr)
+56400   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMediumFactor")
+56410   If IsNumeric(tStr) Then
+56420     If CDbl(tStr) >= 0 Then
+56430       .PDFCompressionGreyCompressionJPEGMediumFactor = CDbl(tStr)
 56440      Else
 56450       If UseStandard Then
 56460        .PDFCompressionGreyCompressionJPEGMediumFactor = 0.5
@@ -3269,10 +3269,10 @@ On Error GoTo ErrPtnr_OnError
 56510      .PDFCompressionGreyCompressionJPEGMediumFactor = 0.5
 56520     End If
 56530   End If
-56540   tstr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMinimumFactor")
-56550   If IsNumeric(tstr) Then
-56560     If CDbl(tstr) >= 0 Then
-56570       .PDFCompressionGreyCompressionJPEGMinimumFactor = CDbl(tstr)
+56540   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMinimumFactor")
+56550   If IsNumeric(tStr) Then
+56560     If CDbl(tStr) >= 0 Then
+56570       .PDFCompressionGreyCompressionJPEGMinimumFactor = CDbl(tStr)
 56580      Else
 56590       If UseStandard Then
 56600        .PDFCompressionGreyCompressionJPEGMinimumFactor = 0.1
@@ -3283,10 +3283,10 @@ On Error GoTo ErrPtnr_OnError
 56650      .PDFCompressionGreyCompressionJPEGMinimumFactor = 0.1
 56660     End If
 56670   End If
-56680   tstr = reg.GetRegistryValue("PDFCompressionGreyResample")
-56690   If IsNumeric(tstr) Then
-56700     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-56710       .PDFCompressionGreyResample = CLng(tstr)
+56680   tStr = reg.GetRegistryValue("PDFCompressionGreyResample")
+56690   If IsNumeric(tStr) Then
+56700     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+56710       .PDFCompressionGreyResample = CLng(tStr)
 56720      Else
 56730       If UseStandard Then
 56740        .PDFCompressionGreyResample = 0
@@ -3297,10 +3297,10 @@ On Error GoTo ErrPtnr_OnError
 56790      .PDFCompressionGreyResample = 0
 56800     End If
 56810   End If
-56820   tstr = reg.GetRegistryValue("PDFCompressionGreyResampleChoice")
-56830   If IsNumeric(tstr) Then
-56840     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-56850       .PDFCompressionGreyResampleChoice = CLng(tstr)
+56820   tStr = reg.GetRegistryValue("PDFCompressionGreyResampleChoice")
+56830   If IsNumeric(tStr) Then
+56840     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+56850       .PDFCompressionGreyResampleChoice = CLng(tStr)
 56860      Else
 56870       If UseStandard Then
 56880        .PDFCompressionGreyResampleChoice = 0
@@ -3311,10 +3311,10 @@ On Error GoTo ErrPtnr_OnError
 56930      .PDFCompressionGreyResampleChoice = 0
 56940     End If
 56950   End If
-56960   tstr = reg.GetRegistryValue("PDFCompressionGreyResolution")
-56970   If IsNumeric(tstr) Then
-56980     If CLng(tstr) >= 0 Then
-56990       .PDFCompressionGreyResolution = CLng(tstr)
+56960   tStr = reg.GetRegistryValue("PDFCompressionGreyResolution")
+56970   If IsNumeric(tStr) Then
+56980     If CLng(tStr) >= 0 Then
+56990       .PDFCompressionGreyResolution = CLng(tStr)
 57000      Else
 57010       If UseStandard Then
 57020        .PDFCompressionGreyResolution = 300
@@ -3325,10 +3325,10 @@ On Error GoTo ErrPtnr_OnError
 57070      .PDFCompressionGreyResolution = 300
 57080     End If
 57090   End If
-57100   tstr = reg.GetRegistryValue("PDFCompressionMonoCompression")
-57110   If IsNumeric(tstr) Then
-57120     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-57130       .PDFCompressionMonoCompression = CLng(tstr)
+57100   tStr = reg.GetRegistryValue("PDFCompressionMonoCompression")
+57110   If IsNumeric(tStr) Then
+57120     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+57130       .PDFCompressionMonoCompression = CLng(tStr)
 57140      Else
 57150       If UseStandard Then
 57160        .PDFCompressionMonoCompression = 1
@@ -3339,10 +3339,10 @@ On Error GoTo ErrPtnr_OnError
 57210      .PDFCompressionMonoCompression = 1
 57220     End If
 57230   End If
-57240   tstr = reg.GetRegistryValue("PDFCompressionMonoCompressionChoice")
-57250   If IsNumeric(tstr) Then
-57260     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-57270       .PDFCompressionMonoCompressionChoice = CLng(tstr)
+57240   tStr = reg.GetRegistryValue("PDFCompressionMonoCompressionChoice")
+57250   If IsNumeric(tStr) Then
+57260     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+57270       .PDFCompressionMonoCompressionChoice = CLng(tStr)
 57280      Else
 57290       If UseStandard Then
 57300        .PDFCompressionMonoCompressionChoice = 0
@@ -3353,10 +3353,10 @@ On Error GoTo ErrPtnr_OnError
 57350      .PDFCompressionMonoCompressionChoice = 0
 57360     End If
 57370   End If
-57380   tstr = reg.GetRegistryValue("PDFCompressionMonoResample")
-57390   If IsNumeric(tstr) Then
-57400     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-57410       .PDFCompressionMonoResample = CLng(tstr)
+57380   tStr = reg.GetRegistryValue("PDFCompressionMonoResample")
+57390   If IsNumeric(tStr) Then
+57400     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+57410       .PDFCompressionMonoResample = CLng(tStr)
 57420      Else
 57430       If UseStandard Then
 57440        .PDFCompressionMonoResample = 0
@@ -3367,10 +3367,10 @@ On Error GoTo ErrPtnr_OnError
 57490      .PDFCompressionMonoResample = 0
 57500     End If
 57510   End If
-57520   tstr = reg.GetRegistryValue("PDFCompressionMonoResampleChoice")
-57530   If IsNumeric(tstr) Then
-57540     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-57550       .PDFCompressionMonoResampleChoice = CLng(tstr)
+57520   tStr = reg.GetRegistryValue("PDFCompressionMonoResampleChoice")
+57530   If IsNumeric(tStr) Then
+57540     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+57550       .PDFCompressionMonoResampleChoice = CLng(tStr)
 57560      Else
 57570       If UseStandard Then
 57580        .PDFCompressionMonoResampleChoice = 0
@@ -3381,10 +3381,10 @@ On Error GoTo ErrPtnr_OnError
 57630      .PDFCompressionMonoResampleChoice = 0
 57640     End If
 57650   End If
-57660   tstr = reg.GetRegistryValue("PDFCompressionMonoResolution")
-57670   If IsNumeric(tstr) Then
-57680     If CLng(tstr) >= 0 Then
-57690       .PDFCompressionMonoResolution = CLng(tstr)
+57660   tStr = reg.GetRegistryValue("PDFCompressionMonoResolution")
+57670   If IsNumeric(tStr) Then
+57680     If CLng(tStr) >= 0 Then
+57690       .PDFCompressionMonoResolution = CLng(tStr)
 57700      Else
 57710       If UseStandard Then
 57720        .PDFCompressionMonoResolution = 1200
@@ -3395,10 +3395,10 @@ On Error GoTo ErrPtnr_OnError
 57770      .PDFCompressionMonoResolution = 1200
 57780     End If
 57790   End If
-57800   tstr = reg.GetRegistryValue("PDFCompressionTextCompression")
-57810   If IsNumeric(tstr) Then
-57820     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-57830       .PDFCompressionTextCompression = CLng(tstr)
+57800   tStr = reg.GetRegistryValue("PDFCompressionTextCompression")
+57810   If IsNumeric(tStr) Then
+57820     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+57830       .PDFCompressionTextCompression = CLng(tStr)
 57840      Else
 57850       If UseStandard Then
 57860        .PDFCompressionTextCompression = 1
@@ -3410,10 +3410,10 @@ On Error GoTo ErrPtnr_OnError
 57920     End If
 57930   End If
 57940   reg.Subkey = "Printing\Formats\PDF\Fonts"
-57950   tstr = reg.GetRegistryValue("PDFFontsEmbedAll")
-57960   If IsNumeric(tstr) Then
-57970     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-57980       .PDFFontsEmbedAll = CLng(tstr)
+57950   tStr = reg.GetRegistryValue("PDFFontsEmbedAll")
+57960   If IsNumeric(tStr) Then
+57970     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+57980       .PDFFontsEmbedAll = CLng(tStr)
 57990      Else
 58000       If UseStandard Then
 58010        .PDFFontsEmbedAll = 1
@@ -3424,10 +3424,10 @@ On Error GoTo ErrPtnr_OnError
 58060      .PDFFontsEmbedAll = 1
 58070     End If
 58080   End If
-58090   tstr = reg.GetRegistryValue("PDFFontsSubSetFonts")
-58100   If IsNumeric(tstr) Then
-58110     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-58120       .PDFFontsSubSetFonts = CLng(tstr)
+58090   tStr = reg.GetRegistryValue("PDFFontsSubSetFonts")
+58100   If IsNumeric(tStr) Then
+58110     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+58120       .PDFFontsSubSetFonts = CLng(tStr)
 58130      Else
 58140       If UseStandard Then
 58150        .PDFFontsSubSetFonts = 1
@@ -3438,10 +3438,10 @@ On Error GoTo ErrPtnr_OnError
 58200      .PDFFontsSubSetFonts = 1
 58210     End If
 58220   End If
-58230   tstr = reg.GetRegistryValue("PDFFontsSubSetFontsPercent")
-58240   If IsNumeric(tstr) Then
-58250     If CLng(tstr) >= 0 Then
-58260       .PDFFontsSubSetFontsPercent = CLng(tstr)
+58230   tStr = reg.GetRegistryValue("PDFFontsSubSetFontsPercent")
+58240   If IsNumeric(tStr) Then
+58250     If CLng(tStr) >= 0 Then
+58260       .PDFFontsSubSetFontsPercent = CLng(tStr)
 58270      Else
 58280       If UseStandard Then
 58290        .PDFFontsSubSetFontsPercent = 100
@@ -3453,10 +3453,10 @@ On Error GoTo ErrPtnr_OnError
 58350     End If
 58360   End If
 58370   reg.Subkey = "Printing\Formats\PDF\General"
-58380   tstr = reg.GetRegistryValue("PDFGeneralASCII85")
-58390   If IsNumeric(tstr) Then
-58400     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-58410       .PDFGeneralASCII85 = CLng(tstr)
+58380   tStr = reg.GetRegistryValue("PDFGeneralASCII85")
+58390   If IsNumeric(tStr) Then
+58400     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+58410       .PDFGeneralASCII85 = CLng(tStr)
 58420      Else
 58430       If UseStandard Then
 58440        .PDFGeneralASCII85 = 0
@@ -3467,10 +3467,10 @@ On Error GoTo ErrPtnr_OnError
 58490      .PDFGeneralASCII85 = 0
 58500     End If
 58510   End If
-58520   tstr = reg.GetRegistryValue("PDFGeneralAutorotate")
-58530   If IsNumeric(tstr) Then
-58540     If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
-58550       .PDFGeneralAutorotate = CLng(tstr)
+58520   tStr = reg.GetRegistryValue("PDFGeneralAutorotate")
+58530   If IsNumeric(tStr) Then
+58540     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+58550       .PDFGeneralAutorotate = CLng(tStr)
 58560      Else
 58570       If UseStandard Then
 58580        .PDFGeneralAutorotate = 2
@@ -3481,10 +3481,10 @@ On Error GoTo ErrPtnr_OnError
 58630      .PDFGeneralAutorotate = 2
 58640     End If
 58650   End If
-58660   tstr = reg.GetRegistryValue("PDFGeneralCompatibility")
-58670   If IsNumeric(tstr) Then
-58680     If CLng(tstr) >= 0 And CLng(tstr) <= 2 Then
-58690       .PDFGeneralCompatibility = CLng(tstr)
+58660   tStr = reg.GetRegistryValue("PDFGeneralCompatibility")
+58670   If IsNumeric(tStr) Then
+58680     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+58690       .PDFGeneralCompatibility = CLng(tStr)
 58700      Else
 58710       If UseStandard Then
 58720        .PDFGeneralCompatibility = 1
@@ -3495,10 +3495,10 @@ On Error GoTo ErrPtnr_OnError
 58770      .PDFGeneralCompatibility = 1
 58780     End If
 58790   End If
-58800   tstr = reg.GetRegistryValue("PDFGeneralOverprint")
-58810   If IsNumeric(tstr) Then
-58820     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-58830       .PDFGeneralOverprint = CLng(tstr)
+58800   tStr = reg.GetRegistryValue("PDFGeneralOverprint")
+58810   If IsNumeric(tStr) Then
+58820     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+58830       .PDFGeneralOverprint = CLng(tStr)
 58840      Else
 58850       If UseStandard Then
 58860        .PDFGeneralOverprint = 0
@@ -3509,10 +3509,10 @@ On Error GoTo ErrPtnr_OnError
 58910      .PDFGeneralOverprint = 0
 58920     End If
 58930   End If
-58940   tstr = reg.GetRegistryValue("PDFGeneralResolution")
-58950   If IsNumeric(tstr) Then
-58960     If CLng(tstr) >= 0 Then
-58970       .PDFGeneralResolution = CLng(tstr)
+58940   tStr = reg.GetRegistryValue("PDFGeneralResolution")
+58950   If IsNumeric(tStr) Then
+58960     If CLng(tStr) >= 0 Then
+58970       .PDFGeneralResolution = CLng(tStr)
 58980      Else
 58990       If UseStandard Then
 59000        .PDFGeneralResolution = 600
@@ -3523,10 +3523,10 @@ On Error GoTo ErrPtnr_OnError
 59050      .PDFGeneralResolution = 600
 59060     End If
 59070   End If
-59080   tstr = reg.GetRegistryValue("PDFOptimize")
-59090   If IsNumeric(tstr) Then
-59100     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59110       .PDFOptimize = CLng(tstr)
+59080   tStr = reg.GetRegistryValue("PDFOptimize")
+59090   If IsNumeric(tStr) Then
+59100     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59110       .PDFOptimize = CLng(tStr)
 59120      Else
 59130       If UseStandard Then
 59140        .PDFOptimize = 0
@@ -3538,10 +3538,10 @@ On Error GoTo ErrPtnr_OnError
 59200     End If
 59210   End If
 59220   reg.Subkey = "Printing\Formats\PDF\Security"
-59230   tstr = reg.GetRegistryValue("PDFAllowAssembly")
-59240   If IsNumeric(tstr) Then
-59250     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59260       .PDFAllowAssembly = CLng(tstr)
+59230   tStr = reg.GetRegistryValue("PDFAllowAssembly")
+59240   If IsNumeric(tStr) Then
+59250     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59260       .PDFAllowAssembly = CLng(tStr)
 59270      Else
 59280       If UseStandard Then
 59290        .PDFAllowAssembly = 0
@@ -3552,10 +3552,10 @@ On Error GoTo ErrPtnr_OnError
 59340      .PDFAllowAssembly = 0
 59350     End If
 59360   End If
-59370   tstr = reg.GetRegistryValue("PDFAllowDegradedPrinting")
-59380   If IsNumeric(tstr) Then
-59390     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59400       .PDFAllowDegradedPrinting = CLng(tstr)
+59370   tStr = reg.GetRegistryValue("PDFAllowDegradedPrinting")
+59380   If IsNumeric(tStr) Then
+59390     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59400       .PDFAllowDegradedPrinting = CLng(tStr)
 59410      Else
 59420       If UseStandard Then
 59430        .PDFAllowDegradedPrinting = 0
@@ -3566,10 +3566,10 @@ On Error GoTo ErrPtnr_OnError
 59480      .PDFAllowDegradedPrinting = 0
 59490     End If
 59500   End If
-59510   tstr = reg.GetRegistryValue("PDFAllowFillIn")
-59520   If IsNumeric(tstr) Then
-59530     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59540       .PDFAllowFillIn = CLng(tstr)
+59510   tStr = reg.GetRegistryValue("PDFAllowFillIn")
+59520   If IsNumeric(tStr) Then
+59530     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59540       .PDFAllowFillIn = CLng(tStr)
 59550      Else
 59560       If UseStandard Then
 59570        .PDFAllowFillIn = 0
@@ -3580,10 +3580,10 @@ On Error GoTo ErrPtnr_OnError
 59620      .PDFAllowFillIn = 0
 59630     End If
 59640   End If
-59650   tstr = reg.GetRegistryValue("PDFAllowScreenReaders")
-59660   If IsNumeric(tstr) Then
-59670     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59680       .PDFAllowScreenReaders = CLng(tstr)
+59650   tStr = reg.GetRegistryValue("PDFAllowScreenReaders")
+59660   If IsNumeric(tStr) Then
+59670     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59680       .PDFAllowScreenReaders = CLng(tStr)
 59690      Else
 59700       If UseStandard Then
 59710        .PDFAllowScreenReaders = 0
@@ -3594,10 +3594,10 @@ On Error GoTo ErrPtnr_OnError
 59760      .PDFAllowScreenReaders = 0
 59770     End If
 59780   End If
-59790   tstr = reg.GetRegistryValue("PDFDisallowCopy")
-59800   If IsNumeric(tstr) Then
-59810     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59820       .PDFDisallowCopy = CLng(tstr)
+59790   tStr = reg.GetRegistryValue("PDFDisallowCopy")
+59800   If IsNumeric(tStr) Then
+59810     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59820       .PDFDisallowCopy = CLng(tStr)
 59830      Else
 59840       If UseStandard Then
 59850        .PDFDisallowCopy = 1
@@ -3608,10 +3608,10 @@ On Error GoTo ErrPtnr_OnError
 59900      .PDFDisallowCopy = 1
 59910     End If
 59920   End If
-59930   tstr = reg.GetRegistryValue("PDFDisallowModifyAnnotations")
-59940   If IsNumeric(tstr) Then
-59950     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-59960       .PDFDisallowModifyAnnotations = CLng(tstr)
+59930   tStr = reg.GetRegistryValue("PDFDisallowModifyAnnotations")
+59940   If IsNumeric(tStr) Then
+59950     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+59960       .PDFDisallowModifyAnnotations = CLng(tStr)
 59970      Else
 59980       If UseStandard Then
 59990        .PDFDisallowModifyAnnotations = 0
@@ -3622,10 +3622,10 @@ On Error GoTo ErrPtnr_OnError
 60040      .PDFDisallowModifyAnnotations = 0
 60050     End If
 60060   End If
-60070   tstr = reg.GetRegistryValue("PDFDisallowModifyContents")
-60080   If IsNumeric(tstr) Then
-60090     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60100       .PDFDisallowModifyContents = CLng(tstr)
+60070   tStr = reg.GetRegistryValue("PDFDisallowModifyContents")
+60080   If IsNumeric(tStr) Then
+60090     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60100       .PDFDisallowModifyContents = CLng(tStr)
 60110      Else
 60120       If UseStandard Then
 60130        .PDFDisallowModifyContents = 0
@@ -3636,10 +3636,10 @@ On Error GoTo ErrPtnr_OnError
 60180      .PDFDisallowModifyContents = 0
 60190     End If
 60200   End If
-60210   tstr = reg.GetRegistryValue("PDFDisallowPrinting")
-60220   If IsNumeric(tstr) Then
-60230     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60240       .PDFDisallowPrinting = CLng(tstr)
+60210   tStr = reg.GetRegistryValue("PDFDisallowPrinting")
+60220   If IsNumeric(tStr) Then
+60230     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60240       .PDFDisallowPrinting = CLng(tStr)
 60250      Else
 60260       If UseStandard Then
 60270        .PDFDisallowPrinting = 0
@@ -3650,10 +3650,10 @@ On Error GoTo ErrPtnr_OnError
 60320      .PDFDisallowPrinting = 0
 60330     End If
 60340   End If
-60350   tstr = reg.GetRegistryValue("PDFEncryptor")
-60360   If IsNumeric(tstr) Then
-60370     If CLng(tstr) >= 0 And CLng(tstr) <= 1 Then
-60380       .PDFEncryptor = CLng(tstr)
+60350   tStr = reg.GetRegistryValue("PDFEncryptor")
+60360   If IsNumeric(tStr) Then
+60370     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+60380       .PDFEncryptor = CLng(tStr)
 60390      Else
 60400       If UseStandard Then
 60410        .PDFEncryptor = 0
@@ -3664,10 +3664,10 @@ On Error GoTo ErrPtnr_OnError
 60460      .PDFEncryptor = 0
 60470     End If
 60480   End If
-60490   tstr = reg.GetRegistryValue("PDFHighEncryption")
-60500   If IsNumeric(tstr) Then
-60510     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60520       .PDFHighEncryption = CLng(tstr)
+60490   tStr = reg.GetRegistryValue("PDFHighEncryption")
+60500   If IsNumeric(tStr) Then
+60510     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60520       .PDFHighEncryption = CLng(tStr)
 60530      Else
 60540       If UseStandard Then
 60550        .PDFHighEncryption = 0
@@ -3678,10 +3678,10 @@ On Error GoTo ErrPtnr_OnError
 60600      .PDFHighEncryption = 0
 60610     End If
 60620   End If
-60630   tstr = reg.GetRegistryValue("PDFLowEncryption")
-60640   If IsNumeric(tstr) Then
-60650     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60660       .PDFLowEncryption = CLng(tstr)
+60630   tStr = reg.GetRegistryValue("PDFLowEncryption")
+60640   If IsNumeric(tStr) Then
+60650     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60660       .PDFLowEncryption = CLng(tStr)
 60670      Else
 60680       If UseStandard Then
 60690        .PDFLowEncryption = 1
@@ -3692,10 +3692,10 @@ On Error GoTo ErrPtnr_OnError
 60740      .PDFLowEncryption = 1
 60750     End If
 60760   End If
-60770   tstr = reg.GetRegistryValue("PDFOwnerPass")
-60780   If IsNumeric(tstr) Then
-60790     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-60800       .PDFOwnerPass = CLng(tstr)
+60770   tStr = reg.GetRegistryValue("PDFOwnerPass")
+60780   If IsNumeric(tStr) Then
+60790     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+60800       .PDFOwnerPass = CLng(tStr)
 60810      Else
 60820       If UseStandard Then
 60830        .PDFOwnerPass = 0
@@ -3706,18 +3706,18 @@ On Error GoTo ErrPtnr_OnError
 60880      .PDFOwnerPass = 0
 60890     End If
 60900   End If
-60910   tstr = reg.GetRegistryValue("PDFOwnerPasswordString")
-60920   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-60930     .PDFOwnerPasswordString = " "
+60910   tStr = reg.GetRegistryValue("PDFOwnerPasswordString")
+60920   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+60930     .PDFOwnerPasswordString = ""
 60940    Else
-60950     If LenB(tstr) > 0 Then
-60960      .PDFOwnerPasswordString = tstr
+60950     If LenB(tStr) > 0 Then
+60960      .PDFOwnerPasswordString = tStr
 60970     End If
 60980   End If
-60990   tstr = reg.GetRegistryValue("PDFUserPass")
-61000   If IsNumeric(tstr) Then
-61010     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61020       .PDFUserPass = CLng(tstr)
+60990   tStr = reg.GetRegistryValue("PDFUserPass")
+61000   If IsNumeric(tStr) Then
+61010     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61020       .PDFUserPass = CLng(tStr)
 61030      Else
 61040       If UseStandard Then
 61050        .PDFUserPass = 0
@@ -3728,18 +3728,18 @@ On Error GoTo ErrPtnr_OnError
 61100      .PDFUserPass = 0
 61110     End If
 61120   End If
-61130   tstr = reg.GetRegistryValue("PDFUserPasswordString")
-61140   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-61150     .PDFUserPasswordString = " "
+61130   tStr = reg.GetRegistryValue("PDFUserPasswordString")
+61140   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+61150     .PDFUserPasswordString = ""
 61160    Else
-61170     If LenB(tstr) > 0 Then
-61180      .PDFUserPasswordString = tstr
+61170     If LenB(tStr) > 0 Then
+61180      .PDFUserPasswordString = tStr
 61190     End If
 61200   End If
-61210   tstr = reg.GetRegistryValue("PDFUseSecurity")
-61220   If IsNumeric(tstr) Then
-61230     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61240       .PDFUseSecurity = CLng(tstr)
+61210   tStr = reg.GetRegistryValue("PDFUseSecurity")
+61220   If IsNumeric(tStr) Then
+61230     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61240       .PDFUseSecurity = CLng(tStr)
 61250      Else
 61260       If UseStandard Then
 61270        .PDFUseSecurity = 0
@@ -3751,10 +3751,10 @@ On Error GoTo ErrPtnr_OnError
 61330     End If
 61340   End If
 61350   reg.Subkey = "Printing\Formats\PS\LanguageLevel"
-61360   tstr = reg.GetRegistryValue("EPSLanguageLevel")
-61370   If IsNumeric(tstr) Then
-61380     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-61390       .EPSLanguageLevel = CLng(tstr)
+61360   tStr = reg.GetRegistryValue("EPSLanguageLevel")
+61370   If IsNumeric(tStr) Then
+61380     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+61390       .EPSLanguageLevel = CLng(tStr)
 61400      Else
 61410       If UseStandard Then
 61420        .EPSLanguageLevel = 2
@@ -3765,10 +3765,10 @@ On Error GoTo ErrPtnr_OnError
 61470      .EPSLanguageLevel = 2
 61480     End If
 61490   End If
-61500   tstr = reg.GetRegistryValue("PSLanguageLevel")
-61510   If IsNumeric(tstr) Then
-61520     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-61530       .PSLanguageLevel = CLng(tstr)
+61500   tStr = reg.GetRegistryValue("PSLanguageLevel")
+61510   If IsNumeric(tStr) Then
+61520     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+61530       .PSLanguageLevel = CLng(tStr)
 61540      Else
 61550       If UseStandard Then
 61560        .PSLanguageLevel = 2
@@ -3780,26 +3780,26 @@ On Error GoTo ErrPtnr_OnError
 61620     End If
 61630   End If
 61640   reg.Subkey = "Program"
-61650   tstr = reg.GetRegistryValue("AdditionalGhostscriptParameters")
-61660   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-61670     .AdditionalGhostscriptParameters = " "
+61650   tStr = reg.GetRegistryValue("AdditionalGhostscriptParameters")
+61660   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+61670     .AdditionalGhostscriptParameters = ""
 61680    Else
-61690     If LenB(tstr) > 0 Then
-61700      .AdditionalGhostscriptParameters = tstr
+61690     If LenB(tStr) > 0 Then
+61700      .AdditionalGhostscriptParameters = tStr
 61710     End If
 61720   End If
-61730   tstr = reg.GetRegistryValue("AdditionalGhostscriptSearchpath")
-61740   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-61750     .AdditionalGhostscriptSearchpath = " "
+61730   tStr = reg.GetRegistryValue("AdditionalGhostscriptSearchpath")
+61740   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+61750     .AdditionalGhostscriptSearchpath = ""
 61760    Else
-61770     If LenB(tstr) > 0 Then
-61780      .AdditionalGhostscriptSearchpath = tstr
+61770     If LenB(tStr) > 0 Then
+61780      .AdditionalGhostscriptSearchpath = tStr
 61790     End If
 61800   End If
-61810   tstr = reg.GetRegistryValue("AddWindowsFontpath")
-61820   If IsNumeric(tstr) Then
-61830     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-61840       .AddWindowsFontpath = CLng(tstr)
+61810   tStr = reg.GetRegistryValue("AddWindowsFontpath")
+61820   If IsNumeric(tStr) Then
+61830     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+61840       .AddWindowsFontpath = CLng(tStr)
 61850      Else
 61860       If UseStandard Then
 61870        .AddWindowsFontpath = 1
@@ -3810,9 +3810,9 @@ On Error GoTo ErrPtnr_OnError
 61920      .AddWindowsFontpath = 1
 61930     End If
 61940   End If
-61950   tstr = reg.GetRegistryValue("AutosaveDirectory")
-61960   If LenB(Trim$(tstr)) > 0 Then
-61970     .AutosaveDirectory = CompletePath(tstr)
+61950   tStr = reg.GetRegistryValue("AutosaveDirectory")
+61960   If LenB(Trim$(tStr)) > 0 Then
+61970     .AutosaveDirectory = CompletePath(tStr)
 61980    Else
 61990     If UseStandard Then
 62000      If InstalledAsServer Then
@@ -3822,18 +3822,18 @@ On Error GoTo ErrPtnr_OnError
 62040      End If
 62050     End If
 62060   End If
-62070   tstr = reg.GetRegistryValue("AutosaveFilename")
-62080   If LenB(tstr) = 0 And LenB("<DateTime>") > 0 And UseStandard Then
+62070   tStr = reg.GetRegistryValue("AutosaveFilename")
+62080   If LenB(tStr) = 0 And LenB("<DateTime>") > 0 And UseStandard Then
 62090     .AutosaveFilename = "<DateTime>"
 62100    Else
-62110     If LenB(tstr) > 0 Then
-62120      .AutosaveFilename = tstr
+62110     If LenB(tStr) > 0 Then
+62120      .AutosaveFilename = tStr
 62130     End If
 62140   End If
-62150   tstr = reg.GetRegistryValue("AutosaveFormat")
-62160   If IsNumeric(tstr) Then
-62170     If CLng(tstr) >= 0 And CLng(tstr) <= 7 Then
-62180       .AutosaveFormat = CLng(tstr)
+62150   tStr = reg.GetRegistryValue("AutosaveFormat")
+62160   If IsNumeric(tStr) Then
+62170     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+62180       .AutosaveFormat = CLng(tStr)
 62190      Else
 62200       If UseStandard Then
 62210        .AutosaveFormat = 0
@@ -3844,10 +3844,10 @@ On Error GoTo ErrPtnr_OnError
 62260      .AutosaveFormat = 0
 62270     End If
 62280   End If
-62290   tstr = reg.GetRegistryValue("ClientComputerResolveIPAddress")
-62300   If IsNumeric(tstr) Then
-62310     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62320       .ClientComputerResolveIPAddress = CLng(tstr)
+62290   tStr = reg.GetRegistryValue("ClientComputerResolveIPAddress")
+62300   If IsNumeric(tStr) Then
+62310     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62320       .ClientComputerResolveIPAddress = CLng(tStr)
 62330      Else
 62340       If UseStandard Then
 62350        .ClientComputerResolveIPAddress = 0
@@ -3858,10 +3858,10 @@ On Error GoTo ErrPtnr_OnError
 62400      .ClientComputerResolveIPAddress = 0
 62410     End If
 62420   End If
-62430   tstr = reg.GetRegistryValue("DisableEmail")
-62440   If IsNumeric(tstr) Then
-62450     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62460       .DisableEmail = CLng(tstr)
+62430   tStr = reg.GetRegistryValue("DisableEmail")
+62440   If IsNumeric(tStr) Then
+62450     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62460       .DisableEmail = CLng(tStr)
 62470      Else
 62480       If UseStandard Then
 62490        .DisableEmail = 0
@@ -3872,10 +3872,10 @@ On Error GoTo ErrPtnr_OnError
 62540      .DisableEmail = 0
 62550     End If
 62560   End If
-62570   tstr = reg.GetRegistryValue("DontUseDocumentSettings")
-62580   If IsNumeric(tstr) Then
-62590     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62600       .DontUseDocumentSettings = CLng(tstr)
+62570   tStr = reg.GetRegistryValue("DontUseDocumentSettings")
+62580   If IsNumeric(tStr) Then
+62590     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62600       .DontUseDocumentSettings = CLng(tStr)
 62610      Else
 62620       If UseStandard Then
 62630        .DontUseDocumentSettings = 0
@@ -3886,18 +3886,18 @@ On Error GoTo ErrPtnr_OnError
 62680      .DontUseDocumentSettings = 0
 62690     End If
 62700   End If
-62710   tstr = reg.GetRegistryValue("FilenameSubstitutions")
-62720   If LenB(tstr) = 0 And LenB("Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt") > 0 And UseStandard Then
+62710   tStr = reg.GetRegistryValue("FilenameSubstitutions")
+62720   If LenB(tStr) = 0 And LenB("Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt") > 0 And UseStandard Then
 62730     .FilenameSubstitutions = "Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt"
 62740    Else
-62750     If LenB(tstr) > 0 Then
-62760      .FilenameSubstitutions = tstr
+62750     If LenB(tStr) > 0 Then
+62760      .FilenameSubstitutions = tStr
 62770     End If
 62780   End If
-62790   tstr = reg.GetRegistryValue("FilenameSubstitutionsOnlyInTitle")
-62800   If IsNumeric(tstr) Then
-62810     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-62820       .FilenameSubstitutionsOnlyInTitle = CLng(tstr)
+62790   tStr = reg.GetRegistryValue("FilenameSubstitutionsOnlyInTitle")
+62800   If IsNumeric(tStr) Then
+62810     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+62820       .FilenameSubstitutionsOnlyInTitle = CLng(tStr)
 62830      Else
 62840       If UseStandard Then
 62850        .FilenameSubstitutionsOnlyInTitle = 1
@@ -3908,17 +3908,17 @@ On Error GoTo ErrPtnr_OnError
 62900      .FilenameSubstitutionsOnlyInTitle = 1
 62910     End If
 62920   End If
-62930   tstr = reg.GetRegistryValue("Language")
-62940   If LenB(tstr) = 0 And LenB("english") > 0 And UseStandard Then
+62930   tStr = reg.GetRegistryValue("Language")
+62940   If LenB(tStr) = 0 And LenB("english") > 0 And UseStandard Then
 62950     .Language = "english"
 62960    Else
-62970     If LenB(tstr) > 0 Then
-62980      .Language = tstr
+62970     If LenB(tStr) > 0 Then
+62980      .Language = tStr
 62990     End If
 63000   End If
-63010   tstr = reg.GetRegistryValue("LastSaveDirectory")
-63020   If LenB(Trim$(tstr)) > 0 Then
-63030     .LastSaveDirectory = CompletePath(tstr)
+63010   tStr = reg.GetRegistryValue("LastSaveDirectory")
+63020   If LenB(Trim$(tStr)) > 0 Then
+63030     .LastSaveDirectory = CompletePath(tStr)
 63040    Else
 63050     If UseStandard Then
 63060      If InstalledAsServer Then
@@ -3928,10 +3928,10 @@ On Error GoTo ErrPtnr_OnError
 63100      End If
 63110     End If
 63120   End If
-63130   tstr = reg.GetRegistryValue("Logging")
-63140   If IsNumeric(tstr) Then
-63150     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-63160       .Logging = CLng(tstr)
+63130   tStr = reg.GetRegistryValue("Logging")
+63140   If IsNumeric(tStr) Then
+63150     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63160       .Logging = CLng(tStr)
 63170      Else
 63180       If UseStandard Then
 63190        .Logging = 0
@@ -3942,10 +3942,10 @@ On Error GoTo ErrPtnr_OnError
 63240      .Logging = 0
 63250     End If
 63260   End If
-63270   tstr = reg.GetRegistryValue("LogLines")
-63280   If IsNumeric(tstr) Then
-63290     If CLng(tstr) >= 100 And CLng(tstr) <= 1000 Then
-63300       .LogLines = CLng(tstr)
+63270   tStr = reg.GetRegistryValue("LogLines")
+63280   If IsNumeric(tStr) Then
+63290     If CLng(tStr) >= 100 And CLng(tStr) <= 1000 Then
+63300       .LogLines = CLng(tStr)
 63310      Else
 63320       If UseStandard Then
 63330        .LogLines = 100
@@ -3956,10 +3956,10 @@ On Error GoTo ErrPtnr_OnError
 63380      .LogLines = 100
 63390     End If
 63400   End If
-63410   tstr = reg.GetRegistryValue("NoConfirmMessageSwitchingDefaultprinter")
-63420   If IsNumeric(tstr) Then
-63430     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-63440       .NoConfirmMessageSwitchingDefaultprinter = CLng(tstr)
+63410   tStr = reg.GetRegistryValue("NoConfirmMessageSwitchingDefaultprinter")
+63420   If IsNumeric(tStr) Then
+63430     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63440       .NoConfirmMessageSwitchingDefaultprinter = CLng(tStr)
 63450      Else
 63460       If UseStandard Then
 63470        .NoConfirmMessageSwitchingDefaultprinter = 0
@@ -3970,10 +3970,10 @@ On Error GoTo ErrPtnr_OnError
 63520      .NoConfirmMessageSwitchingDefaultprinter = 0
 63530     End If
 63540   End If
-63550   tstr = reg.GetRegistryValue("NoProcessingAtStartup")
-63560   If IsNumeric(tstr) Then
-63570     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-63580       .NoProcessingAtStartup = CLng(tstr)
+63550   tStr = reg.GetRegistryValue("NoProcessingAtStartup")
+63560   If IsNumeric(tStr) Then
+63570     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63580       .NoProcessingAtStartup = CLng(tStr)
 63590      Else
 63600       If UseStandard Then
 63610        .NoProcessingAtStartup = 0
@@ -3984,10 +3984,10 @@ On Error GoTo ErrPtnr_OnError
 63660      .NoProcessingAtStartup = 0
 63670     End If
 63680   End If
-63690   tstr = reg.GetRegistryValue("NoPSCheck")
-63700   If IsNumeric(tstr) Then
-63710     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-63720       .NoPSCheck = CLng(tstr)
+63690   tStr = reg.GetRegistryValue("NoPSCheck")
+63700   If IsNumeric(tStr) Then
+63710     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63720       .NoPSCheck = CLng(tStr)
 63730      Else
 63740       If UseStandard Then
 63750        .NoPSCheck = 0
@@ -3998,10 +3998,10 @@ On Error GoTo ErrPtnr_OnError
 63800      .NoPSCheck = 0
 63810     End If
 63820   End If
-63830   tstr = reg.GetRegistryValue("OptionsDesign")
-63840   If IsNumeric(tstr) Then
-63850     If CLng(tstr) >= 1 And CLng(tstr) <= 2 Then
-63860       .OptionsDesign = CLng(tstr)
+63830   tStr = reg.GetRegistryValue("OptionsDesign")
+63840   If IsNumeric(tStr) Then
+63850     If CLng(tStr) >= 1 And CLng(tStr) <= 2 Then
+63860       .OptionsDesign = CLng(tStr)
 63870      Else
 63880       If UseStandard Then
 63890        .OptionsDesign = 1
@@ -4012,10 +4012,10 @@ On Error GoTo ErrPtnr_OnError
 63940      .OptionsDesign = 1
 63950     End If
 63960   End If
-63970   tstr = reg.GetRegistryValue("OptionsEnabled")
-63980   If IsNumeric(tstr) Then
-63990     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64000       .OptionsEnabled = CLng(tstr)
+63970   tStr = reg.GetRegistryValue("OptionsEnabled")
+63980   If IsNumeric(tStr) Then
+63990     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64000       .OptionsEnabled = CLng(tStr)
 64010      Else
 64020       If UseStandard Then
 64030        .OptionsEnabled = 1
@@ -4026,10 +4026,10 @@ On Error GoTo ErrPtnr_OnError
 64080      .OptionsEnabled = 1
 64090     End If
 64100   End If
-64110   tstr = reg.GetRegistryValue("OptionsVisible")
-64120   If IsNumeric(tstr) Then
-64130     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64140       .OptionsVisible = CLng(tstr)
+64110   tStr = reg.GetRegistryValue("OptionsVisible")
+64120   If IsNumeric(tStr) Then
+64130     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64140       .OptionsVisible = CLng(tStr)
 64150      Else
 64160       If UseStandard Then
 64170        .OptionsVisible = 1
@@ -4040,10 +4040,10 @@ On Error GoTo ErrPtnr_OnError
 64220      .OptionsVisible = 1
 64230     End If
 64240   End If
-64250   tstr = reg.GetRegistryValue("PrintAfterSaving")
-64260   If IsNumeric(tstr) Then
-64270     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64280       .PrintAfterSaving = CLng(tstr)
+64250   tStr = reg.GetRegistryValue("PrintAfterSaving")
+64260   If IsNumeric(tStr) Then
+64270     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64280       .PrintAfterSaving = CLng(tStr)
 64290      Else
 64300       If UseStandard Then
 64310        .PrintAfterSaving = 0
@@ -4054,10 +4054,10 @@ On Error GoTo ErrPtnr_OnError
 64360      .PrintAfterSaving = 0
 64370     End If
 64380   End If
-64390   tstr = reg.GetRegistryValue("PrintAfterSavingDuplex")
-64400   If IsNumeric(tstr) Then
-64410     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64420       .PrintAfterSavingDuplex = CLng(tstr)
+64390   tStr = reg.GetRegistryValue("PrintAfterSavingDuplex")
+64400   If IsNumeric(tStr) Then
+64410     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64420       .PrintAfterSavingDuplex = CLng(tStr)
 64430      Else
 64440       If UseStandard Then
 64450        .PrintAfterSavingDuplex = 0
@@ -4068,10 +4068,10 @@ On Error GoTo ErrPtnr_OnError
 64500      .PrintAfterSavingDuplex = 0
 64510     End If
 64520   End If
-64530   tstr = reg.GetRegistryValue("PrintAfterSavingNoCancel")
-64540   If IsNumeric(tstr) Then
-64550     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64560       .PrintAfterSavingNoCancel = CLng(tstr)
+64530   tStr = reg.GetRegistryValue("PrintAfterSavingNoCancel")
+64540   If IsNumeric(tStr) Then
+64550     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64560       .PrintAfterSavingNoCancel = CLng(tStr)
 64570      Else
 64580       If UseStandard Then
 64590        .PrintAfterSavingNoCancel = 0
@@ -4082,18 +4082,18 @@ On Error GoTo ErrPtnr_OnError
 64640      .PrintAfterSavingNoCancel = 0
 64650     End If
 64660   End If
-64670   tstr = reg.GetRegistryValue("PrintAfterSavingPrinter")
-64680   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-64690     .PrintAfterSavingPrinter = " "
+64670   tStr = reg.GetRegistryValue("PrintAfterSavingPrinter")
+64680   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64690     .PrintAfterSavingPrinter = ""
 64700    Else
-64710     If LenB(tstr) > 0 Then
-64720      .PrintAfterSavingPrinter = tstr
+64710     If LenB(tStr) > 0 Then
+64720      .PrintAfterSavingPrinter = tStr
 64730     End If
 64740   End If
-64750   tstr = reg.GetRegistryValue("PrintAfterSavingQueryUser")
-64760   If IsNumeric(tstr) Then
-64770     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-64780       .PrintAfterSavingQueryUser = CLng(tstr)
+64750   tStr = reg.GetRegistryValue("PrintAfterSavingQueryUser")
+64760   If IsNumeric(tStr) Then
+64770     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+64780       .PrintAfterSavingQueryUser = CLng(tStr)
 64790      Else
 64800       If UseStandard Then
 64810        .PrintAfterSavingQueryUser = 0
@@ -4104,10 +4104,10 @@ On Error GoTo ErrPtnr_OnError
 64860      .PrintAfterSavingQueryUser = 0
 64870     End If
 64880   End If
-64890   tstr = reg.GetRegistryValue("PrintAfterSavingTumble")
-64900   If IsNumeric(tstr) Then
-64910     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-64920       .PrintAfterSavingTumble = CLng(tstr)
+64890   tStr = reg.GetRegistryValue("PrintAfterSavingTumble")
+64900   If IsNumeric(tStr) Then
+64910     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64920       .PrintAfterSavingTumble = CLng(tStr)
 64930      Else
 64940       If UseStandard Then
 64950        .PrintAfterSavingTumble = 0
@@ -4118,10 +4118,10 @@ On Error GoTo ErrPtnr_OnError
 65000      .PrintAfterSavingTumble = 0
 65010     End If
 65020   End If
-65030   tstr = reg.GetRegistryValue("PrinterStop")
-65040   If IsNumeric(tstr) Then
-65050     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-65060       .PrinterStop = CLng(tstr)
+65030   tStr = reg.GetRegistryValue("PrinterStop")
+65040   If IsNumeric(tStr) Then
+65050     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65060       .PrinterStop = CLng(tStr)
 65070      Else
 65080       If UseStandard Then
 65090        .PrinterStop = 0
@@ -4132,31 +4132,31 @@ On Error GoTo ErrPtnr_OnError
 65140      .PrinterStop = 0
 65150     End If
 65160   End If
-65170   tstr = reg.GetRegistryValue("PrinterTemppath")
-65180   If LenB(Trim$(tstr)) > 0 Then
-65190    If DirExists(GetSubstFilename2(tstr, False)) = True Then
-65200      .PrinterTemppath = tstr
+65170   tStr = reg.GetRegistryValue("PrinterTemppath")
+65180   If LenB(Trim$(tStr)) > 0 Then
+65190    If DirExists(GetSubstFilename2(tStr, False)) = True Then
+65200      .PrinterTemppath = tStr
 65210     Else
-65220      MakePath ResolveEnvironment(GetSubstFilename2(tstr, False))
-65230      If DirExists(ResolveEnvironment(GetSubstFilename2(tstr, False))) = False Then
+65220      MakePath ResolveEnvironment(GetSubstFilename2(tStr, False))
+65230      If DirExists(ResolveEnvironment(GetSubstFilename2(tStr, False))) = False Then
 65240        If UseStandard Then
 65250          .PrinterTemppath = GetTempPath
 65260         Else
 65270          .PrinterTemppath = ""
 65280          If NoMsg = False Then
-65290           MsgBox "PrinterTemppath: '" & tstr & "' = '" & ResolveEnvironment(GetSubstFilename2(tstr, False)) & "'" & _
+65290           MsgBox "PrinterTemppath: '" & tStr & "' = '" & ResolveEnvironment(GetSubstFilename2(tStr, False)) & "'" & _
            vbCrLf & vbCrLf & LanguageStrings.MessagesMsg07
 65310          End If
 65320        End If
 65330       Else
-65340        .PrinterTemppath = tstr
+65340        .PrinterTemppath = tStr
 65350      End If
 65360    End If
 65370   End If
-65380   tstr = reg.GetRegistryValue("ProcessPriority")
-65390   If IsNumeric(tstr) Then
-65400     If CLng(tstr) >= 0 And CLng(tstr) <= 3 Then
-65410       .ProcessPriority = CLng(tstr)
+65380   tStr = reg.GetRegistryValue("ProcessPriority")
+65390   If IsNumeric(tStr) Then
+65400     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+65410       .ProcessPriority = CLng(tStr)
 65420      Else
 65430       If UseStandard Then
 65440        .ProcessPriority = 1
@@ -4167,18 +4167,18 @@ On Error GoTo ErrPtnr_OnError
 65490      .ProcessPriority = 1
 65500     End If
 65510   End If
-65520   tstr = reg.GetRegistryValue("ProgramFont")
-65530   If LenB(tstr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
+65520   tStr = reg.GetRegistryValue("ProgramFont")
+65530   If LenB(tStr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
 65540     .ProgramFont = "MS Sans Serif"
 65550    Else
-65560     If LenB(tstr) > 0 Then
-65570      .ProgramFont = tstr
+65560     If LenB(tStr) > 0 Then
+65570      .ProgramFont = tStr
 65580     End If
 65590   End If
-65600   tstr = reg.GetRegistryValue("ProgramFontCharset")
-65610   If IsNumeric(tstr) Then
-65620     If CLng(tstr) >= 0 Then
-65630       .ProgramFontCharset = CLng(tstr)
+65600   tStr = reg.GetRegistryValue("ProgramFontCharset")
+65610   If IsNumeric(tStr) Then
+65620     If CLng(tStr) >= 0 Then
+65630       .ProgramFontCharset = CLng(tStr)
 65640      Else
 65650       If UseStandard Then
 65660        .ProgramFontCharset = 0
@@ -4189,10 +4189,10 @@ On Error GoTo ErrPtnr_OnError
 65710      .ProgramFontCharset = 0
 65720     End If
 65730   End If
-65740   tstr = reg.GetRegistryValue("ProgramFontSize")
-65750   If IsNumeric(tstr) Then
-65760     If CLng(tstr) >= 1 And CLng(tstr) <= 72 Then
-65770       .ProgramFontSize = CLng(tstr)
+65740   tStr = reg.GetRegistryValue("ProgramFontSize")
+65750   If IsNumeric(tStr) Then
+65760     If CLng(tStr) >= 1 And CLng(tStr) <= 72 Then
+65770       .ProgramFontSize = CLng(tStr)
 65780      Else
 65790       If UseStandard Then
 65800        .ProgramFontSize = 8
@@ -4203,10 +4203,10 @@ On Error GoTo ErrPtnr_OnError
 65850      .ProgramFontSize = 8
 65860     End If
 65870   End If
-65880   tstr = reg.GetRegistryValue("RemoveAllKnownFileExtensions")
-65890   If IsNumeric(tstr) Then
-65900     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-65910       .RemoveAllKnownFileExtensions = CLng(tstr)
+65880   tStr = reg.GetRegistryValue("RemoveAllKnownFileExtensions")
+65890   If IsNumeric(tStr) Then
+65900     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65910       .RemoveAllKnownFileExtensions = CLng(tStr)
 65920      Else
 65930       If UseStandard Then
 65940        .RemoveAllKnownFileExtensions = 1
@@ -4217,10 +4217,10 @@ On Error GoTo ErrPtnr_OnError
 65990      .RemoveAllKnownFileExtensions = 1
 66000     End If
 66010   End If
-66020   tstr = reg.GetRegistryValue("RemoveSpaces")
-66030   If IsNumeric(tstr) Then
-66040     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-66050       .RemoveSpaces = CLng(tstr)
+66020   tStr = reg.GetRegistryValue("RemoveSpaces")
+66030   If IsNumeric(tStr) Then
+66040     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66050       .RemoveSpaces = CLng(tStr)
 66060      Else
 66070       If UseStandard Then
 66080        .RemoveSpaces = 1
@@ -4231,10 +4231,10 @@ On Error GoTo ErrPtnr_OnError
 66130      .RemoveSpaces = 1
 66140     End If
 66150   End If
-66160   tstr = reg.GetRegistryValue("RunProgramAfterSaving")
-66170   If IsNumeric(tstr) Then
-66180     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-66190       .RunProgramAfterSaving = CLng(tstr)
+66160   tStr = reg.GetRegistryValue("RunProgramAfterSaving")
+66170   If IsNumeric(tStr) Then
+66180     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66190       .RunProgramAfterSaving = CLng(tStr)
 66200      Else
 66210       If UseStandard Then
 66220        .RunProgramAfterSaving = 0
@@ -4245,26 +4245,26 @@ On Error GoTo ErrPtnr_OnError
 66270      .RunProgramAfterSaving = 0
 66280     End If
 66290   End If
-66300   tstr = reg.GetRegistryValue("RunProgramAfterSavingProgramname")
-66310   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66320     .RunProgramAfterSavingProgramname = " "
+66300   tStr = reg.GetRegistryValue("RunProgramAfterSavingProgramname")
+66310   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66320     .RunProgramAfterSavingProgramname = ""
 66330    Else
-66340     If LenB(tstr) > 0 Then
-66350      .RunProgramAfterSavingProgramname = tstr
+66340     If LenB(tStr) > 0 Then
+66350      .RunProgramAfterSavingProgramname = tStr
 66360     End If
 66370   End If
-66380   tstr = reg.GetRegistryValue("RunProgramAfterSavingProgramParameters")
-66390   If LenB(tstr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
+66380   tStr = reg.GetRegistryValue("RunProgramAfterSavingProgramParameters")
+66390   If LenB(tStr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
 66400     .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
 66410    Else
-66420     If LenB(tstr) > 0 Then
-66430      .RunProgramAfterSavingProgramParameters = tstr
+66420     If LenB(tStr) > 0 Then
+66430      .RunProgramAfterSavingProgramParameters = tStr
 66440     End If
 66450   End If
-66460   tstr = reg.GetRegistryValue("RunProgramAfterSavingWaitUntilReady")
-66470   If IsNumeric(tstr) Then
-66480     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-66490       .RunProgramAfterSavingWaitUntilReady = CLng(tstr)
+66460   tStr = reg.GetRegistryValue("RunProgramAfterSavingWaitUntilReady")
+66470   If IsNumeric(tStr) Then
+66480     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66490       .RunProgramAfterSavingWaitUntilReady = CLng(tStr)
 66500      Else
 66510       If UseStandard Then
 66520        .RunProgramAfterSavingWaitUntilReady = 1
@@ -4275,10 +4275,10 @@ On Error GoTo ErrPtnr_OnError
 66570      .RunProgramAfterSavingWaitUntilReady = 1
 66580     End If
 66590   End If
-66600   tstr = reg.GetRegistryValue("RunProgramAfterSavingWindowstyle")
-66610   If IsNumeric(tstr) Then
-66620     If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
-66630       .RunProgramAfterSavingWindowstyle = CLng(tstr)
+66600   tStr = reg.GetRegistryValue("RunProgramAfterSavingWindowstyle")
+66610   If IsNumeric(tStr) Then
+66620     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+66630       .RunProgramAfterSavingWindowstyle = CLng(tStr)
 66640      Else
 66650       If UseStandard Then
 66660        .RunProgramAfterSavingWindowstyle = 1
@@ -4289,10 +4289,10 @@ On Error GoTo ErrPtnr_OnError
 66710      .RunProgramAfterSavingWindowstyle = 1
 66720     End If
 66730   End If
-66740   tstr = reg.GetRegistryValue("RunProgramBeforeSaving")
-66750   If IsNumeric(tstr) Then
-66760     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-66770       .RunProgramBeforeSaving = CLng(tstr)
+66740   tStr = reg.GetRegistryValue("RunProgramBeforeSaving")
+66750   If IsNumeric(tStr) Then
+66760     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66770       .RunProgramBeforeSaving = CLng(tStr)
 66780      Else
 66790       If UseStandard Then
 66800        .RunProgramBeforeSaving = 0
@@ -4303,26 +4303,26 @@ On Error GoTo ErrPtnr_OnError
 66850      .RunProgramBeforeSaving = 0
 66860     End If
 66870   End If
-66880   tstr = reg.GetRegistryValue("RunProgramBeforeSavingProgramname")
-66890   If LenB(tstr) = 0 And LenB("") > 0 And UseStandard Then
-66900     .RunProgramBeforeSavingProgramname = " "
+66880   tStr = reg.GetRegistryValue("RunProgramBeforeSavingProgramname")
+66890   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66900     .RunProgramBeforeSavingProgramname = ""
 66910    Else
-66920     If LenB(tstr) > 0 Then
-66930      .RunProgramBeforeSavingProgramname = tstr
+66920     If LenB(tStr) > 0 Then
+66930      .RunProgramBeforeSavingProgramname = tStr
 66940     End If
 66950   End If
-66960   tstr = reg.GetRegistryValue("RunProgramBeforeSavingProgramParameters")
-66970   If LenB(tstr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
+66960   tStr = reg.GetRegistryValue("RunProgramBeforeSavingProgramParameters")
+66970   If LenB(tStr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
 66980     .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
 66990    Else
-67000     If LenB(tstr) > 0 Then
-67010      .RunProgramBeforeSavingProgramParameters = tstr
+67000     If LenB(tStr) > 0 Then
+67010      .RunProgramBeforeSavingProgramParameters = tStr
 67020     End If
 67030   End If
-67040   tstr = reg.GetRegistryValue("RunProgramBeforeSavingWindowstyle")
-67050   If IsNumeric(tstr) Then
-67060     If CLng(tstr) >= 0 And CLng(tstr) <= 6 Then
-67070       .RunProgramBeforeSavingWindowstyle = CLng(tstr)
+67040   tStr = reg.GetRegistryValue("RunProgramBeforeSavingWindowstyle")
+67050   If IsNumeric(tStr) Then
+67060     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+67070       .RunProgramBeforeSavingWindowstyle = CLng(tStr)
 67080      Else
 67090       If UseStandard Then
 67100        .RunProgramBeforeSavingWindowstyle = 1
@@ -4333,18 +4333,18 @@ On Error GoTo ErrPtnr_OnError
 67150      .RunProgramBeforeSavingWindowstyle = 1
 67160     End If
 67170   End If
-67180   tstr = reg.GetRegistryValue("SaveFilename")
-67190   If LenB(tstr) = 0 And LenB("<Title>") > 0 And UseStandard Then
+67180   tStr = reg.GetRegistryValue("SaveFilename")
+67190   If LenB(tStr) = 0 And LenB("<Title>") > 0 And UseStandard Then
 67200     .SaveFilename = "<Title>"
 67210    Else
-67220     If LenB(tstr) > 0 Then
-67230      .SaveFilename = tstr
+67220     If LenB(tStr) > 0 Then
+67230      .SaveFilename = tStr
 67240     End If
 67250   End If
-67260   tstr = reg.GetRegistryValue("SendMailMethod")
-67270   If IsNumeric(tstr) Then
-67280     If CLng(tstr) >= 0 Then
-67290       .SendMailMethod = CLng(tstr)
+67260   tStr = reg.GetRegistryValue("SendMailMethod")
+67270   If IsNumeric(tStr) Then
+67280     If CLng(tStr) >= 0 Then
+67290       .SendMailMethod = CLng(tStr)
 67300      Else
 67310       If UseStandard Then
 67320        .SendMailMethod = 0
@@ -4355,10 +4355,10 @@ On Error GoTo ErrPtnr_OnError
 67370      .SendMailMethod = 0
 67380     End If
 67390   End If
-67400   tstr = reg.GetRegistryValue("ShowAnimation")
-67410   If IsNumeric(tstr) Then
-67420     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67430       .ShowAnimation = CLng(tstr)
+67400   tStr = reg.GetRegistryValue("ShowAnimation")
+67410   If IsNumeric(tStr) Then
+67420     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67430       .ShowAnimation = CLng(tStr)
 67440      Else
 67450       If UseStandard Then
 67460        .ShowAnimation = 1
@@ -4369,10 +4369,10 @@ On Error GoTo ErrPtnr_OnError
 67510      .ShowAnimation = 1
 67520     End If
 67530   End If
-67540   tstr = reg.GetRegistryValue("StartStandardProgram")
-67550   If IsNumeric(tstr) Then
-67560     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67570       .StartStandardProgram = CLng(tstr)
+67540   tStr = reg.GetRegistryValue("StartStandardProgram")
+67550   If IsNumeric(tStr) Then
+67560     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67570       .StartStandardProgram = CLng(tStr)
 67580      Else
 67590       If UseStandard Then
 67600        .StartStandardProgram = 1
@@ -4383,10 +4383,10 @@ On Error GoTo ErrPtnr_OnError
 67650      .StartStandardProgram = 1
 67660     End If
 67670   End If
-67680   tstr = reg.GetRegistryValue("Toolbars")
-67690   If IsNumeric(tstr) Then
-67700     If CLng(tstr) >= 0 Then
-67710       .Toolbars = CLng(tstr)
+67680   tStr = reg.GetRegistryValue("Toolbars")
+67690   If IsNumeric(tStr) Then
+67700     If CLng(tStr) >= 0 Then
+67710       .Toolbars = CLng(tStr)
 67720      Else
 67730       If UseStandard Then
 67740        .Toolbars = 1
@@ -4397,10 +4397,10 @@ On Error GoTo ErrPtnr_OnError
 67790      .Toolbars = 1
 67800     End If
 67810   End If
-67820   tstr = reg.GetRegistryValue("UseAutosave")
-67830   If IsNumeric(tstr) Then
-67840     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67850       .UseAutosave = CLng(tstr)
+67820   tStr = reg.GetRegistryValue("UseAutosave")
+67830   If IsNumeric(tStr) Then
+67840     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67850       .UseAutosave = CLng(tStr)
 67860      Else
 67870       If UseStandard Then
 67880        .UseAutosave = 0
@@ -4411,10 +4411,10 @@ On Error GoTo ErrPtnr_OnError
 67930      .UseAutosave = 0
 67940     End If
 67950   End If
-67960   tstr = reg.GetRegistryValue("UseAutosaveDirectory")
-67970   If IsNumeric(tstr) Then
-67980     If CLng(tstr) = 0 Or CLng(tstr) = 1 Then
-67990       .UseAutosaveDirectory = CLng(tstr)
+67960   tStr = reg.GetRegistryValue("UseAutosaveDirectory")
+67970   If IsNumeric(tStr) Then
+67980     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67990       .UseAutosaveDirectory = CLng(tStr)
 68000      Else
 68010       If UseStandard Then
 68020        .UseAutosaveDirectory = 1
@@ -5820,7 +5820,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   tList = Split(.FilenameSubstitutions, "\")
@@ -5916,7 +5916,7 @@ Public Sub GetOptions(Frm As Form, sOptions As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tstr As String, lsv As ListView
+50010  Dim i As Long, tStr As String, lsv As ListView
 50020  With sOptions
 50030  .AutosaveDirectory = Frm.txtAutosaveDirectory.Text
 50040  .AutosaveFilename = Frm.txtAutosaveFilename.Text
@@ -5926,18 +5926,18 @@ On Error GoTo ErrPtnr_OnError
 50080  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50090  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50100  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50110  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
+50110  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
 50120  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
-50130  tstr = ""
+50130  tStr = ""
 50140  Set lsv = Frm.lsvFilenameSubst
 50150  For i = 1 To lsv.ListItems.Count
 50160   If i < lsv.ListItems.Count Then
-50170     tstr = tstr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1) & "\"
+50170     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1) & "\"
 50180    Else
-50190     tstr = tstr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1)
+50190     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1)
 50200   End If
 50210  Next i
-50220  .FilenameSubstitutions = tstr
+50220  .FilenameSubstitutions = tStr
 50230  .FilenameSubstitutionsOnlyInTitle = Abs(Frm.chkFilenameSubst.Value)
 50240  .JPEGColorscount = Frm.cmbJPEGColors.ListIndex
 50250  .JPEGQuality = Frm.txtJPEGQuality.Text
@@ -6130,7 +6130,7 @@ Public Function ReadLanguageFromOptionsINI(Language As String, PDFCreatorINIFile
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim hOpt As clsHash, tstr As String, opt As tOptions
+50010  Dim hOpt As clsHash, tStr As String, opt As tOptions
 50020  ReadLanguageFromOptionsINI = Language
 50030  If FileExists(PDFCreatorINIFile) = False Then
 50040   If UseStandard Then
@@ -6141,9 +6141,9 @@ On Error GoTo ErrPtnr_OnError
 50090  End If
 50100  Set hOpt = New clsHash
 50110  ReadINISection PDFCreatorINIFile, "Options", hOpt
-50120  tstr = Trim$(hOpt.Retrieve("Language"))
-50130  If LenB(tstr) > 0 Then
-50140    ReadLanguageFromOptionsINI = tstr
+50120  tStr = Trim$(hOpt.Retrieve("Language"))
+50130  If LenB(tStr) > 0 Then
+50140    ReadLanguageFromOptionsINI = tStr
 50150   Else
 50160    If UseStandard Then
 50170      ReadLanguageFromOptionsINI = "english"
@@ -6168,16 +6168,16 @@ Public Function ReadLanguageFromOptionsReg(Language As String, KeyRoot As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, tstr As String
+50010  Dim reg As clsRegistry, tStr As String
 50020  Set reg = New clsRegistry
 50030  With reg
 50040   .KeyRoot = KeyRoot
 50050   .Subkey = "Program"
 50060   .hkey = hProfile
-50070   tstr = Trim$(reg.GetRegistryValue("Language"))
+50070   tStr = Trim$(reg.GetRegistryValue("Language"))
 50080  End With
-50090  If LenB(tstr) > 0 Then
-50100    ReadLanguageFromOptionsReg = tstr
+50090  If LenB(tStr) > 0 Then
+50100    ReadLanguageFromOptionsReg = tStr
 50110   Else
 50120    If UseStandard Then
 50130      ReadLanguageFromOptionsReg = "english"
@@ -6202,14 +6202,14 @@ Public Function UseINI() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, tstr As String
+50010  Dim reg As clsRegistry, tStr As String
 50020  Set reg = New clsRegistry
 50030  UseINI = False
 50040  With reg
 50050   .hkey = HKEY_LOCAL_MACHINE
 50060   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-50070   tstr = Trim$(.GetRegistryValue("UseINI"))
-50080   If tstr = "1" Then
+50070   tStr = Trim$(.GetRegistryValue("UseINI"))
+50080   If tStr = "1" Then
 50090    UseINI = True
 50100   End If
 50110  End With

@@ -2326,7 +2326,7 @@ Private Sub LoadOptions(Filename As String)
          Else
           tStrf(i) = Trim$(tStrf(i))
           If Len(tStrf(i)) = 0 Then
-           tStrf(i) = " "
+           tStrf(i) = vbNullString
           End If
           Item.SubItems(i + 1) = tStrf(i)
         End If

@@ -287,18 +287,28 @@ Public Function GetProgramReleaseStr() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry, Release As String
+50010  Dim reg As clsRegistry, Release As String, tStr As String
 50020  Set reg = New clsRegistry
 50030  With reg
 50040   .hkey = HKEY_LOCAL_MACHINE
 50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-50060   Release = .GetRegistryValue("ApplicationVersion")
-50070   If Len(Trim$(.GetRegistryValue("BetaVersion"))) > 0 Then
-50080    Release = Release & " Beta " & .GetRegistryValue("BetaVersion")
-50090   End If
-50100  End With
-50110  Set reg = Nothing
-50120  GetProgramReleaseStr = Release
+50060   tStr = "ApplicationVersion"
+50070   Release = .GetRegistryValue(tStr)
+50080   tStr = "BetaVersion"
+50090   If Len(Trim$(.GetRegistryValue(tStr))) > 0 Then
+50100    Release = Release & " Beta " & .GetRegistryValue(tStr)
+50110   End If
+50120   tStr = "ReleaseCandidate"
+50130   If Len(Trim$(.GetRegistryValue(tStr))) > 0 Then
+50140    Release = Release & " RC " & .GetRegistryValue(tStr)
+50150   End If
+50160   tStr = "PatchLevel"
+50170   If Len(Trim$(.GetRegistryValue(tStr))) > 0 Then
+50180    Release = Release & " Patch " & .GetRegistryValue(tStr)
+50190   End If
+50200  End With
+50210  Set reg = Nothing
+50220  GetProgramReleaseStr = Release
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

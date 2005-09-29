@@ -187,19 +187,22 @@ Private Sub cmd_Click(Index As Integer)
    Str3 = cmbType.List(cmbType.ListIndex)
    txt(2).Text = Trim$(txt(2).Text)
    If Len(txt(2).Text) = 0 Then
-     Str4 = " "
+'     Str4 = " "
+     Str4 = vbNullString
     Else
      Str4 = txt(2).Text
    End If
    txt(3).Text = Trim$(txt(3).Text)
    If Len(txt(3).Text) = 0 Then
-     Str5 = " "
+'     Str5 = " "
+     Str5 = vbNullString
     Else
      Str5 = txt(3).Text
    End If
    txt(4).Text = Trim$(txt(4).Text)
    If Len(txt(4).Text) = 0 Then
-     Str6 = " "
+'     Str6 = " "
+     Str6 = vbNullString
     Else
      Str6 = txt(4).Text
    End If
