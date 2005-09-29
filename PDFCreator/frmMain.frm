@@ -13,7 +13,6 @@ Begin VB.Form frmMain
    ScaleWidth      =   9510
    StartUpPosition =   3  'Windows-Standard
    Visible         =   0   'False
-   WindowState     =   1  'Minimiert
    Begin VB.Timer Timer3 
       Enabled         =   0   'False
       Interval        =   1
@@ -449,67 +448,66 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Me.KeyPreview = True
 50020
-50030  If App.StartMode = vbSModeStandalone Or IsInIDE Then
-50040    frmMain.WindowState = vbNormal
-50050   Else
-50060    If ProgramIsVisible = False Then
-50070     frmMain.Visible = False
-50080    End If
-50090  End If
-50100
-50110  ReadAllLanguages LanguagePath
-50120  InitProgram
-50130
-50140  ShowPaypalMenuimage
-50150  SetGSRevision
-50160
-50170  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
-50180   SetMenuPrinterStop
-50190  End If
-50200  If PrinterStop = True Then
-50210   mnPrinter(0).Checked = True
-50220  End If
-50230  If Options.OptionsEnabled = 0 Then
-50240   mnPrinter(2).Enabled = False
-50250   tlb(0).Buttons(2).Enabled = False
-50260  End If
-50270  If Options.OptionsVisible = 0 Then
-50280   tlb(0).Buttons(2).Visible = False
-50290   mnPrinter(2).Visible = False
-50300   mnPrinter(3).Visible = False
-50310  End If
-50320
-50330  CheckPrintJobs
-50340  Call SetDocMenuAndToolbar
-50350  If (Options.Toolbars And 1) = 1 Then
-50360    tlb(0).Visible = True
-50370   Else
-50380    tlb(0).Visible = False
-50390  End If
-50400  If (Options.Toolbars And 2) = 2 Then
-50410    tlb(1).Visible = True
-50420    txtEmailAddress.Visible = True
-50430   Else
-50440    tlb(1).Visible = False
-50450    txtEmailAddress.Visible = False
-50460  End If
-50470  If PDFCreatorPrinter = False Or NoProcessing = True Or _
+50030  If App.StartMode = vbSModeAutomation Then
+50040   If ProgramIsVisible = False Then
+50050    frmMain.Visible = False
+50060   End If
+50070   WindowState = vbMinimized
+50080  End If
+50090
+50100  ReadAllLanguages LanguagePath
+50110  InitProgram
+50120
+50130  ShowPaypalMenuimage
+50140  SetGSRevision
+50150
+50160  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
+50170   SetMenuPrinterStop
+50180  End If
+50190  If PrinterStop = True Then
+50200   mnPrinter(0).Checked = True
+50210  End If
+50220  If Options.OptionsEnabled = 0 Then
+50230   mnPrinter(2).Enabled = False
+50240   tlb(0).Buttons(2).Enabled = False
+50250  End If
+50260  If Options.OptionsVisible = 0 Then
+50270   tlb(0).Buttons(2).Visible = False
+50280   mnPrinter(2).Visible = False
+50290   mnPrinter(3).Visible = False
+50300  End If
+50310
+50320  CheckPrintJobs
+50330  Call SetDocMenuAndToolbar
+50340  If (Options.Toolbars And 1) = 1 Then
+50350    tlb(0).Visible = True
+50360   Else
+50370    tlb(0).Visible = False
+50380  End If
+50390  If (Options.Toolbars And 2) = 2 Then
+50400    tlb(1).Visible = True
+50410    txtEmailAddress.Visible = True
+50420   Else
+50430    tlb(1).Visible = False
+50440    txtEmailAddress.Visible = False
+50450  End If
+50460  If PDFCreatorPrinter = False Or NoProcessing = True Or _
   Options.NoProcessingAtStartup = 1 Or (PDFCreatorPrinter = True And lsv.ListItems.Count > 1) Then
-50490   If ProgramIsVisible Then
-50500    Visible = True
-50510    SetTopMost frmMain, True, True
-50520    SetTopMost frmMain, False, True
-50530    SetActiveWindow frmMain.hwnd
-50540   End If
-50550  End If
-50560
-50570  ' Only for the first time set interval to 10 ms
-50580  Timer1.Interval = 10
-50590  Timer1.Enabled = True
-50600  Timer2.Interval = 100
-50610  Timer2.Enabled = True
-50620
-50630  ProgramIsStarted = True
+50480   If ProgramIsVisible Then
+50490    Visible = True
+50500    SetTopMost frmMain, True, True
+50510    SetTopMost frmMain, False, True
+50520    SetActiveWindow frmMain.hwnd
+50530   End If
+50540  End If
+50550
+50560  ' Only for the first time set interval to 10 ms
+50570  Timer1.Interval = 10
+50580  Timer1.Enabled = True
+50590  Timer2.Interval = 100
+50600  Timer2.Enabled = True
+50610
+50620  ProgramIsStarted = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
