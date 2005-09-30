@@ -55,6 +55,7 @@ Public ShowOnlyOptions As Boolean
 Public UserPassword As String
 Public InstanceCounter As Long
 Public GhostscriptError As Long
+Public ProgramWindowState As Long
 
 Public Function GetPDFCreatorApplicationPath() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
