@@ -103,6 +103,12 @@ End Property
 
 Public Property Let cDefaultPrinter(ByVal Printername As String)
 End Property
+
+Public Property Get cWindowState() As Long
+End Property
+
+Public Property Let cWindowState(ByVal ProgramWindowState As Long)
+End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---

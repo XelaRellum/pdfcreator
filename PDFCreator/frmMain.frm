@@ -452,7 +452,7 @@ On Error GoTo ErrPtnr_OnError
 50040   If ProgramIsVisible = False Then
 50050    frmMain.Visible = False
 50060   End If
-50070   WindowState = vbMinimized
+50070   WindowState = ProgramWindowState
 50080  End If
 50090
 50100  ReadAllLanguages LanguagePath
@@ -525,6 +525,7 @@ Private Sub Form_Resize()
  
  Static isInTaskBar As Boolean
   
+ ProgramWindowState = Me.WindowState
  If Me.WindowState = vbMinimized Then
   isInTaskBar = True
   FormInTaskbar Me, False, False, False

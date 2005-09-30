@@ -46,7 +46,6 @@ On Error GoTo ErrPtnr_OnError
 50100   RaiseEvent eError
 50110   Exit Sub
 50120  End If
-50130 ' ProgramIsVisible = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -373,15 +372,17 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  If Value Then
-50060    If Not PrinterStop Then
-50070     frmMain.SetMenuPrinterStop
-50080    End If
-50090   Else
-50100    If PrinterStop Then
-50110     frmMain.SetMenuPrinterStop
-50120    End If
-50130  End If
+50050  If Not mForm Is Nothing Then
+50060   If Value Then
+50070     If Not PrinterStop Then
+50080      mForm.SetMenuPrinterStop
+50090     End If
+50100    Else
+50110     If PrinterStop Then
+50120      mForm.SetMenuPrinterStop
+50130     End If
+50140   End If
+50150  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -803,6 +804,48 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
+
+Public Property Get cWindowState() As Long
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cWindowState = ProgramWindowState
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cWindowState [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cWindowState(ByVal Value As Long) ' Value must be '0 = normal' or '1 = minimized' or '2 = maximized'
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Value = vbNormal Or Value = vbMinimized Or Value = vbMaximized Then
+50020   ProgramWindowState = Value
+50030   If Not mForm Is Nothing Then
+50040    If mForm.WindowState = vbMinimized And ProgramWindowState <> vbMinimized Then
+50050     mForm.ShowFrmMain
+50060    End If
+50070    mForm.WindowState = Value
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cWindowState [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---
@@ -1000,16 +1043,6 @@ On Error GoTo ErrPtnr_OnError
 50190   ProgramIsStarted = False
 50200   cCloseRunningSession = True
 50210  End If
-50220  If Not frmMain Is Nothing Then
-50230   With frmMain
-50240    .Timer1 = False
-50250    .Timer2 = False
-50260    .Timer3 = False
-50270   End With
-50280   Unload frmMain
-50290   ProgramIsStarted = False
-50300   cCloseRunningSession = True
-50310  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1253,7 +1286,9 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Sub
 50040  End If
-50050  frmMain.CombineAll
+50050  If Not mForm Is Nothing Then
+50060   mForm.CombineAll
+50070  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
