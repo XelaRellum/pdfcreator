@@ -33,11 +33,6 @@ Begin VB.Form frmInfo
       Top             =   210
       Width           =   2235
    End
-   Begin VB.Timer Timer1 
-      Interval        =   100
-      Left            =   105
-      Top             =   105
-   End
    Begin VB.CommandButton cmdCancel 
       Appearance      =   0  '2D
       Cancel          =   -1  'True
@@ -138,10 +133,10 @@ Private Sub AnimateScroller()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim lngSecondCurrX As Long, lngCurrentX As Long, intCounter As Integer
+50010  Dim lngSecondCurrX As Double, lngCurrentX As Double, intCounter As Integer
 50020
 50030  While Not m_blnUnloading
-50040   lngCurrentX = lngCurrentX + 1
+50040   lngCurrentX = lngCurrentX + 0.5
 50050   If intCounter = 40 Then intCounter = -1
 50060   intCounter = intCounter + 1
 50070   picCredits.Cls
