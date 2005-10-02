@@ -678,7 +678,7 @@ On Error GoTo ErrPtnr_OnError
 50290  If App.StartMode = vbSModeStandalone Then
 50300   InstanceCounter = InstanceCounter - 1
 50310  End If
-50320  PDFSpoolerPath = CompletePath(GetSystemDirectory) & "PDFSpooler.exe"
+50320  PDFSpoolerPath = CompletePath(App.Path) & "PDFSpooler.exe"
 50330  If Restart = True And FileExists(PDFSpoolerPath) = True Then
 50340   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", App.Path, 1
 50350  End If

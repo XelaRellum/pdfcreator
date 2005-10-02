@@ -422,7 +422,7 @@ On Error GoTo ErrPtnr_OnError
 50050   End If
 50060   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
 50070    Set tzi = New clsTimeZoneInformation
-50080    tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm")
+50080    tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
 50090    If tzi.DaylightToGMT >= 0 Then
 50100      tStr = "+" & tStr
 50110     Else
