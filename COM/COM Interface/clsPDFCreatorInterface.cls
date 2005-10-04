@@ -29,6 +29,9 @@ End Property
 Public Property Get cErrorDetail(ByVal PropertyName As String) As Variant
 End Property
 
+Public Sub cErrorClear()
+End Sub
+
 Public Property Get cOutputFilename() As String
 End Property
 
