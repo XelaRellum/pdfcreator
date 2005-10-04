@@ -127,25 +127,23 @@ On Error GoTo ErrPtnr_OnError
 50190   Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
 50200
 50210   If Len(bufStr) > 0 Then
-50220     s = Split(bufStr, vbCrLf)
-50230     If Options.LogLines < UBound(s) - 1 Then
-50240       For i = UBound(s) - Options.LogLines + 2 To UBound(s)
-50250        tStr = s(i - 2)
-50260        Print #fn, s(i - 2)
-50270       Next i
-50280      Else
-50290       For i = LBound(s) + 1 To UBound(s)
-50300        tStr = s(i)
-50310        Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
-50320       Next i
-50330     End If
-50340     Print #fn, Now & ": " & Logtext
-50350    Else
-50360     Print #fn, "Windowsversion: " & GetWinVersionStr
-50370     Print #fn, Now & ": " & Logtext
-50380   End If
-50390   Close #fn
-50400  End If
+50220    s = Split(bufStr, vbCrLf)
+50230    If Options.LogLines < UBound(s) - 1 Then
+50240      For i = UBound(s) - Options.LogLines + 2 To UBound(s)
+50250       tStr = s(i - 2)
+50260       Print #fn, s(i - 2)
+50270      Next i
+50280     Else
+50290      Print #fn, bufStr
+50300 '     For i = LBound(s) To UBound(s)
+50310 '      tStr = s(i)
+50320 '      Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
+50330 '     Next i
+50340    End If
+50350   End If
+50360   Print #fn, Now & ": " & Logtext
+50370   Close #fn
+50380  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
