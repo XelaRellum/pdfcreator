@@ -152,35 +152,36 @@ Public Function GetAllSectionsFromInifile(Optional ByVal Filename As String, Opt
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tFilename As String, i As Long, j As Long, nBuffer As String, _
-  res As Long, tstr As String, nItems() As String
+  res As Long, tStr As String, nItems() As String
 50030
 50040  Const kBufferSize = 32767
 50050
-50060  tFilename = GetFilename(Filename)
+50060  Set GetAllSectionsFromInifile = New Collection
 50070
-50080  If CheckIniFile(tFilename) = True Then
-50090   Set GetAllSectionsFromInifile = New Collection
-50100   nBuffer = Space$(kBufferSize)
-50110   res = GetPrivateProfileSectionNames(nBuffer, kBufferSize, tFilename & vbNullString)
-50120   If res = 0 Then
-50130    Exit Function
-50140   End If
-50150   nItems = Split(Left$(nBuffer, res), Chr$(0))
-50160   If Sorted = True Then
-50170    For i = LBound(nItems) To UBound(nItems) - 1
-50180     For j = i To UBound(nItems)
-50190      If StrComp(nItems(i), nItems(j), vbTextCompare) = 1 Then
-50200       tstr = nItems(i): nItems(i) = nItems(j): nItems(j) = tstr
-50210      End If
-50220     Next j
-50230    Next i
-50240   End If
-50250   For i = 0 To UBound(nItems)
-50260    If Trim$(nItems(i)) <> vbNullString Then
-50270     GetAllSectionsFromInifile.Add nItems(i)
-50280    End If
-50290   Next i
-50300  End If
+50080  tFilename = GetFilename(Filename)
+50090
+50100  If CheckIniFile(tFilename) = True Then
+50110   nBuffer = Space$(kBufferSize)
+50120   res = GetPrivateProfileSectionNames(nBuffer, kBufferSize, tFilename & vbNullString)
+50130   If res = 0 Then
+50140    Exit Function
+50150   End If
+50160   nItems = Split(Left$(nBuffer, res), Chr$(0))
+50170   If Sorted = True Then
+50180    For i = LBound(nItems) To UBound(nItems) - 1
+50190     For j = i To UBound(nItems)
+50200      If StrComp(nItems(i), nItems(j), vbTextCompare) = 1 Then
+50210       tStr = nItems(i): nItems(i) = nItems(j): nItems(j) = tStr
+50220      End If
+50230     Next j
+50240    Next i
+50250   End If
+50260   For i = 0 To UBound(nItems)
+50270    If Trim$(nItems(i)) <> vbNullString Then
+50280     GetAllSectionsFromInifile.Add nItems(i)
+50290    End If
+50300   Next i
+50310  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -229,7 +230,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Const kBufferSize = 32767
 50020  Dim tFilename As String, tSection As String, nBuffer As String, res As Long, _
   nItems() As String, nItem() As String, i As Long, tColl As Collection, _
-  ts(1) As String, j As Long, tstr As String
+  ts(1) As String, j As Long, tStr As String
 50050
 50060  tFilename = GetFilename(Filename)
 50070  tSection = GetSectionname(Section)
@@ -247,7 +248,7 @@ On Error GoTo ErrPtnr_OnError
 50190    For i = LBound(nItems) To UBound(nItems) - 1
 50200     For j = i To UBound(nItems)
 50210      If StrComp(nItems(i), nItems(j), vbTextCompare) = 1 Then
-50220       tstr = nItems(i): nItems(i) = nItems(j): nItems(j) = tstr
+50220       tStr = nItems(i): nItems(i) = nItems(j): nItems(j) = tStr
 50230      End If
 50240     Next j
 50250    Next i
@@ -515,7 +516,10 @@ On Error GoTo ErrPtnr_OnError
 50060
 50070  res = WritePrivateProfileString(tSection & vbNullString, tKey & vbNullString, _
   Value & vbNullString, tFilename & vbNullString)
-50090  FlushInifile
+50090  If res <> 0 Then
+50100   SaveKey = True
+50110  End If
+50120  FlushInifile
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
