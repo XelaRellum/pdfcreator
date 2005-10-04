@@ -2267,14 +2267,14 @@ End Select
 End Sub
 
 Private Sub cmbCharset_Change()
-50010  On Error GoTo ErrorHandler
-50020  txtTest.Font.Charset = cmbCharset.Text
-50030  Exit Sub
+ On Error GoTo ErrorHandler
+ txtTest.Font.Charset = cmbCharset.Text
+ Exit Sub
 ErrorHandler:
-50050  If Err.Number = 380 Then
-50060   cmbCharset.Text = 0
-50070  End If
-50080  Err.Clear
+ If Err.Number = 380 Then
+  cmbCharset.Text = 0
+ End If
+ Err.Clear
 End Sub
 
 Private Sub cmbCharset_Click()

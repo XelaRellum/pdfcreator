@@ -200,7 +200,12 @@ On Error GoTo ErrPtnr_OnError
 50300   FormInTaskbar Me, True, True
 50310   Caption = "PDFCreator - " & Caption
 50320  End If
-50330  Timer1.Enabled = True
+50330  With Screen
+50340   Height = 0.75 * .Height
+50350   Width = 0.75 * .Width
+50360   Move (.Width - Width) / 2, (.Height - Height) / 2
+50370  End With
+50380  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -280,11 +285,6 @@ End Sub
 Private Sub Timer1_Timer()
  On Error Resume Next
  Timer1.Enabled = False
- With Screen
-  Height = 0.75 * .Height
-  Width = 0.75 * .Width
-  Move (.Width - Width) / 2, (.Height - Height) / 2
- End With
  SetCursorOnTheBeginningOfTheLastLine txtLog
  txtLog.SetFocus
  cmdClose.SetFocus
