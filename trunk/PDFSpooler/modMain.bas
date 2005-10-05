@@ -86,7 +86,7 @@ On Error GoTo ErrPtnr_OnError
 50770  If FileExists(Languagefile) = True Then
 50780    LoadLanguage Languagefile
 50790   Else
-50800    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
+50800    WriteToSpecialLogfile LanguageStrings.MessagesMsg14 & ": """ & Languagefile & """"
 50810  '   Options.Language = "english"
 50820  End If
 50830
