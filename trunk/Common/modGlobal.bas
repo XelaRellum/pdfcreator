@@ -275,7 +275,7 @@ On Error GoTo ErrPtnr_OnError
 50160   ClientComputer = "'Preview ClientComputer'"
 50170  End If
 50180
-50190  UserName = GetUsername
+50190  UserName = GetDocUsername("", True)
 50200
 50210  Computername = GetComputerName
 50220  MyFiles = GetMyFiles
