@@ -21,7 +21,7 @@ Public Type InfoSpoolFile
  REDMON_DOCNAME As String
  REDMON_FILENAME As String
  REDMON_SESSIONID As String
- Spoolfilename As String
+ SpoolFilename As String
  SpoolerAccount As String
  Computer As String
  Created As String
@@ -264,20 +264,69 @@ ErrorHandler:
  CreateDir = False
 End Function
 
-Public Function DirExists(DirStr As String) As Boolean
- On Error GoTo ErrorHandler
- DirExists = GetAttr(DirStr) Or vbDirectory
- Exit Function
-ErrorHandler:
- DirExists = False
+Private Function UnQualifyPath(ByVal sFolder As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  sFolder = LTrim$(sFolder)
+50020  UnQualifyPath = sFolder
+50030  If LenB(sFolder) > 0 Then
+50040   If Right$(sFolder, 1) = "\" Then
+50050    UnQualifyPath = Left$(sFolder, Len(sFolder) - 1)
+50060   End If
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "UnQualifyPath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function FileExists(FileStr As String) As Boolean
- On Error GoTo ErrorHandler
- FileExists = GetAttr(FileStr)
- Exit Function
-ErrorHandler:
- FileExists = False
+Public Function DirExists(ByVal DirStr As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim WFD As WIN32_FIND_DATA, hFile As Long
+50020  DirStr = UnQualifyPath(DirStr)
+50030  hFile = FindFirstFileA(DirStr, WFD)
+50040  DirExists = (hFile <> INVALID_HANDLE_VALUE) And _
+                (WFD.dwFileAttributes And FILE_ATTRIBUTE_DIRECTORY)
+50060  Call FindClose(hFile)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "DirExists")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function FileExists(ByVal FileStr As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim WFD As WIN32_FIND_DATA, hFile As Long
+50020  hFile = FindFirstFileA(FileStr, WFD)
+50030  FileExists = hFile <> INVALID_HANDLE_VALUE
+50040  Call FindClose(hFile)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "FileExists")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function IsFilePrintable(Filename As String) As Boolean
@@ -1821,7 +1870,7 @@ Public Sub DrawBorder3D(ByVal obj As Object, Index As Integer, BorderWidth As Lo
  End With
 End Sub
 
-Public Sub WriteInfoSpoolfile(Spoolfilename As String)
+Public Sub WriteInfoSpoolfile(SpoolFilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1837,13 +1886,13 @@ On Error GoTo ErrPtnr_OnError
 50100   .REDMON_DOCNAME = Environ$("REDMON_DOCNAME")
 50110   .REDMON_FILENAME = Environ$("REDMON_FILENAME")
 50120   .REDMON_SESSIONID = Environ$("REDMON_SESSIONID")
-50130   .Spoolfilename = Spoolfilename
+50130   .SpoolFilename = SpoolFilename
 50140   .SpoolerAccount = GetUsername
 50150   .Computer = GetComputerName
 50160   .Created = Now
 50170  End With
 50180  fn = FreeFile
-50190  SplitPath Spoolfilename, , Path, , File
+50190  SplitPath SpoolFilename, , Path, , File
 50200  infFile = CompletePath(Path) & File & ".inf"
 50210  Open infFile For Binary As #fn
 50220  Put #fn, , isf
@@ -1860,11 +1909,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function ReadInfoSpoolfile(Spoolfilename As String) As InfoSpoolFile
+Public Function ReadInfoSpoolfile(SpoolFilename As String) As InfoSpoolFile
  On Error Resume Next
  Dim tVar As Variant, fn As Long, infFile As String, _
   Path As String, File As String
- SplitPath Spoolfilename, , Path, , File
+ SplitPath SpoolFilename, , Path, , File
  infFile = CompletePath(Path) & File & ".inf"
  If FileExists(infFile) And Not FileInUse(infFile) Then
   fn = FreeFile
@@ -1891,12 +1940,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub KillInfoSpoolfile(Spoolfilename As String)
+Public Sub KillInfoSpoolfile(SpoolFilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim infFile As String, Path As String, File As String
-50020  SplitPath Spoolfilename, , Path, , File
+50020  SplitPath SpoolFilename, , Path, , File
 50030  infFile = CompletePath(Path) & File & ".inf"
 50040  KillFile infFile
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
