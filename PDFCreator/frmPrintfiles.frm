@@ -15,6 +15,7 @@ Begin VB.Form frmPrintfiles
    Begin VB.CommandButton cmd 
       Cancel          =   -1  'True
       Caption         =   "&Cancel"
+      Default         =   -1  'True
       Height          =   435
       Left            =   2160
       TabIndex        =   4

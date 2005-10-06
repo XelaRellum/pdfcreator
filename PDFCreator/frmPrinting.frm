@@ -142,6 +142,7 @@ Begin VB.Form frmPrinting
    End
    Begin VB.CommandButton cmdSave 
       Caption         =   "&Save"
+      Default         =   -1  'True
       Height          =   495
       Left            =   6375
       TabIndex        =   21
@@ -604,25 +605,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub txtCreateFor_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If KeyAscii = vbKeyReturn Then
-50020   SaveEDoc
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "txtCreateFor_KeyPress")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Sub txtCreationDate_GotFocus()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -637,25 +619,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "txtCreationDate_GotFocus")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub txtCreationDate_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If KeyAscii = vbKeyReturn Then
-50020   SaveEDoc
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "txtCreationDate_KeyPress")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -686,25 +649,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub txtKeywords_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If KeyAscii = vbKeyReturn Then
-50020   SaveEDoc
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "txtKeywords_KeyPress")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Sub txtModifyDate_GotFocus()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -719,25 +663,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "txtModifyDate_GotFocus")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub txtModifyDate_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If KeyAscii = vbKeyReturn Then
-50020   SaveEDoc
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "txtModifyDate_KeyPress")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -768,25 +693,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub txtSubject_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If KeyAscii = vbKeyReturn Then
-50020   SaveEDoc
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "txtSubject_KeyPress")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Sub txtTitle_GotFocus()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -801,25 +707,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "txtTitle_GotFocus")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub txtTitle_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If KeyAscii = vbKeyReturn Then
-50020   SaveEDoc
-50030  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "txtTitle_KeyPress")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

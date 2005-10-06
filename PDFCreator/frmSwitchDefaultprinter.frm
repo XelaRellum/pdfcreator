@@ -15,6 +15,7 @@ Begin VB.Form frmSwitchDefaultprinter
    StartUpPosition =   3  'Windows-Standard
    Begin VB.CommandButton cmd 
       Caption         =   "&Ok"
+      Default         =   -1  'True
       Height          =   495
       Index           =   0
       Left            =   120
