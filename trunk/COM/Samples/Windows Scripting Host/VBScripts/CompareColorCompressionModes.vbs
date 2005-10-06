@@ -267,7 +267,7 @@ End Sub
 
 Private Sub CreatePSBodyFractal
  Const ForAppending = 8
- Dim f, i, j, k, tstr
+ Dim f, i, j, k, tStr
  Set f = fso.OpenTextFile(PSFileName, ForAppending, True)
  f.WriteLine "gsave"
  f.WriteLine Round((596-sf*wi)/2) & " "  & Round((842-sf*hei)/2) & " translate"
@@ -277,17 +277,17 @@ Private Sub CreatePSBodyFractal
  f.WriteLine "false 3"
  f.WriteLine "colorimage"
  for j=0 to hei-1
-  tstr = ""
+  tStr = ""
   for i=0 to wi-1
    for k =0 to 2
     if len(hex(im(i,j,k)))=1 then
-      tstr = tstr & "0" & hex(im(i,j,k))
+      tStr = tStr & "0" & hex(im(i,j,k))
      else
-      tstr = tstr & hex(im(i,j,k))
+      tStr = tStr & hex(im(i,j,k))
     end if
    next
   next
-  f.WriteLine tstr
+  f.WriteLine tStr
   oIE.Document.Body.InnerHTML = "<h1>" & HeadStatus1 & "</h1>" & _
    "<strong>" & HeadStatus4 & "</strong><br><br>Progress: " & _
    j + 1  & " [" & hei & "] = " & FormatNumber(100 * (j + 1) / hei, 2) & "%"
@@ -298,7 +298,7 @@ End Sub
 
 Private Sub CreatePSBodyColorTable
  Const ForAppending = 8
- Dim f, i, j, k, tstr
+ Dim f, i, j, k, tStr
  f.WriteLine "gsave"
  f.WriteLine "10 " & 842-50 & " translate"
  f.WriteLine 2*ColorSteps & " 40  scale"
@@ -307,25 +307,25 @@ Private Sub CreatePSBodyColorTable
  f.WriteLine "false 3"
  f.WriteLine "colorimage"
  for j=0 to 20-1
-  tstr = ""
+  tStr = ""
   for i=0 to ColorSteps-1
    for k =0 to 2
     if len(hex(ColorTable(i,k)))=1 then
-      tstr = tstr & "0" & hex(ColorTable(i,k))
+      tStr = tStr & "0" & hex(ColorTable(i,k))
      else
-      tstr = tstr & hex(ColorTable(i,k))
+      tStr = tStr & hex(ColorTable(i,k))
     end if
    next
   next
-  f.WriteLine tstr
+  f.WriteLine tStr
  next
  f.WriteLine "grestore"
  f.Close
 End Sub
 
-Private Sub  CreatePSFooter
+Private Sub CreatePSFooter
  Const ForAppending = 8
- Dim f, i, j, k, tstr
+ Dim f, tStr
  Set f = fso.OpenTextFile(PSFileName, ForAppending, True)
  f.WriteLine "[ /PageMode /UseNone /Page 1 /View [/FitB] /DOCVIEW pdfmark"
  f.WriteLine "showpage"

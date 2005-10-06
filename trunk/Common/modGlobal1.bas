@@ -61,12 +61,12 @@ Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tstr As String
-50020  tstr = "Check program instances" & vbCrLf & vbCrLf
-50030  tstr = tstr & "PDFCreator:" & vbTab & GetCheckProgramInstancesStr(PDFCreator_GUID) & vbCrLf
-50040  tstr = tstr & "PDFSpooler:" & vbTab & GetCheckProgramInstancesStr(PDFSpooler_GUID) & vbCrLf
-50050  tstr = tstr & "TransTool:" & vbTab & GetCheckProgramInstancesStr(TransTool_GUID) & vbCrLf
-50060  MsgBox tstr
+50010  Dim tStr As String
+50020  tStr = "Check program instances" & vbCrLf & vbCrLf
+50030  tStr = tStr & "PDFCreator:" & vbTab & GetCheckProgramInstancesStr(PDFCreator_GUID) & vbCrLf
+50040  tStr = tStr & "PDFSpooler:" & vbTab & GetCheckProgramInstancesStr(PDFSpooler_GUID) & vbCrLf
+50050  tStr = tStr & "TransTool:" & vbTab & GetCheckProgramInstancesStr(TransTool_GUID) & vbCrLf
+50060  MsgBox tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -79,29 +79,28 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-
 Public Function GetCheckProgramInstancesStr(MutexName As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tstr As String
-50020  tstr = ""
+50010  Dim tStr As String
+50020  tStr = ""
 50030  Set mutexLocal = New clsMutex
 50040  If mutexLocal.CheckMutex(MutexName) = True Then
-50050   tstr = "Local"
+50050   tStr = "Local"
 50060  End If
 50070  Set mutexGlobal = New clsMutex
 50080  If mutexGlobal.CheckMutex("Global\" & MutexName) = True Then
-50090   If LenB(tstr) > 0 Then
-50100     tstr = tstr & ", Global"
+50090   If LenB(tStr) > 0 Then
+50100     tStr = tStr & ", Global"
 50110    Else
-50120     tstr = "Global"
+50120     tStr = "Global"
 50130   End If
 50140  End If
-50150  If LenB(tstr) = 0 Then
-50160   tstr = "No instances found."
+50150  If LenB(tStr) = 0 Then
+50160   tStr = "No instances found."
 50170  End If
-50180  GetCheckProgramInstancesStr = tstr
+50180  GetCheckProgramInstancesStr = tStr
 50190  Set mutexLocal = Nothing
 50200  Set mutexGlobal = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

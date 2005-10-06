@@ -426,10 +426,10 @@ Private Sub cmbCharset_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tstr As String
+50010  Dim allow As String, tStr As String
 50020  allow = "0123456789" & Chr$(8) & Chr$(13)
-50030  tstr = Chr$(KeyAscii)
-50040  If InStr(1, allow, tstr) = 0 Then
+50030  tStr = Chr$(KeyAscii)
+50040  If InStr(1, allow, tStr) = 0 Then
 50050   KeyAscii = 0
 50060  End If
 50070  RefreshListview
@@ -868,10 +868,10 @@ Private Sub cmbProgramFontSize_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tstr As String
+50010  Dim allow As String, tStr As String
 50020  allow = "0123456789" & Chr$(8) & Chr$(13)
-50030  tstr = Chr$(KeyAscii)
-50040  If InStr(1, allow, tstr) = 0 Then
+50030  tStr = Chr$(KeyAscii)
+50040  If InStr(1, allow, tStr) = 0 Then
 50050   KeyAscii = 0
 50060  End If
 50070  RefreshListview
@@ -1034,7 +1034,7 @@ Private Sub InitForm()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim cSystem As clsSystem, SMF As Collection, fi As Long, i As Long, tstr As String, _
+50010  Dim cSystem As clsSystem, SMF As Collection, fi As Long, i As Long, tStr As String, _
   tlbB As MSComctlLib.Button, ctl As Control
 50030  Set cSystem = New clsSystem: Set SMF = cSystem.GetSystemFont(Me, Menu)
 50040  With tlb
@@ -1110,9 +1110,9 @@ On Error GoTo ErrPtnr_OnError
 50740  With cmbFonts
 50750   .Clear
 50760   For i = 1 To Screen.FontCount
-50770    tstr = Trim$(Screen.Fonts(i))
-50780    If Len(tstr) > 0 Then
-50790     cmbFonts.AddItem tstr
+50770    tStr = Trim$(Screen.Fonts(i))
+50780    If Len(tStr) > 0 Then
+50790     cmbFonts.AddItem tStr
 50800    End If
 50810   Next i
 50820   If .ListCount > 0 Then
