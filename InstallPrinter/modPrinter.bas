@@ -737,7 +737,7 @@ Public Function GetFreePDFCreatorPort() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ports As Collection, tstr As String, foundFreePort As Boolean, _
+50010  Dim ports As Collection, tStr As String, foundFreePort As Boolean, _
   i As Long, j As Long
 50030  Set ports = GetPorts
 50040  If ports.Count = 0 Then
@@ -745,10 +745,10 @@ On Error GoTo ErrPtnr_OnError
 50060   Exit Function
 50070  End If
 50080  For i = 1 To 999
-50090   tstr = "PDFCreator" & Format$(i, "000") & ":"
+50090   tStr = "PDFCreator" & Format$(i, "000") & ":"
 50100   foundFreePort = False
 50110   For j = 1 To ports.Count
-50120    If UCase$(tstr) <> UCase$(ports(j)) Then
+50120    If UCase$(tStr) <> UCase$(ports(j)) Then
 50130     foundFreePort = True
 50140     Exit For
 50150    End If
@@ -758,7 +758,7 @@ On Error GoTo ErrPtnr_OnError
 50190   End If
 50200  Next i
 50210  If foundFreePort = True Then
-50220    GetFreePDFCreatorPort = tstr
+50220    GetFreePDFCreatorPort = tStr
 50230   Else
 50240    MsgBox "Cannot find a free printer port!", vbExclamation
 50250  End If
