@@ -37,6 +37,7 @@ Begin VB.Form frmInfo
       Appearance      =   0  '2D
       Cancel          =   -1  'True
       Caption         =   "Cancel"
+      Default         =   -1  'True
       DownPicture     =   "frmInfo.frx":76C9
       Height          =   660
       Left            =   630

@@ -14,6 +14,7 @@ Begin VB.Form frmPassword
    ScaleWidth      =   4530
    ShowInTaskbar   =   0   'False
    Begin VB.CommandButton CancelButton 
+      Cancel          =   -1  'True
       Caption         =   "&Cancel"
       Height          =   375
       Left            =   120
@@ -141,6 +142,7 @@ Begin VB.Form frmPassword
    End
    Begin VB.CommandButton OKButton 
       Caption         =   "&OK"
+      Default         =   -1  'True
       Height          =   375
       Left            =   3240
       TabIndex        =   11

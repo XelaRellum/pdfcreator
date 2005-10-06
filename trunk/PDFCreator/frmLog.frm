@@ -58,6 +58,7 @@ Begin VB.Form frmLog
    Begin VB.CommandButton cmdClose 
       Cancel          =   -1  'True
       Caption         =   "&Close"
+      Default         =   -1  'True
       Height          =   495
       Left            =   3255
       TabIndex        =   4
