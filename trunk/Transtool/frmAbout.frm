@@ -81,6 +81,7 @@ Begin VB.Form frmAbout
       End
    End
    Begin VB.CommandButton cmd 
+      Cancel          =   -1  'True
       Caption         =   "&Close"
       Height          =   450
       Left            =   4920
@@ -418,7 +419,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub lbl_DragDrop(Index As Integer, Source As Control, X As Single, Y As Single)
+Private Sub lbl_DragDrop(Index As Integer, Source As Control, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -445,7 +446,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub lbl_DragOver(Index As Integer, Source As Control, X As Single, Y As Single, State As Integer)
+Private Sub lbl_DragOver(Index As Integer, Source As Control, x As Single, Y As Single, State As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -476,7 +477,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub lbl_MouseMove(Index As Integer, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lbl_MouseMove(Index As Integer, Button As Integer, Shift As Integer, x As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---

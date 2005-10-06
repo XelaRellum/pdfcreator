@@ -1882,3 +1882,79 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Sub ConvertPostscriptFile(InputFilename As String, OutputFilename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Ext As String, Tempfile As String
+50020  IFIsPS = False
+50030  If LenB(InputFilename) = 0 Then
+50040   Exit Sub
+50050  End If
+50060  If FileExists(InputFilename) = False Then
+50070   If LenB(InputFilename) > 0 Then
+50080    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
+    "InputFile -IF" & vbCrLf & ">" & InputFilename & "<", vbExclamation + vbOKOnly
+50100   End If
+50110   Exit Sub
+50120  End If
+50130
+50140  If LenB(OutputFilename) > 0 Then
+50150    If IsPostscriptFile(InputFilename) = True Then
+50160     If GsDllLoaded = 0 Then
+50170      Exit Sub
+50180     End If
+50190     SplitPath OutputFilename, , , , , Ext
+50200     GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+50210     If GsDllLoaded = 0 Then
+50220      MsgBox LanguageStrings.MessagesMsg08
+50230     End If
+50241     Select Case UCase$(Ext)
+           Case "PDF"
+50260       CallGScript InputFilename, OutputFilename, Options, PDFWriter
+50270      Case "PNG"
+50280       CallGScript InputFilename, OutputFilename, Options, PNGWriter
+50290      Case "JPG"
+50300       CallGScript InputFilename, OutputFilename, Options, JPEGWriter
+50310      Case "BMP"
+50320       CallGScript InputFilename, OutputFilename, Options, BMPWriter
+50330      Case "PCX"
+50340       CallGScript InputFilename, OutputFilename, Options, PCXWriter
+50350      Case "TIF"
+50360       CallGScript InputFilename, OutputFilename, Options, TIFFWriter
+50370      Case "PS"
+50380       CallGScript InputFilename, OutputFilename, Options, PSWriter
+50390      Case "EPS"
+50400       CallGScript InputFilename, OutputFilename, Options, EPSWriter
+50410      Case "TXT"
+50420       CallGScript InputFilename, OutputFilename, Options, TXTWriter
+50430     End Select
+50440    End If
+50450 '   If GsDllLoaded <> 0 Then
+50460 '    UnloadDLLComplete GsDllLoaded
+50470 '   End If
+50480    ConvertedOutputFilename = OutputFilename
+50490    ReadyConverting = True
+50500    Exit Sub
+50510   Else
+50520    If FileExists(InputFilename) = True Then
+50530     If IsPostscriptFile(InputFilename) = True Then
+50540       IFIsPS = True
+50550      Else
+50560       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
+50570     End If
+50580    End If
+50590  End If
+50600  DoEvents
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "ConvertPostscriptFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+

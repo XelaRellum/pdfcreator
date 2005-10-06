@@ -10,6 +10,7 @@ Begin VB.Form frmEdit
    ScaleWidth      =   6330
    StartUpPosition =   2  'Bildschirmmitte
    Begin VB.CommandButton cmd 
+      Cancel          =   -1  'True
       Caption         =   "&Cancel"
       Height          =   435
       Index           =   1
