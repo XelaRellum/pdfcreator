@@ -25,22 +25,22 @@ Begin VB.Form frmSearch
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
    Begin VB.CommandButton cmdBrowse 
+      Caption         =   "<"
       Height          =   375
       Index           =   0
       Left            =   1920
       TabIndex        =   5
       Top             =   3390
       Width           =   375
-      Caption         =   "<"
    End
    Begin VB.CommandButton cmd 
+      Caption         =   "&Search"
       Height          =   375
       Index           =   0
       Left            =   3360
       TabIndex        =   3
       Top             =   3390
       Width           =   1215
-      Caption         =   "&Search"
    End
    Begin TransTool.XP_ProgressBar xpPgb 
       Height          =   225
@@ -231,22 +231,23 @@ Begin VB.Form frmSearch
       EndProperty
    End
    Begin VB.CommandButton cmd 
+      Cancel          =   -1  'True
+      Caption         =   "&Close"
       Height          =   375
       Index           =   1
       Left            =   105
       TabIndex        =   6
       Top             =   3390
       Width           =   1215
-      Caption         =   "&Close"
    End
    Begin VB.CommandButton cmdBrowse 
+      Caption         =   ">"
       Height          =   375
       Index           =   1
       Left            =   2400
       TabIndex        =   4
       Top             =   3390
       Width           =   375
-      Caption         =   ">"
    End
 End
 Attribute VB_Name = "frmSearch"
