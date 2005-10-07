@@ -9,7 +9,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Program = RemoveLeadingAndTrailingQuotes(Options.RunProgramAfterSavingProgramname)
 50030  SplitPath Program, drv
 50040  If LenB(drv) = 0 Then
-50050   Program = ResolveRelativePath(Program, App.Path)
+50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
 50060  End If
 50070  If FileExists(Docname) = True And FileExists(Program) = True Then
 50080   tStr = "Run program after saving: Program:" & Program & _
@@ -45,7 +45,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Program = RemoveLeadingAndTrailingQuotes(Options.RunProgramBeforeSavingProgramname)
 50030  SplitPath Program, drv
 50040  If LenB(drv) = 0 Then
-50050   Program = ResolveRelativePath(Program, App.Path)
+50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
 50060  End If
 50070  If FileExists(Docname) = True And FileExists(Program) = True Then
 50080   tStr = "Run program before saving: Program:" & Options.RunProgramBeforeSavingProgramname & _

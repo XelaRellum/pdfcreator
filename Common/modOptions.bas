@@ -548,7 +548,7 @@ On Error GoTo ErrPtnr_OnError
 51500     .DirectoryGhostscriptBinaries = CompletePath(tStr)
 51510    Else
 51520     If UseStandard Then
-51530      tStr = App.Path
+51530      tStr = GetPDFCreatorApplicationPath
 51540      .DirectoryGhostscriptBinaries = CompletePath(tStr)
 51550     End If
 51560   End If
@@ -557,7 +557,7 @@ On Error GoTo ErrPtnr_OnError
 51590     .DirectoryGhostscriptFonts = CompletePath(tStr)
 51600    Else
 51610     If UseStandard Then
-51620      tStr = App.Path & "\fonts"
+51620      tStr = GetPDFCreatorApplicationPath & "fonts"
 51630      .DirectoryGhostscriptFonts = CompletePath(tStr)
 51640     End If
 51650   End If
@@ -566,7 +566,7 @@ On Error GoTo ErrPtnr_OnError
 51680     .DirectoryGhostscriptLibraries = CompletePath(tStr)
 51690    Else
 51700     If UseStandard Then
-51710      tStr = App.Path & "\lib"
+51710      tStr = GetPDFCreatorApplicationPath & "lib"
 51720      .DirectoryGhostscriptLibraries = CompletePath(tStr)
 51730     End If
 51740   End If
@@ -2627,7 +2627,7 @@ On Error GoTo ErrPtnr_OnError
 50090     .DirectoryGhostscriptBinaries = CompletePath(tStr)
 50100    Else
 50110     If UseStandard Then
-50120      tStr = App.Path
+50120      tStr = GetPDFCreatorApplicationPath
 50130      .DirectoryGhostscriptBinaries = CompletePath(tStr)
 50140     End If
 50150   End If
@@ -2636,7 +2636,7 @@ On Error GoTo ErrPtnr_OnError
 50180     .DirectoryGhostscriptFonts = CompletePath(tStr)
 50190    Else
 50200     If UseStandard Then
-50210      tStr = App.Path & "\fonts"
+50210      tStr = GetPDFCreatorApplicationPath & "fonts"
 50220      .DirectoryGhostscriptFonts = CompletePath(tStr)
 50230     End If
 50240   End If
@@ -2645,7 +2645,7 @@ On Error GoTo ErrPtnr_OnError
 50270     .DirectoryGhostscriptLibraries = CompletePath(tStr)
 50280    Else
 50290     If UseStandard Then
-50300      tStr = App.Path & "\lib"
+50300      tStr = GetPDFCreatorApplicationPath & "lib"
 50310      .DirectoryGhostscriptLibraries = CompletePath(tStr)
 50320     End If
 50330   End If

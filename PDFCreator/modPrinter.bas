@@ -169,7 +169,7 @@ On Error GoTo ErrPtnr_OnError
 50090      reg.CreateKey Monitorname & "\Ports\" & Portname
 50100      reg.KeyRoot = "System\CurrentControlSet\Control\Print\Monitors\" & Monitorname & "\Ports\" & Portname
 50110      reg.SetRegistryValue "Arguments", "-PPDFCREATORPRINTER", REG_SZ
-50120      reg.SetRegistryValue "Command", App.Path & "\pdfcreator.exe", REG_SZ
+50120      reg.SetRegistryValue "Command", GetPDFCreatorApplicationPath & "\pdfcreator.exe", REG_SZ
 50130      i = 300
 50140      reg.SetRegistryValue "Delay", i, REG_DWORD
 50150      reg.SetRegistryValue "Description", "Redirected Port", REG_SZ

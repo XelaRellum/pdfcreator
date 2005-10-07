@@ -34,7 +34,7 @@ On Error GoTo ErrPtnr_OnError
 50240   .sFileTitle = vbNullChar & Space$(512) & vbNullChar & vbNullChar
 50250   .nMaxTitle = Len(ofn.sFileTitle)
 50260   If InitDir = vbNullString Then
-50270     .sInitialDir = App.Path & vbNullChar & vbNullChar
+50270     .sInitialDir = GetPDFCreatorApplicationPath & vbNullChar & vbNullChar
 50280    Else
 50290     .sInitialDir = InitDir & vbNullChar & vbNullChar
 50300   End If
@@ -110,7 +110,7 @@ On Error GoTo ErrPtnr_OnError
 50240   .sFileTitle = vbNullChar & Space$(512) & vbNullChar & vbNullChar
 50250   .nMaxTitle = Len(ofn.sFileTitle)
 50260   If InitDir = vbNullString Then
-50270     .sInitialDir = App.Path & vbNullChar & vbNullChar
+50270     .sInitialDir = GetPDFCreatorApplicationPath & vbNullChar & vbNullChar
 50280    Else
 50290     .sInitialDir = InitDir & vbNullChar & vbNullChar
 50300   End If

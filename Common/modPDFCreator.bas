@@ -226,11 +226,11 @@ On Error GoTo ErrPtnr_OnError
 50140   .KeyRoot = "Postscript\Shell\Open"
 50150   .CreateKey "Command"
 50160   .KeyRoot = "Postscript\Shell\Open\Command"
-50170   .SetRegistryValue "", """" & App.Path & "\" & App.EXEName & ".exe"" -IF""%1""", REG_SZ
+50170   .SetRegistryValue "", """" & GetPDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""", REG_SZ
 50180   .KeyRoot = "Postscript"
 50190   .CreateKey "DefaultIcon"
 50200   .KeyRoot = "PostScript\DefaultIcon"
-50210   .SetRegistryValue "", App.Path & "\" & App.EXEName & ".exe,0", REG_SZ
+50210   .SetRegistryValue "", GetPDFCreatorApplicationPath & App.EXEName & ".exe,0", REG_SZ
 50220  End With
 50230  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -259,9 +259,9 @@ On Error GoTo ErrPtnr_OnError
 50080    reg.KeyRoot = "Postscript"
 50090    If reg.KeyExists = True Then
 50100     reg.KeyRoot = "Postscript\DefaultIcon"
-50110     If UCase$(reg.GetRegistryValue("")) = UCase$(App.Path & "\" & App.EXEName & ".exe,0") Then
+50110     If UCase$(reg.GetRegistryValue("")) = UCase$(GetPDFCreatorApplicationPath & App.EXEName & ".exe,0") Then
 50120      reg.KeyRoot = "Postscript\Shell\Open\Command"
-50130      If UCase$(reg.GetRegistryValue("")) = UCase$("""" & App.Path & "\" & App.EXEName & ".exe"" -IF""%1""") Then
+50130      If UCase$(reg.GetRegistryValue("")) = UCase$("""" & GetPDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""") Then
 50140       IsPsAssociate = True
 50150      End If
 50160     End If

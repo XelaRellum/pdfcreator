@@ -356,7 +356,7 @@ On Error GoTo ErrPtnr_OnError
 50090  TestPSPage = Replace(TestPSPage, "[INFODATE]", Now, , 1, vbTextCompare)
 50100  TestPSPage = Replace(TestPSPage, "[INFOAUTHORS]", "Philip Chinery, Frank Heind\224rfer", , 1, vbTextCompare)
 50110  TestPSPage = Replace(TestPSPage, "[INFOHOMEPAGE]", Homepage, , 1, vbTextCompare)
-50120  tStr = CompletePath(App.Path) & "PDFCreator.exe"
+50120  tStr = GetPDFCreatorApplicationPath & "PDFCreator.exe"
 50130  If FileExists(tStr) = True Then
 50140    Set c = GetFileVersion(tStr)
 50150    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
@@ -374,7 +374,7 @@ On Error GoTo ErrPtnr_OnError
 50270  End If
 50280  TestPSPage = Replace(TestPSPage, "[INFOPDFSPOOLER]", tStr, , 1, vbTextCompare)
 50290
-50300  tStr = CompletePath(App.Path) & "Languages\Transtool.exe"
+50300  tStr = GetPDFCreatorApplicationPath & "Languages\Transtool.exe"
 50310  If FileExists(tStr) = True Then
 50320    Set c = GetFileVersion(tStr)
 50330    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")

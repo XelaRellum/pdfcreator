@@ -1431,7 +1431,7 @@ On Error GoTo ErrPtnr_OnError
 50040   Else
 50050    tPrintername = Printername
 50060  End If
-50070  ShellAndWait 0, "open", "RUNDLL32.EXE", "PRINTUI.DLL,PrintUIEntry /n """ & tPrintername & """ /k", CompletePath(App.Path), wNormal, WCNone
+50070  ShellAndWait 0, "open", "RUNDLL32.EXE", "PRINTUI.DLL,PrintUIEntry /n """ & tPrintername & """ /k", GetPDFCreatorApplicationPath, wNormal, WCNone
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2308,6 +2308,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
+
 
 
 

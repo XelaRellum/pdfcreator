@@ -341,7 +341,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, tStr As String
 50020  fn = FreeFile
-50030  tStr = CompletePath(App.Path) & "Unload.tmp"
+50030  tStr = GetPDFCreatorApplicationPath & "Unload.tmp"
 50040  If FileExists(tStr) = False Then
 50050   Open tStr For Output As #fn
 50060   Close #fn
@@ -533,7 +533,7 @@ On Error GoTo ErrPtnr_OnError
 50810  End If
 50820
 50830  SecurityIsPossible = False
-50840  If GSRevision.intRevision >= 814 Or FileExists(CompletePath(App.Path) & "pdfenc.exe") Then
+50840  If GSRevision.intRevision >= 814 Or FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") Then
 50850   SecurityIsPossible = True
 50860  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

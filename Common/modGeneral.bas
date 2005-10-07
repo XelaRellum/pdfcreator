@@ -808,7 +808,7 @@ On Error GoTo ErrPtnr_OnError
 50180    End If
 50190  End If
 50200  If Trim$(TempDir) = vbNullString Then
-50210   TempDir = CompletePath(App.Path) & "Temp\"
+50210   TempDir = GetPDFCreatorApplicationPath & "Temp\"
 50220  End If
 50230
 50240  GetTempPath = CompletePath(TempDir)

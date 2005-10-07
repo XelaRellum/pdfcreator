@@ -678,9 +678,9 @@ On Error GoTo ErrPtnr_OnError
 50290  If App.StartMode = vbSModeStandalone Then
 50300   InstanceCounter = InstanceCounter - 1
 50310  End If
-50320  PDFSpoolerPath = CompletePath(App.Path) & "PDFSpooler.exe"
+50320  PDFSpoolerPath = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
 50330  If Restart = True And FileExists(PDFSpoolerPath) = True Then
-50340   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", App.Path, 1
+50340   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", GetPDFCreatorApplicationPath, 1
 50350  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -796,17 +796,17 @@ On Error GoTo ErrPtnr_OnError
 50110
 50121  Select Case UCase$(Filename)
         Case "GERMAN"
-50140    HelpFile = App.Path & "\PDFCreator_german.chm"
+50140    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_german.chm"
 50150    If Not FileExists(HelpFile) Then
-50160     HelpFile = App.Path & "\PDFCreator_english.chm"
+50160     HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
 50170    End If
 50180   Case Else
-50190    HelpFile = App.Path & "\PDFCreator_english.chm"
+50190    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
 50200  End Select
 50210
 50220  If Not FileExists(HelpFile) Then
 50230   MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & HelpFile, vbExclamation
-50240   HelpFile = App.Path & "\PDFCreator_english.chm"
+50240   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
 50250  End If
 50260
 50270  With LanguageStrings
@@ -1221,7 +1221,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Timer1.Enabled = False
 50020  DoEvents
-50030  If FileExists(CompletePath(App.Path) & "Unload.tmp") = True Or Restart = True Then
+50030  If FileExists(GetPDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
 50040   Unload Me
 50050   Exit Sub
 50060  End If
