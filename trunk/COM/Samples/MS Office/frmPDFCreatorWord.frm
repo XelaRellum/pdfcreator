@@ -1,10 +1,10 @@
 VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmPDFCreator
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmPDFCreator 
    Caption         =   "UserForm1"
-   ClientHeight    =   3795
+   ClientHeight    =   4620
    ClientLeft      =   45
    ClientTop       =   435
-   ClientWidth     =   7485
+   ClientWidth     =   7530
    OleObjectBlob   =   "frmPDFCreatorWord.frx":0000
    ShowModal       =   0   'False
    StartUpPosition =   1  'Fenstermitte
@@ -26,24 +26,59 @@ Private ReadyState As Boolean, DefaultPrinter As String
 
 Private Sub CommandButton1_Click()
  Dim outName As String
- AddStatus "Start ..."
  If InStr(1, ActiveDocument.Name, ".", vbTextCompare) > 1 Then
    outName = Mid(ActiveDocument.Name, 1, InStr(1, ActiveDocument.Name, ".", vbTextCompare) - 1)
   Else
    outName = ActiveDocument.Name
  End If
+ CommandButton1.Enabled = False
+ If OptionButton1.Value = True Then
+  SaveWholeDocumentAsPDF outName
+ End If
+ If OptionButton2.Value = True Then
+  With PDFCreator1
+   .cOption("UseAutosave") = 1
+   .cOption("UseAutosaveDirectory") = 1
+   .cOption("AutosaveDirectory") = ActiveDocument.Path
+   .cOption("AutosaveFilename") = outName & "-1_3"
+   .cOption("AutosaveFormat") = 0                            ' 0 = PDF
+   .cClearCache
+  End With
+  PrintPage 1
+  Sleep 1000
+  PrintPage 3
+  Sleep 1000
+  PDFCreator1.cCombineAll
+  Sleep 1000
+  PDFCreator1.cPrinterStop = False
+ End If
+End Sub
+
+Private Sub SaveWholeDocumentAsPDF(Filename As String)
+ AddStatus "Start ..."
  With PDFCreator1
   .cOption("UseAutosave") = 1
   .cOption("UseAutosaveDirectory") = 1
   .cOption("AutosaveDirectory") = ActiveDocument.Path
-  .cOption("AutosaveFilename") = outName
+  .cOption("AutosaveFilename") = Filename
   .cOption("AutosaveFormat") = 0                            ' 0 = PDF
   .cClearCache
   DoEvents
-  ActiveDocument.PrintOut False
+  ActiveDocument.PrintOut Background:=False
   DoEvents
   .cPrinterStop = False
  End With
+End Sub
+
+Private Sub PrintPage(PageNumber As Integer)
+ Dim cPages As Long
+ cPages = Selection.Information(wdNumberOfPagesInDocument)
+ If PageNumber > cPages Then
+  MsgBox "This document has only " & cPages & " pages!", vbExclamation
+ End If
+ DoEvents
+ ActiveDocument.PrintOut Background:=False, Range:=wdPrintFromTo, From:=CStr(PageNumber), To:=CStr(PageNumber)
+ DoEvents
 End Sub
 
 Private Sub PDFCreator1_eError()
@@ -52,6 +87,8 @@ End Sub
 
 Private Sub PDFCreator1_eReady()
  AddStatus "File'" & PDFCreator1.cOutputFilename & "' was saved."
+ PDFCreator1.cPrinterStop = True
+ CommandButton1.Enabled = True
 End Sub
 
 Private Sub UserForm_Initialize()
