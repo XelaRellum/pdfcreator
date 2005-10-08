@@ -138,6 +138,7 @@ On Error GoTo ErrPtnr_OnError
 50100  With txt(1)
 50110   Set .Font = frmMain.lsv.Font
 50120  End With
+50130  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

@@ -117,6 +117,7 @@ On Error GoTo ErrPtnr_OnError
 50050   chkAskAgain.Caption = .MessagesMsg36
 50060  End With
 50070  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
+50080  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

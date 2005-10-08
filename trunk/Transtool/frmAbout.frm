@@ -251,7 +251,7 @@ On Error GoTo ErrPtnr_OnError
 50320   .Visible = False
 50330   Set .Picture = picAbout.Picture
 50340  End With
-50350
+50350  ShowAcceleratorsInForm Me, True
 50360  Timer1.Enabled = True
 50370  Timer2.Interval = 50
 50380  Timer2.Enabled = True
@@ -315,8 +315,8 @@ On Error GoTo ErrPtnr_OnError
 50420  lbl(4).Left = fraAbout.Width - lbl(4).Width - lbl(0).Left
 50430  cmd.Top = fraAbout.Top + fraAbout.Height + 100
 50440  Me.Height = cmd.Top + cmd.Height + (Me.Height - Me.ScaleHeight) + 100
-50450  imgPaypal.Top = lbl(0).Top
-50460  imgPaypal.Left = fraAbout.Width - imgPaypal.Width - lbl(0).Left
+50450  ImgPaypal.Top = lbl(0).Top
+50460  ImgPaypal.Left = fraAbout.Width - ImgPaypal.Width - lbl(0).Left
 50470  Timer2.Interval = 40
 50480  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

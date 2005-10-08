@@ -224,6 +224,7 @@ On Error GoTo ErrPtnr_OnError
 50190  End With
 50200  bSuccess = False
 50210  bFinished = False
+50220  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

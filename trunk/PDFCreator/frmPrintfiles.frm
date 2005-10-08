@@ -152,7 +152,8 @@ On Error GoTo ErrPtnr_OnError
 50150   .Font.Bold = True
 50160   .ShowText = True
 50170  End With
-50180  Timer1.Enabled = True
+50180  ShowAcceleratorsInForm Me, True
+50190  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

@@ -495,3 +495,10 @@ Public Const AF_INET                         As Long = 2
 
 Public Const ssfAPPDATA                      As Long = &H1A
 Public Const CSIDL_FLAG_CREATE               As Long = &H8000&
+
+Public Const WM_CHANGEUISTATE                As Long = &H127&
+
+Public Const UIS_SET                         As Long = 1&
+Public Const UIS_CLEAR                       As Long = 2&
+
+Public Const UISF_HIDEACCEL                  As Integer = &H2

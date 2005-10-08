@@ -3751,178 +3751,179 @@ On Error GoTo ErrPtnr_OnError
 54760   .AddItem "PDFEnc"
 54770   .ItemData(.NewIndex) = 1
 54780
-54790 '  ShowOptions Me, Options
+54790   SecurityIsPossible = True
 54800
-54810   SecurityIsPossible = True
-54820
-54830   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
-54840    .RemoveItem 1
-54850    .ListIndex = 0
-54860    Options.PDFEncryptor = .ItemData(.ListIndex)
-54870   End If
-54880   If GhostScriptSecurity = False Then
-54890    .RemoveItem 0
-54900   End If
-54910   If .ListCount = 0 Then
-54920     chkUseSecurity.Value = 0
-54930     chkUseSecurity.Enabled = False
-54940     SecurityIsPossible = False
-54950    Else
-54960     For i = 0 To .ListCount - 1
-54970      If .ItemData(i) = Options.PDFEncryptor Then
-54980       .ListIndex = i
-54990       Exit For
-55000      End If
-55010     Next i
-55020     If .ListIndex = -1 Then
-55030      .ListIndex = 0
-55040      Options.PDFEncryptor = .ItemData(.ListIndex)
-55050     End If
-55060   End If
-55070  End With
-55080
-55090  If Options.PDFHighEncryption <> 0 Then
-55100    optEncHigh.Value = True
-55110   Else
-55120    optEncLow.Value = True
-55130  End If
-55140
-55150  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-55160  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-55170  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-55180
-55190  If chkUseStandardAuthor.Value = 1 Then
-55200    txtStandardAuthor.Enabled = True
-55210    txtStandardAuthor.BackColor = &H80000005
-55220   Else
-55230    txtStandardAuthor.Enabled = False
-55240    txtStandardAuthor.BackColor = &H8000000F
-55250  End If
-55260  With Options
-55270   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-55280  End With
-55290  ieb.Refresh
-55300  If chkUseAutosave.Value = 1 Then
-55310    ViewAutosave True
-55320   Else
-55330    ViewAutosave False
-55340  End If
-55350
-55360  With txtGSbin
-55370   .ToolTipText = .Text
-55380  End With
-55390  With txtGSlib
-55400   .ToolTipText = .Text
-55410  End With
-55420  With txtGSfonts
-55430   .ToolTipText = .Text
-55440  End With
-55450  With txtTemppath
-55460   .ToolTipText = .Text
-55470  End With
-55480
-55490  With sldProcessPriority
-55500   .TextPosition = sldBelowRight
-55510   .TickFrequency = 1
-55520   .TickStyle = sldTopLeft
-55531   Select Case .Value
+54810   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
+54820    .RemoveItem 1
+54830    .ListIndex = 0
+54840    Options.PDFEncryptor = .ItemData(.ListIndex)
+54850   End If
+54860   If GhostScriptSecurity = False Then
+54870    .RemoveItem 0
+54880   End If
+54890   If .ListCount = 0 Then
+54900     chkUseSecurity.Value = 0
+54910     chkUseSecurity.Enabled = False
+54920     SecurityIsPossible = False
+54930    Else
+54940     For i = 0 To .ListCount - 1
+54950      If .ItemData(i) = Options.PDFEncryptor Then
+54960       .ListIndex = i
+54970       Exit For
+54980      End If
+54990     Next i
+55000     If .ListIndex = -1 Then
+55010      .ListIndex = 0
+55020      Options.PDFEncryptor = .ItemData(.ListIndex)
+55030     End If
+55040   End If
+55050  End With
+55060
+55070  If Options.PDFHighEncryption <> 0 Then
+55080    optEncHigh.Value = True
+55090   Else
+55100    optEncLow.Value = True
+55110  End If
+55120
+55130  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+55140  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+55150  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+55160
+55170  If chkUseStandardAuthor.Value = 1 Then
+55180    txtStandardAuthor.Enabled = True
+55190    txtStandardAuthor.BackColor = &H80000005
+55200   Else
+55210    txtStandardAuthor.Enabled = False
+55220    txtStandardAuthor.BackColor = &H8000000F
+55230  End If
+55240  With Options
+55250   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+55260  End With
+55270  ieb.Refresh
+55280  If chkUseAutosave.Value = 1 Then
+55290    ViewAutosave True
+55300   Else
+55310    ViewAutosave False
+55320  End If
+55330
+55340  With txtGSbin
+55350   .ToolTipText = .Text
+55360  End With
+55370  With txtGSlib
+55380   .ToolTipText = .Text
+55390  End With
+55400  With txtGSfonts
+55410   .ToolTipText = .Text
+55420  End With
+55430  With txtTemppath
+55440   .ToolTipText = .Text
+55450  End With
+55460
+55470  With sldProcessPriority
+55480   .TextPosition = sldBelowRight
+55490   .TickFrequency = 1
+55500   .TickStyle = sldTopLeft
+55511   Select Case .Value
          Case 0: 'Idle
-55550     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
-55560    Case 1: 'Normal
-55570     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
-55580    Case 2: 'High
-55590     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
-55600    Case 3: 'Realtime
-55610     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
-55620   End Select
-55630  End With
-55640
-55650  If IsWin9xMe = False Then
-55660    lblProcessPriority.Enabled = True
-55670    sldProcessPriority.Enabled = True
-55680   Else
-55690    lblProcessPriority.Enabled = False
-55700    sldProcessPriority.Enabled = False
-55710  End If
-55720  UpdateSecurityFields
-55730
-55740  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
+55530     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
+55540    Case 1: 'Normal
+55550     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
+55560    Case 2: 'High
+55570     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
+55580    Case 3: 'Realtime
+55590     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
+55600   End Select
+55610  End With
+55620
+55630  If IsWin9xMe = False Then
+55640    lblProcessPriority.Enabled = True
+55650    sldProcessPriority.Enabled = True
+55660   Else
+55670    lblProcessPriority.Enabled = False
+55680    sldProcessPriority.Enabled = False
+55690  End If
+55700  UpdateSecurityFields
+55710
+55720  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
  cmbGhostscript.Clear: Set reg = New clsRegistry
-55760  reg.hkey = HKEY_LOCAL_MACHINE
+55740  reg.hkey = HKEY_LOCAL_MACHINE
+55750
+55760  Set gsvers = GetAllGhostscriptversions
 55770
-55780  Set gsvers = GetAllGhostscriptversions
-55790
-55800  If gsvers.Count = 0 Then
-55810    cmbGhostscript.Enabled = False
-55820   Else
-55830    For i = 1 To gsvers.Count
-55840     cmbGhostscript.AddItem gsvers.Item(i)
-55850    Next i
-55860    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
-55870    For i = 0 To cmbGhostscript.ListCount - 1
-55880     tStr = ""
-55890     If InStr(cmbGhostscript.List(i), ":") Then
-55900       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-55910       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
-55920        cmbGhostscript.ListIndex = i
-55930        Exit For
-55940       End If
-55950      Else
-55960       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
-55970        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
-55980        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-55990         tsf = Split(cmbGhostscript.List(i), " ")
-56000         reg.Subkey = tsf(UBound(tsf))
-56010         tStr = reg.GetRegistryValue("GS_DLL")
-56020         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56030          cmbGhostscript.ListIndex = i
-56040          Exit For
-56050         End If
-56060        End If
-56070       End If
-56080       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
-56090        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
-56100        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-56110         tsf = Split(cmbGhostscript.List(i), " ")
-56120         reg.Subkey = tsf(UBound(tsf))
-56130         tStr = reg.GetRegistryValue("GS_DLL")
-56140         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56150          cmbGhostscript.ListIndex = i
-56160          Exit For
-56170         End If
-56180        End If
-56190       End If
-56200       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
-56210        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
-56220        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-56230         tsf = Split(cmbGhostscript.List(i), " ")
-56240         reg.Subkey = tsf(UBound(tsf))
-56250         tStr = reg.GetRegistryValue("GS_DLL")
-56260         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56270          cmbGhostscript.ListIndex = i
-56280          Exit For
-56290         End If
-56300        End If
-56310       End If
-56320     End If
-56330    Next i
-56340  End If
-56350  Set reg = Nothing
-56360  With cmbGhostscript
-56370   If .ListCount = 0 Then
-56380    .Enabled = False
-56390    .BackColor = &H8000000F
-56400   End If
-56410  End With
+55780  If gsvers.Count = 0 Then
+55790    cmbGhostscript.Enabled = False
+55800   Else
+55810    For i = 1 To gsvers.Count
+55820     cmbGhostscript.AddItem gsvers.Item(i)
+55830    Next i
+55840    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
+55850    For i = 0 To cmbGhostscript.ListCount - 1
+55860     tStr = ""
+55870     If InStr(cmbGhostscript.List(i), ":") Then
+55880       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+55890       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
+55900        cmbGhostscript.ListIndex = i
+55910        Exit For
+55920       End If
+55930      Else
+55940       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
+55950        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
+55960        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+55970         tsf = Split(cmbGhostscript.List(i), " ")
+55980         reg.Subkey = tsf(UBound(tsf))
+55990         tStr = reg.GetRegistryValue("GS_DLL")
+56000         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56010          cmbGhostscript.ListIndex = i
+56020          Exit For
+56030         End If
+56040        End If
+56050       End If
+56060       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
+56070        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
+56080        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+56090         tsf = Split(cmbGhostscript.List(i), " ")
+56100         reg.Subkey = tsf(UBound(tsf))
+56110         tStr = reg.GetRegistryValue("GS_DLL")
+56120         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56130          cmbGhostscript.ListIndex = i
+56140          Exit For
+56150         End If
+56160        End If
+56170       End If
+56180       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
+56190        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
+56200        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+56210         tsf = Split(cmbGhostscript.List(i), " ")
+56220         reg.Subkey = tsf(UBound(tsf))
+56230         tStr = reg.GetRegistryValue("GS_DLL")
+56240         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56250          cmbGhostscript.ListIndex = i
+56260          Exit For
+56270         End If
+56280        End If
+56290       End If
+56300     End If
+56310    Next i
+56320  End If
+56330  Set reg = Nothing
+56340  With cmbGhostscript
+56350   If .ListCount = 0 Then
+56360    .Enabled = False
+56370    .BackColor = &H8000000F
+56380   End If
+56390  End With
+56400
+56410  tbstrPDFOptions.ZOrder 1
 56420
-56430  tbstrPDFOptions.ZOrder 1
-56440  'cmdStyle.ZOrder 1
-56450  If ShowOnlyOptions = True Then
-56460   FormInTaskbar Me, True, True
-56470   Caption = "PDFCreator - " & Caption
-56480  End If
-56490  Timer1.Enabled = True
-56500  Screen.MousePointer = vbNormal
+56430  If ShowOnlyOptions = True Then
+56440   FormInTaskbar Me, True, True
+56450   Caption = "PDFCreator - " & Caption
+56460  End If
+56470
+56480  ShowAcceleratorsInForm Me, True
+56490
+56500  Timer1.Enabled = True
+56510  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

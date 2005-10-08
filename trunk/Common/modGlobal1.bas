@@ -114,3 +114,31 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function GetPDFCreatorApplicationPath() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, tStr As String
+50020  Set reg = New clsRegistry
+50030  With reg
+50040   .hkey = HKEY_LOCAL_MACHINE
+50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+50060   tStr = .GetRegistryValue("Inno Setup: App Path")
+50070  End With
+50080  If LenB(LTrim$(tStr)) = 0 Then
+50090   tStr = App.Path
+50100  End If
+50110  GetPDFCreatorApplicationPath = CompletePath(tStr)
+50120  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal1", "GetPDFCreatorApplicationPath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
