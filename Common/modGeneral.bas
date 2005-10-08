@@ -2204,3 +2204,28 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Function LOWORD(ByVal dw As Long) As Integer
+ If dw And &H8000& Then
+   LOWORD = &H8000& Or (dw And &H7FFF&)
+  Else
+   LOWORD = dw And &HFFFF&
+ End If
+End Function
+
+Public Function HIWORD(ByVal dw As Long) As Integer
+ If dw And &H80000000 Then
+   HIWORD = (dw \ 65535) - 1
+  Else
+   HIWORD = dw \ 65535
+ End If
+End Function
+
+Public Function MAKELONG(ByVal wLow As Long, ByVal wHigh As Long) As Long
+ MAKELONG = LOWORD(wLow) Or (&H10000 * LOWORD(wHigh))
+End Function
+
+Public Sub ShowAcceleratorsInForm(ByRef f As Form, ByVal NewValue As Boolean)
+ Call SendMessageByNum(f.hwnd, WM_CHANGEUISTATE, _
+  MAKELONG(IIf(NewValue, UIS_CLEAR, UIS_SET), UISF_HIDEACCEL), 0&)
+End Sub

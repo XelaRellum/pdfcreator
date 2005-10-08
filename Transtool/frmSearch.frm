@@ -381,6 +381,7 @@ On Error GoTo ErrPtnr_OnError
 50390
 50400  Set hLItems = New Collection
 50410  SetLastSearchstrings
+50420  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

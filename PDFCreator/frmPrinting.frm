@@ -20,7 +20,7 @@ Begin VB.Form frmPrinting
       Caption         =   "&Cancel"
       Height          =   495
       Left            =   105
-      TabIndex        =   22
+      TabIndex        =   15
       Top             =   5160
       Width           =   1350
    End
@@ -28,7 +28,7 @@ Begin VB.Form frmPrinting
       Caption         =   "&Waiting"
       Height          =   495
       Left            =   1680
-      TabIndex        =   18
+      TabIndex        =   16
       Top             =   5160
       Width           =   1350
    End
@@ -37,35 +37,35 @@ Begin VB.Form frmPrinting
       Height          =   300
       Index           =   0
       Left            =   6465
-      TabIndex        =   16
+      TabIndex        =   4
       Top             =   1073
       Width           =   1260
    End
    Begin VB.TextBox txtKeywords 
       Height          =   285
       Left            =   105
-      TabIndex        =   5
+      TabIndex        =   13
       Top             =   3960
       Width           =   7620
    End
    Begin VB.TextBox txtSubject 
       Height          =   285
       Left            =   105
-      TabIndex        =   4
+      TabIndex        =   11
       Top             =   3240
       Width           =   7620
    End
    Begin VB.TextBox txtModifyDate 
       Height          =   285
       Left            =   105
-      TabIndex        =   2
+      TabIndex        =   6
       Top             =   1800
       Width           =   6240
    End
    Begin MSComCtl2.Animation anmProcess 
       Height          =   960
       Left            =   1935
-      TabIndex        =   13
+      TabIndex        =   20
       Top             =   120
       Visible         =   0   'False
       Width           =   960
@@ -80,14 +80,14 @@ Begin VB.Form frmPrinting
    Begin VB.TextBox txtCreateFor 
       Height          =   285
       Left            =   105
-      TabIndex        =   3
+      TabIndex        =   9
       Top             =   2520
       Width           =   7620
    End
    Begin VB.TextBox txtCreationDate 
       Height          =   285
       Left            =   105
-      TabIndex        =   1
+      TabIndex        =   3
       Top             =   1080
       Width           =   6240
    End
@@ -95,14 +95,14 @@ Begin VB.Form frmPrinting
       Caption         =   "After saving open the document with the standardprogram."
       Height          =   615
       Left            =   105
-      TabIndex        =   6
+      TabIndex        =   14
       Top             =   4440
       Width           =   7620
    End
    Begin VB.TextBox txtTitle 
       Height          =   285
       Left            =   105
-      TabIndex        =   0
+      TabIndex        =   1
       Top             =   360
       Width           =   7620
    End
@@ -111,7 +111,7 @@ Begin VB.Form frmPrinting
       Left            =   0
       ScaleHeight     =   0
       ScaleWidth      =   0
-      TabIndex        =   15
+      TabIndex        =   21
       Top             =   0
       Width           =   0
    End
@@ -120,7 +120,7 @@ Begin VB.Form frmPrinting
       Height          =   300
       Index           =   1
       Left            =   6465
-      TabIndex        =   17
+      TabIndex        =   7
       Top             =   1793
       Width           =   1260
    End
@@ -128,7 +128,7 @@ Begin VB.Form frmPrinting
       Caption         =   "&Options"
       Height          =   495
       Left            =   3255
-      TabIndex        =   19
+      TabIndex        =   17
       Top             =   5160
       Width           =   1350
    End
@@ -136,7 +136,7 @@ Begin VB.Form frmPrinting
       Caption         =   "&eMail"
       Height          =   495
       Left            =   4830
-      TabIndex        =   20
+      TabIndex        =   18
       Top             =   5160
       Width           =   1350
    End
@@ -145,7 +145,7 @@ Begin VB.Form frmPrinting
       Default         =   -1  'True
       Height          =   495
       Left            =   6375
-      TabIndex        =   21
+      TabIndex        =   19
       Top             =   5160
       Width           =   1350
    End
@@ -163,7 +163,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Subject:"
       Height          =   195
       Left            =   105
-      TabIndex        =   11
+      TabIndex        =   10
       Top             =   3000
       Width           =   7620
    End
@@ -172,7 +172,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Modify Date:"
       Height          =   195
       Left            =   105
-      TabIndex        =   9
+      TabIndex        =   5
       Top             =   1560
       Width           =   6240
    End
@@ -181,7 +181,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Author:"
       Height          =   195
       Left            =   105
-      TabIndex        =   10
+      TabIndex        =   8
       Top             =   2280
       Width           =   7620
    End
@@ -190,7 +190,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Creation Date:"
       Height          =   195
       Left            =   105
-      TabIndex        =   8
+      TabIndex        =   2
       Top             =   840
       Width           =   6240
    End
@@ -199,7 +199,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Document Title:"
       Height          =   195
       Left            =   105
-      TabIndex        =   7
+      TabIndex        =   0
       Top             =   120
       Width           =   7620
    End
@@ -208,7 +208,7 @@ Begin VB.Form frmPrinting
       Caption         =   "Creating file..."
       Height          =   255
       Left            =   480
-      TabIndex        =   14
+      TabIndex        =   22
       Top             =   11080
       Visible         =   0   'False
       Width           =   4095
@@ -449,7 +449,7 @@ On Error GoTo ErrPtnr_OnError
 50040
 50050  Caption = App.Title & " " & GetProgramReleaseStr ' & " " & LanguageStrings.CommonTitle
 50060  Printing = True
-50070 ' RemoveX Me
+50070
 50080
 50090  With anmProcess
 50100   .Top = 0
@@ -534,6 +534,7 @@ On Error GoTo ErrPtnr_OnError
 50890  SetTopMost Me, True, True
 50900  SetTopMost Me, False, True
 50910  SetActiveWindow hwnd
+50920  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

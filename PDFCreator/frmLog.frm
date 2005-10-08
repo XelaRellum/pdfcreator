@@ -170,43 +170,42 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  KeyPreview = True
-50020
-50030  With Options
-50040   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50050  End With
-50060  With LanguageStrings
-50070   Caption = .LoggingLogfile
-50080   cmdClose.Caption = .LoggingClose
-50090   cmdClear.Caption = .LoggingClear
-50100   cmdSave.Caption = .PrintingSave
-50110  End With
-50120  chkLogging.Caption = LanguageStrings.DialogPrinterLogging
-50130  If Options.Logging = 1 Then
-50140    chkLogging.Value = 1
-50150   Else
-50160    chkLogging.Value = 0
-50170  End If
-50180  chkLogging.Visible = ShowOnlyLogfile
-50190 ' txtLog.Text = ReadLogfile
-50200  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
-50210  If Len(txtLog.Text) = 0 Then
-50220    cmdSave.Enabled = False
-50230    cmdClear.Enabled = False
-50240   Else
-50250    If InStr(txtLog.Text, vbCrLf) > 0 Then
-50260     txtLog.SelStart = Len(txtLog.Text) - InStrRev(txtLog.Text, vbCrLf)
-50270    End If
-50280  End If
-50290  If ShowOnlyLogfile = True Then
-50300   FormInTaskbar Me, True, True
-50310   Caption = "PDFCreator - " & Caption
-50320  End If
-50330  With Screen
-50340   Height = 0.75 * .Height
-50350   Width = 0.75 * .Width
-50360   Move (.Width - Width) / 2, (.Height - Height) / 2
-50370  End With
-50380  Timer1.Enabled = True
+50020  With Options
+50030   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50040  End With
+50050  With LanguageStrings
+50060   Caption = .LoggingLogfile
+50070   cmdClose.Caption = .LoggingClose
+50080   cmdClear.Caption = .LoggingClear
+50090   cmdSave.Caption = .PrintingSave
+50100  End With
+50110  chkLogging.Caption = LanguageStrings.DialogPrinterLogging
+50120  If Options.Logging = 1 Then
+50130    chkLogging.Value = 1
+50140   Else
+50150    chkLogging.Value = 0
+50160  End If
+50170  chkLogging.Visible = ShowOnlyLogfile
+50180  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
+50190  If Len(txtLog.Text) = 0 Then
+50200    cmdSave.Enabled = False
+50210    cmdClear.Enabled = False
+50220   Else
+50230    If InStr(txtLog.Text, vbCrLf) > 0 Then
+50240     txtLog.SelStart = Len(txtLog.Text) - InStrRev(txtLog.Text, vbCrLf)
+50250    End If
+50260  End If
+50270  If ShowOnlyLogfile = True Then
+50280   FormInTaskbar Me, True, True
+50290   Caption = "PDFCreator - " & Caption
+50300  End If
+50310  With Screen
+50320   Height = 0.75 * .Height
+50330   Width = 0.75 * .Width
+50340   Move (.Width - Width) / 2, (.Height - Height) / 2
+50350  End With
+50360  ShowAcceleratorsInForm Me, True
+50370  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
