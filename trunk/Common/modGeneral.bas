@@ -2205,27 +2205,37 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function LOWORD(ByVal dw As Long) As Integer
- If dw And &H8000& Then
-   LOWORD = &H8000& Or (dw And &H7FFF&)
-  Else
-   LOWORD = dw And &HFFFF&
- End If
+Public Function MakeLong(ByVal LOWORD As Integer, ByVal HIWORD As Integer) As Long
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010   MakeLong = (HIWORD * &H10000) Or (LOWORD And &HFFFF&)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "MakeLong")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function HIWORD(ByVal dw As Long) As Integer
- If dw And &H80000000 Then
-   HIWORD = (dw \ 65535) - 1
-  Else
-   HIWORD = dw \ 65535
- End If
-End Function
-
-Public Function MAKELONG(ByVal wLow As Long, ByVal wHigh As Long) As Long
- MAKELONG = LOWORD(wLow) Or (&H10000 * LOWORD(wHigh))
-End Function
-
-Public Sub ShowAcceleratorsInForm(ByRef f As Form, ByVal NewValue As Boolean)
- Call SendMessageByNum(f.hwnd, WM_CHANGEUISTATE, _
-  MAKELONG(IIf(NewValue, UIS_CLEAR, UIS_SET), UISF_HIDEACCEL), 0&)
+Public Sub ShowAcceleratorsInForm(ByRef f As Form, ByVal newValue As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Call SendMessageByNum(f.hwnd, WM_CHANGEUISTATE, _
+  MakeLong(IIf(newValue, UIS_CLEAR, UIS_SET), UISF_HIDEACCEL), 0&)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "ShowAcceleratorsInForm")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
