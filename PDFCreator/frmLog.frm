@@ -265,7 +265,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim tStrf() As String
 50020  If Len(txtBox.Text) > 0 Then
 50030   If InStr(1, txtBox.Text, vbCrLf) > 0 Then
-50040     txtBox.SelStart = InStrRev(txtBox.Text, vbCrLf) + Len(vbCrLf)
+50040     txtBox.SelStart = InStrRev(txtBox.Text, vbCrLf) + Len(vbCrLf) - 1
 50050    Else
 50060     txtBox.SelStart = 0
 50070   End If
@@ -283,9 +283,19 @@ End Select
 End Sub
 
 Private Sub Timer1_Timer()
- On Error Resume Next
- Timer1.Enabled = False
- SetCursorOnTheBeginningOfTheLastLine txtLog
- txtLog.SetFocus
- cmdClose.SetFocus
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Timer1.Enabled = False
+50020  SetCursorOnTheBeginningOfTheLastLine txtLog
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "Timer1_Timer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
