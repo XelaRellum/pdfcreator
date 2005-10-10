@@ -81,6 +81,7 @@ Begin VB.Form frmSearch
          Strikethrough   =   0   'False
       EndProperty
       Begin VB.CheckBox chkWholeWord 
+         Appearance      =   0  '2D
          Caption         =   "&Whole word"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -91,6 +92,7 @@ Begin VB.Form frmSearch
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   105
          TabIndex        =   2
@@ -98,6 +100,7 @@ Begin VB.Form frmSearch
          Width           =   4215
       End
       Begin VB.CheckBox chkCaseSensitive 
+         Appearance      =   0  '2D
          Caption         =   "Case s&ensitive"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -108,6 +111,7 @@ Begin VB.Form frmSearch
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         ForeColor       =   &H80000008&
          Height          =   255
          Left            =   105
          TabIndex        =   1
@@ -134,6 +138,7 @@ Begin VB.Form frmSearch
          Strikethrough   =   0   'False
       EndProperty
       Begin VB.ComboBox cmbSearchtext 
+         Appearance      =   0  '2D
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -150,6 +155,7 @@ Begin VB.Form frmSearch
          Width           =   4350
       End
       Begin VB.ComboBox cmbColumn 
+         Appearance      =   0  '2D
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -686,7 +692,7 @@ On Error GoTo ErrPtnr_OnError
 50140  For i = 1 To lsv.ListItems.Count
 50150   xpPgb.Value = i
 50160   For j = 1 To lsv.ColumnHeaders.Count - 1
-50170    If Len(lsv.ListItems(i).ListSubItems(j)) > 0 And (Column = 0 Or Column - 1 = j) Then
+50170    If Len(lsv.ListItems(i).ListSubItems(j)) > 0 And (Column = 0 Or Column + 1 = j) Then
 50180     If StringCompare(lsv.ListItems(i).ListSubItems(j), SearchText, compareMethode, WholeWord) = True Then
 50190      lIndex(0) = i
 50200      lIndex(1) = j
