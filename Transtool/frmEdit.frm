@@ -40,6 +40,7 @@ Begin VB.Form frmEdit
          Strikethrough   =   0   'False
       EndProperty
       Begin VB.TextBox txt 
+         Appearance      =   0  '2D
          Height          =   540
          Index           =   1
          Left            =   0
@@ -70,6 +71,7 @@ Begin VB.Form frmEdit
          Strikethrough   =   0   'False
       EndProperty
       Begin VB.TextBox txt 
+         Appearance      =   0  '2D
          BackColor       =   &H8000000F&
          Height          =   540
          Index           =   0
