@@ -79,7 +79,7 @@ Begin VB.Form frmInfo
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":9B92
+         Picture         =   "frmInfo.frx":9771
          Style           =   1  'Grafisch
          TabIndex        =   0
          Top             =   4080
@@ -88,7 +88,7 @@ Begin VB.Form frmInfo
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":9EF7
+         Picture         =   "frmInfo.frx":9AD6
          Top             =   4020
          Width           =   4380
       End
@@ -101,7 +101,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   15480
       Left            =   1470
-      Picture         =   "frmInfo.frx":A865
+      Picture         =   "frmInfo.frx":A444
       ScaleHeight     =   15480
       ScaleWidth      =   4350
       TabIndex        =   4
