@@ -38,7 +38,6 @@ Begin VB.Form frmInfo
       Cancel          =   -1  'True
       Caption         =   "Cancel"
       Default         =   -1  'True
-      DownPicture     =   "frmInfo.frx":76C9
       Height          =   660
       Left            =   630
       Style           =   1  'Grafisch
@@ -54,7 +53,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   1035
       Left            =   345
-      Picture         =   "frmInfo.frx":89CB
+      Picture         =   "frmInfo.frx":76C9
       ScaleHeight     =   1035
       ScaleWidth      =   2085
       TabIndex        =   2
@@ -79,7 +78,7 @@ Begin VB.Form frmInfo
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":9771
+         Picture         =   "frmInfo.frx":846F
          Style           =   1  'Grafisch
          TabIndex        =   0
          Top             =   4080
@@ -88,7 +87,7 @@ Begin VB.Form frmInfo
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":9AD6
+         Picture         =   "frmInfo.frx":87D4
          Top             =   4020
          Width           =   4380
       End
@@ -101,7 +100,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   15480
       Left            =   1470
-      Picture         =   "frmInfo.frx":A444
+      Picture         =   "frmInfo.frx":9142
       ScaleHeight     =   15480
       ScaleWidth      =   4350
       TabIndex        =   4
