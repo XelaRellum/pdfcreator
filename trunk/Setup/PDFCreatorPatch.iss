@@ -48,7 +48,7 @@
 
 #define BetaVersion          "0"
 
-#define PatchLevel           "1"
+#define PatchLevel           "3"
 
 #define AppVersionStr        AppVersion
 #define SetupAppVersionStr   SetupAppVersion
@@ -80,7 +80,7 @@ AlwaysRestart=false
 AppCopyright=© 2002 - 2004 Philip Chinery, Frank Heindörfer
 AppID={#AppIDStr}
 AppName={#AppName}
-AppVerName=Patch-{#AppName} {#AppVersionStr}
+AppVerName=Patch0{#PatchLevel}-{#AppName} {#AppVersionStr}
 AppPublisher=Philip Chinery, Frank Heindörfer
 AppPublisherURL={#Homepage}
 AppSupportURL={#Homepage}
@@ -93,7 +93,7 @@ DefaultGroupName={#AppName}
 DisableDirPage=true
 DisableStartupPrompt=true
 InternalCompressLevel={#SetupLZMACompressionMode}
-OutputBaseFilename=Patch-{#AppName}-{#SetupAppVersionStr}
+OutputBaseFilename=Patch0{#PatchLevel}-{#AppName}-{#SetupAppVersionStr}
 OutputDir=Installation
 RestartIfNeededByRun=true
 ShowTasksTreeLines=false
@@ -127,6 +127,9 @@ Source: C:\IPDK\vblocal.exe; DestDir: {app}; Flags: deleteafterinstall overwrite
 ; help files
 Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Flags: ignoreversion
 Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversion
+
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Flags: ignoreversion
 #ENDIF
 
 [Registry]
