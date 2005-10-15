@@ -42,6 +42,7 @@ Begin VB.Form frmPrinting
       Width           =   1260
    End
    Begin VB.TextBox txtKeywords 
+      Appearance      =   0  '2D
       Height          =   285
       Left            =   105
       TabIndex        =   13
@@ -49,6 +50,7 @@ Begin VB.Form frmPrinting
       Width           =   7620
    End
    Begin VB.TextBox txtSubject 
+      Appearance      =   0  '2D
       Height          =   285
       Left            =   105
       TabIndex        =   11
@@ -56,6 +58,7 @@ Begin VB.Form frmPrinting
       Width           =   7620
    End
    Begin VB.TextBox txtModifyDate 
+      Appearance      =   0  '2D
       Height          =   285
       Left            =   105
       TabIndex        =   6
@@ -78,6 +81,7 @@ Begin VB.Form frmPrinting
       FullHeight      =   64
    End
    Begin VB.TextBox txtCreateFor 
+      Appearance      =   0  '2D
       Height          =   285
       Left            =   105
       TabIndex        =   9
@@ -85,6 +89,7 @@ Begin VB.Form frmPrinting
       Width           =   7620
    End
    Begin VB.TextBox txtCreationDate 
+      Appearance      =   0  '2D
       Height          =   285
       Left            =   105
       TabIndex        =   3
@@ -92,7 +97,9 @@ Begin VB.Form frmPrinting
       Width           =   6240
    End
    Begin VB.CheckBox chkStartStandardProgram 
+      Appearance      =   0  '2D
       Caption         =   "After saving open the document with the standardprogram."
+      ForeColor       =   &H80000008&
       Height          =   615
       Left            =   105
       TabIndex        =   14
@@ -100,6 +107,7 @@ Begin VB.Form frmPrinting
       Width           =   7620
    End
    Begin VB.TextBox txtTitle 
+      Appearance      =   0  '2D
       Height          =   285
       Left            =   105
       TabIndex        =   1
@@ -156,7 +164,7 @@ Begin VB.Form frmPrinting
       Left            =   105
       TabIndex        =   12
       Top             =   3720
-      Width           =   7620
+      Width           =   735
    End
    Begin VB.Label lblSubject 
       AutoSize        =   -1  'True
@@ -165,7 +173,7 @@ Begin VB.Form frmPrinting
       Left            =   105
       TabIndex        =   10
       Top             =   3000
-      Width           =   7620
+      Width           =   585
    End
    Begin VB.Label lblModifyDate 
       AutoSize        =   -1  'True
@@ -174,7 +182,7 @@ Begin VB.Form frmPrinting
       Left            =   105
       TabIndex        =   5
       Top             =   1560
-      Width           =   6240
+      Width           =   900
    End
    Begin VB.Label lblCreateFor 
       AutoSize        =   -1  'True
@@ -183,7 +191,7 @@ Begin VB.Form frmPrinting
       Left            =   105
       TabIndex        =   8
       Top             =   2280
-      Width           =   7620
+      Width           =   510
    End
    Begin VB.Label lblCreationDate 
       AutoSize        =   -1  'True
@@ -192,7 +200,7 @@ Begin VB.Form frmPrinting
       Left            =   105
       TabIndex        =   2
       Top             =   840
-      Width           =   6240
+      Width           =   1020
    End
    Begin VB.Label lblTitle 
       AutoSize        =   -1  'True
@@ -201,7 +209,7 @@ Begin VB.Form frmPrinting
       Left            =   105
       TabIndex        =   0
       Top             =   120
-      Width           =   7620
+      Width           =   1125
    End
    Begin VB.Label lblStatus 
       Alignment       =   2  'Zentriert
@@ -223,7 +231,7 @@ Option Explicit
 
 Private SaveFilename As String, SaveFilterIndex As Long
 
-Private PSHeader As tPSHeader, FirstFormActivate As Boolean
+Private PSHeader As tPSHeader
 
 Private Sub chkStartStandardProgram_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -399,26 +407,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub Form_Activate()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If FirstFormActivate = False Then
-50020   txtTitle.SetFocus
-50030   FirstFormActivate = True
-50040  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "Form_Activate")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -450,91 +438,87 @@ On Error GoTo ErrPtnr_OnError
 50050  Caption = App.Title & " " & GetProgramReleaseStr ' & " " & LanguageStrings.CommonTitle
 50060  Printing = True
 50070
-50080
-50090  With anmProcess
-50100   .Top = 0
-50110   .Left = 0
-50120   .Width = 260 * Screen.TwipsPerPixelX
-50130   .Height = 66 * Screen.TwipsPerPixelY
-50140  End With
-50150
-50160  If frmMain.Visible = False Then
-50170   FormInTaskbar Me, True, True
-50180  End If
-50190  With LanguageStrings
-50200   lblTitle.Caption = .PrintingDocumentTitle
-50210   lblStatus.Caption = .PrintingStatus
-50220   lblCreationDate.Caption = .PrintingCreationDate
-50230   lblCreateFor.Caption = .PrintingAuthor
-50240   lblModifyDate.Caption = .PrintingModifyDate
-50250   lblSubject.Caption = .PrintingSubject
-50260   lblKeywords.Caption = .PrintingKeywords
-50270   chkStartStandardProgram.Caption = .PrintingStartStandardProgram
-50280   cmdWaiting.Caption = .PrintingWaiting
-50290   cmdOptions.Caption = .DialogPrinterOptions
-50300   cmdEMail.Caption = .PrintingEMail
-50310   cmdSave.Caption = .PrintingSave
-50320   cmdNow(0).Caption = .PrintingNow
-50330   cmdNow(1).Caption = .PrintingNow
-50340   If LenB(.PrintingCancel) = 0 Then
-50350     cmdCancel.Caption = .OptionsCancel
-50360    Else
-50370     cmdCancel.Caption = .PrintingCancel
-50380   End If
-50390  End With
-50400  If Options.StartStandardProgram = 1 Then
-50410    chkStartStandardProgram.Value = 1
-50420   Else
-50430    chkStartStandardProgram.Value = 0
-50440  End If
-50450  PSHeader = GetPSHeader(PDFSpoolfile)
-50460  With PSHeader
-50470   If Len(Trim$(Options.StandardTitle)) > 0 Then
-50480     txtTitle.Text = GetSubstFilename(PDFSpoolfile, _
+50080  With anmProcess
+50090   .Top = 0
+50100   .Left = 0
+50110   .Width = 260 * Screen.TwipsPerPixelX
+50120   .Height = 66 * Screen.TwipsPerPixelY
+50130  End With
+50140
+50150  If frmMain.Visible = False Then
+50160   FormInTaskbar Me, True, True
+50170  End If
+50180  With LanguageStrings
+50190   lblTitle.Caption = .PrintingDocumentTitle
+50200   lblStatus.Caption = .PrintingStatus
+50210   lblCreationDate.Caption = .PrintingCreationDate
+50220   lblCreateFor.Caption = .PrintingAuthor
+50230   lblModifyDate.Caption = .PrintingModifyDate
+50240   lblSubject.Caption = .PrintingSubject
+50250   lblKeywords.Caption = .PrintingKeywords
+50260   chkStartStandardProgram.Caption = .PrintingStartStandardProgram
+50270   cmdWaiting.Caption = .PrintingWaiting
+50280   cmdOptions.Caption = .DialogPrinterOptions
+50290   cmdEMail.Caption = .PrintingEMail
+50300   cmdSave.Caption = .PrintingSave
+50310   cmdNow(0).Caption = .PrintingNow
+50320   cmdNow(1).Caption = .PrintingNow
+50330   If LenB(.PrintingCancel) = 0 Then
+50340     cmdCancel.Caption = .OptionsCancel
+50350    Else
+50360     cmdCancel.Caption = .PrintingCancel
+50370   End If
+50380  End With
+50390  If Options.StartStandardProgram = 1 Then
+50400    chkStartStandardProgram.Value = 1
+50410   Else
+50420    chkStartStandardProgram.Value = 0
+50430  End If
+50440  PSHeader = GetPSHeader(PDFSpoolfile)
+50450  With PSHeader
+50460   If Len(Trim$(Options.StandardTitle)) > 0 Then
+50470     txtTitle.Text = GetSubstFilename(PDFSpoolfile, _
      RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)))
-50500    Else
-50510     txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename)
-50520   End If
-50530   If Options.UseStandardAuthor = 1 Then
-50540     txtCreateFor.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
-50550    Else
-50560     txtCreateFor.Text = GetDocUsername(PDFSpoolfile, False)
-50570   End If
-50580   If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50590    txtKeywords.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)))
-50600   End If
-50610   If Len(Trim$(Options.StandardSubject)) > 0 Then
-50620    txtSubject.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)))
-50630   End If
-50640
-50650   tDate = Now
-50660   If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50670     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
-50680    Else
-50690     tStr = CStr(tDate)
-50700   End If
-50710   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50720   'tStr = CStr(tDate)
-50730   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50740  End With
-50750  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
-50760   cmdOptions.Enabled = False
-50770  End If
-50780  If Options.OptionsVisible = 0 Then
-50790   cmdOptions.Visible = False
-50800  End If
-50810  If Options.DisableEmail = 1 Then
-50820   cmdEMail.Enabled = False
-50830  End If
-50840  Height = cmdWaiting.Top + cmdWaiting.Height + (Height - ScaleHeight) + 100
-50850  With txtTitle
-50860   .SelStart = 0
-50870   .SelLength = Len(.Text)
-50880  End With
-50890  SetTopMost Me, True, True
-50900  SetTopMost Me, False, True
-50910  SetActiveWindow hwnd
-50920  ShowAcceleratorsInForm Me, True
+50490    Else
+50500     txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename)
+50510   End If
+50520   If Options.UseStandardAuthor = 1 Then
+50530     txtCreateFor.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
+50540    Else
+50550     txtCreateFor.Text = GetDocUsername(PDFSpoolfile, False)
+50560   End If
+50570   If Len(Trim$(Options.StandardKeywords)) > 0 Then
+50580    txtKeywords.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)))
+50590   End If
+50600   If Len(Trim$(Options.StandardSubject)) > 0 Then
+50610    txtSubject.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)))
+50620   End If
+50630
+50640   tDate = Now
+50650   If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50660     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50670    Else
+50680     tStr = CStr(tDate)
+50690   End If
+50700   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50710   'tStr = CStr(tDate)
+50720   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50730  End With
+50740  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
+50750   cmdOptions.Enabled = False
+50760  End If
+50770  If Options.OptionsVisible = 0 Then
+50780   cmdOptions.Visible = False
+50790  End If
+50800  If Options.DisableEmail = 1 Then
+50810   cmdEMail.Enabled = False
+50820  End If
+50830  Height = cmdWaiting.Top + cmdWaiting.Height + (Height - ScaleHeight) + 100
+50840  With txtTitle
+50850   .SelStart = 0
+50860   .SelLength = Len(.Text)
+50870  End With
+50880  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

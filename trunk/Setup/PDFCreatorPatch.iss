@@ -130,6 +130,7 @@ Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversi
 
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\modPDFCreatorAccess.bas; DestDir: {app}\COM\MS Office; Flags: ignoreversion
 #ENDIF
 
 [Registry]

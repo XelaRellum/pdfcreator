@@ -7,47 +7,47 @@
 </head>
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr> 
+  <tr>
     <td class="title">PDFCreator Help</td>
   </tr>
-  <tr> 
+  <tr>
     <td background="../images/grad.gif" height="20">&nbsp;</td>
   </tr>
-  <tr> 
+  <tr>
     <td>&nbsp;</td>
   </tr>
-  <tr> 
+  <tr>
     <td class="main"><p class="header">Auto-Save Mode</p>
-      <p>Auto-Save Mode allows the user to automatically create PDF's with a predefined 
-        settings and save it to a predefined location. When Auto-Save Mode is 
-        enabled PDFCreator does not ask for a filename and a location. Below is 
+      <p>Auto-Save Mode allows the user to automatically create PDF's with a predefined
+        settings and save it to a predefined location. When Auto-Save Mode is
+        enabled PDFCreator does not ask for a filename and a location. Below is
         the list of settings that must be set for Auto-Save Mode:</p>
       <ul>
-        <li><strong>Auto-Save format:</strong> The save format is the file type 
+        <li><strong>Auto-Save format:</strong> The save format is the file type
           that you want PDFCreator to save the new document as.</li>
-        <li><strong>Filename</strong>: Sets the file name that you want all documents 
-          you create to have. the &lt;DateTime&gt; variable inputs the creation 
+        <li><strong>Filename</strong>: Sets the file name that you want all documents
+          you create to have. the &lt;DateTime&gt; variable inputs the creation
           date and time as the file name.</li>
-        <li><strong>Filename-Token:</strong> The filename-token is another variable 
-          that is added to the documents file name. Here is the list of filename-tokens 
-          you can use: 
+        <li><strong>Filename-Token:</strong> The filename-token is another variable
+          that is added to the documents file name. Here is the list of filename-tokens
+          you can use:
           <ul>
             <li>&lt;Author&gt; - Gives the preview author name</li>
             <li>&lt;Computername&gt; - Gives the name of the computer.</li>
-            <li>&lt;ClientComputer&gt; - Gives the computer name or IP address 
-              of the client computer asking for the PDF (for use in server installations). 
-              This can also be used in the auto save directory to save directly 
+            <li>&lt;ClientComputer&gt; - Gives the computer name or IP address
+              of the client computer asking for the PDF (for use in server installations).
+              This can also be used in the auto save directory to save directly
               to client computers (i.e. &quot;\\&lt;ClientComputer&gt;\c$\files&quot;).</li>
             <li>&lt;DateTime&gt; - Gives the date and time that the PDF is created.</li>
-            <li>&lt;Username&gt; - Gives the username of the active session of 
+            <li>&lt;Username&gt; - Gives the username of the active session of
               Windows.</li>
           </ul>
         </li>
-        <li><strong>Directory:</strong> An optional feature is to set a different 
-          directory to automatically save the documents. The following tokens 
-          can be used in the directory field: 
+        <li><strong>Directory:</strong> An optional feature is to set a different
+          directory to automatically save the documents. The following tokens
+          can be used in the directory field:
           <ul>
-            <li>&lt;MyFiles&gt; - Gives the directory of the user's My Documents 
+            <li>&lt;MyFiles&gt; - Gives the directory of the user's My Documents
               directory.</li>
             <li>&lt;MyDesktop&gt; - Gives the director fo the user's Desktop directory.</li>
             <li>&lt;Temp&gt; - Gives the temporary path of the logged in user.</li>
@@ -55,35 +55,64 @@
         </li>
       </ul>
       <p><strong><em>RedMon Tokens</em></strong><br>
-        All RedMon enviroment variables are also available as tokens in PDFCreator. 
-        These tokens are only available when you print a file. If you add a Postscript 
-        file to the print monitor the RedMon tokens are empty. Here is a list 
+        All RedMon enviroment variables are also available as tokens in PDFCreator.
+        These tokens are only available when you print a file. If you add a Postscript
+        file to the print monitor the RedMon tokens are empty. Here is a list
         of the Redmon tokens available in PDFCreator:</p>
-      <blockquote> 
-        <p><strong>REDMON_PORT:</strong> The port name. For a typical PDFCreator 
-          installation this variable reads, &quot;PDFCREATOR:&quot;. Otherwise 
-          is it typically &quot;RPT1:&quot;.<br>
-          <strong>REDMON_JOB:</strong> The job number, represented by a integer.<br>
-          <strong>REDMON_PRINTER:</strong> The name of the printer, typically 
-          &quot;PDFCreator&quot;.<br>
-          <strong>REDMON_MACHINE:</strong> The name of the machine that created 
-          the job (e.g. &quot;\\MyComputer&quot;).<br>
-          <strong>REDMON_USER:</strong> The name of the user who owns the job 
-          (e.g. &quot;JOHNDOE&quot;).<br>
-          <strong>REDMON_DOCNAME:</strong> The name of the print job (e.g. &quot;Printer 
-          Test Page&quot;).<br>
-          <strong>REDMON_FILENAME:</strong> The file name of the output file. 
-          If it is prompted for, the filename is used. A temporary filename is 
-          used if a temporary file is sent to the printer. This variable is empty 
-          in PDFCreator if you use other programs with RedMon.<br>
-          <strong>REDMON_SESSIONID:</strong> The session id of the Windows Terminal 
-          Server client session. This value will be zero if Windows Terminal Server 
-          is not used.</p>
-      </blockquote>
-      <p>With Auto-Save Mode you can choose whether you want to automatically 
-        save to a certain directory or let PDFCreator save to the desktop. <strong>Note:</strong> 
-        You can use PDF security features in Auto-Save Mode by using the PDFOwnerPasswordString 
-        and PDFUserPasswordString hidden settings. For more information on the 
+      <table border="1" cellpadding="1" style="border-collapse:collapse;empty-cells:show;">
+       <tr>
+        <td nowrap><strong>REDMON_DOCNAME:</strong></td>
+        <td>The name of the print job (e.g. &quot;Printer Test Page&quot;).</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_DOCNAME_FILE:</strong></td>
+        <td>If <em>REDMON_DOCNAME</em> consists of a file name, this variable will contain the file name.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_DOCNAME_PATH:</strong></td>
+        <td> If <em>REDMON_DOCNAME</em> consists of a complete file name, this variable will contain the path name.
+         If this variable is used for the directory, all files will be saved in the same directory as the printed
+         file.<br>
+         <strong>Note:</strong> Only some applcations (as e.g. Autocad or Irfanview) are depositing the complete file
+         name. That is why this token should not be set in blanket without pre-examine the application.
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_FILENAME:</strong></td>
+        <td>The file name of the output file. If it is prompted for, the filename is used. A temporary filename is
+          used if a temporary file is sent to the printer. This variable is empty in PDFCreator if you use other
+          programs with RedMon.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_JOB:</strong></td>
+        <td>The job number, represented by a integer.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_MACHINE:</strong></td>
+        <td>The name of the machine that created the job (e.g. &quot;\\MyComputer&quot;).</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_PORT:</strong></td>
+        <td>The port name. For a typical PDFCreator installation this variable reads, &quot;PDFCREATOR:&quot;.
+         Otherwise is it typically &quot;RPT1:&quot;.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_PRINTER:</strong></td>
+        <td>The name of the printer, typically &quot;PDFCreator&quot;.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_USER:</strong></td>
+        <td>The name of the user who owns the job (e.g. &quot;JOHNDOE&quot;).</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_SESSIONID:</strong></td>
+        <td>The session id of the Windows Terminal Server client session. This value will be zero if Windows Terminal
+         Server is not used.</td>
+       </tr>
+      </table>
+      <p>With Auto-Save Mode you can choose whether you want to automatically
+        save to a certain directory or let PDFCreator save to the desktop. <strong>Note:</strong>
+        You can use PDF security features in Auto-Save Mode by using the PDFOwnerPasswordString
+        and PDFUserPasswordString hidden settings. For more information on the
         hidden settings, click <a href="hiddensettings.htm">here</a>.</p></td>
   </tr>
 </table>

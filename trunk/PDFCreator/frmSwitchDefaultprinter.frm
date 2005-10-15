@@ -24,7 +24,9 @@ Begin VB.Form frmSwitchDefaultprinter
       Width           =   1455
    End
    Begin VB.CheckBox chkAskAgain 
+      Appearance      =   0  '2D
       Caption         =   "Don't ask me again."
+      ForeColor       =   &H80000008&
       Height          =   255
       Left            =   120
       TabIndex        =   1

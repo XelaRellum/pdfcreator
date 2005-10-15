@@ -411,6 +411,7 @@ Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestD
 ;Source: ..\COM\Samples\MS Office\frmPDFCreatorPowerpoint.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\modPDFCreatorAccess.bas; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
