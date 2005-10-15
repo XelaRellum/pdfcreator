@@ -110,14 +110,15 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Caption = App.EXEName
-50020  ChangeDefaultprinter = False
-50030  With LanguageStrings
-50040   lblSwitchDefaultprinter.Caption = .MessagesMsg35
-50050   chkAskAgain.Caption = .MessagesMsg36
-50060  End With
-50070  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
-50080  ShowAcceleratorsInForm Me, True
+50010  Me.Icon = LoadResPicture(2120, vbResIcon)
+50020  Caption = App.EXEName
+50030  ChangeDefaultprinter = False
+50040  With LanguageStrings
+50050   lblSwitchDefaultprinter.Caption = .MessagesMsg35
+50060   chkAskAgain.Caption = .MessagesMsg36
+50070  End With
+50080  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
+50090  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

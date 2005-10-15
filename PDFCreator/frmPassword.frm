@@ -28,18 +28,10 @@ Begin VB.Form frmPassword
       TabIndex        =   5
       Top             =   1440
       Width           =   4335
-      _ExtentX        =   7646
-      _ExtentY        =   2143
-      Caption         =   "Owner password"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   7646
+      _extenty        =   2143
+      caption         =   "Owner password"
+      font            =   "frmPassword.frx":000C
       Begin VB.TextBox txtOwnerPass 
          Height          =   285
          IMEMode         =   3  'DISABLE
@@ -83,18 +75,10 @@ Begin VB.Form frmPassword
       TabIndex        =   0
       Top             =   120
       Width           =   4335
-      _ExtentX        =   7646
-      _ExtentY        =   2143
-      Caption         =   "User password"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   7646
+      _extenty        =   2143
+      caption         =   "User password"
+      font            =   "frmPassword.frx":0038
       Begin VB.TextBox txtUserPass 
          Height          =   285
          IMEMode         =   3  'DISABLE
@@ -203,28 +187,29 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  oldMousePointer = Screen.MousePointer
-50020  Me.KeyPreview = True
-50030  Screen.MousePointer = vbNormal
-50040  With LanguageStrings
-50050   Caption = .OptionsPDFEnterPasswords
-50060   dmFraUserPass.Caption = .OptionsUserPass
-50070   dmFraOwnerPass.Caption = .OptionsOwnerPass
-50080   lblUserPass.Caption = .OptionsPDFSetPassword
-50090   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
-50100   lblOwnerPass.Caption = .OptionsPDFSetPassword
-50110   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
-50120   OKButton.Caption = .OptionsPassOK
-50130   CancelButton.Caption = .OptionsPassCancel
-50140   chkSavePasswords.Caption = .OptionsSavePasswords
-50150  End With
-50160  With Options
-50170   dmFraUserPass.Enabled = .PDFUserPass
-50180   dmFraOwnerPass.Enabled = .PDFOwnerPass
-50190  End With
-50200  bSuccess = False
-50210  bFinished = False
-50220  ShowAcceleratorsInForm Me, True
+50010  Me.Icon = LoadResPicture(2120, vbResIcon)
+50020  oldMousePointer = Screen.MousePointer
+50030  Me.KeyPreview = True
+50040  Screen.MousePointer = vbNormal
+50050  With LanguageStrings
+50060   Caption = .OptionsPDFEnterPasswords
+50070   dmFraUserPass.Caption = .OptionsUserPass
+50080   dmFraOwnerPass.Caption = .OptionsOwnerPass
+50090   lblUserPass.Caption = .OptionsPDFSetPassword
+50100   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
+50110   lblOwnerPass.Caption = .OptionsPDFSetPassword
+50120   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
+50130   OKButton.Caption = .OptionsPassOK
+50140   CancelButton.Caption = .OptionsPassCancel
+50150   chkSavePasswords.Caption = .OptionsSavePasswords
+50160  End With
+50170  With Options
+50180   dmFraUserPass.Enabled = .PDFUserPass
+50190   dmFraOwnerPass.Enabled = .PDFOwnerPass
+50200  End With
+50210  bSuccess = False
+50220  bFinished = False
+50230  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

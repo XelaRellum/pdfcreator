@@ -20,6 +20,7 @@ Class=clsTimeZoneInformation; ..\Common\clsTimeZoneInformation.cls
 Class=clsURL; ..\Common\clsURL.cls
 Form=..\Common\PDFCreator_ErrPtnrDialog.frm
 Form=frmAnimation.frm
+Form=frmFileinfo.frm
 Form=frmInfo.frm
 Form=frmLog.frm
 Form=frmMain.frm
