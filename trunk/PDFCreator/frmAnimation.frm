@@ -71,29 +71,30 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tL As Long, BorderWidth As Long
-50020  With anmProcess
-50030    .Top = 0
-50040    .Left = 0
-50050    .Width = 260 * Screen.TwipsPerPixelX
-50060    .Height = 66 * Screen.TwipsPerPixelY
-50070   End With
-50080    BorderWidth = 3
-50090    anmProcess.Left = BorderWidth * Screen.TwipsPerPixelX
-50100    anmProcess.Top = BorderWidth * Screen.TwipsPerPixelY
-50110    Height = anmProcess.Height + 380 + 2 * BorderWidth * Screen.TwipsPerPixelY + 10
-50120    Width = anmProcess.Width + 4 * BorderWidth * Screen.TwipsPerPixelX + 10
-50130    BorderStyle = vbBSNone
-50140    Caption = Caption
-50150    tL = Width
-50160    Width = tL - Screen.TwipsPerPixelX
-50170    Width = tL
-50180    DrawBorder3D Me, 4, BorderWidth
-50190    Move (Screen.Width - Width) / 2, (Screen.Height - Height) / 2
-50200  SetTopMost Me, True, True
-50210 ' SetTopMost Me, False, True
-50220  SetActiveWindow hwnd
-50230  ShowAnimation True
-50240  Timer1.Enabled = True
+50020  Me.Icon = LoadResPicture(2120, vbResIcon)
+50030  With anmProcess
+50040    .Top = 0
+50050    .Left = 0
+50060    .Width = 260 * Screen.TwipsPerPixelX
+50070    .Height = 66 * Screen.TwipsPerPixelY
+50080   End With
+50090    BorderWidth = 3
+50100    anmProcess.Left = BorderWidth * Screen.TwipsPerPixelX
+50110    anmProcess.Top = BorderWidth * Screen.TwipsPerPixelY
+50120    Height = anmProcess.Height + 380 + 2 * BorderWidth * Screen.TwipsPerPixelY + 10
+50130    Width = anmProcess.Width + 4 * BorderWidth * Screen.TwipsPerPixelX + 10
+50140    BorderStyle = vbBSNone
+50150    Caption = Caption
+50160    tL = Width
+50170    Width = tL - Screen.TwipsPerPixelX
+50180    Width = tL
+50190    DrawBorder3D Me, 4, BorderWidth
+50200    Move (Screen.Width - Width) / 2, (Screen.Height - Height) / 2
+50210  SetTopMost Me, True, True
+50220 ' SetTopMost Me, False, True
+50230  SetActiveWindow hwnd
+50240  ShowAnimation True
+50250  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

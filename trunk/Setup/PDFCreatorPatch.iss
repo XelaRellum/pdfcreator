@@ -48,7 +48,7 @@
 
 #define BetaVersion          "0"
 
-#define PatchLevel           "3"
+#define PatchLevel           "4"
 
 #define AppVersionStr        AppVersion
 #define SetupAppVersionStr   SetupAppVersion

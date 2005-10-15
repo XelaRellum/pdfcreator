@@ -444,9 +444,9 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tDate As Date, tStr As String
-50020  Me.KeyPreview = True
-50030  Caption = App.EXEName
-50040
+50020  Me.Icon = LoadResPicture(2120, vbResIcon)
+50030  Me.KeyPreview = True
+50040  Caption = App.EXEName
 50050  Caption = App.Title & " " & GetProgramReleaseStr ' & " " & LanguageStrings.CommonTitle
 50060  Printing = True
 50070
