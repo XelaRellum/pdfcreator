@@ -28,11 +28,20 @@ Begin VB.Form frmPassword
       TabIndex        =   5
       Top             =   1440
       Width           =   4335
-      _extentx        =   7646
-      _extenty        =   2143
-      caption         =   "Owner password"
-      font            =   "frmPassword.frx":000C
+      _ExtentX        =   7646
+      _ExtentY        =   2143
+      Caption         =   "Owner password"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtOwnerPass 
+         Appearance      =   0  '2D
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   1200
@@ -42,6 +51,7 @@ Begin VB.Form frmPassword
          Width           =   3015
       End
       Begin VB.TextBox txtOwnerPassRepeat 
+         Appearance      =   0  '2D
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   1200
@@ -75,11 +85,20 @@ Begin VB.Form frmPassword
       TabIndex        =   0
       Top             =   120
       Width           =   4335
-      _extentx        =   7646
-      _extenty        =   2143
-      caption         =   "User password"
-      font            =   "frmPassword.frx":0038
+      _ExtentX        =   7646
+      _ExtentY        =   2143
+      Caption         =   "User password"
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtUserPass 
+         Appearance      =   0  '2D
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   1200
@@ -89,6 +108,7 @@ Begin VB.Form frmPassword
          Width           =   3015
       End
       Begin VB.TextBox txtUserPassRepeat 
+         Appearance      =   0  '2D
          Height          =   285
          IMEMode         =   3  'DISABLE
          Left            =   1200
@@ -117,7 +137,9 @@ Begin VB.Form frmPassword
       End
    End
    Begin VB.CheckBox chkSavePasswords 
+      Appearance      =   0  '2D
       Caption         =   "Save passwords for this session."
+      ForeColor       =   &H80000008&
       Height          =   375
       Left            =   120
       TabIndex        =   10

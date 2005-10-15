@@ -22,7 +22,9 @@ Begin VB.Form frmLog
       Width           =   1335
    End
    Begin VB.CheckBox chkLogging 
+      Appearance      =   0  '2D
       Caption         =   "Logging"
+      ForeColor       =   &H80000008&
       Height          =   225
       Left            =   105
       TabIndex        =   1
@@ -37,6 +39,7 @@ Begin VB.Form frmLog
       Top             =   675
    End
    Begin VB.TextBox txtLog 
+      Appearance      =   0  '2D
       BackColor       =   &H00C0FFFF&
       Height          =   2415
       Left            =   120

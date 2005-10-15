@@ -45,27 +45,58 @@
         zum PDFCreator-Druckmonitor hinzugef&uuml;gt, wird diese Datei nicht gedruckt und diese Variablen
         sind folglich leer. Es folgt die List der zur Verf&uuml;gung stehenden Variablen.
       </p>
-      <blockquote>
-        <p><strong>REDMON_PORT:</strong> Der Portname. F&uuml;r den PDFCreator wurde der Name
-          &quot;PDFCREATOR:&quot; gew&auml;hlt. In anderen F&auml;llen lautet er normalerweise
-          &quot;RPT1:&quot;.<br>
-          <strong>REDMON_JOB:</strong> Die Auftragsnummer dargestellt durch eine Zahl.<br>
-          <strong>REDMON_PRINTER:</strong> Der Name des Druckers, normalerweise
-          &quot;PDFCreator&quot;.<br>
-          <strong>REDMON_MACHINE:</strong> Der Name des Rechners der den Druckauftrag erstellt hat
-          (z.B.. &quot;\\MyComputer&quot;).<br>
-          <strong>REDMON_USER:</strong> Der Name es Benutzers, der den Druckauftrag erstellt hat
-          (z.B. &quot;JOHNDOE&quot;).<br>
-          <strong>REDMON_DOCNAME:</strong> Der Name des Druckauftrages (z.B. &quot;Drucker
-          Testseite&quot;).<br>
-          <strong>REDMON_FILENAME:</strong> Der Dateiname der Ausgebabedatei, falls die redmon-Dll
-          andersweitig verwendet wird. Dies Variable ist im PDFCreator leer.
-          <br>
-          <strong>REDMON_SESSIONID:</strong> The Sitzungs-ID einer Terminalserver-Sitzung. Der Wert
-          ist Null, falls PDFCreator nicht auf einem Terminalserver installiert wurde.
-          </p>
-      </blockquote>
-      <p><strong>Hinweis:</strong> Wenn Sie PDF Sicherheiteinstellungen bei der Automatischen Speicherung nutzen wollen, sehen Sie bitte unter <a href="hiddensettings.htm">versteckte Einstellungen</a> nach.</p>
+      <table border="1" cellpadding="1" style="border-collapse:collapse;empty-cells:show;">
+       <tr>
+        <td nowrap><strong>REDMON_DOCNAME:</strong></td>
+        <td>Der Name des Druckauftrages (z.B. &quot;Drucker Testseite&quot;) bzw. der Name des gedruckten Datei.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_DOCNAME_FILE:</strong></td>
+        <td>Besteht <em>REDMON_DOCNAME</em> aus einem Dateinamen, enth&auml;lt diese Variable den Namen der Datei.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_DOCNAME_PATH:</strong></td>
+        <td>Besteht <em>REDMON_DOCNAME</em> aus einem kompletten Dateinamen, enth&auml;lt diese Variable den Namen des
+         Pfades. Wird diese Variable f&uuml;r das Verzeichnis verwendet, werden die Dateien in denselben Pfad wie die
+         gedruckte Datei gespeichert.<br>
+         <strong>Hinweis:</strong> Nur wenige Anwendungen (wie z.B. Autocad oder Irfanview) hinterlegen den kompletten
+         Dateinamen. Deshalb sollte dieser Token nicht pauschal, sondern nur bei vorher getesteten Anwendungen
+         eingesetzt werden.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_FILENAME:</strong></td>
+        <td>Der Dateiname der Ausgebabedatei, falls die redmon-Dll andersweitig verwendet wird. Dies Variable ist im
+         PDFCreator leer.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_JOB:</strong></td>
+        <td>Die Auftragsnummer, dargestellt durch eine Zahl.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_MACHINE:</strong></td>
+        <td>Der Name des Rechners, der den Druckauftrag erstellt hat (z.B. &quot;\\MyComputer&quot;).</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_PORT:</strong></td>
+        <td>Der Portname. F&uuml;r den PDFCreator wurde der Name &quot;PDFCREATOR:&quot; gew&auml;hlt. In anderen
+         F&auml;llen lautet er normalerweise &quot;RPT1:&quot;.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_PRINTER:</strong></td>
+        <td>Der Name des Druckers, normalerweise &quot;PDFCreator&quot;.</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_USER:</strong></td>
+        <td>Der Name es Benutzers, der den Druckauftrag erstellt hat (z.B. &quot;JOHNDOE&quot;).</td>
+       </tr>
+       <tr>
+        <td nowrap><strong>REDMON_SESSIONID:</strong></td>
+        <td>Die Sitzungs-ID einer Terminalserver-Sitzung. Der Wert ist Null, falls PDFCreator nicht auf einem
+         Terminalserver installiert wurde.</td>
+       </tr>
+      </table>
+      <p><strong>Hinweis:</strong> Wenn Sie PDF Sicherheiteinstellungen bei der <em>Automatischen Speicherung</em>
+       nutzen wollen, sehen Sie bitte unter <a href="hiddensettings.htm">versteckte Einstellungen</a> nach.</p>
     </td>
   </tr>
 </table>
