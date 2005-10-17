@@ -27,6 +27,8 @@ Begin VB.Form frmOptions
       _ExtentY        =   6800
       Caption         =   "Autosave"
       Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -160,6 +162,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   10927
       _ExtentY        =   5106
       Caption         =   "General Options"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -287,6 +291,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   11245
       _ExtentY        =   3413
       Caption         =   "Bitmap"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -420,6 +426,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   11245
       _ExtentY        =   1931
       Caption         =   "Postscript"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -468,6 +476,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   10927
       _ExtentY        =   2990
       Caption         =   "Font options"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -526,6 +536,8 @@ Begin VB.Form frmOptions
       _ExtentY        =   2487
       Caption         =   "Directories"
       Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -591,6 +603,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   11245
       _ExtentY        =   3413
       Caption         =   "Save"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -670,6 +684,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   11245
       _ExtentY        =   3413
       Caption         =   "Document"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -740,6 +756,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   11245
       _ExtentY        =   8281
       Caption         =   "Programfont"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -850,6 +868,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   10927
       _ExtentY        =   9763
       Caption         =   "Security"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -868,6 +888,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1508
          Caption         =   "Enhanced permissions (128 Bit only)"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -927,6 +949,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1508
          Caption         =   "Disallow user to"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -986,6 +1010,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1508
          Caption         =   "Passwords"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -1025,6 +1051,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1508
          Caption         =   "Encryption level"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -1064,6 +1092,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1508
          Caption         =   "Encryptor"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -1106,6 +1136,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   10927
       _ExtentY        =   7646
       Caption         =   "Compression"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -1124,6 +1156,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1931
          Caption         =   "Monochrome images"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -1203,6 +1237,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1931
          Caption         =   "Greyscale images"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -1282,6 +1318,8 @@ Begin VB.Form frmOptions
          _ExtentX        =   10504
          _ExtentY        =   1931
          Caption         =   "Color images"
+         BarColorFrom    =   16744576
+         BarColorTo      =   4194304
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -1373,6 +1411,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   10927
       _ExtentY        =   2143
       Caption         =   "Color options"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -1415,6 +1455,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   10927
       _ExtentY        =   2566
       Caption         =   "Options"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -1591,6 +1633,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   11245
       _ExtentY        =   4471
       Caption         =   "Filename substitutions"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -1773,6 +1817,8 @@ Begin VB.Form frmOptions
       _ExtentY        =   7435
       Caption         =   "General"
       Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -1888,6 +1934,8 @@ Begin VB.Form frmOptions
       _ExtentX        =   11324
       _ExtentY        =   1852
       Caption         =   "Ghostscript"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -2043,6 +2091,8 @@ Begin VB.Form frmOptions
       _ExtentY        =   1879
       Caption         =   "Shell integration"
       Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
