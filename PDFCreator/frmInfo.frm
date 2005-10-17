@@ -17,6 +17,7 @@ Begin VB.Form frmInfo
    ScaleWidth      =   6000
    ShowInTaskbar   =   0   'False
    StartUpPosition =   3  'Windows-Standard
+   Visible         =   0   'False
    Begin VB.PictureBox picTitle 
       Appearance      =   0  '2D
       AutoRedraw      =   -1  'True

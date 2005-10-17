@@ -31,6 +31,8 @@ Begin VB.Form frmPassword
       _ExtentX        =   7646
       _ExtentY        =   2143
       Caption         =   "Owner password"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25
@@ -88,6 +90,8 @@ Begin VB.Form frmPassword
       _ExtentX        =   7646
       _ExtentY        =   2143
       Caption         =   "User password"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   8.25

@@ -626,11 +626,10 @@ On Error GoTo ErrPtnr_OnError
 50380   txtEmailAddress.Enabled = False
 50390   txtEmailAddress.BackColor = Me.BackColor
 50400  End If
-50410  txtEmailAddress.ToolTipText = LanguageStrings.DialogEmailAddress
-50420
-50430  Form_Resize
-50440
-50450  DoEvents
+50410
+50420  Form_Resize
+50430
+50440  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -858,7 +857,9 @@ On Error GoTo ErrPtnr_OnError
 50730   lsv.ColumnHeaders("Filename").Text = .ListFilename
 50740   lsv.ColumnHeaders("Size").Text = .ListSize
 50750   lsv.ColumnHeaders("Status").Text = .ListStatus
-50760  End With
+50760
+50770   txtEmailAddress.ToolTipText = .DialogEmailAddress
+50780  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1116,7 +1117,7 @@ On Error GoTo ErrPtnr_OnError
 50310      MsgBox LanguageStrings.MessagesMsg31 & ": " & dl.ErrorDescription & " [" & dl.ErrorNumber & "]", vbOKOnly + vbExclamation
 50320    End If
 50330   Case 8:
-50340    frmInfo.Show vbModal, Me
+50340    frmInfo.Show , Me
 50350  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2687,4 +2688,10 @@ Case 2: Exit Sub
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtEmailAddress_KeyPress(KeyAscii As Integer)
+ If KeyAscii = vbKeyReturn Then
+  SendEmail
+ End If
 End Sub

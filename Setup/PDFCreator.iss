@@ -26,7 +26,7 @@
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 #If (GhostscriptLicense=="AFPL")
- #define GhostscriptVersion "8.51"
+ #define GhostscriptVersion "8.52"
  #define GhostscriptSetupString "AFPLGhostscript"
 #ENDIF
 #ENDIF
@@ -87,7 +87,7 @@
 #define PDFSpoolerVersion    GetFileVersionVBExe("..\PDFSpooler\PDFSpooler.exe")
 #define TransToolVersion     GetFileVersionVBExe("..\Transtool\Transtool.exe")
 
-#define ReleaseCandidate     "9"
+#define ReleaseCandidate     "10"
 
 #define BetaVersion          ""
 
