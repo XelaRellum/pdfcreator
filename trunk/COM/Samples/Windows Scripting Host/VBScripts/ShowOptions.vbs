@@ -77,7 +77,11 @@ Private Function Table
   tStr = tStr & vbcrlf & "<tr>"
   tStr = tStr & vbcrlf & "<td>" & c & "</td>"
   tStr = tStr & vbcrlf & "<td>" & ReplaceForbiddenChars(item) & "</td>"
-  tStr = tStr & vbcrlf & "<td>" & ReplaceForbiddenChars(PDFCreator.cOption(CStr(item))) & "</td>"
+  If ReplaceForbiddenChars(PDFCreator.cOption(CStr(item))) <> ReplaceForbiddenChars(PDFCreator.cStandardOption(CStr(item))) Then
+    tStr = tStr & vbcrlf & "<td bgcolor=""#00C0C0"">" & ReplaceForbiddenChars(PDFCreator.cOption(CStr(item))) & "</td>"
+   Else
+    tStr = tStr & vbcrlf & "<td>" & ReplaceForbiddenChars(PDFCreator.cOption(CStr(item))) & "</td>"
+  End IF 
   tStr = tStr & vbcrlf & "<td>" & ReplaceForbiddenChars(PDFCreator.cStandardOption(CStr(item))) & "</td>"
   tStr = tStr & vbcrlf & "</tr>"
  Next
