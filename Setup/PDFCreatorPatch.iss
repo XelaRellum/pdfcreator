@@ -116,6 +116,8 @@ Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
 Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Flags: comparetimestamp
 
+Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
 Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
 Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
 Source: ..\PDFCreator\Languages\portuguesept.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
