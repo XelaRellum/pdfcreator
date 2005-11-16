@@ -108,7 +108,7 @@ On Error GoTo ErrPtnr_OnError
 50330     sBuffer = Input(bsize, fnSource)
 50340     Put #fnDest, , sBuffer
 50350     tLen = tLen + bsize
-50360     If IsObject(stb) = True Then
+50360     If Not stb Is Nothing Then
 50370      stb.Panels("Percent").Text = Format(CDbl(tLen) / CDbl(aLen), "0.0%")
 50380     End If
 50390     DoEvents
