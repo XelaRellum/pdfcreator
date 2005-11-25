@@ -302,27 +302,30 @@ On Error GoTo ErrPtnr_OnError
 50430  If FileExists(Languagefile) = True Then
 50440    LoadLanguage Languagefile
 50450   Else
-50460    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
-50470 '   Options.Language = "english"
-50480  End If
-50490
-50500  Options = ReadOptions
-50510
-50520  If IsWin9xMe = False Then
-50531   Select Case Options.ProcessPriority
+50460    If Not InstalledAsServer Then
+50470     MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
+50480    End If
+50490    IfLoggingWriteLogfile "Laguage file >" & Languagefile & _
+    "< not found! Error [" & Err.LastDllError & "]"
+50510  End If
+50520
+50530  Options = ReadOptions
+50540
+50550  If IsWin9xMe = False Then
+50561   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50550     SetProcessPriority Idle
-50560    Case 1: 'Normal
-50570     SetProcessPriority Normal
-50580    Case 2: 'High
-50590     SetProcessPriority High
-50600    Case 3: 'Realtime
-50610     SetProcessPriority RealTime
-50620   End Select
-50630  End If
-50640
-50650  CreatePDFCreatorTempfolder
-50660  ComputerScreenResolution = ScreenResolution
+50580     SetProcessPriority Idle
+50590    Case 1: 'Normal
+50600     SetProcessPriority Normal
+50610    Case 2: 'High
+50620     SetProcessPriority High
+50630    Case 3: 'Realtime
+50640     SetProcessPriority RealTime
+50650   End Select
+50660  End If
+50670
+50680  CreatePDFCreatorTempfolder
+50690  ComputerScreenResolution = ScreenResolution
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
