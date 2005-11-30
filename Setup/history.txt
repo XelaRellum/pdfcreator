@@ -1,27 +1,37 @@
 PDFCreator Revision History
 ================================
-Copyright (C)2002-2004 Philip Chinery, Frank Heindörfer
+Copyright (C)2002-2005 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfcreator.de.vu/
           http://www.sourceforge.net/projects/pdfcreator/
 
-
-Version 0.8.1 (November 4, 2004)
+Version 0.8.1 RC10 (November 30, 2005)
 -------------------------------------------------------------------------------
-Improvements:
-- Using GPL-Ghostscipt 8.15 
+Improvements: 
+- Using GPL-Ghostscript 8.15 / AFPL Ghostscript 8.53 
+- Added a COM Interface (with description and samples) 
+- Added the hidden settings o PDFCompressionColorCompression*, PDFCompressionGreyCompression* to change the standard compression factors 
+- Added the new commandline parameter /NoPSCheck (Now PDFCreator is compatible with PDF-T-Maker) 
+- Added systray property 
+- Added "Cancel" button to the printing dialog 
+- Added the feature to detect the important framedyn.dll file to the setup. 
+- Added german help file 
+- AMD64 Processor Support 
 
-Bug Fixes:
-- Missing msmapi32.ocx is included
-- Improve email support
-- Terminalserver should work
-- Using a modifies ghostpdf.ppd
-- Should work with other shells other than explorer (e.g. geoshell, litestep)
-- Fixed english.ini
-- Fixed some minor bugs
+Bug Fixes: 
+- Fixed the timezone information bug in pdf files 
+- Fixed a bug using the pdfenc encryptor 
+- Fixed a bug in the function OptimizePDF (missing paths) 
+- Fixed a bug in PDFCreator/frmSwitchDefaultprinter.frm 
+- Missing msmapi32.ocx is included. 
+- Improve email support. 
+- Terminalserver should work 
+- Using a modifies ghostpdf.ppd 
+- Should work with other shells other than explorer (e.g. geoshell, litestep) 
+- Fixed english.ini 
+- Fixed some minor bugs. 
 
-
-Known issues:
-- No hyperlinks possible
+Known issues: 
+- No hyperlinks possible 
 
 
 Version 0.8.0 (April 2, 2004)
@@ -40,7 +50,7 @@ Improvements:
   Pegasus Mail (WsendTo.exe), The Bat!, Foxmail, Sylpheed-Claws, IncrediMail
   Problems with: Ak-Mail, GeMail, Postguard, Vivian Mail
 - Added PDF document properties 'Keywords' and 'Subject'
-- You can add printable files (also via 'Drag and Drop') and through the 
+- You can add printable files (also via 'Drag and Drop') and through the
   windows explorer context menu.
 - Added Commandline parameter PF:
   Convert a printable file into a pdf document
@@ -69,16 +79,15 @@ Bug Fixes:
 
 Version 0.7.0 (July 17, 2003)
 -------------------------------------------------------------------------------
-
 What's new:
-- 2 new output formats: Postscript (PS) and 
+- 2 new output formats: Postscript (PS) and
   Encapsulated Postscript (EPS)
 - Process priority can be changed. (only for NT and above)
 - Enhanced errorhandling
 - Improved programmspeed
 - Individual installation of Ghostscript
 - Ask if .ps files should be associated with PDFCreator
-- Commandline parameter: 
+- Commandline parameter:
   example: pdfcreator.exe -IF"My Inputfile.ps" -OF"My Outputfile.pdf"
 - Special filename handling include filename substitutions
 - Switch back to Ghostscript 8.00
@@ -99,5 +108,4 @@ Bug Fixes:
 
 Version 0.6.0 (May 18, 2003)
 -------------------------------------------------------------------------------
-
 New release with a completely new redesign.
