@@ -5,8 +5,7 @@
 ' Version: 1.0.0.0
 ' Date: December, 10. 2005
 ' Author: Frank Heindörfer
-' Comments: This script convert printables files in pdf-files using
-'           the com interface of PDFCreator.
+' Comments: This script combines some printjobs in one pdf and add a bookmark for each file.
 
 Option Explicit
 
