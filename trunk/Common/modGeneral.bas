@@ -2027,17 +2027,34 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function FormIsModal(f As Form) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  FormIsModal = (GetWindowLong(f.hwnd, GWL_EXSTYLE) And WS_EX_DLGMODALFRAME) = WS_EX_DLGMODALFRAME
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "FormIsModal")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function ExistsAnModalForm() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim f As Form
 50020  For Each f In Forms
-50030   If f.Enabled Then
-50040    Exit Function
-50050   End If
-50060  Next
-50070  ExistsAnModalForm = True
+50030   If FormIsModal(f) Then
+50040    ExistsAnModalForm = True
+50050    Exit Function
+50060   End If
+50070  Next f
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
