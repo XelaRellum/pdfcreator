@@ -71,7 +71,7 @@ For i = 0 to objArgs.Count - 1
    c = c + 1
    Wscript.Sleep sleepTime
   Loop
-  FileInfo(0, i) = .cPostscriptInfo(.cPrintjobFilename(i + 1), "Title")
+  FileInfo(0, i) = fso.GetBasename(ifname)
   FileInfo(1, i) = GetCountOfPagesFromPostscriptfile(.cPrintjobFilename(i + 1))
  End With
 Next
@@ -104,14 +104,15 @@ With PDFCreator
 End With
 
 Private Sub AppendBookmarks(PostscriptFile)
- Dim fso, f, i
+ Dim fso, f, i, c
  Set fso = CreateObject("Scripting.FileSystemObject")
  Set f = fso.OpenTextFile(PostscriptFile, ForAppending, True)
- f.writeline "[/Page " & 1 & " /View [/FitB] /Title (" & FileInfo(0, 0) & ") /OUT pdfmark"
+ f.writeline "[/Page " & 1 & "/View[/Fit]/Title(" & FileInfo(0, 0) & ")/OUT pdfmark"
  For i = 2 to objArgs.Count
-  f.writeline "[/Page " & FileInfo(1, i - 2) + 1 & " /View [/FitB] /Title (" & FileInfo(0, i - 1) & ") /OUT pdfmark"
+  c = c + CLng(FileInfo(1, i - 2))
+  f.writeline "[/Page " & c + 1 & "/View[/Fit]/Title(" & FileInfo(0, i - 1) & ")/OUT pdfmark"
  Next
- f.WriteLine "[ /PageMode /UseOutlines /Page 1 /View [/Fit] /DOCVIEW pdfmark"
+ f.WriteLine "[/PageMode/UseOutlines/Page 1/View[/Fit]/DOCVIEW pdfmark"
  f.Close
 End Sub
 
