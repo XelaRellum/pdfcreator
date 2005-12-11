@@ -376,7 +376,9 @@ Public Const DIB_RGB_COLORS                  As Long = 0
 Public Const LWA_COLORKEY                    As Long = &H1
 Public Const GWL_EXSTYLE                     As Long = (-20)
 Public Const GWL_USERDATA                    As Long = (-21)
+Public Const GWL_HWNDPARENT                  As Long = (-8)
 Public Const WS_EX_LAYERED                   As Long = &H80000
+Public Const WS_EX_DLGMODALFRAME             As Long = &H1&
 
 Public Const SEE_MASK_CLASSKEY               As Long = &H3
 Public Const SEE_MASK_CLASSNAME              As Long = &H1

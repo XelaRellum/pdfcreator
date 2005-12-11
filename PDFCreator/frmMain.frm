@@ -2321,27 +2321,34 @@ Public Function CombineAll() As String
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long, cFiles As Collection, tFilename As String, tFilename2 As String
-50020  Screen.MousePointer = vbHourglass
-50030  LockWindowUpdate hwnd
-50040  Timer1.Enabled = False
-50050  Set cFiles = New Collection
-50060  For i = 1 To lsv.ListItems.Count
-50070   cFiles.Add lsv.ListItems(i).SubItems(4)
-50080  Next i
-50090  tFilename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PT")
-50100  KillFile tFilename
-50110  If cFiles.Count > 1 Then
-50120   CombineFiles tFilename, cFiles, , stb
-50130   stb.Panels("Percent").Text = ""
-50140  End If
-50150  tFilename2 = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-50160  KillFile tFilename2
-50170  Name tFilename As tFilename2
-50180  Set cFiles = Nothing
-50190  CombineAll = tFilename2
-50200  Timer1.Enabled = True
-50210  LockWindowUpdate 0&
-50220  Screen.MousePointer = vbNormal
+50020  If lsv.ListItems.Count = 0 Then
+50030   Exit Function
+50040  End If
+50050  If lsv.ListItems.Count = 1 Then
+50060   CombineAll = lsv.ListItems(1).SubItems(4)
+50070   Exit Function
+50080  End If
+50090  Screen.MousePointer = vbHourglass
+50100  LockWindowUpdate hwnd
+50110  Timer1.Enabled = False
+50120  Set cFiles = New Collection
+50130  For i = 1 To lsv.ListItems.Count
+50140   cFiles.Add lsv.ListItems(i).SubItems(4)
+50150  Next i
+50160  tFilename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PT")
+50170  KillFile tFilename
+50180  If cFiles.Count > 1 Then
+50190   CombineFiles tFilename, cFiles, , stb
+50200   stb.Panels("Percent").Text = ""
+50210  End If
+50220  tFilename2 = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+50230  KillFile tFilename2
+50240  Name tFilename As tFilename2
+50250  Set cFiles = Nothing
+50260  CombineAll = tFilename2
+50270  Timer1.Enabled = True
+50280  LockWindowUpdate 0&
+50290  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2691,7 +2698,20 @@ End Select
 End Sub
 
 Private Sub txtEmailAddress_KeyPress(KeyAscii As Integer)
- If KeyAscii = vbKeyReturn Then
-  SendEmail
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If KeyAscii = vbKeyReturn Then
+50020   SendEmail
+50030  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "txtEmailAddress_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub

@@ -428,47 +428,60 @@ End Select
 End Function
 
 Public Sub AppendPDFDocInfo(PSFile As String, PDFDocInfo As tPDFDocInfo)
- Dim fn As Long, DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, tStr As String
- With PDFDocInfo
-  PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author (" & EncodeChars(.Author) & ")"
-  If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-   Set tzi = New clsTimeZoneInformation
-   If tzi.DayLight Then
-     tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
-    Else
-     tStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
-   End If
-   If tzi.DaylightToGMT >= 0 Then
-     tStr = "+" & tStr
-    Else
-     tStr = "-" & tStr
-   End If
-  End If
-  If LenB(Trim$(.CreationDate)) > 0 Then
-   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & EncodeChars(.CreationDate) & tStr & ")"
-  End If
-  PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator (" & EncodeChars(.Creator) & ")"
-  PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords (" & EncodeChars(.Keywords) & ")"
-  If LenB(Trim$(.ModifyDate)) > 0 Then
-   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & EncodeChars(.ModifyDate) & tStr & ")"
-  End If
-  If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-   Set tzi = Nothing
-  End If
-  PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject (" & EncodeChars(.Subject) & ")"
-  PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title (" & EncodeChars(.Title) & ")"
- End With
- If FileExists(PSFile) = True And LenB(PDFDocInfoStr) > 0 Then
-  DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
-  DocInfoStr = DocInfoStr & Chr$(13) & "["
-  DocInfoStr = DocInfoStr & Chr$(13) & PDFDocInfoStr
-  DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
-  DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
-  fn = FreeFile
-  Open PSFile For Append As fn
-  Print #fn, DocInfoStr;
-  Close #fn
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim fn As Long, DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, tStr As String
+50020  With PDFDocInfo
+50030   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author (" & EncodeChars(.Author) & ")"
+50040   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50050    Set tzi = New clsTimeZoneInformation
+50060    If tzi.DayLight Then
+50070      tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
+50080     Else
+50090      tStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
+50100    End If
+50110    If tzi.DaylightToGMT >= 0 Then
+50120      tStr = "+" & tStr
+50130     Else
+50140      tStr = "-" & tStr
+50150    End If
+50160   End If
+50170   If LenB(Trim$(.CreationDate)) > 0 Then
+50180    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & EncodeChars(.CreationDate) & tStr & ")"
+50190   End If
+50200   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator (" & EncodeChars(.Creator) & ")"
+50210   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords (" & EncodeChars(.Keywords) & ")"
+50220   If LenB(Trim$(.ModifyDate)) > 0 Then
+50230    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & EncodeChars(.ModifyDate) & tStr & ")"
+50240   End If
+50250   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50260    Set tzi = Nothing
+50270   End If
+50280   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject (" & EncodeChars(.Subject) & ")"
+50290   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title (" & EncodeChars(.Title) & ")"
+50300  End With
+50310  If FileExists(PSFile) = True And LenB(PDFDocInfoStr) > 0 Then
+50320   DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
+50330   DocInfoStr = DocInfoStr & Chr$(13) & "["
+50340   DocInfoStr = DocInfoStr & Chr$(13) & PDFDocInfoStr
+50350   DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
+50360   DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
+50370   fn = FreeFile
+50380   Open PSFile For Append As fn
+50390   Print #fn, DocInfoStr;
+50400   Close #fn
+50410  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDF", "AppendPDFDocInfo")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Public Function ReplaceEncodingChars(Str1 As String) As String

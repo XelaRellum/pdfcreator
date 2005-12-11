@@ -24,6 +24,7 @@ Private Const ErrDescr3 = "Unknown option name '%1' in '%2'!"
 Private Const ErrDescr4 = "Ghostscript error: '%1'!"
 Private Const ErrDescr5 = "File '%1' doesn't exist!"
 Private Const ErrDescr6 = "Not a valid path or filename '%1'!"
+Private Const ErrDescr7 = "File '%1' is in use!"
 
 Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
 Private WithEvents eActionTimer As Timer
@@ -683,6 +684,74 @@ On Error GoTo ErrPtnr_OnError
 Exit Property
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("clsPDFCreator", "cStandardOptions [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cPostscriptInfo(ByVal PostscriptFilename As String, ByVal PropertyName As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim PSHeader As tPSHeader
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Property
+50050  End If
+50060  If FileExists(PostscriptFilename) = False Then
+50070   mError.Number = 5
+50080   mError.Description = Replace$(ErrDescr5, "%1", PostscriptFilename)
+50090   RaiseEvent eError
+50100   Exit Property
+50110  End If
+50120  If FileInUse(PostscriptFilename) Then
+50130   mError.Number = 7
+50140   mError.Description = Replace$(ErrDescr7, "%1", PostscriptFilename)
+50150   RaiseEvent eError
+50160   Exit Property
+50170  End If
+50180  PSHeader = GetPSHeader(PostscriptFilename)
+50190  With PSHeader
+50201   Select Case True
+         Case ("BoundingBox") = PropertyName
+50220     cPostscriptInfo = .BoundingBox.Comment
+50230    Case ("CreateFor") = PropertyName
+50240     cPostscriptInfo = .CreateFor.Comment
+50250    Case ("CreationDate") = PropertyName
+50260     cPostscriptInfo = .CreationDate.Comment
+50270    Case ("Creator") = PropertyName
+50280     cPostscriptInfo = .Creator.Comment
+50290    Case ("DocumentData") = PropertyName
+50300     cPostscriptInfo = .DocumentData.Comment
+50310    Case ("DocumentNeededResources") = PropertyName
+50320     cPostscriptInfo = .DocumentNeededResources.Comment
+50330    Case ("DocumentSuppliedResources") = PropertyName
+50340     cPostscriptInfo = .DocumentSuppliedResources.Comment
+50350    Case ("LanguageLevel") = PropertyName
+50360     cPostscriptInfo = .LanguageLevel.Comment
+50370    Case ("Orientation") = PropertyName
+50380     cPostscriptInfo = .Orientation.Comment
+50390    Case ("PageOrder") = PropertyName
+50400     cPostscriptInfo = .PageOrder.Comment
+50410    Case ("Pages") = PropertyName
+50420     cPostscriptInfo = .Pages.Comment
+50430    Case ("TargetDevice") = PropertyName
+50440     cPostscriptInfo = .TargetDevice.Comment
+50450    Case ("Title") = PropertyName
+50460     cPostscriptInfo = .Title.Comment
+50470    Case Else
+50480     mError.Number = 3
+50490     mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cPostscriptInfo")
+50500     RaiseEvent eError
+50510   End Select
+50520  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPostscriptInfo [GET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -2308,11 +2377,3 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
-
-
-
-
-
-
-
-

@@ -328,9 +328,9 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case Index
         Case 0:
-50030    txtCreationDate.Text = Format(CStr(Now), Options.StandardDateformat)
+50030    txtCreationDate.Text = Format(CStr(Now), "YYYYMMDDHHNNSS")
 50040   Case 1:
-50050    txtModifyDate.Text = Format(CStr(Now), Options.StandardDateformat)
+50050    txtModifyDate.Text = Format(CStr(Now), "YYYYMMDDHHNNSS")
 50060  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

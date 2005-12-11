@@ -35,6 +35,7 @@ Set PDFCreator = Wscript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_")
 PDFCreator.cStart "/NoProcessingAtStartup"
 
 With PDFCreator
+ .cPrinterStop = true
  .cOption("UseAutosave") = 1
  .cOption("UseAutosaveDirectory") = 1
  .cOption("AutosaveDirectory") = opath
@@ -76,6 +77,12 @@ With PDFCreator
  ' Page order: 3 2 1
 
  .cCombineAll
+
+ c = 0
+ Do While (.cCountOfPrintjobs <> 1) and (c < (maxTime * 1000 / sleepTime))
+  c = c + 1
+  Wscript.Sleep sleepTime
+ Loop
 
  .cPrinterStop = False
 End With
