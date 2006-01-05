@@ -1244,24 +1244,39 @@ Public Function CalculatePermissions(ByRef encData As EncryptData) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With encData
-50020   If .EncryptionLevel = encStrong Then
-50030     CalculatePermissions = -4 - (Abs(.DisallowPrinting) * SEC_PRINT _
-     + Abs(.DisallowModifyContents) * SEC_MODIFY _
-     + Abs(.DisallowCopy) * SEC_COPY _
-     + Abs(.DisallowModifyAnnotations) * SEC_FORM _
-     + Abs(.AllowFillIn) * SEC_FILLFORM _
-     + Abs(.AllowScreenReaders) * SEC_SCREENREADERS _
-     + Abs(.AllowAssembly) * SEC_ASSEMBLY _
-     + Abs(.AllowDegradedPrinting) * SEC_HQPRINT)
-50110    Else
-50120     CalculatePermissions = -4 - (Abs(.DisallowPrinting) * SEC_PRINT _
-     + Abs(.DisallowModifyContents) * SEC_MODIFY _
-     + Abs(.DisallowCopy) * SEC_COPY _
-     + Abs(.DisallowModifyAnnotations) * SEC_FORM)
-50160   End If
-50170  End With
-50180 ' Debug.Print "CP:" & CalculatePermissions
+50010  Dim tB As Long, tB2 As Long
+50020  tB = 192
+50030  With encData
+50040   If Abs(.DisallowPrinting) = 0 Then
+50050    tB = tB + 4
+50060   End If
+50070   If Abs(.DisallowModifyContents) = 0 Then
+50080    tB = tB + 8
+50090   End If
+50100   If Abs(.DisallowCopy) = 0 Then
+50110    tB = tB + 16
+50120   End If
+50130   If Abs(.DisallowModifyAnnotations) = 0 Then
+50140    tB = tB + 32
+50150   End If
+50160   CalculatePermissions = tB - 256
+50170   If .EncryptionLevel = encStrong Then
+50180     tB2 = 240
+50190     If Abs(.AllowFillIn) <> 0 Then
+50200      tB2 = tB2 + 1
+50210     End If
+50220     If Abs(.AllowScreenReaders) <> 0 Then
+50230      tB2 = tB2 + 2
+50240     End If
+50250     If Abs(.AllowAssembly) <> 0 Then
+50260      tB2 = tB2 + 4
+50270     End If
+50280     If Abs(.AllowDegradedPrinting) = 0 Then
+50290      tB2 = tB2 + 8
+50300     End If
+50310    CalculatePermissions = CalculatePermissions - (255 - tB2) * 256&
+50320   End If
+50330  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
