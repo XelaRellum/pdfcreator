@@ -405,10 +405,10 @@ Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; Dest
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-;Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
-;Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 ;Source: ..\COM\Samples\MS Office\frmPDFCreatorPowerpoint.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 ;Source: ..\COM\Samples\MS Office\frmPDFCreatorPowerpoint.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\modPDFCreatorAccess.bas; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
