@@ -359,7 +359,7 @@ On Error GoTo ErrPtnr_OnError
 50180  End If
 50190  TestPSPage = Replace(TestPSPage, "[INFOPDFCREATOR]", tStr, , 1, vbTextCompare)
 50200
-50210  tStr = CompletePath(GetSystemDirectory()) & "PDFSpooler.exe"
+50210  tStr = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
 50220  If FileExists(tStr) = True Then
 50230    Set c = GetFileVersion(tStr)
 50240    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")

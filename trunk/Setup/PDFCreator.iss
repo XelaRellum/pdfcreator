@@ -87,7 +87,7 @@
 #define PDFSpoolerVersion    GetFileVersionVBExe("..\PDFSpooler\PDFSpooler.exe")
 #define TransToolVersion     GetFileVersionVBExe("..\Transtool\Transtool.exe")
 
-#define ReleaseCandidate     "10"
+#define ReleaseCandidate     ""
 
 #define BetaVersion          ""
 
@@ -125,7 +125,7 @@
 #define DefaultPrintername          "PDFCreator"
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "0.8.1"
+#define UpdateIsPossibleMinVersion "0.9.0"
 
 [Setup]
 AllowNoIcons=true
@@ -163,10 +163,10 @@ ShowTasksTreeLines=false
 SolidCompression=true
 UsePreviousAppDir=true
 
-VersionInfoVersion=0.8.1
+VersionInfoVersion=0.9.0
 VersionInfoCompany=Frank Heindörfer, Philip Chinery
 VersionInfoDescription=PDFCreator is the easy way of creating PDFs.
-VersionInfoTextVersion=0.8.1
+VersionInfoTextVersion=0.9.0
 
 WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
@@ -412,6 +412,7 @@ Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestD
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\modPDFCreatorAccess.bas; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CombineAndAddBookmarks.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
@@ -428,7 +429,6 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression3.vbs; De
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall

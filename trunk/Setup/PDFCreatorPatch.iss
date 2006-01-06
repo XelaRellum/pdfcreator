@@ -48,7 +48,7 @@
 
 #define BetaVersion          "0"
 
-#define PatchLevel           "4"
+#define PatchLevel           "1"
 
 #define AppVersionStr        AppVersion
 #define SetupAppVersionStr   SetupAppVersion
@@ -72,7 +72,7 @@
 #define UninstallRegStr2     "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + UninstallIDStr2
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "0.8.1"
+#define UpdateIsPossibleMinVersion "0.9.0"
 
 [Setup]
 AllowNoIcons=false
@@ -100,10 +100,10 @@ ShowTasksTreeLines=false
 SolidCompression=true
 UsePreviousAppDir=true
 
-VersionInfoVersion=0.8.1
+VersionInfoVersion=0.9.0
 VersionInfoCompany=Frank Heindörfer, Philip Chinery
 VersionInfoDescription=PDFCreator is the easy way of creating PDFs.
-VersionInfoTextVersion=0.8.1
+VersionInfoTextVersion=0.9.0
 
 WizardImageFile=..\Pictures\Setup\PDFCreatorBigPatch.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
@@ -113,26 +113,26 @@ Uninstallable=false
 #IFNDEF Test
 ;Program files
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Flags: comparetimestamp
-Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
-Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Flags: comparetimestamp
+;Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
+;Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Flags: comparetimestamp
 
-Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
-Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
-Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
-Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
-Source: ..\PDFCreator\Languages\portuguesept.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
-Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+;Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+;Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+;Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+;Source: ..\PDFCreator\Languages\portuguesept.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
+;Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
 
 ;vblocal.exe from IPDK
 Source: C:\IPDK\vblocal.exe; DestDir: {app}; Flags: deleteafterinstall overwritereadonly onlyifdoesntexist ignoreversion
 
 ; help files
-Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Flags: ignoreversion
-Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversion
+;Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Flags: ignoreversion
+;Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Flags: ignoreversion
 
-Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\modPDFCreatorAccess.bas; DestDir: {app}\COM\MS Office; Flags: ignoreversion
+;Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Flags: ignoreversion
+;Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Flags: ignoreversion
+;Source: ..\COM\Samples\MS Office\modPDFCreatorAccess.bas; DestDir: {app}\COM\MS Office; Flags: ignoreversion
 #ENDIF
 
 [Registry]

@@ -5,8 +5,8 @@ See http://support.microsoft.com/default.aspx?scid=kb;en-us;823746
 Name             Version           Size  
 
 ASYCFILT.DLL     2.40.4275.1         147.728 Bytes     
-MSCOMCT2.OCX     6.0.88.4            647.872 Bytes
-MSCOMCTL.OCX     6.0.88.77         1.122.816 Bytes
+MSCOMCT2.OCX     6.1.97.82           647.872 Bytes
+MSCOMCTL.OCX     6.1.97.86         1.122.816 Bytes
 MSMAPI32.OCX     6.0.81.69           137.000 Bytes
 MSMPIDE.DLL      6.0.81.63            23.552 Bytes
 MSVBVM60.DLL     6.0.96.90         1.394.688 Bytes
