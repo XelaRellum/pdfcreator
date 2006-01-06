@@ -45,92 +45,90 @@ On Error GoTo ErrPtnr_OnError
 50090   CheckProgramInstances
 50100  End If
 50110
-50120
-50130  InitProgram
-50140
-50150  IfLoggingWriteLogfile "PDFCreator Program Start"
-50160  IfLoggingWriteLogfile "Windowsversion: " & GetWinVersionStr
-50170  If UseINI Then
-50180    IfLoggingWriteLogfile "UseINI: True"
-50190    IfLoggingWriteLogfile "PDFCreatorINIFile: " & PDFCreatorINIFile
-50200   Else
-50210    IfLoggingWriteLogfile "UseINI: False"
-50220  End If
-50230  If InstalledAsServer Then
-50240    IfLoggingWriteLogfile "InstalledAsServer: True"
-50250   Else
-50260    IfLoggingWriteLogfile "InstalledAsServer: False"
-50270  End If
-50280  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
-50290
-50300
-50310  If UnLoadFile Then
-50320   CreateUnloadFile
-50330   InstanceCounter = InstanceCounter - 1
-50340   Exit Sub
-50350  End If
-50360
-50370  If ClearCacheDir Then
-50380   ClearCache
-50390  End If
+50120  InitProgram
+50130
+50140  IfLoggingWriteLogfile "PDFCreator Program Start"
+50150  IfLoggingWriteLogfile "Windowsversion: " & GetWinVersionStr
+50160  If UseINI Then
+50170    IfLoggingWriteLogfile "UseINI: True"
+50180    IfLoggingWriteLogfile "PDFCreatorINIFile: " & PDFCreatorINIFile
+50190   Else
+50200    IfLoggingWriteLogfile "UseINI: False"
+50210  End If
+50220  If InstalledAsServer Then
+50230    IfLoggingWriteLogfile "InstalledAsServer: True"
+50240   Else
+50250    IfLoggingWriteLogfile "InstalledAsServer: False"
+50260  End If
+50270  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
+50280
+50290  If UnLoadFile Then
+50300   CreateUnloadFile
+50310   InstanceCounter = InstanceCounter - 1
+50320   Exit Sub
+50330  End If
+50340
+50350  If ClearCacheDir Then
+50360   ClearCache
+50370  End If
+50380
+50390  PrintFiles
 50400
-50410  PrintFiles
-50420
-50430  If InitSettings Then
-50440   SaveOptions Options
-50450  End If
-50460
-50470  If NoStart Then
-50480   InstanceCounter = InstanceCounter - 1
-50490   Exit Sub
-50500  End If
-50510
-50520  If ShowOnlyOptions Then
-50530   frmOptions.Show vbModal
-50540   InstanceCounter = InstanceCounter - 1
-50550   Exit Sub
-50560  End If
-50570
-50580  If ShowOnlyLogfile Then
-50590   frmLog.Show vbModal
-50600   InstanceCounter = InstanceCounter - 1
-50610   Exit Sub
-50620  End If
+50410  If InitSettings Then
+50420   SaveOptions Options
+50430  End If
+50440
+50450  If NoStart Then
+50460   InstanceCounter = InstanceCounter - 1
+50470   Exit Sub
+50480  End If
+50490
+50500  If ShowOnlyOptions Then
+50510   frmOptions.Show vbModal
+50520   InstanceCounter = InstanceCounter - 1
+50530   Exit Sub
+50540  End If
+50550
+50560  If ShowOnlyLogfile Then
+50570   frmLog.Show vbModal
+50580   InstanceCounter = InstanceCounter - 1
+50590   Exit Sub
+50600  End If
+50610
+50620  LoadGhostscriptDLL
 50630
-50640  LoadGhostscriptDLL
-50650
-50660  If PDFCreatorPrinter = False Then
-50670   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
-50680     Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-50690     KillFile Filename
-50700     FileCopy InputFilename, Filename
-50710    Else
-50720     ConvertPostscriptFile InputFilename, OutputFilename
-50730   End If
-50740  End If
-50750
-50760  If ProgramIsRunning(PDFCreator_GUID) Then
-50770    ' There is a local running instance
-50780    If Not NoAbortIfRunning Then
-50790     InstanceCounter = InstanceCounter - 1
-50800     Exit Sub
-50810    End If
-50820   Else
-50830  ' Create a mutex
-50840    Set mutexLocal = New clsMutex
-50850    mutexLocal.CreateMutex PDFCreator_GUID
-50860    Set mutexGlobal = New clsMutex
-50870    ' Check for a global running instance
-50880    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-50890     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-50900    End If
-50910  End If
-50920
-50930  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-50940   InitCommonControls
-50950  End If
-50960
-50970  Load frmMain
+50640  If PDFCreatorPrinter = False Then
+50650   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
+50660     Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+50670     KillFile Filename
+50680     FileCopy InputFilename, Filename
+50690    Else
+50700     ConvertPostscriptFile InputFilename, OutputFilename
+50710   End If
+50720  End If
+50730
+50740  If ProgramIsRunning(PDFCreator_GUID) Then
+50750    ' There is a local running instance
+50760    If Not NoAbortIfRunning Then
+50770     InstanceCounter = InstanceCounter - 1
+50780     Exit Sub
+50790    End If
+50800   Else
+50810  ' Create a mutex
+50820    Set mutexLocal = New clsMutex
+50830    mutexLocal.CreateMutex PDFCreator_GUID
+50840    Set mutexGlobal = New clsMutex
+50850    ' Check for a global running instance
+50860    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+50870     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50880    End If
+50890  End If
+50900
+50910  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+50920   InitCommonControls
+50930  End If
+50940
+50950  Load frmMain
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -302,10 +300,10 @@ On Error GoTo ErrPtnr_OnError
 50430  If FileExists(Languagefile) = True Then
 50440    LoadLanguage Languagefile
 50450   Else
-50460    If Not InstalledAsServer Then
-50470     MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
-50480    End If
-50490    IfLoggingWriteLogfile "Laguage file >" & Languagefile & _
+50460 '   If Not InstalledAsServer Then
+50470 '    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
+50480 '   End If
+50490    IfLoggingWriteLogfile "Language file >" & Languagefile & _
     "< not found! Error [" & Err.LastDllError & "]"
 50510  End If
 50520
@@ -649,4 +647,3 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-
