@@ -2218,23 +2218,48 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Sub CorrectOptions()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Options.AutosaveDirectory = Trim$(Options.AutosaveDirectory)
+50020  Options.PrinterTemppath = Trim$(Options.PrinterTemppath)
+50030  If LenB(Options.AutosaveDirectory) = 0 Then
+50040   Options.AutosaveDirectory = "<MyFiles>\"
+50050  End If
+50060  If LenB(Options.PrinterTemppath) = 0 Then
+50070   Options.PrinterTemppath = "<Temp>PDFCreator\"
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modOptions", "CorrectOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Public Sub SaveOptions(sOptions As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If InstalledAsServer Then
-50020    If UseINI Then
-50030      SaveOptionsINI sOptions, CompletePath(GetCommonAppData) & "PDFCreator.ini"
-50040     Else
-50050      SaveOptionsREG sOptions, HKEY_LOCAL_MACHINE
-50060    End If
-50070   Else
-50080    If UseINI Then
-50090      SaveOptionsINI sOptions, PDFCreatorINIFile
-50100     Else
-50110      SaveOptionsREG sOptions
-50120    End If
-50130  End If
+50010  CorrectOptions
+50020  If InstalledAsServer Then
+50030    If UseINI Then
+50040      SaveOptionsINI sOptions, CompletePath(GetCommonAppData) & "PDFCreator.ini"
+50050     Else
+50060      SaveOptionsREG sOptions, HKEY_LOCAL_MACHINE
+50070    End If
+50080   Else
+50090    If UseINI Then
+50100      SaveOptionsINI sOptions, PDFCreatorINIFile
+50110     Else
+50120      SaveOptionsREG sOptions
+50130    End If
+50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
