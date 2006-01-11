@@ -2087,29 +2087,33 @@ On Error GoTo ErrPtnr_OnError
 50140   nBasePath = Mid$(nBasePath, 3)
 50150   nServerRoot = "\\"
 50160  End If
-50170  nPathParts = Split(RelativePath, PathSeparator)
-50180  If nPathParts(0) = ".." Then
-50190    nBaseParts = Split(nBasePath, PathSeparator)
-50200    For i = 0 To UBound(nPathParts)
-50210     If nPathParts(i) = ".." Then
-50220       p = p + 1
-50230      Else
-50240       If p Then
-50250        nPath = nPath & PathSeparator & nPathParts(i)
-50260       End If
-50270      End If
-50280     Next
-50290     If p > UBound(nBaseParts) Then
-50300       Err.Raise rpErrTooManySteps, "modRelativePaths.ResolvePath", "rpErrTooManySteps"
-50310      Else
-50320       For i = 0 To UBound(nBaseParts) - p
-50330        nResolvedPath = nResolvedPath & nBaseParts(i) & PathSeparator
-50340       Next i
-50350       ResolveRelativePath = nServerRoot & nResolvedPath & Mid$(nPath, 2)
-50360     End If
-50370    Else
-50380     ResolveRelativePath = nServerRoot & nBasePath & PathSeparator & RelativePath
-50390  End If
+50170  If LenB(RelativePath) > 0 Then
+50180    nPathParts = Split(RelativePath, PathSeparator)
+50190    If nPathParts(0) = ".." Then
+50200      nBaseParts = Split(nBasePath, PathSeparator)
+50210      For i = 0 To UBound(nPathParts)
+50220       If nPathParts(i) = ".." Then
+50230         p = p + 1
+50240        Else
+50250         If p Then
+50260          nPath = nPath & PathSeparator & nPathParts(i)
+50270         End If
+50280       End If
+50290      Next i
+50300      If p > UBound(nBaseParts) Then
+50310        Err.Raise rpErrTooManySteps, "modRelativePaths.ResolvePath", "rpErrTooManySteps"
+50320       Else
+50330        For i = 0 To UBound(nBaseParts) - p
+50340         nResolvedPath = nResolvedPath & nBaseParts(i) & PathSeparator
+50350        Next i
+50360        ResolveRelativePath = nServerRoot & nResolvedPath & Mid$(nPath, 2)
+50370      End If
+50380     Else
+50390      ResolveRelativePath = nServerRoot & nBasePath & PathSeparator & RelativePath
+50400    End If
+50410   Else
+50420    ResolveRelativePath = nBasePath & PathSeparator & RelativePath
+50430  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

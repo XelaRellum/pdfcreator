@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -1419,7 +1419,19 @@ Private Sub CreateModOptions()
  Print #fn, " ReadOptionsINI = myOptions"
  Print #fn, "End Function"
  Print #fn, ""
+ Print #fn, "Public Sub CorrectOptions()"
+ Print #fn, " Options.AutosaveDirectory = Trim$(Options.AutosaveDirectory)"
+ Print #fn, " Options.PrinterTemppath = Trim$(Options.PrinterTemppath)"
+ Print #fn, " If LenB(Options.AutosaveDirectory) = 0 Then"
+ Print #fn, "  Options.AutosaveDirectory = ""<MyFiles>\"""
+ Print #fn, " End If"
+ Print #fn, " If LenB(Options.PrinterTemppath) = 0 Then"
+ Print #fn, "  Options.PrinterTemppath = ""<Temp>PDFCreator\"""
+ Print #fn, " End If"
+ Print #fn, "End Sub"
+ Print #fn, ""
  Print #fn, "Public Sub SaveOptions(sOptions as tOptions)"
+ Print #fn, " CorrectOptions"
  Print #fn, " If InstalledAsServer Then"
  Print #fn, "   If UseINI Then"
  Print #fn, "     SaveOptionsINI sOptions, Completepath(GetCommonAppData) & ""PDFCreator.ini"""
