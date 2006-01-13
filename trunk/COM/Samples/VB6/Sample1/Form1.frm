@@ -2,35 +2,61 @@ VERSION 5.00
 Begin VB.Form Form1 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Form1"
-   ClientHeight    =   3075
+   ClientHeight    =   5130
    ClientLeft      =   45
    ClientTop       =   435
    ClientWidth     =   6600
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   3075
+   ScaleHeight     =   5130
    ScaleWidth      =   6600
    StartUpPosition =   3  'Windows-Standard
+   Begin VB.ComboBox cmbCountOfPages 
+      Height          =   315
+      Left            =   1260
+      Style           =   2  'Dropdown-Liste
+      TabIndex        =   6
+      Top             =   2625
+      Width           =   750
+   End
+   Begin VB.TextBox txtFilename 
+      Height          =   330
+      Left            =   105
+      TabIndex        =   4
+      Top             =   2100
+      Width           =   6315
+   End
+   Begin VB.TextBox txtStatus 
+      BackColor       =   &H00C0FFFF&
+      Height          =   1485
+      Left            =   105
+      Locked          =   -1  'True
+      MultiLine       =   -1  'True
+      ScrollBars      =   3  'Beides
+      TabIndex        =   3
+      Top             =   3465
+      Width           =   6315
+   End
    Begin VB.PictureBox Picture1 
       AutoRedraw      =   -1  'True
       AutoSize        =   -1  'True
       Height          =   465
-      Left            =   5400
+      Left            =   5250
       ScaleHeight     =   27
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   62
-      TabIndex        =   3
-      Top             =   1890
+      TabIndex        =   2
+      Top             =   1155
       Visible         =   0   'False
       Width           =   990
    End
    Begin VB.CommandButton Command1 
       Caption         =   "Create PDF"
       Height          =   435
-      Left            =   105
+      Left            =   5145
       TabIndex        =   1
-      Top             =   1890
+      Top             =   2625
       Width           =   1275
    End
    Begin VB.TextBox Text1 
@@ -42,14 +68,29 @@ Begin VB.Form Form1
       Top             =   105
       Width           =   6300
    End
-   Begin VB.Label lbl 
-      Caption         =   "Status: Program was started."
-      ForeColor       =   &H000000C0&
-      Height          =   555
+   Begin VB.Label lblCount 
+      AutoSize        =   -1  'True
+      Caption         =   "Count of pages:"
+      Height          =   195
       Left            =   105
-      TabIndex        =   2
-      Top             =   2415
-      Width           =   6345
+      TabIndex        =   7
+      Top             =   2625
+      Width           =   1125
+   End
+   Begin VB.Line Line1 
+      X1              =   105
+      X2              =   6405
+      Y1              =   3255
+      Y2              =   3255
+   End
+   Begin VB.Label lblFilename 
+      AutoSize        =   -1  'True
+      Caption         =   "Filename"
+      Height          =   195
+      Left            =   105
+      TabIndex        =   5
+      Top             =   1890
+      Width           =   630
    End
 End
 Attribute VB_Name = "Form1"
@@ -68,12 +109,22 @@ Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" _
 
 Private WithEvents PDFCreator1 As PDFCreator.clsPDFCreator
 Attribute PDFCreator1.VB_VarHelpID = -1
-Private pErr As clsPDFCreatorError, noStart As Boolean, fac As Double, _
- opt As clsPDFCreatorOptions
+Private pErr As clsPDFCreatorError, opt As clsPDFCreatorOptions
+Private noStart As Boolean, fac As Double, StartTime As Date
 
 Private Sub Form_Load()
+ Dim i As Long
  noStart = True
  fac = Sqr(2#) / 2#
+ With cmbCountOfPages
+  For i = 1 To 100
+   .AddItem CStr(i)
+  Next i
+  .ListIndex = 0
+  .Left = lblCount.Left + lblCount.Width + 100
+  .Top = lblCount.Top + (lblCount.Height - .Height) / 2
+ End With
+ txtFilename.Text = CompletePath(App.Path) & App.EXEName & ".pdf"
  Set PDFCreator1 = New clsPDFCreator
  Set pErr = New clsPDFCreatorError
  With PDFCreator1
@@ -83,7 +134,7 @@ Private Sub Form_Load()
      Command1.Enabled = False
      Exit Sub
     End If
-    lbl.Caption = "Status: Use an existing running instance!"
+    AddStatus "Use an existing running instance!"
     .cVisible = True
   End If
   ' Get the options
@@ -92,6 +143,7 @@ Private Sub Form_Load()
   Picture1.Picture = LoadResPicture(101, vbResBitmap)
   noStart = False
  End With
+ AddStatus "Program started"
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -106,13 +158,14 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub Command1_Click()
- Dim pic As IPictureDisp, sw As Long, sh As Long, r As Long
- 
+ Dim pic As IPictureDisp, sw As Long, sh As Long, r As Long, _
+  Path As String, Filename As String, i As Long
+ SplitPath txtFilename.Text, , Path, Filename
  Command1.Enabled = False
- lbl.Caption = "Status: Start creating pdf ..."
+ AddStatus "Start creating pdf ..."
  With opt
-  .AutosaveDirectory = App.Path
-  .AutosaveFilename = App.EXEName
+  .AutosaveDirectory = Path
+  .AutosaveFilename = Filename
   .UseAutosave = 1
   .UseAutosaveDirectory = 1
   .AutosaveFormat = 0 ' PDF
@@ -126,15 +179,23 @@ Private Sub Command1_Click()
   sh = .ScaleHeight
   r = (0.8 * sw) / 2#
   .PrintQuality = 150
-  .PaintPicture Picture1.Picture, .ScaleWidth - Picture1.ScaleWidth * 6.3 - 100, 100
   .Font.Size = 12
-  DrawCircles sw / 2#, 1.2 * sh / 2#, r, recDepth
   .ForeColor = vbBlack
+  For i = 1 To cmbCountOfPages.ListIndex
+   .PaintPicture Picture1.Picture, .ScaleWidth - Picture1.ScaleWidth * 6.3 - 100, 100
+   DrawCircles sw / 2#, 1.2 * sh / 2#, r, recDepth
+   PrintTextOnPrinter Text1, 400, 1000
+   .NewPage
+  Next i
+  .PaintPicture Picture1.Picture, .ScaleWidth - Picture1.ScaleWidth * 6.3 - 100, 100
+  DrawCircles sw / 2#, 1.2 * sh / 2#, r, recDepth
   PrintTextOnPrinter Text1, 400, 1000
   .EndDoc
  End With
  PDFCreator1.cPrinterStop = False
+ StartTime = Now
  Command1.Enabled = True
+ Screen.MousePointer = vbHourglass
  ' You can't restore the options here, because the printjob isn't ready!
 End Sub
 
@@ -207,12 +268,102 @@ Private Sub DrawCircles(xm As Long, ym As Long, r As Long, Optional rec As Long 
  End If
 End Sub
 
+Private Sub AddStatus(Str1 As String)
+ With txtStatus
+  If LenB(.Text) = 0 Then
+    .Text = Time & ": " & Str1
+   Else
+    .Text = .Text & vbCrLf & Time & ": " & Str1
+  End If
+  .SelStart = Len(.Text)
+ End With
+End Sub
+
+Public Function CompletePath(Path As String) As String
+ If Len(Path) = 0 Then
+  Exit Function
+ End If
+ Path = Trim$(Path)
+ If Right$(Path, 1) = "\" Then
+   CompletePath = LTrim$(Path)
+  Else
+   CompletePath = LTrim$(Path) & "\"
+ End If
+End Function
+
+Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional Filename As String, Optional File As String, Optional Extension As String)
+ Dim nPos As Integer
+ nPos = InStrRev(FullPath, "\")
+ If nPos > 0 Then
+   If Left$(FullPath, 2) = "\\" Then
+    If nPos = 2 Then
+     Drive = FullPath: Path = vbNullString: Filename = vbNullString: File = vbNullString
+     Extension = vbNullString
+     Exit Sub
+    End If
+   End If
+   Path = Left$(FullPath, nPos - 1)
+   Filename = Mid$(FullPath, nPos + 1)
+   nPos = InStrRev(Filename, ".")
+   If nPos > 0 Then
+     File = Left$(Filename, nPos - 1)
+     Extension = Mid$(Filename, nPos + 1)
+    Else
+     File = Filename
+     Extension = vbNullString
+   End If
+  Else
+   nPos = InStrRev(FullPath, ":")
+   If nPos > 0 Then
+     Path = Mid(FullPath, 1, nPos - 1): Filename = Mid(FullPath, nPos + 1)
+     nPos = InStrRev(Filename, ".")
+     If nPos > 0 Then
+       File = Left$(Filename, nPos - 1)
+       Extension = Mid$(Filename, nPos + 1)
+      Else
+       File = Filename
+       Extension = vbNullString
+     End If
+    Else
+     Path = vbNullString: Filename = FullPath
+     nPos = InStrRev(Filename, ".")
+     If nPos > 0 Then
+       File = Left$(Filename, nPos - 1)
+       Extension = Mid$(Filename, nPos + 1)
+      Else
+       File = Filename
+       Extension = vbNullString
+     End If
+   End If
+ End If
+ If Left$(Path, 2) = "\\" Then
+   nPos = InStr(3, Path, "\")
+   If nPos Then
+     Drive = Left$(Path, nPos - 1)
+    Else
+     Drive = Path
+   End If
+  Else
+   If Len(Path) = 2 Then
+    If Right$(Path, 1) = ":" Then
+     Path = Path & "\"
+    End If
+   End If
+   If Mid$(Path, 2, 2) = ":\" Then
+    Drive = Left$(Path, 2)
+   End If
+ End If
+End Sub
+
 Private Sub PDFCreator1_eReady()
- lbl.Caption = "Status: """ & PDFCreator1.cOutputFilename & """ was created!"
+ AddStatus """" & PDFCreator1.cOutputFilename & """ was created! (" & _
+  DateDiff("s", StartTime, Now) & " seconds)"
  PDFCreator1.cPrinterStop = True
+ Screen.MousePointer = vbNormal
 End Sub
 
 Private Sub PDFCreator1_eError()
  Set pErr = PDFCreator1.cError
- lbl.Caption = "Status: ""Error[" & pErr.Number & "]: " & pErr.Description
+ AddStatus "Error[" & pErr.Number & "]: " & pErr.Description
+ Screen.MousePointer = vbNormal
 End Sub
