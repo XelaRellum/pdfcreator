@@ -926,7 +926,7 @@ Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Butt
   DefaultPrintername = ""
   If Data.Files.Count = 1 Then
     SplitPath Data.Files.Item(1), , , , , Ext
-    If IsPostscriptFile(Data.Files.Item(1)) = True And (UCase$(Ext) = "PS" Or UCase$(Ext) = "EPS") Then
+    If IsPostscriptFile(Data.Files.Item(1)) = True Or UCase$(Ext) = "PS" Or UCase$(Ext) = "EPS" Then
       tFilename = GetTempFile(GetPDFCreatorTempfolder & PDFCreatorSpoolDirectory, "~PS")
       FileCopy Data.Files.Item(1), tFilename
      Else
