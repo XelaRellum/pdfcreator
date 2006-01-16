@@ -22,7 +22,7 @@
 
 #Ifdef IncludeGhostscript
 #If (GhostscriptLicense=="GPL")
- #define GhostscriptVersion "8.15"
+ #define GhostscriptVersion "8.50"
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 #If (GhostscriptLicense=="AFPL")
@@ -274,8 +274,8 @@ Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.NTF; DestDir: {code:PrinterDriverD
 
 ;Ghostscript
 #IFDEF GhostscriptVersion
-Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
-Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
+Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
+Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
 #ENDIF
 
 ;Redmon files
@@ -359,9 +359,9 @@ Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {
 
 ;Ghostscript
 #IFDEF IncludeGhostscript
-Source: C:\Gs{#GhostscriptVersion}\Fonts\*.*; DestDir: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
-Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
-Source: C:\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
+Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\Fonts\*.*; DestDir: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
+Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
+Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
 #ENDIF
 #ENDIF
 
