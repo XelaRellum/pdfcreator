@@ -1720,7 +1720,7 @@ On Error GoTo ErrPtnr_OnError
 50700         If Options.RunProgramAfterSaving = 1 Then
 50710          RunProgramAfterSaving Me.hwnd, OutputFilename, _
          Options.RunProgramAfterSavingProgramParameters, _
-         Options.RunProgramAfterSavingWindowstyle, tFile(1)
+         Options.RunProgramAfterSavingWindowstyle
 50740         End If
 50750        Else
 50760         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
@@ -2384,7 +2384,7 @@ On Error GoTo ErrPtnr_OnError
 50170     If Options.RunProgramAfterSaving = 1 Then
 50180      RunProgramAfterSaving Me.hwnd, OutputFilename, _
       Options.RunProgramAfterSavingProgramParameters, _
-      Options.RunProgramAfterSavingWindowstyle, InputFilename
+      Options.RunProgramAfterSavingWindowstyle
 50210     End If
 50220     Set mail = New clsPDFCreatorMail
 50230     If mail.Send(OutputFilename, Options.StandardSubject, Options.SendMailMethod, rec) <> 0 Then

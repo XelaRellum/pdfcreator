@@ -315,8 +315,8 @@ On Error GoTo ErrPtnr_OnError
 50420  lbl(4).Left = fraAbout.Width - lbl(4).Width - lbl(0).Left
 50430  cmd.Top = fraAbout.Top + fraAbout.Height + 100
 50440  Me.Height = cmd.Top + cmd.Height + (Me.Height - Me.ScaleHeight) + 100
-50450  ImgPaypal.Top = lbl(0).Top
-50460  ImgPaypal.Left = fraAbout.Width - ImgPaypal.Width - lbl(0).Left
+50450  imgPaypal.Top = lbl(0).Top
+50460  imgPaypal.Left = fraAbout.Width - imgPaypal.Width - lbl(0).Left
 50470  Timer2.Interval = 40
 50480  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -583,24 +583,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ChangeFont(Index As Long, f As StdFont)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  fontColl.Remove Index
-50020  fontColl.Add f, , Index
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmAbout", "ChangeFont")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Function GetFont(ctrl As Control) As StdFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -628,7 +610,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
- 
 Private Sub SetAboutText()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -797,28 +778,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmAbout", "SetAboutText")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub SetStandardFont()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim f As StdFont, i As Long
-50020  Set f = GetFont(picAbout)
-50030  Set fontColl = New Collection
-50040  For i = 1 To AboutText.Count
-50050   fontColl.Add f
-50060  Next i
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmAbout", "SetStandardFont")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

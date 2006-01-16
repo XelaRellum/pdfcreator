@@ -128,7 +128,6 @@ Private Const HTCAPTION = 2
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 Private Declare Function ReleaseCapture Lib "user32" () As Long
 Private m_blnUnloading As Boolean
-Private m_MouseOverImgClose As Boolean
 
 Private Sub AnimateScroller()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

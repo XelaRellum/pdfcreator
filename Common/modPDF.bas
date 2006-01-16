@@ -149,36 +149,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function GetPSHeaderString(PSHeader As tPSHeader) As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String
-50020  If PSHeader.StartComment.StartByte = -1 Then
-50030    tStr = "%!PS-Adobe-3.0" & Chr$(&HA)
-50040   Else
-50050    tStr = "%!" & PSHeader.StartComment.Comment & Chr$(&HA)
-50060  End If
-50070
-50080  tStr = tStr & "%%For:" & PSHeader.CreateFor.Comment & Chr$(&HA)
-50090  tStr = tStr & "%%CreationDate:" & PSHeader.CreationDate.Comment & Chr$(&HA)
-50100  tStr = tStr & "%%Creator:" & PSHeader.Creator.Comment & Chr$(&HA)
-50110  tStr = tStr & "%%Title:" & PSHeader.Title.Comment & Chr$(&HA)
-50120
-50130  tStr = tStr & "%%EndComments" & Chr$(&HA)
-50140  GetPSHeaderString = tStr
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDF", "GetPSHeaderString")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 Public Function GetAutosaveFilename(PostscriptFile As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError

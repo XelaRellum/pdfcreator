@@ -296,7 +296,7 @@ On Error GoTo ErrPtnr_OnError
 50170   If Options.RunProgramAfterSaving = 1 Then
 50180    RunProgramAfterSaving Me.hwnd, PDFFile, _
    Options.RunProgramAfterSavingProgramParameters, _
-   Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
+   Options.RunProgramAfterSavingWindowstyle
 50210   End If
 50220   Set mail = New clsPDFCreatorMail
 50230   If mail.Send(PDFFile, txtSubject.Text, Options.SendMailMethod) <> 0 Then
@@ -727,7 +727,7 @@ On Error GoTo ErrPtnr_OnError
 50210    If Options.RunProgramAfterSaving = 1 Then
 50220     RunProgramAfterSaving Me.hwnd, PDFFile, _
      Options.RunProgramAfterSavingProgramParameters, _
-     Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
+     Options.RunProgramAfterSavingWindowstyle
 50250    End If
 50260   End If
 50270   If chkStartStandardProgram.Value = 1 Then

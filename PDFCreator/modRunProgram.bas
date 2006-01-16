@@ -1,7 +1,7 @@
 Attribute VB_Name = "modRunProgram"
 Option Explicit
 
-Public Sub RunProgramAfterSaving(hwnd As Long, ByVal Docname As String, ByVal Parameters As String, Windowstyle As Long, Optional ByVal Spoolfile As String)
+Public Sub RunProgramAfterSaving(hwnd As Long, ByVal Docname As String, ByVal Parameters As String, Windowstyle As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---

@@ -43,11 +43,11 @@ Begin VB.Form frmEdit
          Appearance      =   0  '2D
          Height          =   540
          Index           =   1
-         Left            =   0
+         Left            =   105
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertikal
          TabIndex        =   0
-         Top             =   240
+         Top             =   315
          Width           =   2850
       End
    End
@@ -131,16 +131,12 @@ On Error GoTo ErrPtnr_OnError
 50010  Height = 0.6 * Screen.Height
 50020  Width = 0.6 * Screen.Width
 50030  Move (Screen.Width - Width) / 2, (Screen.Height - Height) / 2
-50040  With frmMain
-50050   Icon = .Icon
-50060   Caption = "Edit"
-50070  End With
-50080  dmFra(0).Caption = "Template text"
-50090  dmFra(1).Caption = "Translated text"
-50100  With txt(1)
-50110   Set .Font = frmMain.lsv.Font
-50120  End With
-50130  ShowAcceleratorsInForm Me, True
+50040  Icon = frmMain.Icon
+50050  Caption = "Edit"
+50060  dmFra(0).Caption = "Template text"
+50070  dmFra(1).Caption = "Translated text"
+50080  Set txt(1).Font = frmMain.lsv.Font
+50090  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
