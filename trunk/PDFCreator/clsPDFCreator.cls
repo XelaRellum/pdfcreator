@@ -582,7 +582,7 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  cOption = cGetOptionFromOptions(PropertyName, Options, "cOption")
+50050  cOption = cGetOptionFromOptions(PropertyName, Options)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -662,7 +662,7 @@ Public Property Get cStandardOption(ByVal PropertyName As String) As Variant
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cStandardOption = cGetOptionFromOptions(PropertyName, StandardOptions, "cStandardOption")
+50010  cStandardOption = cGetOptionFromOptions(PropertyName, StandardOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -1542,7 +1542,11 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Sub
 50040  End If
-50050  SaveOptions Options
+50050  If Not IsMissing(Options1) Then
+50060    SaveOptions cLetOptions(Options1)
+50070   Else
+50080    SaveOptions Options
+50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1706,7 +1710,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions, FunctionName As String) As Variant
+Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions) As Variant
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---

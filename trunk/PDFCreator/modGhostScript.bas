@@ -832,7 +832,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateTXT(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreateTXT(GSInputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -933,7 +933,7 @@ On Error GoTo ErrPtnr_OnError
 50520   Case 7: 'EPS
 50530    CreateEPS GSInputFile, GSOutputFile, Options
 50540   Case 8: 'TXT
-50550    CreateTXT GSInputFile, GSOutputFile, Options
+50550    CreateTXT GSInputFile, Options
 50560    CreateTextFile GSOutputFile, GS_OutStr
 50570  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
