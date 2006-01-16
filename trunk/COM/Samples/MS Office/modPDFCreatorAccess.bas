@@ -44,9 +44,11 @@ Public Sub PrintRep(RepName As String)
   .cClose
  End With
 
-If OutputFilename = "" Then
- MsgBox "Creating pdf file." & vbCrLf & vbCrLf & _
-  "An error is occured: Time is up!", vbExclamation + vbSystemModal
-End If
+ Sleep 2000 ' Wait until PDFCreator is removed from memory
+
+ If OutputFilename = "" Then
+  MsgBox "Creating pdf file." & vbCrLf & vbCrLf & _
+   "An error is occured: Time is up!", vbExclamation + vbSystemModal
+ End If
 
 End Sub
