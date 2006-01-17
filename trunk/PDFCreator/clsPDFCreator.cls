@@ -25,6 +25,7 @@ Private Const ErrDescr4 = "Ghostscript error: '%1'!"
 Private Const ErrDescr5 = "File '%1' doesn't exist!"
 Private Const ErrDescr6 = "Not a valid path or filename '%1'!"
 Private Const ErrDescr7 = "File '%1' is in use!"
+Private Const ErrDescr8 = "Function '%1': Options1 is not a 'clsPDFCreatorOptions' type!"
 
 Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
 Private WithEvents eActionTimer As Timer
@@ -1535,28 +1536,22 @@ End Select
 End Function
 
 Public Sub cSaveOptions(ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If CheckForRunningProgramErrors Then
-50020   RaiseEvent eError
-50030   Exit Sub
-50040  End If
-50050  If Not IsMissing(Options1) Then
-50060    SaveOptions cLetOptions(Options1)
-50070   Else
-50080    SaveOptions Options
-50090  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cSaveOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If CheckForRunningProgramErrors Then
+  RaiseEvent eError
+  Exit Sub
+ End If
+ If Not IsMissing(Options1) Then
+   If TypeOf Options1 Is clsPDFCreatorOptions Then
+     SaveOptions cLetOptions(Options1)
+    Else
+     mError.Number = 8
+     mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
+     RaiseEvent eError
+     Exit Sub
+   End If
+  Else
+   SaveOptions Options
+ End If
 End Sub
 
 Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions
@@ -1594,24 +1589,18 @@ End Select
 End Function
 
 Public Sub cSaveOptionsToFile(ByVal Options1 As Variant, ByVal INIFilename As String) ' Options1 must be a clsPDFCreatorOptions type
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If CheckForRunningProgramErrors Then
-50020   RaiseEvent eError
-50030   Exit Sub
-50040  End If
-50050  SaveOptionsINI cLetOptions(Options1), INIFilename
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cSaveOptionsToFile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If CheckForRunningProgramErrors Then
+  RaiseEvent eError
+  Exit Sub
+ End If
+ If TypeOf Options1 Is clsPDFCreatorOptions Then
+   SaveOptionsINI cLetOptions(Options1), INIFilename
+  Else
+   mError.Number = 8
+   mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
+   RaiseEvent eError
+   Exit Sub
+ End If
 End Sub
 ' --- Public functions/Subroutines - end ---
 
