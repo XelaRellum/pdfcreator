@@ -263,7 +263,7 @@ On Error GoTo ErrPtnr_OnError
 50060  Restart = False
 50070  SavePasswordsForThisSession = False
 50080  ShowAnimationWindow = False
-50090
+50090  Init_ExactTimer
 50100
 50110  PDFCreatorLogfilePath = CompletePath(GetTempPath) & "PDFCreator\"
 50120  ErrPtnr.SetProgInfo App.EXEName & " " & GetProgramReleaseStr

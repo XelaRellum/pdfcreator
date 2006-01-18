@@ -237,10 +237,12 @@ Private Function CallGhostscript(Comment As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim LastStop As Currency, res As Boolean
+50010  Dim LastStop As Currency, res As Boolean, c As Currency
 50020  LastStop = ExactTimer_Value()
 50030  res = CallGS(GSParams)
-50040  IfLoggingWriteLogfile "Time for converting in seconds [" & Comment & "]: " & CStr(ExactTimer_Value() - LastStop)
+50040  c = ExactTimer_Value() - LastStop
+50050  IfLoggingWriteLogfile "Time for converting [" & Comment & "]: " & _
+ Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -952,7 +954,7 @@ Public Function OptimizePDF(PDFInputFilename As String, PDFOutputFilename As Str
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim LastStop As Currency, tStr As String
+50010  Dim LastStop As Currency, tStr As String, c As Currency
 50020  InitParams
 50030  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
 50040  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
@@ -974,7 +976,9 @@ On Error GoTo ErrPtnr_OnError
 50200  GSParams(0) = "pdfopt"
 50210  LastStop = ExactTimer_Value()
 50220  OptimizePDF = CallGS(GSParams)
-50230  IfLoggingWriteLogfile "Time for optimizing in seconds: " & CStr(ExactTimer_Value() - LastStop)
+50230  c = ExactTimer_Value() - LastStop
+50240  IfLoggingWriteLogfile "Time for optimizing: " & _
+ Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

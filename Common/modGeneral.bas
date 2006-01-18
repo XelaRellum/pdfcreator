@@ -1703,31 +1703,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function StopWatch(Optional RunWatch As Boolean = True, Optional TimeMask As String = "nn:ss") As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Static Start As Single
-50021  Select Case RunWatch
-        Case True
-50040    Start = Timer
-50050    StopWatch = "0"
-50060   Case Else
-50070    StopWatch = Format$(Int(Timer - Start) * (1 / 86400), TimeMask & ":") & _
-    Format$(((Timer - Start) - Int(Timer - Start)) * 1000, "000")
-50090  End Select
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "StopWatch")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 Public Function RemoveAllKnownFileExtensions(Filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
