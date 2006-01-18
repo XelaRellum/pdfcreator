@@ -1,7 +1,7 @@
 Attribute VB_Name = "modPerformance"
 Option Explicit
 
-Private Const i_Frequency As Currency = 100
+Private i_Frequency As Currency
 
 Public Sub Init_ExactTimer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
