@@ -4,10 +4,10 @@ Copyright (C)2002-2005 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfcreator.de.vu/
           http://www.sourceforge.net/projects/pdfcreator/
 
-Version 0.9.0 (January 2, 2006)
+Version 0.9.0 (January 19, 2006)
 -------------------------------------------------------------------------------
 Improvements: 
-- Using GPL-Ghostscript 8.15 / AFPL Ghostscript 8.53 
+- Using GPL-Ghostscript 8.50 / AFPL Ghostscript 8.53 
 - Added a COM Interface (with description and samples) 
 - Added the hidden settings o PDFCompressionColorCompression*, PDFCompressionGreyCompression* to change the standard compression factors 
 - Added the new commandline parameter /NoPSCheck (Now PDFCreator is compatible with PDF-T-Maker) 
@@ -16,23 +16,19 @@ Improvements:
 - Added the feature to detect the important framedyn.dll file to the setup. 
 - Added german help file 
 - AMD64 Processor Support 
+- Improve email support
+- Terminalserver/Citrix support
+- Support other shells other than explorer (e.g. geoshell, litestep) 
 
 Bug Fixes: 
-- Fixed the timezone information bug in pdf files 
-- Fixed a bug using the pdfenc encryptor 
-- Fixed a bug in the function OptimizePDF (missing paths) 
-- Fixed a bug in PDFCreator/frmSwitchDefaultprinter.frm 
-- Missing msmapi32.ocx is included. 
-- Improve email support. 
-- Terminalserver should work 
-- Using a modifies ghostpdf.ppd 
-- Should work with other shells other than explorer (e.g. geoshell, litestep) 
-- Fixed english.ini 
 - Fixed some minor bugs. 
 
 Known issues: 
-- No hyperlinks possible 
-
+- No hyperlinks possible
+  Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.
+  PDF-T-Maker:
+   http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm
+   http://www.transcom.de/transcom/de/tipps-tricks/acrobat/2004_pdf-t-maker.htm
 
 Version 0.8.0 (April 2, 2004)
 -------------------------------------------------------------------------------

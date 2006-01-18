@@ -1107,40 +1107,28 @@ End Select
 End Function
 
 Public Function cCloseRunningSession() As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim f As Form
-50020  cVisible = False
-50030  cCloseRunningSession = False
-50040  For Each f In Forms
-50050   If Not f Is Nothing Then
-50060    If UCase$(f.Name) <> "FRMMAIN" Then
-50070     Unload f
-50080     cCloseRunningSession = True
-50090    End If
-50100   End If
-50110  Next f
-50120  If Not mForm Is Nothing Then
-50130   With mForm
-50140    .Timer1 = False
-50150    .Timer2 = False
-50160    .Timer3 = False
-50170   End With
-50180   Unload mForm
-50190   ProgramIsStarted = False
-50200   cCloseRunningSession = True
-50210  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cCloseRunningSession")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ On Error Resume Next
+ Dim f As Form
+ cVisible = False
+ cCloseRunningSession = False
+ For Each f In Forms
+  If Not f Is Nothing Then
+   If UCase$(f.Name) <> "FRMMAIN" Then
+    Unload f
+    cCloseRunningSession = True
+   End If
+  End If
+ Next f
+ If Not mForm Is Nothing Then
+  With mForm
+   .Timer1 = False
+   .Timer2 = False
+   .Timer3 = False
+  End With
+  Unload mForm
+  ProgramIsStarted = False
+  cCloseRunningSession = True
+ End If
 End Function
 
 Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean
@@ -1536,22 +1524,35 @@ End Select
 End Function
 
 Public Sub cSaveOptions(ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
- If CheckForRunningProgramErrors Then
-  RaiseEvent eError
-  Exit Sub
- End If
- If Not IsMissing(Options1) Then
-   If TypeOf Options1 Is clsPDFCreatorOptions Then
-     SaveOptions cLetOptions(Options1)
-    Else
-     mError.Number = 8
-     mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
-     RaiseEvent eError
-     Exit Sub
-   End If
-  Else
-   SaveOptions Options
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  If Not IsMissing(Options1) Then
+50060    If TypeOf Options1 Is clsPDFCreatorOptions Then
+50070      SaveOptions cLetOptions(Options1)
+50080     Else
+50090      mError.Number = 8
+50100      mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
+50110      RaiseEvent eError
+50120      Exit Sub
+50130    End If
+50140   Else
+50150    SaveOptions Options
+50160  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cSaveOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions
@@ -1589,18 +1590,31 @@ End Select
 End Function
 
 Public Sub cSaveOptionsToFile(ByVal Options1 As Variant, ByVal INIFilename As String) ' Options1 must be a clsPDFCreatorOptions type
- If CheckForRunningProgramErrors Then
-  RaiseEvent eError
-  Exit Sub
- End If
- If TypeOf Options1 Is clsPDFCreatorOptions Then
-   SaveOptionsINI cLetOptions(Options1), INIFilename
-  Else
-   mError.Number = 8
-   mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
-   RaiseEvent eError
-   Exit Sub
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  If TypeOf Options1 Is clsPDFCreatorOptions Then
+50060    SaveOptionsINI cLetOptions(Options1), INIFilename
+50070   Else
+50080    mError.Number = 8
+50090    mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
+50100    RaiseEvent eError
+50110    Exit Sub
+50120  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cSaveOptionsToFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 ' --- Public functions/Subroutines - end ---
 
