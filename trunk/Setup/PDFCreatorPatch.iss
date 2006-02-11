@@ -14,10 +14,20 @@
  #define SetupLZMACompressionMode "ultra"
 #endif
 
+#define PatchPDFCreator_EXE
+;#define PatchPDFSpooler_EXE
+;#define PatchTransTool_EXE
+
 ;remove the german localization
-#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
-#expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
-#expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+#ifdef PatchPDFCreator_EXE
+ #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
+#endif
+#ifdef PatchPDFSpooler_EXE
+ #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
+#endif
+#ifdef PatchTransTool_EXE
+ #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
+#endif
 
 ;add manifest to exe files
 #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreator\PDFCreator.exe""","..\ManifestManager\")
@@ -48,7 +58,7 @@
 
 #define BetaVersion          "0"
 
-#define PatchLevel           "1"
+#define PatchLevel           "2"
 
 #define AppVersionStr        AppVersion
 #define SetupAppVersionStr   SetupAppVersion
@@ -112,9 +122,15 @@ Uninstallable=false
 [Files]
 #IFNDEF Test
 ;Program files
+#ifdef PatchPDFCreator_EXE
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Flags: comparetimestamp
-;Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
-;Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Flags: comparetimestamp
+#endif
+#ifdef PatchPDFSpooler_EXE
+Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Flags: comparetimestamp
+#endif
+#ifdef PatchTransTool_EXE
+Source: ..\PDFSpooler\PDFSpooler.exe; DestDir: {app}; Flags: comparetimestamp
+#endif
 
 ;Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
 ;Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Flags: ignoreversion onlyifdestfileexists comparetimestamp
@@ -137,7 +153,19 @@ Source: C:\IPDK\vblocal.exe; DestDir: {app}; Flags: deleteafterinstall overwrite
 
 [Registry]
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PatchLevel; Valuedata: {#PatchLevel}; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ReleaseCandidate; Valuedata: 9; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ApplicationVersion; Valuedata: {#AppVersion}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: DisplayVersion; Valuedata: {#AppVersion} + ' Patch level:' + {#PatchLevel}; Flags: uninsdeletevalue
+;Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ReleaseCandidate; Valuedata: 9; Flags: uninsdeletevalue
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionColorCompressionJPEGHighFactor; ValueData: 0.9
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionColorCompressionJPEGLowFactor; ValueData: 0.25
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionColorCompressionJPEGMaximumFactor; ValueData: 2
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionColorCompressionJPEGMediumFactor; ValueData: 0.5
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionColorCompressionJPEGMinimumFactor; ValueData: 0.1
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionGreyCompressionJPEGHighFactor; ValueData: 0.9
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionGreyCompressionJPEGLowFactor; ValueData: 0.25
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionGreyCompressionJPEGMaximumFactor; ValueData: 2
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionGreyCompressionJPEGMediumFactor; ValueData: 0.5
+Root: HKCU; SubKey: Software\PDFCreator\Printing\Formats\PDF\Compression; ValueType: string; ValueName: PDFCompressionGreyCompressionJPEGMinimumFactor; ValueData: 0.1
 
 [InstallDelete]
 Name: {sys}\PDFSpooler.exe; Type: files

@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -1676,33 +1676,33 @@ Private Sub CreateModOptions()
     Print #fn, "  End If"
    End If
    If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
-    Print #fn, "  If IsNumeric(tStr) Then"
-    Print #fn, "    If CDbl(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
-    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "  If IsNumeric(Replace$(tStr, ""."", GetDecimalChar)) Then"
+    Print #fn, "    If CDbl(Replace$(tStr, ""."", GetDecimalChar)) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(Replace$(tStr, ""."", GetDecimalChar))"
     Print #fn, "     Else"
     Print #fn, "      If UseStandard Then"
-    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "      End If"
     Print #fn, "    End If"
     Print #fn, "   Else"
     Print #fn, "    If UseStandard Then"
-    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
    End If
    If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
-    Print #fn, "  If IsNumeric(tStr) Then"
-    Print #fn, "    If CDbl(tStr) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
-    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(tStr)"
+    Print #fn, "  If IsNumeric(Replace$(tStr, ""."", GetDecimalChar)) Then"
+    Print #fn, "    If CDbl(Replace$(tStr, ""."", GetDecimalChar)) >= " & CDbl(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CDbl(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CDbl(Replace$(tStr, ""."", GetDecimalChar))"
     Print #fn, "     Else"
     Print #fn, "      If UseStandard Then"
-    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "      End If"
     Print #fn, "    End If"
     Print #fn, "   Else"
     Print #fn, "    If UseStandard Then"
-    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = Replace$(""" & lsvOptions.ListItems(i).SubItems(4) & """, ""."", GetDecimalChar)"
     Print #fn, "    End If"
     Print #fn, "  End If"
     ma = True
@@ -2069,7 +2069,7 @@ Private Sub CreateModOptions()
    Exit Sub
  End If
 
- tStr1 = "Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions, FunctionName As String) As Variant"
+ tStr1 = "Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions) As Variant"
  tStr2 = "End Function"
  replStr = tStr1
  replStr = replStr & vbCrLf & " Select Case UCase$(PropertyName)"
