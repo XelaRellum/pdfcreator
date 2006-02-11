@@ -17,7 +17,7 @@
  #define SetupLZMACompressionMode "none"
 #else
  #define CompressionMode="lzma"
- #define SetupLZMACompressionMode "ultra"
+ #define SetupLZMACompressionMode "lzma/ultra"
 #endif
 
 #Ifdef IncludeGhostscript
@@ -149,7 +149,7 @@ DefaultGroupName={#AppName}
 DisableDirPage=false
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
-InternalCompressLevel={#SetupLZMACompressionMode}
+InternalCompressLevel=lzma/ultra
 LicenseFile=.\License\Program license - english.rtf
 #Ifdef IncludeGhostscript
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_{#GhostscriptSetupString}
