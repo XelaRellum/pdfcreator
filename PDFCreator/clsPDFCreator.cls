@@ -2212,9 +2212,7 @@ On Error GoTo ErrPtnr_OnError
 51440    mError.Number = 3
 51450    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
 51460    RaiseEvent eError
-51470    Exit Sub
-51480  End Select
-51490  CorrectOptions
+51470  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2374,7 +2372,6 @@ On Error GoTo ErrPtnr_OnError
 51410   .UseCreationDateNow = sOptions.UseCreationDateNow
 51420   .UseStandardAuthor = sOptions.UseStandardAuthor
 51430  End With
-51440  CorrectOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2387,3 +2384,5 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
+
+

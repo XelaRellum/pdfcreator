@@ -2684,31 +2684,31 @@ On Error GoTo ErrPtnr_OnError
 50410   End If
 50420   reg.Subkey = "Printing"
 50430   tStr = reg.GetRegistryValue("DeviceHeightPoints")
-50440   If IsNumeric(tStr) Then
-50450     If CDbl(tStr) >= -1 Then
-50460       .DeviceHeightPoints = CDbl(tStr)
+50440   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+50450     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= -1 Then
+50460       .DeviceHeightPoints = CDbl(Replace$(tStr, ".", GetDecimalChar))
 50470      Else
 50480       If UseStandard Then
-50490        .DeviceHeightPoints = -1
+50490        .DeviceHeightPoints = Replace$("-1", ".", GetDecimalChar)
 50500       End If
 50510     End If
 50520    Else
 50530     If UseStandard Then
-50540      .DeviceHeightPoints = -1
+50540      .DeviceHeightPoints = Replace$("-1", ".", GetDecimalChar)
 50550     End If
 50560   End If
 50570   tStr = reg.GetRegistryValue("DeviceWidthPoints")
-50580   If IsNumeric(tStr) Then
-50590     If CDbl(tStr) >= -1 Then
-50600       .DeviceWidthPoints = CDbl(tStr)
+50580   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+50590     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= -1 Then
+50600       .DeviceWidthPoints = CDbl(Replace$(tStr, ".", GetDecimalChar))
 50610      Else
 50620       If UseStandard Then
-50630        .DeviceWidthPoints = -1
+50630        .DeviceWidthPoints = Replace$("-1", ".", GetDecimalChar)
 50640       End If
 50650     End If
 50660    Else
 50670     If UseStandard Then
-50680      .DeviceWidthPoints = -1
+50680      .DeviceWidthPoints = Replace$("-1", ".", GetDecimalChar)
 50690     End If
 50700   End If
 50710   tStr = reg.GetRegistryValue("OnePagePerFile")
@@ -3099,73 +3099,73 @@ On Error GoTo ErrPtnr_OnError
 54560     End If
 54570   End If
 54580   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGHighFactor")
-54590   If IsNumeric(tStr) Then
-54600     If CDbl(tStr) >= 0 Then
-54610       .PDFCompressionColorCompressionJPEGHighFactor = CDbl(tStr)
+54590   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+54600     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+54610       .PDFCompressionColorCompressionJPEGHighFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 54620      Else
 54630       If UseStandard Then
-54640        .PDFCompressionColorCompressionJPEGHighFactor = 0.9
+54640        .PDFCompressionColorCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
 54650       End If
 54660     End If
 54670    Else
 54680     If UseStandard Then
-54690      .PDFCompressionColorCompressionJPEGHighFactor = 0.9
+54690      .PDFCompressionColorCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
 54700     End If
 54710   End If
 54720   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGLowFactor")
-54730   If IsNumeric(tStr) Then
-54740     If CDbl(tStr) >= 0 Then
-54750       .PDFCompressionColorCompressionJPEGLowFactor = CDbl(tStr)
+54730   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+54740     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+54750       .PDFCompressionColorCompressionJPEGLowFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 54760      Else
 54770       If UseStandard Then
-54780        .PDFCompressionColorCompressionJPEGLowFactor = 0.25
+54780        .PDFCompressionColorCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
 54790       End If
 54800     End If
 54810    Else
 54820     If UseStandard Then
-54830      .PDFCompressionColorCompressionJPEGLowFactor = 0.25
+54830      .PDFCompressionColorCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
 54840     End If
 54850   End If
 54860   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMaximumFactor")
-54870   If IsNumeric(tStr) Then
-54880     If CDbl(tStr) >= 0 Then
-54890       .PDFCompressionColorCompressionJPEGMaximumFactor = CDbl(tStr)
+54870   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+54880     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+54890       .PDFCompressionColorCompressionJPEGMaximumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 54900      Else
 54910       If UseStandard Then
-54920        .PDFCompressionColorCompressionJPEGMaximumFactor = 2
+54920        .PDFCompressionColorCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
 54930       End If
 54940     End If
 54950    Else
 54960     If UseStandard Then
-54970      .PDFCompressionColorCompressionJPEGMaximumFactor = 2
+54970      .PDFCompressionColorCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
 54980     End If
 54990   End If
 55000   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMediumFactor")
-55010   If IsNumeric(tStr) Then
-55020     If CDbl(tStr) >= 0 Then
-55030       .PDFCompressionColorCompressionJPEGMediumFactor = CDbl(tStr)
+55010   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+55020     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+55030       .PDFCompressionColorCompressionJPEGMediumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 55040      Else
 55050       If UseStandard Then
-55060        .PDFCompressionColorCompressionJPEGMediumFactor = 0.5
+55060        .PDFCompressionColorCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
 55070       End If
 55080     End If
 55090    Else
 55100     If UseStandard Then
-55110      .PDFCompressionColorCompressionJPEGMediumFactor = 0.5
+55110      .PDFCompressionColorCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
 55120     End If
 55130   End If
 55140   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionJPEGMinimumFactor")
-55150   If IsNumeric(tStr) Then
-55160     If CDbl(tStr) >= 0 Then
-55170       .PDFCompressionColorCompressionJPEGMinimumFactor = CDbl(tStr)
+55150   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+55160     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+55170       .PDFCompressionColorCompressionJPEGMinimumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 55180      Else
 55190       If UseStandard Then
-55200        .PDFCompressionColorCompressionJPEGMinimumFactor = 0.1
+55200        .PDFCompressionColorCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
 55210       End If
 55220     End If
 55230    Else
 55240     If UseStandard Then
-55250      .PDFCompressionColorCompressionJPEGMinimumFactor = 0.1
+55250      .PDFCompressionColorCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
 55260     End If
 55270   End If
 55280   tStr = reg.GetRegistryValue("PDFCompressionColorResample")
@@ -3239,73 +3239,73 @@ On Error GoTo ErrPtnr_OnError
 55960     End If
 55970   End If
 55980   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGHighFactor")
-55990   If IsNumeric(tStr) Then
-56000     If CDbl(tStr) >= 0 Then
-56010       .PDFCompressionGreyCompressionJPEGHighFactor = CDbl(tStr)
+55990   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56000     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56010       .PDFCompressionGreyCompressionJPEGHighFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56020      Else
 56030       If UseStandard Then
-56040        .PDFCompressionGreyCompressionJPEGHighFactor = 0.9
+56040        .PDFCompressionGreyCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
 56050       End If
 56060     End If
 56070    Else
 56080     If UseStandard Then
-56090      .PDFCompressionGreyCompressionJPEGHighFactor = 0.9
+56090      .PDFCompressionGreyCompressionJPEGHighFactor = Replace$("0.9", ".", GetDecimalChar)
 56100     End If
 56110   End If
 56120   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGLowFactor")
-56130   If IsNumeric(tStr) Then
-56140     If CDbl(tStr) >= 0 Then
-56150       .PDFCompressionGreyCompressionJPEGLowFactor = CDbl(tStr)
+56130   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56140     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56150       .PDFCompressionGreyCompressionJPEGLowFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56160      Else
 56170       If UseStandard Then
-56180        .PDFCompressionGreyCompressionJPEGLowFactor = 0.25
+56180        .PDFCompressionGreyCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
 56190       End If
 56200     End If
 56210    Else
 56220     If UseStandard Then
-56230      .PDFCompressionGreyCompressionJPEGLowFactor = 0.25
+56230      .PDFCompressionGreyCompressionJPEGLowFactor = Replace$("0.25", ".", GetDecimalChar)
 56240     End If
 56250   End If
 56260   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMaximumFactor")
-56270   If IsNumeric(tStr) Then
-56280     If CDbl(tStr) >= 0 Then
-56290       .PDFCompressionGreyCompressionJPEGMaximumFactor = CDbl(tStr)
+56270   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56280     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56290       .PDFCompressionGreyCompressionJPEGMaximumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56300      Else
 56310       If UseStandard Then
-56320        .PDFCompressionGreyCompressionJPEGMaximumFactor = 2
+56320        .PDFCompressionGreyCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
 56330       End If
 56340     End If
 56350    Else
 56360     If UseStandard Then
-56370      .PDFCompressionGreyCompressionJPEGMaximumFactor = 2
+56370      .PDFCompressionGreyCompressionJPEGMaximumFactor = Replace$("2", ".", GetDecimalChar)
 56380     End If
 56390   End If
 56400   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMediumFactor")
-56410   If IsNumeric(tStr) Then
-56420     If CDbl(tStr) >= 0 Then
-56430       .PDFCompressionGreyCompressionJPEGMediumFactor = CDbl(tStr)
+56410   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56420     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56430       .PDFCompressionGreyCompressionJPEGMediumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56440      Else
 56450       If UseStandard Then
-56460        .PDFCompressionGreyCompressionJPEGMediumFactor = 0.5
+56460        .PDFCompressionGreyCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
 56470       End If
 56480     End If
 56490    Else
 56500     If UseStandard Then
-56510      .PDFCompressionGreyCompressionJPEGMediumFactor = 0.5
+56510      .PDFCompressionGreyCompressionJPEGMediumFactor = Replace$("0.5", ".", GetDecimalChar)
 56520     End If
 56530   End If
 56540   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionJPEGMinimumFactor")
-56550   If IsNumeric(tStr) Then
-56560     If CDbl(tStr) >= 0 Then
-56570       .PDFCompressionGreyCompressionJPEGMinimumFactor = CDbl(tStr)
+56550   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+56560     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+56570       .PDFCompressionGreyCompressionJPEGMinimumFactor = CDbl(Replace$(tStr, ".", GetDecimalChar))
 56580      Else
 56590       If UseStandard Then
-56600        .PDFCompressionGreyCompressionJPEGMinimumFactor = 0.1
+56600        .PDFCompressionGreyCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
 56610       End If
 56620     End If
 56630    Else
 56640     If UseStandard Then
-56650      .PDFCompressionGreyCompressionJPEGMinimumFactor = 0.1
+56650      .PDFCompressionGreyCompressionJPEGMinimumFactor = Replace$("0.1", ".", GetDecimalChar)
 56660     End If
 56670   End If
 56680   tStr = reg.GetRegistryValue("PDFCompressionGreyResample")
@@ -5845,7 +5845,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   tList = Split(.FilenameSubstitutions, "\")
@@ -5924,7 +5924,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.cmbProgramFontsize.Text = .ProgramFontSize
+  Frm.cmbProgramFontSize.Text = .ProgramFontSize
   Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
   Frm.chkSpaces.Value = .RemoveSpaces
   Frm.txtSaveFilename.Text = .SaveFilename
@@ -5951,7 +5951,7 @@ On Error GoTo ErrPtnr_OnError
 50080  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50090  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50100  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50110  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
+50110  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
 50120  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
 50130  tStr = ""
 50140  Set lsv = Frm.lsvFilenameSubst
@@ -6020,7 +6020,7 @@ On Error GoTo ErrPtnr_OnError
 50770  .ProcessPriority = Frm.sldProcessPriority.Value
 50780  .ProgramFont = Frm.cmbFonts.List(Frm.cmbFonts.ListIndex)
 50790  .ProgramFontCharset = Frm.cmbCharset.Text
-50800  .ProgramFontSize = Frm.cmbProgramFontsize.Text
+50800  .ProgramFontSize = Frm.cmbProgramFontSize.Text
 50810  .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
 50820  .RemoveSpaces = Abs(Frm.chkSpaces.Value)
 50830  .SaveFilename = Frm.txtSaveFilename.Text
