@@ -5,6 +5,8 @@
 #include "french.inc"
 #include "greek.inc"
 #include "hungarian.inc"
+#include "icelandic.inc"
+#include "norwegian.inc"
 #include "italian.inc"
 #include "slovak.inc"
 #include "slovensko.inc"
