@@ -35,6 +35,10 @@
         Clears all PDFCreator temporary files. This is useful if PDFCreator will 
         not start because of a corrupt temp file.<br>
         <em>Example:</em> pdfcreator.exe /ClearCache</p>
+      <p><strong>/DeleteIF</strong><br>
+        Delete the input file after converting. This parameter can only be used in conjunction
+        with the /IF and the /OF parameter.<br>
+        <em>Example:</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /DeleteIF</p>
       <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br>
         </strong>Convert a postscript file to a PDF or bitmap. The /OF parameter 
         must be used in conjunction with the /IF parameter. To set the output 
@@ -69,6 +73,10 @@
         its task. The /NoStart parameter automatically closes PDFCreator after 
         it is done.<br>
         <em>Example:</em> pdfcreator.exe /NOSTART /PF&quot;C:\help.doc&quot;</p>
+      <p><strong>/OpenOF</strong><br>
+        Open the output file after converting. This parameter can only be used in conjunction
+        with the /IF and the /OF parameter.<br>
+        <em>Example:</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /OpenOF</p>
       <p><strong>/OptionsFile&lt;option-filename&gt;</strong><br>
         Specifies the particular options file PDFCreator should use.<br>
         <em>Examples:</em> pdfcreator.exe /OptionsFile&quot;C:\MyPDFCreator.ini&quot;<br>
@@ -76,7 +84,8 @@
         printer on a machine.)</p>
       <p><strong>/PF&lt;filename&gt;</strong><br>
         Print a file with the standard program linking with the extension of the 
-        file. In general, this option is useful in connection with Auto-Save mode. 
+        file. In general, this option is useful in connection with Auto-Save mode.
+        It is not possible to use this parameter in conjunction with the /OF parameter.		
         <strong>There is NO space between the parameter and the file name</strong>.<br>
         <em>Example:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;<br>
         You can also use wildcards to create PDF's of all documents in a specified 
