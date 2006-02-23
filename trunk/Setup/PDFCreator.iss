@@ -16,7 +16,7 @@
  #define CompressionMode="none"
  #define SetupLZMACompressionMode "none"
 #else
- #define CompressionMode="lzma"
+ #define CompressionMode="lzma/ultra"
  #define SetupLZMACompressionMode "ultra"
 #endif
 

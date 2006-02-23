@@ -533,9 +533,15 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim res As Long, TempDefaultAppData As String
 50020  TempDefaultAppData = Space$(MAX_PATH)
-50030  If SHGetFolderPath(0, ssfAPPDATA Or CSIDL_FLAG_CREATE, -1, SHGFP_TYPE_DEFAULT, TempDefaultAppData) = 0 Then
-50040   GetDefaultAppData = Left$(TempDefaultAppData, InStr(1, TempDefaultAppData, vbNullChar) - 1)
-50050  End If
+50030  If IsWin95 Or IsWinNT4 Then
+50040    If SHGetFolderPathB(0, ssfAPPDATA Or CSIDL_FLAG_CREATE, -1, SHGFP_TYPE_DEFAULT, TempDefaultAppData) = 0 Then
+50050     GetDefaultAppData = Left$(TempDefaultAppData, InStr(1, TempDefaultAppData, vbNullChar) - 1)
+50060    End If
+50070   Else
+50080    If SHGetFolderPath(0, ssfAPPDATA Or CSIDL_FLAG_CREATE, -1, SHGFP_TYPE_DEFAULT, TempDefaultAppData) = 0 Then
+50090     GetDefaultAppData = Left$(TempDefaultAppData, InStr(1, TempDefaultAppData, vbNullChar) - 1)
+50100    End If
+50110  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

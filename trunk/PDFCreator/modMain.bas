@@ -104,31 +104,37 @@ On Error GoTo ErrPtnr_OnError
 50680     FileCopy InputFilename, Filename
 50690    Else
 50700     ConvertPostscriptFile InputFilename, OutputFilename
-50710   End If
-50720  End If
-50730
-50740  If ProgramIsRunning(PDFCreator_GUID) Then
-50750    ' There is a local running instance
-50760    If Not NoAbortIfRunning Then
-50770     InstanceCounter = InstanceCounter - 1
-50780     Exit Sub
-50790    End If
-50800   Else
-50810  ' Create a mutex
-50820    Set mutexLocal = New clsMutex
-50830    mutexLocal.CreateMutex PDFCreator_GUID
-50840    Set mutexGlobal = New clsMutex
-50850    ' Check for a global running instance
-50860    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-50870     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-50880    End If
-50890  End If
-50900
-50910  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-50920   InitCommonControls
-50930  End If
-50940
-50950  Load frmMain
+50710     If FileExists(InputFilename) And DeleteIF Then
+50720      KillFile InputFilename
+50730     End If
+50740     If FileExists(OutputFilename) And OpenOF Then
+50750       OpenDocument OutputFilename
+50760     End If
+50770   End If
+50780  End If
+50790
+50800  If ProgramIsRunning(PDFCreator_GUID) Then
+50810    ' There is a local running instance
+50820    If Not NoAbortIfRunning Then
+50830     InstanceCounter = InstanceCounter - 1
+50840     Exit Sub
+50850    End If
+50860   Else
+50870  ' Create a mutex
+50880    Set mutexLocal = New clsMutex
+50890    mutexLocal.CreateMutex PDFCreator_GUID
+50900    Set mutexGlobal = New clsMutex
+50910    ' Check for a global running instance
+50920    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+50930     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50940    End If
+50950  End If
+50960
+50970  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+50980   InitCommonControls
+50990  End If
+51000
+51010  Load frmMain
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -222,23 +228,39 @@ On Error GoTo ErrPtnr_OnError
 50750   PrintFilename = CommandSwitch("PF", True)
 50760   InputFilename = CommandSwitch("IF", True)
 50770   OutputFilename = CommandSwitch("OF", True)
-50780   cSwitch = CommandSwitch("OPTIONSFILE", True)
-50790   If LenB(cSwitch) > 0 Then
-50800    If FileExists(cSwitch) = True Then
-50810     Optionsfile = cSwitch
-50820    End If
-50830   End If
-50840   If UCase$(CommandSwitch("NO", False)) = "START" Then
-50850     NoStart = True
-50860    Else
-50870     NoStart = False
-50880   End If
-50890   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
-50900     NoPSCheck = True
-50910    Else
-50920     NoPSCheck = False
-50930   End If
-50940  End If
+50780
+50790   ' Check delete inputfile after converting
+50800   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
+50810     DeleteIF = True
+50820    Else
+50830     DeleteIF = False
+50840   End If
+50850
+50860   ' Open the outputfile after converting
+50870   If UCase$(CommandSwitch("Open", False)) = "OF" Then
+50880     OpenOF = True
+50890    Else
+50900     OpenOF = False
+50910   End If
+50920
+50930
+50940   cSwitch = CommandSwitch("OPTIONSFILE", True)
+50950   If LenB(cSwitch) > 0 Then
+50960    If FileExists(cSwitch) = True Then
+50970     Optionsfile = cSwitch
+50980    End If
+50990   End If
+51000   If UCase$(CommandSwitch("NO", False)) = "START" Then
+51010     NoStart = True
+51020    Else
+51030     NoStart = False
+51040   End If
+51050   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
+51060     NoPSCheck = True
+51070    Else
+51080     NoPSCheck = False
+51090   End If
+51100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
