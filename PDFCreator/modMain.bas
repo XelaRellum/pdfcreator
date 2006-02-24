@@ -102,39 +102,42 @@ On Error GoTo ErrPtnr_OnError
 50660     Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
 50670     KillFile Filename
 50680     FileCopy InputFilename, Filename
-50690    Else
-50700     ConvertPostscriptFile InputFilename, OutputFilename
-50710     If FileExists(InputFilename) And DeleteIF Then
-50720      KillFile InputFilename
-50730     End If
-50740     If FileExists(OutputFilename) And OpenOF Then
-50750       OpenDocument OutputFilename
+50690     If FileExists(InputFilename) And DeleteIF Then
+50700      KillFile InputFilename
+50710     End If
+50720    Else
+50730     ConvertPostscriptFile InputFilename, OutputFilename
+50740     If FileExists(InputFilename) And DeleteIF Then
+50750      KillFile InputFilename
 50760     End If
-50770   End If
-50780  End If
-50790
-50800  If ProgramIsRunning(PDFCreator_GUID) Then
-50810    ' There is a local running instance
-50820    If Not NoAbortIfRunning Then
-50830     InstanceCounter = InstanceCounter - 1
-50840     Exit Sub
-50850    End If
-50860   Else
-50870  ' Create a mutex
-50880    Set mutexLocal = New clsMutex
-50890    mutexLocal.CreateMutex PDFCreator_GUID
-50900    Set mutexGlobal = New clsMutex
-50910    ' Check for a global running instance
-50920    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-50930     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-50940    End If
-50950  End If
-50960
-50970  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-50980   InitCommonControls
-50990  End If
-51000
-51010  Load frmMain
+50770     If FileExists(OutputFilename) And OpenOF Then
+50780       OpenDocument OutputFilename
+50790     End If
+50800   End If
+50810  End If
+50820
+50830  If ProgramIsRunning(PDFCreator_GUID) Then
+50840    ' There is a local running instance
+50850    If Not NoAbortIfRunning Then
+50860     InstanceCounter = InstanceCounter - 1
+50870     Exit Sub
+50880    End If
+50890   Else
+50900  ' Create a mutex
+50910    Set mutexLocal = New clsMutex
+50920    mutexLocal.CreateMutex PDFCreator_GUID
+50930    Set mutexGlobal = New clsMutex
+50940    ' Check for a global running instance
+50950    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+50960     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50970    End If
+50980  End If
+50990
+51000  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+51010   InitCommonControls
+51020  End If
+51030
+51040  Load frmMain
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

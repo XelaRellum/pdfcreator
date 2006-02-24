@@ -6,20 +6,20 @@
 <link href="helpstyle.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<a name="top"></a> 
+<a name="top"></a>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr> 
+  <tr>
     <td class="title">PDFCreator Help</td>
   </tr>
-  <tr> 
+  <tr>
     <td background="../images/grad.gif" height="20">&nbsp;</td>
   </tr>
-  <tr> 
+  <tr>
     <td>&nbsp;</td>
   </tr>
-  <tr> 
+  <tr>
     <td class="main"><p class="header">Command Line Parameters</p>
-      <p>PDFCreator enables you to create documents via the command line interface. 
+      <p>PDFCreator enables you to create documents via the command line interface.
         Here are the different commands that PDFCreator supports:</p>
       <p> <strong>/CheckInstance </strong><br>
         If you use this switch PDFCreaor shows a message box with the information about
@@ -32,45 +32,45 @@
         PDFCreator on a terminal server.<br>
         <em>Example:</em> PDFCreator.exe /CheckInstance </p>
       <p><strong>/ClearCache</strong><br>
-        Clears all PDFCreator temporary files. This is useful if PDFCreator will 
+        Clears all PDFCreator temporary files. This is useful if PDFCreator will
         not start because of a corrupt temp file.<br>
         <em>Example:</em> pdfcreator.exe /ClearCache</p>
       <p><strong>/DeleteIF</strong><br>
         Delete the input file after converting. This parameter can only be used in conjunction
-        with the /IF and the /OF parameter.<br>
+        with the /IF parameter.<br>
         <em>Example:</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /DeleteIF</p>
       <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br>
-        </strong>Convert a postscript file to a PDF or bitmap. The /OF parameter 
-        must be used in conjunction with the /IF parameter. To set the output 
-        file format, include the file extension in the output file name. <strong>There 
+        </strong>Convert a postscript file to a PDF or bitmap. The /OF parameter
+        must be used in conjunction with the /IF parameter. To set the output
+        file format, include the file extension in the output file name. <strong>There
         is NO space between the parameters and the file names.</strong><br>
         <em>Examples:</em><br>
         pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;<br>
         pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.tif&quot;</p>
       <p><strong>/NoAbortIfRunning</strong><br>
-        Opens a new instance of PDFCreator without checking if the program is 
-        already running. It is useful to combine this parameter with the /NoProcessing 
+        Opens a new instance of PDFCreator without checking if the program is
+        already running. It is useful to combine this parameter with the /NoProcessing
         parameter.<br>
         <em>Example:</em> pdfcreator.exe /NoAbortIfRunning</p>
       <p><strong>/NoProcessing</strong><br>
-        When PDFCreator is opened with the /NoProcessing option, all documents 
-        that are sent to PDFCreator are not processed immediately. They are stored 
-        in the print queue until PDFCreator is opened without the /NoProcessing 
+        When PDFCreator is opened with the /NoProcessing option, all documents
+        that are sent to PDFCreator are not processed immediately. They are stored
+        in the print queue until PDFCreator is opened without the /NoProcessing
         option.<br>
         <em>Example:</em> pdfcreator.exe /NoProcessing</p>
-      <p><strong>/NoProcessingAtStartup:</strong> When you use this parameter, PDFCreator 
-        will start without processing any documents. You can manually start processing 
-        by going to the <em><strong>Document</strong></em> menu and selecting 
-        <em><strong>Print</strong></em> or by unchecking the <em><strong>Printer 
-        Stop</strong></em> option in the <em><strong>Printer</strong></em> menu. 
-        The setting is useful if you want collect some files first, then combine 
+      <p><strong>/NoProcessingAtStartup:</strong> When you use this parameter, PDFCreator
+        will start without processing any documents. You can manually start processing
+        by going to the <em><strong>Document</strong></em> menu and selecting
+        <em><strong>Print</strong></em> or by unchecking the <em><strong>Printer
+        Stop</strong></em> option in the <em><strong>Printer</strong></em> menu.
+        The setting is useful if you want collect some files first, then combine
         the files into one and create a pdf.<br>
         <em>Properties:</em><br>
         0 - Off (Default)<br>
         1 - On</p>
       <p><strong>/NoStart</strong><br>
-        When you use the /PF parameter, PDFCreator stays open after it's done 
-        its task. The /NoStart parameter automatically closes PDFCreator after 
+        When you use the /PF parameter, PDFCreator stays open after it's done
+        its task. The /NoStart parameter automatically closes PDFCreator after
         it is done.<br>
         <em>Example:</em> pdfcreator.exe /NOSTART /PF&quot;C:\help.doc&quot;</p>
       <p><strong>/OpenOF</strong><br>
@@ -80,15 +80,15 @@
       <p><strong>/OptionsFile&lt;option-filename&gt;</strong><br>
         Specifies the particular options file PDFCreator should use.<br>
         <em>Examples:</em> pdfcreator.exe /OptionsFile&quot;C:\MyPDFCreator.ini&quot;<br>
-        (Hint: With this parameter (and a work around) you can use more than one 
+        (Hint: With this parameter (and a work around) you can use more than one
         printer on a machine.)</p>
       <p><strong>/PF&lt;filename&gt;</strong><br>
-        Print a file with the standard program linking with the extension of the 
+        Print a file with the standard program linking with the extension of the
         file. In general, this option is useful in connection with Auto-Save mode.
-        It is not possible to use this parameter in conjunction with the /OF parameter.		
+        It is not possible to use this parameter in conjunction with the /OF parameter.
         <strong>There is NO space between the parameter and the file name</strong>.<br>
         <em>Example:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;<br>
-        You can also use wildcards to create PDF's of all documents in a specified 
+        You can also use wildcards to create PDF's of all documents in a specified
         folder.<br>
         <em>Example:</em> pdfcreator.exe /PF&quot;C:\*.doc&quot;</p>
       <p><strong>/ShowOnlyLogfile</strong><br>
