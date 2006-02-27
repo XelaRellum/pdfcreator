@@ -279,86 +279,88 @@ On Error GoTo ErrPtnr_OnError
 50720  If WithoutAuthor = False Then
 50730   Filename = Replace(Filename, "<Author>", Author, , , vbTextCompare)
 50740  End If
-50750  Filename = Replace(Filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
-50760  Filename = Replace(Filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
-50770
-50780  tStr = "DOCNAME"
-50790  If Preview = True Then
-50800    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-50810   Else
-50820    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_DOCNAME, , , vbTextCompare)
-50830  End If
-50840
-50850  tStr = "DOCNAME_FILE"
-50860  If Preview Then
-50870    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-50880   Else
-50890    SplitPath isf.REDMON_DOCNAME, , , , FilePath
-50900    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
-50910  End If
-50920  tStr = "DOCNAME_PATH"
-50930  If Preview Then
-50940    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-50950   Else
-50960    SplitPath isf.REDMON_DOCNAME, , FilePath
-50970    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
-50980  End If
-50990
-51000  tStr = "JOB"
-51010  If Preview = True Then
-51020    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-51030   Else
-51040    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_JOB, , , vbTextCompare)
-51050  End If
-51060  tStr = "MACHINE"
-51070  If Preview = True Then
-51080    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-51090   Else
-51100    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_MACHINE, , , vbTextCompare)
-51110  End If
-51120  tStr = "PORT"
-51130  If Preview = True Then
-51140    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-51150   Else
-51160    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PORT, , , vbTextCompare)
-51170  End If
-51180  tStr = "PRINTER"
-51190  If Preview = True Then
-51200    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-51210   Else
-51220    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PRINTER, , , vbTextCompare)
-51230  End If
-51240  tStr = "SESSIONID"
-51250  If Preview = True Then
-51260    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-51270   Else
-51280    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_SESSIONID, , , vbTextCompare)
-51290  End If
-51300  tStr = "USER"
-51310  If Preview = True Then
-51320    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
-51330   Else
-51340    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_USER, , , vbTextCompare)
-51350  End If
-51360
-51370  If Options.FilenameSubstitutionsOnlyInTitle = 0 Then
-51380   tList = Split(Options.FilenameSubstitutions, "\")
-51390   If UBound(tList) >= 0 Then
-51400    For i = 0 To UBound(tList)
-51410     Subst = Split(tList(i), "|")
-51420     If UBound(Subst) = 0 Then
-51430       tStr = ""
-51440      Else
-51450       tStr = Subst(1)
-51460     End If
-51470     Filename = Replace(Filename, Subst(0), tStr, , , vbTextCompare)
-51480    Next i
-51490   End If
-51500  End If
-51510  If Options.RemoveSpaces = 1 Then
-51520   Filename = Trim$(Filename)
-51530  End If
-51540  GetSubstFilename = Filename
+50750
+50760  Filename = Replace(Filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
+50770  Filename = Replace(Filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
+50780
+50790  tStr = "DOCNAME"
+50800  If Preview = True Then
+50810    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50820   Else
+50830    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_DOCNAME, , , vbTextCompare)
+50840  End If
+50850
+50860  tStr = "DOCNAME_FILE"
+50870  If Preview Then
+50880    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50890   Else
+50900    SplitPath isf.REDMON_DOCNAME, , , , FilePath
+50910    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
+50920  End If
+50930  tStr = "DOCNAME_PATH"
+50940  If Preview Then
+50950    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50960   Else
+50970    SplitPath isf.REDMON_DOCNAME, , FilePath
+50980    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
+50990  End If
+51000
+51010  tStr = "JOB"
+51020  If Preview = True Then
+51030    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51040   Else
+51050    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_JOB, , , vbTextCompare)
+51060  End If
+51070  tStr = "MACHINE"
+51080  If Preview = True Then
+51090    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51100   Else
+51110    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_MACHINE, , , vbTextCompare)
+51120  End If
+51130  tStr = "PORT"
+51140  If Preview = True Then
+51150    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51160   Else
+51170    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PORT, , , vbTextCompare)
+51180  End If
+51190  tStr = "PRINTER"
+51200  If Preview = True Then
+51210    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51220   Else
+51230    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PRINTER, , , vbTextCompare)
+51240  End If
+51250  tStr = "SESSIONID"
+51260  If Preview = True Then
+51270    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51280   Else
+51290    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_SESSIONID, , , vbTextCompare)
+51300  End If
+51310  tStr = "USER"
+51320  If Preview = True Then
+51330    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51340   Else
+51350    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_USER, , , vbTextCompare)
+51360  End If
+51370
+51380  If Options.FilenameSubstitutionsOnlyInTitle = 0 Then
+51390   tList = Split(Options.FilenameSubstitutions, "\")
+51400   If UBound(tList) >= 0 Then
+51410    For i = 0 To UBound(tList)
+51420     Subst = Split(tList(i), "|")
+51430     If UBound(Subst) = 0 Then
+51440       tStr = ""
+51450      Else
+51460       tStr = Subst(1)
+51470     End If
+51480     Filename = Replace(Filename, Subst(0), tStr, , , vbTextCompare)
+51490    Next i
+51500   End If
+51510  End If
+51520  Filename = ReplaceForbiddenChars(Filename)
+51530  If Options.RemoveSpaces = 1 Then
+51540   Filename = Trim$(Filename)
+51550  End If
+51560  GetSubstFilename = Filename
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
