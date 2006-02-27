@@ -8,6 +8,7 @@
 #include "icelandic.inc"
 #include "norwegian.inc"
 #include "italian.inc"
+#include "romanian.inc"
 #include "slovak.inc"
 #include "slovensko.inc"
 #include "spanish.inc"
