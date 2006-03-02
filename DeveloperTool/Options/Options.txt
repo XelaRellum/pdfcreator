@@ -170,6 +170,7 @@ RunProgramBeforeSavingProgramname||String|||
 RunProgramBeforeSavingProgramParameters||String|"<TempFilename>"||
 RunProgramBeforeSavingWindowstyle||Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
+SendEmailAfterAutoSaving||Boolean|0||
 SendMailMethod||Long|0|0|<
 ShowAnimation||Boolean|1||
 

@@ -129,6 +129,7 @@ Public RunProgramBeforeSavingProgramname As String
 Public RunProgramBeforeSavingProgramParameters As String
 Public RunProgramBeforeSavingWindowstyle As Long
 Public SaveFilename As String
+Public SendEmailAfterAutoSaving As Long
 Public SendMailMethod As Long
 Public ShowAnimation As Long
 Public StampFontColor As String

@@ -1650,7 +1650,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tColl As Collection, i As Long, tFile() As String, Pathname As String, _
   OutputFilename As String, PDFDocInfo As tPDFDocInfo, tStr As String, _
-  PSHeader As tPSHeader, tDate As Date
+  PSHeader As tPSHeader, tDate As Date, mail As clsPDFCreatorMail
 50040
 50050  Set tColl = New Collection
 50060
@@ -1722,23 +1722,30 @@ On Error GoTo ErrPtnr_OnError
          Options.RunProgramAfterSavingProgramParameters, _
          Options.RunProgramAfterSavingWindowstyle, tFile(1)
 50740         End If
-50750        Else
-50760         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-50770         IfLoggingWriteLogfile tStr
-50780         WriteToSpecialLogfile tStr
-50790       End If
-50800      Else
-50810       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
-50820     End If
-50830     CheckForPrintingAfterSaving tFile(1), Options
-50840     KillFile tFile(1)
-50850     KillInfoSpoolfile tFile(1)
-50860     ConvertedOutputFilename = OutputFilename
-50870     ReadyConverting = True
-50880    End If
-50890   Next i
-50900   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
-50910  Loop
+50750         If Options.SendEmailAfterAutoSaving = 1 Then
+50760          Set mail = New clsPDFCreatorMail
+50770          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
+50780           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+50790          End If
+50800          Set mail = Nothing
+50810         End If
+50820        Else
+50830         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+50840         IfLoggingWriteLogfile tStr
+50850         WriteToSpecialLogfile tStr
+50860       End If
+50870      Else
+50880       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
+50890     End If
+50900     CheckForPrintingAfterSaving tFile(1), Options
+50910     KillFile tFile(1)
+50920     KillInfoSpoolfile tFile(1)
+50930     ConvertedOutputFilename = OutputFilename
+50940     ReadyConverting = True
+50950    End If
+50960   Next i
+50970   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
+50980  Loop
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

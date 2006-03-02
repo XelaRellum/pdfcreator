@@ -538,31 +538,32 @@ On Error GoTo ErrPtnr_OnError
 51170   .Add "RunProgramBeforeSavingProgramParameters"
 51180   .Add "RunProgramBeforeSavingWindowstyle"
 51190   .Add "SaveFilename"
-51200   .Add "SendMailMethod"
-51210   .Add "ShowAnimation"
-51220   .Add "StampFontColor"
-51230   .Add "StampFontname"
-51240   .Add "StampFontsize"
-51250   .Add "StampOutlineFontthickness"
-51260   .Add "StampString"
-51270   .Add "StampUseOutlineFont"
-51280   .Add "StandardAuthor"
-51290   .Add "StandardCreationdate"
-51300   .Add "StandardDateformat"
-51310   .Add "StandardKeywords"
-51320   .Add "StandardMailDomain"
-51330   .Add "StandardModifydate"
-51340   .Add "StandardSaveformat"
-51350   .Add "StandardSubject"
-51360   .Add "StandardTitle"
-51370   .Add "StartStandardProgram"
-51380   .Add "TIFFColorscount"
-51390   .Add "Toolbars"
-51400   .Add "UseAutosave"
-51410   .Add "UseAutosaveDirectory"
-51420   .Add "UseCreationDateNow"
-51430   .Add "UseStandardAuthor"
-51440  End With
+51200   .Add "SendEmailAfterAutoSaving"
+51210   .Add "SendMailMethod"
+51220   .Add "ShowAnimation"
+51230   .Add "StampFontColor"
+51240   .Add "StampFontname"
+51250   .Add "StampFontsize"
+51260   .Add "StampOutlineFontthickness"
+51270   .Add "StampString"
+51280   .Add "StampUseOutlineFont"
+51290   .Add "StandardAuthor"
+51300   .Add "StandardCreationdate"
+51310   .Add "StandardDateformat"
+51320   .Add "StandardKeywords"
+51330   .Add "StandardMailDomain"
+51340   .Add "StandardModifydate"
+51350   .Add "StandardSaveformat"
+51360   .Add "StandardSubject"
+51370   .Add "StandardTitle"
+51380   .Add "StartStandardProgram"
+51390   .Add "TIFFColorscount"
+51400   .Add "Toolbars"
+51410   .Add "UseAutosave"
+51420   .Add "UseAutosaveDirectory"
+51430   .Add "UseCreationDateNow"
+51440   .Add "UseStandardAuthor"
+51450  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -1835,31 +1836,32 @@ On Error GoTo ErrPtnr_OnError
 51160   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramParameters
 51170   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramBeforeSavingWindowstyle
 51180   Case "SAVEFILENAME": cGetOptionFromOptions = Options.SaveFilename
-51190   Case "SENDMAILMETHOD": cGetOptionFromOptions = Options.SendMailMethod
-51200   Case "SHOWANIMATION": cGetOptionFromOptions = Options.ShowAnimation
-51210   Case "STAMPFONTCOLOR": cGetOptionFromOptions = Options.StampFontColor
-51220   Case "STAMPFONTNAME": cGetOptionFromOptions = Options.StampFontname
-51230   Case "STAMPFONTSIZE": cGetOptionFromOptions = Options.StampFontsize
-51240   Case "STAMPOUTLINEFONTTHICKNESS": cGetOptionFromOptions = Options.StampOutlineFontthickness
-51250   Case "STAMPSTRING": cGetOptionFromOptions = Options.StampString
-51260   Case "STAMPUSEOUTLINEFONT": cGetOptionFromOptions = Options.StampUseOutlineFont
-51270   Case "STANDARDAUTHOR": cGetOptionFromOptions = Options.StandardAuthor
-51280   Case "STANDARDCREATIONDATE": cGetOptionFromOptions = Options.StandardCreationdate
-51290   Case "STANDARDDATEFORMAT": cGetOptionFromOptions = Options.StandardDateformat
-51300   Case "STANDARDKEYWORDS": cGetOptionFromOptions = Options.StandardKeywords
-51310   Case "STANDARDMAILDOMAIN": cGetOptionFromOptions = Options.StandardMailDomain
-51320   Case "STANDARDMODIFYDATE": cGetOptionFromOptions = Options.StandardModifydate
-51330   Case "STANDARDSAVEFORMAT": cGetOptionFromOptions = Options.StandardSaveformat
-51340   Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
-51350   Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
-51360   Case "STARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.StartStandardProgram
-51370   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
-51380   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
-51390   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
-51400   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
-51410   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
-51420   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
-51430  End Select
+51190   Case "SENDEMAILAFTERAUTOSAVING": cGetOptionFromOptions = Options.SendEmailAfterAutoSaving
+51200   Case "SENDMAILMETHOD": cGetOptionFromOptions = Options.SendMailMethod
+51210   Case "SHOWANIMATION": cGetOptionFromOptions = Options.ShowAnimation
+51220   Case "STAMPFONTCOLOR": cGetOptionFromOptions = Options.StampFontColor
+51230   Case "STAMPFONTNAME": cGetOptionFromOptions = Options.StampFontname
+51240   Case "STAMPFONTSIZE": cGetOptionFromOptions = Options.StampFontsize
+51250   Case "STAMPOUTLINEFONTTHICKNESS": cGetOptionFromOptions = Options.StampOutlineFontthickness
+51260   Case "STAMPSTRING": cGetOptionFromOptions = Options.StampString
+51270   Case "STAMPUSEOUTLINEFONT": cGetOptionFromOptions = Options.StampUseOutlineFont
+51280   Case "STANDARDAUTHOR": cGetOptionFromOptions = Options.StandardAuthor
+51290   Case "STANDARDCREATIONDATE": cGetOptionFromOptions = Options.StandardCreationdate
+51300   Case "STANDARDDATEFORMAT": cGetOptionFromOptions = Options.StandardDateformat
+51310   Case "STANDARDKEYWORDS": cGetOptionFromOptions = Options.StandardKeywords
+51320   Case "STANDARDMAILDOMAIN": cGetOptionFromOptions = Options.StandardMailDomain
+51330   Case "STANDARDMODIFYDATE": cGetOptionFromOptions = Options.StandardModifydate
+51340   Case "STANDARDSAVEFORMAT": cGetOptionFromOptions = Options.StandardSaveformat
+51350   Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
+51360   Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
+51370   Case "STARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.StartStandardProgram
+51380   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
+51390   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
+51400   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
+51410   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
+51420   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
+51430   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
+51440  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2025,31 +2027,32 @@ On Error GoTo ErrPtnr_OnError
 51170   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
 51180   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
 51190   .SaveFilename = sOptions.SaveFilename
-51200   .SendMailMethod = sOptions.SendMailMethod
-51210   .ShowAnimation = sOptions.ShowAnimation
-51220   .StampFontColor = sOptions.StampFontColor
-51230   .StampFontname = sOptions.StampFontname
-51240   .StampFontsize = sOptions.StampFontsize
-51250   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
-51260   .StampString = sOptions.StampString
-51270   .StampUseOutlineFont = sOptions.StampUseOutlineFont
-51280   .StandardAuthor = sOptions.StandardAuthor
-51290   .StandardCreationdate = sOptions.StandardCreationdate
-51300   .StandardDateformat = sOptions.StandardDateformat
-51310   .StandardKeywords = sOptions.StandardKeywords
-51320   .StandardMailDomain = sOptions.StandardMailDomain
-51330   .StandardModifydate = sOptions.StandardModifydate
-51340   .StandardSaveformat = sOptions.StandardSaveformat
-51350   .StandardSubject = sOptions.StandardSubject
-51360   .StandardTitle = sOptions.StandardTitle
-51370   .StartStandardProgram = sOptions.StartStandardProgram
-51380   .TIFFColorscount = sOptions.TIFFColorscount
-51390   .Toolbars = sOptions.Toolbars
-51400   .UseAutosave = sOptions.UseAutosave
-51410   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51420   .UseCreationDateNow = sOptions.UseCreationDateNow
-51430   .UseStandardAuthor = sOptions.UseStandardAuthor
-51440  End With
+51200   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+51210   .SendMailMethod = sOptions.SendMailMethod
+51220   .ShowAnimation = sOptions.ShowAnimation
+51230   .StampFontColor = sOptions.StampFontColor
+51240   .StampFontname = sOptions.StampFontname
+51250   .StampFontsize = sOptions.StampFontsize
+51260   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+51270   .StampString = sOptions.StampString
+51280   .StampUseOutlineFont = sOptions.StampUseOutlineFont
+51290   .StandardAuthor = sOptions.StandardAuthor
+51300   .StandardCreationdate = sOptions.StandardCreationdate
+51310   .StandardDateformat = sOptions.StandardDateformat
+51320   .StandardKeywords = sOptions.StandardKeywords
+51330   .StandardMailDomain = sOptions.StandardMailDomain
+51340   .StandardModifydate = sOptions.StandardModifydate
+51350   .StandardSaveformat = sOptions.StandardSaveformat
+51360   .StandardSubject = sOptions.StandardSubject
+51370   .StandardTitle = sOptions.StandardTitle
+51380   .StartStandardProgram = sOptions.StartStandardProgram
+51390   .TIFFColorscount = sOptions.TIFFColorscount
+51400   .Toolbars = sOptions.Toolbars
+51410   .UseAutosave = sOptions.UseAutosave
+51420   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51430   .UseCreationDateNow = sOptions.UseCreationDateNow
+51440   .UseStandardAuthor = sOptions.UseStandardAuthor
+51450  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2184,35 +2187,36 @@ On Error GoTo ErrPtnr_OnError
 51160   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options.RunProgramBeforeSavingProgramParameters = Value
 51170   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options.RunProgramBeforeSavingWindowstyle = Value
 51180   Case "SAVEFILENAME": Options.SaveFilename = Value
-51190   Case "SENDMAILMETHOD": Options.SendMailMethod = Value
-51200   Case "SHOWANIMATION": Options.ShowAnimation = Value
-51210   Case "STAMPFONTCOLOR": Options.StampFontColor = Value
-51220   Case "STAMPFONTNAME": Options.StampFontname = Value
-51230   Case "STAMPFONTSIZE": Options.StampFontsize = Value
-51240   Case "STAMPOUTLINEFONTTHICKNESS": Options.StampOutlineFontthickness = Value
-51250   Case "STAMPSTRING": Options.StampString = Value
-51260   Case "STAMPUSEOUTLINEFONT": Options.StampUseOutlineFont = Value
-51270   Case "STANDARDAUTHOR": Options.StandardAuthor = Value
-51280   Case "STANDARDCREATIONDATE": Options.StandardCreationdate = Value
-51290   Case "STANDARDDATEFORMAT": Options.StandardDateformat = Value
-51300   Case "STANDARDKEYWORDS": Options.StandardKeywords = Value
-51310   Case "STANDARDMAILDOMAIN": Options.StandardMailDomain = Value
-51320   Case "STANDARDMODIFYDATE": Options.StandardModifydate = Value
-51330   Case "STANDARDSAVEFORMAT": Options.StandardSaveformat = Value
-51340   Case "STANDARDSUBJECT": Options.StandardSubject = Value
-51350   Case "STANDARDTITLE": Options.StandardTitle = Value
-51360   Case "STARTSTANDARDPROGRAM": Options.StartStandardProgram = Value
-51370   Case "TIFFCOLORSCOUNT": Options.TIFFColorscount = Value
-51380   Case "TOOLBARS": Options.Toolbars = Value
-51390   Case "USEAUTOSAVE": Options.UseAutosave = Value
-51400   Case "USEAUTOSAVEDIRECTORY": Options.UseAutosaveDirectory = Value
-51410   Case "USECREATIONDATENOW": Options.UseCreationDateNow = Value
-51420   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = Value
-51430   Case Else:
-51440    mError.Number = 3
-51450    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
-51460    RaiseEvent eError
-51470  End Select
+51190   Case "SENDEMAILAFTERAUTOSAVING": Options.SendEmailAfterAutoSaving = Value
+51200   Case "SENDMAILMETHOD": Options.SendMailMethod = Value
+51210   Case "SHOWANIMATION": Options.ShowAnimation = Value
+51220   Case "STAMPFONTCOLOR": Options.StampFontColor = Value
+51230   Case "STAMPFONTNAME": Options.StampFontname = Value
+51240   Case "STAMPFONTSIZE": Options.StampFontsize = Value
+51250   Case "STAMPOUTLINEFONTTHICKNESS": Options.StampOutlineFontthickness = Value
+51260   Case "STAMPSTRING": Options.StampString = Value
+51270   Case "STAMPUSEOUTLINEFONT": Options.StampUseOutlineFont = Value
+51280   Case "STANDARDAUTHOR": Options.StandardAuthor = Value
+51290   Case "STANDARDCREATIONDATE": Options.StandardCreationdate = Value
+51300   Case "STANDARDDATEFORMAT": Options.StandardDateformat = Value
+51310   Case "STANDARDKEYWORDS": Options.StandardKeywords = Value
+51320   Case "STANDARDMAILDOMAIN": Options.StandardMailDomain = Value
+51330   Case "STANDARDMODIFYDATE": Options.StandardModifydate = Value
+51340   Case "STANDARDSAVEFORMAT": Options.StandardSaveformat = Value
+51350   Case "STANDARDSUBJECT": Options.StandardSubject = Value
+51360   Case "STANDARDTITLE": Options.StandardTitle = Value
+51370   Case "STARTSTANDARDPROGRAM": Options.StartStandardProgram = Value
+51380   Case "TIFFCOLORSCOUNT": Options.TIFFColorscount = Value
+51390   Case "TOOLBARS": Options.Toolbars = Value
+51400   Case "USEAUTOSAVE": Options.UseAutosave = Value
+51410   Case "USEAUTOSAVEDIRECTORY": Options.UseAutosaveDirectory = Value
+51420   Case "USECREATIONDATENOW": Options.UseCreationDateNow = Value
+51430   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = Value
+51440   Case Else:
+51450    mError.Number = 3
+51460    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
+51470    RaiseEvent eError
+51480  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2347,31 +2351,32 @@ On Error GoTo ErrPtnr_OnError
 51160   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
 51170   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
 51180   .SaveFilename = sOptions.SaveFilename
-51190   .SendMailMethod = sOptions.SendMailMethod
-51200   .ShowAnimation = sOptions.ShowAnimation
-51210   .StampFontColor = sOptions.StampFontColor
-51220   .StampFontname = sOptions.StampFontname
-51230   .StampFontsize = sOptions.StampFontsize
-51240   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
-51250   .StampString = sOptions.StampString
-51260   .StampUseOutlineFont = sOptions.StampUseOutlineFont
-51270   .StandardAuthor = sOptions.StandardAuthor
-51280   .StandardCreationdate = sOptions.StandardCreationdate
-51290   .StandardDateformat = sOptions.StandardDateformat
-51300   .StandardKeywords = sOptions.StandardKeywords
-51310   .StandardMailDomain = sOptions.StandardMailDomain
-51320   .StandardModifydate = sOptions.StandardModifydate
-51330   .StandardSaveformat = sOptions.StandardSaveformat
-51340   .StandardSubject = sOptions.StandardSubject
-51350   .StandardTitle = sOptions.StandardTitle
-51360   .StartStandardProgram = sOptions.StartStandardProgram
-51370   .TIFFColorscount = sOptions.TIFFColorscount
-51380   .Toolbars = sOptions.Toolbars
-51390   .UseAutosave = sOptions.UseAutosave
-51400   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51410   .UseCreationDateNow = sOptions.UseCreationDateNow
-51420   .UseStandardAuthor = sOptions.UseStandardAuthor
-51430  End With
+51190   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+51200   .SendMailMethod = sOptions.SendMailMethod
+51210   .ShowAnimation = sOptions.ShowAnimation
+51220   .StampFontColor = sOptions.StampFontColor
+51230   .StampFontname = sOptions.StampFontname
+51240   .StampFontsize = sOptions.StampFontsize
+51250   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+51260   .StampString = sOptions.StampString
+51270   .StampUseOutlineFont = sOptions.StampUseOutlineFont
+51280   .StandardAuthor = sOptions.StandardAuthor
+51290   .StandardCreationdate = sOptions.StandardCreationdate
+51300   .StandardDateformat = sOptions.StandardDateformat
+51310   .StandardKeywords = sOptions.StandardKeywords
+51320   .StandardMailDomain = sOptions.StandardMailDomain
+51330   .StandardModifydate = sOptions.StandardModifydate
+51340   .StandardSaveformat = sOptions.StandardSaveformat
+51350   .StandardSubject = sOptions.StandardSubject
+51360   .StandardTitle = sOptions.StandardTitle
+51370   .StartStandardProgram = sOptions.StartStandardProgram
+51380   .TIFFColorscount = sOptions.TIFFColorscount
+51390   .Toolbars = sOptions.Toolbars
+51400   .UseAutosave = sOptions.UseAutosave
+51410   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51420   .UseCreationDateNow = sOptions.UseCreationDateNow
+51430   .UseStandardAuthor = sOptions.UseStandardAuthor
+51440  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2384,5 +2389,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
+
+
 
 
