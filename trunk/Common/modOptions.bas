@@ -123,6 +123,7 @@ Public Type tOptions
  RunProgramBeforeSavingProgramParameters As String
  RunProgramBeforeSavingWindowstyle As Long
  SaveFilename As String
+ SendEmailAfterAutoSaving As Long
  SendMailMethod As Long
  ShowAnimation As Long
  StampFontColor As String
@@ -302,41 +303,42 @@ On Error GoTo ErrPtnr_OnError
 51450   .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
 51460   .RunProgramBeforeSavingWindowstyle = "1"
 51470   .SaveFilename = "<Title>"
-51480   .SendMailMethod = "0"
-51490   .ShowAnimation = "1"
-51500   .StampFontColor = "#FF0000"
-51510   .StampFontname = "Arial"
-51520   .StampFontsize = "48"
-51530   .StampOutlineFontthickness = "0"
-51540   .StampString = vbNullString
-51550   .StampUseOutlineFont = "1"
-51560   .StandardAuthor = vbNullString
-51570   .StandardCreationdate = vbNullString
-51580   .StandardDateformat = "YYYYMMDDHHNNSS"
-51590   .StandardKeywords = vbNullString
-51600   .StandardMailDomain = vbNullString
-51610   .StandardModifydate = vbNullString
-51620   .StandardSaveformat = "pdf"
-51630   .StandardSubject = vbNullString
-51640   .StandardTitle = vbNullString
-51650   .StartStandardProgram = "1"
-51660   .TIFFColorscount = "0"
-51670   .Toolbars = "1"
-51680   .UseAutosave = "0"
-51690   .UseAutosaveDirectory = "1"
-51700   .UseCreationDateNow = "0"
-51710   .UseStandardAuthor = "0"
-51720  End With
-51730  If UseINI Then
-51740    If Not IsWin9xMe Then
-51750     myOptions = ReadOptionsINI(myOptions, CompletePath(GetDefaultAppData) & "PDFCreator.ini", False, False)
-51760    End If
-51770   Else
-51780    If Not IsWin9xMe Then
-51790     myOptions = ReadOptionsReg(myOptions, ".DEFAULT\Software\PDFCreator", HKEY_USERS, False, False)
-51800    End If
-51810  End If
-51820  StandardOptions = myOptions
+51480   .SendEmailAfterAutoSaving = "0"
+51490   .SendMailMethod = "0"
+51500   .ShowAnimation = "1"
+51510   .StampFontColor = "#FF0000"
+51520   .StampFontname = "Arial"
+51530   .StampFontsize = "48"
+51540   .StampOutlineFontthickness = "0"
+51550   .StampString = vbNullString
+51560   .StampUseOutlineFont = "1"
+51570   .StandardAuthor = vbNullString
+51580   .StandardCreationdate = vbNullString
+51590   .StandardDateformat = "YYYYMMDDHHNNSS"
+51600   .StandardKeywords = vbNullString
+51610   .StandardMailDomain = vbNullString
+51620   .StandardModifydate = vbNullString
+51630   .StandardSaveformat = "pdf"
+51640   .StandardSubject = vbNullString
+51650   .StandardTitle = vbNullString
+51660   .StartStandardProgram = "1"
+51670   .TIFFColorscount = "0"
+51680   .Toolbars = "1"
+51690   .UseAutosave = "0"
+51700   .UseAutosaveDirectory = "1"
+51710   .UseCreationDateNow = "0"
+51720   .UseStandardAuthor = "0"
+51730  End With
+51740  If UseINI Then
+51750    If Not IsWin9xMe Then
+51760     myOptions = ReadOptionsINI(myOptions, CompletePath(GetDefaultAppData) & "PDFCreator.ini", False, False)
+51770    End If
+51780   Else
+51790    If Not IsWin9xMe Then
+51800     myOptions = ReadOptionsReg(myOptions, ".DEFAULT\Software\PDFCreator", HKEY_USERS, False, False)
+51810    End If
+51820  End If
+51830  StandardOptions = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1939,273 +1941,287 @@ On Error GoTo ErrPtnr_OnError
 65410      .SaveFilename = tStr
 65420     End If
 65430   End If
-65440   tStr = hOpt.Retrieve("SendMailMethod")
+65440   tStr = hOpt.Retrieve("SendEmailAfterAutoSaving")
 65450   If IsNumeric(tStr) Then
-65460     If CLng(tStr) >= 0 Then
-65470       .SendMailMethod = CLng(tStr)
+65460     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65470       .SendEmailAfterAutoSaving = CLng(tStr)
 65480      Else
 65490       If UseStandard Then
-65500        .SendMailMethod = 0
+65500        .SendEmailAfterAutoSaving = 0
 65510       End If
 65520     End If
 65530    Else
 65540     If UseStandard Then
-65550      .SendMailMethod = 0
+65550      .SendEmailAfterAutoSaving = 0
 65560     End If
 65570   End If
-65580   tStr = hOpt.Retrieve("ShowAnimation")
+65580   tStr = hOpt.Retrieve("SendMailMethod")
 65590   If IsNumeric(tStr) Then
-65600     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-65610       .ShowAnimation = CLng(tStr)
+65600     If CLng(tStr) >= 0 Then
+65610       .SendMailMethod = CLng(tStr)
 65620      Else
 65630       If UseStandard Then
-65640        .ShowAnimation = 1
+65640        .SendMailMethod = 0
 65650       End If
 65660     End If
 65670    Else
 65680     If UseStandard Then
-65690      .ShowAnimation = 1
+65690      .SendMailMethod = 0
 65700     End If
 65710   End If
-65720   tStr = hOpt.Retrieve("StampFontColor")
-65730   If LenB(tStr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
-65740     .StampFontColor = "#FF0000"
-65750    Else
-65760     If LenB(tStr) > 0 Then
-65770      .StampFontColor = tStr
-65780     End If
-65790   End If
-65800   tStr = hOpt.Retrieve("StampFontname")
-65810   If LenB(tStr) = 0 And LenB("Arial") > 0 And UseStandard Then
-65820     .StampFontname = "Arial"
-65830    Else
-65840     If LenB(tStr) > 0 Then
-65850      .StampFontname = tStr
-65860     End If
-65870   End If
-65880   tStr = hOpt.Retrieve("StampFontsize")
-65890   If IsNumeric(tStr) Then
-65900     If CLng(tStr) >= 1 Then
-65910       .StampFontsize = CLng(tStr)
-65920      Else
-65930       If UseStandard Then
-65940        .StampFontsize = 48
-65950       End If
-65960     End If
+65720   tStr = hOpt.Retrieve("ShowAnimation")
+65730   If IsNumeric(tStr) Then
+65740     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65750       .ShowAnimation = CLng(tStr)
+65760      Else
+65770       If UseStandard Then
+65780        .ShowAnimation = 1
+65790       End If
+65800     End If
+65810    Else
+65820     If UseStandard Then
+65830      .ShowAnimation = 1
+65840     End If
+65850   End If
+65860   tStr = hOpt.Retrieve("StampFontColor")
+65870   If LenB(tStr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
+65880     .StampFontColor = "#FF0000"
+65890    Else
+65900     If LenB(tStr) > 0 Then
+65910      .StampFontColor = tStr
+65920     End If
+65930   End If
+65940   tStr = hOpt.Retrieve("StampFontname")
+65950   If LenB(tStr) = 0 And LenB("Arial") > 0 And UseStandard Then
+65960     .StampFontname = "Arial"
 65970    Else
-65980     If UseStandard Then
-65990      .StampFontsize = 48
+65980     If LenB(tStr) > 0 Then
+65990      .StampFontname = tStr
 66000     End If
 66010   End If
-66020   tStr = hOpt.Retrieve("StampOutlineFontthickness")
+66020   tStr = hOpt.Retrieve("StampFontsize")
 66030   If IsNumeric(tStr) Then
-66040     If CLng(tStr) >= 0 Then
-66050       .StampOutlineFontthickness = CLng(tStr)
+66040     If CLng(tStr) >= 1 Then
+66050       .StampFontsize = CLng(tStr)
 66060      Else
 66070       If UseStandard Then
-66080        .StampOutlineFontthickness = 0
+66080        .StampFontsize = 48
 66090       End If
 66100     End If
 66110    Else
 66120     If UseStandard Then
-66130      .StampOutlineFontthickness = 0
+66130      .StampFontsize = 48
 66140     End If
 66150   End If
-66160   tStr = hOpt.Retrieve("StampString")
-66170   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66180     .StampString = ""
-66190    Else
-66200     If LenB(tStr) > 0 Then
-66210      .StampString = tStr
-66220     End If
-66230   End If
-66240   tStr = hOpt.Retrieve("StampUseOutlineFont")
-66250   If IsNumeric(tStr) Then
-66260     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66270       .StampUseOutlineFont = CLng(tStr)
-66280      Else
-66290       If UseStandard Then
-66300        .StampUseOutlineFont = 1
-66310       End If
-66320     End If
+66160   tStr = hOpt.Retrieve("StampOutlineFontthickness")
+66170   If IsNumeric(tStr) Then
+66180     If CLng(tStr) >= 0 Then
+66190       .StampOutlineFontthickness = CLng(tStr)
+66200      Else
+66210       If UseStandard Then
+66220        .StampOutlineFontthickness = 0
+66230       End If
+66240     End If
+66250    Else
+66260     If UseStandard Then
+66270      .StampOutlineFontthickness = 0
+66280     End If
+66290   End If
+66300   tStr = hOpt.Retrieve("StampString")
+66310   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66320     .StampString = ""
 66330    Else
-66340     If UseStandard Then
-66350      .StampUseOutlineFont = 1
+66340     If LenB(tStr) > 0 Then
+66350      .StampString = tStr
 66360     End If
 66370   End If
-66380   tStr = hOpt.Retrieve("StandardAuthor")
-66390   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66400     .StandardAuthor = ""
-66410    Else
-66420     If LenB(tStr) > 0 Then
-66430      .StandardAuthor = tStr
-66440     End If
-66450   End If
-66460   tStr = hOpt.Retrieve("StandardCreationdate")
-66470   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66480     .StandardCreationdate = ""
-66490    Else
-66500     If LenB(tStr) > 0 Then
-66510      .StandardCreationdate = tStr
-66520     End If
-66530   End If
-66540   tStr = hOpt.Retrieve("StandardDateformat")
-66550   If LenB(tStr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
-66560     .StandardDateformat = "YYYYMMDDHHNNSS"
-66570    Else
-66580     If LenB(tStr) > 0 Then
-66590      .StandardDateformat = tStr
-66600     End If
-66610   End If
-66620   tStr = hOpt.Retrieve("StandardKeywords")
-66630   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66640     .StandardKeywords = ""
-66650    Else
-66660     If LenB(tStr) > 0 Then
-66670      .StandardKeywords = tStr
-66680     End If
-66690   End If
-66700   tStr = hOpt.Retrieve("StandardMailDomain")
-66710   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66720     .StandardMailDomain = ""
-66730    Else
-66740     If LenB(tStr) > 0 Then
-66750      .StandardMailDomain = tStr
-66760     End If
-66770   End If
-66780   tStr = hOpt.Retrieve("StandardModifydate")
-66790   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66800     .StandardModifydate = ""
-66810    Else
-66820     If LenB(tStr) > 0 Then
-66830      .StandardModifydate = tStr
-66840     End If
-66850   End If
-66860   tStr = hOpt.Retrieve("StandardSaveformat")
-66870   If LenB(tStr) = 0 And LenB("pdf") > 0 And UseStandard Then
-66880     .StandardSaveformat = "pdf"
-66890    Else
-66900     If LenB(tStr) > 0 Then
-66910      .StandardSaveformat = tStr
-66920     End If
-66930   End If
-66940   tStr = hOpt.Retrieve("StandardSubject")
-66950   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66960     .StandardSubject = ""
-66970    Else
-66980     If LenB(tStr) > 0 Then
-66990      .StandardSubject = tStr
-67000     End If
-67010   End If
-67020   tStr = hOpt.Retrieve("StandardTitle")
-67030   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-67040     .StandardTitle = ""
-67050    Else
-67060     If LenB(tStr) > 0 Then
-67070      .StandardTitle = tStr
-67080     End If
-67090   End If
-67100   tStr = hOpt.Retrieve("StartStandardProgram")
-67110   If IsNumeric(tStr) Then
-67120     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67130       .StartStandardProgram = CLng(tStr)
-67140      Else
-67150       If UseStandard Then
-67160        .StartStandardProgram = 1
-67170       End If
-67180     End If
+66380   tStr = hOpt.Retrieve("StampUseOutlineFont")
+66390   If IsNumeric(tStr) Then
+66400     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66410       .StampUseOutlineFont = CLng(tStr)
+66420      Else
+66430       If UseStandard Then
+66440        .StampUseOutlineFont = 1
+66450       End If
+66460     End If
+66470    Else
+66480     If UseStandard Then
+66490      .StampUseOutlineFont = 1
+66500     End If
+66510   End If
+66520   tStr = hOpt.Retrieve("StandardAuthor")
+66530   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66540     .StandardAuthor = ""
+66550    Else
+66560     If LenB(tStr) > 0 Then
+66570      .StandardAuthor = tStr
+66580     End If
+66590   End If
+66600   tStr = hOpt.Retrieve("StandardCreationdate")
+66610   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66620     .StandardCreationdate = ""
+66630    Else
+66640     If LenB(tStr) > 0 Then
+66650      .StandardCreationdate = tStr
+66660     End If
+66670   End If
+66680   tStr = hOpt.Retrieve("StandardDateformat")
+66690   If LenB(tStr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
+66700     .StandardDateformat = "YYYYMMDDHHNNSS"
+66710    Else
+66720     If LenB(tStr) > 0 Then
+66730      .StandardDateformat = tStr
+66740     End If
+66750   End If
+66760   tStr = hOpt.Retrieve("StandardKeywords")
+66770   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66780     .StandardKeywords = ""
+66790    Else
+66800     If LenB(tStr) > 0 Then
+66810      .StandardKeywords = tStr
+66820     End If
+66830   End If
+66840   tStr = hOpt.Retrieve("StandardMailDomain")
+66850   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66860     .StandardMailDomain = ""
+66870    Else
+66880     If LenB(tStr) > 0 Then
+66890      .StandardMailDomain = tStr
+66900     End If
+66910   End If
+66920   tStr = hOpt.Retrieve("StandardModifydate")
+66930   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66940     .StandardModifydate = ""
+66950    Else
+66960     If LenB(tStr) > 0 Then
+66970      .StandardModifydate = tStr
+66980     End If
+66990   End If
+67000   tStr = hOpt.Retrieve("StandardSaveformat")
+67010   If LenB(tStr) = 0 And LenB("pdf") > 0 And UseStandard Then
+67020     .StandardSaveformat = "pdf"
+67030    Else
+67040     If LenB(tStr) > 0 Then
+67050      .StandardSaveformat = tStr
+67060     End If
+67070   End If
+67080   tStr = hOpt.Retrieve("StandardSubject")
+67090   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+67100     .StandardSubject = ""
+67110    Else
+67120     If LenB(tStr) > 0 Then
+67130      .StandardSubject = tStr
+67140     End If
+67150   End If
+67160   tStr = hOpt.Retrieve("StandardTitle")
+67170   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+67180     .StandardTitle = ""
 67190    Else
-67200     If UseStandard Then
-67210      .StartStandardProgram = 1
+67200     If LenB(tStr) > 0 Then
+67210      .StandardTitle = tStr
 67220     End If
 67230   End If
-67240   tStr = hOpt.Retrieve("TIFFColorscount")
+67240   tStr = hOpt.Retrieve("StartStandardProgram")
 67250   If IsNumeric(tStr) Then
-67260     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
-67270       .TIFFColorscount = CLng(tStr)
+67260     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67270       .StartStandardProgram = CLng(tStr)
 67280      Else
 67290       If UseStandard Then
-67300        .TIFFColorscount = 0
+67300        .StartStandardProgram = 1
 67310       End If
 67320     End If
 67330    Else
 67340     If UseStandard Then
-67350      .TIFFColorscount = 0
+67350      .StartStandardProgram = 1
 67360     End If
 67370   End If
-67380   tStr = hOpt.Retrieve("Toolbars")
+67380   tStr = hOpt.Retrieve("TIFFColorscount")
 67390   If IsNumeric(tStr) Then
-67400     If CLng(tStr) >= 0 Then
-67410       .Toolbars = CLng(tStr)
+67400     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+67410       .TIFFColorscount = CLng(tStr)
 67420      Else
 67430       If UseStandard Then
-67440        .Toolbars = 1
+67440        .TIFFColorscount = 0
 67450       End If
 67460     End If
 67470    Else
 67480     If UseStandard Then
-67490      .Toolbars = 1
+67490      .TIFFColorscount = 0
 67500     End If
 67510   End If
-67520   tStr = hOpt.Retrieve("UseAutosave")
+67520   tStr = hOpt.Retrieve("Toolbars")
 67530   If IsNumeric(tStr) Then
-67540     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67550       .UseAutosave = CLng(tStr)
+67540     If CLng(tStr) >= 0 Then
+67550       .Toolbars = CLng(tStr)
 67560      Else
 67570       If UseStandard Then
-67580        .UseAutosave = 0
+67580        .Toolbars = 1
 67590       End If
 67600     End If
 67610    Else
 67620     If UseStandard Then
-67630      .UseAutosave = 0
+67630      .Toolbars = 1
 67640     End If
 67650   End If
-67660   tStr = hOpt.Retrieve("UseAutosaveDirectory")
+67660   tStr = hOpt.Retrieve("UseAutosave")
 67670   If IsNumeric(tStr) Then
 67680     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67690       .UseAutosaveDirectory = CLng(tStr)
+67690       .UseAutosave = CLng(tStr)
 67700      Else
 67710       If UseStandard Then
-67720        .UseAutosaveDirectory = 1
+67720        .UseAutosave = 0
 67730       End If
 67740     End If
 67750    Else
 67760     If UseStandard Then
-67770      .UseAutosaveDirectory = 1
+67770      .UseAutosave = 0
 67780     End If
 67790   End If
-67800   tStr = hOpt.Retrieve("UseCreationDateNow")
+67800   tStr = hOpt.Retrieve("UseAutosaveDirectory")
 67810   If IsNumeric(tStr) Then
 67820     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67830       .UseCreationDateNow = CLng(tStr)
+67830       .UseAutosaveDirectory = CLng(tStr)
 67840      Else
 67850       If UseStandard Then
-67860        .UseCreationDateNow = 0
+67860        .UseAutosaveDirectory = 1
 67870       End If
 67880     End If
 67890    Else
 67900     If UseStandard Then
-67910      .UseCreationDateNow = 0
+67910      .UseAutosaveDirectory = 1
 67920     End If
 67930   End If
-67940   tStr = hOpt.Retrieve("UseStandardAuthor")
+67940   tStr = hOpt.Retrieve("UseCreationDateNow")
 67950   If IsNumeric(tStr) Then
 67960     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67970       .UseStandardAuthor = CLng(tStr)
+67970       .UseCreationDateNow = CLng(tStr)
 67980      Else
 67990       If UseStandard Then
-68000        .UseStandardAuthor = 0
+68000        .UseCreationDateNow = 0
 68010       End If
 68020     End If
 68030    Else
 68040     If UseStandard Then
-68050      .UseStandardAuthor = 0
+68050      .UseCreationDateNow = 0
 68060     End If
 68070   End If
-68080  End With
-68090  Set ini = Nothing
-68100  ReadOptionsINI = myOptions
+68080   tStr = hOpt.Retrieve("UseStandardAuthor")
+68090   If IsNumeric(tStr) Then
+68100     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+68110       .UseStandardAuthor = CLng(tStr)
+68120      Else
+68130       If UseStandard Then
+68140        .UseStandardAuthor = 0
+68150       End If
+68160     End If
+68170    Else
+68180     If UseStandard Then
+68190      .UseStandardAuthor = 0
+68200     End If
+68210   End If
+68220  End With
+68230  Set ini = Nothing
+68240  ReadOptionsINI = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2431,33 +2447,34 @@ On Error GoTo ErrPtnr_OnError
 51240   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": ini.SaveKey CStr(.RunProgramBeforeSavingProgramParameters), "RunProgramBeforeSavingProgramParameters"
 51250   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": ini.SaveKey CStr(.RunProgramBeforeSavingWindowstyle), "RunProgramBeforeSavingWindowstyle"
 51260   Case "SAVEFILENAME": ini.SaveKey CStr(.SaveFilename), "SaveFilename"
-51270   Case "SENDMAILMETHOD": ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
-51280   Case "SHOWANIMATION": ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
-51290   Case "STAMPFONTCOLOR": ini.SaveKey CStr(.StampFontColor), "StampFontColor"
-51300   Case "STAMPFONTNAME": ini.SaveKey CStr(.StampFontname), "StampFontname"
-51310   Case "STAMPFONTSIZE": ini.SaveKey CStr(.StampFontsize), "StampFontsize"
-51320   Case "STAMPOUTLINEFONTTHICKNESS": ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
-51330   Case "STAMPSTRING": ini.SaveKey CStr(.StampString), "StampString"
-51340   Case "STAMPUSEOUTLINEFONT": ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
-51350   Case "STANDARDAUTHOR": ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
-51360   Case "STANDARDCREATIONDATE": ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
-51370   Case "STANDARDDATEFORMAT": ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
-51380   Case "STANDARDKEYWORDS": ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
-51390   Case "STANDARDMAILDOMAIN": ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
-51400   Case "STANDARDMODIFYDATE": ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
-51410   Case "STANDARDSAVEFORMAT": ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
-51420   Case "STANDARDSUBJECT": ini.SaveKey CStr(.StandardSubject), "StandardSubject"
-51430   Case "STANDARDTITLE": ini.SaveKey CStr(.StandardTitle), "StandardTitle"
-51440   Case "STARTSTANDARDPROGRAM": ini.SaveKey CStr(Abs(.StartStandardProgram)), "StartStandardProgram"
-51450   Case "TIFFCOLORSCOUNT": ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
-51460   Case "TOOLBARS": ini.SaveKey CStr(.Toolbars), "Toolbars"
-51470   Case "USEAUTOSAVE": ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
-51480   Case "USEAUTOSAVEDIRECTORY": ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
-51490   Case "USECREATIONDATENOW": ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
-51500   Case "USESTANDARDAUTHOR": ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
-51510   End Select
-51520  End With
-51530  Set ini = Nothing
+51270   Case "SENDEMAILAFTERAUTOSAVING": ini.SaveKey CStr(Abs(.SendEmailAfterAutoSaving)), "SendEmailAfterAutoSaving"
+51280   Case "SENDMAILMETHOD": ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
+51290   Case "SHOWANIMATION": ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
+51300   Case "STAMPFONTCOLOR": ini.SaveKey CStr(.StampFontColor), "StampFontColor"
+51310   Case "STAMPFONTNAME": ini.SaveKey CStr(.StampFontname), "StampFontname"
+51320   Case "STAMPFONTSIZE": ini.SaveKey CStr(.StampFontsize), "StampFontsize"
+51330   Case "STAMPOUTLINEFONTTHICKNESS": ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
+51340   Case "STAMPSTRING": ini.SaveKey CStr(.StampString), "StampString"
+51350   Case "STAMPUSEOUTLINEFONT": ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
+51360   Case "STANDARDAUTHOR": ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
+51370   Case "STANDARDCREATIONDATE": ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
+51380   Case "STANDARDDATEFORMAT": ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
+51390   Case "STANDARDKEYWORDS": ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
+51400   Case "STANDARDMAILDOMAIN": ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
+51410   Case "STANDARDMODIFYDATE": ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
+51420   Case "STANDARDSAVEFORMAT": ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
+51430   Case "STANDARDSUBJECT": ini.SaveKey CStr(.StandardSubject), "StandardSubject"
+51440   Case "STANDARDTITLE": ini.SaveKey CStr(.StandardTitle), "StandardTitle"
+51450   Case "STARTSTANDARDPROGRAM": ini.SaveKey CStr(Abs(.StartStandardProgram)), "StartStandardProgram"
+51460   Case "TIFFCOLORSCOUNT": ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
+51470   Case "TOOLBARS": ini.SaveKey CStr(.Toolbars), "Toolbars"
+51480   Case "USEAUTOSAVE": ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
+51490   Case "USEAUTOSAVEDIRECTORY": ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
+51500   Case "USECREATIONDATENOW": ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
+51510   Case "USESTANDARDAUTHOR": ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
+51520   End Select
+51530  End With
+51540  Set ini = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2599,32 +2616,33 @@ On Error GoTo ErrPtnr_OnError
 51230   ini.SaveKey CStr(.RunProgramBeforeSavingProgramParameters), "RunProgramBeforeSavingProgramParameters"
 51240   ini.SaveKey CStr(.RunProgramBeforeSavingWindowstyle), "RunProgramBeforeSavingWindowstyle"
 51250   ini.SaveKey CStr(.SaveFilename), "SaveFilename"
-51260   ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
-51270   ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
-51280   ini.SaveKey CStr(.StampFontColor), "StampFontColor"
-51290   ini.SaveKey CStr(.StampFontname), "StampFontname"
-51300   ini.SaveKey CStr(.StampFontsize), "StampFontsize"
-51310   ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
-51320   ini.SaveKey CStr(.StampString), "StampString"
-51330   ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
-51340   ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
-51350   ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
-51360   ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
-51370   ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
-51380   ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
-51390   ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
-51400   ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
-51410   ini.SaveKey CStr(.StandardSubject), "StandardSubject"
-51420   ini.SaveKey CStr(.StandardTitle), "StandardTitle"
-51430   ini.SaveKey CStr(Abs(.StartStandardProgram)), "StartStandardProgram"
-51440   ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
-51450   ini.SaveKey CStr(.Toolbars), "Toolbars"
-51460   ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
-51470   ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
-51480   ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
-51490   ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
-51500  End With
-51510  Set ini = Nothing
+51260   ini.SaveKey CStr(Abs(.SendEmailAfterAutoSaving)), "SendEmailAfterAutoSaving"
+51270   ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
+51280   ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
+51290   ini.SaveKey CStr(.StampFontColor), "StampFontColor"
+51300   ini.SaveKey CStr(.StampFontname), "StampFontname"
+51310   ini.SaveKey CStr(.StampFontsize), "StampFontsize"
+51320   ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
+51330   ini.SaveKey CStr(.StampString), "StampString"
+51340   ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
+51350   ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
+51360   ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
+51370   ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
+51380   ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
+51390   ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
+51400   ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
+51410   ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
+51420   ini.SaveKey CStr(.StandardSubject), "StandardSubject"
+51430   ini.SaveKey CStr(.StandardTitle), "StandardTitle"
+51440   ini.SaveKey CStr(Abs(.StartStandardProgram)), "StartStandardProgram"
+51450   ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
+51460   ini.SaveKey CStr(.Toolbars), "Toolbars"
+51470   ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
+51480   ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
+51490   ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
+51500   ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
+51510  End With
+51520  Set ini = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -4366,93 +4384,107 @@ On Error GoTo ErrPtnr_OnError
 67230      .SaveFilename = tStr
 67240     End If
 67250   End If
-67260   tStr = reg.GetRegistryValue("SendMailMethod")
+67260   tStr = reg.GetRegistryValue("SendEmailAfterAutoSaving")
 67270   If IsNumeric(tStr) Then
-67280     If CLng(tStr) >= 0 Then
-67290       .SendMailMethod = CLng(tStr)
+67280     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67290       .SendEmailAfterAutoSaving = CLng(tStr)
 67300      Else
 67310       If UseStandard Then
-67320        .SendMailMethod = 0
+67320        .SendEmailAfterAutoSaving = 0
 67330       End If
 67340     End If
 67350    Else
 67360     If UseStandard Then
-67370      .SendMailMethod = 0
+67370      .SendEmailAfterAutoSaving = 0
 67380     End If
 67390   End If
-67400   tStr = reg.GetRegistryValue("ShowAnimation")
+67400   tStr = reg.GetRegistryValue("SendMailMethod")
 67410   If IsNumeric(tStr) Then
-67420     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67430       .ShowAnimation = CLng(tStr)
+67420     If CLng(tStr) >= 0 Then
+67430       .SendMailMethod = CLng(tStr)
 67440      Else
 67450       If UseStandard Then
-67460        .ShowAnimation = 1
+67460        .SendMailMethod = 0
 67470       End If
 67480     End If
 67490    Else
 67500     If UseStandard Then
-67510      .ShowAnimation = 1
+67510      .SendMailMethod = 0
 67520     End If
 67530   End If
-67540   tStr = reg.GetRegistryValue("StartStandardProgram")
+67540   tStr = reg.GetRegistryValue("ShowAnimation")
 67550   If IsNumeric(tStr) Then
 67560     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67570       .StartStandardProgram = CLng(tStr)
+67570       .ShowAnimation = CLng(tStr)
 67580      Else
 67590       If UseStandard Then
-67600        .StartStandardProgram = 1
+67600        .ShowAnimation = 1
 67610       End If
 67620     End If
 67630    Else
 67640     If UseStandard Then
-67650      .StartStandardProgram = 1
+67650      .ShowAnimation = 1
 67660     End If
 67670   End If
-67680   tStr = reg.GetRegistryValue("Toolbars")
+67680   tStr = reg.GetRegistryValue("StartStandardProgram")
 67690   If IsNumeric(tStr) Then
-67700     If CLng(tStr) >= 0 Then
-67710       .Toolbars = CLng(tStr)
+67700     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67710       .StartStandardProgram = CLng(tStr)
 67720      Else
 67730       If UseStandard Then
-67740        .Toolbars = 1
+67740        .StartStandardProgram = 1
 67750       End If
 67760     End If
 67770    Else
 67780     If UseStandard Then
-67790      .Toolbars = 1
+67790      .StartStandardProgram = 1
 67800     End If
 67810   End If
-67820   tStr = reg.GetRegistryValue("UseAutosave")
+67820   tStr = reg.GetRegistryValue("Toolbars")
 67830   If IsNumeric(tStr) Then
-67840     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67850       .UseAutosave = CLng(tStr)
+67840     If CLng(tStr) >= 0 Then
+67850       .Toolbars = CLng(tStr)
 67860      Else
 67870       If UseStandard Then
-67880        .UseAutosave = 0
+67880        .Toolbars = 1
 67890       End If
 67900     End If
 67910    Else
 67920     If UseStandard Then
-67930      .UseAutosave = 0
+67930      .Toolbars = 1
 67940     End If
 67950   End If
-67960   tStr = reg.GetRegistryValue("UseAutosaveDirectory")
+67960   tStr = reg.GetRegistryValue("UseAutosave")
 67970   If IsNumeric(tStr) Then
 67980     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67990       .UseAutosaveDirectory = CLng(tStr)
+67990       .UseAutosave = CLng(tStr)
 68000      Else
 68010       If UseStandard Then
-68020        .UseAutosaveDirectory = 1
+68020        .UseAutosave = 0
 68030       End If
 68040     End If
 68050    Else
 68060     If UseStandard Then
-68070      .UseAutosaveDirectory = 1
+68070      .UseAutosave = 0
 68080     End If
 68090   End If
-68100  End With
-68110  Set reg = Nothing
-68120  ReadOptionsReg = myOptions
+68100   tStr = reg.GetRegistryValue("UseAutosaveDirectory")
+68110   If IsNumeric(tStr) Then
+68120     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+68130       .UseAutosaveDirectory = CLng(tStr)
+68140      Else
+68150       If UseStandard Then
+68160        .UseAutosaveDirectory = 1
+68170       End If
+68180     End If
+68190    Else
+68200     If UseStandard Then
+68210      .UseAutosaveDirectory = 1
+68220     End If
+68230   End If
+68240  End With
+68250  Set reg = Nothing
+68260  ReadOptionsReg = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -5564,56 +5596,64 @@ On Error GoTo ErrPtnr_OnError
 60930    Set reg = Nothing
 60940    Exit Sub
 60950   End If
-60960   If UCase$(OptionName) = "SENDMAILMETHOD" Then
+60960   If UCase$(OptionName) = "SENDEMAILAFTERAUTOSAVING" Then
 60970    If Not reg.KeyExists Then
 60980     reg.CreateKey
 60990    End If
-61000    reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
+61000    reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
 61010    Set reg = Nothing
 61020    Exit Sub
 61030   End If
-61040   If UCase$(OptionName) = "SHOWANIMATION" Then
+61040   If UCase$(OptionName) = "SENDMAILMETHOD" Then
 61050    If Not reg.KeyExists Then
 61060     reg.CreateKey
 61070    End If
-61080    reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
+61080    reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
 61090    Set reg = Nothing
 61100    Exit Sub
 61110   End If
-61120   If UCase$(OptionName) = "STARTSTANDARDPROGRAM" Then
+61120   If UCase$(OptionName) = "SHOWANIMATION" Then
 61130    If Not reg.KeyExists Then
 61140     reg.CreateKey
 61150    End If
-61160    reg.SetRegistryValue "StartStandardProgram", CStr(Abs(.StartStandardProgram)), REG_SZ
+61160    reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
 61170    Set reg = Nothing
 61180    Exit Sub
 61190   End If
-61200   If UCase$(OptionName) = "TOOLBARS" Then
+61200   If UCase$(OptionName) = "STARTSTANDARDPROGRAM" Then
 61210    If Not reg.KeyExists Then
 61220     reg.CreateKey
 61230    End If
-61240    reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
+61240    reg.SetRegistryValue "StartStandardProgram", CStr(Abs(.StartStandardProgram)), REG_SZ
 61250    Set reg = Nothing
 61260    Exit Sub
 61270   End If
-61280   If UCase$(OptionName) = "USEAUTOSAVE" Then
+61280   If UCase$(OptionName) = "TOOLBARS" Then
 61290    If Not reg.KeyExists Then
 61300     reg.CreateKey
 61310    End If
-61320    reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
+61320    reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
 61330    Set reg = Nothing
 61340    Exit Sub
 61350   End If
-61360   If UCase$(OptionName) = "USEAUTOSAVEDIRECTORY" Then
+61360   If UCase$(OptionName) = "USEAUTOSAVE" Then
 61370    If Not reg.KeyExists Then
 61380     reg.CreateKey
 61390    End If
-61400    reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+61400    reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
 61410    Set reg = Nothing
 61420    Exit Sub
 61430   End If
-61440  End With
-61450  Set reg = Nothing
+61440   If UCase$(OptionName) = "USEAUTOSAVEDIRECTORY" Then
+61450    If Not reg.KeyExists Then
+61460     reg.CreateKey
+61470    End If
+61480    reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+61490    Set reg = Nothing
+61500    Exit Sub
+61510   End If
+61520  End With
+61530  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -5813,14 +5853,15 @@ On Error GoTo ErrPtnr_OnError
 51810   reg.SetRegistryValue "RunProgramBeforeSavingProgramParameters", CStr(.RunProgramBeforeSavingProgramParameters), REG_SZ
 51820   reg.SetRegistryValue "RunProgramBeforeSavingWindowstyle", CStr(.RunProgramBeforeSavingWindowstyle), REG_SZ
 51830   reg.SetRegistryValue "SaveFilename", CStr(.SaveFilename), REG_SZ
-51840   reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
-51850   reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
-51860   reg.SetRegistryValue "StartStandardProgram", CStr(Abs(.StartStandardProgram)), REG_SZ
-51870   reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
-51880   reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
-51890   reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
-51900  End With
-51910  Set reg = Nothing
+51840   reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
+51850   reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
+51860   reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
+51870   reg.SetRegistryValue "StartStandardProgram", CStr(Abs(.StartStandardProgram)), REG_SZ
+51880   reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
+51890   reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
+51900   reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+51910  End With
+51920  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -5845,7 +5886,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   tList = Split(.FilenameSubstitutions, "\")
@@ -5924,7 +5965,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.cmbProgramFontSize.Text = .ProgramFontSize
+  Frm.cmbProgramFontsize.Text = .ProgramFontSize
   Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
   Frm.chkSpaces.Value = .RemoveSpaces
   Frm.txtSaveFilename.Text = .SaveFilename
@@ -5951,7 +5992,7 @@ On Error GoTo ErrPtnr_OnError
 50080  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50090  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50100  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50110  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
+50110  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
 50120  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
 50130  tStr = ""
 50140  Set lsv = Frm.lsvFilenameSubst
@@ -6020,7 +6061,7 @@ On Error GoTo ErrPtnr_OnError
 50770  .ProcessPriority = Frm.sldProcessPriority.Value
 50780  .ProgramFont = Frm.cmbFonts.List(Frm.cmbFonts.ListIndex)
 50790  .ProgramFontCharset = Frm.cmbCharset.Text
-50800  .ProgramFontSize = Frm.cmbProgramFontSize.Text
+50800  .ProgramFontSize = Frm.cmbProgramFontsize.Text
 50810  .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
 50820  .RemoveSpaces = Abs(Frm.chkSpaces.Value)
 50830  .SaveFilename = Frm.txtSaveFilename.Text
