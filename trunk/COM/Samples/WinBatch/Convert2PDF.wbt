@@ -1,0 +1,112 @@
+; Convert2PDF script
+; Part of PDFCreator
+; License: GPL
+; Homepage: http://www.sourceforge.net/projects/pdfcreator
+; Version: 1.0.0.0
+; Date: March, 1. 2006
+; Author: Frank Heindörfer, JanWillem Teunisse (info@mitc.nl, www.mitc.nl)
+; WinBatch-Version: WinBatch 2006A, jan, 2006 by  Date: 1-MAR-2006
+; Comments: This script convert a printable file in a pdf-file using 
+;           the com interface of PDFCreator.
+;           Contrary to the original script this script doesn't support drag'n drop.
+;
+
+;Constants
+Title = "Convert2PDF"
+maxTime = 30					; in seconds
+sleepTime = 250					; in milliseconds
+
+;---------- UDS PDFCreator events handling ------------
+#DefineSubroutine PDFCreator_eReady()    ; event handling printing is ready/finished
+	ReadyState = 1
+	Return 
+#EndSubroutine
+
+#DefineSubroutine PDFCreator_eError()	; event handling error-control, see PDFCreator Help file
+	eNumber = oPDFC.cErrorDetail("Number")
+	eDetail = oPDFC.cErrorDetail("Description")
+	Message(Title, strcat("Error [%eNumber%]:", eDetail, @CRLF, "This script stops!"))
+	Exit
+#EndSubroutine
+
+
+;---- start main body -----
+IntControl(73, 2, 0, 0, 0)	; wb Error handling
+
+; ask for files
+startDir = RegQueryValue(@REGCURRENT, "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders[Personal]")
+If startDir == "" Then
+ startDir = "C:\"
+End If
+filetypes = "All files (*.*)|*.*|Excel Files (*.xls)|*.xls|Powerpoint Files (*.ppt)|*.ppt|Text Files (*.txt)|*.txt|Word Files (*.doc, *.rtf)|*.doc;*.rtf"
+fn = AskFilename("Convert2PDF", startDir, filetypes, "", 2)
+fc = ItemCount(fn, @TAB)
+
+If fc == 0 Then
+ Message(Title, "Script cancelled.")
+ Exit
+End If
+ 
+; init PDFCreator
+oPDFC  = ObjectCreate("PDFCreator.clsPDFCreator")
+ok = ObjectEventAdd(oPDFC,"eReady", "PDFCreator_eReady")
+ok = ObjectEventAdd(oPDFC,"eError", "PDFCreator_eError")
+
+oPDFC.cStart("/NoProcessingAtStartup")
+oPDFC.cOption("UseAutosave") = 1
+oPDFC.cOption("UseAutosaveDirectory") = 1
+oPDFC.cOption("AutosaveFormat") = 0									; 0 = PDF format
+DefaultPrinter = oPDFC.cDefaultprinter
+oPDFC.cDefaultprinter = "PDFCreator"
+oPDFC.cClearCache
+
+For i = 1 To fc 
+ fname = ItemExtract(i,fn, @TAB)
+ sFname = ObjectType("BSTR", fname)
+ isPrintable = oPDFC.cIsPrintable(sFname)
+ If isPrintable == @FALSE Then
+  Message(Title, StrCat('Converting: "', fname, '"', @CRLF, @CRLF, "An error is occured: File is not printable! "))
+  exit
+ End If
+
+ ReadyState = 0
+ 
+ OutFname = FileRoot(fname)
+ sOutFname = ObjectType("BSTR",OutFname)
+ sOutPath = ObjectType("BSTR", FilePath(fname))
+ oPDFC.cOption("AutosaveFilename") = sOutFname
+ oPDFC.cOption("AutosaveDirectory") = sOutPath
+ 
+ oPDFC.cPrintfile(sfname)
+ oPDFC.cPrinterStop = @false
+ 
+ c = 0
+ d = maxTime * 1000 / sleepTime
+ While (ReadyState == 0) && (c < d)
+  c = c + 1
+  TimeDelay(sleepTime/1000)
+ EndWhile
+
+ If ReadyState == 0 then
+  Message(Title, "An error is occured: Time is up!")
+ End If
+Next fc
+
+TimeDelay(1)		; wait a second
+oPDFC.cDefaultprinter = DefaultPrinter
+oPDFC.cClearcache
+TimeDelay(1)		; wait a second
+
+; start cleaning up
+ ok = ObjectEventRemove(oPDFC,"eReady")
+ ok = ObjectEventRemove(oPDFC,"eError")
+ oPDFC = ""			; closeobject
+ Message(Title, "Ready (%fc% files)")
+ Exit
+
+:wbErrorhandling	; error handling
+;  you have to write your own error handling
+ Message(Title, Strcat("?? Error: in line [%wberrorhandlerlinenumber%]: ", wberrorhandlerlinewhich,@CRLF,"   Error text: ", wberrortextstringone))
+ Return
+
+;Eof script [Convert2PDF.wbt]
