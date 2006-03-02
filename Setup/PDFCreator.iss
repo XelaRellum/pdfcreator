@@ -405,8 +405,6 @@ Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; Dest
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-;Source: ..\COM\Samples\MS Office\frmPDFCreatorPowerpoint.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
-;Source: ..\COM\Samples\MS Office\frmPDFCreatorPowerpoint.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
@@ -429,6 +427,7 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression3.vbs; De
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program; Flags: ignoreversion
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
