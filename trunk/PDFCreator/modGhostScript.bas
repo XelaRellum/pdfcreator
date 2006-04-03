@@ -133,7 +133,7 @@ On Error GoTo ErrPtnr_OnError
 50080
 50090  Resample(0) = "Bicubic": Resample(1) = "Subsample": Resample(2) = "Average"
 50100
-50110  Colormodel(0) = "RGB": Colormodel(1) = "CMYK": Colormodel(2) = "GRAY"
+50110  Colormodel(0) = "RGB": Colormodel(1) = "CMYK": Colormodel(2) = "Gray"
 50120
 50130  ColorsPreserveTransfer(0) = "Remove": ColorsPreserveTransfer(1) = "Preserve"
 50140
