@@ -707,7 +707,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim PDFFile As String
 50020
 50030  SaveEDoc = False
-50040
+50040  IsConverted = False
 50050  If GsDllLoaded = 0 Then
 50060   MsgBox LanguageStrings.MessagesMsg08
 50070   SetPrinterStop True
@@ -737,7 +737,7 @@ On Error GoTo ErrPtnr_OnError
 50310      OpenDocument PDFFile
 50320    End If
 50330   End If
-50340
+50340   IsConverted = True
 50350   KillFile PDFSpoolfile
 50360   KillInfoSpoolfile PDFSpoolfile
 50370  End If
@@ -886,6 +886,7 @@ Private Function Create_eDoc() As String
   ShowAnimation False
  End If
  ConvertedOutputFilename = OutputFile
+ 
  ReadyConverting = True
  frmMain.SetSystrayIcon 2
  frmMain.Timer1.Enabled = True
