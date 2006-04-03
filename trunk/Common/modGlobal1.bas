@@ -58,6 +58,7 @@ Public GhostscriptError As Long
 Public ProgramWindowState As Long
 Public DeleteIF As Boolean
 Public OpenOF As Boolean
+Public IsConverted As Boolean
 
 Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

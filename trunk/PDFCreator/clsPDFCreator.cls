@@ -935,6 +935,40 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
+
+Public Property Get cIsConverted() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cIsConverted = IsConverted
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsConverted [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cIsConverted(ByVal Value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  IsConverted = Value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsConverted [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---
@@ -2389,7 +2423,3 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
-
-
-
-

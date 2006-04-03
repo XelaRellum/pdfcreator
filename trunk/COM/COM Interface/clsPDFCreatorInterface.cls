@@ -112,6 +112,12 @@ End Property
 
 Public Property Let cWindowState(ByVal ProgramWindowState As Long)
 End Property
+
+Public Property Get cIsConverted() As Boolean
+End Property
+
+Public Property Let cIsConverted(ByVal Value As Boolean)
+End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---

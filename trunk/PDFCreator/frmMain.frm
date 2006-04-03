@@ -1652,100 +1652,102 @@ On Error GoTo ErrPtnr_OnError
   OutputFilename As String, PDFDocInfo As tPDFDocInfo, tStr As String, _
   PSHeader As tPSHeader, tDate As Date, mail As clsPDFCreatorMail
 50040
-50050  Set tColl = New Collection
-50060
-50070  If Len(Filename) > 0 Then
-50080    If FileExists(Filename) = True Then
-50090     SplitPath Filename, , Pathname
-50100     tColl.Add Pathname & "|" & Filename & "|" & FileLen(Filename) & "|" & FileDateTime(Filename)
-50110    End If
-50120   Else
-50130    FindFiles CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, tColl, "~PS*.tmp", , True, True
-50140 '   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~P*.tmp")
-50150  End If
-50160
-50170  tStr = "Autosavemodus: " & tColl.Count & "files"
-50180  IfLoggingWriteLogfile tStr
-50190  WriteToSpecialLogfile tStr
-50200  Do While tColl.Count > 0
-50210   For i = 1 To tColl.Count
-50220    tFile = Split(tColl.Item(i), "|")
-50230    If FileExists(tFile(1)) And Not FileInUse(tFile(1)) Then
-50240     OutputFilename = GetAutosaveFilename(tFile(1))
-50250     SplitPath OutputFilename, , Pathname
-50260     If IsValidPath(Pathname) = True Then
-50270       If DirExists(Pathname) = False Then
-50280        MakePath (Pathname)
-50290       End If
-50300       tStr = "Autosavemodus: Create File '" & OutputFilename & "'"
-50310       IfLoggingWriteLogfile tStr
-50320       WriteToSpecialLogfile tStr
-50330       PSHeader = GetPSHeader(tFile(1))
-50340       tDate = Now
-50350       With PDFDocInfo
-50360        If Options.UseStandardAuthor = 1 Then
-50370          .Author = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
-50380         Else
-50390          .Author = GetDocUsername(tFile(1), False)
-50400        End If
-50410        If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50420          tStr = PSHeader.CreationDate.Comment
-50430         Else
-50440          tStr = CStr(tDate)
-50450        End If
-50460        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50470        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50480        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)))
-50490        'tStr = CStr(tDate)
-50500        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50510        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)))
-50520        If Len(Options.StandardTitle) > 0 Then
-50530          .Title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)))
-50540         Else
-50550          .Title = GetSubstFilename(tFile(1), Options.SaveFilename)
-50560        End If
-50570       End With
-50580       AppendPDFDocInfo tFile(1), PDFDocInfo
-50590       CheckForStamping tFile(1)
-50600       If Options.RunProgramBeforeSaving = 1 Then
-50610        RunProgramBeforeSaving Me.hwnd, tFile(1), _
+50050  IsConverted = False
+50060  Set tColl = New Collection
+50070
+50080  If Len(Filename) > 0 Then
+50090    If FileExists(Filename) = True Then
+50100     SplitPath Filename, , Pathname
+50110     tColl.Add Pathname & "|" & Filename & "|" & FileLen(Filename) & "|" & FileDateTime(Filename)
+50120    End If
+50130   Else
+50140    FindFiles CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, tColl, "~PS*.tmp", , True, True
+50150 '   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~P*.tmp")
+50160  End If
+50170
+50180  tStr = "Autosavemodus: " & tColl.Count & "files"
+50190  IfLoggingWriteLogfile tStr
+50200  WriteToSpecialLogfile tStr
+50210  Do While tColl.Count > 0
+50220   For i = 1 To tColl.Count
+50230    tFile = Split(tColl.Item(i), "|")
+50240    If FileExists(tFile(1)) And Not FileInUse(tFile(1)) Then
+50250     OutputFilename = GetAutosaveFilename(tFile(1))
+50260     SplitPath OutputFilename, , Pathname
+50270     If IsValidPath(Pathname) = True Then
+50280       If DirExists(Pathname) = False Then
+50290        MakePath (Pathname)
+50300       End If
+50310       tStr = "Autosavemodus: Create File '" & OutputFilename & "'"
+50320       IfLoggingWriteLogfile tStr
+50330       WriteToSpecialLogfile tStr
+50340       PSHeader = GetPSHeader(tFile(1))
+50350       tDate = Now
+50360       With PDFDocInfo
+50370        If Options.UseStandardAuthor = 1 Then
+50380          .Author = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
+50390         Else
+50400          .Author = GetDocUsername(tFile(1), False)
+50410        End If
+50420        If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50430          tStr = PSHeader.CreationDate.Comment
+50440         Else
+50450          tStr = CStr(tDate)
+50460        End If
+50470        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50480        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+50490        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)))
+50500        'tStr = CStr(tDate)
+50510        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50520        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)))
+50530        If Len(Options.StandardTitle) > 0 Then
+50540          .Title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)))
+50550         Else
+50560          .Title = GetSubstFilename(tFile(1), Options.SaveFilename)
+50570        End If
+50580       End With
+50590       AppendPDFDocInfo tFile(1), PDFDocInfo
+50600       CheckForStamping tFile(1)
+50610       If Options.RunProgramBeforeSaving = 1 Then
+50620        RunProgramBeforeSaving Me.hwnd, tFile(1), _
         Options.RunProgramBeforeSavingProgramParameters, _
         Options.RunProgramBeforeSavingWindowstyle
-50640       End If
-50650       CallGScript tFile(1), OutputFilename, Options, Options.AutosaveFormat
-50660       If FileExists(OutputFilename) = True Then
-50670         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
-50680         IfLoggingWriteLogfile tStr
-50690         WriteToSpecialLogfile tStr
-50700         If Options.RunProgramAfterSaving = 1 Then
-50710          RunProgramAfterSaving Me.hwnd, OutputFilename, _
+50650       End If
+50660       CallGScript tFile(1), OutputFilename, Options, Options.AutosaveFormat
+50670       If FileExists(OutputFilename) = True Then
+50680         IsConverted = True
+50690         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
+50700         IfLoggingWriteLogfile tStr
+50710         WriteToSpecialLogfile tStr
+50720         If Options.RunProgramAfterSaving = 1 Then
+50730          RunProgramAfterSaving Me.hwnd, OutputFilename, _
          Options.RunProgramAfterSavingProgramParameters, _
          Options.RunProgramAfterSavingWindowstyle, tFile(1)
-50740         End If
-50750         If Options.SendEmailAfterAutoSaving = 1 Then
-50760          Set mail = New clsPDFCreatorMail
-50770          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
-50780           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
-50790          End If
-50800          Set mail = Nothing
-50810         End If
-50820        Else
-50830         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-50840         IfLoggingWriteLogfile tStr
-50850         WriteToSpecialLogfile tStr
-50860       End If
-50870      Else
-50880       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
-50890     End If
-50900     CheckForPrintingAfterSaving tFile(1), Options
-50910     KillFile tFile(1)
-50920     KillInfoSpoolfile tFile(1)
-50930     ConvertedOutputFilename = OutputFilename
-50940     ReadyConverting = True
-50950    End If
-50960   Next i
-50970   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
-50980  Loop
+50760         End If
+50770         If Options.SendEmailAfterAutoSaving = 1 Then
+50780          Set mail = New clsPDFCreatorMail
+50790          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
+50800           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+50810          End If
+50820          Set mail = Nothing
+50830         End If
+50840        Else
+50850         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+50860         IfLoggingWriteLogfile tStr
+50870         WriteToSpecialLogfile tStr
+50880       End If
+50890      Else
+50900       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
+50910     End If
+50920     CheckForPrintingAfterSaving tFile(1), Options
+50930     KillFile tFile(1)
+50940     KillInfoSpoolfile tFile(1)
+50950     ConvertedOutputFilename = OutputFilename
+50960     ReadyConverting = True
+50970    End If
+50980   Next i
+50990   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
+51000  Loop
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
