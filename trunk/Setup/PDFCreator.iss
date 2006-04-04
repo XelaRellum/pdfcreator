@@ -669,60 +669,60 @@ Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptV
 Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Check: IsGhostscriptInstalled(false)
 #ENDIF
 Name: languages; Description: {cm:Languages}; Types: full custom
-Name: languages\catalan; Description: Catalan; Types: full
-Name: languages\chinesesimplified; Description: Chinese simplified; Types: full
-Name: languages\chinesetraditional; Description: Chinese traditional; Types: full
+Name: languages\catalan; Description: Catalan; Types: full; Flags: dontinheritcheck
+Name: languages\chinesesimplified; Description: Chinese simplified; Types: full; Flags: dontinheritcheck
+Name: languages\chinesetraditional; Description: Chinese traditional; Types: full; Flags: dontinheritcheck
 
-Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech')
-Name: languages\czech; Description: Czech; Types: full; Check: IsLanguage('czech')
+Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
+Name: languages\czech; Description: Czech; Types: full; Check: IsLanguage('czech'); Flags: dontinheritcheck
 
-Name: languages\danish; Description: Danish; Types: full
+Name: languages\danish; Description: Danish; Types: full; Flags: dontinheritcheck
 
-Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch')
-Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch')
+Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
+Name: languages\dutch; Description: Dutch; Types: full; Check: IsLanguage('dutch'); Flags: dontinheritcheck
 
-Name: languages\eesti; Description: Eesti; Types: full
+Name: languages\eesti; Description: Eesti; Types: full; Flags: dontinheritcheck
 
-Name: languages\english; Description: English; Types: full compact custom; Flags: fixed
+Name: languages\english; Description: English; Types: full compact custom; Flags: fixed dontinheritcheck
 
-Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french')
-Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french')
+Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
+Name: languages\french; Description: French; Types: full; Check: IsLanguage('french'); Flags: dontinheritcheck
 
-Name: languages\galician; Description: Galician; Types: full
+Name: languages\galician; Description: Galician; Types: full; Flags: dontinheritcheck
 
-Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german')
-Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german')
+Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
+Name: languages\german; Description: German; Types: full; Check: IsLanguage('german'); Flags: dontinheritcheck
 
-Name: languages\greek; Description: Greek; Types: full; Check: Not IsLanguage('greek')
-Name: languages\greek; Description: Greek; Types: full custom; Check: IsLanguage('greek')
+Name: languages\greek; Description: Greek; Types: full; Check: Not IsLanguage('greek'); Flags: dontinheritcheck
+Name: languages\greek; Description: Greek; Types: full; Check: IsLanguage('greek'); Flags: dontinheritcheck
 
-Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian')
-Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian')
+Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
+Name: languages\hungarian; Description: Hungarian; Types: full; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
 
-Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian')
-Name: languages\italian; Description: Italian; Types: full custom; Check: IsLanguage('italian')
+Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
+Name: languages\italian; Description: Italian; Types: full; Check: IsLanguage('italian'); Flags: dontinheritcheck
 
-Name: languages\korean; Description: Korean; Types: full
-Name: languages\norwegian; Description: Norwegian; Types: full
-Name: languages\polish; Description: Polish; Types: full
-Name: languages\portuguesebr; Description: Portuguese br; Types: full
-Name: languages\portuguesept; Description: Portuguese pt; Types: full
-Name: languages\romanian; Description: Romanian; Types: full
-Name: languages\russian; Description: Russian; Types: full
+Name: languages\korean; Description: Korean; Types: full; Flags: dontinheritcheck
+Name: languages\norwegian; Description: Norwegian; Types: full; Flags: dontinheritcheck
+Name: languages\polish; Description: Polish; Types: full; Flags: dontinheritcheck
+Name: languages\portuguesebr; Description: Portuguese br; Types: full; Flags: dontinheritcheck
+Name: languages\portuguesept; Description: Portuguese pt; Types: full; Flags: dontinheritcheck
+Name: languages\romanian; Description: Romanian; Types: full; Flags: dontinheritcheck
+Name: languages\russian; Description: Russian; Types: full; Flags: dontinheritcheck
 
-Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak')
-Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak')
+Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
+Name: languages\slovak; Description: Slovak; Types: full; Check: IsLanguage('slovak'); Flags: dontinheritcheck
 
-Name: languages\slovensko; Description: Slovensko; Types: full; Check: Not IsLanguage('slovensko')
-Name: languages\slovensko; Description: Slovensko; Types: full custom; Check: IsLanguage('slovensko')
+Name: languages\slovensko; Description: Slovensko; Types: full; Check: Not IsLanguage('slovensko'); Flags: dontinheritcheck
+Name: languages\slovensko; Description: Slovensko; Types: full; Check: IsLanguage('slovensko'); Flags: dontinheritcheck
 
-Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish')
-Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish')
+Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
+Name: languages\spanish; Description: Spanish; Types: full; Check: IsLanguage('spanish'); Flags: dontinheritcheck
 
-Name: languages\suomi; Description: Suomi; Types: full
-Name: languages\svenska; Description: Svenska; Types: full
-Name: languages\turkish; Description: Turkish; Types: full
-Name: languages\ukrainian; Description: Ukrainian; Types: full
+Name: languages\suomi; Description: Suomi; Types: full; Flags: dontinheritcheck
+Name: languages\svenska; Description: Svenska; Types: full; Flags: dontinheritcheck
+Name: languages\turkish; Description: Turkish; Types: full; Flags: dontinheritcheck
+Name: languages\ukrainian; Description: Ukrainian; Types: full; Flags: dontinheritcheck
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
