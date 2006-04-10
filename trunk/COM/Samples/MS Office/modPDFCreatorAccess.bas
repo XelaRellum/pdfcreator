@@ -2,6 +2,8 @@ Attribute VB_Name = "modPDFCreatorAccess"
 Option Compare Database
 Option Explicit
 
+' Add a reference to PDFCreator
+
 Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
 
 Private Const maxTime = 10    ' in seconds
