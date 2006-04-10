@@ -3,10 +3,14 @@
 ; Installation from Frank Heindörfer
 
 ;#define Test
-;#define FastCompilation
-#define CompileHelp
-#define IncludeGhostscript
-#define Localization
+
+#ifdef Test
+ #define FastCompilation
+#else
+ #define CompileHelp
+ #define IncludeGhostscript
+ #define Localization
+#endif
 
 #define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
@@ -274,8 +278,8 @@ Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.NTF; DestDir: {code:PrinterDriverD
 
 ;Ghostscript
 #IFDEF GhostscriptVersion
-Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
-Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
+Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
+Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
 #ENDIF
 
 ;Redmon files
@@ -360,8 +364,8 @@ Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {
 ;Ghostscript
 #IFDEF IncludeGhostscript
 Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\Fonts\*.*; DestDir: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
-Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
-Source: C:\gs\{#GhostscriptLicense}\gS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
+Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
+Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
 #ENDIF
 #ENDIF
 
@@ -504,14 +508,6 @@ Root: HKCR; SubKey: .ps; ValueType: string; ValueData: PostScript; Flags: uninsd
 Root: HKCR; SubKey: PostScript\Shell\Open\Command; ValueType: string; ValueData: """{app}\PDFCreator.exe"" -IF""%1"""; Flags: uninsdeletevalue uninsdeletekeyifempty noerror; Tasks: fileassoc
 Root: HKCR; Subkey: PostScript\DefaultIcon; ValueType: string; ValueData: {app}\PDFCreator.exe,0; Flags: uninsdeletevalue uninsdeletekeyifempty noerror; Tasks: fileassoc
 Root: HKCR; SubKey: PostScript; ValueType: string; ValueData: PostScript; Flags: uninsdeletekeyifempty noerror; Tasks: fileassoc
-
-;Root: HKU; Subkey: .DEFAULT\Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: {cm:WinexplorerEntryCreate,{#Appname}}; Tasks: fileassoc; Check: IsAdminLoggedOn(); Flags: noerror uninsdeletevalue uninsdeletekeyifempty
-;Root: HKCU; Subkey: Software\Microsoft\Windows\ShellNoRoam\MUICache; ValueType: string; Valuename: {app}\PDFCreator.exe; ValueData: {cm:WinexplorerEntryCreate,{#Appname}}; Tasks: fileassoc; Check: IsAdminLoggedOn(); Flags: uninsdeletekeyifempty uninsdeletevalue noerror
-
-;Windows Explorer popup-menu
-;Root: HKCR; SubKey: *\shell\{#UninstallIDStr}; ValueType: string; ValueData: Create &PDF with PDFCreator; Flags: uninsdeletekey; Tasks: winexplorer; Languages: English
-;Root: HKCR; SubKey: *\shell\{#UninstallIDStr}; ValueType: string; ValueData: Erzeuge &PDF mit PDFCreator; Flags: uninsdeletekey; Tasks: winexplorer; Languages: German
-;Root: HKCR; SubKey: *\shell\{#UninstallIDStr}\command; ValueType: string; ValueData: "{app}\pdfcreator.exe -PF""%1"" -NS"; Flags: uninsdeletekey; Tasks: winexplorer
 
 ;Uninstall - Software
 Root: HKLM; Subkey: {#UninstallRegStr}; Flags: uninsdeletekey
@@ -725,15 +721,18 @@ Name: languages\turkish; Description: Turkish; Types: full; Flags: dontinheritch
 Name: languages\ukrainian; Description: Ukrainian; Types: full; Flags: dontinheritcheck
 
 [Tasks]
-Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}
-Name: desktopicon\common; Description: {cm:ForAllUser}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive
-Name: desktopicon\user; Description: {cm:ForTheCurrentUserOnly}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive unchecked
-Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; Check: IExplorerVersionGreater3
-#Ifdef IncludeGhostscript
-;Name: ghostscript; Description: {cm:InstallGhostscript,{#GhostscriptLicense},{#GhostscriptVersion}}; GroupDescription: {cm:OtherTasks}; Flags: exclusive
-#ENDIF
-Name: fileassoc; Description: {cm:AssocFileExtension,PDFCreator,.ps}; GroupDescription: {cm:OtherTasks}; Flags: unchecked
-Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:OtherTasks}
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Check: UseDesktopiconCommon
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; Check: Not UseDesktopiconCommon
+Name: desktopicon\common; Description: {cm:ForAllUser}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive; Check: UseDesktopiconCommon
+Name: desktopicon\common; Description: {cm:ForAllUser}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive unchecked; Check: Not UseDesktopiconCommon
+Name: desktopicon\user; Description: {cm:ForTheCurrentUserOnly}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive; Check: UseDesktopiconUser
+Name: desktopicon\user; Description: {cm:ForTheCurrentUserOnly}; GroupDescription: {cm:AdditionalIcons}; Flags: exclusive unchecked; Check: Not UseDesktopiconUser
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Check: IExplorerVersionGreater3 And UseQuickLaunchIcon
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked; Check: IExplorerVersionGreater3 And Not UseQuickLaunchIcon
+Name: fileassoc; Description: {cm:AssocFileExtension,PDFCreator,.ps}; GroupDescription: {cm:OtherTasks}; Check: UseFileAssoc
+Name: fileassoc; Description: {cm:AssocFileExtension,PDFCreator,.ps}; GroupDescription: {cm:OtherTasks}; Flags: unchecked; Check: Not UseFileAssoc
+Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:OtherTasks}; Check: UseWinExplorer
+Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:OtherTasks}; Flags: unchecked; Check: Not UseWinExplorer
 
 [Code]
 const
@@ -908,8 +907,12 @@ var progTitel, progHandle: TArrayOfString;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
 
-    cmdlPrintername, cmdlPPDFile, cmdlREGFile, cmdlINIFile: String;
+    cmdlPrintername, cmdlPPDFile, cmdlREGFile, cmdlINIFile,
+    cmdlSaveInfFile, cmdlLoadInfFile: String;
     cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlUseINI: Boolean;
+
+    desktopicon, desktopicon_common, desktopicon_user,
+    quicklaunchicon, fileassoc, winexplorer: Boolean;
 
     SCPage:TWizardPage;
     PrinternamePage: TInputQueryWizardpage;
@@ -2327,7 +2330,7 @@ begin
  Result:=ResultStr;
 end;
 
-procedure Split(Expression, Delimeter : String; var res :array of string);
+procedure Split(Expression, Delimeter : String; var res :TArrayOfString);
 var
  i, l :Integer; sl :tStringList;
 begin
@@ -2397,12 +2400,19 @@ begin
  Result:=RegValueExists(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'PDFCreatorRestart')
 end;
 
+function CompletePath(Path: String): String;
+begin
+ if Copy(Path,Length(Path),1)<>'\' then
+   result:=Path + '\'
+  else
+   result:=Path;
+end;
+
 function AnalyzeCommandlineParameters:Boolean;
 var
  i:Longint; cmdParam, pStr: String;
 begin
  Result:=false;
-
  for i:=0 to Paramcount do begin
   if Length(paramstr(i))=1 then begin
    Msgbox('False commandline parameter: ' + paramstr(i),mbError,MB_OK);
@@ -2429,6 +2439,30 @@ begin
    cmdlForceInstall:=true;
   if uppercase(paramstr(i))='/USEINI' then
    cmdlUseINI:=true;
+
+  cmdParam:='/LoadInf';
+  pStr:=Copy(paramstr(i),1,Length(cmdParam));
+  if uppercase(pstr)=uppercase(cmdParam) then begin
+   if Copy(paramstr(i),Length(cmdParam)+1,1)='=' then
+     cmdlLoadInfFile:=Copy(paramstr(i),Length(cmdParam)+2,Length(paramstr(i)))
+    else
+     cmdlLoadInfFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
+  end;
+  if Length(cmdlLoadInfFile)>0 then
+   if Length(ExtractFilePath(cmdlLoadInfFile))=0 then
+    cmdlLoadInfFile:=CompletePath(GetCurrentDir) + cmdlLoadInfFile;
+
+  cmdParam:='/SaveInf';
+  pStr:=Copy(paramstr(i),1,Length(cmdParam));
+  if uppercase(pstr)=uppercase(cmdParam) then begin
+   if Copy(paramstr(i),Length(cmdParam)+1,1)='=' then
+     cmdlSaveInfFile:=Copy(paramstr(i),Length(cmdParam)+2,Length(paramstr(i)))
+    else
+     cmdlSaveInfFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
+  end;
+  if Length(cmdlSaveInfFile)>0 then
+   if Length(ExtractFilePath(cmdlSaveInfFile))=0 then
+    cmdlSaveInfFile:=CompletePath(GetCurrentDir) + cmdlSaveInfFile;
 
   cmdParam:='/REGFile';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -2483,6 +2517,86 @@ begin
  Result:=true;
 end;
 
+function UseDesktopIcon: boolean;
+begin
+ result:=desktopicon;
+end;
+
+function UseDesktopiconCommon: boolean;
+begin
+ result:=desktopicon_common;
+end;
+
+function UseDesktopiconUser: boolean;
+begin
+ result:=desktopicon_user;
+end;
+
+function UseQuickLaunchIcon: boolean;
+begin
+ result:=quicklaunchicon;
+end;
+
+function UseFileAssoc: boolean;
+begin
+ result:=fileassoc;
+end;
+
+function UseWinExplorer: boolean;
+begin
+ result:=winexplorer;
+end;
+
+procedure LoadInf;
+var tasks:string; atasks:TArrayOfString; i:LongInt;
+begin
+ tasks:='';
+ desktopicon:=false;
+ desktopicon_common:=false;
+ desktopicon_user:=false;
+ quicklaunchicon:=false;
+ fileassoc:=false;
+ winexplorer:=false;
+ if IniKeyExists('Setup','Printername',cmdlLoadInfFile) then
+  Printername:=GetIniString('Setup', 'Printername', Printername, cmdlLoadInfFile);
+ if IniKeyExists('Setup','Tasks',cmdlLoadInfFile) then
+  tasks:=GetIniString('Setup', 'Tasks', tasks, cmdlLoadInfFile);
+ if length(tasks)>0 then
+  Split(tasks,',',atasks);
+ for i:=0 to GetArrayLength(atasks)-1 do
+  Case lowercase(atasks[i]) of
+   'desktopicon':        desktopicon:=true;
+   'desktopicon\common': desktopicon_common:=true;
+   'desktopicon\user':   desktopicon_user:=true;
+   'quicklaunchicon':    quicklaunchicon:=true;
+   'fileassoc':          fileassoc:=true;
+   'winexplorer':        winexplorer:=true;
+  end
+end;
+
+procedure SaveInf;
+var res: boolean; tasks: String;
+begin
+ res:=SetIniString('Setup', 'Printername', Printername, cmdlSaveInfFile)
+ if IsTaskSelected('desktopicon') then
+  tasks:='desktopicon';
+ if IsTaskSelected('desktopicon\common') then
+  tasks:=tasks + ',desktopicon\common';
+ if IsTaskSelected('desktopicon\user') then
+  tasks:=tasks + ',desktopicon\user';
+ if IsTaskSelected('quicklaunchicon') then
+  tasks:=tasks + ',quicklaunchicon';
+ if IsTaskSelected('fileassoc') then
+  tasks:=tasks + ',fileassoc';
+ if IsTaskSelected('winexplorer') then
+  tasks:=tasks + ',winexplorer';
+ if length(tasks)>0 then begin
+  if copy(tasks,1,1)=',' then
+   tasks:=copy(tasks,2,length(tasks)-1);
+  res:=SetIniString('Setup', 'Tasks', tasks, cmdlSaveInfFile)
+ end
+end;
+
 function InitializeSetup(): Boolean;
 var
 #ifdef UpdateIsPossible
@@ -2504,10 +2618,16 @@ begin
  PrinterDrivername:=  'PDFCreator';
  Printername:=        'PDFCreator';
 
+ desktopicon:=true;
+ desktopicon_common:=true;
+ winexplorer:=true;
+
  If AnalyzeCommandlineParameters=false then begin
   result:=false;
   exit
  end;
+
+ If cmdlLoadInfFile<>'' then LoadInf;
 
  If IsDummyRunOnce then begin
   MsgBox(ExpandConstant('{cm:RestartError}'),mbError,MB_OK);
@@ -2817,6 +2937,7 @@ begin
      if Pos('winexplorer',s)>0 then
       IntegrateWinexplorer;
      PrinterInstallationSuccessfully:=res;
+     If cmdlSaveInfFile<>'' Then SaveInf;
     finally
       if res=false then
        MsgBox(ExpandConstant('{cm:PrinterInstallationFailed}'),mbError,MB_OK + MB_SETFOREGROUND);
