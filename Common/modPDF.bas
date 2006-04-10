@@ -405,45 +405,55 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, tStr As String
 50020  With PDFDocInfo
-50030   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author (" & EncodeChars(.Author) & ")"
-50040   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-50050    Set tzi = New clsTimeZoneInformation
-50060    If tzi.DayLight Then
-50070      tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
-50080     Else
-50090      tStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
-50100    End If
-50110    If tzi.DaylightToGMT >= 0 Then
-50120      tStr = "+" & tStr
-50130     Else
-50140      tStr = "-" & tStr
-50150    End If
-50160   End If
-50170   If LenB(Trim$(.CreationDate)) > 0 Then
-50180    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & EncodeChars(.CreationDate) & tStr & ")"
-50190   End If
-50200   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator (" & EncodeChars(.Creator) & ")"
-50210   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords (" & EncodeChars(.Keywords) & ")"
-50220   If LenB(Trim$(.ModifyDate)) > 0 Then
-50230    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & EncodeChars(.ModifyDate) & tStr & ")"
+50030   If LenB(.Author) > 0 Then
+50040    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author " & EncodeChars(.Author)
+50050   End If
+50060   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50070    Set tzi = New clsTimeZoneInformation
+50080    If tzi.DayLight Then
+50090      tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
+50100     Else
+50110      tStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
+50120    End If
+50130    If tzi.DaylightToGMT >= 0 Then
+50140      tStr = "+" & tStr
+50150     Else
+50160      tStr = "-" & tStr
+50170    End If
+50180   End If
+50190   If LenB(Trim$(.CreationDate)) > 0 Then
+50200    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & .CreationDate & tStr & ")"
+50210   End If
+50220   If LenB(.Creator) > 0 Then
+50230    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator " & EncodeChars(.Creator)
 50240   End If
-50250   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-50260    Set tzi = Nothing
+50250   If LenB(.Keywords) > 0 Then
+50260    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords " & EncodeChars(.Keywords)
 50270   End If
-50280   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject (" & EncodeChars(.Subject) & ")"
-50290   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title (" & EncodeChars(.Title) & ")"
-50300  End With
-50310  If FileExists(PSFile) = True And LenB(PDFDocInfoStr) > 0 Then
-50320   DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
-50330   DocInfoStr = DocInfoStr & Chr$(13) & "["
-50340   DocInfoStr = DocInfoStr & Chr$(13) & PDFDocInfoStr
-50350   DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
-50360   DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
-50370   fn = FreeFile
-50380   Open PSFile For Append As fn
-50390   Print #fn, DocInfoStr;
-50400   Close #fn
-50410  End If
+50280   If LenB(Trim$(.ModifyDate)) > 0 Then
+50290    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & .ModifyDate & tStr & ")"
+50300   End If
+50310   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50320    Set tzi = Nothing
+50330   End If
+50340   If LenB(.Subject) > 0 Then
+50350    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject " & EncodeChars(.Subject)
+50360   End If
+50370   If LenB(.Title) > 0 Then
+50380    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title " & EncodeChars(.Title)
+50390   End If
+50400  End With
+50410  If FileExists(PSFile) = True And LenB(PDFDocInfoStr) > 0 Then
+50420   DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
+50430   DocInfoStr = DocInfoStr & Chr$(13) & "["
+50440   DocInfoStr = DocInfoStr & Chr$(13) & PDFDocInfoStr
+50450   DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
+50460   DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
+50470   fn = FreeFile
+50480   Open PSFile For Append As fn
+50490   Print #fn, DocInfoStr;
+50500   Close #fn
+50510  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -616,7 +626,31 @@ Public Function FormatPrintDocumentDate(tDate As String) As String
  FormatPrintDocumentDate = CStr(DateSerial(Y, m, d)) + Mid(tDate, InStr(tDate, " "))
 End Function
 
-Public Function EncodeChars(ByVal Str1 As String) As String
+Public Function EncodeChars(ByVal Str1 As String) As String ' UTF-16 conversion
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, tStr As String
+50020  If LenB(Str1) = 0 Then
+50030   Exit Function
+50040  End If
+50050  For i = 1 To Len(Str1)
+50060   tStr = tStr & String(4 - Len(Hex(AscW(Mid$(Str1, i, 1)))), "0") & Hex(AscW(Mid$(Str1, i, 1)))
+50070  Next i
+50080  EncodeChars = "<FEFF" & tStr & ">"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDF", "EncodeChars")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function EncodeCharsOld(ByVal Str1 As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -635,11 +669,11 @@ On Error GoTo ErrPtnr_OnError
 50130     tStr = tStr & Mid(Str1, i, 1)
 50140   End If
 50150  Next i
-50160  EncodeChars = tStr
+50160  EncodeCharsOld = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDF", "EncodeChars")
+Select Case ErrPtnr.OnError("modPDF", "EncodeCharsOld")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
