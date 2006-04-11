@@ -1,8 +1,8 @@
 Type=OleExe
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\WINDOWS\system32\STDOLE2.TLB#OLE Automation
 Reference=*\G{3181A65A-CC39-4CDE-A4DF-2E889E6F1AF1}#1.51#0#..\..\WINDOWS\system32\olelib.tlb#Edanmo's OLE interfaces & functions v1.81
 Reference=*\G{20C62CAE-15DA-101B-B9A8-444553540000}#1.1#0#..\..\WINDOWS\system32\MSMAPI32.OCX#Microsoft MAPI Controls 6.0
-Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; mscomctl.ocx
+Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
 Object={86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCT2.OCX
 Class=clsDownload; ..\Common\clsDownload.cls
 Class=clsHash; ..\Common\clsHash.cls
