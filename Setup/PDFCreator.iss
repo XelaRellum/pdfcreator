@@ -321,36 +321,22 @@ Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ign
 Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 
 ;Languages
-Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinesetraditional; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinesesimplified; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\eesti.ini; DestDir: {app}\languages; Components: languages\eesti; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\korean.ini; DestDir: {app}\languages; Components: languages\korean; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\icelandic.ini; DestDir: {app}\languages; Components: languages\icelandic; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\norwegian.ini; DestDir: {app}\languages; Components: languages\norwegian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\portuguese-br.ini; DestDir: {app}\languages; Components: languages\portuguesebr; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\portuguesebr.ini; DestDir: {app}\languages; Components: languages\portuguesebr; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\portuguesept.ini; DestDir: {app}\languages; Components: languages\portuguesept; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovensko.ini; DestDir: {app}\languages; Components: languages\slovensko; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\suomi.ini; DestDir: {app}\languages; Components: languages\suomi; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\svenska.ini; DestDir: {app}\languages; Components: languages\svenska; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\ukrainian; Flags: ignoreversion
 
 ;Ini file
 Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
@@ -665,60 +651,53 @@ Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptV
 Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Check: IsGhostscriptInstalled(false)
 #ENDIF
 Name: languages; Description: {cm:Languages}; Types: full custom
-Name: languages\catalan; Description: Catalan; Types: full; Flags: dontinheritcheck
-Name: languages\chinesesimplified; Description: Chinese simplified; Types: full; Flags: dontinheritcheck
-Name: languages\chinesetraditional; Description: Chinese traditional; Types: full; Flags: dontinheritcheck
 
 Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
-Name: languages\czech; Description: Czech; Types: full; Check: IsLanguage('czech'); Flags: dontinheritcheck
-
-Name: languages\danish; Description: Danish; Types: full; Flags: dontinheritcheck
-
-Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
-Name: languages\dutch; Description: Dutch; Types: full; Check: IsLanguage('dutch'); Flags: dontinheritcheck
-
-Name: languages\eesti; Description: Eesti; Types: full; Flags: dontinheritcheck
+Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
 
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed dontinheritcheck
 
 Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
-Name: languages\french; Description: French; Types: full; Check: IsLanguage('french'); Flags: dontinheritcheck
-
-Name: languages\galician; Description: Galician; Types: full; Flags: dontinheritcheck
+Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
-Name: languages\german; Description: German; Types: full; Check: IsLanguage('german'); Flags: dontinheritcheck
+Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german'); Flags: dontinheritcheck
 
 Name: languages\greek; Description: Greek; Types: full; Check: Not IsLanguage('greek'); Flags: dontinheritcheck
-Name: languages\greek; Description: Greek; Types: full; Check: IsLanguage('greek'); Flags: dontinheritcheck
+Name: languages\greek; Description: Greek; Types: full custom; Check: IsLanguage('greek'); Flags: dontinheritcheck
 
 Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
-Name: languages\hungarian; Description: Hungarian; Types: full; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
+Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
 
-Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
-Name: languages\italian; Description: Italian; Types: full; Check: IsLanguage('italian'); Flags: dontinheritcheck
+Name: languages\icelandic; Description: Icelandic; Types: full; Check: Not IsLanguage('icelandic'); Flags: dontinheritcheck
+Name: languages\icelandic; Description: Icelandic; Types: full custom; Check: IsLanguage('icelandic'); Flags: dontinheritcheck
 
-Name: languages\korean; Description: Korean; Types: full; Flags: dontinheritcheck
-Name: languages\norwegian; Description: Norwegian; Types: full; Flags: dontinheritcheck
-Name: languages\polish; Description: Polish; Types: full; Flags: dontinheritcheck
-Name: languages\portuguesebr; Description: Portuguese br; Types: full; Flags: dontinheritcheck
-Name: languages\portuguesept; Description: Portuguese pt; Types: full; Flags: dontinheritcheck
-Name: languages\romanian; Description: Romanian; Types: full; Flags: dontinheritcheck
-Name: languages\russian; Description: Russian; Types: full; Flags: dontinheritcheck
+Name: languages\indonesian; Description: Indonesian; Types: full; Check: Not IsLanguage('indonesian'); Flags: dontinheritcheck
+Name: languages\indonesian; Description: Indonesian; Types: full custom; Check: IsLanguage('indonesian'); Flags: dontinheritcheck
+
+Name: languages\norwegian; Description: Norwegian; Types: full; Check: Not IsLanguage('norwegian'); Flags: dontinheritcheck
+Name: languages\norwegian; Description: Norwegian; Types: full custom; Check: IsLanguage('norwegian'); Flags: dontinheritcheck
+
+Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
+Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
+
+Name: languages\portuguesebr; Description: Portuguese (Brazil); Types: full; Check: Not IsLanguage('portuguesebr'); Flags: dontinheritcheck
+Name: languages\portuguesebr; Description: Portuguese (Brazil); Types: full custom; Check: IsLanguage('portuguesebr'); Flags: dontinheritcheck
+
+Name: languages\portuguesept; Description: Portuguese (Portugal); Types: full; Check: Not IsLanguage('portuguesept'); Flags: dontinheritcheck
+Name: languages\portuguesept; Description: Portuguese (Portugal); Types: full custom; Check: IsLanguage('portuguesept'); Flags: dontinheritcheck
+
+Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
+Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
+
+Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
+Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
 
 Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
-Name: languages\slovak; Description: Slovak; Types: full; Check: IsLanguage('slovak'); Flags: dontinheritcheck
+Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
 
 Name: languages\slovensko; Description: Slovensko; Types: full; Check: Not IsLanguage('slovensko'); Flags: dontinheritcheck
-Name: languages\slovensko; Description: Slovensko; Types: full; Check: IsLanguage('slovensko'); Flags: dontinheritcheck
-
-Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
-Name: languages\spanish; Description: Spanish; Types: full; Check: IsLanguage('spanish'); Flags: dontinheritcheck
-
-Name: languages\suomi; Description: Suomi; Types: full; Flags: dontinheritcheck
-Name: languages\svenska; Description: Svenska; Types: full; Flags: dontinheritcheck
-Name: languages\turkish; Description: Turkish; Types: full; Flags: dontinheritcheck
-Name: languages\ukrainian; Description: Ukrainian; Types: full; Flags: dontinheritcheck
+Name: languages\slovensko; Description: Slovensko; Types: full custom; Check: IsLanguage('slovensko'); Flags: dontinheritcheck
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Check: UseDesktopiconCommon

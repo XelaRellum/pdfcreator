@@ -19,19 +19,11 @@ Begin VB.Form frmMain
       Top             =   735
       Visible         =   0   'False
       Width           =   540
-      _ExtentX        =   953
-      _ExtentY        =   503
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BrushStyle      =   0
-      Color           =   65280
+      _extentx        =   953
+      _extenty        =   503
+      font            =   "frmMain.frx":548A
+      brushstyle      =   0
+      color           =   65280
    End
    Begin VB.PictureBox picAbout 
       Appearance      =   0  '2D
@@ -89,23 +81,23 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   5
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":548A
+            Picture         =   "frmMain.frx":54B6
             Key             =   "open"
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5824
+            Picture         =   "frmMain.frx":5850
             Key             =   "save"
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5BBE
+            Picture         =   "frmMain.frx":5BEA
             Key             =   "search"
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5F58
+            Picture         =   "frmMain.frx":5F84
             Key             =   "empty"
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":62F2
+            Picture         =   "frmMain.frx":631E
             Key             =   "unmark"
          EndProperty
       EndProperty
@@ -137,11 +129,11 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   2
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":668C
+            Picture         =   "frmMain.frx":66B8
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6ADE
+            Picture         =   "frmMain.frx":6B0A
             Key             =   ""
          EndProperty
       EndProperty
@@ -232,7 +224,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   0
-      Picture         =   "frmMain.frx":6F30
+      Picture         =   "frmMain.frx":6F5C
       Top             =   840
       Width           =   930
    End
@@ -1307,15 +1299,17 @@ On Error GoTo ErrPtnr_OnError
 50420    .Value = 0
 50430    .Visible = False
 50440   End With
-50450   ChangedListitem = False
-50460   Caption = "Transtool"
-50470   Screen.MousePointer = vbNormal
-50480   mnFileMain.Enabled = True
-50490   mnEditMain.Enabled = True
-50500   mnHelpMain.Enabled = True
-50510   lsv.Enabled = True
-50520   tlb.Enabled = True
-50530  End If
+50450   SplitPath Filename, , , Filename
+50460   lsv.ColumnHeaders(1).Text = "Translated text (" & Filename & ")"
+50470   ChangedListitem = False
+50480   Caption = "Transtool"
+50490   Screen.MousePointer = vbNormal
+50500   mnFileMain.Enabled = True
+50510   mnEditMain.Enabled = True
+50520   mnHelpMain.Enabled = True
+50530   lsv.Enabled = True
+50540   tlb.Enabled = True
+50550  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1333,40 +1327,45 @@ Private Sub ShowLanguageIniFile(LanguageIniFilename As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ini As clsINI, secs As Collection, keys As Collection, i As Long, j As Long, _
-  l As Long, c As Long
+  l As Long, c As Long, Filename As String
 50030  Screen.MousePointer = vbHourglass
-50040  Set ini = New clsINI
-50050  ini.Filename = LanguageIniFilename
-50060  Set secs = ini.GetAllSectionsFromInifile(, True)
-50070  If secs.Count > 0 Then
-50080   c = 0
-50090   For i = 1 To secs.Count
-50100    Set keys = ini.GetAllKeysFromSection(secs.Item(i), , , True)
-50110    c = c + keys.Count
-50120   Next i
-50130   With xpPgb
-50140    .Min = 0: .Max = c
-50150    .Visible = True
-50160    c = 0
-50170    For i = 1 To secs.Count
-50180     Set keys = ini.GetAllKeysFromSection(secs.Item(i), , , True)
-50190     For j = 1 To keys.Count
-50200      c = c + 1
-50210      .Value = c
-50220      For l = 1 To lsv.ListItems.Count
-50230       If UCase$(lsv.ListItems(l).ListSubItems(3)) = UCase$(secs.Item(i)) And _
+50040  For i = 1 To lsv.ListItems.Count
+50050   lsv.ListItems(i).Text = ""
+50060  Next i
+50070  Set ini = New clsINI
+50080  ini.Filename = LanguageIniFilename
+50090  Set secs = ini.GetAllSectionsFromInifile(, True)
+50100  If secs.Count > 0 Then
+50110   c = 0
+50120   For i = 1 To secs.Count
+50130    Set keys = ini.GetAllKeysFromSection(secs.Item(i), , , True)
+50140    c = c + keys.Count
+50150   Next i
+50160   With xpPgb
+50170    .Min = 0: .Max = c
+50180    .Visible = True
+50190    c = 0
+50200    For i = 1 To secs.Count
+50210     Set keys = ini.GetAllKeysFromSection(secs.Item(i), , , True)
+50220     For j = 1 To keys.Count
+50230      c = c + 1
+50240      .Value = c
+50250      For l = 1 To lsv.ListItems.Count
+50260       If UCase$(lsv.ListItems(l).ListSubItems(3)) = UCase$(secs.Item(i)) And _
        UCase$(lsv.ListItems(l).ListSubItems(4)) = UCase$(keys.Item(j)(0)) Then
-50250         lsv.ListItems(l).Text = keys.Item(j)(1)
-50260         Exit For
-50270       End If
-50280      Next l
-50290     Next j
-50300    Next i
-50310    .Value = 0
-50320    .Visible = False
-50330   End With
-50340  End If
-50350  Screen.MousePointer = vbNormal
+50280         lsv.ListItems(l).Text = keys.Item(j)(1)
+50290         Exit For
+50300       End If
+50310      Next l
+50320     Next j
+50330    Next i
+50340    .Value = 0
+50350    .Visible = False
+50360   End With
+50370  End If
+50380  SplitPath LanguageIniFilename, , , Filename
+50390  lsv.ColumnHeaders(1).Text = "Translated text (" & Filename & ")"
+50400  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1384,7 +1383,7 @@ Private Sub ReadTemplate(IniFile As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ini As clsINI, secs As Collection, keys As Collection, _
-  i As Long, j As Long, lsvItem As ListItem
+  i As Long, j As Long, lsvItem As ListItem, Filename As String
 50030
 50040  lsv.ListItems.Clear
 50050  Set ini = New clsINI
@@ -1402,6 +1401,8 @@ On Error GoTo ErrPtnr_OnError
 50170   Next j
 50180  Next i
 50190  LsvLineNumber
+50200  SplitPath IniFile, , , Filename
+50210  lsv.ColumnHeaders(6).Text = "Template text (" & Filename & ")"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1469,7 +1470,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim h1 As Long, h2 As Long, com As Long
 50020  h1 = GetMenu(Me.hwnd): h2 = GetSubMenu(h1, 2)
 50030  com = GetMenuItemID(h2, 0)
-50040  ModifyMenu h2, com, MF_BYCOMMAND Or MF_BITMAP, com, CLng(imgPaypal.Picture)
+50040  ModifyMenu h2, com, MF_BYCOMMAND Or MF_BITMAP, com, CLng(ImgPaypal.Picture)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
