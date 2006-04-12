@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.0.0.0
-' Date: September, 1. 2005
+' Version: 2.0.0.0
+' Date: April, 12. 2005
 ' Author: Frank Heindörfer
 ' Comments: This script shows how you decrease the size of a pdf-file
 '           using diffent compression modes.
@@ -85,6 +85,30 @@ Public Sub CheckCompressions
  fname = "Compression test - Automatic"
  CheckCompression fname, 0, 0, 0, 0, 0, 0
 
+ PDFCreator.cOption("PDFCompressionColorResample") = 0
+
+ fname = "Compression test - ZIP No DownSample"
+ CheckCompression fname, 6, 0, 0, 0, 0, 0
+
+ PDFCreator.cOption("PDFCompressionColorResample") = 1
+ PDFCreator.cOption("PDFCompressionColorResampleChoice") = 0
+ PDFCreator.cOption("PDFCompressionColorResolution") = 64
+ fname = "Compression test - ZIP DownSample 64"
+ CheckCompression fname, 6, 0, 0, 0, 0, 0
+
+ PDFCreator.cOption("PDFCompressionColorResolution") = 32
+ fname = "Compression test - ZIP DownSample 32"
+ CheckCompression fname, 6, 0, 0, 0, 0, 0
+
+ PDFCreator.cOption("PDFCompressionColorResolution") = 16
+ fname = "Compression test - ZIP DownSample 16"
+ CheckCompression fname, 6, 0, 0, 0, 0, 0
+
+ PDFCreator.cOption("PDFCompressionColorResolution") = 8
+ fname = "Compression test - ZIP DownSample 8"
+ CheckCompression fname, 6, 0, 0, 0, 0, 0
+
+ PDFCreator.cOption("PDFCompressionColorResample") = 0
  fname = "Compression test - JPEG-Minimum Standard"
  CheckCompression fname, 5, PDFCreator.cStandardOption("PDFCompressionColorCompressionJPEGMinimumFactor"), 0, 0, 0, 0
 
@@ -356,16 +380,17 @@ Private Sub InitScript
  With oIE
   .height = 400
   .width = 500
-  .menubar = 0
-  .toolbar = 0
-  .statusbar = 0
-  .resizable = 0
-  .visible = 1
+  .menubar = false
+  .toolbar = false
+  .statusbar = false
+  .resizable = false
+  .visible = true
   .Navigate "about:blank"
  End With
  Do Until oIE.ReadyState=4
   WScript.Sleep 50
  Loop
+ oIE.Navigate ("javascript:'<TITLE>PDFCreator - CompareColorCompressionModes</TITLE>'")
 
  opath = fso.GetParentFolderName(Wscript.ScriptFullname)
  Set PDFCreator = Wscript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_")

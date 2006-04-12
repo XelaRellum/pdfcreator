@@ -3396,7 +3396,7 @@ On Error GoTo ErrPtnr_OnError
 52770   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp04
 52780   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp05
 52790   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp06
-52800 '  cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp07
+52800   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp07
 52810 '  cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp08
 52820   cmbPDFColorResample.Clear
 52830   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample01
@@ -3413,7 +3413,7 @@ On Error GoTo ErrPtnr_OnError
 52940   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp04
 52950   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp05
 52960   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp06
-52970 '  cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp07
+52970   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp07
 52980 '  cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp08
 52990   cmbPDFGreyResample.Clear
 53000   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample01
