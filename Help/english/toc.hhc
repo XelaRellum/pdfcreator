@@ -182,20 +182,20 @@
 			<param name="Local" value="html\cominterface.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Public classes">
-			<param name="Local" value="html\comclasses.htm">
+			<param name="Name" value="clsPDFCreator">
+			<param name="Local" value="html\comclspdfcreator.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Public properties">
-			<param name="Local" value="html\comproperties.htm">
+			<param name="Name" value="clsPDFCreatorError">
+			<param name="Local" value="html\comclspdfcreatorerror.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Public methods">
-			<param name="Local" value="html\commethods.htm">
+			<param name="Name" value="clsPDFCreatorInfoSpoolFile">
+			<param name="Local" value="html\comclspdfcreatorinfospoolfile.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Public events">
-			<param name="Local" value="html\comevents.htm">
+			<param name="Name" value="clsPDFCreatorOptions">
+			<param name="Local" value="html\comclspdfcreatoroptions.htm">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
