@@ -59,11 +59,11 @@ html\welcome.htm
 html\whatis.htm
 html\whatislang.htm
 html\whatsnew.htm
-html\comclasses.htm
-html\comevents.htm
 html\cominterface.htm
-html\comproperties.htm
-html\commethods.htm
+html\comclspdfcreator.htm
+html\comclspdfcreatorerror.htm
+html\comclspdfcreatorinfospoolfile.htm
+html\comclspdfcreatoroptions.htm
 
 [INFOTYPES]
 

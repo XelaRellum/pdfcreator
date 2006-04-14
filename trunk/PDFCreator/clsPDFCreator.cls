@@ -1558,7 +1558,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub cSaveOptions(ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
+Public Sub cSaveOptions(Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1624,7 +1624,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub cSaveOptionsToFile(ByVal Options1 As Variant, ByVal INIFilename As String) ' Options1 must be a clsPDFCreatorOptions type
+Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1632,14 +1632,18 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Sub
 50040  End If
-50050  If TypeOf Options1 Is clsPDFCreatorOptions Then
-50060    SaveOptionsINI cLetOptions(Options1), INIFilename
-50070   Else
-50080    mError.Number = 8
-50090    mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
-50100    RaiseEvent eError
-50110    Exit Sub
-50120  End If
+50050  If Not IsMissing(Options1) Then
+50060    If TypeOf Options1 Is clsPDFCreatorOptions Then
+50070      SaveOptionsINI cLetOptions(Options1), INIFilename
+50080     Else
+50090      mError.Number = 8
+50100      mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptionsToFile")
+50110      RaiseEvent eError
+50120      Exit Sub
+50130    End If
+50140   Else
+50150    SaveOptionsINI Options, INIFilename
+50160  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

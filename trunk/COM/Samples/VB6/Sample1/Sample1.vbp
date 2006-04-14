@@ -1,6 +1,6 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\WINDOWS\system32\STDOLE2.TLB#OLE Automation
-Reference=*\G{1CE9DC08-9FBC-45C6-8A7C-4FE1E208A613}#2.0#0#..\..\..\..\PDFCreator\PDFCreator.exe#PDFCreator
+Reference=*\G{1CE9DC08-9FBC-45C6-8A7C-4FE1E208A613}#3.1#0#..\..\..\..\PDFCreator\PDFCreator.exe#PDFCreator
 Form=Form1.frm
 ResFile32="Sample1.RES"
 IconForm="Form1"
@@ -13,7 +13,7 @@ Name="Sample1"
 HelpContextID="0"
 CompatibleMode="0"
 MajorVer=1
-MinorVer=0
+MinorVer=1
 RevisionVer=0
 AutoIncrementVer=0
 ServerSupportFiles=0

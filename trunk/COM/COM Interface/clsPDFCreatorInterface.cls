@@ -193,13 +193,13 @@ End Sub
 Public Function cReadOptions() As clsPDFCreatorOptions
 End Function
 
-Public Sub cSaveOptions(ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
+Public Sub cSaveOptions(Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
 End Sub
 
 Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions
 End Function
 
-Public Sub cSaveOptionsToFile(ByVal Options1 As Variant, ByVal INIFilename As String) ' Options1 must be a clsPDFCreatorOptions type
+Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
 End Sub
 ' --- Public functions/Subroutines - end ---
 

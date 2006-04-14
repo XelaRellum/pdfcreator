@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.0.0.0
-' Date: September, 1. 2005
+' Version: 2.0.0.0
+' Date: Aprl, 14. 2005
 ' Author: Frank Heindörfer
 ' Comments: Save the pdfcreator as ini-file.
 
@@ -25,13 +25,10 @@ If CDbl(Replace(WScript.Version,".",",")) < 5.1 then
 End if
 
 Set PDFCreator = Wscript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_")
-PDFCreator.cStart "/NoProcessingAtStartup"
 
 With PDFCreator
- .cSaveOptionsToFile .cReadOptions, fso.GetParentFolderName(Wscript.ScriptFullname) & "\PDFCreator.ini"
-End With
-
-With PDFCreator
+ .cStart "/NoProcessingAtStartup"
+ .cSaveOptionsToFile fso.GetParentFolderName(Wscript.ScriptFullname) & "\PDFCreator.ini"
  WScript.Sleep sleepTime
  .cClose
 End With
