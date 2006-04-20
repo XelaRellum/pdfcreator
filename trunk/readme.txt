@@ -1,6 +1,6 @@
-Title: PDFCreator Version 0.9.0
+Title: PDFCreator Version 0.9.1
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: January 18.  2006
+Releasedate: April 20.  2006
 
 Look at the readme.txt-Files in 'Setup', 'Printer', 'Printer\Redmon'.
 
@@ -8,7 +8,8 @@ Necessary additional files:
 
 IPDK:
 	Install the IPDK files to use error messages in your native language.
-	http://msdn.microsoft.com/vbasic/downloads/tools/ipdk.aspx
+	http://msdn.microsoft.com/vbasic/downloads/tools/ipdk.aspx (This official link is not available anymore.)
+	Web-Archive: http://web.archive.org/web/20040526064205/msdn.microsoft.com/vbasic/downloads/tools/IPDK5down.aspx
 
 Systemfiles:
 	Run Win9x_CopySystemfiles.bat or WinNt_CopySystemfiles.bat from 'Additional files\Systemfiles' to copy the Systemfiles for the setup.

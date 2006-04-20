@@ -4,6 +4,29 @@ Copyright (C)2002-2005 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfcreator.de.vu/
           http://www.sourceforge.net/projects/pdfcreator/
 
+Version 0.9.1 (April 20, 2006)
+-------------------------------------------------------------------------------
+Improvements:
+- Updated the com functions cSaveOptions and cSaveOptionsToFile
+- Updated and reorganize the help files (com interface)
+- Added the zip compression for color and gray images in pdfs again
+- Updated the languages files
+- Added unicode (UTF-16) support for pdf document info
+- Added the new com property isConverted for applications with no event handling
+- Added a new com sample for the language WinBatch
+- Added the new hidden feature SendEmailAfterAutoSaving
+- Added the new commandline parameters /DeleteIF and /OpenOF
+
+Bug Fixes:
+- Fixed some minor bugs.
+
+Known issues:
+- No hyperlinks possible
+  Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.
+  PDF-T-Maker:
+   http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm
+   http://www.transcom.de/transcom/de/tipps-tricks/acrobat/2004_pdf-t-maker.htm
+
 Version 0.9.0 (January 19, 2006)
 -------------------------------------------------------------------------------
 Improvements: 
