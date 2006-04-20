@@ -222,9 +222,9 @@ Source: C:\IPDK\French\VB6FR.DLL; DestDir: {sys}; Components: program; Flags: 32
 ;Printerdriver files
 ;PPD-File
 ; Win9x/Me
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND IsLanguage('german') AND NOT UseOwnPPDFile
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall; Check: InstallWin9xPrinterdriver AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
-Source: {code:GetExternalPPDFile}; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver AND IsLanguage('german') AND NOT UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+Source: {code:GetExternalPPDFile}; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion external; Check: UseOwnPPDFile
 ; WinNt4, Win2k, WinXP, Win2k3 - 32bit
 Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND IsLanguage('german') AND NOT UseOwnPPDFile
 Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
@@ -236,9 +236,9 @@ Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:Printe
 
 ;Driver files
 ; Win9x/Me
-Source: ..\Printer\Adobe\Windows\ICONLIB.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver; Flags: deleteafterinstall
-Source: ..\Printer\Adobe\Windows\PSMON.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver; Flags: deleteafterinstall
-Source: ..\Printer\Adobe\Windows\ADOBEPS4.HLP; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\ICONLIB.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\PSMON.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\ADOBEPS4.HLP; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
 Source: ..\Printer\Adobe\Windows\FONTSDIR.MFD; DestDir: {win}; Flags: ignoreversion; Components: program; Check: InstallWin9xPrinterdriver
 Source: ..\Printer\Adobe\Windows\adfonts.mfm; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
 Source: ..\Printer\Adobe\Windows\ADOBEPS4.DRV; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
