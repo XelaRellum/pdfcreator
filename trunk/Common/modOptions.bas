@@ -982,7 +982,7 @@ On Error GoTo ErrPtnr_OnError
 55820   End If
 55830   tStr = hOpt.Retrieve("PDFCompressionColorCompressionChoice")
 55840   If IsNumeric(tStr) Then
-55850     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+55850     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
 55860       .PDFCompressionColorCompressionChoice = CLng(tStr)
 55870      Else
 55880       If UseStandard Then
@@ -1122,7 +1122,7 @@ On Error GoTo ErrPtnr_OnError
 57220   End If
 57230   tStr = hOpt.Retrieve("PDFCompressionGreyCompressionChoice")
 57240   If IsNumeric(tStr) Then
-57250     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+57250     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
 57260       .PDFCompressionGreyCompressionChoice = CLng(tStr)
 57270      Else
 57280       If UseStandard Then
@@ -3104,7 +3104,7 @@ On Error GoTo ErrPtnr_OnError
 54430   End If
 54440   tStr = reg.GetRegistryValue("PDFCompressionColorCompressionChoice")
 54450   If IsNumeric(tStr) Then
-54460     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+54460     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
 54470       .PDFCompressionColorCompressionChoice = CLng(tStr)
 54480      Else
 54490       If UseStandard Then
@@ -3244,7 +3244,7 @@ On Error GoTo ErrPtnr_OnError
 55830   End If
 55840   tStr = reg.GetRegistryValue("PDFCompressionGreyCompressionChoice")
 55850   If IsNumeric(tStr) Then
-55860     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+55860     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
 55870       .PDFCompressionGreyCompressionChoice = CLng(tStr)
 55880      Else
 55890       If UseStandard Then
