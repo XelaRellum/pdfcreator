@@ -78,7 +78,7 @@ PDFColorsPreserveTransfer|chkPDFPreserveTransfer.Value|Boolean|1||
 
 ' <Printing Formats PDF Compression>
 PDFCompressionColorCompression|chkPDFColorComp.Value|Boolean|1||
-PDFCompressionColorCompressionChoice|cmbPDFColorComp.Listindex|Long|0|0|5
+PDFCompressionColorCompressionChoice|cmbPDFColorComp.Listindex|Long|0|0|6
 PDFCompressionColorCompressionJPEGHighFactor||Double|0.9|0|<
 PDFCompressionColorCompressionJPEGLowFactor||Double|0.25|0|<
 PDFCompressionColorCompressionJPEGMaximumFactor||Double|2|0|<
@@ -88,7 +88,7 @@ PDFCompressionColorResample|chkPDFColorResample.Value|Boolean|0||
 PDFCompressionColorResampleChoice|cmbPDFColorResample.Listindex|Long|0|0|1
 PDFCompressionColorResolution|txtPDFColorRes.Text|Long|300|0|<
 PDFCompressionGreyCompression|chkPDFGreyComp.Value|Boolean|1||
-PDFCompressionGreyCompressionChoice|cmbPDFGreyComp.Listindex|Long|0|0|5
+PDFCompressionGreyCompressionChoice|cmbPDFGreyComp.Listindex|Long|0|0|6
 PDFCompressionGreyCompressionJPEGHighFactor||Double|0.9|0|<
 PDFCompressionGreyCompressionJPEGLowFactor||Double|0.25|0|<
 PDFCompressionGreyCompressionJPEGMaximumFactor||Double|2|0|<
