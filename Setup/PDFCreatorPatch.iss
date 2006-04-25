@@ -18,21 +18,19 @@
 ;#define PatchPDFSpooler_EXE
 ;#define PatchTransTool_EXE
 
-;remove the german localization
+;remove the german localization and add manifest to exe files
 #ifdef PatchPDFCreator_EXE
  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
+ #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreator\PDFCreator.exe""","..\ManifestManager\")
 #endif
 #ifdef PatchPDFSpooler_EXE
  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpooler.exe * 0x409 ~ 0x0",".\")
+ #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFSpooler\PDFSpooler.exe""","..\ManifestManager\")
 #endif
 #ifdef PatchTransTool_EXE
  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
-#endif
-
-;add manifest to exe files
-#expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreator\PDFCreator.exe""","..\ManifestManager\")
-#expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFSpooler\PDFSpooler.exe""","..\ManifestManager\")
 #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\TransTool\TransTool.exe""","..\ManifestManager\")
+#endif
 
 #ifdef CompileHelp
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
@@ -82,7 +80,7 @@
 #define UninstallRegStr2     "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + UninstallIDStr2
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "0.9.0"
+#define UpdateIsPossibleMinVersion "0.9.1"
 
 [Setup]
 AllowNoIcons=false

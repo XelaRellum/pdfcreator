@@ -14,3 +14,4 @@ Name: romanian;     MessagesFile: Romanian.isl
 Name: russian;      MessagesFile: compiler:Languages\Russian.isl
 Name: slovak;       MessagesFile: Slovak.isl
 Name: slovensko;    MessagesFile: compiler:Languages\Slovenian.isl
+Name: spanish;      MessagesFile: Spanish.isl
