@@ -14,3 +14,4 @@
 #include "russian.inc"
 #include "slovak.inc"
 #include "slovensko.inc"
+#include "spanish.inc"
