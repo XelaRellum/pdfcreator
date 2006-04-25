@@ -6,6 +6,7 @@ Name: greek;        MessagesFile: Greek.isl
 Name: hungarian;    MessagesFile: compiler:Languages\Hungarian.isl
 Name: icelandic;    MessagesFile: Icelandic.isl
 Name: indonesian;   MessagesFile: Indonesian.isl
+Name: italian;      MessagesFile: compiler:Languages\Italian.isl
 Name: norwegian;    MessagesFile: compiler:Languages\Norwegian.isl
 Name: polish;       MessagesFile: compiler:Languages\Polish.isl
 Name: portuguesebr; MessagesFile: compiler:Languages\BrazilianPortuguese.isl
