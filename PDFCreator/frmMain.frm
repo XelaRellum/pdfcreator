@@ -1696,14 +1696,14 @@ On Error GoTo ErrPtnr_OnError
 50460        End If
 50470        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
 50480        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50490        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)))
+50490        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
 50500        'tStr = CStr(tDate)
 50510        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50520        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)))
+50520        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
 50530        If Len(Options.StandardTitle) > 0 Then
-50540          .Title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)))
+50540          .Title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
 50550         Else
-50560          .Title = GetSubstFilename(tFile(1), Options.SaveFilename)
+50560          .Title = GetSubstFilename(tFile(1), Options.SaveFilename, , , True)
 50570        End If
 50580       End With
 50590       AppendPDFDocInfo tFile(1), PDFDocInfo
