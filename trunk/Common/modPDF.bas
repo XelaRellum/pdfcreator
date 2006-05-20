@@ -201,7 +201,8 @@ End Select
 End Function
 
 Public Function GetSubstFilename(PostscriptFile As String, TokenFilename As String, _
- Optional WithoutAuthor As Boolean = False, Optional Preview As Boolean = False) As String
+ Optional WithoutAuthor As Boolean = False, Optional Preview As Boolean = False, _
+ Optional NoReplaceForbiddenChars As Boolean = False) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -356,11 +357,13 @@ On Error GoTo ErrPtnr_OnError
 51490    Next i
 51500   End If
 51510  End If
-51520  Filename = ReplaceForbiddenChars(Filename)
-51530  If Options.RemoveSpaces = 1 Then
-51540   Filename = Trim$(Filename)
-51550  End If
-51560  GetSubstFilename = Filename
+51520  If Not NoReplaceForbiddenChars Then
+51530   Filename = ReplaceForbiddenChars(Filename)
+51540  End If
+51550  If Options.RemoveSpaces = 1 Then
+51560   Filename = Trim$(Filename)
+51570  End If
+51580  GetSubstFilename = Filename
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

@@ -478,20 +478,20 @@ On Error GoTo ErrPtnr_OnError
 50450  With PSHeader
 50460   If Len(Trim$(Options.StandardTitle)) > 0 Then
 50470     txtTitle.Text = GetSubstFilename(PDFSpoolfile, _
-     RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)))
+     RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
 50490    Else
-50500     txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename)
+50500     txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename, , , True)
 50510   End If
 50520   If Options.UseStandardAuthor = 1 Then
-50530     txtCreateFor.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
+50530     txtCreateFor.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
 50540    Else
 50550     txtCreateFor.Text = GetDocUsername(PDFSpoolfile, False)
 50560   End If
 50570   If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50580    txtKeywords.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)))
+50580    txtKeywords.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
 50590   End If
 50600   If Len(Trim$(Options.StandardSubject)) > 0 Then
-50610    txtSubject.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)))
+50610    txtSubject.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
 50620   End If
 50630
 50640   tDate = Now
@@ -843,10 +843,10 @@ Private Function Create_eDoc() As String
   .Author = txtCreateFor.Text
   .CreationDate = txtCreationDate.Text
   .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-  .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text)
+  .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , True)
   .ModifyDate = txtModifyDate.Text
-  .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text)
-  .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text)
+  .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , True)
+  .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , True)
  End With
 
  AppendPDFDocInfo PDFSpoolfile, PDFDocInfo
