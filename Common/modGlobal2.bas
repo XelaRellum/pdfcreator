@@ -169,7 +169,7 @@ Public Function GetDocDate(Optional StandardDate As String = "", Optional Standa
  GetDocDate = tStr
 End Function
 
-Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String, Optional PostscriptFile As String) As String
+Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String, Optional PostscriptFile As String, Optional hkey1 As hkey = HKEY_CURRENT_USER) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -218,7 +218,7 @@ On Error GoTo ErrPtnr_OnError
 50430  If LenB(Temppath) > 0 Then
 50440    Filename = Replace(Filename, "<Temp>", CompletePath(Temppath), , , vbTextCompare)
 50450   Else
-50460    Filename = Replace(Filename, "<Temp>", CompletePath(GetTempPathReg(HKEY_CURRENT_USER)), , , vbTextCompare)
+50460    Filename = Replace(Filename, "<Temp>", CompletePath(GetTempPathReg(hkey1)), , , vbTextCompare)
 50470  End If
 50480
 50490  tStr = "DOCNAME"

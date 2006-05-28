@@ -129,7 +129,7 @@
 #define DefaultPrintername          "PDFCreator"
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "0.9.0"
+#define UpdateIsPossibleMinVersion "0.9.2"
 
 [Setup]
 AllowNoIcons=true
@@ -167,10 +167,10 @@ ShowTasksTreeLines=false
 SolidCompression=true
 UsePreviousAppDir=true
 
-VersionInfoVersion=0.9.0
+VersionInfoVersion={#AppVersion}
 VersionInfoCompany=Frank Heindörfer, Philip Chinery
 VersionInfoDescription=PDFCreator is the easy way of creating PDFs.
-VersionInfoTextVersion=0.9.0
+VersionInfoTextVersion={#AppVersion}
 
 WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
