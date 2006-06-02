@@ -30,23 +30,23 @@ On Error GoTo ErrPtnr_OnError
 50210   If FilterIndex < 0 Then
 50220     SaveOpenCancel = True: Cancelled = True
 50230    Else
-50240 '    tStr = "*.*"
-50250 '    If InStr(Filter, "|") > 0 Then
-50260 '     sFilter = Split(Filter, "|")
-50270 '     If (Filterindex * 2 - 1) <= UBound(sFilter) Then
-50280 '      tStr = sFilter(Filterindex * 2 - 1)
-50290 '     End If
-50300 '    End If
-50310 '    If Len(tStr) > 0 Then
-50320 '     If InStr(tStr, ".") > 0 Then
-50330 '      If InStr(InStrRev(tStr, "."), "*") <= 0 Then
-50340 '       SplitPath Filename, , , , , Ext
-50350 '       If UCase$(Mid(tStr, InStrRev(tStr, ".") + 1)) <> UCase$(Ext) Then
-50360 '        Filename = Filename & "." & LCase$(Mid(tStr, InStrRev(tStr, ".") + 1))
-50370 '       End If
-50380 '      End If
-50390 '     End If
-50400 '    End If
+50240     tStr = "*.*"
+50250     If InStr(Filter, "|") > 0 Then
+50260      sFilter = Split(Filter, "|")
+50270      If (FilterIndex * 2 - 1) <= UBound(sFilter) Then
+50280       tStr = sFilter(FilterIndex * 2 - 1)
+50290      End If
+50300     End If
+50310     If Len(tStr) > 0 Then
+50320      If InStr(tStr, ".") > 0 Then
+50330       If InStr(InStrRev(tStr, "."), "*") <= 0 Then
+50340        SplitPath Filename, , , , , Ext
+50350        If UCase$(Mid(tStr, InStrRev(tStr, ".") + 1)) <> UCase$(Ext) Then
+50360         Filename = Filename & "." & LCase$(Mid(tStr, InStrRev(tStr, ".") + 1))
+50370        End If
+50380       End If
+50390      End If
+50400     End If
 50410     Set GetFilename = New Collection
 50420     GetFilename.Add Filename
 50430     SaveOpenCancel = False: Cancelled = False
