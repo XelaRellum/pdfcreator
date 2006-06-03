@@ -279,41 +279,12 @@ On Error GoTo ErrPtnr_OnError
 50070     BuildNumber = osv.dwBuildNumber And &HFFFF&
 50080   End If
 50090   IsWin95 = (osv.PlatformID = VER_PLATFORM_WIN32_WINDOWS) And _
-            (osv.dwVerMajor = 4 And osv.dwVerMinor = 0) And _
-            (BuildNumber = 950)
-50120  End If
+            (osv.dwVerMajor = 4 And ((osv.dwVerMinor = 0) Or (osv.dwVerMinor = 3))) 'And (BuildNumber = 950)
+50110  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modWindowsVersion", "IsWin95")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Public Function IsWin95OSR2() As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim osv As OSVERSIONINFO, BuildNumber As Long
-50020  osv.OSVSize = Len(osv)
-50030  If GetVersionEx(osv) = 1 Then
-50040   If (osv.dwBuildNumber And &HFFFF&) > &H7FFF Then
-50050     BuildNumber = (osv.dwBuildNumber And &HFFFF&) - &H10000
-50060    Else
-50070     BuildNumber = osv.dwBuildNumber And &HFFFF&
-50080   End If
-50090   IsWin95OSR2 = (osv.PlatformID = VER_PLATFORM_WIN32_WINDOWS) And _
-                (osv.dwVerMajor = 4 And osv.dwVerMinor = 0) And _
-                (BuildNumber = 1111)
-50120  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modWindowsVersion", "IsWin95OSR2")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -684,7 +655,7 @@ Public Function IsWin9xMe() As Boolean
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  'returns True if running Win95, Win98 or WinMe
-50020  If IsWin95 = True Or IsWin95OSR2 = True Or IsWin98 = True Or IsWinME = True Then
+50020  If IsWin95 = True Or IsWin98 = True Or IsWinME = True Then
 50030   IsWin9xMe = True
 50040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -811,27 +782,30 @@ On Error GoTo ErrPtnr_OnError
 50111      Select Case osv.dwVerMinor
             Case 0:  win.VersionName = "Windows 2000"
 50130       Case 1:  win.VersionName = "Windows XP"
-50140      End Select
-50150    End Select
-50160    Case VER_PLATFORM_WIN32_WINDOWS:
-50171     Select Case osv.dwVerMinor
+50140       Case 2:  win.VersionName = "Windows 2003"
+50150       Case Else:  win.VersionName = "Unknown 'VerMinor':" & osv.dwVerMinor
+50160      End Select
+50170     Case Else: win.VersionName = "Unknown 'VerMajor':" & osv.dwVerMajor
+50180    End Select
+50190    Case VER_PLATFORM_WIN32_WINDOWS:
+50201     Select Case osv.dwVerMinor
            Case 0:    win.VersionName = "Windows 95"
-50190      Case 90:   win.VersionName = "Windows ME"
-50200      Case Else: win.VersionName = "Windows 98"
-50210     End Select
-50220   End Select
-50230   'Get the version number
-50240   win.VersionNo = osv.dwVerMajor & "." & osv.dwVerMinor
-50250   'Get the build
-50260   win.BuildNo = (osv.dwBuildNumber And &HFFFF&)
-50270   'Any additional info. In Win9x, this can be
-50280   '"any arbitrary string" provided by the
-50290   'manufacturer. In NT, this is the service pack.
-50300   pos = InStr(osv.szCSDVersion, Chr$(0))
-50310   If pos Then
-50320    win.ServicePack = Left$(osv.szCSDVersion, pos - 1)
-50330   End If
-50340  End If
+50220      Case 90:   win.VersionName = "Windows ME"
+50230      Case Else: win.VersionName = "Windows 98"
+50240     End Select
+50250   End Select
+50260   'Get the version number
+50270   win.VersionNo = osv.dwVerMajor & "." & osv.dwVerMinor
+50280   'Get the build
+50290   win.BuildNo = (osv.dwBuildNumber And &HFFFF&)
+50300   'Any additional info. In Win9x, this can be
+50310   '"any arbitrary string" provided by the
+50320   'manufacturer. In NT, this is the service pack.
+50330   pos = InStr(osv.szCSDVersion, Chr$(0))
+50340   If pos Then
+50350    win.ServicePack = Left$(osv.szCSDVersion, pos - 1)
+50360   End If
+50370  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
