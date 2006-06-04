@@ -1,5 +1,5 @@
 ; PDFCreator-Patch Installation
-; Setup created with Inno Setup QuickStart Pack 5.1.4 (with ISPP) and ISTool 5.0.8
+; Setup created with Inno Setup QuickStart Pack 5.1.6 (with ISPP) and ISTool 5.1.6
 ; Installation from Frank Heindörfer, Philip Chinery
 
 ;#define FastCompilation
