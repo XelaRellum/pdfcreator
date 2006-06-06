@@ -24,8 +24,8 @@ Begin VB.Form frmPrinting
       Top             =   5160
       Width           =   1350
    End
-   Begin VB.CommandButton cmdWaiting 
-      Caption         =   "&Waiting"
+   Begin VB.CommandButton cmdCollect 
+      Caption         =   "&Wait - Collect"
       Height          =   495
       Left            =   1680
       TabIndex        =   16
@@ -382,7 +382,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub cmdWaiting_Click()
+Private Sub cmdCollect_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -398,7 +398,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "cmdWaiting_Click")
+Select Case ErrPtnr.OnError("frmPrinting", "cmdCollect_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -457,7 +457,7 @@ On Error GoTo ErrPtnr_OnError
 50240   lblSubject.Caption = .PrintingSubject
 50250   lblKeywords.Caption = .PrintingKeywords
 50260   chkStartStandardProgram.Caption = .PrintingStartStandardProgram
-50270   cmdWaiting.Caption = .PrintingWaiting
+50270   cmdCollect.Caption = .PrintingCollect
 50280   cmdOptions.Caption = .DialogPrinterOptions
 50290   cmdEMail.Caption = .PrintingEMail
 50300   cmdSave.Caption = .PrintingSave
@@ -513,7 +513,7 @@ On Error GoTo ErrPtnr_OnError
 50800  If Options.DisableEmail = 1 Then
 50810   cmdEMail.Enabled = False
 50820  End If
-50830  Height = cmdWaiting.Top + cmdWaiting.Height + (Height - ScaleHeight) + 100
+50830  Height = cmdCollect.Top + cmdCollect.Height + (Height - ScaleHeight) + 100
 50840  With txtTitle
 50850   .SelStart = 0
 50860   .SelLength = Len(.Text)
