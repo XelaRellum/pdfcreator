@@ -236,7 +236,7 @@ Public Const ABM_GETTASKBARPOS               As Long = &H5
 Public Const SHCNE_ASSOCCHANGED              As Long = &H8000000
 Public Const SHCNF_IDLIST                    As Long = &H0&
 
-Public Const ANYSIZE_ARRAY                   As Long = 500
+Public Const ANYSIZE_ARRAY                   As Long = 1500
 
 Public Const TokenUser                       As Long = 1
 Public Const TokenGroups                     As Long = 2
