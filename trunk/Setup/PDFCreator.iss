@@ -7,9 +7,11 @@
 #ifdef Test
  #define FastCompilation
 #else
- #define CompileHelp
- #define IncludeGhostscript
- #define Localization
+; #define FastCompilation
+; #define CompileHelp
+; #define IncludeGhostscript
+ #define IncludeToolbar
+; #define Localization
 #endif
 
 #define ProgramLicense "GNU"
@@ -130,6 +132,10 @@
 
 ;#define UpdateIsPossible
 #define UpdateIsPossibleMinVersion "0.9.2"
+
+#IFDEF IncludeToolbar
+ #include "ToolbarForm.isd"
+#ENDIF
 
 [Setup]
 AllowNoIcons=true
@@ -419,6 +425,12 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDi
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program; Flags: ignoreversion
 
+; Toolbar
+#IFDEF IncludeToolbar
+Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy
+Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe
+#ENDIF
+
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
 
@@ -612,6 +624,7 @@ Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shel
 
 Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile AND (Not UseINI)
 #ENDIF
+Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: " toolbar"
 
 [UninstallRun]
 Filename: {app}\PDFCreator.exe; Parameters: /UnRegServer; Flags: skipifdoesntexist runhidden
@@ -650,6 +663,11 @@ Name: program; Description: {cm:Programfiles}; Types: full compact custom; Flags
 Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Flags: fixed; Check: IsGhostscriptInstalled(true)
 Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Check: IsGhostscriptInstalled(false)
 #ENDIF
+
+#IFDEF IncludeToolbar
+Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom
+#ENDIF
+
 Name: languages; Description: {cm:Languages}; Types: full custom
 
 Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
@@ -2752,6 +2770,8 @@ end;
 
 procedure InitializeWizard();
 begin
+ ToolbarForm_CreatePage(wpSelectDir);
+
  SCPage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
   ExpandConstant('{cm:InstallationTypeDescription}'));
 
