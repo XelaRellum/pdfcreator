@@ -1,0 +1,201 @@
+  [Code]
+  var
+    lblFeatureSearch: TLabel;
+    imgToolbar: TBitmapImage;
+    lblFeaturePopup: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    lblIntro: TLabel;
+    Label3: TLabel;
+    lblRead: TLabel;
+    lblComponents: TLabel;
+    lblHyperlink: TLabel;
+
+  
+  procedure ToolbarForm_Activate(Page: TWizardPage);
+  begin
+  end;
+  
+  function ToolbarForm_ShouldSkipPage(Page: TWizardPage): Boolean;
+  begin
+    Result := False;
+  end;
+  
+  function ToolbarForm_BackButtonClick(Page: TWizardPage): Boolean;
+  begin
+    Result := True;
+  end;
+  
+  function ToolbarForm_NextButtonClick(Page: TWizardPage): Boolean;
+  begin
+    Result := True;
+  end;
+  
+  procedure ToolbarForm_CancelButtonClick(Page: TWizardPage; var Cancel, Confirm: Boolean);
+  begin
+  end;
+  
+  procedure onclick_lblHyperlink(Sender: TObject);
+  var ErrorCode: Integer;  begin
+   ShellExec('open', 'www.pdfcreator-toolbar.org/privacy', '', '', SW_SHOW, ewNoWait, ErrorCode)
+  end;
+  
+  function ToolbarForm_CreatePage(PreviousPageId: Integer): Integer;
+  var
+    Page: TWizardPage;
+  begin
+    Page := CreateCustomPage(
+      PreviousPageId,
+      ExpandConstant('{cm:ToolbarFormCaption}'),
+      ExpandConstant('{cm:ToolbarFormDescription}')
+    );
+  
+    { lblFeatureSearch }
+    lblFeatureSearch := TLabel.Create(Page);
+    with lblFeatureSearch do
+    begin
+      Parent := Page.Surface;
+      Left := ScaleX(8);
+      Top := ScaleY(96);
+      Width := ScaleX(191);
+      Height := ScaleY(13);
+      Caption := ExpandConstant('{cm:ToolbarSaveDocuments}');
+    end;
+    
+    { imgToolbar }
+    imgToolbar := TBitmapImage.Create(Page);
+    with imgToolbar do
+    begin
+      Parent := Page.Surface;
+      ExtractTemporaryFile('Toolbar.bmp');
+      Bitmap.LoadFromFile(ExpandConstant('{tmp}')+'\Toolbar.bmp');
+      Left := ScaleX(8);
+      Top := ScaleY(48);
+      Width := ScaleX(385);
+      Height := ScaleY(41);
+      AutoSize := True;
+    end;
+    
+    { lblFeaturePopup }
+    lblFeaturePopup := TLabel.Create(Page);
+    with lblFeaturePopup do
+    begin
+      Parent := Page.Surface;
+      Left := ScaleX(262);
+      Top := ScaleY(120);
+      Width := ScaleX(116);
+      Height := ScaleY(13);
+      Caption := ExpandConstant('{cm:ToolbarPopups}');
+    end;
+    
+    { Label1 }
+    Label1 := TLabel.Create(Page);
+    with Label1 do
+    begin
+      Parent := Page.Surface;
+      Left := ScaleX(8);
+      Top := ScaleY(120);
+      Width := ScaleX(251);
+      Height := ScaleY(13);
+      Caption := ExpandConstant('{cm:ToolbarSearch}');
+    end;
+    
+    { Label2 }
+    Label2 := TLabel.Create(Page);
+    with Label2 do
+    begin
+      Parent := Page.Surface;
+      Left := ScaleX(262);
+      Top := ScaleY(96);
+      Width := ScaleX(132);
+      Height := ScaleY(13);
+      Caption := ExpandConstant('{cm:ToolbarBestSearch}');
+    end;
+    
+    { lblIntro }
+    lblIntro := TLabel.Create(Page);
+    with lblIntro do
+    begin
+      Parent := Page.Surface;
+      Left := ScaleX(8);
+      Top := ScaleY(8);
+      Width := ScaleX(379);
+      Height := ScaleY(26);
+      AutoSize := False;
+      WordWrap := True;
+      Font.Color := -16777208;
+      Font.Height := ScaleY(-11);
+      Font.Name := 'Tahoma';
+      Font.Style := [fsBold];
+      Caption := ExpandConstant('{cm:ToolbarOnClickPDF}');
+    end;
+    
+      { Label3 }
+      Label3 := TLabel.Create(Page);
+      with Label3 do
+      begin
+        Parent := Page.Surface;
+        Left := ScaleX(8);
+        Top := ScaleY(152);
+        Width := ScaleX(383);
+        Height := ScaleY(29);
+        AutoSize := False;
+        WordWrap := True;
+        Caption := ExpandConstant('{cm:ToolbarUninstall}');
+      end;
+      
+      { lblRead }
+      lblRead := TLabel.Create(Page);
+      with lblRead do
+      begin
+        Parent := Page.Surface;
+        Left := ScaleX(8);
+        Top := ScaleY(221);
+        Caption := ExpandConstant('{cm:ToolbarPrivacy}');
+      end;
+
+      { lblHyperlink }
+      lblHyperlink := TLabel.Create(Page);
+      with lblHyperlink do
+      begin
+        Parent := Page.Surface;
+        Left := lblRead.Left + lblRead.Width + 5;
+        Top := ScaleY(221);
+        Width := ScaleX(350);
+        Height := ScaleY(13);
+        Font.Color := 16711680;
+        Font.Style := [fsUnderline];
+        Caption := 'www.pdfcreator-toolbar.org/privacy';
+        Cursor := crHand;
+        Onclick := @onclick_lblHyperlink;
+      end;
+
+      { lblComponents }
+      lblComponents := TLabel.Create(Page);
+      with lblComponents do
+      begin
+        Parent := Page.Surface;
+        Left := ScaleX(8);
+        Top := ScaleY(186);
+        Width := ScaleX(397);
+        Height := ScaleY(29);
+        AutoSize := False;
+        WordWrap := True;
+        Font.Color := -16777208;
+        Font.Height := ScaleY(-11);
+        Font.Name := 'Tahoma';
+        Font.Style := [fsBold];
+        Caption := ExpandConstant('{cm:ToolbarNoInstall}');
+      end;
+
+   with Page do
+    begin
+      OnActivate := @ToolbarForm_Activate;
+      OnShouldSkipPage := @ToolbarForm_ShouldSkipPage;
+      OnBackButtonClick := @ToolbarForm_BackButtonClick;
+      OnNextButtonClick := @ToolbarForm_NextButtonClick;
+      OnCancelButtonClick := @ToolbarForm_CancelButtonClick;
+    end;
+  
+    Result := Page.ID;
+  end;
