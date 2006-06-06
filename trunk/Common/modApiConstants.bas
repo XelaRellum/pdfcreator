@@ -9,9 +9,12 @@ Public Const ERROR_KEY_NOT_FOUND             As Long = &H2
 Public Const ERROR_ALREADY_EXISTS            As Long = 183&
 Public Const ERROR_ACCESS_DENIED             As Long = 5&
 
+Public Const GENERIC_EXECUTE                 As Long = &H20000000
+Public Const GENERIC_WRITE                   As Long = &H40000000
 Public Const GENERIC_READ                    As Long = &H80000000
 Public Const INVALID_HANDLE_VALUE            As Long = -1
 Public Const OPEN_EXISTING                   As Long = &H3
+
 
 Public Const FORMAT_MESSAGE_FROM_SYSTEM      As Long = &H1000
 Public Const FORMAT_MESSAGE_IGNORE_INSERTS   As Long = &H200
