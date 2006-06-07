@@ -424,6 +424,8 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestEvents.vbs; DestDir:
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program; Flags: ignoreversion
+Source: Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy
+Source: PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe
 
 ; Toolbar
 #IFDEF IncludeToolbar
@@ -716,6 +718,7 @@ Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLangua
 
 Name: languages\slovensko; Description: Slovensko; Types: full; Check: Not IsLanguage('slovensko'); Flags: dontinheritcheck
 Name: languages\slovensko; Description: Slovensko; Types: full custom; Check: IsLanguage('slovensko'); Flags: dontinheritcheck
+
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Check: UseDesktopiconCommon
