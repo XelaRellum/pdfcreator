@@ -1,9 +1,9 @@
 'Optionname|OptionControlvalue|Type|Standard|LeftLimit|RightLimit
 
 ' <Program>
-AdditionalGhostscriptParameters||String|||
-AdditionalGhostscriptSearchpath||String|||
-AddWindowsFontpath||Boolean|1||
+AdditionalGhostscriptParameters|txtAdditionalGhostscriptParameters.Text|String|||
+AdditionalGhostscriptSearchpath|txtAdditionalGhostscriptSearchpath.Text|String|||
+AddWindowsFontpath|chkAddWindowsFontpath.Value|Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|<MyFiles>||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
 AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|7
@@ -21,10 +21,10 @@ DeviceHeightPoints||Double|-1|-1|<
 DeviceWidthPoints||Double|-1|-1|<
 
 ' <Ghostscript>
-DirectoryGhostscriptBinaries|txtGSbin.text|String|||
-DirectoryGhostscriptFonts|txtGSfonts.text|String|||
-DirectoryGhostscriptLibraries|txtGSlib.text|String|||
-DirectoryGhostscriptResource|txtGSResource.text|String|||
+DirectoryGhostscriptBinaries|txtGSbin.Text|String|||
+DirectoryGhostscriptFonts|txtGSfonts.Text|String|||
+DirectoryGhostscriptLibraries|txtGSlib.Text|String|||
+DirectoryGhostscriptResource|txtGSResource.Text|String|||
 
 ' <Program>
 DisableEmail||Boolean|0||

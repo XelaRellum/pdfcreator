@@ -5816,16 +5816,19 @@ Public Sub ShowOptions(Frm as Form, sOptions as tOptions)
  On Error Resume Next
  Dim i as Long, tList() as String, tStrA() As String, lsv As ListView
  With sOptions
+  frm.txtAdditionalGhostscriptParameters.Text = .AdditionalGhostscriptParameters
+  frm.txtAdditionalGhostscriptSearchpath.Text = .AdditionalGhostscriptSearchpath
+  frm.chkAddWindowsFontpath.Value = .AddWindowsFontpath
   frm.txtAutosaveDirectory.Text = .AutosaveDirectory
   frm.txtAutosaveFilename.Text = .AutosaveFilename
   frm.cmbAutosaveFormat.Listindex = .AutosaveFormat
   frm.chkAutosaveStartStandardProgram.Value = .AutosaveStartStandardProgram
   frm.txtBitmapResolution.Text = .BitmapResolution
   frm.cmbBMPColors.Listindex = .BMPColorscount
-  frm.txtGSbin.text = .DirectoryGhostscriptBinaries
-  frm.txtGSfonts.text = .DirectoryGhostscriptFonts
-  frm.txtGSlib.text = .DirectoryGhostscriptLibraries
-  frm.txtGSResource.text = .DirectoryGhostscriptResource
+  frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
+  frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
+  frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
+  frm.txtGSResource.Text = .DirectoryGhostscriptResource
   frm.cmbEPSLanguageLevel.Listindex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   tList = Split(.FilenameSubstitutions, "\")
@@ -5920,16 +5923,19 @@ End Sub
 Public Sub GetOptions(Frm as Form, sOptions as tOptions)
  Dim i as Long, tStr as String, lsv As ListView
  With sOptions
+ .AdditionalGhostscriptParameters =  frm.txtAdditionalGhostscriptParameters.Text
+ .AdditionalGhostscriptSearchpath =  frm.txtAdditionalGhostscriptSearchpath.Text
+ .AddWindowsFontpath =  Abs(frm.chkAddWindowsFontpath.Value)
  .AutosaveDirectory =  frm.txtAutosaveDirectory.Text
  .AutosaveFilename =  frm.txtAutosaveFilename.Text
  .AutosaveFormat =  frm.cmbAutosaveFormat.Listindex
  .AutosaveStartStandardProgram =  Abs(frm.chkAutosaveStartStandardProgram.Value)
  .BitmapResolution =  frm.txtBitmapResolution.Text
  .BMPColorscount =  frm.cmbBMPColors.Listindex
- .DirectoryGhostscriptBinaries =  frm.txtGSbin.text
- .DirectoryGhostscriptFonts =  frm.txtGSfonts.text
- .DirectoryGhostscriptLibraries =  frm.txtGSlib.text
- .DirectoryGhostscriptResource =  frm.txtGSResource.text
+ .DirectoryGhostscriptBinaries =  frm.txtGSbin.Text
+ .DirectoryGhostscriptFonts =  frm.txtGSfonts.Text
+ .DirectoryGhostscriptLibraries =  frm.txtGSlib.Text
+ .DirectoryGhostscriptResource =  frm.txtGSResource.Text
  .EPSLanguageLevel =  frm.cmbEPSLanguageLevel.Listindex
  tStr=""
  Set lsv = Frm.lsvFilenameSubst
