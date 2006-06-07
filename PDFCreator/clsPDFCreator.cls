@@ -2367,6 +2367,3 @@ Private Function cLetOptions(sOptions As Variant) As tOptions
  End With
 End Function
 ' --- Private functions/Subroutines - end ---
-
-
-

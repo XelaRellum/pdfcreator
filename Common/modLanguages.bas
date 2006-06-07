@@ -101,6 +101,9 @@ Public Type tLanguageStrings
  MessagesMsg35 As String
  MessagesMsg36 As String
 
+ OptionsAdditionalGhostscriptParameters As String
+ OptionsAdditionalGhostscriptSearchpath As String
+ OptionsAddWindowsFontpath As String
  OptionsAssociatePSFiles As String
  OptionsAutosaveDirectoryPrompt As String
  OptionsAutosaveFilename As String
@@ -505,6 +508,9 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
  Dim hLang As New clsHash
  ReadINISection Languagefile, "Options", hLang
  With LanguageStrings
+  .OptionsAdditionalGhostscriptParameters = Replace$(hLang.Retrieve("AdditionalGhostscriptParameters", .OptionsAdditionalGhostscriptParameters),"/n",vbCrLf)
+  .OptionsAdditionalGhostscriptSearchpath = Replace$(hLang.Retrieve("AdditionalGhostscriptSearchpath", .OptionsAdditionalGhostscriptSearchpath),"/n",vbCrLf)
+  .OptionsAddWindowsFontpath = Replace$(hLang.Retrieve("AddWindowsFontpath", .OptionsAddWindowsFontpath),"/n",vbCrLf)
   .OptionsAssociatePSFiles = Replace$(hLang.Retrieve("AssociatePSFiles", .OptionsAssociatePSFiles),"/n",vbCrLf)
   .OptionsAutosaveDirectoryPrompt = Replace$(hLang.Retrieve("AutosaveDirectoryPrompt", .OptionsAutosaveDirectoryPrompt),"/n",vbCrLf)
   .OptionsAutosaveFilename = Replace$(hLang.Retrieve("AutosaveFilename", .OptionsAutosaveFilename),"/n",vbCrLf)
@@ -873,6 +879,9 @@ Public Sub InitLanguagesStrings()
   .MessagesMsg35 = "It is necessary to temporarily set PDFCreator as defaultprinter."
   .MessagesMsg36 = "Don't ask me again."
 
+  .OptionsAdditionalGhostscriptParameters = "Additional Ghostscript parameters"
+  .OptionsAdditionalGhostscriptSearchpath = "Additional Ghostscript searchpath"
+  .OptionsAddWindowsFontpath = "Use Windows fonts"
   .OptionsAssociatePSFiles = "Associate PDFCreator with postscript files"
   .OptionsAutosaveDirectoryPrompt = "Select Autosave Directory"
   .OptionsAutosaveFilename = "Filename"
