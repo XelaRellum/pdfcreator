@@ -211,7 +211,7 @@ Public Function StandardOptions() As tOptions
   .NoProcessingAtStartup = "0"
   .NoPSCheck = "0"
   .OnePagePerFile = "0"
-  .OptionsDesign = "1"
+  .OptionsDesign = "0"
   .OptionsEnabled = "1"
   .OptionsVisible = "1"
   .Papersize = vbNullString
@@ -775,16 +775,16 @@ Public Function ReadOptionsINI(myOptions As tOptions, PDFCreatorINIFile As Strin
   End If
   tStr = hOpt.Retrieve("OptionsDesign")
   If IsNumeric(tStr) Then
-    If CLng(tStr) >= 1 And CLng(tStr) <= 2 Then
+    If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
       .OptionsDesign = CLng(tStr)
      Else
       If UseStandard Then
-       .OptionsDesign = 1
+       .OptionsDesign = 0
       End If
     End If
    Else
     If UseStandard Then
-     .OptionsDesign = 1
+     .OptionsDesign = 0
     End If
   End If
   tStr = hOpt.Retrieve("OptionsEnabled")
@@ -3993,16 +3993,16 @@ Public Function ReadOptionsReg(myOptions As tOptions, KeyRoot as String, Optiona
   End If
   tStr = reg.GetRegistryValue("OptionsDesign")
   If Isnumeric(tStr) Then
-    If CLng(tStr) >= 1 And CLng(tStr) <= 2 Then
+    If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
       .OptionsDesign = CLng(tStr)
      Else
       If UseStandard Then
-       .OptionsDesign = 1
+       .OptionsDesign = 0
       End If
     End If
    Else
     If UseStandard Then
-     .OptionsDesign = 1
+     .OptionsDesign = 0
     End If
   End If
   tStr = reg.GetRegistryValue("OptionsEnabled")
@@ -5853,6 +5853,8 @@ Public Sub ShowOptions(Frm as Form, sOptions as tOptions)
   frm.cmbJPEGColors.Listindex = .JPEGColorscount
   frm.txtJPEGQuality.Text = .JPEGQuality
   frm.chkNoConfirmMessageSwitchingDefaultprinter = .NoConfirmMessageSwitchingDefaultprinter
+  frm.chkNoProcessingAtStartup = .NoProcessingAtStartup
+  frm.cmbOptionsDesign.Listindex = .OptionsDesign
   frm.cmbPCXColors.Listindex = .PCXColorscount
   frm.chkAllowAssembly.Value = .PDFAllowAssembly
   frm.chkAllowDegradedPrinting.Value = .PDFAllowDegradedPrinting
@@ -5911,6 +5913,7 @@ Public Sub ShowOptions(Frm as Form, sOptions as tOptions)
   frm.cmbPSLanguageLevel.Listindex = .PSLanguageLevel
   frm.chkSpaces.Value = .RemoveSpaces
   frm.txtSaveFilename.Text = .SaveFilename
+  frm.chkShowAnimation = .ShowAnimation
   frm.txtStandardAuthor.Text = .StandardAuthor
   frm.cmbTIFFColors.Listindex = .TIFFColorscount
   frm.chkUseAutosave.Value = .UseAutosave
@@ -5951,6 +5954,8 @@ Public Sub GetOptions(Frm as Form, sOptions as tOptions)
  .JPEGColorscount =  frm.cmbJPEGColors.Listindex
  .JPEGQuality =  frm.txtJPEGQuality.Text
  .NoConfirmMessageSwitchingDefaultprinter =  Abs(frm.chkNoConfirmMessageSwitchingDefaultprinter)
+ .NoProcessingAtStartup =  Abs(frm.chkNoProcessingAtStartup)
+ .OptionsDesign =  frm.cmbOptionsDesign.Listindex
  .PCXColorscount =  frm.cmbPCXColors.Listindex
  .PDFAllowAssembly =  Abs(frm.chkAllowAssembly.Value)
  .PDFAllowDegradedPrinting =  Abs(frm.chkAllowDegradedPrinting.Value)
@@ -6008,6 +6013,7 @@ Public Sub GetOptions(Frm as Form, sOptions as tOptions)
  .PSLanguageLevel =  frm.cmbPSLanguageLevel.Listindex
  .RemoveSpaces =  Abs(frm.chkSpaces.Value)
  .SaveFilename =  frm.txtSaveFilename.Text
+ .ShowAnimation =  Abs(frm.chkShowAnimation)
  .StandardAuthor =  frm.txtStandardAuthor.Text
  .TIFFColorscount =  frm.cmbTIFFColors.Listindex
  .UseAutosave =  Abs(frm.chkUseAutosave.Value)
