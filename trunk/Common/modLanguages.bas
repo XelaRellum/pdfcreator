@@ -285,8 +285,13 @@ Public Type tLanguageStrings
  OptionsProgramGeneralSymbol As String
  OptionsProgramGhostscriptDescription As String
  OptionsProgramGhostscriptSymbol As String
+ OptionsProgramNoProcessingAtStartup As String
+ OptionsProgramOptionsDesign As String
+ OptionsProgramOptionsDesignGradient As String
+ OptionsProgramOptionsDesignSimple As String
  OptionsProgramSaveDescription As String
  OptionsProgramSaveSymbol As String
+ OptionsProgramShowAnimation As String
  OptionsProgramSwitchingDefaultprinter As String
  OptionsPSDescription As String
  OptionsPSFiles As String
@@ -692,8 +697,13 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
   .OptionsProgramGeneralSymbol = Replace$(hLang.Retrieve("ProgramGeneralSymbol", .OptionsProgramGeneralSymbol),"/n",vbCrLf)
   .OptionsProgramGhostscriptDescription = Replace$(hLang.Retrieve("ProgramGhostscriptDescription", .OptionsProgramGhostscriptDescription),"/n",vbCrLf)
   .OptionsProgramGhostscriptSymbol = Replace$(hLang.Retrieve("ProgramGhostscriptSymbol", .OptionsProgramGhostscriptSymbol),"/n",vbCrLf)
+  .OptionsProgramNoProcessingAtStartup = Replace$(hLang.Retrieve("ProgramNoProcessingAtStartup", .OptionsProgramNoProcessingAtStartup),"/n",vbCrLf)
+  .OptionsProgramOptionsDesign = Replace$(hLang.Retrieve("ProgramOptionsDesign", .OptionsProgramOptionsDesign),"/n",vbCrLf)
+  .OptionsProgramOptionsDesignGradient = Replace$(hLang.Retrieve("ProgramOptionsDesignGradient", .OptionsProgramOptionsDesignGradient),"/n",vbCrLf)
+  .OptionsProgramOptionsDesignSimple = Replace$(hLang.Retrieve("ProgramOptionsDesignSimple", .OptionsProgramOptionsDesignSimple),"/n",vbCrLf)
   .OptionsProgramSaveDescription = Replace$(hLang.Retrieve("ProgramSaveDescription", .OptionsProgramSaveDescription),"/n",vbCrLf)
   .OptionsProgramSaveSymbol = Replace$(hLang.Retrieve("ProgramSaveSymbol", .OptionsProgramSaveSymbol),"/n",vbCrLf)
+  .OptionsProgramShowAnimation = Replace$(hLang.Retrieve("ProgramShowAnimation", .OptionsProgramShowAnimation),"/n",vbCrLf)
   .OptionsProgramSwitchingDefaultprinter = Replace$(hLang.Retrieve("ProgramSwitchingDefaultprinter", .OptionsProgramSwitchingDefaultprinter),"/n",vbCrLf)
   .OptionsPSDescription = Replace$(hLang.Retrieve("PSDescription", .OptionsPSDescription),"/n",vbCrLf)
   .OptionsPSFiles = Replace$(hLang.Retrieve("PSFiles", .OptionsPSFiles),"/n",vbCrLf)
@@ -1063,8 +1073,13 @@ Public Sub InitLanguagesStrings()
   .OptionsProgramGeneralSymbol = "General settings"
   .OptionsProgramGhostscriptDescription = "Ghostscript"
   .OptionsProgramGhostscriptSymbol = "Ghostscript"
+  .OptionsProgramNoProcessingAtStartup = "No processing at startup"
+  .OptionsProgramOptionsDesign = "Frame color of the options dialog"
+  .OptionsProgramOptionsDesignGradient = "Red and blue gradient (Default)"
+  .OptionsProgramOptionsDesignSimple = "Simple red and blue color"
   .OptionsProgramSaveDescription = "Save"
   .OptionsProgramSaveSymbol = "Save"
+  .OptionsProgramShowAnimation = "Show an animation during the process"
   .OptionsProgramSwitchingDefaultprinter = "No confirm message switching PDFCreator temporarily as default printer."
   .OptionsPSDescription = "Postscript Format"
   .OptionsPSFiles = "Postscript-Files"

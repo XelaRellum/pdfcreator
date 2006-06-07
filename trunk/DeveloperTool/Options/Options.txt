@@ -47,14 +47,14 @@ LastSaveDirectory|LastSaveDirectory|String|<MyFiles>||
 Logging|Logging|Boolean|0||
 LogLines|LogLines|Long|100|100|1000
 NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
-NoProcessingAtStartup||Boolean|0||
+NoProcessingAtStartup|chkNoProcessingAtStartup|Boolean|0||
 NoPSCheck||Boolean|0||
 
 ' <Printing>
 OnePagePerFile||Boolean|0||
 
 ' <Program>
-OptionsDesign||Long|1|1|2
+OptionsDesign|cmbOptionsDesign.Listindex|Long|0|0|1
 OptionsEnabled||Boolean|1||
 OptionsVisible||Boolean|1||
 
@@ -173,7 +173,7 @@ RunProgramBeforeSavingWindowstyle||Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
 SendEmailAfterAutoSaving||Boolean|0||
 SendMailMethod||Long|0|0|<
-ShowAnimation||Boolean|1||
+ShowAnimation|chkShowAnimation|Boolean|1||
 
 ' <Printing>
 StampFontColor||String|#FF0000||

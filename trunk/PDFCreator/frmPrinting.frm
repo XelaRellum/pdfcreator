@@ -921,7 +921,7 @@ On Error GoTo ErrPtnr_OnError
 50070  txtCreationDate.Visible = Not Show
 50080  txtCreateFor.Visible = Not Show
 50090
-50100  cmdWaiting.Visible = Not Show
+50100  cmdCollect.Visible = Not Show
 50110  cmdEMail.Visible = Not Show
 50120  cmdSave.Visible = Not Show
 50130  chkStartStandardProgram.Visible = Not Show
