@@ -14,6 +14,8 @@
  #define Localization
 #endif
 
+#define IncludeToolbar
+
 #define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
 #define GhostscriptLicense "AFPL"
@@ -424,13 +426,11 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestEvents.vbs; DestDir:
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program; Flags: ignoreversion
-Source: Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy
-Source: PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe
 
 ; Toolbar
 #IFDEF IncludeToolbar
 Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy
-Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe
+Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: toolbar; Tasks: 
 #ENDIF
 
 [Dirs]
@@ -626,7 +626,10 @@ Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shel
 
 Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile AND (Not UseINI)
 #ENDIF
+
+#IFDEF IncludeToolbar
 Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: " toolbar"
+#ENDIF
 
 [UninstallRun]
 Filename: {app}\PDFCreator.exe; Parameters: /UnRegServer; Flags: skipifdoesntexist runhidden
@@ -2773,7 +2776,9 @@ end;
 
 procedure InitializeWizard();
 begin
+#IFDEF IncludeToolbar
  ToolbarForm_CreatePage(wpSelectDir);
+#ENDIF
 
  SCPage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
   ExpandConstant('{cm:InstallationTypeDescription}'));
