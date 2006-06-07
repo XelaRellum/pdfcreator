@@ -7,6 +7,7 @@ AddWindowsFontpath||Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|<MyFiles>||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
 AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|7
+AutosaveStartStandardProgram|chkAutosaveStartStandardProgram.Value|Boolean|0||
 
 ' <Printing Formats Bitmap Colors>
 BitmapResolution|txtBitmapResolution.Text|Long|150|1|<

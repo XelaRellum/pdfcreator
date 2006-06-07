@@ -8,10 +8,10 @@
  #define FastCompilation
 #else
 ; #define FastCompilation
-; #define CompileHelp
-; #define IncludeGhostscript
+ #define CompileHelp
+ #define IncludeGhostscript
  #define IncludeToolbar
-; #define Localization
+ #define Localization
 #endif
 
 #define ProgramLicense "GNU"

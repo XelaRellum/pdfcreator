@@ -18,6 +18,7 @@ Public AddWindowsFontpath As Long
 Public AutosaveDirectory As String
 Public AutosaveFilename As String
 Public AutosaveFormat As Long
+Public AutosaveStartStandardProgram As Long
 Public BitmapResolution As Long
 Public BMPColorscount As Long
 Public ClientComputerResolveIPAddress As Long
