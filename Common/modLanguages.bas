@@ -106,6 +106,7 @@ Public Type tLanguageStrings
  OptionsAutosaveFilename As String
  OptionsAutosaveFilenameTokens As String
  OptionsAutosaveFormat As String
+ OptionsAutosaveStartStandardProgram As String
  OptionsBitmapResolution As String
  OptionsBMPColorscount01 As String
  OptionsBMPColorscount02 As String
@@ -509,6 +510,7 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
   .OptionsAutosaveFilename = Replace$(hLang.Retrieve("AutosaveFilename", .OptionsAutosaveFilename),"/n",vbCrLf)
   .OptionsAutosaveFilenameTokens = Replace$(hLang.Retrieve("AutosaveFilenameTokens", .OptionsAutosaveFilenameTokens),"/n",vbCrLf)
   .OptionsAutosaveFormat = Replace$(hLang.Retrieve("AutosaveFormat", .OptionsAutosaveFormat),"/n",vbCrLf)
+  .OptionsAutosaveStartStandardProgram = Replace$(hLang.Retrieve("AutosaveStartStandardProgram", .OptionsAutosaveStartStandardProgram),"/n",vbCrLf)
   .OptionsBitmapResolution = Replace$(hLang.Retrieve("BitmapResolution", .OptionsBitmapResolution),"/n",vbCrLf)
   .OptionsBMPColorscount01 = Replace$(hLang.Retrieve("BMPColorscount01", .OptionsBMPColorscount01),"/n",vbCrLf)
   .OptionsBMPColorscount02 = Replace$(hLang.Retrieve("BMPColorscount02", .OptionsBMPColorscount02),"/n",vbCrLf)
@@ -876,6 +878,7 @@ Public Sub InitLanguagesStrings()
   .OptionsAutosaveFilename = "Filename"
   .OptionsAutosaveFilenameTokens = "Add a Filename-Token"
   .OptionsAutosaveFormat = "Autosave format"
+  .OptionsAutosaveStartStandardProgram = "After auto-saving open the document with the default program."
   .OptionsBitmapResolution = "Resolution"
   .OptionsBMPColorscount01 = "4294967296 colors (32 Bit)"
   .OptionsBMPColorscount02 = "16777216 colors (24 Bit)"
@@ -1110,7 +1113,7 @@ Public Sub InitLanguagesStrings()
   .PrintingPNGFiles = "PNG-Files"
   .PrintingPSFiles = "Postscript-Files"
   .PrintingSave = "&Save"
-  .PrintingStartStandardProgram = "&After saving, open the document with the default program."
+  .PrintingStartStandardProgram = "&After saving open the document with the default program."
   .PrintingStatus = "Creating file..."
   .PrintingSubject = "Su&bject:"
   .PrintingTIFFFiles = "TIFF-Files"

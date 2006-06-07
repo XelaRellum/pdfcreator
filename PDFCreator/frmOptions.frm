@@ -17,14 +17,14 @@ Begin VB.Form frmOptions
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
    Begin PDFCreator.dmFrame dmFraProgAutosave 
-      Height          =   3855
+      Height          =   4485
       Left            =   2640
       TabIndex        =   31
       Top             =   1200
       Visible         =   0   'False
       Width           =   6375
       _ExtentX        =   11245
-      _ExtentY        =   6800
+      _ExtentY        =   7911
       Caption         =   "Autosave"
       Caption3D       =   2
       BarColorFrom    =   16744576
@@ -39,6 +39,16 @@ Begin VB.Form frmOptions
          Strikethrough   =   0   'False
       EndProperty
       TextShaddowColor=   12582912
+      Begin VB.CheckBox chkAutosaveStartStandardProgram 
+         Appearance      =   0  '2D
+         Caption         =   "After auto-saving open the document with the default program."
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   105
+         TabIndex        =   172
+         Top             =   4095
+         Width           =   5895
+      End
       Begin VB.CommandButton cmdGetAutosaveDirectory 
          Caption         =   "..."
          Height          =   300

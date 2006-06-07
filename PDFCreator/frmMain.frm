@@ -1491,6 +1491,13 @@ Private Sub Autosave(Optional Filename As String = vbNullString)
          End If
          Set mail = Nothing
         End If
+        If Options.AutosaveStartStandardProgram = 1 Then
+         If Options.OnePagePerFile = 1 Then
+           OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
+          Else
+           OpenDocument OutputFilename
+         End If
+        End If
        Else
         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
         IfLoggingWriteLogfile tStr
