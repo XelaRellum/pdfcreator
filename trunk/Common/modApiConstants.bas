@@ -183,6 +183,7 @@ Public Const WM_GETTEXTLENGTH                As Long = &HE
 Public Const WM_SETTEXT                      As Long = &HC
 
 Public Const BIF_RETURNONLYFSDIRS            As Long = 1
+Public Const BIF_BROWSEINCLUDEFILES          As Long = &H4000
 
 Public Const FW_NORMAL                       As Long = 400
 Public Const DEFAULT_CHARSET                 As Long = 1

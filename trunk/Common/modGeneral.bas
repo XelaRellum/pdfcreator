@@ -486,35 +486,36 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tColl1 As Collection, tColl2 As Collection, tFilename As String, _
   i As Long, tStrf() As String
-50030  If Len(Searchmask) > 0 Then
-50040    tFilename = Dir(CompletePath(Trim$(Path)) & Searchmask)
-50050   Else
-50060    tFilename = Dir(Path)
-50070    SplitPath Path, , Path
-50080    Path = CompletePath(Path)
-50090  End If
-50100  Set tColl1 = New Collection
-50110  Do While tFilename <> ""
-50121   Select Case Sorted
+50030  Path = CompletePath(Trim$(Path))
+50040  If Len(Searchmask) > 0 Then
+50050    tFilename = Dir(Path & Searchmask)
+50060   Else
+50070    tFilename = Dir(Path)
+50080    SplitPath Path, , Path
+50090    Path = CompletePath(Path)
+50100  End If
+50110  Set tColl1 = New Collection
+50120  Do While tFilename <> ""
+50131   Select Case Sorted
          Case eSortModeFiles.SortedByDate
-50140     AddSortedStr tColl1, Format$(FileDateTime(Path & tFilename), "yyyymmddhhnnss") & "|" & Path & tFilename
-50150    Case eSortModeFiles.SortedByName
-50160     AddSortedStr tColl1, "|" & Path & tFilename
-50170    Case Else
-50180     tColl1.Add "|" & Path & tFilename
-50190   End Select
-50200   tFilename = Dir()
-50210   DoEvents
-50220  Loop
-50230  Set tColl2 = New Collection
-50240  For i = 1 To tColl1.Count
-50250   tStrf = Split(tColl1(i), "|")
-50260   SplitPath tStrf(1), , Path, tFilename
-50270   Path = CompletePath(Path)
-50280   tColl2.Add Path & "|" & Path & tFilename & "|" & FileLen(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
-50290  Next i
-50300  Set GetFiles = tColl2
-50310 ' Set tColl = Nothing
+50150     AddSortedStr tColl1, Format$(FileDateTime(Path & tFilename), "yyyymmddhhnnss") & "|" & Path & tFilename
+50160    Case eSortModeFiles.SortedByName
+50170     AddSortedStr tColl1, "|" & Path & tFilename
+50180    Case Else
+50190     tColl1.Add "|" & Path & tFilename
+50200   End Select
+50210   tFilename = Dir()
+50220   DoEvents
+50230  Loop
+50240  Set tColl2 = New Collection
+50250  For i = 1 To tColl1.Count
+50260   tStrf = Split(tColl1(i), "|")
+50270   SplitPath tStrf(1), , Path, tFilename
+50280   Path = CompletePath(Path)
+50290   tColl2.Add Path & "|" & Path & tFilename & "|" & FileLen(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
+50300  Next i
+50310  Set GetFiles = tColl2
+50320 ' Set tColl = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1155,6 +1156,25 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGeneral", "OpenDocument")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub EditDocument(sFilename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim res As Long, handle As Long
+50020  handle = GetDesktopWindow()
+50030  res = ShellExecute(handle, "edit", sFilename, vbNullString, vbNullString, vbNormalFocus)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "EditDocument")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2242,3 +2262,42 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Function IsFileEditable(Filename As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Ext As String, reg As clsRegistry
+50020  IsFileEditable = False
+50030  If Len(Filename) = 0 Then
+50040   Exit Function
+50050  End If
+50060  SplitPath Filename, , , , , Ext
+50070  If Len(Ext) = 0 Then
+50080   Exit Function
+50090  End If
+50100  Set reg = New clsRegistry
+50110  reg.hkey = HKEY_LOCAL_MACHINE
+50120  reg.KeyRoot = "Software\CLASSES\." & Ext
+50130  If reg.KeyExists = False Then
+50140   Set reg = Nothing
+50150    Exit Function
+50160   End If
+50170  reg.KeyRoot = "Software\CLASSES\" & reg.GetRegistryValue("") & "\shell\print"
+50180  If reg.KeyExists = False Then
+50190   Set reg = Nothing
+50200   Exit Function
+50210  End If
+50220  IsFileEditable = True
+50230  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "IsFileEditable")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function

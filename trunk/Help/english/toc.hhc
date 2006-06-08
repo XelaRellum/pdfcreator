@@ -110,6 +110,10 @@
 				<param name="Local" value="html\directories.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Actions">
+				<param name="Local" value="html\actions.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Font Settings">
 				<param name="Local" value="html\fontsettings.htm">
 				</OBJECT>
