@@ -171,7 +171,7 @@ RunProgramBeforeSavingProgramname|cmbRunProgramBeforeSavingProgramname.Text|Stri
 RunProgramBeforeSavingProgramParameters|txtRunProgramBeforeSavingProgramParameters.Text|String|"<TempFilename>"||
 RunProgramBeforeSavingWindowstyle|cmbRunProgramBeforeSavingWindowstyle.Listindex|Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
-SendEmailAfterAutoSaving||Boolean|0||
+SendEmailAfterAutoSaving|chkAutosaveSendEmail.Value|Boolean|0||
 SendMailMethod||Long|0|0|<
 ShowAnimation|chkShowAnimation|Boolean|1||
 
