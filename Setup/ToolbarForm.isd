@@ -81,7 +81,7 @@
     with lblFeaturePopup do
     begin
       Parent := Page.Surface;
-      Left := ScaleX(262);
+      Left := ScaleX(260);
       Top := ScaleY(120);
       Width := ScaleX(116);
       Height := ScaleY(13);
@@ -105,7 +105,7 @@
     with Label2 do
     begin
       Parent := Page.Surface;
-      Left := ScaleX(262);
+      Left := ScaleX(260);
       Top := ScaleY(96);
       Width := ScaleX(132);
       Height := ScaleY(13);
