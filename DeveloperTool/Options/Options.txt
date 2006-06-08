@@ -149,8 +149,8 @@ PrintAfterSavingPrinter||String|||
 PrintAfterSavingQueryUser||Long|0|0|3
 PrintAfterSavingTumble||Boolean|0||
 PrinterStop|PrinterStop|Boolean|0||
-PrinterTemppath|txtTemppath.text|String|<Temp>PDFCreator\||
-ProcessPriority|sldProcessPriority.value|Long|1|0|3
+PrinterTemppath|txtTemppath.Text|String|<Temp>PDFCreator\||
+ProcessPriority|sldProcessPriority.Value|Long|1|0|3
 ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
 ProgramFontSize|cmbProgramFontSize.text|Long|8|1|72
@@ -161,15 +161,15 @@ PSLanguageLevel|cmbPSLanguageLevel.Listindex|Long|2|0|3
 ' <Program>
 RemoveAllKnownFileExtensions||Boolean|1||
 RemoveSpaces|chkSpaces.Value|Boolean|1||
-RunProgramAfterSaving||Boolean|0||
-RunProgramAfterSavingProgramname||String|||
-RunProgramAfterSavingProgramParameters||String|"<OutputFilename>"||
-RunProgramAfterSavingWaitUntilReady||Boolean|1||
-RunProgramAfterSavingWindowstyle||Long|1|0|6
-RunProgramBeforeSaving||Boolean|0||
-RunProgramBeforeSavingProgramname||String|||
-RunProgramBeforeSavingProgramParameters||String|"<TempFilename>"||
-RunProgramBeforeSavingWindowstyle||Long|1|0|6
+RunProgramAfterSaving|chkRunProgramAfterSaving.Value|Boolean|0||
+RunProgramAfterSavingProgramname|cmbRunProgramAfterSavingProgramname.Text|String|||
+RunProgramAfterSavingProgramParameters|txtRunProgramAfterSavingProgramParameters.Text|String|"<OutputFilename>"||
+RunProgramAfterSavingWaitUntilReady|chkRunProgramAfterSavingWaitUntilReady.Value|Boolean|1||
+RunProgramAfterSavingWindowstyle|cmbRunProgramAfterSavingWindowstyle.Listindex|Long|1|0|6
+RunProgramBeforeSaving|chkRunProgramBeforeSaving.Value|Boolean|0||
+RunProgramBeforeSavingProgramname|cmbRunProgramBeforeSavingProgramname.Text|String|||
+RunProgramBeforeSavingProgramParameters|txtRunProgramBeforeSavingProgramParameters.Text|String|"<TempFilename>"||
+RunProgramBeforeSavingWindowstyle|cmbRunProgramBeforeSavingWindowstyle.Listindex|Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
 SendEmailAfterAutoSaving||Boolean|0||
 SendMailMethod||Long|0|0|<

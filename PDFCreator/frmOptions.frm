@@ -16,6 +16,386 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin PDFCreator.dmFrame dmFraProgActions 
+      Height          =   4560
+      Left            =   2625
+      TabIndex        =   182
+      Top             =   1050
+      Visible         =   0   'False
+      Width           =   6375
+      _extentx        =   11245
+      _extenty        =   8043
+      caption         =   "Actions"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":000C
+      Begin PDFCreator.dmFrame dmFraProgActionsRunProgramAfterSaving 
+         Height          =   3510
+         Left            =   360
+         TabIndex        =   193
+         Top             =   2400
+         Width           =   6165
+         _extentx        =   10874
+         _extenty        =   6191
+         caption         =   "Run a program/script after saving"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":0038
+         Begin VB.CommandButton cmdRunProgramAfterSavingPrognameEdit 
+            Height          =   300
+            Left            =   5520
+            Picture         =   "frmOptions.frx":0064
+            Style           =   1  'Grafisch
+            TabIndex        =   204
+            Top             =   1155
+            Width           =   435
+         End
+         Begin VB.ComboBox cmbRunProgramAfterSavingWindowstyle 
+            Height          =   315
+            Left            =   210
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   199
+            Top             =   3045
+            Width           =   5370
+         End
+         Begin VB.CheckBox chkRunProgramAfterSavingWaitUntilReady 
+            Appearance      =   0  '2D
+            Caption         =   "Wait until ready"
+            ForeColor       =   &H80000008&
+            Height          =   255
+            Left            =   210
+            TabIndex        =   198
+            Top             =   2415
+            Width           =   5805
+         End
+         Begin VB.TextBox txtRunProgramAfterSavingProgramParameters 
+            Appearance      =   0  '2D
+            Height          =   285
+            Left            =   210
+            TabIndex        =   197
+            Top             =   1890
+            Width           =   5805
+         End
+         Begin VB.CommandButton cmdRunProgramAfterSavingPrognameChoice 
+            Caption         =   "..."
+            Height          =   300
+            Left            =   5040
+            TabIndex        =   196
+            Top             =   1155
+            Width           =   435
+         End
+         Begin VB.ComboBox cmbRunProgramAfterSavingProgramname 
+            Height          =   315
+            Left            =   210
+            TabIndex        =   195
+            Top             =   1155
+            Width           =   4770
+         End
+         Begin VB.CheckBox chkRunProgramAfterSaving 
+            Appearance      =   0  '2D
+            Caption         =   "Run a program/script after saving"
+            ForeColor       =   &H80000008&
+            Height          =   255
+            Left            =   210
+            TabIndex        =   194
+            Top             =   420
+            Width           =   5805
+         End
+         Begin VB.Label lblRunProgramAfterSavingWindowstyle 
+            AutoSize        =   -1  'True
+            Caption         =   "Windowstyle"
+            Height          =   195
+            Left            =   210
+            TabIndex        =   202
+            Top             =   2835
+            Width           =   900
+         End
+         Begin VB.Label lblRunProgramAfterSavingProgramParameters 
+            AutoSize        =   -1  'True
+            Caption         =   "Program parameters"
+            Height          =   195
+            Left            =   210
+            TabIndex        =   201
+            Top             =   1680
+            Width           =   1410
+         End
+         Begin VB.Label lblRunProgramAfterSavingProgramname 
+            AutoSize        =   -1  'True
+            Caption         =   "Program/Script"
+            Height          =   195
+            Left            =   210
+            TabIndex        =   200
+            Top             =   945
+            Width           =   1065
+         End
+      End
+      Begin PDFCreator.dmFrame dmFraProgActionsRunProgramBeforeSaving 
+         Height          =   3510
+         Left            =   210
+         TabIndex        =   183
+         Top             =   735
+         Visible         =   0   'False
+         Width           =   6165
+         _extentx        =   10874
+         _extenty        =   6191
+         caption         =   "Run a program/script before saving"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":05EE
+         Begin VB.CommandButton cmdRunProgramBeforeSavingPrognameEdit 
+            Height          =   300
+            Left            =   5520
+            Picture         =   "frmOptions.frx":061A
+            Style           =   1  'Grafisch
+            TabIndex        =   205
+            Top             =   1155
+            Width           =   435
+         End
+         Begin VB.ComboBox cmbRunProgramBeforeSavingWindowstyle 
+            Height          =   315
+            Left            =   210
+            Style           =   2  'Dropdown-Liste
+            TabIndex        =   191
+            Top             =   3045
+            Width           =   2790
+         End
+         Begin VB.CheckBox chkRunProgramBeforeSavingWaitUntilReady 
+            Appearance      =   0  '2D
+            Caption         =   "Wait until ready"
+            ForeColor       =   &H80000008&
+            Height          =   255
+            Left            =   210
+            TabIndex        =   190
+            Top             =   2415
+            Width           =   5580
+         End
+         Begin VB.TextBox txtRunProgramBeforeSavingProgramParameters 
+            Appearance      =   0  '2D
+            Height          =   285
+            Left            =   210
+            TabIndex        =   188
+            Top             =   1890
+            Width           =   5580
+         End
+         Begin VB.CommandButton cmdRunProgramBeforeSavingPrognameChoice 
+            Caption         =   "..."
+            Height          =   300
+            Left            =   5040
+            TabIndex        =   187
+            Top             =   1155
+            Width           =   435
+         End
+         Begin VB.ComboBox cmbRunProgramBeforeSavingProgramname 
+            Height          =   315
+            Left            =   210
+            TabIndex        =   186
+            Top             =   1155
+            Width           =   4770
+         End
+         Begin VB.CheckBox chkRunProgramBeforeSaving 
+            Appearance      =   0  '2D
+            Caption         =   "Run a program/script before saving"
+            ForeColor       =   &H80000008&
+            Height          =   255
+            Left            =   210
+            TabIndex        =   184
+            Top             =   420
+            Width           =   5385
+         End
+         Begin VB.Label lblRunProgramBeforeSavingWindowstyle 
+            AutoSize        =   -1  'True
+            Caption         =   "Windowstyle"
+            Height          =   195
+            Left            =   210
+            TabIndex        =   192
+            Top             =   2835
+            Width           =   900
+         End
+         Begin VB.Label lblRunProgramBeforeSavingProgramParameters 
+            AutoSize        =   -1  'True
+            Caption         =   "Program parameters"
+            Height          =   195
+            Left            =   210
+            TabIndex        =   189
+            Top             =   1680
+            Width           =   1410
+         End
+         Begin VB.Label lblRunProgramBeforeSavingProgramname 
+            AutoSize        =   -1  'True
+            Caption         =   "Program/Script"
+            Height          =   195
+            Left            =   210
+            TabIndex        =   185
+            Top             =   945
+            Width           =   1065
+         End
+      End
+      Begin MSComctlLib.TabStrip tbstrProgActions 
+         Height          =   4110
+         Left            =   105
+         TabIndex        =   203
+         Top             =   315
+         Width           =   6210
+         _ExtentX        =   10954
+         _ExtentY        =   7250
+         _Version        =   393216
+         BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
+            NumTabs         =   1
+            BeginProperty Tab1 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
+               ImageVarType    =   2
+            EndProperty
+         EndProperty
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraProgGeneral 
+      Height          =   4740
+      Left            =   2760
+      TabIndex        =   10
+      Top             =   1320
+      Visible         =   0   'False
+      Width           =   6420
+      _extentx        =   11324
+      _extenty        =   8361
+      caption         =   "General"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":0BA4
+      textshaddowcolor=   12582912
+      Begin VB.ComboBox cmbOptionsDesign 
+         Height          =   315
+         ItemData        =   "frmOptions.frx":0BD0
+         Left            =   120
+         List            =   "frmOptions.frx":0BD2
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   180
+         Top             =   3720
+         Width           =   3870
+      End
+      Begin VB.CheckBox chkShowAnimation 
+         Appearance      =   0  '2D
+         Caption         =   "Show animation"
+         ForeColor       =   &H80000008&
+         Height          =   330
+         Left            =   105
+         TabIndex        =   179
+         Top             =   4320
+         Width           =   5775
+      End
+      Begin VB.CheckBox chkNoProcessingAtStartup 
+         Appearance      =   0  '2D
+         Caption         =   "No processing at startup"
+         ForeColor       =   &H80000008&
+         Height          =   330
+         Left            =   120
+         TabIndex        =   178
+         Top             =   2280
+         Width           =   5775
+      End
+      Begin VB.CommandButton cmdTestpage 
+         Caption         =   "&Print testpage"
+         Height          =   495
+         Left            =   120
+         TabIndex        =   6
+         Top             =   480
+         Width           =   2580
+      End
+      Begin VB.CommandButton cmdAsso 
+         Caption         =   "&Associate PDFCreator with Postscript files"
+         Height          =   495
+         Left            =   3600
+         TabIndex        =   3
+         Top             =   480
+         Width           =   2580
+      End
+      Begin PDFCreator.Line3D Line3D1 
+         Height          =   30
+         Index           =   0
+         Left            =   120
+         TabIndex        =   28
+         TabStop         =   0   'False
+         Top             =   1200
+         Width           =   6135
+         _extentx        =   10821
+         _extenty        =   53
+         linetype        =   1
+         3dhighlight     =   -2147483628
+         3dshadow        =   -2147483632
+         drawstyle       =   0
+      End
+      Begin VB.CheckBox chkNoConfirmMessageSwitchingDefaultprinter 
+         Appearance      =   0  '2D
+         Caption         =   "No confirm message switching PDFCreator temporarly as default printer."
+         ForeColor       =   &H80000008&
+         Height          =   495
+         Left            =   120
+         TabIndex        =   5
+         Top             =   2640
+         Width           =   5775
+      End
+      Begin MSComctlLib.Slider sldProcessPriority 
+         Height          =   495
+         Left            =   120
+         TabIndex        =   4
+         Top             =   1560
+         Width           =   5895
+         _ExtentX        =   10398
+         _ExtentY        =   873
+         _Version        =   393216
+         LargeChange     =   1
+         Max             =   3
+         SelStart        =   1
+         Value           =   1
+      End
+      Begin PDFCreator.Line3D Line3D1 
+         Height          =   30
+         Index           =   1
+         Left            =   120
+         TabIndex        =   29
+         TabStop         =   0   'False
+         Top             =   2160
+         Width           =   6135
+         _extentx        =   10821
+         _extenty        =   53
+         linetype        =   1
+         3dhighlight     =   -2147483628
+         3dshadow        =   -2147483632
+         drawstyle       =   0
+      End
+      Begin PDFCreator.Line3D Line3D1 
+         Height          =   30
+         Index           =   2
+         Left            =   120
+         TabIndex        =   30
+         TabStop         =   0   'False
+         Top             =   3240
+         Width           =   6135
+         _extentx        =   10821
+         _extenty        =   53
+         linetype        =   1
+         3dhighlight     =   -2147483628
+         3dshadow        =   -2147483632
+         drawstyle       =   0
+      End
+      Begin VB.Label lblOptionsDesign 
+         AutoSize        =   -1  'True
+         Caption         =   "Frame color of the setting dialog"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   181
+         Top             =   3480
+         Width           =   2250
+      End
+      Begin VB.Label lblProcessPriority 
+         AutoSize        =   -1  'True
+         Caption         =   "Processpriority: Normal"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   11
+         Top             =   1320
+         Width           =   1605
+      End
+   End
    Begin PDFCreator.dmFrame dmFraProgAutosave 
       Height          =   4485
       Left            =   2640
@@ -23,30 +403,22 @@ Begin VB.Form frmOptions
       Top             =   1200
       Visible         =   0   'False
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   7911
-      Caption         =   "Autosave"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
+      _extentx        =   11245
+      _extenty        =   7911
+      caption         =   "Autosave"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":0BD4
+      textshaddowcolor=   12582912
       Begin VB.CheckBox chkAutosaveStartStandardProgram 
          Appearance      =   0  '2D
          Caption         =   "After auto-saving open the document with the default program."
          ForeColor       =   &H80000008&
-         Height          =   495
+         Height          =   255
          Left            =   105
          TabIndex        =   172
-         Top             =   3855
+         Top             =   4095
          Width           =   5895
       End
       Begin VB.CommandButton cmdGetAutosaveDirectory 
@@ -69,9 +441,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":000C
+         ItemData        =   "frmOptions.frx":0C00
          Left            =   3690
-         List            =   "frmOptions.frx":000E
+         List            =   "frmOptions.frx":0C02
          Style           =   2  'Dropdown-Liste
          TabIndex        =   38
          Top             =   1785
@@ -162,259 +534,6 @@ Begin VB.Form frmOptions
          Width           =   630
       End
    End
-   Begin PDFCreator.dmFrame dmfraProgSave 
-      Height          =   1935
-      Left            =   2640
-      TabIndex        =   52
-      Top             =   2160
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   3413
-      Caption         =   "Save"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.CheckBox chkSpaces 
-         Appearance      =   0  '2D
-         Caption         =   "Remove leading and trailing spaces"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   56
-         Top             =   1440
-         Value           =   1  'Aktiviert
-         Width           =   6015
-      End
-      Begin VB.TextBox txtSaveFilename 
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   120
-         TabIndex        =   55
-         Text            =   "<Title>"
-         Top             =   600
-         Width           =   3495
-      End
-      Begin VB.ComboBox cmbSaveFilenameTokens 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":0010
-         Left            =   3720
-         List            =   "frmOptions.frx":0012
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   54
-         Top             =   600
-         Width           =   2415
-      End
-      Begin VB.TextBox txtSavePreview 
-         Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   53
-         Top             =   960
-         Width           =   6015
-      End
-      Begin VB.Label lblSaveFilename 
-         AutoSize        =   -1  'True
-         Caption         =   "Filename"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   58
-         Top             =   360
-         Width           =   630
-      End
-      Begin VB.Label lblSaveFilenameTokens 
-         AutoSize        =   -1  'True
-         Caption         =   "Add a Filename-Token"
-         Height          =   195
-         Left            =   3720
-         TabIndex        =   57
-         Top             =   360
-         Width           =   1605
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraProgGeneral 
-      Height          =   4740
-      Left            =   2640
-      TabIndex        =   10
-      Top             =   1050
-      Visible         =   0   'False
-      Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   8361
-      Caption         =   "General"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
-      Begin VB.ComboBox cmbOptionsDesign 
-         Height          =   315
-         ItemData        =   "frmOptions.frx":0014
-         Left            =   105
-         List            =   "frmOptions.frx":0016
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   181
-         Top             =   3150
-         Width           =   3870
-      End
-      Begin VB.CheckBox chkShowAnimation 
-         Appearance      =   0  '2D
-         Caption         =   "Show animation"
-         ForeColor       =   &H80000008&
-         Height          =   330
-         Left            =   105
-         TabIndex        =   180
-         Top             =   3570
-         Width           =   5775
-      End
-      Begin VB.CheckBox chkNoProcessingAtStartup 
-         Appearance      =   0  '2D
-         Caption         =   "No processing at startup"
-         ForeColor       =   &H80000008&
-         Height          =   330
-         Left            =   120
-         TabIndex        =   178
-         Top             =   1890
-         Width           =   5775
-      End
-      Begin VB.CommandButton cmdTestpage 
-         Caption         =   "&Print testpage"
-         Height          =   495
-         Left            =   120
-         TabIndex        =   6
-         Top             =   4095
-         Width           =   2580
-      End
-      Begin VB.CommandButton cmdAsso 
-         Caption         =   "&Associate PDFCreator with Postscript files"
-         Height          =   495
-         Left            =   120
-         TabIndex        =   3
-         Top             =   315
-         Width           =   2580
-      End
-      Begin PDFCreator.Line3D Line3D1 
-         Height          =   30
-         Index           =   0
-         Left            =   120
-         TabIndex        =   28
-         TabStop         =   0   'False
-         Top             =   945
-         Width           =   6135
-         _ExtentX        =   10821
-         _ExtentY        =   53
-         LineType        =   1
-         3DHighlight     =   -2147483628
-         3DShadow        =   -2147483632
-         DrawStyle       =   0
-      End
-      Begin VB.CheckBox chkNoConfirmMessageSwitchingDefaultprinter 
-         Appearance      =   0  '2D
-         Caption         =   "No confirm message switching PDFCreator temporarly as default printer."
-         ForeColor       =   &H80000008&
-         Height          =   495
-         Left            =   120
-         TabIndex        =   5
-         Top             =   2205
-         Width           =   5775
-      End
-      Begin MSComctlLib.Slider sldProcessPriority 
-         Height          =   495
-         Left            =   120
-         TabIndex        =   4
-         Top             =   1260
-         Width           =   5895
-         _ExtentX        =   10398
-         _ExtentY        =   873
-         _Version        =   393216
-         LargeChange     =   1
-         Max             =   3
-         SelStart        =   1
-         Value           =   1
-      End
-      Begin PDFCreator.Line3D Line3D1 
-         Height          =   30
-         Index           =   1
-         Left            =   120
-         TabIndex        =   29
-         TabStop         =   0   'False
-         Top             =   1785
-         Width           =   6135
-         _ExtentX        =   10821
-         _ExtentY        =   53
-         LineType        =   1
-         3DHighlight     =   -2147483628
-         3DShadow        =   -2147483632
-         DrawStyle       =   0
-      End
-      Begin PDFCreator.Line3D Line3D1 
-         Height          =   30
-         Index           =   2
-         Left            =   105
-         TabIndex        =   30
-         TabStop         =   0   'False
-         Top             =   2730
-         Width           =   6135
-         _ExtentX        =   10821
-         _ExtentY        =   53
-         LineType        =   1
-         3DHighlight     =   -2147483628
-         3DShadow        =   -2147483632
-         DrawStyle       =   0
-      End
-      Begin PDFCreator.Line3D Line3D1 
-         Height          =   30
-         Index           =   3
-         Left            =   105
-         TabIndex        =   179
-         TabStop         =   0   'False
-         Top             =   3990
-         Width           =   6135
-         _ExtentX        =   10821
-         _ExtentY        =   53
-         LineType        =   1
-         3DHighlight     =   -2147483628
-         3DShadow        =   -2147483632
-         DrawStyle       =   0
-      End
-      Begin VB.Label lblOptionsDesign 
-         AutoSize        =   -1  'True
-         Caption         =   "Frame color of the setting dialog"
-         Height          =   195
-         Left            =   105
-         TabIndex        =   182
-         Top             =   2940
-         Width           =   2250
-      End
-      Begin VB.Label lblProcessPriority 
-         AutoSize        =   -1  'True
-         Caption         =   "Processpriority: Normal"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   11
-         Top             =   1050
-         Width           =   1605
-      End
-   End
    Begin PDFCreator.dmFrame dmFraProgGhostscript 
       Height          =   3150
       Left            =   2625
@@ -422,21 +541,13 @@ Begin VB.Form frmOptions
       Top             =   945
       Visible         =   0   'False
       Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   5556
-      Caption         =   "Ghostscript"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
+      _extentx        =   11324
+      _extenty        =   5556
+      caption         =   "Ghostscript"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":0C04
+      textshaddowcolor=   12582912
       Begin VB.CheckBox chkAddWindowsFontpath 
          Appearance      =   0  '2D
          Caption         =   "Add Windows fontpath"
@@ -620,6 +731,108 @@ Begin VB.Form frmOptions
          Width           =   1530
       End
    End
+   Begin PDFCreator.dmFrame dmFraProgDirectories 
+      Height          =   1410
+      Left            =   2640
+      TabIndex        =   43
+      Top             =   1320
+      Visible         =   0   'False
+      Width           =   6495
+      _extentx        =   11456
+      _extenty        =   2487
+      caption         =   "Directories"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":0C30
+      textshaddowcolor=   12582912
+      Begin VB.TextBox txtTemppathPreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   171
+         Top             =   945
+         Width           =   5910
+      End
+      Begin VB.CommandButton cmdGetTemppath 
+         Caption         =   "..."
+         Height          =   300
+         Left            =   5154
+         TabIndex        =   166
+         Top             =   600
+         Width           =   375
+      End
+      Begin VB.TextBox txtTemppath 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   44
+         Top             =   600
+         Width           =   4965
+      End
+      Begin VB.CommandButton cmdUsertempPath 
+         Height          =   300
+         Left            =   5640
+         Picture         =   "frmOptions.frx":0C5C
+         Style           =   1  'Grafisch
+         TabIndex        =   167
+         Top             =   600
+         Width           =   375
+      End
+      Begin VB.Label lblPrintTempPath 
+         AutoSize        =   -1  'True
+         Caption         =   "Temppath"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   45
+         Top             =   360
+         Width           =   720
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraPSGeneral 
+      Height          =   1095
+      Left            =   2640
+      TabIndex        =   87
+      Top             =   1920
+      Visible         =   0   'False
+      Width           =   6375
+      _extentx        =   11245
+      _extenty        =   1931
+      caption         =   "Postscript"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":11E6
+      Begin VB.ComboBox cmbEPSLanguageLevel 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   2280
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   89
+         Top             =   600
+         Width           =   735
+      End
+      Begin VB.ComboBox cmbPSLanguageLevel 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   2040
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   88
+         Top             =   480
+         Width           =   735
+      End
+      Begin VB.Label lblLangLevel 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         Caption         =   "Language Level:"
+         Height          =   195
+         Left            =   735
+         TabIndex        =   90
+         Top             =   510
+         Width           =   1200
+      End
+   End
    Begin PDFCreator.dmFrame dmFraPDFGeneral 
       Height          =   2895
       Left            =   2730
@@ -627,20 +840,12 @@ Begin VB.Form frmOptions
       Top             =   1785
       Visible         =   0   'False
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   5106
-      Caption         =   "General Options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   5106
+      caption         =   "General Options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":1212
       Begin VB.CheckBox chkPDFASCII85 
          Appearance      =   0  '2D
          Caption         =   "Convert binary data to ASCII85"
@@ -654,9 +859,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFOverprint 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0018
+         ItemData        =   "frmOptions.frx":123E
          Left            =   2400
-         List            =   "frmOptions.frx":001A
+         List            =   "frmOptions.frx":1240
          Style           =   2  'Dropdown-Liste
          TabIndex        =   95
          Top             =   1980
@@ -675,9 +880,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFCompat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":001C
+         ItemData        =   "frmOptions.frx":1242
          Left            =   2400
-         List            =   "frmOptions.frx":001E
+         List            =   "frmOptions.frx":1244
          Style           =   2  'Dropdown-Liste
          TabIndex        =   93
          Top             =   480
@@ -686,9 +891,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFRotate 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0020
+         ItemData        =   "frmOptions.frx":1246
          Left            =   2400
-         List            =   "frmOptions.frx":0022
+         List            =   "frmOptions.frx":1248
          Style           =   2  'Dropdown-Liste
          TabIndex        =   92
          Tag             =   "None|All|PageByPage"
@@ -756,20 +961,12 @@ Begin VB.Form frmOptions
       Top             =   1680
       Visible         =   0   'False
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   3413
-      Caption         =   "Bitmap"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   3413
+      caption         =   "Bitmap"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":124A
       Begin VB.ComboBox cmbTIFFColors 
          Appearance      =   0  '2D
          Height          =   315
@@ -884,56 +1081,6 @@ Begin VB.Form frmOptions
          Width           =   795
       End
    End
-   Begin PDFCreator.dmFrame dmFraPSGeneral 
-      Height          =   1095
-      Left            =   2640
-      TabIndex        =   87
-      Top             =   1920
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   1931
-      Caption         =   "Postscript"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.ComboBox cmbEPSLanguageLevel 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   2280
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   89
-         Top             =   600
-         Width           =   735
-      End
-      Begin VB.ComboBox cmbPSLanguageLevel 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   2040
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   88
-         Top             =   480
-         Width           =   735
-      End
-      Begin VB.Label lblLangLevel 
-         Alignment       =   1  'Rechts
-         AutoSize        =   -1  'True
-         Caption         =   "Language Level:"
-         Height          =   195
-         Left            =   735
-         TabIndex        =   90
-         Top             =   510
-         Width           =   1200
-      End
-   End
    Begin PDFCreator.dmFrame dmFraPDFFonts 
       Height          =   1695
       Left            =   2760
@@ -941,20 +1088,12 @@ Begin VB.Form frmOptions
       Top             =   2400
       Visible         =   0   'False
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2990
-      Caption         =   "Font options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   2990
+      caption         =   "Font options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":1276
       Begin VB.CheckBox chkPDFEmbedAll 
          Appearance      =   0  '2D
          Caption         =   "Embed all Fonts"
@@ -993,72 +1132,77 @@ Begin VB.Form frmOptions
          Width           =   120
       End
    End
-   Begin PDFCreator.dmFrame dmFraProgDirectories 
-      Height          =   1410
+   Begin PDFCreator.dmFrame dmfraProgSave 
+      Height          =   1935
       Left            =   2640
-      TabIndex        =   43
-      Top             =   1320
+      TabIndex        =   52
+      Top             =   2160
       Visible         =   0   'False
-      Width           =   6495
-      _ExtentX        =   11456
-      _ExtentY        =   2487
-      Caption         =   "Directories"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
-      Begin VB.TextBox txtTemppathPreview 
+      Width           =   6375
+      _extentx        =   11245
+      _extenty        =   3413
+      caption         =   "Save"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":12A2
+      Begin VB.CheckBox chkSpaces 
+         Appearance      =   0  '2D
+         Caption         =   "Remove leading and trailing spaces"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   56
+         Top             =   1440
+         Value           =   1  'Aktiviert
+         Width           =   6015
+      End
+      Begin VB.TextBox txtSaveFilename 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   55
+         Text            =   "<Title>"
+         Top             =   600
+         Width           =   3495
+      End
+      Begin VB.ComboBox cmbSaveFilenameTokens 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":12CE
+         Left            =   3720
+         List            =   "frmOptions.frx":12D0
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   54
+         Top             =   600
+         Width           =   2415
+      End
+      Begin VB.TextBox txtSavePreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
          Height          =   285
          Left            =   120
          Locked          =   -1  'True
-         TabIndex        =   171
-         Top             =   945
-         Width           =   5910
+         TabIndex        =   53
+         Top             =   960
+         Width           =   6015
       End
-      Begin VB.CommandButton cmdGetTemppath 
-         Caption         =   "..."
-         Height          =   300
-         Left            =   5154
-         TabIndex        =   166
-         Top             =   600
-         Width           =   375
-      End
-      Begin VB.TextBox txtTemppath 
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   120
-         TabIndex        =   44
-         Top             =   600
-         Width           =   4965
-      End
-      Begin VB.CommandButton cmdUsertempPath 
-         Height          =   300
-         Left            =   5640
-         Picture         =   "frmOptions.frx":0024
-         Style           =   1  'Grafisch
-         TabIndex        =   167
-         Top             =   600
-         Width           =   375
-      End
-      Begin VB.Label lblPrintTempPath 
+      Begin VB.Label lblSaveFilename 
          AutoSize        =   -1  'True
-         Caption         =   "Temppath"
+         Caption         =   "Filename"
          Height          =   195
          Left            =   120
-         TabIndex        =   45
+         TabIndex        =   58
          Top             =   360
-         Width           =   720
+         Width           =   630
+      End
+      Begin VB.Label lblSaveFilenameTokens 
+         AutoSize        =   -1  'True
+         Caption         =   "Add a Filename-Token"
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   57
+         Top             =   360
+         Width           =   1605
       End
    End
    Begin PDFCreator.dmFrame dmFraProgDocument 
@@ -1068,27 +1212,19 @@ Begin VB.Form frmOptions
       Top             =   1800
       Visible         =   0   'False
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   3413
-      Caption         =   "Document"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   3413
+      caption         =   "Document"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":12D2
       Begin VB.ComboBox cmbAuthorTokens 
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "frmOptions.frx":05AE
+         ItemData        =   "frmOptions.frx":12FE
          Left            =   3720
-         List            =   "frmOptions.frx":05B0
+         List            =   "frmOptions.frx":1300
          Style           =   2  'Dropdown-Liste
          TabIndex        =   51
          Top             =   840
@@ -1140,20 +1276,12 @@ Begin VB.Form frmOptions
       Top             =   1440
       Visible         =   0   'False
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   8281
-      Caption         =   "Programfont"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   8281
+      caption         =   "Programfont"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":1302
       Begin VB.CommandButton cmdCancelTest 
          Caption         =   "C&ancel test"
          Height          =   495
@@ -1252,40 +1380,24 @@ Begin VB.Form frmOptions
       Top             =   2205
       Visible         =   0   'False
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   9763
-      Caption         =   "Security"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   9763
+      caption         =   "Security"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":132E
       Begin PDFCreator.dmFrame dmFraPDFHighPermissions 
          Height          =   855
          Left            =   120
          TabIndex        =   152
          Top             =   4560
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Enhanced permissions (128 Bit only)"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Enhanced permissions (128 Bit only)"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":135A
          Begin VB.CheckBox chkAllowAssembly 
             Appearance      =   0  '2D
             Caption         =   "Allow changes to the Assembly"
@@ -1333,20 +1445,12 @@ Begin VB.Form frmOptions
          TabIndex        =   147
          Top             =   3600
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Disallow user to"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Disallow user to"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":1386
          Begin VB.CheckBox chkAllowModifyAnnotations 
             Appearance      =   0  '2D
             Caption         =   "modify comments"
@@ -1394,20 +1498,12 @@ Begin VB.Form frmOptions
          TabIndex        =   144
          Top             =   2640
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Passwords"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Passwords"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":13B2
          Begin VB.CheckBox chkOwnerPass 
             Appearance      =   0  '2D
             Caption         =   "Password required to change Permissions and Passwords"
@@ -1435,20 +1531,12 @@ Begin VB.Form frmOptions
          TabIndex        =   141
          Top             =   1680
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Encryption level"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Encryption level"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":13DE
          Begin VB.OptionButton optEncHigh 
             Appearance      =   0  '2D
             Caption         =   "High (128 Bit - Adobe Acrobat 5.0 and above)"
@@ -1476,26 +1564,18 @@ Begin VB.Form frmOptions
          TabIndex        =   139
          Top             =   720
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Encryptor"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Encryptor"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":140A
          Begin VB.ComboBox cmbPDFEncryptor 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":05B2
+            ItemData        =   "frmOptions.frx":1436
             Left            =   120
-            List            =   "frmOptions.frx":05B4
+            List            =   "frmOptions.frx":1438
             Style           =   2  'Dropdown-Liste
             TabIndex        =   140
             Top             =   360
@@ -1520,40 +1600,24 @@ Begin VB.Form frmOptions
       Top             =   1920
       Visible         =   0   'False
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   7646
-      Caption         =   "Compression"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   7646
+      caption         =   "Compression"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":143A
       Begin PDFCreator.dmFrame dmFraPDFMono 
          Height          =   1095
          Left            =   120
          TabIndex        =   118
          Top             =   3120
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1931
-         Caption         =   "Monochrome images"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1931
+         caption         =   "Monochrome images"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":1466
          Begin VB.CheckBox chkPDFMonoComp 
             Appearance      =   0  '2D
             Caption         =   "Compress"
@@ -1567,9 +1631,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFMonoComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":05B6
+            ItemData        =   "frmOptions.frx":1492
             Left            =   120
-            List            =   "frmOptions.frx":05B8
+            List            =   "frmOptions.frx":1494
             Style           =   2  'Dropdown-Liste
             TabIndex        =   122
             Top             =   660
@@ -1588,9 +1652,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFMonoResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":05BA
+            ItemData        =   "frmOptions.frx":1496
             Left            =   2520
-            List            =   "frmOptions.frx":05BC
+            List            =   "frmOptions.frx":1498
             Style           =   2  'Dropdown-Liste
             TabIndex        =   120
             Tag             =   "Bicubic|Subsample|Average"
@@ -1621,20 +1685,12 @@ Begin VB.Form frmOptions
          TabIndex        =   111
          Top             =   1920
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1931
-         Caption         =   "Greyscale images"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1931
+         caption         =   "Greyscale images"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":149A
          Begin VB.TextBox txtPDFGreyRes 
             Appearance      =   0  '2D
             Height          =   285
@@ -1646,9 +1702,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFGreyResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":05BE
+            ItemData        =   "frmOptions.frx":14C6
             Left            =   2520
-            List            =   "frmOptions.frx":05C0
+            List            =   "frmOptions.frx":14C8
             Style           =   2  'Dropdown-Liste
             TabIndex        =   115
             Tag             =   "Bicubic|Subsample|Average"
@@ -1668,9 +1724,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFGreyComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":05C2
+            ItemData        =   "frmOptions.frx":14CA
             Left            =   120
-            List            =   "frmOptions.frx":05C4
+            List            =   "frmOptions.frx":14CC
             Style           =   2  'Dropdown-Liste
             TabIndex        =   113
             Top             =   660
@@ -1702,20 +1758,12 @@ Begin VB.Form frmOptions
          TabIndex        =   104
          Top             =   720
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1931
-         Caption         =   "Color images"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1931
+         caption         =   "Color images"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "frmOptions.frx":14CE
          Begin VB.TextBox txtPDFColorRes 
             Appearance      =   0  '2D
             Height          =   285
@@ -1727,9 +1775,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFColorResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":05C6
+            ItemData        =   "frmOptions.frx":14FA
             Left            =   2520
-            List            =   "frmOptions.frx":05C8
+            List            =   "frmOptions.frx":14FC
             Style           =   2  'Dropdown-Liste
             TabIndex        =   108
             Tag             =   "Bicubic|Subsample|Average"
@@ -1749,9 +1797,9 @@ Begin VB.Form frmOptions
          Begin VB.ComboBox cmbPDFColorComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "frmOptions.frx":05CA
+            ItemData        =   "frmOptions.frx":14FE
             Left            =   120
-            List            =   "frmOptions.frx":05CC
+            List            =   "frmOptions.frx":1500
             Style           =   2  'Dropdown-Liste
             TabIndex        =   106
             Top             =   660
@@ -1795,26 +1843,18 @@ Begin VB.Form frmOptions
       Top             =   2760
       Visible         =   0   'False
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2143
-      Caption         =   "Color options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   2143
+      caption         =   "Color options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":1502
       Begin VB.ComboBox cmbPDFColorModel 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":05CE
+         ItemData        =   "frmOptions.frx":152E
          Left            =   120
-         List            =   "frmOptions.frx":05D0
+         List            =   "frmOptions.frx":1530
          Style           =   2  'Dropdown-Liste
          TabIndex        =   132
          Tag             =   "RGB|CMYK|GRAY"
@@ -1839,20 +1879,12 @@ Begin VB.Form frmOptions
       Top             =   4080
       Visible         =   0   'False
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2566
-      Caption         =   "Options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   2566
+      caption         =   "Options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":1532
       Begin VB.CheckBox chkPDFPreserveHalftone 
          Appearance      =   0  '2D
          Caption         =   "Preserve Halftone Information"
@@ -1901,10 +1933,10 @@ Begin VB.Form frmOptions
       TabIndex        =   160
       Top             =   0
       Width           =   2535
-      _ExtentX        =   4471
-      _ExtentY        =   13917
-      FontName        =   "MS Sans Serif"
-      FontCharset     =   0
+      _extentx        =   4471
+      _extenty        =   13917
+      fontname        =   "MS Sans Serif"
+      fontcharset     =   0
       Begin VB.Timer Timer1 
          Enabled         =   0   'False
          Interval        =   100
@@ -1922,73 +1954,77 @@ Begin VB.Form frmOptions
          MaskColor       =   12632256
          _Version        =   393216
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
-            NumListImages   =   17
+            NumListImages   =   18
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":05D2
+               Picture         =   "frmOptions.frx":155E
                Key             =   ""
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":0B6C
+               Picture         =   "frmOptions.frx":1AF8
                Key             =   ""
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":1106
+               Picture         =   "frmOptions.frx":2092
                Key             =   ""
             EndProperty
             BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":16A0
+               Picture         =   "frmOptions.frx":262C
                Key             =   ""
             EndProperty
             BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":1C3A
+               Picture         =   "frmOptions.frx":2BC6
                Key             =   ""
             EndProperty
             BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":1FD4
+               Picture         =   "frmOptions.frx":2F60
                Key             =   ""
             EndProperty
             BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":256E
+               Picture         =   "frmOptions.frx":34FA
                Key             =   ""
             EndProperty
             BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":2B08
+               Picture         =   "frmOptions.frx":3DD4
                Key             =   ""
             EndProperty
             BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":30A2
+               Picture         =   "frmOptions.frx":436E
                Key             =   ""
             EndProperty
             BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":363C
+               Picture         =   "frmOptions.frx":4908
                Key             =   ""
             EndProperty
             BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":3BD6
+               Picture         =   "frmOptions.frx":4EA2
                Key             =   ""
             EndProperty
             BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":4170
+               Picture         =   "frmOptions.frx":543C
                Key             =   ""
             EndProperty
             BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":470A
+               Picture         =   "frmOptions.frx":59D6
                Key             =   ""
             EndProperty
             BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":4CA4
+               Picture         =   "frmOptions.frx":5F70
                Key             =   ""
             EndProperty
             BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":523E
+               Picture         =   "frmOptions.frx":650A
                Key             =   ""
             EndProperty
             BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":57D8
+               Picture         =   "frmOptions.frx":6AA4
                Key             =   ""
             EndProperty
             BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":60B2
+               Picture         =   "frmOptions.frx":703E
+               Key             =   ""
+            EndProperty
+            BeginProperty ListImage18 {2C247F27-8591-11D1-B16A-00C0F0283628} 
+               Picture         =   "frmOptions.frx":7918
                Key             =   ""
             EndProperty
          EndProperty
@@ -2017,20 +2053,12 @@ Begin VB.Form frmOptions
       Top             =   4200
       Visible         =   0   'False
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   4471
-      Caption         =   "Filename substitutions"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   4471
+      caption         =   "Filename substitutions"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":81F2
       Begin VB.CommandButton cmdFilenameSubst 
          Caption         =   "&Add"
          Height          =   375
@@ -2044,7 +2072,7 @@ Begin VB.Form frmOptions
          Height          =   435
          Index           =   0
          Left            =   120
-         Picture         =   "frmOptions.frx":698C
+         Picture         =   "frmOptions.frx":821E
          Style           =   1  'Grafisch
          TabIndex        =   161
          Top             =   915
@@ -2102,7 +2130,7 @@ Begin VB.Form frmOptions
          Height          =   435
          Index           =   1
          Left            =   120
-         Picture         =   "frmOptions.frx":6D16
+         Picture         =   "frmOptions.frx":85A8
          Style           =   1  'Grafisch
          TabIndex        =   162
          Top             =   1440
@@ -2141,20 +2169,12 @@ Begin VB.Form frmOptions
       TabIndex        =   157
       Top             =   105
       Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   1879
-      Caption         =   ""
-      BarColorFrom    =   8421631
-      BarColorTo      =   192
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11324
+      _extenty        =   1879
+      caption         =   ""
+      barcolorfrom    =   8421631
+      barcolorto      =   192
+      font            =   "frmOptions.frx":8932
       Begin VB.PictureBox picOptions 
          Appearance      =   0  '2D
          BorderStyle     =   0  'Kein
@@ -2199,22 +2219,14 @@ Begin VB.Form frmOptions
       TabIndex        =   12
       Top             =   5565
       Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   1879
-      Caption         =   "Shell integration"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
+      _extentx        =   11324
+      _extenty        =   1879
+      caption         =   "Shell integration"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":895E
+      textshaddowcolor=   12582912
       Begin VB.CommandButton cmdShellintegration 
          Caption         =   "Integrate PDFCreator into shell"
          Height          =   495
@@ -2361,7 +2373,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-
 Private Sub chkOwnerPass_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -2477,6 +2488,48 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmOptions", "chkPDFMonoResample_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub chkRunProgramBeforeSaving_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkRunProgramBeforeSaving.Value = 1 Then
+50020    ViewRunProgramBeforeSaving True
+50030   Else
+50040    ViewRunProgramBeforeSaving False
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "chkRunProgramBeforeSaving_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub chkRunProgramAfterSaving_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkRunProgramAfterSaving.Value = 1 Then
+50020    ViewRunProgramAfterSaving True
+50030   Else
+50040    ViewRunProgramAfterSaving False
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "chkRunProgramAfterSaving_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2881,6 +2934,110 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub cmbRunProgramAfterSavingProgramname_Change()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Program As String, drv As String
+50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramAfterSavingProgramname.Text)
+50030  SplitPath Program, drv
+50040  If LenB(drv) = 0 Then
+50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50060  End If
+50070  If FileExists(Program) = True Then
+50080    If IsFileEditable(Program) Then
+50090      cmdRunProgramAfterSavingPrognameEdit.Enabled = True
+50100     Else
+50110      cmdRunProgramAfterSavingPrognameEdit.Enabled = False
+50120    End If
+50130   Else
+50140    cmdRunProgramAfterSavingPrognameEdit.Enabled = False
+50150  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbRunProgramAfterSavingProgramname_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbRunProgramAfterSavingProgramname_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With cmbRunProgramAfterSavingProgramname
+50020   If .ListCount > 0 Then
+50030    .Text = "Scripts\RunProgramAfterSaving\" & .List(.ListIndex)
+50040   End If
+50050  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbRunProgramAfterSavingProgramname_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbRunProgramBeforeSavingProgramname_Change()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Program As String, drv As String
+50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramBeforeSavingProgramname.Text)
+50030  SplitPath Program, drv
+50040  If LenB(drv) = 0 Then
+50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50060  End If
+50070  If FileExists(Program) = True Then
+50080    If IsFileEditable(Program) Then
+50090      cmdRunProgramBeforeSavingPrognameEdit.Enabled = True
+50100     Else
+50110      cmdRunProgramBeforeSavingPrognameEdit.Enabled = False
+50120    End If
+50130   Else
+50140    cmdRunProgramBeforeSavingPrognameEdit.Enabled = False
+50150  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbRunProgramBeforeSavingProgramname_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbRunProgramBeforeSavingProgramname_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With cmbRunProgramBeforeSavingProgramname
+50020   If .ListCount > 0 Then
+50030    .Text = "Scripts\RunProgramBeforeSaving\" & .List(.ListIndex)
+50040   End If
+50050  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbRunProgramBeforeSavingProgramname_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub cmbSaveFilenameTokens_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -3210,6 +3367,120 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub cmdRunProgramAfterSavingPrognameChoice_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Filename As String
+50020  Filename = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsProgramRunProgramAfterSavingCaption, False)
+50030  If LenB(Filename) > 0 Then
+50040   cmbRunProgramAfterSavingProgramname.Text = Filename
+50050  End If
+50060  If FileExists(Filename) = True Then
+50070    If IsFileEditable(Filename) Then
+50080      cmdRunProgramAfterSavingPrognameEdit.Enabled = True
+50090     Else
+50100      cmdRunProgramAfterSavingPrognameEdit.Enabled = False
+50110    End If
+50120   Else
+50130    cmdRunProgramAfterSavingPrognameEdit.Enabled = False
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdRunProgramAfterSavingPrognameChoice_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmdRunProgramAfterSavingPrognameEdit_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Program As String, drv As String
+50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramAfterSavingProgramname.Text)
+50030  SplitPath Program, drv
+50040  If LenB(drv) = 0 Then
+50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50060  End If
+50070  If FileExists(Program) = True Then
+50080   If IsFileEditable(Program) Then
+50090    EditDocument Program
+50100   End If
+50110  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdRunProgramAfterSavingPrognameEdit_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmdRunProgramBeforeSavingPrognameChoice_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Filename As String
+50020  Filename = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsProgramRunProgramBeforeSavingCaption, False)
+50030  If LenB(Filename) > 0 Then
+50040   cmbRunProgramBeforeSavingProgramname.Text = Filename
+50050  End If
+50060  If FileExists(Filename) = True Then
+50070    If IsFileEditable(Filename) Then
+50080      cmdRunProgramBeforeSavingPrognameEdit.Enabled = True
+50090     Else
+50100      cmdRunProgramBeforeSavingPrognameEdit.Enabled = False
+50110    End If
+50120   Else
+50130    cmdRunProgramBeforeSavingPrognameEdit.Enabled = False
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdRunProgramBeforeSavingPrognameChoice_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmdRunProgramBeforeSavingPrognameEdit_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Program As String, drv As String
+50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramBeforeSavingProgramname.Text)
+50030  SplitPath Program, drv
+50040  If LenB(drv) = 0 Then
+50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50060  End If
+50070  If FileExists(Program) = True Then
+50080   If IsFileEditable(Program) Then
+50090    EditDocument Program
+50100   End If
+50110  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmdRunProgramBeforeSavingPrognameEdit_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub cmdSave_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -3455,657 +3726,740 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Const fraPDFTop = 1360, fraPDFLeft = 2960
 50020  Dim pic As New StdPicture, i As Long, tStr As String, gsvers As Collection, _
-  fc As Long, reg As clsRegistry, tsf() As String, tStr2 As String
-50040  Me.Icon = LoadResPicture(2120, vbResIcon)
-50050  KeyPreview = True
-50060
-50070  With Screen
-50080   .MousePointer = vbHourglass
-50090   Move (.Width - Width) / 2, (.Height - Height) / 2
-50100  End With
-50110
-50120  SetFrames
-50130
-50140  With dmFraDescription
-50150   .Caption = LanguageStrings.OptionsTreeProgram
-50160   .Visible = True
-50170  End With
-50180  dmFraShellIntegration.Visible = True
-50190  With dmFraProgGeneral
-50200   .Visible = True
-50210   .Top = dmFraDescription.Top + dmFraDescription.Height + 50
-50220   .Left = dmFraDescription.Left
-50230   dmFraShellIntegration.Top = .Top + .Height + 50
-50240   dmFraShellIntegration.Left = .Left
-50250   dmFraShellIntegration.Width = .Width
-50260   dmFraProgGhostscript.Top = .Top
-50270   dmFraProgGhostscript.Left = .Left
-50280   dmFraProgGhostscript.Width = .Width
-50290   dmFraProgAutosave.Top = .Top
-50300   dmFraProgAutosave.Left = .Left
-50310   dmFraProgAutosave.Width = .Width
-50320   dmFraProgDirectories.Top = .Top
-50330   dmFraProgDirectories.Left = .Left
-50340   dmFraProgDirectories.Width = .Width
-50350   dmFraProgDocument.Top = .Top
-50360   dmFraProgDocument.Left = .Left
-50370   dmFraProgDocument.Width = .Width
-50380   dmfraProgSave.Top = .Top
-50390   dmfraProgSave.Left = .Left
-50400   dmfraProgSave.Width = .Width
-50410   dmfraFilenameSubstitutions.Top = dmfraProgSave.Top + dmfraProgSave.Height + 50
-50420   dmfraFilenameSubstitutions.Left = .Left
-50430   dmfraFilenameSubstitutions.Width = .Width
-50440   dmFraProgFont.Top = .Top
-50450   dmFraProgFont.Left = .Left
-50460   dmFraProgFont.Width = .Width
-50470   dmFraBitmapGeneral.Top = .Top
-50480   dmFraBitmapGeneral.Left = .Left
-50490   dmFraBitmapGeneral.Width = .Width
-50500   dmFraPSGeneral.Top = .Top
-50510   dmFraPSGeneral.Left = .Left
-50520   dmFraPSGeneral.Width = .Width
-50530
-50540   cmdCancel.Left = .Left
-50550   cmdReset.Left = .Left + (.Width - cmdReset.Width) / 2
-50560   cmdSave.Left = .Left + .Width - cmdSave.Width
-50570  End With
-50580
-50590  With tbstrPDFOptions
-50600   .Top = dmFraDescription.Top + dmFraDescription.Height + 50
-50610   .Left = dmFraDescription.Left
-50620   .Height = cmdCancel.Top - tbstrPDFOptions.Top - 50
-50630   .Width = dmFraDescription.Width
+  fc As Long, reg As clsRegistry, tsf() As String, tStr2 As String, Files As Collection, _
+  Path As String, Filename As String, Ext As String
+50050  Me.Icon = LoadResPicture(2120, vbResIcon)
+50060  KeyPreview = True
+50070
+50080  With Screen
+50090   .MousePointer = vbHourglass
+50100   Move (.Width - Width) / 2, (.Height - Height) / 2
+50110  End With
+50120
+50130  SetFrames
+50140
+50150  With dmFraDescription
+50160   .Caption = LanguageStrings.OptionsTreeProgram
+50170   .Visible = True
+50180  End With
+50190  dmFraShellIntegration.Visible = True
+50200  With dmFraProgGeneral
+50210   .Visible = True
+50220   .Top = dmFraDescription.Top + dmFraDescription.Height + 50
+50230   .Left = dmFraDescription.Left
+50240   dmFraShellIntegration.Top = .Top + .Height + 50
+50250   dmFraShellIntegration.Left = .Left
+50260   dmFraShellIntegration.Width = .Width
+50270   dmFraProgGhostscript.Top = .Top
+50280   dmFraProgGhostscript.Left = .Left
+50290   dmFraProgGhostscript.Width = .Width
+50300   dmFraProgAutosave.Top = .Top
+50310   dmFraProgAutosave.Left = .Left
+50320   dmFraProgAutosave.Width = .Width
+50330   dmFraProgDirectories.Top = .Top
+50340   dmFraProgDirectories.Left = .Left
+50350   dmFraProgDirectories.Width = .Width
+50360   dmFraProgDocument.Top = .Top
+50370   dmFraProgDocument.Left = .Left
+50380   dmFraProgDocument.Width = .Width
+50390   dmfraProgSave.Top = .Top
+50400   dmfraProgSave.Left = .Left
+50410   dmfraProgSave.Width = .Width
+50420   dmfraFilenameSubstitutions.Top = dmfraProgSave.Top + dmfraProgSave.Height + 50
+50430   dmfraFilenameSubstitutions.Left = .Left
+50440   dmfraFilenameSubstitutions.Width = .Width
+50450   dmFraProgFont.Top = .Top
+50460   dmFraProgFont.Left = .Left
+50470   dmFraProgFont.Width = .Width
+50480   dmFraProgActions.Top = .Top
+50490   dmFraProgActions.Left = .Left
+50500   dmFraProgActions.Width = .Width
+50510   dmFraBitmapGeneral.Top = .Top
+50520   dmFraBitmapGeneral.Left = .Left
+50530   dmFraBitmapGeneral.Width = .Width
+50540   dmFraPSGeneral.Top = .Top
+50550   dmFraPSGeneral.Left = .Left
+50560   dmFraPSGeneral.Width = .Width
+50570
+50580   dmFraProgActionsRunProgramAfterSaving.Top = dmFraProgActionsRunProgramBeforeSaving.Top
+50590   dmFraProgActionsRunProgramAfterSaving.Left = dmFraProgActionsRunProgramBeforeSaving.Left
+50600
+50610   cmdCancel.Left = .Left
+50620   cmdReset.Left = .Left + (.Width - cmdReset.Width) / 2
+50630   cmdSave.Left = .Left + .Width - cmdSave.Width
 50640  End With
 50650
-50660  With dmFraPDFGeneral
-50670   .Top = tbstrPDFOptions.ClientTop + 100
-50680   .Left = tbstrPDFOptions.Left + (tbstrPDFOptions.Width - .Width) / 2
-50690   dmfraPDFCompress.Top = .Top
-50700   dmfraPDFCompress.Left = .Left
-50710   dmFraPDFFonts.Top = .Top
-50720   dmFraPDFFonts.Left = .Left
-50730   dmFraPDFColors.Top = .Top
-50740   dmFraPDFColors.Left = .Left
-50750   dmFraPDFColorOptions.Top = dmFraPDFColors.Top + dmFraPDFColors.Height + 50
-50760   dmFraPDFColorOptions.Left = .Left
-50770   dmFraPDFSecurity.Top = .Top
-50780   dmFraPDFSecurity.Left = .Left
-50790  End With
-50800
-50810  cmbEPSLanguageLevel.Top = cmbPSLanguageLevel.Top
-50820  cmbEPSLanguageLevel.Left = cmbPSLanguageLevel.Left
-50830
-50840  ieb.DisableUpdates True
-50850  ieb.ClearStructure
-50860  ieb.SetImageList imlIeb
-50870  With LanguageStrings
-50880   ieb.AddGroup "Program", .OptionsTreeProgram, 0
-50890   ieb.AddItem "Program", "General", .OptionsProgramGeneralSymbol, 1
-50900   ieb.AddItem "Program", "Ghostscript", .OptionsProgramGhostscriptSymbol, 2
-50910   ieb.AddItem "Program", "Document", .OptionsProgramDocumentSymbol, 3
-50920   ieb.AddItem "Program", "Save", .OptionsProgramSaveSymbol, 4
-50930   ieb.AddItem "Program", "AutoSave", .OptionsProgramAutosaveSymbol, 5
-50940   ieb.AddItem "Program", "Directories", .OptionsProgramDirectoriesSymbol, 6
-50950   ieb.AddItem "Program", "Fonts", .OptionsProgramFontSymbol, 7
-50960   ieb.AddGroup "Formats", .OptionsTreeFormats, 0
-50970   ieb.AddItem "Formats", "PDF", .OptionsPDFSymbol, 8
-50980   ieb.AddItem "Formats", "PNG", .OptionsPNGSymbol, 9
-50990   ieb.AddItem "Formats", "JPEG", .OptionsJPEGSymbol, 10
-51000   ieb.AddItem "Formats", "BMP", .OptionsBMPSymbol, 11
-51010   ieb.AddItem "Formats", "PCX", .OptionsPCXSymbol, 12
-51020   ieb.AddItem "Formats", "TIFF", .OptionsTIFFSymbol, 13
-51030   ieb.AddItem "Formats", "PS", .OptionsPSSymbol, 14
-51040   ieb.AddItem "Formats", "EPS", .OptionsEPSSymbol, 15
-51050   ieb.DisableUpdates False
-51060
-51070   Set picOptions = LoadResPicture(2101, vbResIcon)
-51080   dmFraProgGeneral.Visible = True
-51090
-51100   dmFraProgGeneral.Caption = .OptionsProgramGeneralSymbol
-51110   dmFraShellIntegration.Caption = .OptionsShellIntegration
-51120   dmFraProgGhostscript.Caption = .OptionsProgramGhostscriptSymbol
-51130   dmFraProgAutosave.Caption = .OptionsProgramAutosaveSymbol
-51140   dmFraProgDirectories.Caption = .OptionsProgramDirectoriesSymbol
-51150   dmFraProgDocument.Caption = .OptionsProgramDocumentSymbol
-51160   dmFraProgFont.Caption = .OptionsProgramFontSymbol
-51170   dmfraProgSave.Caption = .OptionsProgramSaveSymbol
-51180
-51190   cmdShellintegration(0).Caption = .OptionsShellIntegrationAdd
-51200   cmdShellintegration(1).Caption = .OptionsShellIntegrationRemove
-51210   If IsWin9xMe = False Then
-51220    If IsAdmin = False Then
-51230     cmdShellintegration(0).Enabled = False
-51240     cmdShellintegration(1).Enabled = False
-51250    End If
-51260   End If
+50660  With tbstrPDFOptions
+50670   .Top = dmFraDescription.Top + dmFraDescription.Height + 50
+50680   .Left = dmFraDescription.Left
+50690   .Height = cmdCancel.Top - tbstrPDFOptions.Top - 50
+50700   .Width = dmFraDescription.Width
+50710  End With
+50720
+50730  With dmFraPDFGeneral
+50740   .Top = tbstrPDFOptions.ClientTop + 100
+50750   .Left = tbstrPDFOptions.Left + (tbstrPDFOptions.Width - .Width) / 2
+50760   dmfraPDFCompress.Top = .Top
+50770   dmfraPDFCompress.Left = .Left
+50780   dmFraPDFFonts.Top = .Top
+50790   dmFraPDFFonts.Left = .Left
+50800   dmFraPDFColors.Top = .Top
+50810   dmFraPDFColors.Left = .Left
+50820   dmFraPDFColorOptions.Top = dmFraPDFColors.Top + dmFraPDFColors.Height + 50
+50830   dmFraPDFColorOptions.Left = .Left
+50840   dmFraPDFSecurity.Top = .Top
+50850   dmFraPDFSecurity.Left = .Left
+50860  End With
+50870
+50880  cmbEPSLanguageLevel.Top = cmbPSLanguageLevel.Top
+50890  cmbEPSLanguageLevel.Left = cmbPSLanguageLevel.Left
+50900
+50910  ieb.DisableUpdates True
+50920  ieb.ClearStructure
+50930  ieb.SetImageList imlIeb
+50940  With LanguageStrings
+50950   ieb.AddGroup "Program", .OptionsTreeProgram, 0
+50960   ieb.AddItem "Program", "General", .OptionsProgramGeneralSymbol, 1
+50970   ieb.AddItem "Program", "Ghostscript", .OptionsProgramGhostscriptSymbol, 2
+50980   ieb.AddItem "Program", "Document", .OptionsProgramDocumentSymbol, 3
+50990   ieb.AddItem "Program", "Save", .OptionsProgramSaveSymbol, 4
+51000   ieb.AddItem "Program", "AutoSave", .OptionsProgramAutosaveSymbol, 5
+51010   ieb.AddItem "Program", "Directories", .OptionsProgramDirectoriesSymbol, 6
+51020   ieb.AddItem "Program", "Actions", .OptionsProgramActionsSymbol, 7
+51030   ieb.AddItem "Program", "Fonts", .OptionsProgramFontSymbol, 8
+51040   ieb.AddGroup "Formats", .OptionsTreeFormats, 0
+51050   ieb.AddItem "Formats", "PDF", .OptionsPDFSymbol, 9
+51060   ieb.AddItem "Formats", "PNG", .OptionsPNGSymbol, 10
+51070   ieb.AddItem "Formats", "JPEG", .OptionsJPEGSymbol, 11
+51080   ieb.AddItem "Formats", "BMP", .OptionsBMPSymbol, 12
+51090   ieb.AddItem "Formats", "PCX", .OptionsPCXSymbol, 13
+51100   ieb.AddItem "Formats", "TIFF", .OptionsTIFFSymbol, 14
+51110   ieb.AddItem "Formats", "PS", .OptionsPSSymbol, 15
+51120   ieb.AddItem "Formats", "EPS", .OptionsEPSSymbol, 16
+51130   ieb.DisableUpdates False
+51140
+51150   Set picOptions = LoadResPicture(2101, vbResIcon)
+51160   dmFraProgGeneral.Visible = True
+51170
+51180   dmFraProgGeneral.Caption = .OptionsProgramGeneralSymbol
+51190   dmFraShellIntegration.Caption = .OptionsShellIntegration
+51200   dmFraProgGhostscript.Caption = .OptionsProgramGhostscriptSymbol
+51210   dmFraProgAutosave.Caption = .OptionsProgramAutosaveSymbol
+51220   dmFraProgDirectories.Caption = .OptionsProgramDirectoriesSymbol
+51230   dmFraProgDocument.Caption = .OptionsProgramDocumentSymbol
+51240   dmFraProgFont.Caption = .OptionsProgramFontSymbol
+51250   dmfraProgSave.Caption = .OptionsProgramSaveSymbol
+51260   dmFraProgActions.Caption = .OptionsProgramActionsSymbol
 51270
-51280   lblGhostscriptversion.Caption = .OptionsGhostscriptversion
-51290   lblAdditionalGhostscriptParameters.Caption = .OptionsAdditionalGhostscriptParameters
-51300   lblAdditionalGhostscriptSearchpath.Caption = .OptionsAdditionalGhostscriptSearchpath
-51310   chkAddWindowsFontpath.Caption = .OptionsAddWindowsFontpath
-51320
-51330   lblSaveFilename.Caption = .OptionsSaveFilename
-51340   lblSaveFilenameTokens.Caption = .OptionsSaveFilenameTokens
-51350   dmfraFilenameSubstitutions.Caption = .OptionsSaveFilenameSubstitutions
-51360   chkFilenameSubst.Caption = .OptionsSaveFilenameSubstitutionsTitle
-51370   cmdFilenameSubst(0).Caption = .OptionsSaveFilenameAdd
-51380   cmdFilenameSubst(1).Caption = .OptionsSaveFilenameChange
-51390   cmdFilenameSubst(2).Caption = .OptionsSaveFilenameDelete
-51400
-51410   chkSpaces.Caption = .OptionsRemoveSpaces
-51420   chkNoConfirmMessageSwitchingDefaultprinter.Caption = .OptionsProgramSwitchingDefaultprinter
-51430   chkNoProcessingAtStartup.Caption = .OptionsProgramNoProcessingAtStartup
-51440   lblOptionsDesign.Caption = .OptionsProgramOptionsDesign
-51450   cmbOptionsDesign.AddItem .OptionsProgramOptionsDesignGradient
-51460   cmbOptionsDesign.AddItem .OptionsProgramOptionsDesignSimple
-51470   chkShowAnimation.Caption = .OptionsProgramShowAnimation
-51480
-51490   lblGSbin.Caption = .OptionsDirectoriesGSBin
-51500   lblGSlib.Caption = .OptionsDirectoriesGSLibraries
-51510   lblGSfonts.Caption = .OptionsDirectoriesGSFonts
-51520   lblPrintTempPath.Caption = .OptionsDirectoriesTempPath
-51530
-51540   lblOptions = .OptionsProgramGeneralDescription
-51550   lblAutosaveformat.Caption = .OptionsAutosaveFormat
-51560   chkUseStandardAuthor.Caption = .OptionsUseStandardauthor
-51570   chkUseCreationDateNow.Caption = .OptionsUseCreationDateNow
-51580   chkUseAutosave.Caption = .OptionsUseAutosave
-51581   chkAutosaveStartStandardProgram.Caption = .OptionsAutosaveStartStandardProgram
-51590   cmdTestpage.Caption = .OptionsPrintTestpage
-51600   lblAutosaveFilename.Caption = .OptionsAutosaveFilename
-51610   lblAutosaveFilenameTokens.Caption = .OptionsAutosaveFilenameTokens
-51620   chkUseAutosaveDirectory.Caption = .OptionsUseAutosaveDirectory
-51630   lblAuthorTokens.Caption = .OptionsStandardAuthorToken
-51640
-51650   With cmbAutosaveFormat
-51660    .AddItem "PDF"
-51670    .AddItem "PNG"
-51680    .AddItem "JPEG"
-51690    .AddItem "BMP"
-51700    .AddItem "PCX"
-51710    .AddItem "TIFF"
-51720    .AddItem "PS"
-51730    .AddItem "EPS"
-51740   End With
-51750   With cmbSaveFilenameTokens
-51760    .AddItem "<Author>"
-51770    .AddItem "<Computername>"
-51780    .AddItem "<DateTime>"
-51790    .AddItem "<Title>"
-51800    .AddItem "<Username>"
-51810    .AddItem "<REDMON_DOCNAME>"
-51820    .AddItem "<REDMON_DOCNAME_FILE>"
-51830    .AddItem "<REDMON_DOCNAME_PATH>"
-51840    .AddItem "<REDMON_JOB>"
-51850    .AddItem "<REDMON_MACHINE>"
-51860    .AddItem "<REDMON_PORT>"
-51870    .AddItem "<REDMON_PRINTER>"
-51880    .AddItem "<REDMON_SESSIONID>"
-51890    .AddItem "<REDMON_USER>"
-51900    .ListIndex = 0
-51910   End With
-51920   With cmbAuthorTokens
-51930    .AddItem "<Computername>"
-51940    .AddItem "<ClientComputer>"
-51950    .AddItem "<DateTime>"
-51960    .AddItem "<Title>"
-51970    .AddItem "<Username>"
-51980    .AddItem "<REDMON_DOCNAME>"
-51990    .AddItem "<REDMON_DOCNAME_FILE>"
-52000    .AddItem "<REDMON_DOCNAME_PATH>"
-52010    .AddItem "<REDMON_JOB>"
-52020    .AddItem "<REDMON_MACHINE>"
-52030    .AddItem "<REDMON_PORT>"
-52040    .AddItem "<REDMON_PRINTER>"
-52050    .AddItem "<REDMON_SESSIONID>"
-52060    .AddItem "<REDMON_USER>"
-52070    .ListIndex = 0
-52080   End With
-52090   With cmbAutoSaveFilenameTokens
-52100    .AddItem "<Author>"
-52110    .AddItem "<Computername>"
-52120    .AddItem "<ClientComputer>"
-52130    .AddItem "<DateTime>"
-52140    .AddItem "<Title>"
-52150    .AddItem "<Username>"
-52160    .AddItem "<REDMON_DOCNAME>"
-52170    .AddItem "<REDMON_DOCNAME_FILE>"
-52180    .AddItem "<REDMON_DOCNAME_PATH>"
-52190    .AddItem "<REDMON_JOB>"
-52200    .AddItem "<REDMON_MACHINE>"
-52210    .AddItem "<REDMON_PORT>"
-52220    .AddItem "<REDMON_PRINTER>"
-52230    .AddItem "<REDMON_SESSIONID>"
-52240    .AddItem "<REDMON_USER>"
-52250    .ListIndex = 0
-52260   End With
-52270   Me.Caption = .DialogPrinterOptions
-52280   cmdCancel.Caption = .OptionsCancel
-52290   cmdReset.Caption = .OptionsReset
-52300   cmdSave.Caption = .OptionsSave
-52310   tbstrPDFOptions.Tabs.Clear
-52320   tbstrPDFOptions.Tabs.Add , "General", .OptionsPDFGeneral
-52330   tbstrPDFOptions.Tabs.Add , "Compression", .OptionsPDFCompression
-52340   tbstrPDFOptions.Tabs.Add , "Fonts", .OptionsPDFFonts
-52350   tbstrPDFOptions.Tabs.Add , "Colors", .OptionsPDFColors
-52360   tbstrPDFOptions.Tabs.Add , "Security", .OptionsPDFSecurity
-52370   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
-52380   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
-52390   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
-52400   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
-52410   lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
-52420   lblProgfont.Caption = .OptionsProgramFont
-52430   lblProgcharset.Caption = .OptionsProgramFontcharset
-52440   lblSize.Caption = .OptionsProgramFontSize
-52450   lblTesttext = .OptionsProgramFontTestdescription
-52460   cmdTest.Caption = .OptionsProgramFontTest
-52470   cmdCancelTest.Caption = .OptionsProgramFontCancelTest
-52480   chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
-52490   cmbPDFCompat.Clear
-52500   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility01
-52510   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility02
-52520   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility03
-52530   cmbPDFRotate.Clear
-52540   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate01
-52550   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate02
-52560   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate03
-52570   cmbPDFOverprint.Clear
-52580   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint01
-52590   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint02
-52600
-52610   dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
-52620   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
-52630   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
-52640   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
-52650   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
-52660   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
-52670   cmbPDFColorComp.Clear
-52680   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp01
-52690   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp02
-52700   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp03
-52710   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp04
-52720   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp05
-52730   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp06
-52740   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp07
-52750 '  cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp08
-52760   cmbPDFColorResample.Clear
-52770   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample01
-52780   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample02
-52790 '  cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample03
-52800   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
-52810   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
-52820   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
-52830   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
-52840   cmbPDFGreyComp.Clear
-52850   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp01
-52860   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp02
-52870   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp03
-52880   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp04
-52890   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp05
-52900   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp06
-52910   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp07
-52920 '  cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp08
-52930   cmbPDFGreyResample.Clear
-52940   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample01
-52950   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample02
-52960 '  cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample03
-52970   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
-52980   chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
-52990   chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
-53000   lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
-53010   cmbPDFMonoComp.Clear
-53020   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp01
-53030   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp02
-53040   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp03
-53050 '  cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp04
-53060   cmbPDFMonoResample.Clear
-53070   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample01
-53080   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample02
-53090 '  cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample03
-53100
-53110   dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
-53120   chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
-53130   chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
-53140
-53150   dmFraPDFColors.Caption = .OptionsPDFColorsCaption
-53160   chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
-53170   dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
-53180   chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
-53190   chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
-53200   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
-53210   cmbPDFColorModel.Clear
-53220   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel01
-53230   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel02
-53240   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel03
-53250
-53260   dmFraPDFEncryptor.Caption = .OptionsPDFEncryptor
-53270   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
-53280   chkUseSecurity.Caption = .OptionsPDFUseSecurity
-53290   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
-53300   optEncHigh.Caption = .OptionsPDFEncryptionHigh
-53310   optEncLow.Caption = .OptionsPDFEncryptionLow
-53320   dmFraSecurityPass.Caption = .OptionsPDFPasswords
-53330   chkUserPass.Caption = .OptionsPDFUserPass
-53340   chkOwnerPass.Caption = .OptionsPDFOwnerPass
-53350   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
-53360   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
-53370   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
-53380   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
-53390   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
-53400   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
-53410   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
-53420   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
-53430   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
-53440   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
-53450
-53460   cmbPNGColors.AddItem .OptionsPNGColorscount01
-53470   cmbPNGColors.AddItem .OptionsPNGColorscount02
-53480   cmbPNGColors.AddItem .OptionsPNGColorscount03
-53490   cmbPNGColors.AddItem .OptionsPNGColorscount04
-53500   cmbJPEGColors.Left = cmbPNGColors.Left
-53510   cmbJPEGColors.Width = cmbPNGColors.Width
-53520   cmbJPEGColors.Top = cmbPNGColors.Top
-53530   cmbJPEGColors.AddItem .OptionsJPEGColorscount01
-53540   cmbJPEGColors.AddItem .OptionsJPEGColorscount02
-53550   cmbBMPColors.Left = cmbPNGColors.Left
-53560   cmbBMPColors.Width = cmbPNGColors.Width
-53570   cmbBMPColors.Top = cmbPNGColors.Top
-53580   cmbBMPColors.AddItem .OptionsBMPColorscount01
-53590   cmbBMPColors.AddItem .OptionsBMPColorscount02
-53600   cmbBMPColors.AddItem .OptionsBMPColorscount03
-53610   cmbBMPColors.AddItem .OptionsBMPColorscount04
-53620   cmbBMPColors.AddItem .OptionsBMPColorscount05
-53630   cmbBMPColors.AddItem .OptionsBMPColorscount06
-53640   cmbBMPColors.AddItem .OptionsBMPColorscount07
-53650   cmbPCXColors.Left = cmbPNGColors.Left
-53660   cmbPCXColors.Width = cmbPNGColors.Width
-53670   cmbPCXColors.Top = cmbPNGColors.Top
-53680   cmbPCXColors.AddItem .OptionsPCXColorscount01
-53690   cmbPCXColors.AddItem .OptionsPCXColorscount02
-53700   cmbPCXColors.AddItem .OptionsPCXColorscount03
-53710   cmbPCXColors.AddItem .OptionsPCXColorscount04
-53720   cmbPCXColors.AddItem .OptionsPCXColorscount05
-53730   cmbPCXColors.AddItem .OptionsPCXColorscount06
-53740   cmbTIFFColors.Left = cmbPNGColors.Left
-53750   cmbTIFFColors.Width = cmbPNGColors.Width
-53760   cmbTIFFColors.Top = cmbPNGColors.Top
-53770   cmbTIFFColors.AddItem .OptionsTIFFColorscount01
-53780   cmbTIFFColors.AddItem .OptionsTIFFColorscount02
-53790   cmbTIFFColors.AddItem .OptionsTIFFColorscount03
-53800   cmbTIFFColors.AddItem .OptionsTIFFColorscount04
-53810   cmbTIFFColors.AddItem .OptionsTIFFColorscount05
-53820   cmbTIFFColors.AddItem .OptionsTIFFColorscount06
-53830   cmbTIFFColors.AddItem .OptionsTIFFColorscount07
-53840   cmbTIFFColors.AddItem .OptionsTIFFColorscount08
-53850
-53860   dmFraBitmapGeneral.Caption = .OptionsImageSettings
-53870   lblBitmapResolution = .OptionsBitmapResolution
-53880   lblJPEGQuality = .OptionsJPEGQuality
-53890   lblBitmapColors = .OptionsPDFColors
-53900   lblProcessPriority.Caption = .OptionsProcesspriority
-53910   lblLangLevel.Caption = .OptionsPSLanguageLevel
-53920
-53930   cmdAsso.Caption = .OptionsAssociatePSFiles
-53940  End With
-53950
-53960  If IsPsAssociate = False Then
-53970    cmdAsso.Enabled = True
-53980   Else
-53990    cmdAsso.Enabled = False
-54000  End If
-54010
-54020  txtPDFRes.Text = 600
-54030  cmbPDFCompat.ListIndex = 1
-54040  cmbPDFRotate.ListIndex = 0
-54050  cmbPDFOverprint.ListIndex = 0
-54060  chkPDFASCII85.Value = 0
-54070
-54080  chkPDFTextComp.Value = 1
-54090
-54100  chkPDFColorComp.Value = 1
-54110  chkPDFColorResample.Value = 0
-54120  cmbPDFColorComp.ListIndex = 0
-54130  cmbPDFColorResample.ListIndex = 0
-54140  txtPDFColorRes.Text = 300
-54150
-54160  chkPDFGreyComp.Value = 1
-54170  chkPDFGreyResample.Value = 0
-54180  cmbPDFGreyComp.ListIndex = 0
-54190  cmbPDFGreyResample.ListIndex = 0
-54200  txtPDFGreyRes.Text = 300
-54210
-54220  chkPDFMonoComp.Value = 1
-54230  chkPDFMonoResample.Value = 0
-54240  cmbPDFMonoComp.ListIndex = 0
-54250  cmbPDFMonoResample.ListIndex = 0
-54260  txtPDFMonoRes.Text = 1200
+51280   cmdShellintegration(0).Caption = .OptionsShellIntegrationAdd
+51290   cmdShellintegration(1).Caption = .OptionsShellIntegrationRemove
+51300   If IsWin9xMe = False Then
+51310    If IsAdmin = False Then
+51320     cmdShellintegration(0).Enabled = False
+51330     cmdShellintegration(1).Enabled = False
+51340    End If
+51350   End If
+51360
+51370   lblGhostscriptversion.Caption = .OptionsGhostscriptversion
+51380   lblAdditionalGhostscriptParameters.Caption = .OptionsAdditionalGhostscriptParameters
+51390   lblAdditionalGhostscriptSearchpath.Caption = .OptionsAdditionalGhostscriptSearchpath
+51400   chkAddWindowsFontpath.Caption = .OptionsAddWindowsFontpath
+51410
+51420   lblSaveFilename.Caption = .OptionsSaveFilename
+51430   lblSaveFilenameTokens.Caption = .OptionsSaveFilenameTokens
+51440   dmfraFilenameSubstitutions.Caption = .OptionsSaveFilenameSubstitutions
+51450   chkFilenameSubst.Caption = .OptionsSaveFilenameSubstitutionsTitle
+51460   cmdFilenameSubst(0).Caption = .OptionsSaveFilenameAdd
+51470   cmdFilenameSubst(1).Caption = .OptionsSaveFilenameChange
+51480   cmdFilenameSubst(2).Caption = .OptionsSaveFilenameDelete
+51490
+51500   chkSpaces.Caption = .OptionsRemoveSpaces
+51510   chkNoConfirmMessageSwitchingDefaultprinter.Caption = .OptionsProgramSwitchingDefaultprinter
+51520   chkNoProcessingAtStartup.Caption = .OptionsProgramNoProcessingAtStartup
+51530   lblOptionsDesign.Caption = .OptionsProgramOptionsDesign
+51540   cmbOptionsDesign.AddItem .OptionsProgramOptionsDesignGradient
+51550   cmbOptionsDesign.AddItem .OptionsProgramOptionsDesignSimple
+51560   chkShowAnimation.Caption = .OptionsProgramShowAnimation
+51570
+51580   lblGSbin.Caption = .OptionsDirectoriesGSBin
+51590   lblGSlib.Caption = .OptionsDirectoriesGSLibraries
+51600   lblGSfonts.Caption = .OptionsDirectoriesGSFonts
+51610   lblPrintTempPath.Caption = .OptionsDirectoriesTempPath
+51620
+51630   lblOptions = .OptionsProgramGeneralDescription
+51640   lblAutosaveformat.Caption = .OptionsAutosaveFormat
+51650   chkUseStandardAuthor.Caption = .OptionsUseStandardauthor
+51660   chkUseCreationDateNow.Caption = .OptionsUseCreationDateNow
+51670   chkUseAutosave.Caption = .OptionsUseAutosave
+51680   cmdTestpage.Caption = .OptionsPrintTestpage
+51690   lblAutosaveFilename.Caption = .OptionsAutosaveFilename
+51700   lblAutosaveFilenameTokens.Caption = .OptionsAutosaveFilenameTokens
+51710   chkUseAutosaveDirectory.Caption = .OptionsUseAutosaveDirectory
+51720   lblAuthorTokens.Caption = .OptionsStandardAuthorToken
+51730   chkAutosaveStartStandardProgram.Caption = .OptionsAutosaveStartStandardProgram
+51740
+51750   dmFraProgActionsRunProgramAfterSaving.Caption = .OptionsProgramRunProgramAfterSavingCaption
+51760   chkRunProgramAfterSaving.Caption = .OptionsProgramRunProgramAfterSavingCaption
+51770   lblRunProgramAfterSavingProgramname.Caption = .OptionsProgramRunProgramAfterSavingProgram
+51780   lblRunProgramAfterSavingProgramParameters.Caption = .OptionsProgramRunProgramAfterSavingProgramParameters
+51790   chkRunProgramAfterSavingWaitUntilReady.Caption = .OptionsProgramRunProgramAfterSavingWaitUntilReady
+51800   lblRunProgramAfterSavingWindowstyle.Caption = .OptionsProgramRunProgramAfterSavingWindowstyle
+51810   cmbRunProgramAfterSavingWindowstyle.AddItem .OptionsProgramRunProgramAfterSavingWindowstyleHide
+51820   cmbRunProgramAfterSavingWindowstyle.AddItem .OptionsProgramRunProgramAfterSavingWindowstyleNormalFocus
+51830   cmbRunProgramAfterSavingWindowstyle.AddItem .OptionsProgramRunProgramAfterSavingWindowstyleMinimizedFocus
+51840   cmbRunProgramAfterSavingWindowstyle.AddItem .OptionsProgramRunProgramAfterSavingWindowstyleMaximizedFocus
+51850   cmbRunProgramAfterSavingWindowstyle.AddItem .OptionsProgramRunProgramAfterSavingWindowstyleNormalNoFocus
+51860   cmbRunProgramAfterSavingWindowstyle.AddItem .OptionsProgramRunProgramAfterSavingWindowstyleMinimizedNoFocus
+51870
+51880   With tbstrProgActions.Tabs
+51890    .Clear
+51900    .Add , , LanguageStrings.OptionsProgramRunProgramBeforeSavingCaption
+51910    .Add , , LanguageStrings.OptionsProgramRunProgramAfterSavingCaption
+51920   End With
+51930
+51940   dmFraProgActionsRunProgramBeforeSaving.Caption = .OptionsProgramRunProgramBeforeSavingCaption
+51950   chkRunProgramBeforeSaving.Caption = .OptionsProgramRunProgramBeforeSavingCaption
+51960   lblRunProgramBeforeSavingProgramname.Caption = .OptionsProgramRunProgramBeforeSavingProgram
+51970   lblRunProgramBeforeSavingProgramParameters.Caption = .OptionsProgramRunProgramBeforeSavingProgramParameters
+51980   chkRunProgramBeforeSavingWaitUntilReady.Caption = .OptionsProgramRunProgramBeforeSavingWaitUntilReady
+51990   lblRunProgramBeforeSavingWindowstyle.Caption = .OptionsProgramRunProgramBeforeSavingWindowstyle
+52000   cmbRunProgramBeforeSavingWindowstyle.AddItem .OptionsProgramRunProgramBeforeSavingWindowstyleHide
+52010   cmbRunProgramBeforeSavingWindowstyle.AddItem .OptionsProgramRunProgramBeforeSavingWindowstyleNormalFocus
+52020   cmbRunProgramBeforeSavingWindowstyle.AddItem .OptionsProgramRunProgramBeforeSavingWindowstyleMinimizedFocus
+52030   cmbRunProgramBeforeSavingWindowstyle.AddItem .OptionsProgramRunProgramBeforeSavingWindowstyleMaximizedFocus
+52040   cmbRunProgramBeforeSavingWindowstyle.AddItem .OptionsProgramRunProgramBeforeSavingWindowstyleNormalNoFocus
+52050   cmbRunProgramBeforeSavingWindowstyle.AddItem .OptionsProgramRunProgramBeforeSavingWindowstyleMinimizedNoFocus
+52060
+52070   With cmbAutosaveFormat
+52080    .AddItem "PDF"
+52090    .AddItem "PNG"
+52100    .AddItem "JPEG"
+52110    .AddItem "BMP"
+52120    .AddItem "PCX"
+52130    .AddItem "TIFF"
+52140    .AddItem "PS"
+52150    .AddItem "EPS"
+52160   End With
+52170   With cmbSaveFilenameTokens
+52180    .AddItem "<Author>"
+52190    .AddItem "<Computername>"
+52200    .AddItem "<DateTime>"
+52210    .AddItem "<Title>"
+52220    .AddItem "<Username>"
+52230    .AddItem "<REDMON_DOCNAME>"
+52240    .AddItem "<REDMON_DOCNAME_FILE>"
+52250    .AddItem "<REDMON_DOCNAME_PATH>"
+52260    .AddItem "<REDMON_JOB>"
+52270    .AddItem "<REDMON_MACHINE>"
+52280    .AddItem "<REDMON_PORT>"
+52290    .AddItem "<REDMON_PRINTER>"
+52300    .AddItem "<REDMON_SESSIONID>"
+52310    .AddItem "<REDMON_USER>"
+52320    .ListIndex = 0
+52330   End With
+52340   With cmbAuthorTokens
+52350    .AddItem "<Computername>"
+52360    .AddItem "<ClientComputer>"
+52370    .AddItem "<DateTime>"
+52380    .AddItem "<Title>"
+52390    .AddItem "<Username>"
+52400    .AddItem "<REDMON_DOCNAME>"
+52410    .AddItem "<REDMON_DOCNAME_FILE>"
+52420    .AddItem "<REDMON_DOCNAME_PATH>"
+52430    .AddItem "<REDMON_JOB>"
+52440    .AddItem "<REDMON_MACHINE>"
+52450    .AddItem "<REDMON_PORT>"
+52460    .AddItem "<REDMON_PRINTER>"
+52470    .AddItem "<REDMON_SESSIONID>"
+52480    .AddItem "<REDMON_USER>"
+52490    .ListIndex = 0
+52500   End With
+52510   With cmbAutoSaveFilenameTokens
+52520    .AddItem "<Author>"
+52530    .AddItem "<Computername>"
+52540    .AddItem "<ClientComputer>"
+52550    .AddItem "<DateTime>"
+52560    .AddItem "<Title>"
+52570    .AddItem "<Username>"
+52580    .AddItem "<REDMON_DOCNAME>"
+52590    .AddItem "<REDMON_DOCNAME_FILE>"
+52600    .AddItem "<REDMON_DOCNAME_PATH>"
+52610    .AddItem "<REDMON_JOB>"
+52620    .AddItem "<REDMON_MACHINE>"
+52630    .AddItem "<REDMON_PORT>"
+52640    .AddItem "<REDMON_PRINTER>"
+52650    .AddItem "<REDMON_SESSIONID>"
+52660    .AddItem "<REDMON_USER>"
+52670    .ListIndex = 0
+52680   End With
+52690   Me.Caption = .DialogPrinterOptions
+52700   cmdCancel.Caption = .OptionsCancel
+52710   cmdReset.Caption = .OptionsReset
+52720   cmdSave.Caption = .OptionsSave
+52730   tbstrPDFOptions.Tabs.Clear
+52740   tbstrPDFOptions.Tabs.Add , "General", .OptionsPDFGeneral
+52750   tbstrPDFOptions.Tabs.Add , "Compression", .OptionsPDFCompression
+52760   tbstrPDFOptions.Tabs.Add , "Fonts", .OptionsPDFFonts
+52770   tbstrPDFOptions.Tabs.Add , "Colors", .OptionsPDFColors
+52780   tbstrPDFOptions.Tabs.Add , "Security", .OptionsPDFSecurity
+52790   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
+52800   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
+52810   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
+52820   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
+52830   lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
+52840   lblProgfont.Caption = .OptionsProgramFont
+52850   lblProgcharset.Caption = .OptionsProgramFontcharset
+52860   lblSize.Caption = .OptionsProgramFontSize
+52870   lblTesttext = .OptionsProgramFontTestdescription
+52880   cmdTest.Caption = .OptionsProgramFontTest
+52890   cmdCancelTest.Caption = .OptionsProgramFontCancelTest
+52900   chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
+52910   cmbPDFCompat.Clear
+52920   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility01
+52930   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility02
+52940   cmbPDFCompat.AddItem .OptionsPDFGeneralCompatibility03
+52950   cmbPDFRotate.Clear
+52960   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate01
+52970   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate02
+52980   cmbPDFRotate.AddItem .OptionsPDFGeneralRotate03
+52990   cmbPDFOverprint.Clear
+53000   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint01
+53010   cmbPDFOverprint.AddItem .OptionsPDFGeneralOverprint02
+53020
+53030   dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
+53040   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
+53050   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
+53060   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
+53070   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
+53080   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
+53090   cmbPDFColorComp.Clear
+53100   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp01
+53110   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp02
+53120   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp03
+53130   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp04
+53140   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp05
+53150   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp06
+53160   cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp07
+53170 '  cmbPDFColorComp.AddItem .OptionsPDFCompressionColorComp08
+53180   cmbPDFColorResample.Clear
+53190   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample01
+53200   cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample02
+53210 '  cmbPDFColorResample.AddItem .OptionsPDFCompressionColorResample03
+53220   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
+53230   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
+53240   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
+53250   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
+53260   cmbPDFGreyComp.Clear
+53270   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp01
+53280   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp02
+53290   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp03
+53300   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp04
+53310   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp05
+53320   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp06
+53330   cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp07
+53340 '  cmbPDFGreyComp.AddItem .OptionsPDFCompressionGreyComp08
+53350   cmbPDFGreyResample.Clear
+53360   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample01
+53370   cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample02
+53380 '  cmbPDFGreyResample.AddItem .OptionsPDFCompressionGreyResample03
+53390   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
+53400   chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
+53410   chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
+53420   lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
+53430   cmbPDFMonoComp.Clear
+53440   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp01
+53450   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp02
+53460   cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp03
+53470 '  cmbPDFMonoComp.AddItem .OptionsPDFCompressionMonoComp04
+53480   cmbPDFMonoResample.Clear
+53490   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample01
+53500   cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample02
+53510 '  cmbPDFMonoResample.AddItem .OptionsPDFCompressionMonoResample03
+53520
+53530   dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
+53540   chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
+53550   chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
+53560
+53570   dmFraPDFColors.Caption = .OptionsPDFColorsCaption
+53580   chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
+53590   dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
+53600   chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
+53610   chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
+53620   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
+53630   cmbPDFColorModel.Clear
+53640   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel01
+53650   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel02
+53660   cmbPDFColorModel.AddItem .OptionsPDFColorsColorModel03
+53670
+53680   dmFraPDFEncryptor.Caption = .OptionsPDFEncryptor
+53690   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
+53700   chkUseSecurity.Caption = .OptionsPDFUseSecurity
+53710   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
+53720   optEncHigh.Caption = .OptionsPDFEncryptionHigh
+53730   optEncLow.Caption = .OptionsPDFEncryptionLow
+53740   dmFraSecurityPass.Caption = .OptionsPDFPasswords
+53750   chkUserPass.Caption = .OptionsPDFUserPass
+53760   chkOwnerPass.Caption = .OptionsPDFOwnerPass
+53770   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
+53780   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
+53790   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
+53800   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
+53810   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
+53820   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
+53830   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
+53840   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
+53850   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
+53860   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
+53870
+53880   cmbPNGColors.AddItem .OptionsPNGColorscount01
+53890   cmbPNGColors.AddItem .OptionsPNGColorscount02
+53900   cmbPNGColors.AddItem .OptionsPNGColorscount03
+53910   cmbPNGColors.AddItem .OptionsPNGColorscount04
+53920   cmbJPEGColors.Left = cmbPNGColors.Left
+53930   cmbJPEGColors.Width = cmbPNGColors.Width
+53940   cmbJPEGColors.Top = cmbPNGColors.Top
+53950   cmbJPEGColors.AddItem .OptionsJPEGColorscount01
+53960   cmbJPEGColors.AddItem .OptionsJPEGColorscount02
+53970   cmbBMPColors.Left = cmbPNGColors.Left
+53980   cmbBMPColors.Width = cmbPNGColors.Width
+53990   cmbBMPColors.Top = cmbPNGColors.Top
+54000   cmbBMPColors.AddItem .OptionsBMPColorscount01
+54010   cmbBMPColors.AddItem .OptionsBMPColorscount02
+54020   cmbBMPColors.AddItem .OptionsBMPColorscount03
+54030   cmbBMPColors.AddItem .OptionsBMPColorscount04
+54040   cmbBMPColors.AddItem .OptionsBMPColorscount05
+54050   cmbBMPColors.AddItem .OptionsBMPColorscount06
+54060   cmbBMPColors.AddItem .OptionsBMPColorscount07
+54070   cmbPCXColors.Left = cmbPNGColors.Left
+54080   cmbPCXColors.Width = cmbPNGColors.Width
+54090   cmbPCXColors.Top = cmbPNGColors.Top
+54100   cmbPCXColors.AddItem .OptionsPCXColorscount01
+54110   cmbPCXColors.AddItem .OptionsPCXColorscount02
+54120   cmbPCXColors.AddItem .OptionsPCXColorscount03
+54130   cmbPCXColors.AddItem .OptionsPCXColorscount04
+54140   cmbPCXColors.AddItem .OptionsPCXColorscount05
+54150   cmbPCXColors.AddItem .OptionsPCXColorscount06
+54160   cmbTIFFColors.Left = cmbPNGColors.Left
+54170   cmbTIFFColors.Width = cmbPNGColors.Width
+54180   cmbTIFFColors.Top = cmbPNGColors.Top
+54190   cmbTIFFColors.AddItem .OptionsTIFFColorscount01
+54200   cmbTIFFColors.AddItem .OptionsTIFFColorscount02
+54210   cmbTIFFColors.AddItem .OptionsTIFFColorscount03
+54220   cmbTIFFColors.AddItem .OptionsTIFFColorscount04
+54230   cmbTIFFColors.AddItem .OptionsTIFFColorscount05
+54240   cmbTIFFColors.AddItem .OptionsTIFFColorscount06
+54250   cmbTIFFColors.AddItem .OptionsTIFFColorscount07
+54260   cmbTIFFColors.AddItem .OptionsTIFFColorscount08
 54270
-54280  chkPDFEmbedAll.Value = 1
-54290  chkPDFSubSetFonts.Value = 1
-54300  txtPDFSubSetPerc.Text = 100
-54310
-54320  cmbPDFColorModel.ListIndex = 1
-54330  chkPDFCMYKtoRGB.Value = 1
-54340  chkPDFPreserveOverprint.Value = 1
-54350  chkPDFPreserveTransfer.Value = 1
-54360  chkPDFPreserveHalftone.Value = 0
+54280   dmFraBitmapGeneral.Caption = .OptionsImageSettings
+54290   lblBitmapResolution = .OptionsBitmapResolution
+54300   lblJPEGQuality = .OptionsJPEGQuality
+54310   lblBitmapColors = .OptionsPDFColors
+54320   lblProcessPriority.Caption = .OptionsProcesspriority
+54330   lblLangLevel.Caption = .OptionsPSLanguageLevel
+54340
+54350   cmdAsso.Caption = .OptionsAssociatePSFiles
+54360  End With
 54370
-54380  cmbPNGColors.ListIndex = 0
-54390  cmbJPEGColors.ListIndex = 0
-54400  cmbBMPColors.ListIndex = 0
-54410  cmbPCXColors.ListIndex = 0
-54420  cmbTIFFColors.ListIndex = 0
-54430  txtBitmapResolution.Text = 150
-54440
-54450 ' chkUseStandardAuthor.Value = 1
-54460  txtStandardAuthor.Text = vbNullString
-54470
-54480  With cmbPSLanguageLevel
-54490   .AddItem "1"
-54500   .AddItem "1.5"
-54510   .AddItem "2"
-54520   .AddItem "3"
-54530  End With
-54540  With cmbEPSLanguageLevel
-54550   .AddItem "1"
-54560   .AddItem "1.5"
-54570   .AddItem "2"
-54580   .AddItem "3"
-54590  End With
-54600
-54610  With lsvFilenameSubst
-54620   .Appearance = ccFlat
-54630   .ColumnHeaders.Clear
-54640   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
-54650   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
-54660   .HideColumnHeaders = True
-54670   .GridLines = True
-54680   .FullRowSelect = True
-54690   .HideSelection = False
-54700  End With
-54710
-54720  With cmbPDFEncryptor
-54730   .Clear
-54740   .AddItem "Ghostscript (>= 8.14)"
-54750   .ItemData(.NewIndex) = 0
-54760   .AddItem "PDFEnc"
-54770   .ItemData(.NewIndex) = 1
-54780
-54790   SecurityIsPossible = True
-54800
-54810   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
-54820    .RemoveItem 1
-54830    .ListIndex = 0
-54840    Options.PDFEncryptor = .ItemData(.ListIndex)
-54850   End If
-54860   If GhostScriptSecurity = False Then
-54870    .RemoveItem 0
-54880   End If
-54890   If .ListCount = 0 Then
-54900     chkUseSecurity.Value = 0
-54910     chkUseSecurity.Enabled = False
-54920     SecurityIsPossible = False
-54930    Else
-54940     For i = 0 To .ListCount - 1
-54950      If .ItemData(i) = Options.PDFEncryptor Then
-54960       .ListIndex = i
-54970       Exit For
-54980      End If
-54990     Next i
-55000     If .ListIndex = -1 Then
-55010      .ListIndex = 0
-55020      Options.PDFEncryptor = .ItemData(.ListIndex)
-55030     End If
-55040   End If
-55050  End With
-55060
-55070  If Options.PDFHighEncryption <> 0 Then
-55080    optEncHigh.Value = True
-55090   Else
-55100    optEncLow.Value = True
-55110  End If
-55120
-55130  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-55140  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-55150  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-55160
-55170  If chkUseStandardAuthor.Value = 1 Then
-55180    txtStandardAuthor.Enabled = True
-55190    txtStandardAuthor.BackColor = &H80000005
-55200   Else
-55210    txtStandardAuthor.Enabled = False
-55220    txtStandardAuthor.BackColor = &H8000000F
-55230  End If
-55240  With Options
-55250   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-55260  End With
-55270  ieb.Refresh
-55280  If chkUseAutosave.Value = 1 Then
-55290    ViewAutosave True
-55300   Else
-55310    ViewAutosave False
-55320  End If
-55330
-55340  With txtGSbin
-55350   .ToolTipText = .Text
-55360  End With
-55370  With txtGSlib
-55380   .ToolTipText = .Text
-55390  End With
-55400  With txtGSfonts
-55410   .ToolTipText = .Text
-55420  End With
-55430  With txtTemppath
-55440   .ToolTipText = ResolveEnvironment(GetSubstFilename2(.Text))
-55450  End With
-55460
-55470  With sldProcessPriority
-55480   .TextPosition = sldBelowRight
-55490   .TickFrequency = 1
-55500   .TickStyle = sldTopLeft
-55511   Select Case .Value
-         Case 0: 'Idle
-55530     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
-55540    Case 1: 'Normal
-55550     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
-55560    Case 2: 'High
-55570     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
-55580    Case 3: 'Realtime
-55590     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
-55600   End Select
-55610  End With
-55620
-55630  If IsWin9xMe = False Then
-55640    lblProcessPriority.Enabled = True
-55650    sldProcessPriority.Enabled = True
-55660   Else
-55670    lblProcessPriority.Enabled = False
-55680    sldProcessPriority.Enabled = False
-55690  End If
-55700  UpdateSecurityFields
-55710
-55720  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
- cmbGhostscript.Clear: Set reg = New clsRegistry
-55740  reg.hkey = HKEY_LOCAL_MACHINE
+54380  If IsPsAssociate = False Then
+54390    cmdAsso.Enabled = True
+54400   Else
+54410    cmdAsso.Enabled = False
+54420  End If
+54430
+54440  txtPDFRes.Text = 600
+54450  cmbPDFCompat.ListIndex = 1
+54460  cmbPDFRotate.ListIndex = 0
+54470  cmbPDFOverprint.ListIndex = 0
+54480  chkPDFASCII85.Value = 0
+54490
+54500  chkPDFTextComp.Value = 1
+54510
+54520  chkPDFColorComp.Value = 1
+54530  chkPDFColorResample.Value = 0
+54540  cmbPDFColorComp.ListIndex = 0
+54550  cmbPDFColorResample.ListIndex = 0
+54560  txtPDFColorRes.Text = 300
+54570
+54580  chkPDFGreyComp.Value = 1
+54590  chkPDFGreyResample.Value = 0
+54600  cmbPDFGreyComp.ListIndex = 0
+54610  cmbPDFGreyResample.ListIndex = 0
+54620  txtPDFGreyRes.Text = 300
+54630
+54640  chkPDFMonoComp.Value = 1
+54650  chkPDFMonoResample.Value = 0
+54660  cmbPDFMonoComp.ListIndex = 0
+54670  cmbPDFMonoResample.ListIndex = 0
+54680  txtPDFMonoRes.Text = 1200
+54690
+54700  chkPDFEmbedAll.Value = 1
+54710  chkPDFSubSetFonts.Value = 1
+54720  txtPDFSubSetPerc.Text = 100
+54730
+54740  cmbPDFColorModel.ListIndex = 1
+54750  chkPDFCMYKtoRGB.Value = 1
+54760  chkPDFPreserveOverprint.Value = 1
+54770  chkPDFPreserveTransfer.Value = 1
+54780  chkPDFPreserveHalftone.Value = 0
+54790
+54800  cmbPNGColors.ListIndex = 0
+54810  cmbJPEGColors.ListIndex = 0
+54820  cmbBMPColors.ListIndex = 0
+54830  cmbPCXColors.ListIndex = 0
+54840  cmbTIFFColors.ListIndex = 0
+54850  txtBitmapResolution.Text = 150
+54860
+54870 ' chkUseStandardAuthor.Value = 1
+54880  txtStandardAuthor.Text = vbNullString
+54890
+54900  With cmbPSLanguageLevel
+54910   .AddItem "1"
+54920   .AddItem "1.5"
+54930   .AddItem "2"
+54940   .AddItem "3"
+54950  End With
+54960  With cmbEPSLanguageLevel
+54970   .AddItem "1"
+54980   .AddItem "1.5"
+54990   .AddItem "2"
+55000   .AddItem "3"
+55010  End With
+55020
+55030  With lsvFilenameSubst
+55040   .Appearance = ccFlat
+55050   .ColumnHeaders.Clear
+55060   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
+55070   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
+55080   .HideColumnHeaders = True
+55090   .GridLines = True
+55100   .FullRowSelect = True
+55110   .HideSelection = False
+55120  End With
+55130
+55140  With cmbPDFEncryptor
+55150   .Clear
+55160   .AddItem "Ghostscript (>= 8.14)"
+55170   .ItemData(.NewIndex) = 0
+55180   .AddItem "PDFEnc"
+55190   .ItemData(.NewIndex) = 1
+55200
+55210   SecurityIsPossible = True
+55220
+55230   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
+55240    .RemoveItem 1
+55250    .ListIndex = 0
+55260    Options.PDFEncryptor = .ItemData(.ListIndex)
+55270   End If
+55280   If GhostScriptSecurity = False Then
+55290    .RemoveItem 0
+55300   End If
+55310   If .ListCount = 0 Then
+55320     chkUseSecurity.Value = 0
+55330     chkUseSecurity.Enabled = False
+55340     SecurityIsPossible = False
+55350    Else
+55360     For i = 0 To .ListCount - 1
+55370      If .ItemData(i) = Options.PDFEncryptor Then
+55380       .ListIndex = i
+55390       Exit For
+55400      End If
+55410     Next i
+55420     If .ListIndex = -1 Then
+55430      .ListIndex = 0
+55440      Options.PDFEncryptor = .ItemData(.ListIndex)
+55450     End If
+55460   End If
+55470  End With
+55480
+55490  If Options.PDFHighEncryption <> 0 Then
+55500    optEncHigh.Value = True
+55510   Else
+55520    optEncLow.Value = True
+55530  End If
+55540
+55550  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+55560  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+55570  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+55580
+55590  If chkUseStandardAuthor.Value = 1 Then
+55600    txtStandardAuthor.Enabled = True
+55610    txtStandardAuthor.BackColor = &H80000005
+55620   Else
+55630    txtStandardAuthor.Enabled = False
+55640    txtStandardAuthor.BackColor = &H8000000F
+55650  End If
+55660  With Options
+55670   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+55680  End With
+55690  ieb.Refresh
+55700  If chkUseAutosave.Value = 1 Then
+55710    ViewAutosave True
+55720   Else
+55730    ViewAutosave False
+55740  End If
 55750
-55760  Set gsvers = GetAllGhostscriptversions
-55770
-55780  If gsvers.Count = 0 Then
-55790    cmbGhostscript.Enabled = False
-55800   Else
-55810    For i = 1 To gsvers.Count
-55820     cmbGhostscript.AddItem gsvers.Item(i)
-55830    Next i
-55840    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
-55850    For i = 0 To cmbGhostscript.ListCount - 1
-55860     tStr = ""
-55870     If InStr(cmbGhostscript.List(i), ":") Then
-55880       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-55890       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
-55900        cmbGhostscript.ListIndex = i
-55910        Exit For
-55920       End If
-55930      Else
-55940       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
-55950        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
-55960        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-55970         tsf = Split(cmbGhostscript.List(i), " ")
-55980         reg.Subkey = tsf(UBound(tsf))
-55990         tStr = reg.GetRegistryValue("GS_DLL")
-56000         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56010          cmbGhostscript.ListIndex = i
-56020          Exit For
-56030         End If
-56040        End If
-56050       End If
-56060       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
-56070        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
-56080        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-56090         tsf = Split(cmbGhostscript.List(i), " ")
-56100         reg.Subkey = tsf(UBound(tsf))
-56110         tStr = reg.GetRegistryValue("GS_DLL")
-56120         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56130          cmbGhostscript.ListIndex = i
-56140          Exit For
-56150         End If
-56160        End If
-56170       End If
-56180       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
-56190        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
-56200        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-56210         tsf = Split(cmbGhostscript.List(i), " ")
-56220         reg.Subkey = tsf(UBound(tsf))
-56230         tStr = reg.GetRegistryValue("GS_DLL")
-56240         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-56250          cmbGhostscript.ListIndex = i
-56260          Exit For
-56270         End If
-56280        End If
-56290       End If
-56300     End If
-56310    Next i
-56320  End If
-56330  Set reg = Nothing
-56340  With cmbGhostscript
-56350   If .ListCount = 0 Then
-56360    .Enabled = False
-56370    .BackColor = &H8000000F
-56380   End If
-56390  End With
-56400
-56410  tbstrPDFOptions.ZOrder 1
-56420
-56430  If ShowOnlyOptions = True Then
-56440   FormInTaskbar Me, True, True
-56450   Caption = "PDFCreator - " & Caption
-56460  End If
-56470
-56480  ShowAcceleratorsInForm Me, True
-56490
-56500  ShowOptions Me, Options
-56510  Timer1.Enabled = True
-56520  Screen.MousePointer = vbNormal
+55760  With txtGSbin
+55770   .ToolTipText = .Text
+55780  End With
+55790  With txtGSlib
+55800   .ToolTipText = .Text
+55810  End With
+55820  With txtGSfonts
+55830   .ToolTipText = .Text
+55840  End With
+55850  With txtTemppath
+55860   .ToolTipText = ResolveEnvironment(GetSubstFilename2(.Text))
+55870  End With
+55880
+55890  With sldProcessPriority
+55900   .TextPosition = sldBelowRight
+55910   .TickFrequency = 1
+55920   .TickStyle = sldTopLeft
+55931   Select Case .Value
+         Case 0: 'Idle
+55950     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
+55960    Case 1: 'Normal
+55970     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
+55980    Case 2: 'High
+55990     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
+56000    Case 3: 'Realtime
+56010     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
+56020   End Select
+56030  End With
+56040
+56050  If IsWin9xMe = False Then
+56060    lblProcessPriority.Enabled = True
+56070    sldProcessPriority.Enabled = True
+56080   Else
+56090    lblProcessPriority.Enabled = False
+56100    sldProcessPriority.Enabled = False
+56110  End If
+56120  UpdateSecurityFields
+56130
+56140  If Options.RunProgramAfterSaving Then
+56150    ViewRunProgramAfterSaving True
+56160   Else
+56170    ViewRunProgramAfterSaving False
+56180  End If
+56190  If Options.RunProgramBeforeSaving Then
+56200    ViewRunProgramBeforeSaving True
+56210   Else
+56220    ViewRunProgramBeforeSaving False
+56230  End If
+56240
+56250  Set Files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\", "*.*", SortedByName)
+56260  For i = 1 To Files.Count
+56270   tsf = Split(Files(i), "|")
+56280   SplitPath tsf(1), , Path, Filename, , Ext
+56290   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
+   UCase$(Ext) <> "JPG" And UCase$(Ext) <> "BMP" And UCase$(Ext) <> "PCX" And _
+   UCase$(Ext) <> "TIF" And UCase$(Ext) <> "EPS" And UCase$(Ext) <> "PS" Then
+56320    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\") Then
+56330      cmbRunProgramAfterSavingProgramname.AddItem tsf(0)
+56340     Else
+56350      cmbRunProgramAfterSavingProgramname.AddItem Filename
+56360    End If
+56370   End If
+56380  Next i
+56390
+56400  Set Files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\", "*.*", SortedByName)
+56410  For i = 1 To Files.Count
+56420   tsf = Split(Files(i), "|")
+56430   SplitPath tsf(1), , Path, Filename, , Ext
+56440   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
+   UCase$(Ext) <> "JPG" And UCase$(Ext) <> "BMP" And UCase$(Ext) <> "PCX" And _
+   UCase$(Ext) <> "TIF" And UCase$(Ext) <> "EPS" And UCase$(Ext) <> "PS" Then
+56470    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\") Then
+56480      cmbRunProgramBeforeSavingProgramname.AddItem tsf(0)
+56490     Else
+56500      cmbRunProgramBeforeSavingProgramname.AddItem Filename
+56510    End If
+56520   End If
+56530  Next i
+56540
+56550  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
+ cmbGhostscript.Clear: Set reg = New clsRegistry
+56570  reg.hkey = HKEY_LOCAL_MACHINE
+56580
+56590  Set gsvers = GetAllGhostscriptversions
+56600
+56610  If gsvers.Count = 0 Then
+56620    cmbGhostscript.Enabled = False
+56630   Else
+56640    For i = 1 To gsvers.Count
+56650     cmbGhostscript.AddItem gsvers.Item(i)
+56660    Next i
+56670    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
+56680    For i = 0 To cmbGhostscript.ListCount - 1
+56690     tStr = ""
+56700     If InStr(cmbGhostscript.List(i), ":") Then
+56710       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+56720       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
+56730        cmbGhostscript.ListIndex = i
+56740        Exit For
+56750       End If
+56760      Else
+56770       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
+56780        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
+56790        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+56800         tsf = Split(cmbGhostscript.List(i), " ")
+56810         reg.Subkey = tsf(UBound(tsf))
+56820         tStr = reg.GetRegistryValue("GS_DLL")
+56830         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56840          cmbGhostscript.ListIndex = i
+56850          Exit For
+56860         End If
+56870        End If
+56880       End If
+56890       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
+56900        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
+56910        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+56920         tsf = Split(cmbGhostscript.List(i), " ")
+56930         reg.Subkey = tsf(UBound(tsf))
+56940         tStr = reg.GetRegistryValue("GS_DLL")
+56950         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+56960          cmbGhostscript.ListIndex = i
+56970          Exit For
+56980         End If
+56990        End If
+57000       End If
+57010       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
+57020        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
+57030        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+57040         tsf = Split(cmbGhostscript.List(i), " ")
+57050         reg.Subkey = tsf(UBound(tsf))
+57060         tStr = reg.GetRegistryValue("GS_DLL")
+57070         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+57080          cmbGhostscript.ListIndex = i
+57090          Exit For
+57100         End If
+57110        End If
+57120       End If
+57130     End If
+57140    Next i
+57150  End If
+57160  Set reg = Nothing
+57170  With cmbGhostscript
+57180   If .ListCount = 0 Then
+57190    .Enabled = False
+57200    .BackColor = &H8000000F
+57210   End If
+57220  End With
+57230
+57240  tbstrPDFOptions.ZOrder 1
+57250  tbstrProgActions.ZOrder 1
+57260
+57270  If ShowOnlyOptions = True Then
+57280   FormInTaskbar Me, True, True
+57290   Caption = "PDFCreator - " & Caption
+57300  End If
+57310
+57320  ShowAcceleratorsInForm Me, True
+57330
+57340  ShowOptions Me, Options
+57350  Timer1.Enabled = True
+57360  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -4223,82 +4577,93 @@ On Error GoTo ErrPtnr_OnError
 50640      dmFraProgDirectories.Enabled = True
 50650      dmFraProgDirectories.Visible = True
 50660      dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50670     Case "FONTS"
-50680      Set picOptions = LoadResPicture(2102, vbResIcon)
-50690      lblOptions = LanguageStrings.OptionsProgramFontDescription
-50700      dmFraProgFont.Enabled = True
-50710      dmFraProgFont.Visible = True
-50720      dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50730    End Select
-50740   Case "FORMATS"
-50751    Select Case UCase$(sItemKey)
+50670     Case "ACTIONS"
+50680      Set picOptions = LoadResPicture(2121, vbResIcon)
+50690      lblOptions = LanguageStrings.OptionsProgramActionsDescription
+50700      dmFraProgActions.Enabled = True
+50710      dmFraProgActions.Visible = True
+50720      ViewProgActions
+50730 '     dmFraProgActionsRunProgramBeforeSaving.Enabled = True
+50740 '     dmFraProgActionsRunProgramBeforeSaving.Visible = True
+50750 '     dmFraProgActionsRunProgramAfterSaving.Enabled = True
+50760 '     dmFraProgActionsRunProgramAfterSaving.Visible = True
+50770      dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50780     Case "FONTS"
+50790      Set picOptions = LoadResPicture(2102, vbResIcon)
+50800      lblOptions = LanguageStrings.OptionsProgramFontDescription
+50810      dmFraProgFont.Enabled = True
+50820      dmFraProgFont.Visible = True
+50830      dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50840    End Select
+50850   Case "FORMATS"
+50861    Select Case UCase$(sItemKey)
           Case "PDF"
-50770      Set picOptions = LoadResPicture(2111, vbResIcon)
-50780      lblOptions = LanguageStrings.OptionsPDFDescription
-50790      tbstrPDFOptions.Enabled = True
-50800      tbstrPDFOptions.Visible = True
-50810      dmFraPDFGeneral.Enabled = True
-50820      dmFraPDFGeneral.Visible = True
-50830      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-50840      dmFraPDFGeneral.Enabled = True
-50850     Case "PNG"
-50860      Set picOptions = LoadResPicture(2112, vbResIcon)
-50870      lblOptions = LanguageStrings.OptionsPNGDescription
-50880      dmFraBitmapGeneral.Enabled = True
-50890      dmFraBitmapGeneral.Visible = True
-50900      cmbPNGColors.Visible = True
-50910      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-50920     Case "JPEG"
-50930      Set picOptions = LoadResPicture(2113, vbResIcon)
-50940      lblOptions = LanguageStrings.OptionsJPEGDescription
-50950      dmFraBitmapGeneral.Enabled = True
-50960      dmFraBitmapGeneral.Visible = True
-50970      lblJPEGQuality.Caption = LanguageStrings.OptionsJPEGQuality
-50980      lblJPEGQuality.Visible = True
-50990      txtJPEGQuality.Visible = True
-51000      lblJPEQQualityProzent.Visible = True
-51010      lblJPEQQualityProzent.Left = txtJPEGQuality.Left + txtJPEGQuality.Width + 100
-51020      cmbJPEGColors.Visible = True
-51030      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51040     Case "BMP"
-51050      Set picOptions = LoadResPicture(2114, vbResIcon)
-51060      lblOptions = LanguageStrings.OptionsBMPDescription
-51070      dmFraBitmapGeneral.Enabled = True
-51080      dmFraBitmapGeneral.Visible = True
-51090      cmbBMPColors.Visible = True
-51100      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51110     Case "PCX"
-51120      Set picOptions = LoadResPicture(2115, vbResIcon)
-51130      lblOptions = LanguageStrings.OptionsPCXDescription
-51140      dmFraBitmapGeneral.Enabled = True
-51150      dmFraBitmapGeneral.Visible = True
-51160      cmbPCXColors.Visible = True
-51170      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51180     Case "TIFF"
-51190      Set picOptions = LoadResPicture(2116, vbResIcon)
-51200      lblOptions = LanguageStrings.OptionsTIFFDescription
-51210      dmFraBitmapGeneral.Enabled = True
-51220      dmFraBitmapGeneral.Visible = True
-51230      cmbTIFFColors.Visible = True
-51240      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51250     Case "PS"
-51260      Set picOptions = LoadResPicture(2117, vbResIcon)
-51270      lblOptions.Caption = LanguageStrings.OptionsPSDescription
-51280      dmFraPSGeneral.Enabled = True
-51290      dmFraPSGeneral.Visible = True
-51300      cmbPSLanguageLevel.Visible = True
-51310      dmFraPSGeneral.Caption = LanguageStrings.OptionsPSDescription
-51320      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51330     Case "EPS"
-51340      Set picOptions = LoadResPicture(2118, vbResIcon)
-51350      lblOptions.Caption = LanguageStrings.OptionsEPSDescription
-51360      dmFraPSGeneral.Enabled = True
-51370      dmFraPSGeneral.Visible = True
-51380      cmbEPSLanguageLevel.Visible = True
-51390      dmFraPSGeneral.Caption = LanguageStrings.OptionsEPSDescription
-51400      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51410    End Select
-51420  End Select
+50880      Set picOptions = LoadResPicture(2111, vbResIcon)
+50890      lblOptions = LanguageStrings.OptionsPDFDescription
+50900      tbstrPDFOptions.Enabled = True
+50910      tbstrPDFOptions.Visible = True
+50920      dmFraPDFGeneral.Enabled = True
+50930      dmFraPDFGeneral.Visible = True
+50940      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+50950      dmFraPDFGeneral.Enabled = True
+50960     Case "PNG"
+50970      Set picOptions = LoadResPicture(2112, vbResIcon)
+50980      lblOptions = LanguageStrings.OptionsPNGDescription
+50990      dmFraBitmapGeneral.Enabled = True
+51000      dmFraBitmapGeneral.Visible = True
+51010      cmbPNGColors.Visible = True
+51020      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51030     Case "JPEG"
+51040      Set picOptions = LoadResPicture(2113, vbResIcon)
+51050      lblOptions = LanguageStrings.OptionsJPEGDescription
+51060      dmFraBitmapGeneral.Enabled = True
+51070      dmFraBitmapGeneral.Visible = True
+51080      lblJPEGQuality.Caption = LanguageStrings.OptionsJPEGQuality
+51090      lblJPEGQuality.Visible = True
+51100      txtJPEGQuality.Visible = True
+51110      lblJPEQQualityProzent.Visible = True
+51120      lblJPEQQualityProzent.Left = txtJPEGQuality.Left + txtJPEGQuality.Width + 100
+51130      cmbJPEGColors.Visible = True
+51140      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51150     Case "BMP"
+51160      Set picOptions = LoadResPicture(2114, vbResIcon)
+51170      lblOptions = LanguageStrings.OptionsBMPDescription
+51180      dmFraBitmapGeneral.Enabled = True
+51190      dmFraBitmapGeneral.Visible = True
+51200      cmbBMPColors.Visible = True
+51210      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51220     Case "PCX"
+51230      Set picOptions = LoadResPicture(2115, vbResIcon)
+51240      lblOptions = LanguageStrings.OptionsPCXDescription
+51250      dmFraBitmapGeneral.Enabled = True
+51260      dmFraBitmapGeneral.Visible = True
+51270      cmbPCXColors.Visible = True
+51280      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51290     Case "TIFF"
+51300      Set picOptions = LoadResPicture(2116, vbResIcon)
+51310      lblOptions = LanguageStrings.OptionsTIFFDescription
+51320      dmFraBitmapGeneral.Enabled = True
+51330      dmFraBitmapGeneral.Visible = True
+51340      cmbTIFFColors.Visible = True
+51350      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51360     Case "PS"
+51370      Set picOptions = LoadResPicture(2117, vbResIcon)
+51380      lblOptions.Caption = LanguageStrings.OptionsPSDescription
+51390      dmFraPSGeneral.Enabled = True
+51400      dmFraPSGeneral.Visible = True
+51410      cmbPSLanguageLevel.Visible = True
+51420      dmFraPSGeneral.Caption = LanguageStrings.OptionsPSDescription
+51430      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51440     Case "EPS"
+51450      Set picOptions = LoadResPicture(2118, vbResIcon)
+51460      lblOptions.Caption = LanguageStrings.OptionsEPSDescription
+51470      dmFraPSGeneral.Enabled = True
+51480      dmFraPSGeneral.Visible = True
+51490      cmbEPSLanguageLevel.Visible = True
+51500      dmFraPSGeneral.Caption = LanguageStrings.OptionsEPSDescription
+51510      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51520    End Select
+51530  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -4473,6 +4838,23 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub tbstrProgActions_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ViewProgActions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "tbstrProgActions_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub Timer1_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -4581,7 +4963,8 @@ On Error GoTo ErrPtnr_OnError
 51020
 51030  CheckCmdFilenameSubst
 51040  CorrectCmbCharset
-51050 ' Call ieb_ItemClick("PROGRAM", "GENERAL")
+51050  tbstrProgActions.Tabs(2).Selected = True
+51060 ' Call ieb_ItemClick("PROGRAM", "GENERAL")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -4787,6 +5170,108 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmOptions", "ViewAutosaveDirectory")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub ViewProgActions()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case tbstrProgActions.SelectedItem.Index
+        Case 1
+50030    dmFraProgActionsRunProgramBeforeSaving.Visible = True
+50040    dmFraProgActionsRunProgramBeforeSaving.Enabled = True
+50050    dmFraProgActionsRunProgramAfterSaving.Visible = False
+50060    dmFraProgActionsRunProgramAfterSaving.Enabled = False
+50070   Case 2
+50080    dmFraProgActionsRunProgramAfterSaving.Visible = True
+50090    dmFraProgActionsRunProgramAfterSaving.Enabled = True
+50100    dmFraProgActionsRunProgramBeforeSaving.Visible = False
+50110    dmFraProgActionsRunProgramBeforeSaving.Enabled = False
+50120  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "ViewProgActions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub ViewRunProgramAfterSaving(ViewIt As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lblRunProgramAfterSavingProgramname.Enabled = ViewIt
+50020  cmbRunProgramAfterSavingProgramname.Enabled = ViewIt
+50030  lblRunProgramAfterSavingProgramParameters.Enabled = ViewIt
+50040  txtRunProgramAfterSavingProgramParameters.Enabled = ViewIt
+50050  chkRunProgramAfterSavingWaitUntilReady.Enabled = ViewIt
+50060  lblRunProgramAfterSavingWindowstyle.Enabled = ViewIt
+50070  cmbRunProgramAfterSavingWindowstyle.Enabled = ViewIt
+50080  cmdRunProgramAfterSavingPrognameChoice.Enabled = ViewIt
+50090  cmdRunProgramAfterSavingPrognameEdit.Enabled = ViewIt
+50100
+50110  If ViewIt = True Then
+50120    cmbRunProgramAfterSavingProgramname.BackColor = &H80000005
+50130    cmbRunProgramAfterSavingWindowstyle.BackColor = &H80000005
+50140    txtRunProgramAfterSavingProgramParameters.BackColor = &H80000005
+50150   Else
+50160    cmbRunProgramAfterSavingProgramname.BackColor = &H8000000F
+50170    cmbRunProgramAfterSavingWindowstyle.BackColor = &H8000000F
+50180    txtRunProgramAfterSavingProgramParameters.BackColor = &H8000000F
+50190  End If
+50200
+50210  cmbRunProgramAfterSavingProgramname_Change
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "ViewRunProgramAfterSaving")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub ViewRunProgramBeforeSaving(ViewIt As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lblRunProgramBeforeSavingProgramname.Enabled = ViewIt
+50020  cmbRunProgramBeforeSavingProgramname.Enabled = ViewIt
+50030  lblRunProgramBeforeSavingProgramParameters.Enabled = ViewIt
+50040  txtRunProgramBeforeSavingProgramParameters.Enabled = ViewIt
+50050  chkRunProgramBeforeSavingWaitUntilReady.Enabled = ViewIt
+50060  lblRunProgramBeforeSavingWindowstyle.Enabled = ViewIt
+50070  cmbRunProgramBeforeSavingWindowstyle.Enabled = ViewIt
+50080  cmdRunProgramBeforeSavingPrognameChoice.Enabled = ViewIt
+50090  cmdRunProgramBeforeSavingPrognameEdit.Enabled = ViewIt
+50100
+50110  If ViewIt = True Then
+50120    cmbRunProgramBeforeSavingProgramname.BackColor = &H80000005
+50130    cmbRunProgramBeforeSavingWindowstyle.BackColor = &H80000005
+50140    txtRunProgramBeforeSavingProgramParameters.BackColor = &H80000005
+50150   Else
+50160    cmbRunProgramBeforeSavingProgramname.BackColor = &H8000000F
+50170    cmbRunProgramBeforeSavingWindowstyle.BackColor = &H8000000F
+50180    txtRunProgramBeforeSavingProgramParameters.BackColor = &H8000000F
+50190  End If
+50200
+50210  cmbRunProgramBeforeSavingProgramname_Change
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "ViewRunProgramBeforeSaving")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
