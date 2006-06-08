@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -2954,7 +2954,6 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "PDFCompressionGreyCompressionJPEGMediumFactor"
   .Add "PDFCompressionGreyCompressionJPEGLowFactor"
   .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
-  .Add "SendEmailAfterAutoSaving"
  End With
  IsSpecialString = False
  For i = 1 To ss.Count
