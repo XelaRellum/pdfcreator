@@ -3023,15 +3023,17 @@ Private Sub cmdFilenameSubstMove_Click(Index As Integer)
 End Sub
 
 Private Sub cmdGetAutosaveDirectory_Click()
-Dim strFolder As String
-strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
-If Len(strFolder) = 0 Then Exit Sub
-txtAutosaveDirectory.Text = CompletePath(strFolder)
+ Dim strFolder As String
+ strFolder = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
+ If Len(strFolder) = 0 Then
+  Exit Sub
+ End If
+ txtAutosaveDirectory.Text = CompletePath(strFolder)
 End Sub
 
 Private Sub cmdGetgsbinDirectory_Click()
  Dim strFolder As String, aw As Long
- strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsGhostscriptBinariesDirectoryPrompt)
+ strFolder = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsGhostscriptBinariesDirectoryPrompt)
  If Len(strFolder) = 0 Then
   Exit Sub
  End If
@@ -3059,7 +3061,7 @@ End Sub
 
 Private Sub cmdGetgsfontsDirectory_Click()
  Dim strFolder As String
- strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsGhostscriptFontsDirectoryPrompt)
+ strFolder = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsGhostscriptFontsDirectoryPrompt)
  If Len(strFolder) = 0 Then Exit Sub
  strFolder = CompletePath(strFolder)
  If LenB(Dir(strFolder & "*.afm", vbNormal)) = 0 And LenB(Dir(strFolder & "*.pfb", vbNormal)) = 0 Then
@@ -3074,7 +3076,7 @@ End Sub
 
 Private Sub cmdGetgslibDirectory_Click()
  Dim strFolder As String
- strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsGhostscriptLibrariesDirectoryPrompt)
+ strFolder = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsGhostscriptLibrariesDirectoryPrompt)
  If Len(strFolder) = 0 Then Exit Sub
  strFolder = CompletePath(strFolder)
  If LenB(Dir(strFolder & "*.*", vbNormal)) = 0 Then
@@ -3089,7 +3091,7 @@ End Sub
 
 Private Sub cmdGetgsresourceDirectory_Click()
  Dim strFolder As String
- strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsGhostscriptResourceDirectoryPrompt)
+ strFolder = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsGhostscriptResourceDirectoryPrompt)
  If Len(strFolder) = 0 Then Exit Sub
  strFolder = CompletePath(strFolder)
  With txtGSresource
@@ -3100,7 +3102,7 @@ End Sub
 
 Private Sub cmdGetTemppath_Click()
  Dim strFolder As String
- strFolder = BrowseForFolder(Me.hwnd, LanguageStrings.OptionsPrintertempDirectoryPrompt)
+ strFolder = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsPrintertempDirectoryPrompt)
  If Len(strFolder) = 0 Then Exit Sub
  strFolder = CompletePath(strFolder)
  With txtTemppath
