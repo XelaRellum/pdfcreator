@@ -2927,7 +2927,6 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "StampString"
   .Add "StampUseOutlineFont"
   .Add "StartStandardProgram"
-  .Add "StandardSaveformat"
   .Add "PDFOptimize"
   .Add "StandardMailDomain"
   .Add "Toolbars"

@@ -758,17 +758,25 @@ Private Function Create_eDoc() As String
  Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
   tErrNumber As Long, Filename As String, FilterIndex As Long, _
   Cancel As Boolean, PDFDocInfo As tPDFDocInfo, Files As Collection, _
-  tStrf() As String, i As Long, Ext As String, Ext2 As String
+  tStrf() As String, i As Long, Ext As String, Ext2 As String, Extf(7) As String
 
+ Extf(0) = "*.pdf"
+ Extf(1) = "*.png"
+ Extf(2) = "*.jpg"
+ Extf(3) = "*.bmp"
+ Extf(4) = "*.pcx"
+ Extf(5) = "*.tif"
+ Extf(6) = "*.ps"
+ Extf(7) = "*.eps"
  With LanguageStrings
-  Filter = .ListPDFFiles & " (*.pdf)|*.pdf|" & _
-   .PrintingPNGFiles & " (*.png)|*.png|" & _
-   .PrintingJPEGFiles & " (*.jpg)|*.jpg|" & _
-   .PrintingBMPFiles & " (*.bmp)|*.bmp|" & _
-   .PrintingPCXFiles & " (*.pcx)|*.pcx|" & _
-   .PrintingTIFFFiles & " (*.tif)|*.tif|" & _
-   .PrintingPSFiles & " (*.ps)|*.ps|" & _
-   .PrintingEPSFiles & " (*.eps)|*.eps"
+  Filter = .ListPDFFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
+   .PrintingPNGFiles & " (" & Extf(1) & ")|" & Extf(1) & "|" & _
+   .PrintingJPEGFiles & " (" & Extf(2) & ")|" & Extf(2) & "|" & _
+   .PrintingBMPFiles & " (" & Extf(3) & ")|" & Extf(3) & "|" & _
+   .PrintingPCXFiles & " (" & Extf(4) & "|" & Extf(4) & "|" & _
+   .PrintingTIFFFiles & " (" & Extf(5) & ")|" & Extf(5) & "|" & _
+   .PrintingPSFiles & " (" & Extf(6) & ")|" & Extf(6) & "|" & _
+   .PrintingEPSFiles & " (" & Extf(7) & ")|" & Extf(7)
  End With
  If IsInIDE Then
   Filter = Filter & "|(*.txt)|*.txt"
@@ -776,12 +784,7 @@ Private Function Create_eDoc() As String
  FilterIndex = 1
  If InStr(1, Filter, "|", vbTextCompare) > 0 Then
   tStrf = Split(Filter, "|")
-  If InStr(1, Options.StandardSaveformat, ".") Then
-    SplitPath Options.StandardSaveformat, , , , , Ext2
-   Else
-    Ext2 = Options.StandardSaveformat
-  End If
-  Ext2 = UCase$(Ext2)
+  Ext2 = UCase$(Mid$(Extf(Options.StandardSaveformat), 3))
   For i = 1 To UBound(tStrf) Step 2
    SplitPath tStrf(i), , , , , Ext
    If Ext2 = UCase$(Ext) Then
