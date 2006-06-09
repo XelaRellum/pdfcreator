@@ -7,6 +7,7 @@
 <UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Einleitung">
+		<param name="Local" value="html\welcome.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
@@ -33,6 +34,7 @@
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Verwendung von PDFCreator">
+		<param name="Local" value="html\installationtypes.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
@@ -60,14 +62,6 @@
 			<param name="Local" value="html\changelang.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="PDFCreator Einstellungen">
-			<param name="Local" value="html\settings.htm">
-			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Versteckte Einstellungen">
-			<param name="Local" value="html\hiddensettings.htm">
-			</OBJECT>
-		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Aktualisierung des Programmes">
 			<param name="Local" value="html\update.htm">
 			</OBJECT>
@@ -78,10 +72,16 @@
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Einstellungen">
+		<param name="Local" value="html\settings.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="PDFCreator Einstellungen">
+			<param name="Local" value="html\settings.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Programmeinstellungen">
+			<param name="Local" value="html\generalsettings.htm">
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
@@ -124,10 +124,12 @@
 		</UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Formateinstellungen">
+			<param name="Local" value="html\pdfgeneral.htm">
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="PDF">
+				<param name="Local" value="html\pdfgeneral.htm">
 				</OBJECT>
 			<UL>
 				<LI> <OBJECT type="text/sitemap">
@@ -180,9 +182,14 @@
 				<param name="Local" value="html\epssettings.htm">
 				</OBJECT>
 		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Versteckte Einstellungen">
+			<param name="Local" value="html\hiddensettings.htm">
+			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="COM-Schnittstelle">
+		<param name="Local" value="html\cominterface.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
@@ -208,6 +215,7 @@
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Das &Uuml;bersetzungsprogramm &quot;TransTool&quot;">
+		<param name="Local" value="html\transtool.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
