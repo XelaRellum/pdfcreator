@@ -142,12 +142,12 @@ PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
 PNGColorscount|cmbPNGColors.Listindex|Long|0|0|4
 
 ' <Program>
-PrintAfterSaving||Boolean|0||
-PrintAfterSavingDuplex||Boolean|0||
-PrintAfterSavingNoCancel||Boolean|0||
-PrintAfterSavingPrinter||String|||
-PrintAfterSavingQueryUser||Long|0|0|3
-PrintAfterSavingTumble||Boolean|0||
+PrintAfterSaving|chkPrintAfterSaving.Value|Boolean|0||
+PrintAfterSavingDuplex|chkPrintAfterSavingDuplex.Value|Boolean|0||
+PrintAfterSavingNoCancel|chkPrintAfterSavingNoCancel.Value|Boolean|0||
+PrintAfterSavingPrinter|cmbPrintAfterSavingPrinter.Text|String|||
+PrintAfterSavingQueryUser|cmbPrintAfterSavingQueryUser.Listindex|Long|0|0|3
+PrintAfterSavingTumble|cmbPrintAfterSavingTumble.Listindex|Long|0|0|1
 PrinterStop|PrinterStop|Boolean|0||
 PrinterTemppath|txtTemppath.Text|String|<Temp>PDFCreator\||
 ProcessPriority|sldProcessPriority.Value|Long|1|0|3

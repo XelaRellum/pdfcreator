@@ -66,6 +66,11 @@
 		<param name="Local" value="html\acknowledgements.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Actions">
+		<param name="Name" value="Actions">
+		<param name="Local" value="html\actions.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="AFPL">
 		<param name="Name" value="Aladdin Free Public License">
 		<param name="Local" value="html\afpl.htm">
@@ -266,6 +271,11 @@
 		<param name="Name" value="Postscript">
 		<param name="Name" value="PS Settings">
 		<param name="Local" value="html\pssettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Print after saving">
+		<param name="Name" value="Print">
+		<param name="Local" value="html\print.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Printing">
