@@ -1876,7 +1876,7 @@ On Error GoTo ErrPtnr_OnError
 50310  If Options.PrintAfterSavingQueryUser > 0 Then
 50320   AddParams "-QueryUser=" & Options.PrintAfterSavingQueryUser
 50330  End If
-50340  AddParams "-sOutputFile=" & Options.PrintAfterSavingPrinter
+50340  AddParams "-sOutputFile=\\spool\" & Options.PrintAfterSavingPrinter
 50350  If Options.PrintAfterSavingDuplex = 1 Then
 50360   If Options.PrintAfterSavingTumble = 1 Then
 50370     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"

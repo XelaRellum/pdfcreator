@@ -61,6 +61,11 @@
 		<param name="Local" value="html\afpl.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Aktionen">
+		<param name="Name" value="Aktionen">
+		<param name="Local" value="html\actions.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Allgemeine Einstellungen">
 		<param name="Name" value="Allgemeine Einstellungen">
 		<param name="Local" value="html\generalsettings.htm">
@@ -121,6 +126,11 @@
 		<param name="Name" value="Drucken">
 		<param name="Name" value="Erstellen einer PDF-Datei">
 		<param name="Local" value="html\createpdf.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Drucken nach dem Speichern">
+		<param name="Name" value="Drucken">
+		<param name="Local" value="html\print.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Einstellungen">

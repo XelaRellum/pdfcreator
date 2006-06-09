@@ -96,38 +96,6 @@
         &uuml;bernimmt das Passwort automatisch als Benutzerpasswort.<em> <strong>ACHTUNG:</strong></em>
         Der Text in der PDFCreator.ini ist nicht verschl&uuml;sselt. Sie Benutzen
         diese Option auf eigene Gefahr.</p>
-      <p><strong>PrintAfterSaving:</strong> Druckt automatisch ein Dokument nach dem Speichern.<br>
-        <em>Eigenschaften:</em><br>
-        0 - Aus (Standard) <br>
-        1 - Ein</p>
-        <p><strong>PrintAfterSavingPrinter:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann hier der Name des Druckers vorgegeben werden.
-         Wird diese Einstellung leer gelassen oder existiert der Drucker nicht, erscheint ein Druckerauswahl-Dialog. Es kann ein lokaler Drucker wie auch ein
-         Netzwerkdrucker ausgew&auml;hlt werden. Dabei ist immer der Pr&auml;fix "\\spool\" zu verwenden. Standardm&auml;&szlig;ig ist diese Einstellung leer.<br>
-        <em>Beispiele:</em><br>
-         PrintAfterSavingPrinter="\\spool\HP4300"<br>
-         PrintAfterSavingPrinter="\\spool\\\printserver\HP4300"</p>
-      <p><strong>PrintAfterSavingQueryUser:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit dieser Einstellung vorgegeben werden, ob dem
-         Benutzer ein Druckerdialog angezeigt werden soll.<br>
-        <em>Eigenschaften:</em><br>
-         0 - Aus (Standard)<br>
-         1 - Zeigt den Standard-Druckerdialog<br>
-         2 - Zeigt den Installations-Druckerdialog<br>
-         3 - W&auml;hlt den Standarddrucker ohne eine Benutzerauswahl.</p>
-      <p><strong>PrintAfterSavingNoCancel:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit Hilfe dieser Einstellung die Anzeige des
-        Druckfortschrittes aktiviert bzw. deaktiert werden.<br>
-        <em>Eigenschaften:</em><br>
-         0 - Aus (Standard)<br>
-         1 - Ein</p>
-      <p><strong>PrintAfterSavingDuplex:</strong> Ist die Einstellung PrintAfterSaving aktiviert, kann mit dieser Einstellung der Duplexdruck,
-        falls vom Drucker unterst&uuml;tzt, aktiviert werden.<br>
-        <em>Eigenschaften:</em><br>
-         0 - Kein Duplexdruck (Standard) <br>
-         1 - Verwendet Duplexdruck, falls vom Drucker unterst&uuml;tzt</p>
-      <p><strong>PrintAfterSavingTumble:</strong> Ist die Einstellung PrintAfterSaving und die Einstellung PrintAfterSavingDuplex aktiviert,
-        kann mit dieser Einstellung festgelegt werden, an welcher Kante der Duplexdruck zu erfolgen hat.<br>
-        <em>Eigenschaften:</em><br>
-         0 - Lange Kante (Standard)<br>
-         1 - Kurze kante</p>
       <p><strong>RemoveAllKnownFileExtensions:</strong> Wird diese Einstellung aktiviert,
         entfernt PDFCretor alle bekannten Erweiterungen von rechts beginnend, bis eine
         unbekannte Erweiterung gefunden wurde.
@@ -137,61 +105,6 @@
         <em>Eigenschaften:</em><br>
         0 - Aus<br>
         1 - Ein (Standard)</p>
-      <p><strong>RunProgramAfterSaving:</strong> Diese Einstellung legt fest,
-        ob das unter RunProgramAfterSavingProgramname angegebene Programm ausgef&uuml;hrt
-        wird, wenn PDFCreator das Dokument gespeichert hat. Der Name Dokumentes
-        wird als Parameter &uuml;bergeben.<br>
-        <em>Eigenschaften:</em><br>
-        0 - Aus (Standard)<br>
-        1 - Ein</p>
-      <p><strong>RunProgramAfterSavingProgramname:</strong> Hier wird der Pfad
-        zu dem auszuf&uuml;hrenden Programm festgelegt.<br>
-        <em>Beispiel:</em> RunProgramAfterSavingProgramname=&quot;C:\Programme\Mein
-        Programm\Mein Programm.exe&quot;</p>
-      <p><strong>RunProgramAfterSavingProgramParameters:</strong> Diese Einstellung
-        wird in Verbindung mit RunProgramAfterSaving benutzt. Sie gibt die Parameter
-        an, mit denen das Programm aufgerufen wird.</p>
-      <p><strong>RunProgramAfterSavingWaitUntilReady:</strong> Diese Einstellung
-        legt fest, ob PDFCreator wartet, bis das Programm die Verarbeitung des Dokumentes
-        abgeschlossen hat.<br>
-        <em>Eigenschaften:</em><br>
-        0 - Aus (Standard)<br>
-        1 - Ein</p>
-      <p><strong>RunProgramAfterSavingWindowstyle:</strong> Diese Einstellung legt
-        die Erscheinung des Fensters des Programmes fest, das nach dem Speichern
-        ausgef&uuml;hrt wird.<br>
-        <em>Eigenschaften:</em><br>
-        0 - Das Programm wird versteckt ausgef&uuml;hrt.<br>
-        1 - Das Programm wird normal ausgef&uuml;hrt und aktiviert.<br>
-        2 - Das Programm wird minimiert ausgef&uuml;hrt und aktiviert.<br>
-        3 - Das Programm wird maximiert ausgef&uuml;hrt und aktiviert.<br>
-        4 - Das Programm wird normal ausgef&uuml;hrt und nicht aktiviert.<br>
-        6 - Das Programm wird minimiert ausgef&uuml;hrt und nicht aktiviert.</p>
-      <p><strong>RunProgramBeforeSaving:</strong> Diese Einstellung legt fest,
-        ob das unter RunProgramBeforeSavingProgramname angegebene Programm ausgef&uuml;hrt
-        wird, bevor PDFCreator das Dokument gespeichert hat. PDFCreator wartet, bis das
-        Programm die Verarbeitung des Dokumentes abgeschlossen hat. Der Name Dokumentes
-        wird als Parameter &uuml;bergeben.<br>
-        <em>Eigenschaften:</em><br>
-        0 - Aus (Standard)<br>
-        1 - Ein</p>
-      <p><strong>RunProgramBeforeSavingProgramname:</strong> Hier wird der Pfad
-        zu dem auszuf&uuml;hrenden Programm festgelegt.<br>
-        <em>Beispiel:</em> RunProgramBeforeSavingProgramname=&quot;C:\Programme\Mein
-        Programm\Mein Programm.exe&quot;</p>
-      <p><strong>RunProgramBeforeSavingProgramParameters:</strong> Diese Einstellung
-        wird in Verbindung mit RunProgramBeforeSaving benutzt. Sie gibt die Parameter
-        an, mit denen das Programm aufgerufen wird.</p>
-      <p><strong>RunProgramBeforeSavingWindowstyle:</strong> Diese Einstellung legt
-        die Erscheinung des Fensters des Programmes fest, das vor dem Speichern
-        ausgef&uuml;hrt wird.<br>
-        <em>Eigenschaften:</em><br>
-        0 - Das Programm wird versteckt ausgef&uuml;hrt.<br>
-        1 - Das Programm wird normal ausgef&uuml;hrt und aktiviert.<br>
-        2 - Das Programm wird minimiert ausgef&uuml;hrt und aktiviert.<br>
-        3 - Das Programm wird maximiert ausgef&uuml;hrt und aktiviert.<br>
-        4 - Das Programm wird normal ausgef&uuml;hrt und nicht aktiviert.<br>
-        6 - Das Programm wird minimiert ausgef&uuml;hrt und nicht aktiviert.</p>
       <p><strong>SendMailMethod:</strong> Legt das Verfahren fest wie eine Email
         erstellt werden soll.<br>
         <em>Eigenschaften:</em><br>
