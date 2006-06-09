@@ -18,12 +18,30 @@
   </tr>
   <tr>
     <td class="main"><p class="header">Aktionen</p>
-      <p>Unter Aktionen können Programme und Skripte festgelegt werden, die vor bzw.
-       nach dem Speichern abgearbeitet werden sollen.</p>
-      <p>
-       Das intern verwendete Dateiformat ist das Postscript-Format. Programme die vor dem Speichern
-       Veränderungen vornehmen wollen, sollten bei einer Änderungen, dieses Format beherrschen.
-      </p>
+      <p>Under Actions you can set Programs and Scripts, that are run before
+      or after PDFCreator saves the files. </p>
+      <p>The internal file format is PostScript. Programs that want to change
+        the files before PDFCreator converts them will need to be able to use
+        this format. Programs that are called after PDFCreator has saved the
+      file receive the final PDF. </p>
+      <p><strong>Wait until the program/script is ready:</strong> This setting
+        allows to specify whether or not PDFCreator waits until the program
+      is ready. This is required if the program modifies the file before PDFCreator
+        converts it.</p>
+      <p><strong>Program parameters: </strong>These parameters are paased to
+        the program/script. Currently there the Tokens &lt;TempFilename&gt; for
+        the filename of the temporary file before saving and &lt;OutputFilename&gt; for
+        the PDF after saving it. The filenames should be surrounded by double
+        quotes to avoid problems with spaces in the filename. </p>
+      <p><strong>Window style :</strong> This setting
+        allows to specify the appearance of the Program window of the application
+        that is run before/after saving. <br>
+        Hidden: The program is run hidden.<br>
+        Normal/Focus: The program is run normally and in the foreground.<br>
+        Minimized/Focus: The program is run minimized and activated.<br>
+        Maximized/Focus: The program is run maximized and in the foreground.<br>
+        Normal/no Focus: The program is run normally in the background. <br>
+        Minimized/no Focus: The program is run minimized and not activated. </p>
     </td>
   </tr>
 </table>
