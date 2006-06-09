@@ -351,6 +351,7 @@ Public Type tLanguageStrings
  OptionsShellIntegrationCaption As String
  OptionsShellIntegrationRemove As String
  OptionsStandardAuthorToken As String
+ OptionsStandardSaveFormat As String
  OptionsTestpage As String
  OptionsTIFFColorscount01 As String
  OptionsTIFFColorscount02 As String
@@ -801,6 +802,7 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
   .OptionsShellIntegrationCaption = Replace$(hLang.Retrieve("ShellIntegrationCaption", .OptionsShellIntegrationCaption),"/n",vbCrLf)
   .OptionsShellIntegrationRemove = Replace$(hLang.Retrieve("ShellIntegrationRemove", .OptionsShellIntegrationRemove),"/n",vbCrLf)
   .OptionsStandardAuthorToken = Replace$(hLang.Retrieve("StandardAuthorToken", .OptionsStandardAuthorToken),"/n",vbCrLf)
+  .OptionsStandardSaveFormat = Replace$(hLang.Retrieve("StandardSaveFormat", .OptionsStandardSaveFormat),"/n",vbCrLf)
   .OptionsTestpage = Replace$(hLang.Retrieve("Testpage", .OptionsTestpage),"/n",vbCrLf)
   .OptionsTIFFColorscount01 = Replace$(hLang.Retrieve("TIFFColorscount01", .OptionsTIFFColorscount01),"/n",vbCrLf)
   .OptionsTIFFColorscount02 = Replace$(hLang.Retrieve("TIFFColorscount02", .OptionsTIFFColorscount02),"/n",vbCrLf)
@@ -1215,6 +1217,7 @@ Public Sub InitLanguagesStrings()
   .OptionsShellIntegrationCaption = "Create &PDF with PDFCreator"
   .OptionsShellIntegrationRemove = "Remove shell integration"
   .OptionsStandardAuthorToken = "Add a Author-Token"
+  .OptionsStandardSaveFormat = "Standard save format"
   .OptionsTestpage = "PDFCreator Testpage"
   .OptionsTIFFColorscount01 = "16777216 (24 Bit)"
   .OptionsTIFFColorscount02 = "4096 (12 Bit)"

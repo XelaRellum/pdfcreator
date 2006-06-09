@@ -145,7 +145,7 @@ Public StandardDateformat As String
 Public StandardKeywords As String
 Public StandardMailDomain As String
 Public StandardModifydate As String
-Public StandardSaveformat As String
+Public StandardSaveformat As Long
 Public StandardSubject As String
 Public StandardTitle As String
 Public StartStandardProgram As Long

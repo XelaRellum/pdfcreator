@@ -139,7 +139,7 @@ Public Type tOptions
  StandardKeywords As String
  StandardMailDomain As String
  StandardModifydate As String
- StandardSaveformat As String
+ StandardSaveformat As Long
  StandardSubject As String
  StandardTitle As String
  StartStandardProgram As Long
@@ -317,7 +317,7 @@ Public Function StandardOptions() As tOptions
   .StandardKeywords = vbNullString
   .StandardMailDomain = vbNullString
   .StandardModifydate = vbNullString
-  .StandardSaveformat = "pdf"
+  .StandardSaveformat = "0"
   .StandardSubject = vbNullString
   .StandardTitle = vbNullString
   .StartStandardProgram = "1"
@@ -2110,11 +2110,17 @@ Public Function ReadOptionsINI(myOptions As tOptions, PDFCreatorINIFile As Strin
     End If
   End If
   tStr = hOpt.Retrieve("StandardSaveformat")
-  If LenB(tStr) = 0 And LenB("pdf") > 0 And UseStandard Then
-    .StandardSaveformat = "pdf"
+  If IsNumeric(tStr) Then
+    If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+      .StandardSaveformat = CLng(tStr)
+     Else
+      If UseStandard Then
+       .StandardSaveformat = 0
+      End If
+    End If
    Else
-    If LenB(tStr) > 0 Then
-     .StandardSaveformat = tStr
+    If UseStandard Then
+     .StandardSaveformat = 0
     End If
   End If
   tStr = hOpt.Retrieve("StandardSubject")
@@ -2802,11 +2808,17 @@ Public Function ReadOptionsReg(myOptions As tOptions, KeyRoot as String, Optiona
     End If
   End If
   tStr = reg.GetRegistryValue("StandardSaveformat")
-  If LenB(tStr) = 0 And LenB("pdf") > 0 And UseStandard Then
-    .StandardSaveformat = "pdf"
+  If Isnumeric(tStr) Then
+    If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+      .StandardSaveformat = CLng(tStr)
+     Else
+      If UseStandard Then
+       .StandardSaveformat = 0
+      End If
+    End If
    Else
-    If LenB(tStr) > 0 Then
-     .StandardSaveformat = tStr
+    If UseStandard Then
+     .StandardSaveformat = 0
     End If
   End If
   tStr = reg.GetRegistryValue("StandardSubject")
@@ -5931,6 +5943,7 @@ Public Sub ShowOptions(Frm as Form, sOptions as tOptions)
   frm.chkAutosaveSendEmail.Value = .SendEmailAfterAutoSaving
   frm.chkShowAnimation = .ShowAnimation
   frm.txtStandardAuthor.Text = .StandardAuthor
+  frm.cmbStandardSaveformat.Listindex = .StandardSaveformat
   frm.cmbTIFFColors.Listindex = .TIFFColorscount
   frm.chkUseAutosave.Value = .UseAutosave
   frm.chkUseAutosaveDirectory.Value = .UseAutosaveDirectory
@@ -6047,6 +6060,7 @@ Public Sub GetOptions(Frm as Form, sOptions as tOptions)
  .SendEmailAfterAutoSaving =  Abs(frm.chkAutosaveSendEmail.Value)
  .ShowAnimation =  Abs(frm.chkShowAnimation)
  .StandardAuthor =  frm.txtStandardAuthor.Text
+ .StandardSaveformat =  frm.cmbStandardSaveformat.Listindex
  .TIFFColorscount =  frm.cmbTIFFColors.Listindex
  .UseAutosave =  Abs(frm.chkUseAutosave.Value)
  .UseAutosaveDirectory =  Abs(frm.chkUseAutosaveDirectory.Value)

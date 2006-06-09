@@ -188,7 +188,7 @@ StandardDateformat||String|YYYYMMDDHHNNSS||
 StandardKeywords||String|||
 StandardMailDomain||String|||
 StandardModifydate||String|||
-StandardSaveformat||String|pdf||
+StandardSaveformat|cmbStandardSaveformat.Listindex|Long|0|0|7
 StandardSubject||String|||
 StandardTitle||String|||
 
