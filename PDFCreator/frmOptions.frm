@@ -87,7 +87,7 @@ Begin VB.Form frmOptions
          Height          =   255
          Left            =   120
          TabIndex        =   208
-         Top             =   360
+         Top             =   420
          Width           =   6015
       End
       Begin VB.Label lblPrintAfterSavingQueryUser 
