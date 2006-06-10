@@ -5908,6 +5908,7 @@ Public Sub ShowOptions(Frm as Form, sOptions as tOptions)
   frm.txtPDFRes.Text = .PDFGeneralResolution
   frm.optEncHigh.Value = .PDFHighEncryption
   frm.optEncLow.Value = .PDFLowEncryption
+  frm.chkPDFOptimize.value = .PDFOptimize
   frm.chkOwnerPass.Value = .PDFOwnerPass
   frm.chkUserPass.Value = .PDFUserPass
   frm.chkUseSecurity.Value = .PDFUseSecurity
@@ -6031,6 +6032,7 @@ Public Sub GetOptions(Frm as Form, sOptions as tOptions)
  .PDFGeneralResolution =  frm.txtPDFRes.Text
  .PDFHighEncryption =  Abs(frm.optEncHigh.Value)
  .PDFLowEncryption =  Abs(frm.optEncLow.Value)
+ .PDFOptimize =  Abs(frm.chkPDFOptimize.value)
  .PDFOwnerPass =  Abs(frm.chkOwnerPass.Value)
  .PDFUserPass =  Abs(frm.chkUserPass.Value)
  .PDFUseSecurity =  Abs(frm.chkUseSecurity.Value)

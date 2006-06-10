@@ -16,6 +16,141 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin PDFCreator.dmFrame dmFraPDFGeneral 
+      Height          =   4365
+      Left            =   2625
+      TabIndex        =   90
+      Top             =   1890
+      Visible         =   0   'False
+      Width           =   6195
+      _ExtentX        =   10927
+      _ExtentY        =   7699
+      Caption         =   "General Options"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.CheckBox chkPDFOptimize 
+         Appearance      =   0  '2D
+         Caption         =   "Fast web view"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   223
+         Top             =   3990
+         Width           =   5880
+      End
+      Begin VB.CheckBox chkPDFASCII85 
+         Appearance      =   0  '2D
+         Caption         =   "Convert binary data to ASCII85"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   95
+         Top             =   3570
+         Width           =   5880
+      End
+      Begin VB.ComboBox cmbPDFOverprint 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":000C
+         Left            =   120
+         List            =   "frmOptions.frx":000E
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   94
+         Top             =   2940
+         Width           =   2655
+      End
+      Begin VB.TextBox txtPDFRes 
+         Alignment       =   1  'Rechts
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   93
+         Text            =   "600"
+         Top             =   2205
+         Width           =   615
+      End
+      Begin VB.ComboBox cmbPDFCompat 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":0010
+         Left            =   120
+         List            =   "frmOptions.frx":0012
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   92
+         Top             =   735
+         Width           =   2655
+      End
+      Begin VB.ComboBox cmbPDFRotate 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":0014
+         Left            =   120
+         List            =   "frmOptions.frx":0016
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   91
+         Tag             =   "None|All|PageByPage"
+         Top             =   1470
+         Width           =   2655
+      End
+      Begin VB.Label lblPDFDPI 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "dpi"
+         Height          =   195
+         Left            =   800
+         TabIndex        =   100
+         Top             =   2250
+         Width           =   210
+      End
+      Begin VB.Label lblPDFOverprint 
+         AutoSize        =   -1  'True
+         Caption         =   "Overprint:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   99
+         Top             =   2730
+         Width           =   690
+      End
+      Begin VB.Label lblPDFResolution 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Resolution:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   98
+         Top             =   1995
+         Width           =   795
+      End
+      Begin VB.Label lblPDFCompat 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Compatibility:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   97
+         Top             =   540
+         Width           =   915
+      End
+      Begin VB.Label lblPDFAutoRotate 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Auto-Rotate Pages:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   96
+         Top             =   1260
+         Width           =   1395
+      End
+   End
    Begin PDFCreator.dmFrame dmFraProgGeneral1 
       Height          =   4110
       Left            =   2625
@@ -239,9 +374,9 @@ Begin VB.Form frmOptions
       End
       Begin VB.ComboBox cmbOptionsDesign 
          Height          =   315
-         ItemData        =   "frmOptions.frx":000C
+         ItemData        =   "frmOptions.frx":0018
          Left            =   120
-         List            =   "frmOptions.frx":000E
+         List            =   "frmOptions.frx":001A
          Style           =   2  'Dropdown-Liste
          TabIndex        =   216
          Top             =   1620
@@ -296,9 +431,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbStandardSaveFormat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0010
+         ItemData        =   "frmOptions.frx":001C
          Left            =   120
-         List            =   "frmOptions.frx":0012
+         List            =   "frmOptions.frx":001E
          Style           =   2  'Dropdown-Liste
          TabIndex        =   213
          Top             =   2100
@@ -327,9 +462,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0014
+         ItemData        =   "frmOptions.frx":0020
          Left            =   3720
-         List            =   "frmOptions.frx":0016
+         List            =   "frmOptions.frx":0022
          Style           =   2  'Dropdown-Liste
          TabIndex        =   53
          Top             =   600
@@ -398,9 +533,9 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "frmOptions.frx":0018
+         ItemData        =   "frmOptions.frx":0024
          Left            =   3720
-         List            =   "frmOptions.frx":001A
+         List            =   "frmOptions.frx":0026
          Style           =   2  'Dropdown-Liste
          TabIndex        =   50
          Top             =   840
@@ -582,7 +717,7 @@ Begin VB.Form frmOptions
          Begin VB.CommandButton cmdRunProgramAfterSavingPrognameEdit 
             Height          =   300
             Left            =   5520
-            Picture         =   "frmOptions.frx":001C
+            Picture         =   "frmOptions.frx":0028
             Style           =   1  'Grafisch
             TabIndex        =   200
             Top             =   1155
@@ -691,7 +826,7 @@ Begin VB.Form frmOptions
          Begin VB.CommandButton cmdRunProgramBeforeSavingPrognameEdit 
             Height          =   300
             Left            =   5520
-            Picture         =   "frmOptions.frx":05A6
+            Picture         =   "frmOptions.frx":05B2
             Style           =   1  'Grafisch
             TabIndex        =   201
             Top             =   1155
@@ -856,9 +991,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0B30
+         ItemData        =   "frmOptions.frx":0B3C
          Left            =   3690
-         List            =   "frmOptions.frx":0B32
+         List            =   "frmOptions.frx":0B3E
          Style           =   2  'Dropdown-Liste
          TabIndex        =   37
          Top             =   1785
@@ -1206,7 +1341,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdUsertempPath 
          Height          =   300
          Left            =   5640
-         Picture         =   "frmOptions.frx":0B34
+         Picture         =   "frmOptions.frx":0B40
          Style           =   1  'Grafisch
          TabIndex        =   166
          Top             =   600
@@ -1270,135 +1405,6 @@ Begin VB.Form frmOptions
          TabIndex        =   89
          Top             =   510
          Width           =   1200
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraPDFGeneral 
-      Height          =   2895
-      Left            =   2730
-      TabIndex        =   90
-      Top             =   1785
-      Visible         =   0   'False
-      Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   5106
-      Caption         =   "General Options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.CheckBox chkPDFASCII85 
-         Appearance      =   0  '2D
-         Caption         =   "Convert binary data to ASCII85"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   2400
-         TabIndex        =   95
-         Top             =   2520
-         Width           =   3675
-      End
-      Begin VB.ComboBox cmbPDFOverprint 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":10BE
-         Left            =   2400
-         List            =   "frmOptions.frx":10C0
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   94
-         Top             =   1980
-         Width           =   2655
-      End
-      Begin VB.TextBox txtPDFRes 
-         Alignment       =   1  'Rechts
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   2400
-         TabIndex        =   93
-         Text            =   "600"
-         Top             =   1440
-         Width           =   615
-      End
-      Begin VB.ComboBox cmbPDFCompat 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":10C2
-         Left            =   2400
-         List            =   "frmOptions.frx":10C4
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   92
-         Top             =   480
-         Width           =   2655
-      End
-      Begin VB.ComboBox cmbPDFRotate 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":10C6
-         Left            =   2400
-         List            =   "frmOptions.frx":10C8
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   91
-         Tag             =   "None|All|PageByPage"
-         Top             =   960
-         Width           =   2655
-      End
-      Begin VB.Label lblPDFDPI 
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "dpi"
-         Height          =   195
-         Left            =   3120
-         TabIndex        =   100
-         Top             =   1485
-         Width           =   210
-      End
-      Begin VB.Label lblPDFOverprint 
-         Alignment       =   1  'Rechts
-         AutoSize        =   -1  'True
-         Caption         =   "Overprint:"
-         Height          =   195
-         Left            =   1605
-         TabIndex        =   99
-         Top             =   2040
-         Width           =   690
-      End
-      Begin VB.Label lblPDFResolution 
-         Alignment       =   1  'Rechts
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Resolution:"
-         Height          =   195
-         Left            =   1500
-         TabIndex        =   98
-         Top             =   1485
-         Width           =   795
-      End
-      Begin VB.Label lblPDFCompat 
-         Alignment       =   1  'Rechts
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Compatibility:"
-         Height          =   195
-         Left            =   1380
-         TabIndex        =   97
-         Top             =   540
-         Width           =   915
-      End
-      Begin VB.Label lblPDFAutoRotate 
-         Alignment       =   1  'Rechts
-         AutoSize        =   -1  'True
-         BackStyle       =   0  'Transparent
-         Caption         =   "Auto-Rotate Pages:"
-         Height          =   195
-         Left            =   900
-         TabIndex        =   96
-         Top             =   1020
-         Width           =   1395
       End
    End
    Begin PDFCreator.dmFrame dmFraBitmapGeneral 
@@ -3793,6 +3799,7 @@ Private Sub Form_Load()
   tbstrPDFOptions.Tabs.Add , "Colors", .OptionsPDFColors
   tbstrPDFOptions.Tabs.Add , "Security", .OptionsPDFSecurity
   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
+  chkPDFOptimize.Caption = .OptionsPDFOptimize
   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
