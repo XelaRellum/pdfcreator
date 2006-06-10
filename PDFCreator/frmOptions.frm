@@ -16,10 +16,266 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
-   Begin PDFCreator.dmFrame dmfraProgSave 
+   Begin PDFCreator.dmFrame dmFraProgGeneral1 
+      Height          =   4110
+      Left            =   2625
+      TabIndex        =   9
+      Top             =   420
+      Visible         =   0   'False
+      Width           =   6195
+      _ExtentX        =   10927
+      _ExtentY        =   7250
+      Caption         =   "General 1"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
+      Begin VB.ComboBox cmbSendMailMethod 
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   222
+         Top             =   3675
+         Width           =   2580
+      End
+      Begin VB.CheckBox chkNoProcessingAtStartup 
+         Appearance      =   0  '2D
+         Caption         =   "No processing at startup"
+         ForeColor       =   &H80000008&
+         Height          =   330
+         Left            =   120
+         TabIndex        =   177
+         Top             =   2280
+         Width           =   5775
+      End
+      Begin VB.CommandButton cmdTestpage 
+         Caption         =   "&Print testpage"
+         Height          =   495
+         Left            =   120
+         TabIndex        =   5
+         Top             =   480
+         Width           =   2580
+      End
+      Begin PDFCreator.Line3D Line3D1 
+         Height          =   30
+         Index           =   0
+         Left            =   105
+         TabIndex        =   27
+         TabStop         =   0   'False
+         Top             =   1200
+         Width           =   5925
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
+      End
+      Begin VB.CheckBox chkNoConfirmMessageSwitchingDefaultprinter 
+         Appearance      =   0  '2D
+         Caption         =   "No confirm message switching PDFCreator temporarly as default printer."
+         ForeColor       =   &H80000008&
+         Height          =   495
+         Left            =   120
+         TabIndex        =   4
+         Top             =   2640
+         Width           =   5775
+      End
+      Begin MSComctlLib.Slider sldProcessPriority 
+         Height          =   495
+         Left            =   120
+         TabIndex        =   3
+         Top             =   1560
+         Width           =   5895
+         _ExtentX        =   10398
+         _ExtentY        =   873
+         _Version        =   393216
+         LargeChange     =   1
+         Max             =   3
+         SelStart        =   1
+         Value           =   1
+      End
+      Begin PDFCreator.Line3D Line3D1 
+         Height          =   30
+         Index           =   1
+         Left            =   120
+         TabIndex        =   28
+         TabStop         =   0   'False
+         Top             =   2160
+         Width           =   5925
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
+      End
+      Begin PDFCreator.Line3D Line3D1 
+         Height          =   30
+         Index           =   2
+         Left            =   120
+         TabIndex        =   29
+         TabStop         =   0   'False
+         Top             =   3240
+         Width           =   5925
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
+      End
+      Begin VB.Label lblSendMailMethod 
+         AutoSize        =   -1  'True
+         Caption         =   "Methode to send an email"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   221
+         Top             =   3465
+         Width           =   1830
+      End
+      Begin VB.Label lblProcessPriority 
+         AutoSize        =   -1  'True
+         Caption         =   "Processpriority: Normal"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   10
+         Top             =   1320
+         Width           =   1605
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraShellIntegration 
+      Height          =   1065
+      Left            =   2640
+      TabIndex        =   11
+      Top             =   5565
+      Visible         =   0   'False
+      Width           =   6195
+      _ExtentX        =   10927
+      _ExtentY        =   1879
+      Caption         =   "Shell integration"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
+      Enabled         =   0   'False
+      Begin VB.CommandButton cmdShellintegration 
+         Caption         =   "Integrate PDFCreator into shell"
+         Height          =   495
+         Index           =   1
+         Left            =   3150
+         TabIndex        =   7
+         Top             =   420
+         Width           =   2910
+      End
+      Begin VB.CommandButton cmdShellintegration 
+         Caption         =   "Integrate PDFCreator into shell"
+         Height          =   495
+         Index           =   0
+         Left            =   120
+         TabIndex        =   6
+         Top             =   420
+         Width           =   2910
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraProgGeneral2 
+      Height          =   2745
+      Left            =   3150
+      TabIndex        =   215
+      Top             =   1470
+      Visible         =   0   'False
+      Width           =   6195
+      _ExtentX        =   10927
+      _ExtentY        =   4842
+      Caption         =   "General 2"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
+      Begin VB.CommandButton cmdAsso 
+         Caption         =   "&Associate PDFCreator with Postscript files"
+         Height          =   495
+         Left            =   120
+         TabIndex        =   218
+         Top             =   480
+         Width           =   2580
+      End
+      Begin VB.CheckBox chkShowAnimation 
+         Appearance      =   0  '2D
+         Caption         =   "Show animation"
+         ForeColor       =   &H80000008&
+         Height          =   330
+         Left            =   120
+         TabIndex        =   217
+         Top             =   2220
+         Width           =   5775
+      End
+      Begin VB.ComboBox cmbOptionsDesign 
+         Height          =   315
+         ItemData        =   "frmOptions.frx":000C
+         Left            =   120
+         List            =   "frmOptions.frx":000E
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   216
+         Top             =   1620
+         Width           =   3870
+      End
+      Begin PDFCreator.Line3D Line3D1 
+         Height          =   30
+         Index           =   3
+         Left            =   105
+         TabIndex        =   219
+         TabStop         =   0   'False
+         Top             =   1200
+         Width           =   5925
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
+      End
+      Begin VB.Label lblOptionsDesign 
+         AutoSize        =   -1  'True
+         Caption         =   "Frame color of the setting dialog"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   220
+         Top             =   1380
+         Width           =   2250
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraProgSave 
       Height          =   2670
       Left            =   2640
-      TabIndex        =   52
+      TabIndex        =   51
       Top             =   2160
       Visible         =   0   'False
       Width           =   6375
@@ -40,11 +296,11 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbStandardSaveFormat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":000C
+         ItemData        =   "frmOptions.frx":0010
          Left            =   120
-         List            =   "frmOptions.frx":000E
+         List            =   "frmOptions.frx":0012
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   217
+         TabIndex        =   213
          Top             =   2100
          Width           =   1050
       End
@@ -54,7 +310,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   56
+         TabIndex        =   55
          Top             =   1440
          Value           =   1  'Aktiviert
          Width           =   6015
@@ -63,7 +319,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   120
-         TabIndex        =   55
+         TabIndex        =   54
          Text            =   "<Title>"
          Top             =   600
          Width           =   3495
@@ -71,11 +327,11 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0010
+         ItemData        =   "frmOptions.frx":0014
          Left            =   3720
-         List            =   "frmOptions.frx":0012
+         List            =   "frmOptions.frx":0016
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   54
+         TabIndex        =   53
          Top             =   600
          Width           =   2415
       End
@@ -85,7 +341,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   120
          Locked          =   -1  'True
-         TabIndex        =   53
+         TabIndex        =   52
          Top             =   960
          Width           =   6015
       End
@@ -94,7 +350,7 @@ Begin VB.Form frmOptions
          Caption         =   "Standard save format"
          Height          =   195
          Left            =   120
-         TabIndex        =   216
+         TabIndex        =   212
          Top             =   1890
          Width           =   1515
       End
@@ -103,7 +359,7 @@ Begin VB.Form frmOptions
          Caption         =   "Filename"
          Height          =   195
          Left            =   120
-         TabIndex        =   58
+         TabIndex        =   57
          Top             =   360
          Width           =   630
       End
@@ -112,7 +368,7 @@ Begin VB.Form frmOptions
          Caption         =   "Add a Filename-Token"
          Height          =   195
          Left            =   3720
-         TabIndex        =   57
+         TabIndex        =   56
          Top             =   360
          Width           =   1605
       End
@@ -120,7 +376,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraProgDocument 
       Height          =   2880
       Left            =   2640
-      TabIndex        =   46
+      TabIndex        =   45
       Top             =   1800
       Visible         =   0   'False
       Width           =   6375
@@ -142,11 +398,11 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "frmOptions.frx":0014
+         ItemData        =   "frmOptions.frx":0018
          Left            =   3720
-         List            =   "frmOptions.frx":0016
+         List            =   "frmOptions.frx":001A
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   51
+         TabIndex        =   50
          Top             =   840
          Width           =   2415
       End
@@ -156,7 +412,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   50
+         TabIndex        =   49
          Top             =   360
          Width           =   6000
       End
@@ -164,7 +420,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   315
          Left            =   120
-         TabIndex        =   49
+         TabIndex        =   48
          Top             =   840
          Width           =   3495
       End
@@ -174,7 +430,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   48
+         TabIndex        =   47
          Top             =   1440
          Width           =   6000
       End
@@ -184,7 +440,7 @@ Begin VB.Form frmOptions
          Enabled         =   0   'False
          Height          =   195
          Left            =   3720
-         TabIndex        =   47
+         TabIndex        =   46
          Top             =   600
          Width           =   1440
       End
@@ -192,7 +448,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraProgPrint 
       Height          =   3930
       Left            =   2940
-      TabIndex        =   207
+      TabIndex        =   203
       Top             =   2205
       Visible         =   0   'False
       Width           =   6375
@@ -214,7 +470,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   420
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   215
+         TabIndex        =   211
          Top             =   3360
          Width           =   4470
       End
@@ -224,7 +480,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   214
+         TabIndex        =   210
          Top             =   3045
          Width           =   6015
       End
@@ -234,7 +490,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   213
+         TabIndex        =   209
          Top             =   2625
          Width           =   6015
       End
@@ -242,14 +498,14 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   120
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   212
+         TabIndex        =   208
          Top             =   1995
          Width           =   4770
       End
       Begin VB.ComboBox cmbPrintAfterSavingPrinter 
          Height          =   315
          Left            =   105
-         TabIndex        =   210
+         TabIndex        =   206
          Top             =   1155
          Width           =   4770
       End
@@ -259,7 +515,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   208
+         TabIndex        =   204
          Top             =   420
          Width           =   6015
       End
@@ -268,7 +524,7 @@ Begin VB.Form frmOptions
          Caption         =   "Query user"
          Height          =   195
          Left            =   120
-         TabIndex        =   211
+         TabIndex        =   207
          Top             =   1785
          Width           =   765
       End
@@ -277,7 +533,7 @@ Begin VB.Form frmOptions
          Caption         =   "Printer"
          Height          =   195
          Left            =   120
-         TabIndex        =   209
+         TabIndex        =   205
          Top             =   945
          Width           =   450
       End
@@ -285,7 +541,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraProgActions 
       Height          =   4560
       Left            =   2625
-      TabIndex        =   182
+      TabIndex        =   178
       Top             =   1050
       Visible         =   0   'False
       Width           =   6375
@@ -306,7 +562,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraProgActionsRunProgramAfterSaving 
          Height          =   3510
          Left            =   360
-         TabIndex        =   193
+         TabIndex        =   189
          Top             =   2400
          Width           =   6165
          _ExtentX        =   10874
@@ -326,9 +582,9 @@ Begin VB.Form frmOptions
          Begin VB.CommandButton cmdRunProgramAfterSavingPrognameEdit 
             Height          =   300
             Left            =   5520
-            Picture         =   "frmOptions.frx":0018
+            Picture         =   "frmOptions.frx":001C
             Style           =   1  'Grafisch
-            TabIndex        =   204
+            TabIndex        =   200
             Top             =   1155
             Width           =   435
          End
@@ -336,7 +592,7 @@ Begin VB.Form frmOptions
             Height          =   315
             Left            =   210
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   199
+            TabIndex        =   195
             Top             =   3045
             Width           =   5370
          End
@@ -346,7 +602,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   210
-            TabIndex        =   198
+            TabIndex        =   194
             Top             =   2415
             Width           =   5805
          End
@@ -354,7 +610,7 @@ Begin VB.Form frmOptions
             Appearance      =   0  '2D
             Height          =   285
             Left            =   210
-            TabIndex        =   197
+            TabIndex        =   193
             Top             =   1890
             Width           =   5805
          End
@@ -362,14 +618,14 @@ Begin VB.Form frmOptions
             Caption         =   "..."
             Height          =   300
             Left            =   5040
-            TabIndex        =   196
+            TabIndex        =   192
             Top             =   1155
             Width           =   435
          End
          Begin VB.ComboBox cmbRunProgramAfterSavingProgramname 
             Height          =   315
             Left            =   210
-            TabIndex        =   195
+            TabIndex        =   191
             Top             =   1155
             Width           =   4770
          End
@@ -379,7 +635,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   210
-            TabIndex        =   194
+            TabIndex        =   190
             Top             =   420
             Width           =   5805
          End
@@ -388,7 +644,7 @@ Begin VB.Form frmOptions
             Caption         =   "Windowstyle"
             Height          =   195
             Left            =   210
-            TabIndex        =   202
+            TabIndex        =   198
             Top             =   2835
             Width           =   900
          End
@@ -397,7 +653,7 @@ Begin VB.Form frmOptions
             Caption         =   "Program parameters"
             Height          =   195
             Left            =   210
-            TabIndex        =   201
+            TabIndex        =   197
             Top             =   1680
             Width           =   1410
          End
@@ -406,7 +662,7 @@ Begin VB.Form frmOptions
             Caption         =   "Program/Script"
             Height          =   195
             Left            =   210
-            TabIndex        =   200
+            TabIndex        =   196
             Top             =   945
             Width           =   1065
          End
@@ -414,7 +670,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraProgActionsRunProgramBeforeSaving 
          Height          =   3510
          Left            =   210
-         TabIndex        =   183
+         TabIndex        =   179
          Top             =   735
          Visible         =   0   'False
          Width           =   6165
@@ -435,9 +691,9 @@ Begin VB.Form frmOptions
          Begin VB.CommandButton cmdRunProgramBeforeSavingPrognameEdit 
             Height          =   300
             Left            =   5520
-            Picture         =   "frmOptions.frx":05A2
+            Picture         =   "frmOptions.frx":05A6
             Style           =   1  'Grafisch
-            TabIndex        =   205
+            TabIndex        =   201
             Top             =   1155
             Width           =   435
          End
@@ -445,7 +701,7 @@ Begin VB.Form frmOptions
             Height          =   315
             Left            =   210
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   191
+            TabIndex        =   187
             Top             =   3045
             Width           =   2790
          End
@@ -455,7 +711,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   210
-            TabIndex        =   190
+            TabIndex        =   186
             Top             =   2415
             Width           =   5580
          End
@@ -463,7 +719,7 @@ Begin VB.Form frmOptions
             Appearance      =   0  '2D
             Height          =   285
             Left            =   210
-            TabIndex        =   188
+            TabIndex        =   184
             Top             =   1890
             Width           =   5580
          End
@@ -471,14 +727,14 @@ Begin VB.Form frmOptions
             Caption         =   "..."
             Height          =   300
             Left            =   5040
-            TabIndex        =   187
+            TabIndex        =   183
             Top             =   1155
             Width           =   435
          End
          Begin VB.ComboBox cmbRunProgramBeforeSavingProgramname 
             Height          =   315
             Left            =   210
-            TabIndex        =   186
+            TabIndex        =   182
             Top             =   1155
             Width           =   4770
          End
@@ -488,7 +744,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   210
-            TabIndex        =   184
+            TabIndex        =   180
             Top             =   420
             Width           =   5385
          End
@@ -497,7 +753,7 @@ Begin VB.Form frmOptions
             Caption         =   "Windowstyle"
             Height          =   195
             Left            =   210
-            TabIndex        =   192
+            TabIndex        =   188
             Top             =   2835
             Width           =   900
          End
@@ -506,7 +762,7 @@ Begin VB.Form frmOptions
             Caption         =   "Program parameters"
             Height          =   195
             Left            =   210
-            TabIndex        =   189
+            TabIndex        =   185
             Top             =   1680
             Width           =   1410
          End
@@ -515,7 +771,7 @@ Begin VB.Form frmOptions
             Caption         =   "Program/Script"
             Height          =   195
             Left            =   210
-            TabIndex        =   185
+            TabIndex        =   181
             Top             =   945
             Width           =   1065
          End
@@ -523,7 +779,7 @@ Begin VB.Form frmOptions
       Begin MSComctlLib.TabStrip tbstrProgActions 
          Height          =   4110
          Left            =   105
-         TabIndex        =   203
+         TabIndex        =   199
          Top             =   315
          Width           =   6210
          _ExtentX        =   10954
@@ -540,7 +796,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraProgAutosave 
       Height          =   5085
       Left            =   2640
-      TabIndex        =   31
+      TabIndex        =   30
       Top             =   1200
       Visible         =   0   'False
       Width           =   6375
@@ -566,7 +822,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   240
          Left            =   120
-         TabIndex        =   206
+         TabIndex        =   202
          Top             =   4680
          Width           =   5895
       End
@@ -576,7 +832,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   360
          Left            =   120
-         TabIndex        =   172
+         TabIndex        =   171
          Top             =   4095
          Width           =   5895
       End
@@ -584,7 +840,7 @@ Begin VB.Form frmOptions
          Caption         =   "..."
          Height          =   300
          Left            =   5760
-         TabIndex        =   168
+         TabIndex        =   167
          Top             =   3120
          Width           =   375
       End
@@ -593,18 +849,18 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   120
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   39
+         TabIndex        =   38
          Top             =   960
          Width           =   1935
       End
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0B2C
+         ItemData        =   "frmOptions.frx":0B30
          Left            =   3690
-         List            =   "frmOptions.frx":0B2E
+         List            =   "frmOptions.frx":0B32
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   38
+         TabIndex        =   37
          Top             =   1785
          Width           =   2460
       End
@@ -612,7 +868,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   120
-         TabIndex        =   37
+         TabIndex        =   36
          Text            =   "<DateTime>"
          Top             =   1800
          Width           =   3495
@@ -622,7 +878,7 @@ Begin VB.Form frmOptions
          Enabled         =   0   'False
          Height          =   285
          Left            =   120
-         TabIndex        =   36
+         TabIndex        =   35
          Top             =   3120
          Width           =   5535
       End
@@ -632,7 +888,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   35
+         TabIndex        =   34
          Top             =   2760
          Width           =   5895
       End
@@ -642,7 +898,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   34
+         TabIndex        =   33
          Top             =   360
          Width           =   6015
       End
@@ -652,7 +908,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   120
          Locked          =   -1  'True
-         TabIndex        =   33
+         TabIndex        =   32
          Top             =   2145
          Width           =   6015
       End
@@ -662,7 +918,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   120
          Locked          =   -1  'True
-         TabIndex        =   32
+         TabIndex        =   31
          Top             =   3450
          Width           =   6015
       End
@@ -671,7 +927,7 @@ Begin VB.Form frmOptions
          Caption         =   "Add a Filename-Token"
          Height          =   195
          Left            =   3720
-         TabIndex        =   42
+         TabIndex        =   41
          Top             =   1560
          Width           =   1605
       End
@@ -679,7 +935,7 @@ Begin VB.Form frmOptions
          Caption         =   "Autosaveformat"
          Height          =   255
          Left            =   120
-         TabIndex        =   41
+         TabIndex        =   40
          Top             =   720
          Width           =   3495
       End
@@ -688,172 +944,15 @@ Begin VB.Form frmOptions
          Caption         =   "Filename"
          Height          =   195
          Left            =   120
-         TabIndex        =   40
+         TabIndex        =   39
          Top             =   1560
          Width           =   630
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraProgGeneral 
-      Height          =   4740
-      Left            =   2760
-      TabIndex        =   10
-      Top             =   1320
-      Visible         =   0   'False
-      Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   8361
-      Caption         =   "General"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
-      Begin VB.ComboBox cmbOptionsDesign 
-         Height          =   315
-         ItemData        =   "frmOptions.frx":0B30
-         Left            =   120
-         List            =   "frmOptions.frx":0B32
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   180
-         Top             =   3720
-         Width           =   3870
-      End
-      Begin VB.CheckBox chkShowAnimation 
-         Appearance      =   0  '2D
-         Caption         =   "Show animation"
-         ForeColor       =   &H80000008&
-         Height          =   330
-         Left            =   120
-         TabIndex        =   179
-         Top             =   4320
-         Width           =   5775
-      End
-      Begin VB.CheckBox chkNoProcessingAtStartup 
-         Appearance      =   0  '2D
-         Caption         =   "No processing at startup"
-         ForeColor       =   &H80000008&
-         Height          =   330
-         Left            =   120
-         TabIndex        =   178
-         Top             =   2280
-         Width           =   5775
-      End
-      Begin VB.CommandButton cmdTestpage 
-         Caption         =   "&Print testpage"
-         Height          =   495
-         Left            =   120
-         TabIndex        =   6
-         Top             =   480
-         Width           =   2580
-      End
-      Begin VB.CommandButton cmdAsso 
-         Caption         =   "&Associate PDFCreator with Postscript files"
-         Height          =   495
-         Left            =   3600
-         TabIndex        =   3
-         Top             =   480
-         Width           =   2580
-      End
-      Begin PDFCreator.Line3D Line3D1 
-         Height          =   30
-         Index           =   0
-         Left            =   120
-         TabIndex        =   28
-         TabStop         =   0   'False
-         Top             =   1200
-         Width           =   6135
-         _ExtentX        =   10821
-         _ExtentY        =   53
-         LineType        =   1
-         3DHighlight     =   -2147483628
-         3DShadow        =   -2147483632
-         DrawStyle       =   0
-      End
-      Begin VB.CheckBox chkNoConfirmMessageSwitchingDefaultprinter 
-         Appearance      =   0  '2D
-         Caption         =   "No confirm message switching PDFCreator temporarly as default printer."
-         ForeColor       =   &H80000008&
-         Height          =   495
-         Left            =   120
-         TabIndex        =   5
-         Top             =   2640
-         Width           =   5775
-      End
-      Begin MSComctlLib.Slider sldProcessPriority 
-         Height          =   495
-         Left            =   120
-         TabIndex        =   4
-         Top             =   1560
-         Width           =   5895
-         _ExtentX        =   10398
-         _ExtentY        =   873
-         _Version        =   393216
-         LargeChange     =   1
-         Max             =   3
-         SelStart        =   1
-         Value           =   1
-      End
-      Begin PDFCreator.Line3D Line3D1 
-         Height          =   30
-         Index           =   1
-         Left            =   120
-         TabIndex        =   29
-         TabStop         =   0   'False
-         Top             =   2160
-         Width           =   6135
-         _ExtentX        =   10821
-         _ExtentY        =   53
-         LineType        =   1
-         3DHighlight     =   -2147483628
-         3DShadow        =   -2147483632
-         DrawStyle       =   0
-      End
-      Begin PDFCreator.Line3D Line3D1 
-         Height          =   30
-         Index           =   2
-         Left            =   120
-         TabIndex        =   30
-         TabStop         =   0   'False
-         Top             =   3240
-         Width           =   6135
-         _ExtentX        =   10821
-         _ExtentY        =   53
-         LineType        =   1
-         3DHighlight     =   -2147483628
-         3DShadow        =   -2147483632
-         DrawStyle       =   0
-      End
-      Begin VB.Label lblOptionsDesign 
-         AutoSize        =   -1  'True
-         Caption         =   "Frame color of the setting dialog"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   181
-         Top             =   3480
-         Width           =   2250
-      End
-      Begin VB.Label lblProcessPriority 
-         AutoSize        =   -1  'True
-         Caption         =   "Processpriority: Normal"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   11
-         Top             =   1320
-         Width           =   1605
       End
    End
    Begin PDFCreator.dmFrame dmFraProgGhostscript 
       Height          =   3150
       Left            =   2625
-      TabIndex        =   13
+      TabIndex        =   12
       Top             =   945
       Visible         =   0   'False
       Width           =   6420
@@ -878,7 +977,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   225
          Left            =   105
-         TabIndex        =   177
+         TabIndex        =   176
          Top             =   2730
          Width           =   6105
       End
@@ -886,7 +985,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   105
-         TabIndex        =   175
+         TabIndex        =   174
          Top             =   2100
          Width           =   6105
       End
@@ -894,7 +993,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   105
-         TabIndex        =   174
+         TabIndex        =   173
          Top             =   1365
          Width           =   6105
       End
@@ -903,7 +1002,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   105
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   22
+         TabIndex        =   21
          Top             =   630
          Width           =   4215
       End
@@ -911,7 +1010,7 @@ Begin VB.Form frmOptions
          Caption         =   "..."
          Height          =   255
          Left            =   5625
-         TabIndex        =   21
+         TabIndex        =   20
          Top             =   3690
          Visible         =   0   'False
          Width           =   375
@@ -922,7 +1021,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
-         TabIndex        =   20
+         TabIndex        =   19
          Top             =   3690
          Visible         =   0   'False
          Width           =   5415
@@ -933,7 +1032,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
-         TabIndex        =   19
+         TabIndex        =   18
          Top             =   4290
          Visible         =   0   'False
          Width           =   5415
@@ -944,7 +1043,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
-         TabIndex        =   18
+         TabIndex        =   17
          Top             =   4890
          Visible         =   0   'False
          Width           =   5415
@@ -953,7 +1052,7 @@ Begin VB.Form frmOptions
          Caption         =   "..."
          Height          =   255
          Left            =   5625
-         TabIndex        =   17
+         TabIndex        =   16
          Top             =   4290
          Visible         =   0   'False
          Width           =   375
@@ -962,7 +1061,7 @@ Begin VB.Form frmOptions
          Caption         =   "..."
          Height          =   255
          Left            =   5625
-         TabIndex        =   16
+         TabIndex        =   15
          Top             =   4890
          Visible         =   0   'False
          Width           =   375
@@ -973,7 +1072,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
-         TabIndex        =   15
+         TabIndex        =   14
          Top             =   5490
          Visible         =   0   'False
          Width           =   5415
@@ -982,7 +1081,7 @@ Begin VB.Form frmOptions
          Caption         =   "..."
          Height          =   255
          Left            =   5625
-         TabIndex        =   14
+         TabIndex        =   13
          Top             =   5490
          Visible         =   0   'False
          Width           =   375
@@ -992,7 +1091,7 @@ Begin VB.Form frmOptions
          Caption         =   "Additional Ghostscript searchpath"
          Height          =   195
          Left            =   105
-         TabIndex        =   176
+         TabIndex        =   175
          Top             =   1890
          Width           =   2370
       End
@@ -1001,7 +1100,7 @@ Begin VB.Form frmOptions
          Caption         =   "Additional Ghostscript parameters"
          Height          =   195
          Left            =   105
-         TabIndex        =   173
+         TabIndex        =   172
          Top             =   1155
          Width           =   2355
       End
@@ -1010,7 +1109,7 @@ Begin VB.Form frmOptions
          Caption         =   "Ghostscriptversion"
          Height          =   195
          Left            =   105
-         TabIndex        =   27
+         TabIndex        =   26
          Top             =   420
          Width           =   1305
       End
@@ -1019,7 +1118,7 @@ Begin VB.Form frmOptions
          Caption         =   "Ghostscript Binaries"
          Height          =   195
          Left            =   105
-         TabIndex        =   26
+         TabIndex        =   25
          Top             =   3450
          Visible         =   0   'False
          Width           =   1395
@@ -1029,7 +1128,7 @@ Begin VB.Form frmOptions
          Caption         =   "Ghostscript Libraries"
          Height          =   195
          Left            =   105
-         TabIndex        =   25
+         TabIndex        =   24
          Top             =   4050
          Visible         =   0   'False
          Width           =   1425
@@ -1039,7 +1138,7 @@ Begin VB.Form frmOptions
          Caption         =   "Ghostscript Fonts"
          Height          =   195
          Left            =   105
-         TabIndex        =   24
+         TabIndex        =   23
          Top             =   4650
          Visible         =   0   'False
          Width           =   1230
@@ -1049,7 +1148,7 @@ Begin VB.Form frmOptions
          Caption         =   "Ghostscript Resource"
          Height          =   195
          Left            =   105
-         TabIndex        =   23
+         TabIndex        =   22
          Top             =   5250
          Visible         =   0   'False
          Width           =   1530
@@ -1058,7 +1157,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraProgDirectories 
       Height          =   1410
       Left            =   2640
-      TabIndex        =   43
+      TabIndex        =   42
       Top             =   1320
       Visible         =   0   'False
       Width           =   6495
@@ -1084,7 +1183,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Left            =   120
          Locked          =   -1  'True
-         TabIndex        =   171
+         TabIndex        =   170
          Top             =   945
          Width           =   5910
       End
@@ -1092,7 +1191,7 @@ Begin VB.Form frmOptions
          Caption         =   "..."
          Height          =   300
          Left            =   5154
-         TabIndex        =   166
+         TabIndex        =   165
          Top             =   600
          Width           =   375
       End
@@ -1100,7 +1199,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   120
-         TabIndex        =   44
+         TabIndex        =   43
          Top             =   600
          Width           =   4965
       End
@@ -1109,7 +1208,7 @@ Begin VB.Form frmOptions
          Left            =   5640
          Picture         =   "frmOptions.frx":0B34
          Style           =   1  'Grafisch
-         TabIndex        =   167
+         TabIndex        =   166
          Top             =   600
          Width           =   375
       End
@@ -1118,7 +1217,7 @@ Begin VB.Form frmOptions
          Caption         =   "Temppath"
          Height          =   195
          Left            =   120
-         TabIndex        =   45
+         TabIndex        =   44
          Top             =   360
          Width           =   720
       End
@@ -1126,7 +1225,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraPSGeneral 
       Height          =   1095
       Left            =   2640
-      TabIndex        =   87
+      TabIndex        =   86
       Top             =   1920
       Visible         =   0   'False
       Width           =   6375
@@ -1149,7 +1248,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   2280
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   89
+         TabIndex        =   88
          Top             =   600
          Width           =   735
       End
@@ -1158,7 +1257,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   2040
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   88
+         TabIndex        =   87
          Top             =   480
          Width           =   735
       End
@@ -1168,7 +1267,7 @@ Begin VB.Form frmOptions
          Caption         =   "Language Level:"
          Height          =   195
          Left            =   735
-         TabIndex        =   90
+         TabIndex        =   89
          Top             =   510
          Width           =   1200
       End
@@ -1176,7 +1275,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraPDFGeneral 
       Height          =   2895
       Left            =   2730
-      TabIndex        =   91
+      TabIndex        =   90
       Top             =   1785
       Visible         =   0   'False
       Width           =   6195
@@ -1200,7 +1299,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   2400
-         TabIndex        =   96
+         TabIndex        =   95
          Top             =   2520
          Width           =   3675
       End
@@ -1211,7 +1310,7 @@ Begin VB.Form frmOptions
          Left            =   2400
          List            =   "frmOptions.frx":10C0
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   95
+         TabIndex        =   94
          Top             =   1980
          Width           =   2655
       End
@@ -1220,7 +1319,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   2400
-         TabIndex        =   94
+         TabIndex        =   93
          Text            =   "600"
          Top             =   1440
          Width           =   615
@@ -1232,7 +1331,7 @@ Begin VB.Form frmOptions
          Left            =   2400
          List            =   "frmOptions.frx":10C4
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   93
+         TabIndex        =   92
          Top             =   480
          Width           =   2655
       End
@@ -1243,7 +1342,7 @@ Begin VB.Form frmOptions
          Left            =   2400
          List            =   "frmOptions.frx":10C8
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   92
+         TabIndex        =   91
          Tag             =   "None|All|PageByPage"
          Top             =   960
          Width           =   2655
@@ -1254,7 +1353,7 @@ Begin VB.Form frmOptions
          Caption         =   "dpi"
          Height          =   195
          Left            =   3120
-         TabIndex        =   101
+         TabIndex        =   100
          Top             =   1485
          Width           =   210
       End
@@ -1264,7 +1363,7 @@ Begin VB.Form frmOptions
          Caption         =   "Overprint:"
          Height          =   195
          Left            =   1605
-         TabIndex        =   100
+         TabIndex        =   99
          Top             =   2040
          Width           =   690
       End
@@ -1275,7 +1374,7 @@ Begin VB.Form frmOptions
          Caption         =   "Resolution:"
          Height          =   195
          Left            =   1500
-         TabIndex        =   99
+         TabIndex        =   98
          Top             =   1485
          Width           =   795
       End
@@ -1286,7 +1385,7 @@ Begin VB.Form frmOptions
          Caption         =   "Compatibility:"
          Height          =   195
          Left            =   1380
-         TabIndex        =   98
+         TabIndex        =   97
          Top             =   540
          Width           =   915
       End
@@ -1297,7 +1396,7 @@ Begin VB.Form frmOptions
          Caption         =   "Auto-Rotate Pages:"
          Height          =   195
          Left            =   900
-         TabIndex        =   97
+         TabIndex        =   96
          Top             =   1020
          Width           =   1395
       End
@@ -1305,7 +1404,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraBitmapGeneral 
       Height          =   1935
       Left            =   2640
-      TabIndex        =   74
+      TabIndex        =   73
       Top             =   1680
       Visible         =   0   'False
       Width           =   6375
@@ -1328,7 +1427,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   3480
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   81
+         TabIndex        =   80
          Top             =   1440
          Width           =   2175
       End
@@ -1337,7 +1436,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   3240
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   80
+         TabIndex        =   79
          Top             =   1320
          Width           =   2175
       End
@@ -1346,7 +1445,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   3000
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   79
+         TabIndex        =   78
          Top             =   1200
          Width           =   2175
       End
@@ -1355,7 +1454,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   2880
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   78
+         TabIndex        =   77
          Top             =   1080
          Width           =   2175
       End
@@ -1364,7 +1463,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   1920
-         TabIndex        =   77
+         TabIndex        =   76
          Text            =   "75"
          Top             =   1440
          Width           =   495
@@ -1374,7 +1473,7 @@ Begin VB.Form frmOptions
          Height          =   315
          Left            =   1920
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   76
+         TabIndex        =   75
          Top             =   960
          Width           =   4215
       End
@@ -1383,7 +1482,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   1920
-         TabIndex        =   75
+         TabIndex        =   74
          Text            =   "72"
          Top             =   480
          Width           =   495
@@ -1393,7 +1492,7 @@ Begin VB.Form frmOptions
          Caption         =   "%"
          Height          =   195
          Left            =   2520
-         TabIndex        =   86
+         TabIndex        =   85
          Top             =   1485
          Width           =   120
       End
@@ -1403,7 +1502,7 @@ Begin VB.Form frmOptions
          Caption         =   "Quality:"
          Height          =   195
          Left            =   1290
-         TabIndex        =   85
+         TabIndex        =   84
          Top             =   1485
          Width           =   525
       End
@@ -1413,7 +1512,7 @@ Begin VB.Form frmOptions
          Caption         =   "Colors:"
          Height          =   195
          Left            =   1335
-         TabIndex        =   84
+         TabIndex        =   83
          Top             =   1020
          Width           =   480
       End
@@ -1422,7 +1521,7 @@ Begin VB.Form frmOptions
          Caption         =   "dpi"
          Height          =   195
          Left            =   2520
-         TabIndex        =   83
+         TabIndex        =   82
          Top             =   525
          Width           =   210
       End
@@ -1432,7 +1531,7 @@ Begin VB.Form frmOptions
          Caption         =   "Resolution:"
          Height          =   195
          Left            =   1020
-         TabIndex        =   82
+         TabIndex        =   81
          Top             =   525
          Width           =   795
       End
@@ -1440,7 +1539,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraPDFFonts 
       Height          =   1695
       Left            =   2760
-      TabIndex        =   125
+      TabIndex        =   124
       Top             =   2400
       Visible         =   0   'False
       Width           =   6195
@@ -1464,7 +1563,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   128
+         TabIndex        =   127
          Top             =   360
          Width           =   5955
       End
@@ -1474,7 +1573,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   495
          Left            =   120
-         TabIndex        =   127
+         TabIndex        =   126
          Top             =   780
          Width           =   5955
       End
@@ -1482,7 +1581,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   285
          Left            =   400
-         TabIndex        =   126
+         TabIndex        =   125
          Top             =   1320
          Width           =   495
       End
@@ -1491,7 +1590,7 @@ Begin VB.Form frmOptions
          Caption         =   "%"
          Height          =   195
          Left            =   960
-         TabIndex        =   129
+         TabIndex        =   128
          Top             =   1365
          Width           =   120
       End
@@ -1499,7 +1598,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraProgFont 
       Height          =   4695
       Left            =   2640
-      TabIndex        =   65
+      TabIndex        =   64
       Top             =   1440
       Visible         =   0   'False
       Width           =   6375
@@ -1521,7 +1620,7 @@ Begin VB.Form frmOptions
          Caption         =   "C&ancel test"
          Height          =   495
          Left            =   2310
-         TabIndex        =   170
+         TabIndex        =   169
          Top             =   4095
          Width           =   1755
       End
@@ -1529,7 +1628,7 @@ Begin VB.Form frmOptions
          Caption         =   "&Test"
          Height          =   495
          Left            =   120
-         TabIndex        =   169
+         TabIndex        =   168
          Top             =   4095
          Width           =   1755
       End
@@ -1539,7 +1638,7 @@ Begin VB.Form frmOptions
          Left            =   120
          MultiLine       =   -1  'True
          ScrollBars      =   2  'Vertikal
-         TabIndex        =   69
+         TabIndex        =   68
          Top             =   1320
          Width           =   6135
       End
@@ -1547,7 +1646,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   315
          Left            =   3000
-         TabIndex        =   68
+         TabIndex        =   67
          Text            =   "cmbCharset"
          Top             =   600
          Width           =   2295
@@ -1558,7 +1657,7 @@ Begin VB.Form frmOptions
          Left            =   120
          Sorted          =   -1  'True
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   67
+         TabIndex        =   66
          Top             =   600
          Width           =   2775
       End
@@ -1566,7 +1665,7 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Height          =   315
          Left            =   5400
-         TabIndex        =   66
+         TabIndex        =   65
          Text            =   "8"
          Top             =   600
          Width           =   765
@@ -1576,7 +1675,7 @@ Begin VB.Form frmOptions
          Caption         =   "Size"
          Height          =   195
          Left            =   5400
-         TabIndex        =   73
+         TabIndex        =   72
          Top             =   360
          Width           =   300
       End
@@ -1585,7 +1684,7 @@ Begin VB.Form frmOptions
          Caption         =   "Here you can test the font."
          Height          =   195
          Left            =   120
-         TabIndex        =   72
+         TabIndex        =   71
          Top             =   1080
          Width           =   1890
       End
@@ -1594,7 +1693,7 @@ Begin VB.Form frmOptions
          Caption         =   "Charset"
          Height          =   195
          Left            =   3000
-         TabIndex        =   71
+         TabIndex        =   70
          Top             =   360
          Width           =   540
       End
@@ -1603,7 +1702,7 @@ Begin VB.Form frmOptions
          Caption         =   "Programfont"
          Height          =   195
          Left            =   120
-         TabIndex        =   70
+         TabIndex        =   69
          Top             =   360
          Width           =   855
       End
@@ -1611,7 +1710,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraPDFSecurity 
       Height          =   5535
       Left            =   2730
-      TabIndex        =   137
+      TabIndex        =   136
       Top             =   2205
       Visible         =   0   'False
       Width           =   6195
@@ -1632,7 +1731,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraPDFHighPermissions 
          Height          =   855
          Left            =   120
-         TabIndex        =   152
+         TabIndex        =   151
          Top             =   4560
          Width           =   5955
          _ExtentX        =   10504
@@ -1655,7 +1754,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   156
+            TabIndex        =   155
             Top             =   525
             Width           =   2760
          End
@@ -1665,7 +1764,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   155
+            TabIndex        =   154
             Top             =   525
             Width           =   2865
          End
@@ -1675,7 +1774,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   154
+            TabIndex        =   153
             Top             =   300
             Width           =   2760
          End
@@ -1685,7 +1784,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   153
+            TabIndex        =   152
             Top             =   300
             Width           =   2865
          End
@@ -1693,7 +1792,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraPDFPermissions 
          Height          =   855
          Left            =   120
-         TabIndex        =   147
+         TabIndex        =   146
          Top             =   3600
          Width           =   5955
          _ExtentX        =   10504
@@ -1716,7 +1815,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   151
+            TabIndex        =   150
             Top             =   525
             Width           =   2760
          End
@@ -1726,7 +1825,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   150
+            TabIndex        =   149
             Top             =   300
             Width           =   2760
          End
@@ -1736,7 +1835,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   149
+            TabIndex        =   148
             Top             =   525
             Width           =   2865
          End
@@ -1746,7 +1845,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   148
+            TabIndex        =   147
             Top             =   300
             Width           =   2865
          End
@@ -1754,7 +1853,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraSecurityPass 
          Height          =   855
          Left            =   120
-         TabIndex        =   144
+         TabIndex        =   143
          Top             =   2640
          Width           =   5955
          _ExtentX        =   10504
@@ -1777,7 +1876,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   146
+            TabIndex        =   145
             Top             =   525
             Width           =   5700
          End
@@ -1787,7 +1886,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   145
+            TabIndex        =   144
             Top             =   300
             Width           =   5700
          End
@@ -1795,7 +1894,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraPDFEncLevel 
          Height          =   855
          Left            =   120
-         TabIndex        =   141
+         TabIndex        =   140
          Top             =   1680
          Width           =   5955
          _ExtentX        =   10504
@@ -1818,7 +1917,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   143
+            TabIndex        =   142
             Top             =   525
             Width           =   5775
          End
@@ -1828,7 +1927,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   142
+            TabIndex        =   141
             Top             =   300
             Width           =   5775
          End
@@ -1836,7 +1935,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraPDFEncryptor 
          Height          =   855
          Left            =   120
-         TabIndex        =   139
+         TabIndex        =   138
          Top             =   720
          Width           =   5955
          _ExtentX        =   10504
@@ -1860,7 +1959,7 @@ Begin VB.Form frmOptions
             Left            =   120
             List            =   "frmOptions.frx":10CC
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   140
+            TabIndex        =   139
             Top             =   360
             Width           =   5715
          End
@@ -1871,7 +1970,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   138
+         TabIndex        =   137
          Top             =   360
          Width           =   5535
       End
@@ -1879,7 +1978,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmfraPDFCompress 
       Height          =   4335
       Left            =   2760
-      TabIndex        =   102
+      TabIndex        =   101
       Top             =   1920
       Visible         =   0   'False
       Width           =   6195
@@ -1900,7 +1999,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraPDFMono 
          Height          =   1095
          Left            =   120
-         TabIndex        =   118
+         TabIndex        =   117
          Top             =   3120
          Width           =   5955
          _ExtentX        =   10504
@@ -1923,7 +2022,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   123
+            TabIndex        =   122
             Top             =   360
             Width           =   2325
          End
@@ -1934,7 +2033,7 @@ Begin VB.Form frmOptions
             Left            =   120
             List            =   "frmOptions.frx":10D0
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   122
+            TabIndex        =   121
             Top             =   660
             Width           =   2370
          End
@@ -1944,7 +2043,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   2520
-            TabIndex        =   121
+            TabIndex        =   120
             Top             =   360
             Width           =   2295
          End
@@ -1955,7 +2054,7 @@ Begin VB.Form frmOptions
             Left            =   2520
             List            =   "frmOptions.frx":10D4
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   120
+            TabIndex        =   119
             Tag             =   "Bicubic|Subsample|Average"
             Top             =   660
             Width           =   2370
@@ -1964,7 +2063,7 @@ Begin VB.Form frmOptions
             Appearance      =   0  '2D
             Height          =   285
             Left            =   4935
-            TabIndex        =   119
+            TabIndex        =   118
             Top             =   660
             Width           =   735
          End
@@ -1973,7 +2072,7 @@ Begin VB.Form frmOptions
             Caption         =   "Resolution"
             Height          =   195
             Left            =   4935
-            TabIndex        =   124
+            TabIndex        =   123
             Top             =   360
             Width           =   750
          End
@@ -1981,7 +2080,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraPDFGrey 
          Height          =   1095
          Left            =   120
-         TabIndex        =   111
+         TabIndex        =   110
          Top             =   1920
          Width           =   5955
          _ExtentX        =   10504
@@ -2002,7 +2101,7 @@ Begin VB.Form frmOptions
             Appearance      =   0  '2D
             Height          =   285
             Left            =   4935
-            TabIndex        =   116
+            TabIndex        =   115
             Top             =   660
             Width           =   735
          End
@@ -2013,7 +2112,7 @@ Begin VB.Form frmOptions
             Left            =   2520
             List            =   "frmOptions.frx":10D8
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   115
+            TabIndex        =   114
             Tag             =   "Bicubic|Subsample|Average"
             Top             =   660
             Width           =   2370
@@ -2024,7 +2123,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   2520
-            TabIndex        =   114
+            TabIndex        =   113
             Top             =   360
             Width           =   2295
          End
@@ -2035,7 +2134,7 @@ Begin VB.Form frmOptions
             Left            =   120
             List            =   "frmOptions.frx":10DC
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   113
+            TabIndex        =   112
             Top             =   660
             Width           =   2370
          End
@@ -2045,7 +2144,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   112
+            TabIndex        =   111
             Top             =   360
             Width           =   2325
          End
@@ -2054,7 +2153,7 @@ Begin VB.Form frmOptions
             Caption         =   "Resolution"
             Height          =   195
             Left            =   4935
-            TabIndex        =   117
+            TabIndex        =   116
             Top             =   360
             Width           =   750
          End
@@ -2062,7 +2161,7 @@ Begin VB.Form frmOptions
       Begin PDFCreator.dmFrame dmFraPDFColor 
          Height          =   1095
          Left            =   120
-         TabIndex        =   104
+         TabIndex        =   103
          Top             =   720
          Width           =   5955
          _ExtentX        =   10504
@@ -2083,7 +2182,7 @@ Begin VB.Form frmOptions
             Appearance      =   0  '2D
             Height          =   285
             Left            =   4935
-            TabIndex        =   109
+            TabIndex        =   108
             Top             =   660
             Width           =   735
          End
@@ -2094,7 +2193,7 @@ Begin VB.Form frmOptions
             Left            =   2520
             List            =   "frmOptions.frx":10E0
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   108
+            TabIndex        =   107
             Tag             =   "Bicubic|Subsample|Average"
             Top             =   660
             Width           =   2370
@@ -2105,7 +2204,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   2520
-            TabIndex        =   107
+            TabIndex        =   106
             Top             =   360
             Width           =   2295
          End
@@ -2116,7 +2215,7 @@ Begin VB.Form frmOptions
             Left            =   120
             List            =   "frmOptions.frx":10E4
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   106
+            TabIndex        =   105
             Top             =   660
             Width           =   2370
          End
@@ -2126,7 +2225,7 @@ Begin VB.Form frmOptions
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   105
+            TabIndex        =   104
             Top             =   360
             Width           =   2325
          End
@@ -2135,7 +2234,7 @@ Begin VB.Form frmOptions
             Caption         =   "Resolution"
             Height          =   195
             Left            =   4935
-            TabIndex        =   110
+            TabIndex        =   109
             Top             =   360
             Width           =   750
          End
@@ -2146,7 +2245,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   103
+         TabIndex        =   102
          Top             =   360
          Width           =   5910
       End
@@ -2154,7 +2253,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraPDFColors 
       Height          =   1215
       Left            =   2760
-      TabIndex        =   130
+      TabIndex        =   129
       Top             =   2760
       Visible         =   0   'False
       Width           =   6195
@@ -2179,7 +2278,7 @@ Begin VB.Form frmOptions
          Left            =   120
          List            =   "frmOptions.frx":10E8
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   132
+         TabIndex        =   131
          Tag             =   "RGB|CMYK|GRAY"
          Top             =   360
          Width           =   2775
@@ -2190,7 +2289,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   131
+         TabIndex        =   130
          Top             =   840
          Width           =   5880
       End
@@ -2198,7 +2297,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraPDFColorOptions 
       Height          =   1455
       Left            =   2760
-      TabIndex        =   133
+      TabIndex        =   132
       Top             =   4080
       Visible         =   0   'False
       Width           =   6195
@@ -2222,7 +2321,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   136
+         TabIndex        =   135
          Top             =   1050
          Width           =   5910
       End
@@ -2232,7 +2331,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   135
+         TabIndex        =   134
          Tag             =   "Remove|Preserve"
          Top             =   720
          Width           =   5910
@@ -2243,7 +2342,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
-         TabIndex        =   134
+         TabIndex        =   133
          Top             =   360
          Width           =   5910
       End
@@ -2261,7 +2360,7 @@ Begin VB.Form frmOptions
       Align           =   3  'Links ausrichten
       Height          =   7890
       Left            =   0
-      TabIndex        =   160
+      TabIndex        =   159
       Top             =   0
       Width           =   2535
       _ExtentX        =   4471
@@ -2381,10 +2480,10 @@ Begin VB.Form frmOptions
       Top             =   7320
       Width           =   1815
    End
-   Begin PDFCreator.dmFrame dmfraFilenameSubstitutions 
+   Begin PDFCreator.dmFrame dmFraFilenameSubstitutions 
       Height          =   2535
       Left            =   2640
-      TabIndex        =   59
+      TabIndex        =   58
       Top             =   4200
       Visible         =   0   'False
       Width           =   6375
@@ -2407,7 +2506,7 @@ Begin VB.Form frmOptions
          Height          =   375
          Index           =   0
          Left            =   4440
-         TabIndex        =   163
+         TabIndex        =   162
          Top             =   720
          Width           =   1455
       End
@@ -2417,7 +2516,7 @@ Begin VB.Form frmOptions
          Left            =   120
          Picture         =   "frmOptions.frx":8318
          Style           =   1  'Grafisch
-         TabIndex        =   161
+         TabIndex        =   160
          Top             =   915
          Width           =   375
       End
@@ -2426,7 +2525,7 @@ Begin VB.Form frmOptions
          Height          =   285
          Index           =   1
          Left            =   2640
-         TabIndex        =   62
+         TabIndex        =   61
          Top             =   360
          Width           =   1695
       End
@@ -2436,7 +2535,7 @@ Begin VB.Form frmOptions
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   240
-         TabIndex        =   61
+         TabIndex        =   60
          Top             =   2160
          Value           =   1  'Aktiviert
          Width           =   3255
@@ -2446,14 +2545,14 @@ Begin VB.Form frmOptions
          Height          =   285
          Index           =   0
          Left            =   600
-         TabIndex        =   60
+         TabIndex        =   59
          Top             =   360
          Width           =   1695
       End
       Begin MSComctlLib.ListView lsvFilenameSubst 
          Height          =   1335
          Left            =   600
-         TabIndex        =   63
+         TabIndex        =   62
          Top             =   720
          Width           =   3735
          _ExtentX        =   6588
@@ -2475,7 +2574,7 @@ Begin VB.Form frmOptions
          Left            =   120
          Picture         =   "frmOptions.frx":86A2
          Style           =   1  'Grafisch
-         TabIndex        =   162
+         TabIndex        =   161
          Top             =   1440
          Width           =   375
       End
@@ -2484,7 +2583,7 @@ Begin VB.Form frmOptions
          Height          =   375
          Index           =   1
          Left            =   4440
-         TabIndex        =   164
+         TabIndex        =   163
          Top             =   1155
          Width           =   1455
       End
@@ -2493,7 +2592,7 @@ Begin VB.Form frmOptions
          Height          =   375
          Index           =   2
          Left            =   4440
-         TabIndex        =   165
+         TabIndex        =   164
          Top             =   1680
          Width           =   1455
       End
@@ -2501,7 +2600,7 @@ Begin VB.Form frmOptions
          Caption         =   "="
          Height          =   255
          Left            =   2400
-         TabIndex        =   64
+         TabIndex        =   63
          Top             =   360
          Width           =   135
       End
@@ -2509,7 +2608,7 @@ Begin VB.Form frmOptions
    Begin PDFCreator.dmFrame dmFraDescription 
       Height          =   1065
       Left            =   2640
-      TabIndex        =   157
+      TabIndex        =   156
       Top             =   105
       Width           =   6420
       _ExtentX        =   11324
@@ -2535,14 +2634,14 @@ Begin VB.Form frmOptions
          Left            =   105
          ScaleHeight     =   615
          ScaleWidth      =   615
-         TabIndex        =   158
+         TabIndex        =   157
          Top             =   420
          Width           =   615
       End
       Begin VB.Label lblOptions 
          Height          =   615
          Left            =   735
-         TabIndex        =   159
+         TabIndex        =   158
          Top             =   420
          Width           =   5655
       End
@@ -2550,7 +2649,7 @@ Begin VB.Form frmOptions
    Begin MSComctlLib.TabStrip tbstrPDFOptions 
       Height          =   4935
       Left            =   2640
-      TabIndex        =   9
+      TabIndex        =   8
       Top             =   1320
       Visible         =   0   'False
       Width           =   6420
@@ -2564,46 +2663,22 @@ Begin VB.Form frmOptions
          EndProperty
       EndProperty
    End
-   Begin PDFCreator.dmFrame dmFraShellIntegration 
-      Height          =   1065
-      Left            =   2640
-      TabIndex        =   12
-      Top             =   5565
+   Begin MSComctlLib.TabStrip tbstrProgGeneral 
+      Height          =   4935
+      Left            =   2600
+      TabIndex        =   214
+      Top             =   420
+      Visible         =   0   'False
       Width           =   6420
       _ExtentX        =   11324
-      _ExtentY        =   1879
-      Caption         =   "Shell integration"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
+      _ExtentY        =   8705
+      _Version        =   393216
+      BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
+         NumTabs         =   1
+         BeginProperty Tab1 {1EFB659A-857C-11D1-B16A-00C0F0283628} 
+            ImageVarType    =   2
+         EndProperty
       EndProperty
-      TextShaddowColor=   12582912
-      Begin VB.CommandButton cmdShellintegration 
-         Caption         =   "Integrate PDFCreator into shell"
-         Height          =   495
-         Index           =   1
-         Left            =   3240
-         TabIndex        =   8
-         Top             =   420
-         Width           =   3015
-      End
-      Begin VB.CommandButton cmdShellintegration 
-         Caption         =   "Integrate PDFCreator into shell"
-         Height          =   495
-         Index           =   0
-         Left            =   120
-         TabIndex        =   7
-         Top             =   420
-         Width           =   3015
-      End
    End
 End
 Attribute VB_Name = "frmOptions"
@@ -3306,6 +3381,7 @@ Private Sub cmdUsertempPath_Click()
  End With
 End Sub
 
+
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
  If KeyCode = vbKeyF1 Then
   KeyCode = 0
@@ -3389,14 +3465,15 @@ Private Sub Form_Load()
   .Caption = LanguageStrings.OptionsTreeProgram
   .Visible = True
  End With
- dmFraShellIntegration.Visible = True
- With dmFraProgGeneral
+ tbstrProgGeneral.Visible = True
+ With dmFraProgGeneral1
   .Visible = True
   .Top = dmFraDescription.Top + dmFraDescription.Height + 50
   .Left = dmFraDescription.Left
-  dmFraShellIntegration.Top = .Top + .Height + 50
-  dmFraShellIntegration.Left = .Left
-  dmFraShellIntegration.Width = .Width
+  dmFraProgGeneral2.Top = .Top
+  dmFraProgGeneral2.Left = .Left
+  dmFraProgGeneral2.Width = .Width
+  dmFraShellIntegration.Width = dmFraProgGeneral2.Width
   dmFraProgGhostscript.Top = .Top
   dmFraProgGhostscript.Left = .Left
   dmFraProgGhostscript.Width = .Width
@@ -3409,12 +3486,12 @@ Private Sub Form_Load()
   dmFraProgDocument.Top = .Top
   dmFraProgDocument.Left = .Left
   dmFraProgDocument.Width = .Width
-  dmfraProgSave.Top = .Top
-  dmfraProgSave.Left = .Left
-  dmfraProgSave.Width = .Width
-  dmfraFilenameSubstitutions.Top = dmfraProgSave.Top + dmfraProgSave.Height + 50
-  dmfraFilenameSubstitutions.Left = .Left
-  dmfraFilenameSubstitutions.Width = .Width
+  dmFraProgSave.Top = .Top
+  dmFraProgSave.Left = .Left
+  dmFraProgSave.Width = .Width
+  dmFraFilenameSubstitutions.Top = dmFraProgSave.Top + dmFraProgSave.Height + 50
+  dmFraFilenameSubstitutions.Left = .Left
+  dmFraFilenameSubstitutions.Width = .Width
   dmFraProgFont.Top = .Top
   dmFraProgFont.Left = .Left
   dmFraProgFont.Width = .Width
@@ -3439,6 +3516,26 @@ Private Sub Form_Load()
   cmdSave.Left = .Left + .Width - cmdSave.Width
  End With
 
+ With tbstrProgGeneral
+  .Top = dmFraDescription.Top + dmFraDescription.Height + 50
+  .Left = dmFraDescription.Left
+  .Height = cmdCancel.Top - tbstrProgGeneral.Top - 50
+  .Width = dmFraDescription.Width
+ End With
+ 
+ With dmFraProgGeneral1
+  .Top = tbstrProgGeneral.ClientTop + 100
+  .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
+ End With
+ With dmFraProgGeneral2
+  .Top = tbstrProgGeneral.ClientTop + 100
+  .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
+ End With
+ With dmFraShellIntegration
+  .Top = dmFraProgGeneral2.Top + dmFraProgGeneral2.Height + 50
+  .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
+ End With
+ 
  With tbstrPDFOptions
   .Top = dmFraDescription.Top + dmFraDescription.Height + 50
   .Left = dmFraDescription.Left
@@ -3490,16 +3587,22 @@ Private Sub Form_Load()
   ieb.DisableUpdates False
 
   Set picOptions = LoadResPicture(2101, vbResIcon)
-  dmFraProgGeneral.Visible = True
+  dmFraProgGeneral1.Visible = True
 
-  dmFraProgGeneral.Caption = .OptionsProgramGeneralSymbol
+  dmFraProgGeneral1.Caption = .OptionsProgramGeneralDescription1
+  dmFraProgGeneral2.Caption = .OptionsProgramGeneralDescription2
+  With tbstrProgGeneral.Tabs
+   .Clear
+   .Add , , LanguageStrings.OptionsProgramGeneralDescription1
+   .Add , , LanguageStrings.OptionsProgramGeneralDescription2
+  End With
   dmFraShellIntegration.Caption = .OptionsShellIntegration
   dmFraProgGhostscript.Caption = .OptionsProgramGhostscriptSymbol
   dmFraProgAutosave.Caption = .OptionsProgramAutosaveSymbol
   dmFraProgDirectories.Caption = .OptionsProgramDirectoriesSymbol
   dmFraProgDocument.Caption = .OptionsProgramDocumentSymbol
   dmFraProgFont.Caption = .OptionsProgramFontSymbol
-  dmfraProgSave.Caption = .OptionsProgramSaveSymbol
+  dmFraProgSave.Caption = .OptionsProgramSaveSymbol
   dmFraProgActions.Caption = .OptionsProgramActionsSymbol
   dmFraProgPrint.Caption = .OptionsProgramPrintSymbol
 
@@ -3511,6 +3614,11 @@ Private Sub Form_Load()
     cmdShellintegration(1).Enabled = False
    End If
   End If
+  
+  lblSendMailMethod.Caption = .OptionsSendMailMethod
+  cmbSendMailMethod.AddItem .OptionsSendMailMethodAutomatic
+  cmbSendMailMethod.AddItem .OptionsSendMailMethodMapi
+  cmbSendMailMethod.AddItem .OptionsSendMailMethodSendmailDLL
 
   lblGhostscriptversion.Caption = .OptionsGhostscriptversion
   lblAdditionalGhostscriptParameters.Caption = .OptionsAdditionalGhostscriptParameters
@@ -3519,7 +3627,7 @@ Private Sub Form_Load()
 
   lblSaveFilename.Caption = .OptionsSaveFilename
   lblSaveFilenameTokens.Caption = .OptionsSaveFilenameTokens
-  dmfraFilenameSubstitutions.Caption = .OptionsSaveFilenameSubstitutions
+  dmFraFilenameSubstitutions.Caption = .OptionsSaveFilenameSubstitutions
   chkFilenameSubst.Caption = .OptionsSaveFilenameSubstitutionsTitle
   cmdFilenameSubst(0).Caption = .OptionsSaveFilenameAdd
   cmdFilenameSubst(1).Caption = .OptionsSaveFilenameChange
@@ -4180,6 +4288,7 @@ Private Sub ieb_ItemClick(sGroup As String, sItemKey As String)
  cmbPCXColors.Visible = False
  cmbTIFFColors.Visible = False
  tbstrPDFOptions.Visible = False
+ tbstrProgGeneral.Visible = False
  For Each ctl In Controls
   If TypeOf ctl Is dmFrame Then
    ctl.Visible = False
@@ -4201,10 +4310,18 @@ Private Sub ieb_ItemClick(sGroup As String, sItemKey As String)
     Case "GENERAL"
      Set picOptions = LoadResPicture(2101, vbResIcon)
      lblOptions = LanguageStrings.OptionsProgramGeneralDescription
-     dmFraProgGeneral.Enabled = True
-     dmFraShellIntegration.Enabled = True
-     dmFraProgGeneral.Visible = True
-     dmFraShellIntegration.Visible = True
+     tbstrProgGeneral.Enabled = True
+     tbstrProgGeneral.Visible = True
+     Select Case tbstrProgGeneral.SelectedItem.Index
+      Case 1
+       dmFraProgGeneral1.Enabled = True
+       dmFraProgGeneral1.Visible = True
+      Case 2
+       dmFraProgGeneral2.Enabled = True
+       dmFraProgGeneral2.Visible = True
+       dmFraShellIntegration.Enabled = True
+       dmFraShellIntegration.Visible = True
+     End Select
      dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
     Case "GHOSTSCRIPT"
      Set picOptions = LoadResPicture(2119, vbResIcon)
@@ -4221,10 +4338,10 @@ Private Sub ieb_ItemClick(sGroup As String, sItemKey As String)
     Case "SAVE"
      Set picOptions = LoadResPicture(2106, vbResIcon)
      lblOptions = LanguageStrings.OptionsProgramSaveDescription
-     dmfraProgSave.Enabled = True
-     dmfraProgSave.Visible = True
-     dmfraFilenameSubstitutions.Visible = True
-     dmfraFilenameSubstitutions.Enabled = True
+     dmFraProgSave.Enabled = True
+     dmFraProgSave.Visible = True
+     dmFraFilenameSubstitutions.Visible = True
+     dmFraFilenameSubstitutions.Enabled = True
      dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
     Case "AUTOSAVE"
      Set picOptions = LoadResPicture(2103, vbResIcon)
@@ -4415,6 +4532,25 @@ End Sub
 
 Private Sub tbstrProgActions_Click()
  ViewProgActions
+End Sub
+
+Private Sub tbstrProgGeneral_Click()
+ Select Case tbstrProgGeneral.SelectedItem.Index
+  Case 1
+   dmFraProgGeneral1.Enabled = True
+   dmFraProgGeneral1.Visible = True
+   dmFraProgGeneral2.Enabled = False
+   dmFraProgGeneral2.Visible = False
+   dmFraShellIntegration.Enabled = False
+   dmFraShellIntegration.Visible = False
+  Case 2
+   dmFraProgGeneral2.Enabled = True
+   dmFraProgGeneral2.Visible = True
+   dmFraShellIntegration.Enabled = True
+   dmFraShellIntegration.Visible = True
+   dmFraProgGeneral1.Enabled = False
+   dmFraProgGeneral1.Visible = False
+ End Select
 End Sub
 
 Private Sub Timer1_Timer()

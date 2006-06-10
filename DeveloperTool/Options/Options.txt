@@ -172,7 +172,7 @@ RunProgramBeforeSavingProgramParameters|txtRunProgramBeforeSavingProgramParamete
 RunProgramBeforeSavingWindowstyle|cmbRunProgramBeforeSavingWindowstyle.Listindex|Long|1|0|6
 SaveFilename|txtSaveFilename.Text|String|<Title>||
 SendEmailAfterAutoSaving|chkAutosaveSendEmail.Value|Boolean|0||
-SendMailMethod||Long|0|0|<
+SendMailMethod|cmbSendMailMethod.Listindex|Long|0|0|2
 ShowAnimation|chkShowAnimation|Boolean|1||
 
 ' <Printing>

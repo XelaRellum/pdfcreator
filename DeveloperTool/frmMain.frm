@@ -2913,7 +2913,6 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "RemoveAllKnownFileExtensions"
   .Add "PDFOwnerPasswordString"
   .Add "PDFUserPasswordString"
-  .Add "SendMailMethod"
   .Add "StandardKeywords"
   .Add "StandardDateformat"
   .Add "StandardCreationdate"
