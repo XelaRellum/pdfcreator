@@ -242,6 +242,7 @@ Public Type tLanguageStrings
  OptionsPDFGeneralRotate01 As String
  OptionsPDFGeneralRotate02 As String
  OptionsPDFGeneralRotate03 As String
+ OptionsPDFOptimize As String
  OptionsPDFOptions As String
  OptionsPDFOwnerPass As String
  OptionsPDFPasswords As String
@@ -699,6 +700,7 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
   .OptionsPDFGeneralRotate01 = Replace$(hLang.Retrieve("PDFGeneralRotate01", .OptionsPDFGeneralRotate01),"/n",vbCrLf)
   .OptionsPDFGeneralRotate02 = Replace$(hLang.Retrieve("PDFGeneralRotate02", .OptionsPDFGeneralRotate02),"/n",vbCrLf)
   .OptionsPDFGeneralRotate03 = Replace$(hLang.Retrieve("PDFGeneralRotate03", .OptionsPDFGeneralRotate03),"/n",vbCrLf)
+  .OptionsPDFOptimize = Replace$(hLang.Retrieve("PDFOptimize", .OptionsPDFOptimize),"/n",vbCrLf)
   .OptionsPDFOptions = Replace$(hLang.Retrieve("PDFOptions", .OptionsPDFOptions),"/n",vbCrLf)
   .OptionsPDFOwnerPass = Replace$(hLang.Retrieve("PDFOwnerPass", .OptionsPDFOwnerPass),"/n",vbCrLf)
   .OptionsPDFPasswords = Replace$(hLang.Retrieve("PDFPasswords", .OptionsPDFPasswords),"/n",vbCrLf)
@@ -1120,6 +1122,7 @@ Public Sub InitLanguagesStrings()
   .OptionsPDFGeneralRotate01 = "None"
   .OptionsPDFGeneralRotate02 = "All"
   .OptionsPDFGeneralRotate03 = "Single Page"
+  .OptionsPDFOptimize = "Fast web view"
   .OptionsPDFOptions = "PDF Options"
   .OptionsPDFOwnerPass = "Password required to change permissions and passwords"
   .OptionsPDFPasswords = "Passwords"

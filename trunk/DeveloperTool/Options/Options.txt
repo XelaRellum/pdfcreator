@@ -129,7 +129,7 @@ PDFHighEncryption|optEncHigh.Value|Boolean|0||
 PDFLowEncryption|optEncLow.Value|Boolean|1||
 
 ' <Printing Formats PDF General>
-PDFOptimize||Boolean|0||
+PDFOptimize|chkPDFOptimize.value|Boolean|0||
 
 ' <Printing Formats PDF Security>
 PDFOwnerPass|chkOwnerPass.Value|Boolean|0||
