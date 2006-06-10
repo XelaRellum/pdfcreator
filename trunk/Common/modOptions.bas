@@ -1969,7 +1969,7 @@ Public Function ReadOptionsINI(myOptions As tOptions, PDFCreatorINIFile As Strin
   End If
   tStr = hOpt.Retrieve("SendMailMethod")
   If IsNumeric(tStr) Then
-    If CLng(tStr) >= 0 Then
+    If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
       .SendMailMethod = CLng(tStr)
      Else
       If UseStandard Then
@@ -4377,7 +4377,7 @@ Public Function ReadOptionsReg(myOptions As tOptions, KeyRoot as String, Optiona
   End If
   tStr = reg.GetRegistryValue("SendMailMethod")
   If Isnumeric(tStr) Then
-    If CLng(tStr) >= 0 Then
+    If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
       .SendMailMethod = CLng(tStr)
      Else
       If UseStandard Then
@@ -5941,6 +5941,7 @@ Public Sub ShowOptions(Frm as Form, sOptions as tOptions)
   frm.cmbRunProgramBeforeSavingWindowstyle.Listindex = .RunProgramBeforeSavingWindowstyle
   frm.txtSaveFilename.Text = .SaveFilename
   frm.chkAutosaveSendEmail.Value = .SendEmailAfterAutoSaving
+  frm.cmbSendMailMethod.Listindex = .SendMailMethod
   frm.chkShowAnimation = .ShowAnimation
   frm.txtStandardAuthor.Text = .StandardAuthor
   frm.cmbStandardSaveformat.Listindex = .StandardSaveformat
@@ -6058,6 +6059,7 @@ Public Sub GetOptions(Frm as Form, sOptions as tOptions)
  .RunProgramBeforeSavingWindowstyle =  frm.cmbRunProgramBeforeSavingWindowstyle.Listindex
  .SaveFilename =  frm.txtSaveFilename.Text
  .SendEmailAfterAutoSaving =  Abs(frm.chkAutosaveSendEmail.Value)
+ .SendMailMethod =  frm.cmbSendMailMethod.Listindex
  .ShowAnimation =  Abs(frm.chkShowAnimation)
  .StandardAuthor =  frm.txtStandardAuthor.Text
  .StandardSaveformat =  frm.cmbStandardSaveformat.Listindex

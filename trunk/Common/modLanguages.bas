@@ -295,6 +295,8 @@ Public Type tLanguageStrings
  OptionsProgramFontTest As String
  OptionsProgramFontTestdescription As String
  OptionsProgramGeneralDescription As String
+ OptionsProgramGeneralDescription1 As String
+ OptionsProgramGeneralDescription2 As String
  OptionsProgramGeneralSymbol As String
  OptionsProgramGhostscriptDescription As String
  OptionsProgramGhostscriptSymbol As String
@@ -346,6 +348,10 @@ Public Type tLanguageStrings
  OptionsSaveFilenameTokens As String
  OptionsSavePasswords As String
  OptionsSendEmailAfterAutosave As String
+ OptionsSendMailMethod As String
+ OptionsSendMailMethodAutomatic As String
+ OptionsSendMailMethodMapi As String
+ OptionsSendMailMethodSendmailDLL As String
  OptionsShellIntegration As String
  OptionsShellIntegrationAdd As String
  OptionsShellIntegrationCaption As String
@@ -746,6 +752,8 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
   .OptionsProgramFontTest = Replace$(hLang.Retrieve("ProgramFontTest", .OptionsProgramFontTest),"/n",vbCrLf)
   .OptionsProgramFontTestdescription = Replace$(hLang.Retrieve("ProgramFontTestdescription", .OptionsProgramFontTestdescription),"/n",vbCrLf)
   .OptionsProgramGeneralDescription = Replace$(hLang.Retrieve("ProgramGeneralDescription", .OptionsProgramGeneralDescription),"/n",vbCrLf)
+  .OptionsProgramGeneralDescription1 = Replace$(hLang.Retrieve("ProgramGeneralDescription1", .OptionsProgramGeneralDescription1),"/n",vbCrLf)
+  .OptionsProgramGeneralDescription2 = Replace$(hLang.Retrieve("ProgramGeneralDescription2", .OptionsProgramGeneralDescription2),"/n",vbCrLf)
   .OptionsProgramGeneralSymbol = Replace$(hLang.Retrieve("ProgramGeneralSymbol", .OptionsProgramGeneralSymbol),"/n",vbCrLf)
   .OptionsProgramGhostscriptDescription = Replace$(hLang.Retrieve("ProgramGhostscriptDescription", .OptionsProgramGhostscriptDescription),"/n",vbCrLf)
   .OptionsProgramGhostscriptSymbol = Replace$(hLang.Retrieve("ProgramGhostscriptSymbol", .OptionsProgramGhostscriptSymbol),"/n",vbCrLf)
@@ -797,6 +805,10 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
   .OptionsSaveFilenameTokens = Replace$(hLang.Retrieve("SaveFilenameTokens", .OptionsSaveFilenameTokens),"/n",vbCrLf)
   .OptionsSavePasswords = Replace$(hLang.Retrieve("SavePasswords", .OptionsSavePasswords),"/n",vbCrLf)
   .OptionsSendEmailAfterAutosave = Replace$(hLang.Retrieve("SendEmailAfterAutosave", .OptionsSendEmailAfterAutosave),"/n",vbCrLf)
+  .OptionsSendMailMethod = Replace$(hLang.Retrieve("SendMailMethod", .OptionsSendMailMethod),"/n",vbCrLf)
+  .OptionsSendMailMethodAutomatic = Replace$(hLang.Retrieve("SendMailMethodAutomatic", .OptionsSendMailMethodAutomatic),"/n",vbCrLf)
+  .OptionsSendMailMethodMapi = Replace$(hLang.Retrieve("SendMailMethodMapi", .OptionsSendMailMethodMapi),"/n",vbCrLf)
+  .OptionsSendMailMethodSendmailDLL = Replace$(hLang.Retrieve("SendMailMethodSendmailDLL", .OptionsSendMailMethodSendmailDLL),"/n",vbCrLf)
   .OptionsShellIntegration = Replace$(hLang.Retrieve("ShellIntegration", .OptionsShellIntegration),"/n",vbCrLf)
   .OptionsShellIntegrationAdd = Replace$(hLang.Retrieve("ShellIntegrationAdd", .OptionsShellIntegrationAdd),"/n",vbCrLf)
   .OptionsShellIntegrationCaption = Replace$(hLang.Retrieve("ShellIntegrationCaption", .OptionsShellIntegrationCaption),"/n",vbCrLf)
@@ -1160,7 +1172,9 @@ Public Sub InitLanguagesStrings()
   .OptionsProgramFontSymbol = "Program font"
   .OptionsProgramFontTest = "Test"
   .OptionsProgramFontTestdescription = "Here you can test the font."
-  .OptionsProgramGeneralDescription = "General Settings."
+  .OptionsProgramGeneralDescription = "General Settings"
+  .OptionsProgramGeneralDescription1 = "General Settings 1"
+  .OptionsProgramGeneralDescription2 = "General Settings 2"
   .OptionsProgramGeneralSymbol = "General settings"
   .OptionsProgramGhostscriptDescription = "Ghostscript"
   .OptionsProgramGhostscriptSymbol = "Ghostscript"
@@ -1212,6 +1226,10 @@ Public Sub InitLanguagesStrings()
   .OptionsSaveFilenameTokens = "Add a Filename-Token"
   .OptionsSavePasswords = "Save passwords temporarily for this session."
   .OptionsSendEmailAfterAutosave = "Send an email after auto-saving"
+  .OptionsSendMailMethod = "Methode to send an email"
+  .OptionsSendMailMethodAutomatic = "Automatic"
+  .OptionsSendMailMethodMapi = "Mapi interface"
+  .OptionsSendMailMethodSendmailDLL = "Using sendmail.dll"
   .OptionsShellIntegration = "Shell integration"
   .OptionsShellIntegrationAdd = "Integrate PDFCreator into shell"
   .OptionsShellIntegrationCaption = "Create &PDF with PDFCreator"

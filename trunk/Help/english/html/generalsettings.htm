@@ -20,10 +20,10 @@
     <td class="main"><p class="header">General Settings</p>
       <p>The General Settings page sets the basic properties that the entire PDFCreator 
         application will use.</p>
-      <p><strong>Associate PDFCreator with Postscript Files:</strong> When this 
-        is clicked, PDFCreator becomes the default application for opening Postscript 
-        (.ps) files in Windows. Do not click this if you have another program 
-        that you wish to be the default instead.</p>
+      <p><strong>Print Test Page:</strong> Creates a sample PDF to test the PDFCreator 
+        printer and drivers. This allows the user to make a PDF without having 
+        to go into another program to test the application. This is especially 
+        useful when troubleshooting PDFCreator on your system.</p>
       <p><strong>Processpriority:</strong> The process priority determines how 
         much of your computer's processing power will go into creating the PDF 
         when you go to print. If changed, the speed at which PDFCreator creates 
@@ -35,15 +35,24 @@
         <em><strong>Print</strong></em> or by unchecking the <em><strong>Printer
         Stop</strong></em> option in the <em><strong>Printer</strong></em> menu.
         The setting is useful if you want collect some files first, then combine
-        the files into one and create a pdf.<br>
-        <em>Properties:</em><br>
-        0 - Off (Default)<br>
-        1 - On</p>
+        the files into one and create a pdf.</p>
       <p><strong>No Confirmation on Temporary Changing to Default Printer:</strong> 
         Occasionally, PDFCreator is required to be the default printer to perform 
         some tasks. When checked, PDFCreator automatically changes itself to the 
         default printer temporarily to complete the task. When not checked, PDFCreator 
         will ask each time it is needed.</p>
+      <p><strong>Method to send an email:</strong> This option allows the user to set the
+        method in which PDFCreator sends the document to email.<br>
+        <em>Properties:</em><br>
+        Automatic - PDFCreator detects the mail client and chooses the best
+        method. (Default)<br>
+        MAPI interface - PDFCreator uses the MAPI interface.<br>
+        Using sendmail.dll - PDFCreator uses the &quot;Send To/Mail Recipient&quot;
+        shell extension.</p>
+      <p><strong>Associate PDFCreator with Postscript Files:</strong> When this 
+        is clicked, PDFCreator becomes the default application for opening Postscript 
+        (.ps) files in Windows. Do not click this if you have another program 
+        that you wish to be the default instead.</p>
       <p><strong>Frame color of the options dialog:</strong> With this setting you can change the
         colors of the frames in the options dialog. This can be helpful for people
         with sensitive eyes or people with poor eyesight.<br>
@@ -65,10 +74,7 @@
         assigned the default printer status.</p>
       <p><strong>Remove Shell Integration:</strong> When clicked, removes the 
         PDFCreator shell integration described above.</p>
-      <p><strong>Print Test Page:</strong> Creates a sample PDF to test the PDFCreator 
-        printer and drivers. This allows the user to make a PDF without having 
-        to go into another program to test the application. This is especially 
-        useful when troubleshooting PDFCreator on your system.</p></td>
+   </td>
   </tr>
 </table>
 </body>
