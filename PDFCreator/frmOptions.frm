@@ -16,6 +16,88 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin PDFCreator.dmFrame dmFraProgDocument 
+      Height          =   2250
+      Left            =   2640
+      TabIndex        =   45
+      Top             =   1800
+      Visible         =   0   'False
+      Width           =   6375
+      _ExtentX        =   11245
+      _ExtentY        =   3969
+      Caption         =   "Document"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.CheckBox chkOnePagePerFile 
+         Appearance      =   0  '2D
+         Caption         =   "One page per file"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   224
+         Top             =   1890
+         Width           =   6000
+      End
+      Begin VB.ComboBox cmbAuthorTokens 
+         Appearance      =   0  '2D
+         Enabled         =   0   'False
+         Height          =   315
+         ItemData        =   "frmOptions.frx":000C
+         Left            =   3720
+         List            =   "frmOptions.frx":000E
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   50
+         Top             =   840
+         Width           =   2415
+      End
+      Begin VB.CheckBox chkUseStandardAuthor 
+         Appearance      =   0  '2D
+         Caption         =   "Use Standardauthor"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   49
+         Top             =   360
+         Width           =   6000
+      End
+      Begin VB.TextBox txtStandardAuthor 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   120
+         TabIndex        =   48
+         Top             =   840
+         Width           =   3495
+      End
+      Begin VB.CheckBox chkUseCreationDateNow 
+         Appearance      =   0  '2D
+         Caption         =   "Use the current Date/Time for 'Creation Date'"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   47
+         Top             =   1440
+         Width           =   6000
+      End
+      Begin VB.Label lblAuthorTokens 
+         AutoSize        =   -1  'True
+         Caption         =   "Add a Author-Token"
+         Enabled         =   0   'False
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   46
+         Top             =   600
+         Width           =   1440
+      End
+   End
    Begin PDFCreator.dmFrame dmFraPDFGeneral 
       Height          =   4365
       Left            =   2625
@@ -60,9 +142,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFOverprint 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":000C
+         ItemData        =   "frmOptions.frx":0010
          Left            =   120
-         List            =   "frmOptions.frx":000E
+         List            =   "frmOptions.frx":0012
          Style           =   2  'Dropdown-Liste
          TabIndex        =   94
          Top             =   2940
@@ -81,9 +163,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFCompat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0010
+         ItemData        =   "frmOptions.frx":0014
          Left            =   120
-         List            =   "frmOptions.frx":0012
+         List            =   "frmOptions.frx":0016
          Style           =   2  'Dropdown-Liste
          TabIndex        =   92
          Top             =   735
@@ -92,9 +174,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFRotate 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0014
+         ItemData        =   "frmOptions.frx":0018
          Left            =   120
-         List            =   "frmOptions.frx":0016
+         List            =   "frmOptions.frx":001A
          Style           =   2  'Dropdown-Liste
          TabIndex        =   91
          Tag             =   "None|All|PageByPage"
@@ -374,9 +456,9 @@ Begin VB.Form frmOptions
       End
       Begin VB.ComboBox cmbOptionsDesign 
          Height          =   315
-         ItemData        =   "frmOptions.frx":0018
+         ItemData        =   "frmOptions.frx":001C
          Left            =   120
-         List            =   "frmOptions.frx":001A
+         List            =   "frmOptions.frx":001E
          Style           =   2  'Dropdown-Liste
          TabIndex        =   216
          Top             =   1620
@@ -431,9 +513,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbStandardSaveFormat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":001C
+         ItemData        =   "frmOptions.frx":0020
          Left            =   120
-         List            =   "frmOptions.frx":001E
+         List            =   "frmOptions.frx":0022
          Style           =   2  'Dropdown-Liste
          TabIndex        =   213
          Top             =   2100
@@ -462,9 +544,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0020
+         ItemData        =   "frmOptions.frx":0024
          Left            =   3720
-         List            =   "frmOptions.frx":0022
+         List            =   "frmOptions.frx":0026
          Style           =   2  'Dropdown-Liste
          TabIndex        =   53
          Top             =   600
@@ -506,78 +588,6 @@ Begin VB.Form frmOptions
          TabIndex        =   56
          Top             =   360
          Width           =   1605
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraProgDocument 
-      Height          =   2880
-      Left            =   2640
-      TabIndex        =   45
-      Top             =   1800
-      Visible         =   0   'False
-      Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   5080
-      Caption         =   "Document"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Begin VB.ComboBox cmbAuthorTokens 
-         Appearance      =   0  '2D
-         Enabled         =   0   'False
-         Height          =   315
-         ItemData        =   "frmOptions.frx":0024
-         Left            =   3720
-         List            =   "frmOptions.frx":0026
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   50
-         Top             =   840
-         Width           =   2415
-      End
-      Begin VB.CheckBox chkUseStandardAuthor 
-         Appearance      =   0  '2D
-         Caption         =   "Use Standardauthor"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   49
-         Top             =   360
-         Width           =   6000
-      End
-      Begin VB.TextBox txtStandardAuthor 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   120
-         TabIndex        =   48
-         Top             =   840
-         Width           =   3495
-      End
-      Begin VB.CheckBox chkUseCreationDateNow 
-         Appearance      =   0  '2D
-         Caption         =   "Use the current Date/Time for 'Creation Date'"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   47
-         Top             =   1440
-         Width           =   6000
-      End
-      Begin VB.Label lblAuthorTokens 
-         AutoSize        =   -1  'True
-         Caption         =   "Add a Author-Token"
-         Enabled         =   0   'False
-         Height          =   195
-         Left            =   3720
-         TabIndex        =   46
-         Top             =   600
-         Width           =   1440
       End
    End
    Begin PDFCreator.dmFrame dmFraProgPrint 
@@ -3652,6 +3662,7 @@ Private Sub Form_Load()
   lblGSfonts.Caption = .OptionsDirectoriesGSFonts
   lblPrintTempPath.Caption = .OptionsDirectoriesTempPath
 
+  chkOnePagePerFile.Caption = .OptionsOnePagePerFile
   lblOptions = .OptionsProgramGeneralDescription
   lblAutosaveformat.Caption = .OptionsAutosaveFormat
   chkUseStandardAuthor.Caption = .OptionsUseStandardauthor

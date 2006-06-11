@@ -101,6 +101,7 @@ Public Type tLanguageStrings
  MessagesMsg35 As String
  MessagesMsg36 As String
 
+ Options(Not for pdf and eps files) As String
  OptionsAdditionalGhostscriptParameters As String
  OptionsAdditionalGhostscriptSearchpath As String
  OptionsAddWindowsFontpath As String
@@ -142,6 +143,7 @@ Public Type tLanguageStrings
  OptionsJPEGDescription As String
  OptionsJPEGQuality As String
  OptionsJPEGSymbol As String
+ OptionsOnePagePerFile As String
  OptionsOwnerPass As String
  OptionsPassCancel As String
  OptionsPassOK As String
@@ -559,6 +561,7 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
  Dim hLang As New clsHash
  ReadINISection Languagefile, "Options", hLang
  With LanguageStrings
+  .Options(Not for pdf and eps files) = Replace$(hLang.Retrieve("(Not for pdf and eps files)", .Options(Not for pdf and eps files)),"/n",vbCrLf)
   .OptionsAdditionalGhostscriptParameters = Replace$(hLang.Retrieve("AdditionalGhostscriptParameters", .OptionsAdditionalGhostscriptParameters),"/n",vbCrLf)
   .OptionsAdditionalGhostscriptSearchpath = Replace$(hLang.Retrieve("AdditionalGhostscriptSearchpath", .OptionsAdditionalGhostscriptSearchpath),"/n",vbCrLf)
   .OptionsAddWindowsFontpath = Replace$(hLang.Retrieve("AddWindowsFontpath", .OptionsAddWindowsFontpath),"/n",vbCrLf)
@@ -600,6 +603,7 @@ Private Sub LoadOptionsStrings(ByVal Languagefile As String)
   .OptionsJPEGDescription = Replace$(hLang.Retrieve("JPEGDescription", .OptionsJPEGDescription),"/n",vbCrLf)
   .OptionsJPEGQuality = Replace$(hLang.Retrieve("JPEGQuality", .OptionsJPEGQuality),"/n",vbCrLf)
   .OptionsJPEGSymbol = Replace$(hLang.Retrieve("JPEGSymbol", .OptionsJPEGSymbol),"/n",vbCrLf)
+  .OptionsOnePagePerFile = Replace$(hLang.Retrieve("OnePagePerFile", .OptionsOnePagePerFile),"/n",vbCrLf)
   .OptionsOwnerPass = Replace$(hLang.Retrieve("OwnerPass", .OptionsOwnerPass),"/n",vbCrLf)
   .OptionsPassCancel = Replace$(hLang.Retrieve("PassCancel", .OptionsPassCancel),"/n",vbCrLf)
   .OptionsPassOK = Replace$(hLang.Retrieve("PassOK", .OptionsPassOK),"/n",vbCrLf)
@@ -981,6 +985,7 @@ Public Sub InitLanguagesStrings()
   .MessagesMsg35 = "It is necessary to temporarily set PDFCreator as defaultprinter."
   .MessagesMsg36 = "Don't ask me again."
 
+  .Options(Not for pdf and eps files) = ""
   .OptionsAdditionalGhostscriptParameters = "Additional Ghostscript parameters"
   .OptionsAdditionalGhostscriptSearchpath = "Additional Ghostscript searchpath"
   .OptionsAddWindowsFontpath = "Use Windows fonts"
@@ -1022,6 +1027,7 @@ Public Sub InitLanguagesStrings()
   .OptionsJPEGDescription = "JPEG (JFIF) Format. Please use only for single pages."
   .OptionsJPEGQuality = "Quality:"
   .OptionsJPEGSymbol = "JPEG"
+  .OptionsOnePagePerFile = "One page per file"
   .OptionsOwnerPass = "Owner Password"
   .OptionsPassCancel = "Cancel"
   .OptionsPassOK = "OK"
