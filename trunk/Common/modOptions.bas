@@ -5866,6 +5866,7 @@ Public Sub ShowOptions(Frm as Form, sOptions as tOptions)
   frm.txtJPEGQuality.Text = .JPEGQuality
   frm.chkNoConfirmMessageSwitchingDefaultprinter = .NoConfirmMessageSwitchingDefaultprinter
   frm.chkNoProcessingAtStartup = .NoProcessingAtStartup
+  frm.chkOnePagePerFile.Value = .OnePagePerFile
   frm.cmbOptionsDesign.Listindex = .OptionsDesign
   frm.cmbPCXColors.Listindex = .PCXColorscount
   frm.chkAllowAssembly.Value = .PDFAllowAssembly
@@ -5986,6 +5987,7 @@ Public Sub GetOptions(Frm as Form, sOptions as tOptions)
  .JPEGQuality =  frm.txtJPEGQuality.Text
  .NoConfirmMessageSwitchingDefaultprinter =  Abs(frm.chkNoConfirmMessageSwitchingDefaultprinter)
  .NoProcessingAtStartup =  Abs(frm.chkNoProcessingAtStartup)
+ .OnePagePerFile =  Abs(frm.chkOnePagePerFile.Value)
  .OptionsDesign =  frm.cmbOptionsDesign.Listindex
  .PCXColorscount =  frm.cmbPCXColors.Listindex
  .PDFAllowAssembly =  Abs(frm.chkAllowAssembly.Value)

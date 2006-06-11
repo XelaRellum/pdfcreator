@@ -2909,7 +2909,6 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "Logging"
   .Add "LogLines"
   .Add "GetOptions"
-  .Add "OnePagePerFile"
   .Add "RemoveAllKnownFileExtensions"
   .Add "PDFOwnerPasswordString"
   .Add "PDFUserPasswordString"
