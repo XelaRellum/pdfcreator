@@ -14,8 +14,6 @@
  #define Localization
 #endif
 
-#define IncludeToolbar
-
 #define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
 #define GhostscriptLicense "AFPL"
@@ -835,6 +833,10 @@ function GetWindowThreadProcessId (hWnd : Longint;var lpdwProcessId : Longint) :
 function GetParent (var hWnd : Longint) : Longint;
  external 'GetParent@user32.dll';
 
+function GetEnvironmentStrings(): LongInt;
+ external 'GetEnvironmentStringsA@kernel32.dll';
+function FreeEnvironmentStrings(lpsz: LongInt): LongInt;
+ external 'FreeEnvironmentStringsA@kernel32.dll';
 function OpenProcess (dwDesiredAccess : Longint; bInheritHandle : LongInt; dwProcessId : Longint) : Longint;
  external 'OpenProcess@kernel32.dll';
 function TerminateProcess (hProcess : Longint; uExitCode : Longint) : Longint;
@@ -1061,6 +1063,23 @@ end;
 function GetExternalPPDFile(Default:string): String;
 begin
  Result:=cmdlPPDFile
+end;
+
+function GetEnvironment(): String;
+var res: LongInt; tStr, resStr: String;
+begin
+ res := GetEnvironmentStrings;
+ Repeat
+  tStr := CastIntegerToString(res);
+  OemToCharBuff(tStr);
+  If Length(resStr) = 0 then
+    resStr := tStr
+   else
+    resStr := resStr + #13#10 + tStr;
+  res := res + Length(tStr) + 1;
+ until Length(CastIntegerToString(res)) = 0;
+ FreeEnvironmentStrings(res);
+ Result := resStr;
 end;
 
 function InstallWin9xPrinterdriver(): Boolean;
@@ -2026,6 +2045,7 @@ begin
    else
     SaveStringToFile(LogFile, fdName + ': found NOT in path'+#13#10, True)
  end;
+ SaveStringToFile(LogFile, 'Environment:'#13#10 + GetEnvironment, True)
 end;
 
 procedure SavePrinterdriverInformations(Environment :String);
