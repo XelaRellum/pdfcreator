@@ -430,8 +430,8 @@ Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Co
 
 ; Toolbar
 #IFDEF IncludeToolbar
-Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy
-Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: toolbar; Tasks: 
+Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: toolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 
 [Dirs]
@@ -629,7 +629,7 @@ Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-exte
 #ENDIF
 
 #IFDEF IncludeToolbar
-Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: " toolbar"
+Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: " toolbar"; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 
 [UninstallRun]
@@ -671,7 +671,7 @@ Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptV
 #ENDIF
 
 #IFDEF IncludeToolbar
-Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom
+Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 
 Name: languages; Description: {cm:Languages}; Types: full custom
@@ -2800,7 +2800,8 @@ end;
 procedure InitializeWizard();
 begin
 #IFDEF IncludeToolbar
- ToolbarForm_CreatePage(wpSelectDir);
+ If InstallOnThisVersion('4.1.1998,5.0.2195','0,0')=irInstall then // Not Win95, Not WinNT4
+  ToolbarForm_CreatePage(wpSelectDir);
 #ENDIF
 
  SCPage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
@@ -3063,3 +3064,5 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
+
+
