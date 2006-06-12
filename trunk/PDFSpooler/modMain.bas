@@ -11,7 +11,7 @@ On Error GoTo ErrPtnr_OnError
   UserAppData As String, UserLocalTemp As String, tStr As String, _
   hToken As Long, hProfile As Long, AppPath As String, AppParams As String, _
   stdio As clsStdIO, cinStr As String, SpooltimeSeconds As Double, _
-  LoggedInConsole As Boolean, Tempfile As String
+  LoggedInConsole As Boolean, Tempfile As String, res As Long
 50060
 50070  ' Reduce the working size of used memory
 50080  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
@@ -41,95 +41,103 @@ On Error GoTo ErrPtnr_OnError
 50320  End If
 50330
 50340  hToken = 0: hProfile = 0
-50350  Call GetUserLocalDirs(HKEY_CURRENT_USER, UserAppData, UserLocalTemp)
-50360  If IsWin9xMe = False Then
-50370   If GetUserSessionToken(UserName, SessionID, hToken, enableSpecialLogging) = 0 Then
-50380    If LoadProfile(UserName, hToken, hProfile) = 0 Then
-50390     Call GetUserLocalDirs(hProfile, UserAppData, UserLocalTemp)
-50400     LoggedInConsole = True
-50410    End If
-50420   End If
-50430  End If
-50440  WriteToSpecialLogfile "UserAppData=" & UserAppData
-50450  WriteToSpecialLogfile "UserLocalTemp=" & UserLocalTemp
-50460
-50470  If InstalledAsServer Then
-50480    PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & "PDFCreator.ini"
+50350  If IsWin9xMe = False Then
+50360    res = GetUserSessionToken(UserName, SessionID, hToken, enableSpecialLogging)
+50370    If res = 0 Then
+50380      res = LoadProfile(UserName, hToken, hProfile)
+50390      If res = 0 Then
+50400        WriteToSpecialLogfile "hProfile = " & hProfile
+50410        Call GetUserLocalDirs(hProfile, UserAppData, UserLocalTemp)
+50420        LoggedInConsole = True
+50430       Else
+50440        WriteToSpecialLogfile "LoadProfile -> Error [" & res & "] = " & RaiseAPIError(res)
+50450      End If
+50460     Else
+50470      WriteToSpecialLogfile "GetUserSessionToken -> Error"
+50480    End If
 50490   Else
-50500    PDFCreatorINIFile = CompletePath(UserAppData) & "PDFcreator\PDFCreator.ini"
+50500    Call GetUserLocalDirs(HKEY_CURRENT_USER, UserAppData, UserLocalTemp)
 50510  End If
-50520  If LenB(Optionsfile) > 0 Then
-50530   PDFCreatorINIFile = Optionsfile
-50540  End If
-50550
-50560  WriteToSpecialLogfile "InstalledAsServer=" & InstalledAsServer
-50570  WriteToSpecialLogfile "UseINI=" & UseINI
-50580  WriteToSpecialLogfile "PDFCreatorINIFile=" & PDFCreatorINIFile
-50590
-50600  If IsWin9xMe Then
-50610    Options = ReadOptions(True)
-50620   Else
-50630    WriteToSpecialLogfile "Read options: start"
-50640    Options = ReadOptions(True, hProfile)
-50650    WriteToSpecialLogfile "Read options: ready"
-50660  End If
+50520  WriteToSpecialLogfile "UserAppData=" & UserAppData
+50530  WriteToSpecialLogfile "UserLocalTemp=" & UserLocalTemp
+50540
+50550  If InstalledAsServer Then
+50560    PDFCreatorINIFile = CompletePath(GetPDFCreatorApplicationPath) & "PDFCreator.ini"
+50570   Else
+50580    PDFCreatorINIFile = CompletePath(UserAppData) & "PDFcreator\PDFCreator.ini"
+50590  End If
+50600  If LenB(Optionsfile) > 0 Then
+50610   PDFCreatorINIFile = Optionsfile
+50620  End If
+50630
+50640  WriteToSpecialLogfile "InstalledAsServer=" & InstalledAsServer
+50650  WriteToSpecialLogfile "UseINI=" & UseINI
+50660  WriteToSpecialLogfile "PDFCreatorINIFile=" & PDFCreatorINIFile
 50670
-50680  WriteToSpecialLogfile ""
-50690  WriteToSpecialLogfile "Options.DirectoryGhostscriptBinaries=" & Options.DirectoryGhostscriptBinaries
-50700  WriteToSpecialLogfile "Options.DirectoryGhostscriptFonts=" & Options.DirectoryGhostscriptFonts
-50710  WriteToSpecialLogfile "Options.DirectoryGhostscriptLibraries=" & Options.DirectoryGhostscriptLibraries
-50720  WriteToSpecialLogfile "Options.DirectoryGhostscriptResource=" & Options.DirectoryGhostscriptResource
-50730  WriteToSpecialLogfile "Options.PrinterTemppath=" & Options.PrinterTemppath
-50740
-50750  WriteToSpecialLogfile ""
-50760  WriteToSpecialLogfile "PDFCreatorTempPath=" & Options.PrinterTemppath
-50770  WriteToSpecialLogfile "GetPDFCreatorTempfolder=" & GetPDFCreatorTempfolder
-50780
-50790  If SleepTime > 0 Then
-50800   Sleep SleepTime
-50810  End If
+50680  If IsWin9xMe Then
+50690    Options = ReadOptions(True)
+50700   Else
+50710    WriteToSpecialLogfile "Read options: start"
+50720    Options = ReadOptions(True, hProfile)
+50730    WriteToSpecialLogfile "Read options: ready"
+50740  End If
+50750
+50760  WriteToSpecialLogfile ""
+50770  WriteToSpecialLogfile "Options.DirectoryGhostscriptBinaries=" & Options.DirectoryGhostscriptBinaries
+50780  WriteToSpecialLogfile "Options.DirectoryGhostscriptFonts=" & Options.DirectoryGhostscriptFonts
+50790  WriteToSpecialLogfile "Options.DirectoryGhostscriptLibraries=" & Options.DirectoryGhostscriptLibraries
+50800  WriteToSpecialLogfile "Options.DirectoryGhostscriptResource=" & Options.DirectoryGhostscriptResource
+50810  WriteToSpecialLogfile "Options.PrinterTemppath=" & Options.PrinterTemppath
 50820
-50830  If StartPDFCreatorProgram And ProgramIsRunning(PDFCreator_GUID) = False Then
-50840   Shell """" & PDFCreatorPath & "PDFCreator.exe""", vbNormalFocus
-50850   Exit Sub
-50860  End If
-50870
-50880  If PDFCreatorPrinter Then
-50890   Set stdio = New clsStdIO
-50900   If InstalledAsServer = False Then
-50910     cinStr = stdio.StdIn(GetPDFCreatorTempfolder(, UserLocalTemp), SpooltimeSeconds)
-50920     WriteToSpecialLogfile "cinStr=" & cinStr
-50930     If FileLen(cinStr) > 0 Then
-50940       WriteToSpecialLogfile "cinstr-Filelen=" & CStr(FileLen(cinStr))
-50950       If IsWin9xMe = True Then
-50960         Shell """" & PDFCreatorPath & "PDFCreator.exe"" " & Command$ & " -IF""" & cinStr & """"
-50970        Else
-50980         AppPath = PDFCreatorPath & "PDFCreator.exe"
-50990         AppParams = " " & Command$ & " -IF""" & cinStr & """" ' The leading space is important and cannot be removed.
-51000         If LoggedInConsole = True Then
-51010          WriteToSpecialLogfile "Start RunAsUser: " & AppPath & ", " & AppParams
-51020          RunAsUser hToken, AppPath, AppParams, App.Path
-51030         End If
-51040       End If
-51050      Else
-51060       KillFile cinStr
-51070     End If
-51080    Else
-51090     WriteToSpecialLogfile "InstalledAsServer=1"
-51100     tStr = GetPDFCreatorTempfolder
-51110     cinStr = stdio.StdIn(tStr, SpooltimeSeconds)
-51120     WriteToSpecialLogfile "cinStr=" & cinStr
-51130   End If
-51140   Set stdio = Nothing
-51150  End If
-51160
-51170  WriteToSpecialLogfile ""
-51180  WriteEnvironmentToSpecialLogfile
-51190
-51200  If IsWin9xMe = False Then
-51210   UnloadProfile hToken, hProfile
-51220   CloseToken hToken
+50830  WriteToSpecialLogfile ""
+50840  WriteToSpecialLogfile "PDFCreatorTempPath=" & Options.PrinterTemppath
+50850  WriteToSpecialLogfile "GetPDFCreatorTempfolder=" & GetPDFCreatorTempfolder(, UserLocalTemp)
+50860
+50870  If SleepTime > 0 Then
+50880   Sleep SleepTime
+50890  End If
+50900
+50910  If StartPDFCreatorProgram And ProgramIsRunning(PDFCreator_GUID) = False Then
+50920   Shell """" & PDFCreatorPath & "PDFCreator.exe""", vbNormalFocus
+50930   Exit Sub
+50940  End If
+50950
+50960  If PDFCreatorPrinter Then
+50970   Set stdio = New clsStdIO
+50980   If InstalledAsServer = False Then
+50990     cinStr = stdio.StdIn(GetPDFCreatorTempfolder(, UserLocalTemp), SpooltimeSeconds)
+51000     WriteToSpecialLogfile "cinStr=" & cinStr
+51010     If FileLen(cinStr) > 0 Then
+51020       WriteToSpecialLogfile "cinstr-Filelen=" & CStr(FileLen(cinStr))
+51030       If IsWin9xMe = True Then
+51040         Shell """" & PDFCreatorPath & "PDFCreator.exe"" " & Command$ & " -IF""" & cinStr & """"
+51050        Else
+51060         AppPath = PDFCreatorPath & "PDFCreator.exe"
+51070         AppParams = " " & Command$ & " -IF""" & cinStr & """" ' The leading space is important and cannot be removed.
+51080         If LoggedInConsole = True Then
+51090          WriteToSpecialLogfile "Start RunAsUser: " & AppPath & ", " & AppParams
+51100          RunAsUser hToken, AppPath, AppParams, App.Path
+51110         End If
+51120       End If
+51130      Else
+51140       KillFile cinStr
+51150     End If
+51160    Else
+51170     WriteToSpecialLogfile "InstalledAsServer=1"
+51180     tStr = GetPDFCreatorTempfolder
+51190     cinStr = stdio.StdIn(tStr, SpooltimeSeconds)
+51200     WriteToSpecialLogfile "cinStr=" & cinStr
+51210   End If
+51220   Set stdio = Nothing
 51230  End If
+51240
+51250  WriteToSpecialLogfile ""
+51260  WriteEnvironmentToSpecialLogfile
+51270
+51280  If IsWin9xMe = False Then
+51290   UnloadProfile hToken, hProfile
+51300   CloseToken hToken
+51310  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

@@ -199,10 +199,10 @@ Public Sub ComboSetListWidth(oCombo As Object, Optional ByVal nFixWidth As Varia
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With oCombo
-50020   If IsMissing(nScaleMode) Or IsMissing(nFixWidth) Then
+50020   If isMissing(nScaleMode) Or isMissing(nFixWidth) Then
 50030    nScaleMode = .Parent.ScaleMode
 50040   End If
-50050   If IsMissing(nFixWidth) Then
+50050   If isMissing(nFixWidth) Then
 50060    Dim i As Long, nWidth As Long
 50070    nFixWidth = 0
 50080    For i = 0 To .ListCount - 1
@@ -1672,18 +1672,22 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function RaiseAPIError() As String
+Public Function RaiseAPIError(Optional ErrorNumber As Long = 0) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ErrorMsg As String, ErrNum As Long
-50020  ErrNum = Err.LastDllError
-50030  ErrorMsg = String(256, 0)
-50040  ErrorMsg = Left$(ErrorMsg, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM Or FORMAT_MESSAGE_IGNORE_INSERTS, 0, ErrNum, 0&, ErrorMsg, Len(ErrorMsg), ByVal 0))
-50050  If Mid(ErrorMsg, Len(ErrorMsg) - 1) = vbCrLf Then
-50060   ErrorMsg = Mid(ErrorMsg, 1, Len(ErrorMsg) - 2)
-50070  End If
-50080  RaiseAPIError = ErrNum & ": " & ErrorMsg
+50020  If ErrorNumber <> 0 Then
+50030    ErrNum = ErrorNumber
+50040   Else
+50050    ErrNum = Err.LastDllError
+50060  End If
+50070  ErrorMsg = String(256, 0)
+50080  ErrorMsg = Left$(ErrorMsg, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM Or FORMAT_MESSAGE_IGNORE_INSERTS, 0, ErrNum, 0&, ErrorMsg, Len(ErrorMsg), ByVal 0))
+50090  If Mid(ErrorMsg, Len(ErrorMsg) - 1) = vbCrLf Then
+50100   ErrorMsg = Mid(ErrorMsg, 1, Len(ErrorMsg) - 2)
+50110  End If
+50120  RaiseAPIError = ErrNum & ": " & ErrorMsg
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
