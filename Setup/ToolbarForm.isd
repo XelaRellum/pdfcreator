@@ -10,6 +10,7 @@
     lblRead: TLabel;
     lblComponents: TLabel;
     lblHyperlink: TLabel;
+    lblIEWarning: TLabel;
 
   
   procedure ToolbarForm_Activate(Page: TWizardPage);
@@ -136,7 +137,7 @@
       begin
         Parent := Page.Surface;
         Left := ScaleX(8);
-        Top := ScaleY(152);
+        Top := ScaleY(136);
         Width := ScaleX(383);
         Height := ScaleY(29);
         AutoSize := False;
@@ -176,9 +177,9 @@
       begin
         Parent := Page.Surface;
         Left := ScaleX(8);
-        Top := ScaleY(186);
+        Top := ScaleY(176);
         Width := ScaleX(397);
-        Height := ScaleY(29);
+        Height := ScaleY(39);
         AutoSize := False;
         WordWrap := True;
         Font.Color := -16777208;
@@ -187,7 +188,7 @@
         Font.Style := [fsBold];
         Caption := ExpandConstant('{cm:ToolbarNoInstall}');
       end;
-
+      
    with Page do
     begin
       OnActivate := @ToolbarForm_Activate;
