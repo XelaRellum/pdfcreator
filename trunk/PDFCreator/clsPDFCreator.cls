@@ -1162,6 +1162,7 @@ Public Function cCloseRunningSession() As Boolean
    .Timer3 = False
   End With
   Unload mForm
+  Set mForm = Nothing
   ProgramIsStarted = False
   cCloseRunningSession = True
  End If
