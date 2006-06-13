@@ -161,11 +161,6 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Form1_Closed(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Closed
-        _PDFCreator.cClose()
-        _PDFCreator = Nothing
-    End Sub
-
     Private Sub _PDFCreator_eReady() Handles _PDFCreator.eReady
         AddStatus("Status: """ & _PDFCreator.cOutputFilename & """ was created!")
         _PDFCreator.cPrinterStop = True
@@ -194,5 +189,11 @@ Public Class Form1
                 End If
             End If
         End With
+    End Sub
+
+    Private Sub Form1_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
+        _PDFCreator.cClose()
+        _PDFCreator = Nothing
+        pErr = Nothing
     End Sub
 End Class

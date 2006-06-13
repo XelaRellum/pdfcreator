@@ -144,6 +144,7 @@ namespace Sample1
 			this.Controls.Add(this.button6);
 			this.Name = "Form1";
 			this.Text = "Sample1 - PDFCreator COM interface";
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.ResumeLayout(false);
 
@@ -182,12 +183,6 @@ namespace Sample1
 				button5.Enabled = true;
 				button6.Enabled = true;
 			}
-		}
-
-		private void Form1_Closed(object sender, System.EventArgs e)
-		{
-			_PDFCreator.cClose();
-			_PDFCreator = null;
 		}
 
 		private void button1_Click(object sender, System.EventArgs e)
@@ -307,6 +302,13 @@ namespace Sample1
 		private void timer1_Tick(object sender, System.EventArgs e)
 		{
 			timer1.Enabled=false;
+		}
+
+		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			pErr = null;
+			_PDFCreator.cClose();
+			_PDFCreator = null;
 		}
 	}
 }

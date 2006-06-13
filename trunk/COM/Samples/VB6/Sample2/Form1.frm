@@ -75,6 +75,10 @@ Private Sub Form_Load()
     .cClose
   End If
  End With
+ Set c = Nothing
+ Set l = Nothing
+ Set PDFCreator1 = Nothing
+ Set pErr = Nothing
 End Sub
 
 Private Sub Form_Resize()
@@ -91,10 +95,6 @@ Private Sub Form_Resize()
   .ColumnHeaders(4).Width = cw
   .ColumnHeaders(5).Width = cw
  End With
-End Sub
-
-Private Sub Form_Unload(Cancel As Integer)
- Set PDFCreator1 = Nothing
 End Sub
 
 Private Sub PDFCreator1_eError()

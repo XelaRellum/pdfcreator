@@ -95,6 +95,7 @@ namespace Sample2
 			this.MinimizeBox = false;
 			this.Name = "Form1";
 			this.Text = "Sample2 - PDFCreator COM interface";
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.ResumeLayout(false);
 
@@ -213,6 +214,13 @@ namespace Sample2
 				DrawCircles(x + r, y - r / 2, r / 2, rec - 1, ev);
 				DrawCircles(x + r, y + r, r / 2, rec - 1, ev);
 			}
+		}
+
+		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			_PDFCreator.cClose();
+			_PDFCreator = null;
+			pErr = null;
 		}
 	}
 }

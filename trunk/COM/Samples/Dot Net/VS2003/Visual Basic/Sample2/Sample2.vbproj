@@ -88,7 +88,7 @@
                 <Reference
                     Name = "PDFCreator"
                     Guid = "{1CE9DC08-9FBC-45C6-8A7C-4FE1E208A613}"
-                    VersionMajor = "3"
+                    VersionMajor = "4"
                     VersionMinor = "1"
                     Lcid = "0"
                     WrapperTool = "tlbimp"
