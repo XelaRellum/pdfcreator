@@ -672,7 +672,8 @@ Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptV
 #ENDIF
 
 #IFDEF IncludeToolbar
-Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: IExplorerVersionLower55
+Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: ; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: Not IExplorerVersionLower55; Flags: fixed
 #ENDIF
 
 Name: languages; Description: {cm:Languages}; Types: full custom
@@ -1913,6 +1914,19 @@ begin
    Result:=false
   else
    Result:=true;
+end;
+
+function IExplorerVersionLower55(): Boolean;
+var vers: TAInt;
+begin
+ DecodeVersion(GetIExplorerVersion,vers);
+ if vers[0]<5 then
+   Result:=false
+  else
+   if (vers[0]=5) and (vers[1]<5) then
+     Result:=false
+    else
+     Result:=true;
 end;
 
 function PrinterDriverDirectory(WinEnvironment:String):String;
