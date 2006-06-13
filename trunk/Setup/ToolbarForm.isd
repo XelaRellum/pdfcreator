@@ -10,7 +10,6 @@
     lblRead: TLabel;
     lblComponents: TLabel;
     lblHyperlink: TLabel;
-    lblIEWarning: TLabel;
 
   
   procedure ToolbarForm_Activate(Page: TWizardPage);
