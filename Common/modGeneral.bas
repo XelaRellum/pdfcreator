@@ -481,39 +481,59 @@ End Function
 
 Public Function GetFiles(ByVal Path As String, Optional Searchmask As String = "*.*", _
  Optional Sorted As eSortModeFiles = notSorted) As Collection
- Dim tColl1 As Collection, tColl2 As Collection, tFilename As String, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tColl1 As Collection, tColl2 As Collection, tFilename As String, _
   i As Long, tStrf() As String
- Path = Trim$(Path)
- If Len(Searchmask) > 0 Then
-   Path = CompletePath(Path)
-   tFilename = Dir(Path & Searchmask)
-  Else
-   tFilename = Dir(Path)
-   SplitPath Path, , Path
-   Path = CompletePath(Path)
- End If
- Set tColl1 = New Collection
- Do While tFilename <> ""
-  Select Case Sorted
-   Case eSortModeFiles.SortedByDate
-    AddSortedStr tColl1, Format$(FileDateTime(Path & tFilename), "yyyymmddhhnnss") & "|" & Path & tFilename
-   Case eSortModeFiles.SortedByName
-    AddSortedStr tColl1, "|" & Path & tFilename
-   Case Else
-    tColl1.Add "|" & Path & tFilename
-  End Select
-  tFilename = Dir()
-  DoEvents
- Loop
- Set tColl2 = New Collection
- For i = 1 To tColl1.Count
-  tStrf = Split(tColl1(i), "|")
-  SplitPath tStrf(1), , Path, tFilename
-  Path = CompletePath(Path)
-  tColl2.Add Path & "|" & Path & tFilename & "|" & FileLen(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
- Next i
- Set GetFiles = tColl2
-' Set tColl = Nothing
+50030  Set GetFiles = New Collection
+50040  Path = Trim$(Path)
+50050  If Len(Searchmask) > 0 Then
+50060    If Not DirExists(Path) Then
+50070     Exit Function
+50080    End If
+50090    Path = CompletePath(Path)
+50100    tFilename = Dir(Path & Searchmask)
+50110   Else
+50120    If Not FileExists(Path) Then
+50130     Exit Function
+50140    End If
+50150    tFilename = Dir(Path)
+50160    SplitPath Path, , Path
+50170    Path = CompletePath(Path)
+50180  End If
+50190  Set tColl1 = New Collection
+50200  Do While tFilename <> ""
+50211   Select Case Sorted
+         Case eSortModeFiles.SortedByDate
+50230     AddSortedStr tColl1, Format$(FileDateTime(Path & tFilename), "yyyymmddhhnnss") & "|" & Path & tFilename
+50240    Case eSortModeFiles.SortedByName
+50250     AddSortedStr tColl1, "|" & Path & tFilename
+50260    Case Else
+50270     tColl1.Add "|" & Path & tFilename
+50280   End Select
+50290   tFilename = Dir()
+50300   DoEvents
+50310  Loop
+50320  Set tColl2 = New Collection
+50330  For i = 1 To tColl1.Count
+50340   tStrf = Split(tColl1(i), "|")
+50350   SplitPath tStrf(1), , Path, tFilename
+50360   Path = CompletePath(Path)
+50370   tColl2.Add Path & "|" & Path & tFilename & "|" & FileLen(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
+50380  Next i
+50390  Set GetFiles = tColl2
+50400 ' Set tColl = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetFiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function GetDefaultAppData() As String
