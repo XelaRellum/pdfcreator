@@ -2,7 +2,7 @@
 ; Setup created with Inno Setup QuickStart Pack 5.1.6 (with ISPP) and ISTool 5.1.6
 ; Installation from Frank Heindörfer
 
-#define Test
+;#define Test
 
 #ifdef Test
  #define FastCompilation
@@ -3065,4 +3065,3 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
-
