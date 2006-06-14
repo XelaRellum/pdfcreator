@@ -69,6 +69,8 @@ On Error GoTo ErrPtnr_OnError
 50030   cCloseRunningSession
 50040  End If
 50050  Set mError = Nothing
+50060  Set mForm = Nothing
+50070  Set eActionTimer = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2433,6 +2435,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
+
 
 
 

@@ -12,11 +12,11 @@ SummarySubject=PDFCreator creates pdfs for free
 SummaryAuthor=Frank Heindörfer, Philip Chinery
 SummaryKeywords=pdf, ghostscript, free
 SummaryComments=PDFCreator easily creates PDFs from any Windows program. Use it like a printer in Word, StarCalc or any other Windows application.
-SupportProductURL=http://www.pdfcreator.de.vu
-SupportURL=http://www.sf.net/projects/pdfcreator
+SupportProductURL=http://www.pdfforge.org
+SupportURL=http://sourceforge.net/projects/pdfcreator
 SupportPhoneNumber=
 SupportContactPerson=Frank Heindörfer, Philip Chinery
-SupportProductUpdateURL=http://www.pdfcreator.de.vu
+SupportProductUpdateURL=http://www.pdfforge.org
 SupportProductComments=PDFCreator - Opensource
 
 [SETUP_INFO]
@@ -924,7 +924,7 @@ STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersi
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},GhostscriptDirectoryLibraries,%AppDir%&bs;GS8.53&bs;gs8.53&bs;Lib
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},GhostscriptDirectoryFonts,%AppDir%&bs;Gs8.53&bs;Fonts
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},GhostscriptDirectoryResource,%AppDir%&bs;GS8.53&bs;gs8.53&bs;Resource
-STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},HelpLink,http://www.pdfcreator.de.vu
+STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},HelpLink,http://www.pdfforge.org
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},Publisher,Frank Heindörfer&comma; Philip Chinery
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},Printername,PDFCreator
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},Printerdrivername,PDFCreator
@@ -934,9 +934,9 @@ STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersi
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},Comments,PDFCreator - Opensource
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},DisplayIcon,%AppDir%&bs;PDFCreator.exe
 STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},DisplayVersion,0.9.0
-STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},Readme,http://www.pdfcreator.de.vu
-STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},URLInfoAbout,http://www.sf.net/projects/pdfcreator
-STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},URLUpdateInfo,http://www.sf.net/projects/pdfcreator
+STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},Readme,http://www.pdfforge.org
+STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},URLInfoAbout,http://sourceforge.net/projects/pdfcreator
+STRING2=%HKEY_LOCAL_MACHINE%&bs;SOFTWARE&bs;Microsoft&bs;Windows&bs;CurrentVersion&bs;Uninstall&bs;{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D},URLUpdateInfo,http://sourceforge.net/projects/pdfcreator
 
 [FILE_TYPES]
 
