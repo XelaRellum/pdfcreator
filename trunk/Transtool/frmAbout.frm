@@ -220,9 +220,9 @@ On Error GoTo ErrPtnr_OnError
 50010  lbl(0).Caption = App.ProductName & " " & App.Major & "." & App.Minor & "." & App.Revision
 50020  lbl(1).Caption = "License: GNU GENERAL PUBLIC LICENSE"
 50030  lbl(2).Caption = "Author: Frank Heindörfer, Philip Chinery (c) 2004"
-50040  lbl(3).Caption = "http://www.pdfcreator.de.vu"
+50040  lbl(3).Caption = Homepage
 50050  lbl(3).DragIcon = LoadResPicture(2001, vbResCursor)
-50060  lbl(4).Caption = "http://www.sf.net/projects/pdfcreator"
+50060  lbl(4).Caption = Sourceforge
 50070  lbl(4).DragIcon = LoadResPicture(2001, vbResCursor)
 50080  txtDescription.Text = "TransTool is a part from PDFCreator. With TransTool you can create and edit language files for PDFCreator. Language files are normal ini files."
 50090  sCol1 = lbl(3).ForeColor
@@ -315,8 +315,8 @@ On Error GoTo ErrPtnr_OnError
 50420  lbl(4).Left = fraAbout.Width - lbl(4).Width - lbl(0).Left
 50430  cmd.Top = fraAbout.Top + fraAbout.Height + 100
 50440  Me.Height = cmd.Top + cmd.Height + (Me.Height - Me.ScaleHeight) + 100
-50450  imgPaypal.Top = lbl(0).Top
-50460  imgPaypal.Left = fraAbout.Width - imgPaypal.Width - lbl(0).Left
+50450  ImgPaypal.Top = lbl(0).Top
+50460  ImgPaypal.Left = fraAbout.Width - ImgPaypal.Width - lbl(0).Left
 50470  Timer2.Interval = 40
 50480  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
