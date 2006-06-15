@@ -1,10 +1,8 @@
 using System;
-using System.Drawing;
 using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Data;
+using System.Drawing;
 using System.Drawing.Printing;
+using System.Windows.Forms;
 
 namespace Sample2
 {
@@ -13,10 +11,8 @@ namespace Sample2
 		private PDFCreator.clsPDFCreator _PDFCreator;
 		private PDFCreator.clsPDFCreatorError pErr;
 
-		PrintDocument pd;
+		private PrintDocument pd;
 		
-		private bool ReadyState;
-
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.TextBox textBox1;
@@ -134,24 +130,20 @@ namespace Sample2
 			string parameters;
 			AddStatus("Status: Program is started.", true);
 
+			pErr = new PDFCreator.clsPDFCreatorError();
+
 			_PDFCreator = new PDFCreator.clsPDFCreator();
 			_PDFCreator.eError  += new PDFCreator.__clsPDFCreator_eErrorEventHandler(_PDFCreator_eError); 
 			_PDFCreator.eReady  += new PDFCreator.__clsPDFCreator_eReadyEventHandler(_PDFCreator_eReady); 
 			
-			pErr = new PDFCreator.clsPDFCreatorError();
-        
 			parameters = "/NoProcessingAtStartup";
 
-			if (!_PDFCreator.cStart(parameters, false))
-			{
-				AddStatus("Status: Error[" + pErr.Number + "]: " + pErr.Description, false);
-			}
-			else
+			if (_PDFCreator.cStart(parameters, false))
 			{
 				button1.Enabled = true;
 				button2.Enabled = true;
 				_PDFCreator.cClearCache();
-				_PDFCreator.set_cOption("Autosave", 0);
+				_PDFCreator.set_cOption("UseAutosave", 0);
 				_PDFCreator.cPrinterStop = false;
 			}
 		}
@@ -160,17 +152,17 @@ namespace Sample2
 		{
 			AddStatus("Status: \"" + _PDFCreator.cOutputFilename + "\" was created!", false);
 			_PDFCreator.cPrinterStop = true;
-			ReadyState = true;
 		}
 
 		private void _PDFCreator_eError()
 		{
 			pErr = _PDFCreator.cError;
+			AddStatus("Status: Error[" + pErr.Number + "]: " + pErr.Description, false);
 		}
 
 		private void button1_Click(object sender, System.EventArgs e)
 		{
-			PrintDocument pd = new PrintDocument();
+			pd = new PrintDocument();
 			pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
 			pd.PrinterSettings.PrinterName = "PDFCreator";
 			pd.DocumentName = "PDFCreator Dot Net - Sample2";
@@ -221,6 +213,7 @@ namespace Sample2
 			_PDFCreator.cClose();
 			_PDFCreator = null;
 			pErr = null;
+			GC.Collect();
 		}
 	}
 }

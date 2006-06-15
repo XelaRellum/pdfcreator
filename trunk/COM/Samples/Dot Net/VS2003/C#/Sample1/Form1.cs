@@ -10,7 +10,7 @@ namespace Sample1
 {
 	public class Form1 : System.Windows.Forms.Form
 	{
-		private const int maxTime = 20;
+		private const int maxTime  = 20;
 
 		private PDFCreator.clsPDFCreator _PDFCreator;
 		private PDFCreator.clsPDFCreatorError pErr;
@@ -162,11 +162,11 @@ namespace Sample1
 			string parameters;
 			statusBar1.Text = "Status: Program is started.";
 
+			pErr = new PDFCreator.clsPDFCreatorError();
+
 			_PDFCreator = new PDFCreator.clsPDFCreator();
 			_PDFCreator.eError += new PDFCreator.__clsPDFCreator_eErrorEventHandler(_PDFCreator_eError); 
 			_PDFCreator.eReady += new PDFCreator.__clsPDFCreator_eReadyEventHandler(_PDFCreator_eReady); 
-			
-			pErr = new PDFCreator.clsPDFCreatorError();
         
 			parameters = "/NoProcessingAtStartup";
 
@@ -309,6 +309,7 @@ namespace Sample1
 			pErr = null;
 			_PDFCreator.cClose();
 			_PDFCreator = null;
+			GC.Collect();
 		}
 	}
 }

@@ -83,30 +83,25 @@ Public Class Form1
 
 #End Region
 
-    Private Const maxTime As Long = 20
-
     Private WithEvents _PDFCreator As PDFCreator.clsPDFCreator
     Private pErr As PDFCreator.clsPDFCreatorError
 
-    Private ReadyState As Boolean
     Private pd As PrintDocument
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim parameters As String
         AddStatus("Status: Program is started.", True)
 
-        _PDFCreator = New PDFCreator.clsPDFCreator
         pErr = New PDFCreator.clsPDFCreatorError
+        _PDFCreator = New PDFCreator.clsPDFCreator
 
         parameters = "/NoProcessingAtStartup"
 
-        If _PDFCreator.cStart(parameters) = False Then
-            AddStatus("Status: Error[" & pErr.Number & "]: " & pErr.Description)
-        Else
+        If _PDFCreator.cStart(parameters) = True Then
+            _PDFCreator.cClearCache()
+            _PDFCreator.cOption("UseAutosave") = 0
             Button1.Enabled = True
             Button2.Enabled = True
-            _PDFCreator.cClearCache()
-            _PDFCreator.cOption("Autosave") = 0
             _PDFCreator.cPrinterStop = False
         End If
     End Sub
@@ -164,11 +159,11 @@ Public Class Form1
     Private Sub _PDFCreator_eReady() Handles _PDFCreator.eReady
         AddStatus("Status: """ & _PDFCreator.cOutputFilename & """ was created!")
         _PDFCreator.cPrinterStop = True
-        ReadyState = True
     End Sub
 
     Private Sub _PDFCreator_eError() Handles _PDFCreator.eError
         pErr = _PDFCreator.cError
+        AddStatus("Status: Error[" & pErr.Number & "]: " & pErr.Description)
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
@@ -195,5 +190,6 @@ Public Class Form1
         _PDFCreator.cClose()
         _PDFCreator = Nothing
         pErr = Nothing
+        GC.Collect()
     End Sub
 End Class

@@ -6,7 +6,10 @@ Public Class Form1
     Private Const maxTime As Long = 20
 
     Private WithEvents _PDFCreator As PDFCreator.clsPDFCreator
-    Private ReadyState As Boolean, pErr As PDFCreator.clsPDFCreatorError
+    Private pErr As PDFCreator.clsPDFCreatorError
+
+    Private ReadyState As Boolean
+
 #Region " Vom Windows Form Designer generierter Code "
 
     Public Sub New()
@@ -135,8 +138,9 @@ Public Class Form1
         Dim parameters As String
         StatusBar1.Text = "Status: Program is started."
 
-        _PDFCreator = New PDFCreator.clsPDFCreator
         pErr = New PDFCreator.clsPDFCreatorError
+        _PDFCreator = New PDFCreator.clsPDFCreator
+
         parameters = "/NoProcessingAtStartup"
 
         If _PDFCreator.cStart(parameters) = False Then
@@ -264,5 +268,6 @@ Public Class Form1
         _PDFCreator.cClose()
         _PDFCreator = Nothing
         pErr = Nothing
+        GC.Collect()
     End Sub
 End Class

@@ -39,15 +39,6 @@ On Error GoTo ErrPtnr_OnError
 50010  Set mError = New clsPDFCreatorError
 50020  InstanceCounter = InstanceCounter + 1
 50030  ProgramIsVisible = True
-50040  If cProgramIsRunning Then
-50050   With mError
-50060    .Number = 2
-50070    .Description = ErrDescr2
-50080   End With
-50090   mProgramIsRunning = True
-50100   RaiseEvent eError
-50110   Exit Sub
-50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
