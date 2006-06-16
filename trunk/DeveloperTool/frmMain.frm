@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -2173,6 +2173,17 @@ Private Sub CreateModOptions()
    MsgBox "Error 6 !!!", vbCritical
    Exit Sub
  End If
+ 
+ outStrF = Trim$(outStrF)
+ Do While Len(outStrF) >= 2
+  If Mid(outStrF, Len(outStrF) - 1) = vbCrLf Then
+    outStrF = Mid$(outStrF, 1, Len(outStrF) - 2)
+   Else
+    outStrF = outStrF & vbCrLf
+    Exit Do
+  End If
+  DoEvents
+ Loop
  
  fn = FreeFile
  Open Filename2 For Output As #fn
