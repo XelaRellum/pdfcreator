@@ -264,7 +264,7 @@ On Error GoTo ErrPtnr_OnError
 51050   .PDFFontsSubSetFontsPercent = "100"
 51060   .PDFGeneralASCII85 = "0"
 51070   .PDFGeneralAutorotate = "2"
-51080   .PDFGeneralCompatibility = "1"
+51080   .PDFGeneralCompatibility = "2"
 51090   .PDFGeneralOverprint = "0"
 51100   .PDFGeneralResolution = "600"
 51110   .PDFHighEncryption = "0"
@@ -1502,12 +1502,12 @@ On Error GoTo ErrPtnr_OnError
 60900       .PDFGeneralCompatibility = CLng(tStr)
 60910      Else
 60920       If UseStandard Then
-60930        .PDFGeneralCompatibility = 1
+60930        .PDFGeneralCompatibility = 2
 60940       End If
 60950     End If
 60960    Else
 60970     If UseStandard Then
-60980      .PDFGeneralCompatibility = 1
+60980      .PDFGeneralCompatibility = 2
 60990     End If
 61000   End If
 61010   tStr = hOpt.Retrieve("PDFGeneralOverprint")
@@ -3585,12 +3585,12 @@ On Error GoTo ErrPtnr_OnError
 58750       .PDFGeneralCompatibility = CLng(tStr)
 58760      Else
 58770       If UseStandard Then
-58780        .PDFGeneralCompatibility = 1
+58780        .PDFGeneralCompatibility = 2
 58790       End If
 58800     End If
 58810    Else
 58820     If UseStandard Then
-58830      .PDFGeneralCompatibility = 1
+58830      .PDFGeneralCompatibility = 2
 58840     End If
 58850   End If
 58860   tStr = reg.GetRegistryValue("PDFGeneralOverprint")
