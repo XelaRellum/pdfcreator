@@ -1,3 +1,4 @@
+#include "chinese_simplified.inc"
 #include "dutch.inc"
 #include "english.inc"
 #include "french.inc"

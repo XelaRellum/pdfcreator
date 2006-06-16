@@ -331,6 +331,7 @@ Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ign
 Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 
 ;Languages
+Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
@@ -340,6 +341,7 @@ Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Componen
 Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
 
 ;Ini file
 Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
@@ -671,6 +673,9 @@ Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; T
 
 Name: languages; Description: {cm:Languages}; Types: full custom
 
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+
 Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
 Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch'); Flags: dontinheritcheck
 
@@ -696,6 +701,8 @@ Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLangua
 
 Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
 Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
+
+Name: languages\valencian; Description: Valencian; Types: full; Flags: dontinheritcheck
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Check: UseDesktopiconCommon
