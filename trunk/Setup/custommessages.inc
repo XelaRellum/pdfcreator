@@ -3,6 +3,7 @@
 #include "english.inc"
 #include "french.inc"
 #include "german.inc"
+#include "indonesian.inc"
 #include "italian.inc"
 #include "romanian.inc"
 #include "russian.inc"

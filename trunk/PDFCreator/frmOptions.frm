@@ -16,6 +16,247 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin PDFCreator.dmFrame dmFraProgSave 
+      Height          =   2670
+      Left            =   2730
+      TabIndex        =   51
+      Top             =   2835
+      Visible         =   0   'False
+      Width           =   6375
+      _extentx        =   11245
+      _extenty        =   4710
+      caption         =   "Save"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":000C
+      Begin VB.ComboBox cmbStandardSaveFormat 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":0038
+         Left            =   120
+         List            =   "frmOptions.frx":003A
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   213
+         Top             =   2100
+         Width           =   1050
+      End
+      Begin VB.CheckBox chkSpaces 
+         Appearance      =   0  '2D
+         Caption         =   "Remove leading and trailing spaces"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   55
+         Top             =   1440
+         Value           =   1  'Aktiviert
+         Width           =   6015
+      End
+      Begin VB.TextBox txtSaveFilename 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   54
+         Text            =   "<Title>"
+         Top             =   600
+         Width           =   3495
+      End
+      Begin VB.ComboBox cmbSaveFilenameTokens 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":003C
+         Left            =   3720
+         List            =   "frmOptions.frx":003E
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   53
+         Top             =   600
+         Width           =   2415
+      End
+      Begin VB.TextBox txtSavePreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   52
+         Top             =   960
+         Width           =   6015
+      End
+      Begin VB.Label lblStandardSaveformat 
+         AutoSize        =   -1  'True
+         Caption         =   "Standard save format"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   212
+         Top             =   1890
+         Width           =   1515
+      End
+      Begin VB.Label lblSaveFilename 
+         AutoSize        =   -1  'True
+         Caption         =   "Filename"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   57
+         Top             =   360
+         Width           =   630
+      End
+      Begin VB.Label lblSaveFilenameTokens 
+         AutoSize        =   -1  'True
+         Caption         =   "Add a Filename-Token"
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   56
+         Top             =   360
+         Width           =   1605
+      End
+   End
+   Begin PDFCreator.dmFrame dmFraProgAutosave 
+      Height          =   5085
+      Left            =   2640
+      TabIndex        =   30
+      Top             =   1200
+      Visible         =   0   'False
+      Width           =   6375
+      _extentx        =   11245
+      _extenty        =   8969
+      caption         =   "Autosave"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmOptions.frx":0040
+      textshaddowcolor=   12582912
+      Begin VB.CheckBox chkAutosaveSendEmail 
+         Appearance      =   0  '2D
+         Caption         =   "Send an email after auto-saving"
+         ForeColor       =   &H80000008&
+         Height          =   240
+         Left            =   120
+         TabIndex        =   202
+         Top             =   4680
+         Width           =   5895
+      End
+      Begin VB.CheckBox chkAutosaveStartStandardProgram 
+         Appearance      =   0  '2D
+         Caption         =   "After auto-saving open the document with the default program."
+         ForeColor       =   &H80000008&
+         Height          =   360
+         Left            =   120
+         TabIndex        =   171
+         Top             =   4095
+         Width           =   5895
+      End
+      Begin VB.CommandButton cmdGetAutosaveDirectory 
+         Caption         =   "..."
+         Height          =   300
+         Left            =   5760
+         TabIndex        =   167
+         Top             =   3120
+         Width           =   375
+      End
+      Begin VB.ComboBox cmbAutosaveFormat 
+         Appearance      =   0  '2D
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   38
+         Top             =   960
+         Width           =   1935
+      End
+      Begin VB.ComboBox cmbAutoSaveFilenameTokens 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "frmOptions.frx":006C
+         Left            =   3690
+         List            =   "frmOptions.frx":006E
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   37
+         Top             =   1785
+         Width           =   2460
+      End
+      Begin VB.TextBox txtAutosaveFilename 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   36
+         Text            =   "<DateTime>"
+         Top             =   1800
+         Width           =   3495
+      End
+      Begin VB.TextBox txtAutosaveDirectory 
+         Appearance      =   0  '2D
+         Enabled         =   0   'False
+         Height          =   285
+         Left            =   120
+         TabIndex        =   35
+         Top             =   3120
+         Width           =   5535
+      End
+      Begin VB.CheckBox chkUseAutosaveDirectory 
+         Appearance      =   0  '2D
+         Caption         =   "For autosave use this directory"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   34
+         Top             =   2760
+         Width           =   5895
+      End
+      Begin VB.CheckBox chkUseAutosave 
+         Appearance      =   0  '2D
+         Caption         =   "Use Autosave"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   33
+         Top             =   360
+         Width           =   6015
+      End
+      Begin VB.TextBox txtAutoSaveFilenamePreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   32
+         Top             =   2145
+         Width           =   6015
+      End
+      Begin VB.TextBox txtAutoSaveDirectoryPreview 
+         Appearance      =   0  '2D
+         BackColor       =   &H8000000F&
+         Height          =   285
+         Left            =   120
+         Locked          =   -1  'True
+         TabIndex        =   31
+         Top             =   3450
+         Width           =   6015
+      End
+      Begin VB.Label lblAutosaveFilenameTokens 
+         AutoSize        =   -1  'True
+         Caption         =   "Add a Filename-Token"
+         Height          =   195
+         Left            =   3720
+         TabIndex        =   41
+         Top             =   1560
+         Width           =   1605
+      End
+      Begin VB.Label lblAutosaveformat 
+         Caption         =   "Autosaveformat"
+         Height          =   255
+         Left            =   120
+         TabIndex        =   40
+         Top             =   720
+         Width           =   3495
+      End
+      Begin VB.Label lblAutosaveFilename 
+         AutoSize        =   -1  'True
+         Caption         =   "Filename"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   39
+         Top             =   1560
+         Width           =   630
+      End
+   End
    Begin PDFCreator.dmFrame dmFraProgDocument 
       Height          =   2250
       Left            =   2640
@@ -28,7 +269,7 @@ Begin VB.Form frmOptions
       caption         =   "Document"
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "frmOptions.frx":000C
+      font            =   "frmOptions.frx":0070
       Begin VB.CheckBox chkOnePagePerFile 
          Appearance      =   0  '2D
          Caption         =   "One page per file"
@@ -43,9 +284,9 @@ Begin VB.Form frmOptions
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "frmOptions.frx":0038
+         ItemData        =   "frmOptions.frx":009C
          Left            =   3720
-         List            =   "frmOptions.frx":003A
+         List            =   "frmOptions.frx":009E
          Style           =   2  'Dropdown-Liste
          TabIndex        =   50
          Top             =   840
@@ -102,7 +343,7 @@ Begin VB.Form frmOptions
       caption         =   "General Options"
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "frmOptions.frx":003C
+      font            =   "frmOptions.frx":00A0
       Begin VB.CheckBox chkPDFOptimize 
          Appearance      =   0  '2D
          Caption         =   "Fast web view"
@@ -126,9 +367,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFOverprint 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0068
+         ItemData        =   "frmOptions.frx":00CC
          Left            =   120
-         List            =   "frmOptions.frx":006A
+         List            =   "frmOptions.frx":00CE
          Style           =   2  'Dropdown-Liste
          TabIndex        =   94
          Top             =   2940
@@ -147,9 +388,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFCompat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":006C
+         ItemData        =   "frmOptions.frx":00D0
          Left            =   120
-         List            =   "frmOptions.frx":006E
+         List            =   "frmOptions.frx":00D2
          Style           =   2  'Dropdown-Liste
          TabIndex        =   92
          Top             =   735
@@ -158,9 +399,9 @@ Begin VB.Form frmOptions
       Begin VB.ComboBox cmbPDFRotate 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "frmOptions.frx":0070
+         ItemData        =   "frmOptions.frx":00D4
          Left            =   120
-         List            =   "frmOptions.frx":0072
+         List            =   "frmOptions.frx":00D6
          Style           =   2  'Dropdown-Liste
          TabIndex        =   91
          Tag             =   "None|All|PageByPage"
@@ -230,7 +471,7 @@ Begin VB.Form frmOptions
       caption3d       =   2
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "frmOptions.frx":0074
+      font            =   "frmOptions.frx":00D8
       textshaddowcolor=   12582912
       Begin VB.ComboBox cmbSendMailMethod 
          Height          =   315
@@ -359,7 +600,7 @@ Begin VB.Form frmOptions
       caption3d       =   2
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "frmOptions.frx":00A0
+      font            =   "frmOptions.frx":0104
       textshaddowcolor=   12582912
       enabled         =   0   'False
       Begin VB.CommandButton cmdShellintegration 
@@ -394,7 +635,7 @@ Begin VB.Form frmOptions
       caption3d       =   2
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "frmOptions.frx":00CC
+      font            =   "frmOptions.frx":0130
       textshaddowcolor=   12582912
       Begin VB.CommandButton cmdAsso 
          Caption         =   "&Associate PDFCreator with Postscript files"
@@ -416,9 +657,9 @@ Begin VB.Form frmOptions
       End
       Begin VB.ComboBox cmbOptionsDesign 
          Height          =   315
-         ItemData        =   "frmOptions.frx":00F8
+         ItemData        =   "frmOptions.frx":015C
          Left            =   120
-         List            =   "frmOptions.frx":00FA
+         List            =   "frmOptions.frx":015E
          Style           =   2  'Dropdown-Liste
          TabIndex        =   216
          Top             =   1620
@@ -449,99 +690,6 @@ Begin VB.Form frmOptions
          Width           =   2250
       End
    End
-   Begin PDFCreator.dmFrame dmFraProgSave 
-      Height          =   2670
-      Left            =   2640
-      TabIndex        =   51
-      Top             =   2160
-      Visible         =   0   'False
-      Width           =   6375
-      _extentx        =   11245
-      _extenty        =   4710
-      caption         =   "Save"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "frmOptions.frx":00FC
-      Begin VB.ComboBox cmbStandardSaveFormat 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":0128
-         Left            =   120
-         List            =   "frmOptions.frx":012A
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   213
-         Top             =   2100
-         Width           =   1050
-      End
-      Begin VB.CheckBox chkSpaces 
-         Appearance      =   0  '2D
-         Caption         =   "Remove leading and trailing spaces"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   55
-         Top             =   1440
-         Value           =   1  'Aktiviert
-         Width           =   6015
-      End
-      Begin VB.TextBox txtSaveFilename 
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   120
-         TabIndex        =   54
-         Text            =   "<Title>"
-         Top             =   600
-         Width           =   3495
-      End
-      Begin VB.ComboBox cmbSaveFilenameTokens 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":012C
-         Left            =   3720
-         List            =   "frmOptions.frx":012E
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   53
-         Top             =   600
-         Width           =   2415
-      End
-      Begin VB.TextBox txtSavePreview 
-         Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   52
-         Top             =   960
-         Width           =   6015
-      End
-      Begin VB.Label lblStandardSaveformat 
-         AutoSize        =   -1  'True
-         Caption         =   "Standard save format"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   212
-         Top             =   1890
-         Width           =   1515
-      End
-      Begin VB.Label lblSaveFilename 
-         AutoSize        =   -1  'True
-         Caption         =   "Filename"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   57
-         Top             =   360
-         Width           =   630
-      End
-      Begin VB.Label lblSaveFilenameTokens 
-         AutoSize        =   -1  'True
-         Caption         =   "Add a Filename-Token"
-         Height          =   195
-         Left            =   3720
-         TabIndex        =   56
-         Top             =   360
-         Width           =   1605
-      End
-   End
    Begin PDFCreator.dmFrame dmFraProgPrint 
       Height          =   3930
       Left            =   2940
@@ -554,7 +702,7 @@ Begin VB.Form frmOptions
       caption         =   "Print after saving"
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "frmOptions.frx":0130
+      font            =   "frmOptions.frx":0160
       Begin VB.ComboBox cmbPrintAfterSavingTumble 
          Height          =   315
          Left            =   420
@@ -639,7 +787,7 @@ Begin VB.Form frmOptions
       caption         =   "Actions"
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "frmOptions.frx":015C
+      font            =   "frmOptions.frx":018C
       Begin PDFCreator.dmFrame dmFraProgActionsRunProgramAfterSaving 
          Height          =   3510
          Left            =   360
@@ -651,11 +799,11 @@ Begin VB.Form frmOptions
          caption         =   "Run a program/script after saving"
          barcolorfrom    =   16744576
          barcolorto      =   4194304
-         font            =   "frmOptions.frx":0188
+         font            =   "frmOptions.frx":01B8
          Begin VB.CommandButton cmdRunProgramAfterSavingPrognameEdit 
             Height          =   300
             Left            =   5520
-            Picture         =   "frmOptions.frx":01B4
+            Picture         =   "frmOptions.frx":01E4
             Style           =   1  'Grafisch
             TabIndex        =   200
             Top             =   1155
@@ -752,11 +900,11 @@ Begin VB.Form frmOptions
          caption         =   "Run a program/script before saving"
          barcolorfrom    =   16744576
          barcolorto      =   4194304
-         font            =   "frmOptions.frx":073E
+         font            =   "frmOptions.frx":076E
          Begin VB.CommandButton cmdRunProgramBeforeSavingPrognameEdit 
             Height          =   300
             Left            =   5520
-            Picture         =   "frmOptions.frx":076A
+            Picture         =   "frmOptions.frx":079A
             Style           =   1  'Grafisch
             TabIndex        =   201
             Top             =   1155
@@ -856,154 +1004,6 @@ Begin VB.Form frmOptions
                ImageVarType    =   2
             EndProperty
          EndProperty
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraProgAutosave 
-      Height          =   5085
-      Left            =   2640
-      TabIndex        =   30
-      Top             =   1200
-      Visible         =   0   'False
-      Width           =   6375
-      _extentx        =   11245
-      _extenty        =   8969
-      caption         =   "Autosave"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "frmOptions.frx":0CF4
-      textshaddowcolor=   12582912
-      Begin VB.CheckBox chkAutosaveSendEmail 
-         Appearance      =   0  '2D
-         Caption         =   "Send an email after auto-saving"
-         ForeColor       =   &H80000008&
-         Height          =   240
-         Left            =   120
-         TabIndex        =   202
-         Top             =   4680
-         Width           =   5895
-      End
-      Begin VB.CheckBox chkAutosaveStartStandardProgram 
-         Appearance      =   0  '2D
-         Caption         =   "After auto-saving open the document with the default program."
-         ForeColor       =   &H80000008&
-         Height          =   360
-         Left            =   120
-         TabIndex        =   171
-         Top             =   4095
-         Width           =   5895
-      End
-      Begin VB.CommandButton cmdGetAutosaveDirectory 
-         Caption         =   "..."
-         Height          =   300
-         Left            =   5760
-         TabIndex        =   167
-         Top             =   3120
-         Width           =   375
-      End
-      Begin VB.ComboBox cmbAutosaveFormat 
-         Appearance      =   0  '2D
-         Height          =   315
-         Left            =   120
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   38
-         Top             =   960
-         Width           =   1935
-      End
-      Begin VB.ComboBox cmbAutoSaveFilenameTokens 
-         Appearance      =   0  '2D
-         Height          =   315
-         ItemData        =   "frmOptions.frx":0D20
-         Left            =   3690
-         List            =   "frmOptions.frx":0D22
-         Style           =   2  'Dropdown-Liste
-         TabIndex        =   37
-         Top             =   1785
-         Width           =   2460
-      End
-      Begin VB.TextBox txtAutosaveFilename 
-         Appearance      =   0  '2D
-         Height          =   285
-         Left            =   120
-         TabIndex        =   36
-         Text            =   "<DateTime>"
-         Top             =   1800
-         Width           =   3495
-      End
-      Begin VB.TextBox txtAutosaveDirectory 
-         Appearance      =   0  '2D
-         Enabled         =   0   'False
-         Height          =   285
-         Left            =   120
-         TabIndex        =   35
-         Top             =   3120
-         Width           =   5535
-      End
-      Begin VB.CheckBox chkUseAutosaveDirectory 
-         Appearance      =   0  '2D
-         Caption         =   "For autosave use this directory"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   34
-         Top             =   2760
-         Width           =   5895
-      End
-      Begin VB.CheckBox chkUseAutosave 
-         Appearance      =   0  '2D
-         Caption         =   "Use Autosave"
-         ForeColor       =   &H80000008&
-         Height          =   255
-         Left            =   120
-         TabIndex        =   33
-         Top             =   360
-         Width           =   6015
-      End
-      Begin VB.TextBox txtAutoSaveFilenamePreview 
-         Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   32
-         Top             =   2145
-         Width           =   6015
-      End
-      Begin VB.TextBox txtAutoSaveDirectoryPreview 
-         Appearance      =   0  '2D
-         BackColor       =   &H8000000F&
-         Height          =   285
-         Left            =   120
-         Locked          =   -1  'True
-         TabIndex        =   31
-         Top             =   3450
-         Width           =   6015
-      End
-      Begin VB.Label lblAutosaveFilenameTokens 
-         AutoSize        =   -1  'True
-         Caption         =   "Add a Filename-Token"
-         Height          =   195
-         Left            =   3720
-         TabIndex        =   41
-         Top             =   1560
-         Width           =   1605
-      End
-      Begin VB.Label lblAutosaveformat 
-         Caption         =   "Autosaveformat"
-         Height          =   255
-         Left            =   120
-         TabIndex        =   40
-         Top             =   720
-         Width           =   3495
-      End
-      Begin VB.Label lblAutosaveFilename 
-         AutoSize        =   -1  'True
-         Caption         =   "Filename"
-         Height          =   195
-         Left            =   120
-         TabIndex        =   39
-         Top             =   1560
-         Width           =   630
       End
    End
    Begin PDFCreator.dmFrame dmFraProgGhostscript 
@@ -2912,15 +2912,14 @@ Private Sub cmbAutosaveFormat_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Ext As String
-50020  txtAutosaveFilename.ToolTipText = txtAutosaveFilename.Text
-50030  txtAutoSaveFilenamePreview.Text = GetSubstFilename("B:\dummy.dum", txtAutosaveFilename.Text, , True) & _
-  GetAutosaveFormatExtension
-50050  If IsValidPath("C:\" & txtAutoSaveFilenamePreview.Text) = False Then
-50060    txtAutoSaveFilenamePreview.ForeColor = vbRed
-50070   Else
-50080    txtAutoSaveFilenamePreview.ForeColor = &H80000008
-50090  End If
+50010  txtAutosaveFilename.ToolTipText = txtAutosaveFilename.Text
+50020  txtAutoSaveFilenamePreview.Text = GetSubstFilename("B:\dummy.dum", txtAutosaveFilename.Text, , True) & _
+  GetSaveAutosaveFormatExtension(cmbAutosaveFormat.ListIndex)
+50040  If IsValidPath("C:\" & txtAutoSaveFilenamePreview.Text) = False Then
+50050    txtAutoSaveFilenamePreview.ForeColor = vbRed
+50060   Else
+50070    txtAutoSaveFilenamePreview.ForeColor = &H80000008
+50080  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2934,14 +2933,14 @@ End Select
 End Sub
 
 Private Sub cmbCharset_Change()
-50010  On Error GoTo ErrorHandler
-50020  txtTest.Font.Charset = cmbCharset.Text
-50030  Exit Sub
+ On Error GoTo ErrorHandler
+ txtTest.Font.Charset = cmbCharset.Text
+ Exit Sub
 ErrorHandler:
-50050  If Err.Number = 380 Then
-50060   cmbCharset.Text = 0
-50070  End If
-50080  Err.Clear
+ If Err.Number = 380 Then
+  cmbCharset.Text = 0
+ End If
+ Err.Clear
 End Sub
 
 Private Sub cmbCharset_Click()
@@ -3287,6 +3286,14 @@ Private Sub cmbSaveFilenameTokens_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  txtSaveFilename.Text = txtSaveFilename.Text & cmbSaveFilenameTokens.Text
+50020  txtSavePreview.ToolTipText = txtSavePreview.Text
+50030  txtSavePreview.Text = GetSubstFilename("B:\dummy.dum", txtSaveFilename.Text, , True) & _
+  GetSaveAutosaveFormatExtension(cmbStandardSaveFormat.ListIndex)
+50050  If IsValidPath("C:\" & txtSavePreview.Text) = False Then
+50060    txtSavePreview.ForeColor = vbRed
+50070   Else
+50080    txtSavePreview.ForeColor = &H80000008
+50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -3325,6 +3332,30 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmOptions", "cmbPDFCompat_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbStandardSaveFormat_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  txtSavePreview.ToolTipText = txtSavePreview.Text
+50020  txtSavePreview.Text = GetSubstFilename("B:\dummy.dum", txtSaveFilename.Text, , True) & _
+  GetSaveAutosaveFormatExtension(cmbStandardSaveFormat.ListIndex)
+50040  If IsValidPath("C:\" & txtSavePreview.Text) = False Then
+50050    txtSavePreview.ForeColor = vbRed
+50060   Else
+50070    txtSavePreview.ForeColor = &H80000008
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "cmbStandardSaveFormat_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -5375,7 +5406,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim Ext As String
 50020  txtAutosaveFilename.ToolTipText = txtAutosaveFilename.Text
 50030  With txtAutoSaveFilenamePreview
-50040   .Text = GetSubstFilename("B:\dummy.dum", txtAutosaveFilename.Text, , True) & GetAutosaveFormatExtension
+50040   .Text = GetSubstFilename("B:\dummy.dum", txtAutosaveFilename.Text, , True) & GetSaveAutosaveFormatExtension(cmbAutosaveFormat.ListIndex)
 50050   .ToolTipText = .Text
 50060   If IsValidPath("C:\" & .Text) = False Then
 50070     .ForeColor = vbRed
@@ -6084,32 +6115,32 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function GetAutosaveFormatExtension() As String
+Private Function GetSaveAutosaveFormatExtension(Index As Long) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case cmbAutosaveFormat.ListIndex
+50011  Select Case Index
         Case -1, 0
-50030    GetAutosaveFormatExtension = ".pdf"
+50030    GetSaveAutosaveFormatExtension = ".pdf"
 50040   Case 1
-50050    GetAutosaveFormatExtension = ".png"
+50050    GetSaveAutosaveFormatExtension = ".png"
 50060   Case 2
-50070    GetAutosaveFormatExtension = ".jpg"
+50070    GetSaveAutosaveFormatExtension = ".jpg"
 50080   Case 3
-50090    GetAutosaveFormatExtension = ".bmp"
+50090    GetSaveAutosaveFormatExtension = ".bmp"
 50100   Case 4
-50110    GetAutosaveFormatExtension = ".pcx"
+50110    GetSaveAutosaveFormatExtension = ".pcx"
 50120   Case 5
-50130    GetAutosaveFormatExtension = ".tif"
+50130    GetSaveAutosaveFormatExtension = ".tif"
 50140   Case 6
-50150    GetAutosaveFormatExtension = ".ps"
+50150    GetSaveAutosaveFormatExtension = ".ps"
 50160   Case 7
-50170    GetAutosaveFormatExtension = ".eps"
+50170    GetSaveAutosaveFormatExtension = ".eps"
 50180  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmOptions", "GetAutosaveFormatExtension")
+Select Case ErrPtnr.OnError("frmOptions", "GetSaveAutosaveFormatExtension")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
