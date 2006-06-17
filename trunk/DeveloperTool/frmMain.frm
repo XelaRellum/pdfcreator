@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -631,7 +631,7 @@ Private Sub cmdIncFile_Click(Index As Integer)
     .Filename = LastIncFile & ".inc"
     .Filter = "Setup inc files (*.inc)|*.inc"
     .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
-    .InitDir = App.Path & "\..\Setup"
+    .InitDir = App.Path & "\..\Setup\Language includes"
     .ShowSave
     SaveFile .Filename, txtIncFile.Text
    End With
@@ -648,7 +648,7 @@ Private Sub cmdIncFile_Click(Index As Integer)
      cmdIncFile(1).Enabled = True
     End If
    End With
-   SaveFile App.Path & "\..\Setup\" & LastIncFile & ".inc", txtIncFile.Text
+   SaveFile App.Path & "\..\Setup\Language includes\" & LastIncFile & ".inc", txtIncFile.Text
  End Select
  Exit Sub
 ErrorHandler:
