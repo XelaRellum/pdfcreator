@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-2"?>
+<scriptdoc process="1">
+ <comment>
+  Sample1 script
+  Part of PDFCreator
+  License: GPL
+  Homepage: http://www.sf.net/projects/pdfcreator
+  Version: 1.0.0.0
+  Date: September, 1. 2005
+  Author: Frank Heindörfer
+  Comments: Print on PDFCreator using DOT-Net
+</comment>
+<references>
+<assembly>System.dll</assembly>
+<assembly>System.Drawing.dll</assembly>
+</references>
+<log error="YES" success="YES" start="YES">
+<eventlog1 name="Scripting"/>
+<logfile1 name="c:\dsh-log.txt"/>
+</log>
+<!-- ****************************************** -->
+<script name="Sample1" language="CS" startClass="Sample1.Class1">
+using System;
+using System.Drawing;
+using System.Drawing.Printing;
+
+namespace Sample1
+{
+		class TestPrint
+		{
+			PrintDocument pd = new PrintDocument();
+			public void Print()
+			{
+				pd.PrinterSettings.PrinterName="PDFCreator";
+				pd.DocumentName="DOT-Net PDFCreator test1"; 
+				pd.PrintPage += new PrintPageEventHandler(pd_PrintPage);
+				pd.Print();
+			}
+			private void pd_PrintPage(object sender, PrintPageEventArgs e)
+			{
+				String drawString = "PDFCreator";
+				Font drawFont = new Font("Arial", 16);
+				Pen p = new Pen(Color.Red);
+				SolidBrush drawBrush = new SolidBrush(Color.Black);
+				float r = 300;
+				float x;
+				float y =  50.0F;
+				int c = 360;
+				x = pd.PrinterSettings.DefaultPageSettings.PaperSize.Width / 2;
+				e.Graphics.DrawString(drawString, drawFont, drawBrush, x - r, y);
+				y = pd.PrinterSettings.DefaultPageSettings.PaperSize.Height / 2;
+				e.Graphics.DrawLine(p, x, y, x, y - r);
+				e.Graphics.DrawLine(p, x, y, x + r / 2, y - r);
+				e.Graphics.DrawLine(p, x, y, x + r, y - r);
+				e.Graphics.DrawLine(p, x, y, x + r, y - r / 2);
+				e.Graphics.DrawLine(p, x, y, x + r, y);
+				e.Graphics.DrawLine(p, x, y, x + r, y + r / 2);
+				e.Graphics.DrawLine(p, x, y, x + r, y + r);
+				e.Graphics.DrawLine(p, x, y, x + r / 2, y + r);
+				e.Graphics.DrawLine(p, x, y, x, y + r);
+				e.Graphics.DrawLine(p, x, y, x - r / 2, y + r);
+				e.Graphics.DrawLine(p, x, y, x - r, y + r);
+				e.Graphics.DrawLine(p, x, y, x - r, y + r / 2);
+				e.Graphics.DrawLine(p, x, y, x - r, y);
+				e.Graphics.DrawLine(p, x, y, x - r, y + r / 2);
+				e.Graphics.DrawLine(p, x, y, x - r, y - r);
+				e.Graphics.DrawLine(p, x, y, x - r, y - r / 2);
+				e.Graphics.DrawLine(p, x, y, x - r / 2, y - r);
+			}
+		}
+		class Class1
+		{
+			[STAThread]
+			static void Main(string[] args)
+			{
+				TestPrint tp = new TestPrint();
+				tp.Print();
+			}
+		}
+}
+</script>
+</scriptdoc>
