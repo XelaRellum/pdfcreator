@@ -602,7 +602,7 @@ Begin VB.Form frmOptions
       barcolorto      =   4194304
       font            =   "frmOptions.frx":0104
       textshaddowcolor=   12582912
-      enabled         =   0   'False
+      enabled         =   0
       Begin VB.CommandButton cmdShellintegration 
          Caption         =   "Integrate PDFCreator into shell"
          Height          =   495
@@ -4957,77 +4957,74 @@ On Error GoTo ErrPtnr_OnError
 50910      lblOptions = LanguageStrings.OptionsProgramFontDescription
 50920      dmFraProgFont.Enabled = True
 50930      dmFraProgFont.Visible = True
-50940      dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50950    End Select
-50960   Case "FORMATS"
-50971    Select Case UCase$(sItemKey)
+50940    End Select
+50950   Case "FORMATS"
+50961    Select Case UCase$(sItemKey)
           Case "PDF"
-50990      Set picOptions = LoadResPicture(2111, vbResIcon)
-51000      lblOptions = LanguageStrings.OptionsPDFDescription
-51010      tbstrPDFOptions.Enabled = True
-51020      tbstrPDFOptions.Visible = True
-51030      dmFraPDFGeneral.Enabled = True
-51040      dmFraPDFGeneral.Visible = True
-51050      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51060      dmFraPDFGeneral.Enabled = True
-51070     Case "PNG"
-51080      Set picOptions = LoadResPicture(2112, vbResIcon)
-51090      lblOptions = LanguageStrings.OptionsPNGDescription
-51100      dmFraBitmapGeneral.Enabled = True
-51110      dmFraBitmapGeneral.Visible = True
-51120      cmbPNGColors.Visible = True
-51130      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51140     Case "JPEG"
-51150      Set picOptions = LoadResPicture(2113, vbResIcon)
-51160      lblOptions = LanguageStrings.OptionsJPEGDescription
-51170      dmFraBitmapGeneral.Enabled = True
-51180      dmFraBitmapGeneral.Visible = True
-51190      lblJPEGQuality.Caption = LanguageStrings.OptionsJPEGQuality
-51200      lblJPEGQuality.Visible = True
-51210      txtJPEGQuality.Visible = True
-51220      lblJPEQQualityProzent.Visible = True
-51230      lblJPEQQualityProzent.Left = txtJPEGQuality.Left + txtJPEGQuality.Width + 100
-51240      cmbJPEGColors.Visible = True
-51250      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51260     Case "BMP"
-51270      Set picOptions = LoadResPicture(2114, vbResIcon)
-51280      lblOptions = LanguageStrings.OptionsBMPDescription
-51290      dmFraBitmapGeneral.Enabled = True
-51300      dmFraBitmapGeneral.Visible = True
-51310      cmbBMPColors.Visible = True
-51320      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51330     Case "PCX"
-51340      Set picOptions = LoadResPicture(2115, vbResIcon)
-51350      lblOptions = LanguageStrings.OptionsPCXDescription
-51360      dmFraBitmapGeneral.Enabled = True
-51370      dmFraBitmapGeneral.Visible = True
-51380      cmbPCXColors.Visible = True
-51390      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51400     Case "TIFF"
-51410      Set picOptions = LoadResPicture(2116, vbResIcon)
-51420      lblOptions = LanguageStrings.OptionsTIFFDescription
-51430      dmFraBitmapGeneral.Enabled = True
-51440      dmFraBitmapGeneral.Visible = True
-51450      cmbTIFFColors.Visible = True
-51460      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51470     Case "PS"
-51480      Set picOptions = LoadResPicture(2117, vbResIcon)
-51490      lblOptions.Caption = LanguageStrings.OptionsPSDescription
-51500      dmFraPSGeneral.Enabled = True
-51510      dmFraPSGeneral.Visible = True
-51520      cmbPSLanguageLevel.Visible = True
-51530      dmFraPSGeneral.Caption = LanguageStrings.OptionsPSDescription
-51540      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51550     Case "EPS"
-51560      Set picOptions = LoadResPicture(2118, vbResIcon)
-51570      lblOptions.Caption = LanguageStrings.OptionsEPSDescription
-51580      dmFraPSGeneral.Enabled = True
-51590      dmFraPSGeneral.Visible = True
-51600      cmbEPSLanguageLevel.Visible = True
-51610      dmFraPSGeneral.Caption = LanguageStrings.OptionsEPSDescription
-51620      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51630    End Select
-51640  End Select
+50980      Set picOptions = LoadResPicture(2111, vbResIcon)
+50990      lblOptions = LanguageStrings.OptionsPDFDescription
+51000      tbstrPDFOptions.Enabled = True
+51010      tbstrPDFOptions.Visible = True
+51020      tbstrPDFOptions_Click
+51030      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51040     Case "PNG"
+51050      Set picOptions = LoadResPicture(2112, vbResIcon)
+51060      lblOptions = LanguageStrings.OptionsPNGDescription
+51070      dmFraBitmapGeneral.Enabled = True
+51080      dmFraBitmapGeneral.Visible = True
+51090      cmbPNGColors.Visible = True
+51100      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51110     Case "JPEG"
+51120      Set picOptions = LoadResPicture(2113, vbResIcon)
+51130      lblOptions = LanguageStrings.OptionsJPEGDescription
+51140      dmFraBitmapGeneral.Enabled = True
+51150      dmFraBitmapGeneral.Visible = True
+51160      lblJPEGQuality.Caption = LanguageStrings.OptionsJPEGQuality
+51170      lblJPEGQuality.Visible = True
+51180      txtJPEGQuality.Visible = True
+51190      lblJPEQQualityProzent.Visible = True
+51200      lblJPEQQualityProzent.Left = txtJPEGQuality.Left + txtJPEGQuality.Width + 100
+51210      cmbJPEGColors.Visible = True
+51220      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51230     Case "BMP"
+51240      Set picOptions = LoadResPicture(2114, vbResIcon)
+51250      lblOptions = LanguageStrings.OptionsBMPDescription
+51260      dmFraBitmapGeneral.Enabled = True
+51270      dmFraBitmapGeneral.Visible = True
+51280      cmbBMPColors.Visible = True
+51290      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51300     Case "PCX"
+51310      Set picOptions = LoadResPicture(2115, vbResIcon)
+51320      lblOptions = LanguageStrings.OptionsPCXDescription
+51330      dmFraBitmapGeneral.Enabled = True
+51340      dmFraBitmapGeneral.Visible = True
+51350      cmbPCXColors.Visible = True
+51360      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51370     Case "TIFF"
+51380      Set picOptions = LoadResPicture(2116, vbResIcon)
+51390      lblOptions = LanguageStrings.OptionsTIFFDescription
+51400      dmFraBitmapGeneral.Enabled = True
+51410      dmFraBitmapGeneral.Visible = True
+51420      cmbTIFFColors.Visible = True
+51430      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51440     Case "PS"
+51450      Set picOptions = LoadResPicture(2117, vbResIcon)
+51460      lblOptions.Caption = LanguageStrings.OptionsPSDescription
+51470      dmFraPSGeneral.Enabled = True
+51480      dmFraPSGeneral.Visible = True
+51490      cmbPSLanguageLevel.Visible = True
+51500      dmFraPSGeneral.Caption = LanguageStrings.OptionsPSDescription
+51510      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51520     Case "EPS"
+51530      Set picOptions = LoadResPicture(2118, vbResIcon)
+51540      lblOptions.Caption = LanguageStrings.OptionsEPSDescription
+51550      dmFraPSGeneral.Enabled = True
+51560      dmFraPSGeneral.Visible = True
+51570      cmbEPSLanguageLevel.Visible = True
+51580      dmFraPSGeneral.Caption = LanguageStrings.OptionsEPSDescription
+51590      dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51600    End Select
+51610  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
