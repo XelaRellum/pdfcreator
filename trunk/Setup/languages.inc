@@ -1,3 +1,4 @@
+Name: catalan;            MessagesFile: compiler:Languages\Catalan.isl
 Name: chinese_simplified; MessagesFile: Innosetup languages files\ChineseSimp-11-5.1.0.isl
 Name: dutch;              MessagesFile: compiler:Languages\Dutch.isl
 Name: english;            MessagesFile: compiler:Default.isl

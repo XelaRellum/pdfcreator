@@ -331,6 +331,7 @@ Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ign
 Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 
 ;Languages
+Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
@@ -674,6 +675,9 @@ Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; T
 #ENDIF
 
 Name: languages; Description: {cm:Languages}; Types: full custom
+
+Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
+Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
 
 Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
 Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
