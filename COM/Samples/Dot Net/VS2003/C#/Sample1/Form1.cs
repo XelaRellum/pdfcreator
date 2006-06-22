@@ -306,9 +306,10 @@ namespace Sample1
 
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			pErr = null;
 			_PDFCreator.cClose();
-			_PDFCreator = null;
+			System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator);
+			System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr);
+			pErr = null;
 			GC.Collect();
 		}
 	}
