@@ -1,3 +1,4 @@
+#include "Language includes\catalan.inc"
 #include "Language includes\chinese_simplified.inc"
 #include "Language includes\dutch.inc"
 #include "Language includes\english.inc"
