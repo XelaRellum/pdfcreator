@@ -1818,7 +1818,7 @@ On Error GoTo ErrPtnr_OnError
 64060   End If
 64070   tStr = hOpt.Retrieve("ProgramFontSize")
 64080   If IsNumeric(tStr) Then
-64090     If CLng(tStr) >= 1 And CLng(tStr) <= 72 Then
+64090     If CLng(tStr) >= 6 And CLng(tStr) <= 72 Then
 64100       .ProgramFontSize = CLng(tStr)
 64110      Else
 64120       If UseStandard Then
@@ -4318,7 +4318,7 @@ On Error GoTo ErrPtnr_OnError
 66080   End If
 66090   tStr = reg.GetRegistryValue("ProgramFontSize")
 66100   If IsNumeric(tStr) Then
-66110     If CLng(tStr) >= 1 And CLng(tStr) <= 72 Then
+66110     If CLng(tStr) >= 6 And CLng(tStr) <= 72 Then
 66120       .ProgramFontSize = CLng(tStr)
 66130      Else
 66140       If UseStandard Then
