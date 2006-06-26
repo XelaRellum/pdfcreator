@@ -153,7 +153,7 @@ PrinterTemppath|txtTemppath.Text|String|<Temp>PDFCreator\||
 ProcessPriority|sldProcessPriority.Value|Long|1|0|3
 ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
-ProgramFontSize|cmbProgramFontSize.text|Long|8|1|72
+ProgramFontSize|cmbProgramFontSize.text|Long|8|6|72
 
 ' <Printing Formats PS LanguageLevel>
 PSLanguageLevel|cmbPSLanguageLevel.Listindex|Long|2|0|3
