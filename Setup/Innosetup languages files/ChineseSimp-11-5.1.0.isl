@@ -12,7 +12,7 @@
 LanguageName=<7B80><4F53><4E2D><6587>
 ;简体中文
 LanguageID=$0804
-;LanguageCodePage=0
+LanguageCodePage=936
 DialogFontName=宋体
 DialogFontSize=9
 ;WelcomeFontName=Verdana
