@@ -1705,7 +1705,7 @@ On Error GoTo ErrPtnr_OnError
 50060  If Len(StampString) > 0 Then
 50070   StampPage = StrConv(LoadResData(101, "STAMPPAGE"), vbUnicode)
 50080   StampPage = Replace(StampPage, vbCrLf, vbCr, , , vbBinaryCompare)
-50090   StampPage = Replace(StampPage, "[STAMPSTRING]", StampString, , , vbTextCompare)
+50090   StampPage = Replace(StampPage, "[STAMPSTRING]", EncodeCharsOctal(StampString), , , vbTextCompare)
 50100   StampPage = Replace(StampPage, "[FONTNAME]", Trim$(Options.StampFontname), , , vbTextCompare)
 50110   StampFontsize = 48
 50120   If IsNumeric(Options.StampFontsize) = True Then

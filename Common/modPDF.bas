@@ -671,7 +671,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function EncodeCharsOld(ByVal Str1 As String) As String
+Public Function EncodeCharsOctal(ByVal Str1 As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -690,7 +690,7 @@ On Error GoTo ErrPtnr_OnError
 50130     tStr = tStr & Mid(Str1, i, 1)
 50140   End If
 50150  Next i
-50160  EncodeCharsOld = tStr
+50160  EncodeCharsOctal = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
