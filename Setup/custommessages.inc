@@ -11,3 +11,4 @@
 #include "Language includes\russian.inc"
 #include "Language includes\slovak.inc"
 #include "Language includes\slovenian.inc"
+#include "Language includes\spanish.inc"
