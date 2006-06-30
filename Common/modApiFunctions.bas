@@ -30,8 +30,8 @@ Public Declare Function SetTokenInformation Lib "advapi32.dll" (ByVal TokenHandl
 Public Declare Sub InitCommonControls Lib "comctl32.dll" ()
 
 ' comdlg32.dll
-Public Declare Function CHOOSECOLOR Lib "comdlg32.dll" Alias "ChooseColorA" (pChoosecolor As CHOOSECOLOR) As Long
-Public Declare Function CHOOSEFONT Lib "comdlg32.dll" Alias "ChooseFontA" (pChoosefont As CHOOSEFONT) As Long
+Public Declare Function CHOOSECOLOR Lib "comdlg32.dll" Alias "ChooseColorA" (pChoosecolor As tCHOOSECOLOR) As Long
+Public Declare Function CHOOSEFONT Lib "comdlg32.dll" Alias "ChooseFontA" (pChoosefont As tCHOOSEFONT) As Long
 Public Declare Function GetOpenFileName Lib "comdlg32.dll" Alias "GetOpenFileNameA" (pOpenfilename As OPENFILENAME) As Long
 Public Declare Function GetSaveFileName Lib "comdlg32.dll" Alias "GetSaveFileNameA" (pOpenfilename As OPENFILENAME) As Long
 Public Declare Function PAGESETUPDLG Lib "comdlg32.dll" Alias "PageSetupDlgA" (pPagesetupdlg As PAGESETUPDLG) As Long
@@ -189,6 +189,7 @@ Public Declare Function GetMenuItemID Lib "user32.dll" (ByVal hMenu As Long, ByV
 Public Declare Function GetMessageExtraInfo Lib "user32" () As Long
 Public Declare Function GetParent Lib "user32.dll" (ByVal hwnd As Long) As Long
 Public Declare Function GetSubMenu Lib "user32.dll" (ByVal hMenu As Long, ByVal nPos As Long) As Long
+Public Declare Function GetSysColor Lib "user32.dll" (ByVal nIndex As Long) As Long
 Public Declare Function GetSystemMenu Lib "user32.dll" (ByVal hwnd As Long, ByVal bRevert As Long) As Long
 Public Declare Function GetSystemMetrics Lib "user32.dll" (ByVal nIndex As Long) As Long
 Public Declare Function GetWindowDC Lib "user32.dll" (ByVal hwnd As Long) As Long

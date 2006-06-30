@@ -1,6 +1,6 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "ComDlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
@@ -1833,40 +1833,44 @@ Private Sub CreateModOptions()
  Print #fn, " With sOptions"
  For i = 1 To lsvOptions.ListItems.Count
   If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
-   If UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase("Programfont") Then
+   Select Case True
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase("Programfont")
      Print #fn, "  For i=0 to frm.cmbFonts.Listcount - 1"
      Print #fn, "    If Ucase$(frm.cmbFonts.List(i)) = Ucase$(." & lsvOptions.ListItems(i).SubItems(1) & ") Then"
      Print #fn, "     frm.cmbFonts.Listindex = i"
      Print #fn, "     Exit For"
      Print #fn, "    End If"
      Print #fn, "  Next i"
-    Else
-     If UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions") Then
-       Print #fn, "  Set lsv = Frm.lsvFilenameSubst"
-       Print #fn, "  tList = Split(.FilenameSubstitutions, ""\"")"
-       Print #fn, "  For i = 0 To UBound(tList)"
-       Print #fn, "   If InStr(tList(i), ""|"") <= 0 Then"
-       Print #fn, "    tList(i) = tList(i) & ""|"""
-       Print #fn, "   End If"
-       Print #fn, "   If UBound(Split(tList(i), ""|"")) = 1 Then"
-       Print #fn, "    tStrA = Split(tList(i), ""|"")"
-       Print #fn, "    lsv.ListItems.Add , , tStrA(0)"
-       Print #fn, "    lsv.ListItems(lsv.ListItems.Count).SubItems(1) = tStrA(1)"
-       Print #fn, "   End If"
-       Print #fn, "  Next i"
-       Print #fn, "  If lsv.ListItems.Count > 0 Then"
-       Print #fn, "   lsv.ListItems(1).Selected = True"
-       Print #fn, "   Frm.txtFilenameSubst(0).Text = lsv.ListItems(1).Text"
-       Print #fn, "   Frm.txtFilenameSubst(0).ToolTipText = Frm.txtFilenameSubst(0).Text"
-       Print #fn, "   Frm.txtFilenameSubst(1).Text = lsv.ListItems(1).SubItems(1)"
-       Print #fn, "   Frm.txtFilenameSubst(1).ToolTipText = Frm.txtFilenameSubst(1).Text"
-       Print #fn, "  End If"
-     Else
-      If UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") Then
-       Print #fn, "  frm." & lsvOptions.ListItems(i).SubItems(2) & " = ." & lsvOptions.ListItems(i).SubItems(1)
-      End If
-    End If
-   End If
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions")
+     Print #fn, "  Set lsv = Frm.lsvFilenameSubst"
+     Print #fn, "  lsv.ListItems.Clear"
+     Print #fn, "  tList = Split(.FilenameSubstitutions, ""\"")"
+     Print #fn, "  For i = 0 To UBound(tList)"
+     Print #fn, "   If InStr(tList(i), ""|"") <= 0 Then"
+     Print #fn, "    tList(i) = tList(i) & ""|"""
+     Print #fn, "   End If"
+     Print #fn, "   If UBound(Split(tList(i), ""|"")) = 1 Then"
+     Print #fn, "    tStrA = Split(tList(i), ""|"")"
+     Print #fn, "    lsv.ListItems.Add , , tStrA(0)"
+     Print #fn, "    lsv.ListItems(lsv.ListItems.Count).SubItems(1) = tStrA(1)"
+     Print #fn, "   End If"
+     Print #fn, "  Next i"
+     Print #fn, "  If lsv.ListItems.Count > 0 Then"
+     Print #fn, "   lsv.ListItems(1).Selected = True"
+     Print #fn, "   Frm.txtFilenameSubst(0).Text = lsv.ListItems(1).Text"
+     Print #fn, "   Frm.txtFilenameSubst(0).ToolTipText = Frm.txtFilenameSubst(0).Text"
+     Print #fn, "   Frm.txtFilenameSubst(1).Text = lsv.ListItems(1).SubItems(1)"
+     Print #fn, "   Frm.txtFilenameSubst(1).ToolTipText = Frm.txtFilenameSubst(1).Text"
+     Print #fn, "  End If"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontColor")
+     Print #fn, "  Frm.picStampFontColor.BackColor = HTMLcolorToOleColor(." & lsvOptions.ListItems(i).SubItems(1) & ")"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontname")
+     Print #fn, "  Frm.lblFontNameSize.Caption = .StampFontname & "", "" & .StampFontsize"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And _
+         UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") And _
+         LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
+     Print #fn, "  frm." & lsvOptions.ListItems(i).SubItems(2) & " = ." & lsvOptions.ListItems(i).SubItems(1)
+   End Select
   End If
  Next i
  Print #fn, " End With"
@@ -1877,34 +1881,34 @@ Private Sub CreateModOptions()
  Print #fn, " With sOptions"
  For i = 1 To lsvOptions.ListItems.Count
   If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
-    If UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions") Then
-      Print #fn, " tStr="""""
-      Print #fn, " Set lsv = Frm.lsvFilenameSubst"
-      Print #fn, " For i = 1 To lsv.ListItems.Count"
-      Print #fn, "  If i < lsv.ListItems.Count Then"
-      Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1) & ""\"""
-      Print #fn, "   Else"
-      Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1)"
-      Print #fn, "  End If"
-      Print #fn, " Next i"
-      Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
-     Else
-      If UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("PDFEncryptor") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") Then
-        Print #fn, " If Frm.cmbPDFEncryptor.ListIndex < 0 Then"
-        Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " = 0"
-        Print #fn, "  Else"
-        Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " =  frm." & lsvOptions.ListItems(i).SubItems(2)
-        Print #fn, " End If"
-       Else
-        If UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") Then
-         If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
-           Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Abs(frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
-          Else
-           Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  frm." & lsvOptions.ListItems(i).SubItems(2)
-         End If
-        End If
-      End If
-    End If
+   Select Case True
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions")
+     Print #fn, " tStr="""""
+     Print #fn, " Set lsv = Frm.lsvFilenameSubst"
+     Print #fn, " For i = 1 To lsv.ListItems.Count"
+     Print #fn, "  If i < lsv.ListItems.Count Then"
+     Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1) & ""\"""
+     Print #fn, "   Else"
+     Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1)"
+     Print #fn, "  End If"
+     Print #fn, " Next i"
+     Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("PDFEncryptor") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible")
+     Print #fn, " If Frm.cmbPDFEncryptor.ListIndex < 0 Then"
+     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " = 0"
+     Print #fn, "  Else"
+     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " =  frm." & lsvOptions.ListItems(i).SubItems(2)
+     Print #fn, " End If"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontcolor")
+     Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = OleColorToHTMLColor(frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") _
+     And LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
+     If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
+       Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Abs(frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
+      Else
+       Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  frm." & lsvOptions.ListItems(i).SubItems(2)
+     End If
+   End Select
   End If
  Next i
  Print #fn, " End With"
@@ -2929,12 +2933,6 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "StandardModifydate"
   .Add "StandardSubject"
   .Add "StandardTitle"
-  .Add "StampFontColor"
-  .Add "StampFontname"
-  .Add "StampFontsize"
-  .Add "StampOutlineFontthickness"
-  .Add "StampString"
-  .Add "StampUseOutlineFont"
   .Add "StartStandardProgram"
   .Add "StandardMailDomain"
   .Add "Toolbars"

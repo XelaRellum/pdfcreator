@@ -358,6 +358,11 @@ Public Type tLanguageStrings
  OptionsShellIntegrationAdd As String
  OptionsShellIntegrationCaption As String
  OptionsShellIntegrationRemove As String
+ OptionsStamp As String
+ OptionsStampFontColor As String
+ OptionsStampOutlineFontThickness As String
+ OptionsStampString As String
+ OptionsStampUseOutlineFont As String
  OptionsStandardAuthorToken As String
  OptionsStandardSaveFormat As String
  OptionsTestpage As String
@@ -898,28 +903,33 @@ On Error GoTo ErrPtnr_OnError
 52580   .OptionsShellIntegrationAdd = Replace$(hLang.Retrieve("ShellIntegrationAdd", .OptionsShellIntegrationAdd), "/n", vbCrLf)
 52590   .OptionsShellIntegrationCaption = Replace$(hLang.Retrieve("ShellIntegrationCaption", .OptionsShellIntegrationCaption), "/n", vbCrLf)
 52600   .OptionsShellIntegrationRemove = Replace$(hLang.Retrieve("ShellIntegrationRemove", .OptionsShellIntegrationRemove), "/n", vbCrLf)
-52610   .OptionsStandardAuthorToken = Replace$(hLang.Retrieve("StandardAuthorToken", .OptionsStandardAuthorToken), "/n", vbCrLf)
-52620   .OptionsStandardSaveFormat = Replace$(hLang.Retrieve("StandardSaveFormat", .OptionsStandardSaveFormat), "/n", vbCrLf)
-52630   .OptionsTestpage = Replace$(hLang.Retrieve("Testpage", .OptionsTestpage), "/n", vbCrLf)
-52640   .OptionsTIFFColorscount01 = Replace$(hLang.Retrieve("TIFFColorscount01", .OptionsTIFFColorscount01), "/n", vbCrLf)
-52650   .OptionsTIFFColorscount02 = Replace$(hLang.Retrieve("TIFFColorscount02", .OptionsTIFFColorscount02), "/n", vbCrLf)
-52660   .OptionsTIFFColorscount03 = Replace$(hLang.Retrieve("TIFFColorscount03", .OptionsTIFFColorscount03), "/n", vbCrLf)
-52670   .OptionsTIFFColorscount04 = Replace$(hLang.Retrieve("TIFFColorscount04", .OptionsTIFFColorscount04), "/n", vbCrLf)
-52680   .OptionsTIFFColorscount05 = Replace$(hLang.Retrieve("TIFFColorscount05", .OptionsTIFFColorscount05), "/n", vbCrLf)
-52690   .OptionsTIFFColorscount06 = Replace$(hLang.Retrieve("TIFFColorscount06", .OptionsTIFFColorscount06), "/n", vbCrLf)
-52700   .OptionsTIFFColorscount07 = Replace$(hLang.Retrieve("TIFFColorscount07", .OptionsTIFFColorscount07), "/n", vbCrLf)
-52710   .OptionsTIFFColorscount08 = Replace$(hLang.Retrieve("TIFFColorscount08", .OptionsTIFFColorscount08), "/n", vbCrLf)
-52720   .OptionsTIFFDescription = Replace$(hLang.Retrieve("TIFFDescription", .OptionsTIFFDescription), "/n", vbCrLf)
-52730   .OptionsTIFFSymbol = Replace$(hLang.Retrieve("TIFFSymbol", .OptionsTIFFSymbol), "/n", vbCrLf)
-52740   .OptionsTreeFormats = Replace$(hLang.Retrieve("TreeFormats", .OptionsTreeFormats), "/n", vbCrLf)
-52750   .OptionsTreeProgram = Replace$(hLang.Retrieve("TreeProgram", .OptionsTreeProgram), "/n", vbCrLf)
-52760   .OptionsUseAutosave = Replace$(hLang.Retrieve("UseAutosave", .OptionsUseAutosave), "/n", vbCrLf)
-52770   .OptionsUseAutosaveDirectory = Replace$(hLang.Retrieve("UseAutosaveDirectory", .OptionsUseAutosaveDirectory), "/n", vbCrLf)
-52780   .OptionsUseCreationDateNow = Replace$(hLang.Retrieve("UseCreationDateNow", .OptionsUseCreationDateNow), "/n", vbCrLf)
-52790   .OptionsUserPass = Replace$(hLang.Retrieve("UserPass", .OptionsUserPass), "/n", vbCrLf)
-52800   .OptionsUseStandardauthor = Replace$(hLang.Retrieve("UseStandardauthor", .OptionsUseStandardauthor), "/n", vbCrLf)
-52810  End With
-52820  Set hLang = Nothing
+52610   .OptionsStamp = Replace$(hLang.Retrieve("Stamp", .OptionsStamp), "/n", vbCrLf)
+52620   .OptionsStampFontColor = Replace$(hLang.Retrieve("StampFontColor", .OptionsStampFontColor), "/n", vbCrLf)
+52630   .OptionsStampOutlineFontThickness = Replace$(hLang.Retrieve("StampOutlineFontThickness", .OptionsStampOutlineFontThickness), "/n", vbCrLf)
+52640   .OptionsStampString = Replace$(hLang.Retrieve("StampString", .OptionsStampString), "/n", vbCrLf)
+52650   .OptionsStampUseOutlineFont = Replace$(hLang.Retrieve("StampUseOutlineFont", .OptionsStampUseOutlineFont), "/n", vbCrLf)
+52660   .OptionsStandardAuthorToken = Replace$(hLang.Retrieve("StandardAuthorToken", .OptionsStandardAuthorToken), "/n", vbCrLf)
+52670   .OptionsStandardSaveFormat = Replace$(hLang.Retrieve("StandardSaveFormat", .OptionsStandardSaveFormat), "/n", vbCrLf)
+52680   .OptionsTestpage = Replace$(hLang.Retrieve("Testpage", .OptionsTestpage), "/n", vbCrLf)
+52690   .OptionsTIFFColorscount01 = Replace$(hLang.Retrieve("TIFFColorscount01", .OptionsTIFFColorscount01), "/n", vbCrLf)
+52700   .OptionsTIFFColorscount02 = Replace$(hLang.Retrieve("TIFFColorscount02", .OptionsTIFFColorscount02), "/n", vbCrLf)
+52710   .OptionsTIFFColorscount03 = Replace$(hLang.Retrieve("TIFFColorscount03", .OptionsTIFFColorscount03), "/n", vbCrLf)
+52720   .OptionsTIFFColorscount04 = Replace$(hLang.Retrieve("TIFFColorscount04", .OptionsTIFFColorscount04), "/n", vbCrLf)
+52730   .OptionsTIFFColorscount05 = Replace$(hLang.Retrieve("TIFFColorscount05", .OptionsTIFFColorscount05), "/n", vbCrLf)
+52740   .OptionsTIFFColorscount06 = Replace$(hLang.Retrieve("TIFFColorscount06", .OptionsTIFFColorscount06), "/n", vbCrLf)
+52750   .OptionsTIFFColorscount07 = Replace$(hLang.Retrieve("TIFFColorscount07", .OptionsTIFFColorscount07), "/n", vbCrLf)
+52760   .OptionsTIFFColorscount08 = Replace$(hLang.Retrieve("TIFFColorscount08", .OptionsTIFFColorscount08), "/n", vbCrLf)
+52770   .OptionsTIFFDescription = Replace$(hLang.Retrieve("TIFFDescription", .OptionsTIFFDescription), "/n", vbCrLf)
+52780   .OptionsTIFFSymbol = Replace$(hLang.Retrieve("TIFFSymbol", .OptionsTIFFSymbol), "/n", vbCrLf)
+52790   .OptionsTreeFormats = Replace$(hLang.Retrieve("TreeFormats", .OptionsTreeFormats), "/n", vbCrLf)
+52800   .OptionsTreeProgram = Replace$(hLang.Retrieve("TreeProgram", .OptionsTreeProgram), "/n", vbCrLf)
+52810   .OptionsUseAutosave = Replace$(hLang.Retrieve("UseAutosave", .OptionsUseAutosave), "/n", vbCrLf)
+52820   .OptionsUseAutosaveDirectory = Replace$(hLang.Retrieve("UseAutosaveDirectory", .OptionsUseAutosaveDirectory), "/n", vbCrLf)
+52830   .OptionsUseCreationDateNow = Replace$(hLang.Retrieve("UseCreationDateNow", .OptionsUseCreationDateNow), "/n", vbCrLf)
+52840   .OptionsUserPass = Replace$(hLang.Retrieve("UserPass", .OptionsUserPass), "/n", vbCrLf)
+52850   .OptionsUseStandardauthor = Replace$(hLang.Retrieve("UseStandardauthor", .OptionsUseStandardauthor), "/n", vbCrLf)
+52860  End With
+52870  Set hLang = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1011,7 +1021,7 @@ On Error GoTo ErrPtnr_OnError
 50020   .CommonAuthor = "Philip Chinery, Frank Heindörfer"
 50030   .CommonLanguagename = "English"
 50040   .CommonTitle = "PDF Print monitor"
-50050   .CommonVersion = "0.9.2"
+50050   .CommonVersion = "0.9.3"
 50060
 50070   .DialogDocument = "&Document"
 50080   .DialogDocumentAdd = "Add"
@@ -1360,59 +1370,64 @@ On Error GoTo ErrPtnr_OnError
 53510   .OptionsShellIntegrationAdd = "Integrate PDFCreator into shell"
 53520   .OptionsShellIntegrationCaption = "Create &PDF with PDFCreator"
 53530   .OptionsShellIntegrationRemove = "Remove shell integration"
-53540   .OptionsStandardAuthorToken = "Add a Author-Token"
-53550   .OptionsStandardSaveFormat = "Standard save format"
-53560   .OptionsTestpage = "PDFCreator Testpage"
-53570   .OptionsTIFFColorscount01 = "16777216 (24 Bit)"
-53580   .OptionsTIFFColorscount02 = "4096 (12 Bit)"
-53590   .OptionsTIFFColorscount03 = "2 colors (Black/White) G3 fax encoding with no EOLs"
-53600   .OptionsTIFFColorscount04 = "2 colors (Black/White) G3 fax encoding with EOLs"
-53610   .OptionsTIFFColorscount05 = "2 colors (Black/White) 2-D G3 fax encoding"
-53620   .OptionsTIFFColorscount06 = "2 colors (Black/White) G4 fax encoding"
-53630   .OptionsTIFFColorscount07 = "2 colors (Black/White) LZW-compatible"
-53640   .OptionsTIFFColorscount08 = "2 colors (Black/White) PackBits"
-53650   .OptionsTIFFDescription = "TIFF Format. For multipages use the tiff-format."
-53660   .OptionsTIFFSymbol = "TIFF"
-53670   .OptionsTreeFormats = "Formats"
-53680   .OptionsTreeProgram = "Program"
-53690   .OptionsUseAutosave = "Use Auto-save"
-53700   .OptionsUseAutosaveDirectory = "Use this directory for auto-save"
-53710   .OptionsUseCreationDateNow = "Use the current Date/Time for 'Creation Date'"
-53720   .OptionsUserPass = "User Password"
-53730   .OptionsUseStandardauthor = "Use standard author"
-53740
-53750   .PrintingAuthor = "A&uthor:"
-53760   .PrintingBMPFiles = "BMP-Files"
-53770   .PrintingCancel = "&Cancel"
-53780   .PrintingCollect = "&Wait - Collect"
-53790   .PrintingCreationDate = "Creation &Date:"
-53800   .PrintingDocumentTitle = "Document &Title:"
-53810   .PrintingEMail = "&eMail"
-53820   .PrintingEPSFiles = "Encapsulated Postscript-Files"
-53830   .PrintingJPEGFiles = "JPEG-Files"
-53840   .PrintingKeywords = "&Keywords:"
-53850   .PrintingModifyDate = "&Modify Date:"
-53860   .PrintingNow = "Now"
-53870   .PrintingPCXFiles = "PCX-Files"
-53880   .PrintingPDFFiles = "PDF-Files"
-53890   .PrintingPNGFiles = "PNG-Files"
-53900   .PrintingPSFiles = "Postscript-Files"
-53910   .PrintingSave = "&Save"
-53920   .PrintingStartStandardProgram = "&After saving open the document with the default program."
-53930   .PrintingStatus = "Creating file..."
-53940   .PrintingSubject = "Su&bject:"
-53950   .PrintingTIFFFiles = "TIFF-Files"
-53960
-53970   .SaveOpenAttributes = "Attributes"
-53980   .SaveOpenCancel = "Cancel"
-53990   .SaveOpenFilename = "Filename"
-54000   .SaveOpenOpen = "Open"
-54010   .SaveOpenOpenTitle = "Open"
-54020   .SaveOpenSave = "Save"
-54030   .SaveOpenSaveTitle = "Save as"
-54040   .SaveOpenSize = "Size"
-54050
-54060  End With
+53540   .OptionsStamp = "Stamp"
+53550   .OptionsStampFontColor = "Font-color"
+53560   .OptionsStampOutlineFontThickness = "Outline font thickness"
+53570   .OptionsStampString = "Stampstring"
+53580   .OptionsStampUseOutlineFont = "Use outline font"
+53590   .OptionsStandardAuthorToken = "Add a Author-Token"
+53600   .OptionsStandardSaveFormat = "Standard save format"
+53610   .OptionsTestpage = "PDFCreator Testpage"
+53620   .OptionsTIFFColorscount01 = "16777216 (24 Bit)"
+53630   .OptionsTIFFColorscount02 = "4096 (12 Bit)"
+53640   .OptionsTIFFColorscount03 = "2 colors (Black/White) G3 fax encoding with no EOLs"
+53650   .OptionsTIFFColorscount04 = "2 colors (Black/White) G3 fax encoding with EOLs"
+53660   .OptionsTIFFColorscount05 = "2 colors (Black/White) 2-D G3 fax encoding"
+53670   .OptionsTIFFColorscount06 = "2 colors (Black/White) G4 fax encoding"
+53680   .OptionsTIFFColorscount07 = "2 colors (Black/White) LZW-compatible"
+53690   .OptionsTIFFColorscount08 = "2 colors (Black/White) PackBits"
+53700   .OptionsTIFFDescription = "TIFF Format. For multipages use the tiff-format."
+53710   .OptionsTIFFSymbol = "TIFF"
+53720   .OptionsTreeFormats = "Formats"
+53730   .OptionsTreeProgram = "Program"
+53740   .OptionsUseAutosave = "Use Auto-save"
+53750   .OptionsUseAutosaveDirectory = "Use this directory for auto-save"
+53760   .OptionsUseCreationDateNow = "Use the current Date/Time for 'Creation Date'"
+53770   .OptionsUserPass = "User Password"
+53780   .OptionsUseStandardauthor = "Use standard author"
+53790
+53800   .PrintingAuthor = "A&uthor:"
+53810   .PrintingBMPFiles = "BMP-Files"
+53820   .PrintingCancel = "&Cancel"
+53830   .PrintingCollect = "&Wait - Collect"
+53840   .PrintingCreationDate = "Creation &Date:"
+53850   .PrintingDocumentTitle = "Document &Title:"
+53860   .PrintingEMail = "&eMail"
+53870   .PrintingEPSFiles = "Encapsulated Postscript-Files"
+53880   .PrintingJPEGFiles = "JPEG-Files"
+53890   .PrintingKeywords = "&Keywords:"
+53900   .PrintingModifyDate = "&Modify Date:"
+53910   .PrintingNow = "Now"
+53920   .PrintingPCXFiles = "PCX-Files"
+53930   .PrintingPDFFiles = "PDF-Files"
+53940   .PrintingPNGFiles = "PNG-Files"
+53950   .PrintingPSFiles = "Postscript-Files"
+53960   .PrintingSave = "&Save"
+53970   .PrintingStartStandardProgram = "&After saving open the document with the default program."
+53980   .PrintingStatus = "Creating file..."
+53990   .PrintingSubject = "Su&bject:"
+54000   .PrintingTIFFFiles = "TIFF-Files"
+54010
+54020   .SaveOpenAttributes = "Attributes"
+54030   .SaveOpenCancel = "Cancel"
+54040   .SaveOpenFilename = "Filename"
+54050   .SaveOpenOpen = "Open"
+54060   .SaveOpenOpenTitle = "Open"
+54070   .SaveOpenSave = "Save"
+54080   .SaveOpenSaveTitle = "Save as"
+54090   .SaveOpenSize = "Size"
+54100
+54110  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

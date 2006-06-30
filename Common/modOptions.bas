@@ -5983,9 +5983,10 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
+  lsv.ListItems.Clear
   tList = Split(.FilenameSubstitutions, "\")
   For i = 0 To UBound(tList)
    If InStr(tList(i), "|") <= 0 Then
@@ -6072,7 +6073,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.cmbProgramFontSize.Text = .ProgramFontSize
+  Frm.cmbProgramFontsize.Text = .ProgramFontSize
   Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
   Frm.chkSpaces.Value = .RemoveSpaces
   Frm.chkRunProgramAfterSaving.Value = .RunProgramAfterSaving
@@ -6087,9 +6088,14 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtSaveFilename.Text = .SaveFilename
   Frm.chkAutosaveSendEmail.Value = .SendEmailAfterAutoSaving
   Frm.cmbSendMailMethod.ListIndex = .SendMailMethod
-  Frm.chkShowAnimation = .ShowAnimation
+  Frm.chkShowAnimation.Value = .ShowAnimation
+  Frm.picStampFontColor.BackColor = HTMLColorToOleColor(.StampFontColor)
+  Frm.lblFontNameSize.Caption = .StampFontname & ", " & .StampFontsize
+  Frm.txtOutlineFontThickness.Text = .StampOutlineFontthickness
+  Frm.txtStampString.Text = .StampString
+  Frm.chkStampUseOutlineFont.Value = .StampUseOutlineFont
   Frm.txtStandardAuthor.Text = .StandardAuthor
-  Frm.cmbStandardSaveformat.ListIndex = .StandardSaveformat
+  Frm.cmbStandardSaveFormat.ListIndex = .StandardSaveformat
   Frm.cmbTIFFColors.ListIndex = .TIFFColorscount
   Frm.chkUseAutosave.Value = .UseAutosave
   Frm.chkUseAutosaveDirectory.Value = .UseAutosaveDirectory
@@ -6116,7 +6122,7 @@ On Error GoTo ErrPtnr_OnError
 50120  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50130  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50140  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50150  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
+50150  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
 50160  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
 50170  tStr = ""
 50180  Set lsv = Frm.lsvFilenameSubst
@@ -6195,7 +6201,7 @@ On Error GoTo ErrPtnr_OnError
 50910  .ProcessPriority = Frm.sldProcessPriority.Value
 50920  .ProgramFont = Frm.cmbFonts.List(Frm.cmbFonts.ListIndex)
 50930  .ProgramFontCharset = Frm.cmbCharset.Text
-50940  .ProgramFontSize = Frm.cmbProgramFontSize.Text
+50940  .ProgramFontSize = Frm.cmbProgramFontsize.Text
 50950  .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
 50960  .RemoveSpaces = Abs(Frm.chkSpaces.Value)
 50970  .RunProgramAfterSaving = Abs(Frm.chkRunProgramAfterSaving.Value)
@@ -6210,15 +6216,19 @@ On Error GoTo ErrPtnr_OnError
 51060  .SaveFilename = Frm.txtSaveFilename.Text
 51070  .SendEmailAfterAutoSaving = Abs(Frm.chkAutosaveSendEmail.Value)
 51080  .SendMailMethod = Frm.cmbSendMailMethod.ListIndex
-51090  .ShowAnimation = Abs(Frm.chkShowAnimation)
-51100  .StandardAuthor = Frm.txtStandardAuthor.Text
-51110  .StandardSaveformat = Frm.cmbStandardSaveformat.ListIndex
-51120  .TIFFColorscount = Frm.cmbTIFFColors.ListIndex
-51130  .UseAutosave = Abs(Frm.chkUseAutosave.Value)
-51140  .UseAutosaveDirectory = Abs(Frm.chkUseAutosaveDirectory.Value)
-51150  .UseCreationDateNow = Abs(Frm.chkUseCreationDateNow.Value)
-51160  .UseStandardAuthor = Abs(Frm.chkUseStandardAuthor.Value)
-51170  End With
+51090  .ShowAnimation = Abs(Frm.chkShowAnimation.Value)
+51100  .StampFontColor = OleColorToHTMLColor(Frm.picStampFontColor.BackColor)
+51110  .StampOutlineFontthickness = Frm.txtOutlineFontThickness.Text
+51120  .StampString = Frm.txtStampString.Text
+51130  .StampUseOutlineFont = Abs(Frm.chkStampUseOutlineFont.Value)
+51140  .StandardAuthor = Frm.txtStandardAuthor.Text
+51150  .StandardSaveformat = Frm.cmbStandardSaveFormat.ListIndex
+51160  .TIFFColorscount = Frm.cmbTIFFColors.ListIndex
+51170  .UseAutosave = Abs(Frm.chkUseAutosave.Value)
+51180  .UseAutosaveDirectory = Abs(Frm.chkUseAutosaveDirectory.Value)
+51190  .UseCreationDateNow = Abs(Frm.chkUseCreationDateNow.Value)
+51200  .UseStandardAuthor = Abs(Frm.chkUseStandardAuthor.Value)
+51210  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
