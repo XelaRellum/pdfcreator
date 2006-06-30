@@ -32,6 +32,16 @@ Public Enum RelativePathErrors
  rpErrDifferentRoot = 50011
 End Enum
 
+Public Type tFont
+ Bold As Boolean
+ Color As OLE_COLOR
+ Italic As Boolean
+ Name As String
+ Size As Double
+ Strikethrough As Boolean
+ Underline As Boolean
+End Type
+
 Public Function ANSItoASCII(ByVal AnsiString As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -2313,3 +2323,70 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function HTMLColorToOleColor(HTMLColorStr As String) As OLE_COLOR
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tStr As String
+50020  If Len(HTMLColorStr) < 6 Then
+50030   Exit Function
+50040  End If
+50050  If Mid$(HTMLColorStr, 1, 1) = "#" Then
+50060    tStr = Mid$(HTMLColorStr, 2)
+50070   Else
+50080    tStr = HTMLColorStr
+50090  End If
+50100  If IsNumeric("&H" & Mid$(tStr, 1, 2)) And IsNumeric("&H" & Mid$(tStr, 3, 2)) And _
+    IsNumeric("&H" & Mid$(tStr, 5, 2)) Then
+50120   HTMLColorToOleColor = RGB(Val("&H" & Mid$(tStr, 1, 2)), Val("&H" & Mid$(tStr, 3, 2)), Val("&H" & Mid$(tStr, 5, 2)))
+50130  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "HTMLColorToOleColor")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function OleColorToHTMLColor(OleColor As OLE_COLOR) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Red As String, Green As String, Blue As String, nColor As OLE_COLOR
+50020  If OleTranslateColor(OleColor, 0, nColor) Then
+50030   OleColorToHTMLColor = "#000000"
+50040   Exit Function
+50050  End If
+50060
+50070  Red = Hex$(nColor And vbRed)
+50080  Green = Hex$((nColor And vbGreen) \ &H100)
+50090  Blue = Hex$((nColor And vbBlue) \ &H10000)
+50100
+50110  If Len(Red) = 1 Then
+50120   Red = "0" & Red
+50130  End If
+50140  If Len(Green) = 1 Then
+50150   Green = "0" & Green
+50160  End If
+50170  If Len(Blue) = 1 Then
+50180   Blue = "0" & Blue
+50190  End If
+50200
+50210  OleColorToHTMLColor = "#" & Red & Green & Blue
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "OleColorToHTMLColor")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+

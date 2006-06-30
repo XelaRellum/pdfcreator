@@ -306,7 +306,7 @@ Public Type Rect
 End Type
 
 Public Type BrowseInfo
- hwndOwner As Long
+ hWndOwner As Long
  pIDLRoot As Long
  pszDisplayName As Long
  lpszTitle As Long
@@ -352,7 +352,7 @@ End Type
 
 Public Type OPENFILENAME
  nStructSize    As Long
- hwndOwner      As Long
+ hWndOwner      As Long
  hInstance      As Long
  sFilter        As String
  sCustomFilter  As String
@@ -375,7 +375,7 @@ End Type
 
 Public Type PAGESETUPDLG
  lStructSize As Long
- hwndOwner As Long
+ hWndOwner As Long
  hDevMode As Long
  hDevNames As Long
  Flags As Long
@@ -390,16 +390,16 @@ Public Type PAGESETUPDLG
  hPageSetupTemplate As Long
 End Type
 
-Public Type CHOOSECOLOR
+Public Type tCHOOSECOLOR
  lStructSize As Long
- hwndOwner As Long
+ hWndOwner As Long
  hInstance As Long
  rgbResult As Long
- lpCustColors As String
+ lpCustColors As Long
  Flags As Long
  lCustData As Long
  lpfnHook As Long
- lpTemplateName As String
+ lpTemplateName As Long
 End Type
 
 Public Type LOGFONT
@@ -417,11 +417,12 @@ Public Type LOGFONT
  lfQuality As Byte
  lfPitchAndFamily As Byte
  lfFaceName(LF_FACESIZE) As Byte
+' lfFaceName As String * LF_FACESIZE
 End Type
 
-Public Type CHOOSEFONT
+Public Type tCHOOSEFONT
  lStructSize As Long
- hwndOwner As Long
+ hWndOwner As Long
  hdc As Long
  lpLogFont As Long
  iPointSize As Long
@@ -440,7 +441,7 @@ End Type
 
 Public Type PRINTDLG_TYPE
  lStructSize As Long
- hwndOwner As Long
+ hWndOwner As Long
  hDevMode As Long
  hDevNames As Long
  hdc As Long

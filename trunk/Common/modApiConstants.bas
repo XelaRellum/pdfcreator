@@ -185,7 +185,6 @@ Public Const WM_SETTEXT                      As Long = &HC
 Public Const BIF_RETURNONLYFSDIRS            As Long = 1
 Public Const BIF_BROWSEINCLUDEFILES          As Long = &H4000
 
-Public Const FW_NORMAL                       As Long = 400
 Public Const DEFAULT_CHARSET                 As Long = 1
 Public Const OUT_DEFAULT_PRECIS              As Long = 0
 Public Const CLIP_DEFAULT_PRECIS             As Long = 0
@@ -508,3 +507,24 @@ Public Const UIS_SET                         As Long = 1&
 Public Const UIS_CLEAR                       As Long = 2&
 
 Public Const UISF_HIDEACCEL                  As Integer = &H2
+
+Public Const FW_DONTCARE                     As Long = 0
+Public Const FW_THIN                         As Long = 100
+Public Const FW_EXTRALIGHT                   As Long = 200
+Public Const FW_LIGHT                        As Long = 300
+Public Const FW_NORMAL                       As Long = 400
+Public Const FW_MEDIUM                       As Long = 500
+Public Const FW_SEMIBOLD                     As Long = 600
+Public Const FW_BOLD                         As Long = 700
+Public Const FW_EXTRABOLD                    As Long = 800
+Public Const FW_HEAVY                        As Long = 900
+
+Public Const CC_ANYCOLOR                     As Long = &H100
+Public Const CC_ENABLEHOOK                   As Long = &H10
+Public Const CC_ENABLETEMPLATE               As Long = &H20
+Public Const CC_ENABLETEMPLATEHANDLE         As Long = &H40
+Public Const CC_FULLOPEN                     As Long = &H2
+Public Const CC_PREVENTFULLOPEN              As Long = &H4
+Public Const CC_RGBINIT                      As Long = &H1
+Public Const CC_SHOWHELP                     As Long = &H8
+Public Const CC_SOLIDCOLOR                   As Long = &H80

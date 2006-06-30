@@ -173,15 +173,15 @@ RunProgramBeforeSavingWindowstyle|cmbRunProgramBeforeSavingWindowstyle.Listindex
 SaveFilename|txtSaveFilename.Text|String|<Title>||
 SendEmailAfterAutoSaving|chkAutosaveSendEmail.Value|Boolean|0||
 SendMailMethod|cmbSendMailMethod.Listindex|Long|0|0|2
-ShowAnimation|chkShowAnimation|Boolean|1||
+ShowAnimation|chkShowAnimation.Value|Boolean|1||
 
 ' <Printing>
-StampFontColor||String|#FF0000||
+StampFontColor|picStampFontColor.BackColor|String|#FF0000||
 StampFontname||String|Arial||
 StampFontsize||Long|48|1|<
-StampOutlineFontthickness||Long|0|0|<
-StampString||String|||
-StampUseOutlineFont||Boolean|1||
+StampOutlineFontthickness|txtOutlineFontThickness.Text|Long|0|0|<
+StampString|txtStampString.Text|String|||
+StampUseOutlineFont|chkStampUseOutlineFont.Value|Boolean|1||
 StandardAuthor|txtStandardAuthor.Text|String|||
 StandardCreationdate||String|||
 StandardDateformat||String|YYYYMMDDHHNNSS||
