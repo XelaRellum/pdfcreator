@@ -4202,15 +4202,12 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim res As Long, Font As tFont
 50020  Font.Name = Options.StampFontname
-50030  Font.Color = HTMLColorToOleColor(Options.StampFontColor)
-50040  Font.Size = Options.StampFontsize
-50050  If OpenFontDialog(Font, Me.hwnd) > 0 Then
-50060   picStampFontColor.BackColor = Font.Color
-50070   Options.StampFontname = Font.Name
-50080   Options.StampFontsize = Font.Size
-50090   Options.StampFontColor = OleColorToHTMLColor(Font.Color)
-50100   lblFontNameSize.Caption = Font.Name & ", " & Font.Size
-50110  End If
+50030  Font.Size = Options.StampFontsize
+50040  If OpenFontDialog(Font, Me.hwnd) > 0 Then
+50050   Options.StampFontname = Font.Name
+50060   Options.StampFontsize = Font.Size
+50070   lblFontNameSize.Caption = Font.Name & ", " & Font.Size
+50080  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -5519,7 +5516,8 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim c As OLE_COLOR
 50020  If OpenColorDialog(c, Me.hwnd) = 1 Then
 50030   picStampFontColor.BackColor = c
-50040  End If
+50040   Options.StampFontColor = OleColorToHTMLColor(c)
+50050  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
