@@ -293,9 +293,9 @@ Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersi
 #ENDIF
 
 ;Redmon files
-Source: ..\Printer\Redmon\redmon95.dll; Components: program; DestDir: {sys}; MinVersion: 4.00.950,0; DestName: pdfcmn95.dll
-Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll; Check: Not IsWin64; Flags: 32bit
-Source: ..\Printer\Redmon\redmonnt-x64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmnnt.dll; Check: IsX64; Flags: 64bit
+Source: ..\Printer\Redmon\redmon95.dll; Components: program; DestDir: {sys}; MinVersion: 4.00.950,0; DestName: pdfcmn95.dll; Flags: comparetimestamp
+Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll; Check: Not IsWin64; Flags: 32bit comparetimestamp
+Source: ..\Printer\Redmon\redmonnt-x64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmnnt.dll; Check: IsX64; Flags: 64bit comparetimestamp
 
 ;Source: ..\SystemFiles\COMCT332.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
@@ -2047,7 +2047,7 @@ begin
  SaveStringToFile(LogFile, 'Path: '+Getenv('Path')+#13#10, True);
  if InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then begin
   fdName:='framedyn.dll';
-  fdPath:=ExpandConstant('{sys}')+'\wbem\'+ fdName;
+  fdPath:=ExpandConstant('{sys}')+'\Wbem\'+ fdName;
   if fileExists(fdPath) then
     SaveStringToFile(LogFile, fdPath + ': found'+#13#10, True)
    else
@@ -2413,11 +2413,11 @@ end;
 
 function IsPathSettingCorrupt(): Boolean;
 begin
- if IsDirInSystemEnvironPath(GetEnv('Systemroot')+'\system32\wbem') or
-  IsDirInSystemEnvironPath('%systemroot%\system32\wbem') then
-   Result:=True
-  else
-   Result:=False;
+ if IsDirInSystemEnvironPath(GetEnv('Systemroot')+'\system32\Wbem') or
+  IsDirInSystemEnvironPath('%systemroot%\system32\Wbem') then
+     Result:=False
+    else
+     Result:=True;
 end;
 
 procedure RepairFalseSystemPathEnvironment;
@@ -2426,8 +2426,20 @@ begin
  rootKey:=HKLM;
  SubKeyName:='SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
  RegQueryStringValue(RootKey, SubKeyName, 'Path', ResultStr);
- ResultStr:=ResultStr+';%systemroot%\system32\wbem';
- RegWriteStringValue(RootKey, SubKeyName, 'Path', ResultStr);
+ If Length(ResultStr) = 0 Then
+   ResultStr:='%SystemRoot%\System32\Wbem'
+  Else
+   ResultStr:='%SystemRoot%\System32\Wbem;' + ResultStr;
+ RegWriteExpandStringValue(RootKey, SubKeyName, 'Path', ResultStr);
+end;
+
+procedure RepairFalseTypeSystemPathEnvironment;
+var Rootkey :Integer; SubKeyName, ResultStr : String;
+begin
+ rootKey:=HKLM;
+ SubKeyName:='SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
+ RegQueryStringValue(RootKey, SubKeyName, 'Path', ResultStr);
+ RegWriteExpandStringValue(RootKey, SubKeyName, 'Path', ResultStr);
 end;
 
 function IsDummyRunOnce:Boolean;
@@ -2669,14 +2681,23 @@ begin
   Result:=False;
   Exit;
  end;
- If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then // XP and above
-  If Not IsPathSettingCorrupt then begin
+ If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then begin // XP and above
+  If IsPathSettingCorrupt then begin
    If MsgBox(ExpandConstant('{cm:FalseSystemEnvironPath}'),mbCriticalError,MB_OKCANCEL or MB_SETFOREGROUND or MB_DEFBUTTON2)=IDOK then begin
     RepairFalseSystemPathEnvironment;
     SetDummyRunOnce
    end;
-  Result:=False;
-  Exit
+   Result:=False;
+   Exit
+  end
+  if fileExists(ExpandConstant('{sys}')+'\Wbem\framedyn.dll') And Not FileInPath('framedyn.dll','') then begin
+   If MsgBox(ExpandConstant('{cm:FalseSystemEnvironPath}'),mbCriticalError,MB_OKCANCEL or MB_SETFOREGROUND or MB_DEFBUTTON2)=IDOK then begin
+    RepairFalseTypeSystemPathEnvironment;
+    SetDummyRunOnce
+   end;
+   Result:=False;
+   Exit
+  end
  end;
 
  if CheckForMutexes('{#PDFCreatorExeIDStr}')=true then begin
