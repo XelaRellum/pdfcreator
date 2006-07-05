@@ -364,7 +364,7 @@ On Error GoTo ErrPtnr_OnError
 50050      myOptions = ReadOptionsINI(myOptions, CompletePath(GetCommonAppData) & "PDFCreator.ini", HKEY_LOCAL_MACHINE, NoMsg)
 50060     Else
 50070      WriteToSpecialLogfile "Reg-Read options: HKEY_LOCAL_MACHINE"
-50080      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", HKEY_LOCAL_MACHINE, HKEY_LOCAL_MACHINE, NoMsg)
+50080      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", HKEY_LOCAL_MACHINE, NoMsg)
 50090    End If
 50100   Else
 50110    If UseINI Then
@@ -5983,7 +5983,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   lsv.ListItems.Clear
@@ -6073,7 +6073,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.cmbProgramFontsize.Text = .ProgramFontSize
+  Frm.cmbProgramFontSize.Text = .ProgramFontSize
   Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
   Frm.chkSpaces.Value = .RemoveSpaces
   Frm.chkRunProgramAfterSaving.Value = .RunProgramAfterSaving
@@ -6095,7 +6095,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtStampString.Text = .StampString
   Frm.chkStampUseOutlineFont.Value = .StampUseOutlineFont
   Frm.txtStandardAuthor.Text = .StandardAuthor
-  Frm.cmbStandardSaveFormat.ListIndex = .StandardSaveformat
+  Frm.cmbStandardSaveformat.ListIndex = .StandardSaveformat
   Frm.cmbTIFFColors.ListIndex = .TIFFColorscount
   Frm.chkUseAutosave.Value = .UseAutosave
   Frm.chkUseAutosaveDirectory.Value = .UseAutosaveDirectory
@@ -6122,7 +6122,7 @@ On Error GoTo ErrPtnr_OnError
 50120  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50130  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50140  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50150  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
+50150  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
 50160  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
 50170  tStr = ""
 50180  Set lsv = Frm.lsvFilenameSubst
@@ -6201,7 +6201,7 @@ On Error GoTo ErrPtnr_OnError
 50910  .ProcessPriority = Frm.sldProcessPriority.Value
 50920  .ProgramFont = Frm.cmbFonts.List(Frm.cmbFonts.ListIndex)
 50930  .ProgramFontCharset = Frm.cmbCharset.Text
-50940  .ProgramFontSize = Frm.cmbProgramFontsize.Text
+50940  .ProgramFontSize = Frm.cmbProgramFontSize.Text
 50950  .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
 50960  .RemoveSpaces = Abs(Frm.chkSpaces.Value)
 50970  .RunProgramAfterSaving = Abs(Frm.chkRunProgramAfterSaving.Value)
@@ -6222,7 +6222,7 @@ On Error GoTo ErrPtnr_OnError
 51120  .StampString = Frm.txtStampString.Text
 51130  .StampUseOutlineFont = Abs(Frm.chkStampUseOutlineFont.Value)
 51140  .StandardAuthor = Frm.txtStandardAuthor.Text
-51150  .StandardSaveformat = Frm.cmbStandardSaveFormat.ListIndex
+51150  .StandardSaveformat = Frm.cmbStandardSaveformat.ListIndex
 51160  .TIFFColorscount = Frm.cmbTIFFColors.ListIndex
 51170  .UseAutosave = Abs(Frm.chkUseAutosave.Value)
 51180  .UseAutosaveDirectory = Abs(Frm.chkUseAutosaveDirectory.Value)
