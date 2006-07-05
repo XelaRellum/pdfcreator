@@ -1191,7 +1191,7 @@ Private Sub CreateModOptions()
  Print #fn, "     myOptions = ReadOptionsINI(myOptions, Completepath(GetCommonAppData) & ""PDFCreator.ini"", HKEY_LOCAL_MACHINE, NoMsg)"
  Print #fn, "    Else"
  Print #fn, "     WriteToSpecialLogfile ""Reg-Read options: HKEY_LOCAL_MACHINE"""
- Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, HKEY_LOCAL_MACHINE, NoMsg)"
+ Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg)"
  Print #fn, "   End If"
  Print #fn, "  Else"
  Print #fn, "   If UseINI Then"
