@@ -142,7 +142,7 @@
 AllowNoIcons=true
 AlwaysRestart=false
 AppContact={#Homepage}
-AppCopyright=© 2002 - 2005 Philip Chinery, Frank Heindörfer
+AppCopyright=© Frank Heindörfer, Philip Chinery
 AppID={#AppIDStr}
 AppName={#AppName}
 AppVerName={#AppName} {#AppVersionStr}
@@ -751,6 +751,18 @@ const
  SERVICE_QUERY_STATUS  = $4;
  SERVICE_RUNNING       = $4;
 
+ ERROR_SUCCESS = 0;
+ ERROR_MORE_DATA = 234;
+ STANDARD_RIGHTS_ALL = $1F0000;
+ KEY_QUERY_VALUE = $1;
+ KEY_SET_VALUE = $2;
+ KEY_CREATE_SUB_KEY = $4;
+ KEY_ENUMERATE_SUB_KEYS = $8;
+ KEY_NOTIFY = $10;
+ KEY_CREATE_LINK = $20;
+ SYNCHRONIZE = $100000;
+ KEY_ALL_ACCESS = ((STANDARD_RIGHTS_ALL Or KEY_QUERY_VALUE Or KEY_SET_VALUE Or KEY_CREATE_SUB_KEY Or KEY_ENUMERATE_SUB_KEYS Or KEY_NOTIFY Or KEY_CREATE_LINK) And (Not SYNCHRONIZE));
+
 type
  TAInt = Array of Integer; TAStr = Array of String;
  TPrinterDefaults = record
@@ -900,6 +912,11 @@ function CloseServiceHandle(hSCObject :HANDLE): boolean;
  external 'CloseServiceHandle@advapi32.dll stdcall';
 function QueryServiceStatus(hService :HANDLE;var ServiceStatus :SERVICE_STATUS) : boolean;
  external 'QueryServiceStatus@advapi32.dll stdcall';
+
+function RegOpenKeyEx(hKey :LongInt; lpValueName: String; ulOptions: LongInt; samDesired :LongInt;var phkResult: LongInt) :Longint;
+ external 'RegOpenKeyExA@advapi32.dll';
+function RegQueryValueEx(hKey :LongInt; lpValueName: String; lpReserved: LongInt;var lpType :LongInt;var lpData: LongInt; var lpcbData: LongInt) :Longint;
+ external 'RegQueryValueExA@advapi32.dll';
 
 var progTitel, progHandle: TArrayOfString;
     msg : TAStr;
@@ -2411,6 +2428,22 @@ begin
  end
 end;
 
+function RegistryValueType(hkey :LongInt; SubKeyName, ValueName :String) :LongInt;
+var res, thkey, rType, Data, cbData :LongInt;
+begin
+ result := -1;
+ SubKeyName := RemoveBackslash(SubKeyName);
+ if RegKeyExists(hkey, SubKeyName) then
+  if RegValueExists(hkey, SubKeyName, ValueName) then begin
+   res := RegOpenKeyEx(hkey, SubKeyName, 0, KEY_ALL_ACCESS, thkey);
+   if res = ERROR_SUCCESS then begin
+    res:=RegQueryValueEx(thkey, ValueName , 0, rType, Data, cbData);
+    If (res = ERROR_SUCCESS) or (res = ERROR_MORE_DATA) then
+     result := rType;
+   end
+  end
+end;
+
 function IsPathSettingCorrupt(): Boolean;
 begin
  if IsDirInSystemEnvironPath(GetEnv('Systemroot')+'\system32\Wbem') or
@@ -2676,27 +2709,32 @@ begin
 
  If cmdlLoadInfFile<>'' then LoadInf;
 
- If IsDummyRunOnce then begin
-  MsgBox(ExpandConstant('{cm:RestartError}'),mbError,MB_OK);
-  Result:=False;
-  Exit;
- end;
- If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then begin // XP and above
-  If IsPathSettingCorrupt then begin
-   If MsgBox(ExpandConstant('{cm:FalseSystemEnvironPath}'),mbCriticalError,MB_OKCANCEL or MB_SETFOREGROUND or MB_DEFBUTTON2)=IDOK then begin
-    RepairFalseSystemPathEnvironment;
-    SetDummyRunOnce
-   end;
+ if not cmdlForceInstall then begin
+  If IsDummyRunOnce then begin
+   MsgBox(ExpandConstant('{cm:RestartError}'),mbError,MB_OK);
    Result:=False;
-   Exit
-  end
-  if fileExists(ExpandConstant('{sys}')+'\Wbem\framedyn.dll') And Not FileInPath('framedyn.dll','') then begin
-   If MsgBox(ExpandConstant('{cm:FalseSystemEnvironPath}'),mbCriticalError,MB_OKCANCEL or MB_SETFOREGROUND or MB_DEFBUTTON2)=IDOK then begin
-    RepairFalseTypeSystemPathEnvironment;
-    SetDummyRunOnce
-   end;
-   Result:=False;
-   Exit
+   Exit;
+  end;
+  If InstallOnThisVersion('0,5.01.2600','0,0')=irInstall then begin // XP and above
+   If IsPathSettingCorrupt then begin
+    If MsgBox(ExpandConstant('{cm:FalseSystemEnvironPath}'),mbCriticalError,MB_OKCANCEL or MB_SETFOREGROUND or MB_DEFBUTTON2)=IDOK then begin
+     RepairFalseSystemPathEnvironment;
+     SetDummyRunOnce
+    end;
+    Result:=False;
+    Exit
+   end
+   if fileExists(ExpandConstant('{sys}')+'\Wbem\framedyn.dll') And Not FileInPath('framedyn.dll','') then begin
+    a := RegistryValueType(HKLM, 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', 'Path');
+    if (a>=0) and (a<>2) then begin
+     if MsgBox(ExpandConstant('{cm:FalseSystemEnvironPath}'),mbCriticalError,MB_OKCANCEL or MB_SETFOREGROUND or MB_DEFBUTTON2)=IDOK then begin
+      RepairFalseTypeSystemPathEnvironment;
+      SetDummyRunOnce
+     end;
+     Result:=False;
+     Exit
+    end
+   end
   end
  end;
 
