@@ -407,74 +407,77 @@ Public Sub AppendPDFDocInfo(PSFile As String, PDFDocInfo As tPDFDocInfo)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, _
-  tStr As String, PSHeader As tPSHeader, b() As Byte
+  tStr As String
 50030  With PDFDocInfo
-50040   If LenB(.Author) > 0 Then
-50050    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author " & EncodeChars(.Author)
-50060   End If
-50070   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-50080    Set tzi = New clsTimeZoneInformation
-50090    If tzi.DayLight Then
-50100      tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
-50110     Else
-50120      tStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
-50130    End If
-50140    If tzi.DaylightToGMT >= 0 Then
-50150      tStr = "+" & tStr
-50160     Else
-50170      tStr = "-" & tStr
-50180    End If
-50190   End If
-50200   If LenB(Trim$(.CreationDate)) > 0 Then
-50210    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & .CreationDate & tStr & ")"
-50220   End If
-50230   If LenB(.Creator) > 0 Then
-50240    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator " & EncodeChars(.Creator)
-50250   End If
-50260   If LenB(.Keywords) > 0 Then
-50270    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords " & EncodeChars(.Keywords)
-50280   End If
-50290   If LenB(Trim$(.ModifyDate)) > 0 Then
-50300    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & .ModifyDate & tStr & ")"
-50310   End If
-50320   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-50330    Set tzi = Nothing
-50340   End If
-50350   If LenB(.Subject) > 0 Then
-50360    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject " & EncodeChars(.Subject)
-50370   End If
-50380   If LenB(.Title) > 0 Then
-50390    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title " & EncodeChars(.Title)
+50040   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author "
+50050   tStr = EncodeChars(.Author)
+50060   If LenB(tStr) > 0 Then
+50070     PDFDocInfoStr = PDFDocInfoStr & tStr
+50080    Else
+50090     PDFDocInfoStr = PDFDocInfoStr & "()"
+50100   End If
+50110   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50120    Set tzi = New clsTimeZoneInformation
+50130    If tzi.DayLight Then
+50140      tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
+50150     Else
+50160      tStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
+50170    End If
+50180    If tzi.DaylightToGMT >= 0 Then
+50190      tStr = "+" & tStr
+50200     Else
+50210      tStr = "-" & tStr
+50220    End If
+50230   End If
+50240   If LenB(Trim$(.CreationDate)) > 0 Then
+50250    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & .CreationDate & tStr & ")"
+50260   End If
+50270   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator "
+50280   tStr = EncodeChars(.Creator)
+50290   If LenB(tStr) > 0 Then
+50300     PDFDocInfoStr = PDFDocInfoStr & tStr
+50310    Else
+50320     PDFDocInfoStr = PDFDocInfoStr & "()"
+50330   End If
+50340   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords "
+50350   tStr = EncodeChars(.Keywords)
+50360   If LenB(tStr) > 0 Then
+50370     PDFDocInfoStr = PDFDocInfoStr & tStr
+50380    Else
+50390     PDFDocInfoStr = PDFDocInfoStr & "()"
 50400   End If
-50410  End With
-50420  If FileExists(PSFile) = True And LenB(PDFDocInfoStr) > 0 Then
-50430   DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
-50440   DocInfoStr = DocInfoStr & Chr$(13) & "["
-50450   DocInfoStr = DocInfoStr & Chr$(13) & PDFDocInfoStr
-50460   DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
-50470   DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
-50480   fn = FreeFile
-50490   Open PSFile For Append As fn
-50500   Print #fn, DocInfoStr;
-50510   Close #fn
-50520   PSHeader = GetPSHeader(PSFile)
-50530   Open PSFile For Binary As fn
-50540   With PSHeader
-50550    If .Creator.StartByte > 0 And .Creator.EndByte > .Creator.StartByte Then
-50560     b = StrConv(String(.Creator.EndByte - .Creator.StartByte + 1, " "), vbFromUnicode)
-50570     Put #fn, .Creator.StartByte, b
-50580    End If
-50590    If .CreateFor.StartByte > 0 And .CreateFor.EndByte > .CreateFor.StartByte Then
-50600     b = StrConv(String(.CreateFor.EndByte - .CreateFor.StartByte + 1, " "), vbFromUnicode)
-50610     Put #fn, .CreateFor.StartByte, b
-50620    End If
-50630    If .Title.StartByte > 0 And .Title.EndByte > .Title.StartByte Then
-50640     b = StrConv(String(.Title.EndByte - .Title.StartByte + 1, " "), vbFromUnicode)
-50650     Put #fn, .Title.StartByte, b
-50660    End If
-50670   End With
-50680   Close #fn
-50690  End If
+50410   If LenB(Trim$(.ModifyDate)) > 0 Then
+50420    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & .ModifyDate & tStr & ")"
+50430   End If
+50440   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50450    Set tzi = Nothing
+50460   End If
+50470   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject "
+50480   tStr = EncodeChars(.Subject)
+50490   If LenB(tStr) > 0 Then
+50500     PDFDocInfoStr = PDFDocInfoStr & tStr
+50510    Else
+50520     PDFDocInfoStr = PDFDocInfoStr & "()"
+50530   End If
+50540   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title "
+50550   tStr = EncodeChars(.Title)
+50560   If LenB(tStr) > 0 Then
+50570     PDFDocInfoStr = PDFDocInfoStr & tStr
+50580    Else
+50590     PDFDocInfoStr = PDFDocInfoStr & "()"
+50600   End If
+50610  End With
+50620  If FileExists(PSFile) = True And LenB(PDFDocInfoStr) > 0 Then
+50630   DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
+50640   DocInfoStr = DocInfoStr & Chr$(13) & "["
+50650   DocInfoStr = DocInfoStr & Chr$(13) & PDFDocInfoStr
+50660   DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
+50670   DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
+50680   fn = FreeFile
+50690   Open PSFile For Append As fn
+50700   Print #fn, DocInfoStr;
+50710   Close #fn
+50720  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
