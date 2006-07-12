@@ -511,7 +511,7 @@ End Enum
 
 Private EditItem As Boolean, TempFile1 As String, _
  ChangeOptions As Boolean, ChangeLanguages As Boolean, ChangeTestpage As Boolean, _
- ChangeStamppage As Boolean, LastIncFile As String
+ ChangeStamppage As Boolean, LastIncFile As String, ss As Collection
 
 Public Function AddLanguagesItem(Str1 As String, Str2 As String, Str3 As String, Str4 As String) As Boolean
  Dim Item As ListItem, i As Long
@@ -1866,6 +1866,15 @@ Private Sub CreateModOptions()
      Print #fn, "  Frm.picStampFontColor.BackColor = HTMLcolorToOleColor(." & lsvOptions.ListItems(i).SubItems(1) & ")"
     Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontname")
      Print #fn, "  Frm.lblFontNameSize.Caption = .StampFontname & "", "" & .StampFontsize"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Papersize")
+     Print #fn, "  With Frm.cmbDocumentPapersizes"
+     Print #fn, "   For i = 0 To .ListCount - 1"
+     Print #fn, "    If UCase$(.List(i)) = UCase$(Options.Papersize) Then"
+     Print #fn, "     .ListIndex = i"
+     Print #fn, "     Exit For"
+     Print #fn, "    End If"
+     Print #fn, "   Next i"
+     Print #fn, "  End With"
     Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And _
          UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") And _
          LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
@@ -1901,6 +1910,12 @@ Private Sub CreateModOptions()
      Print #fn, " End If"
     Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontcolor")
      Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = OleColorToHTMLColor(frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Papersize")
+     Print #fn, " If Frm.cmbDocumentPapersizes.ListCount > 0 Then"
+     Print #fn, "  If Frm.cmbDocumentPapersizes.ListIndex > 0 Then"
+     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " = Frm.cmbDocumentPapersizes.List(Frm.cmbDocumentPapersizes.ListIndex)"
+     Print #fn, "  End If"
+     Print #fn, " End If"
     Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") _
      And LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
      If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
@@ -2256,6 +2271,7 @@ Private Sub cmdPrintRegData_Click(Index As Integer)
 End Sub
 
 Private Sub Form_Load()
+ CreateSpecialStrings
  With lsvOptions.ColumnHeaders
   .Clear
   .Add , "Comment", "Comment", 1000
@@ -2328,6 +2344,7 @@ Private Sub Form_Unload(Cancel As Integer)
  If Dir(TempFile1) <> "" Then
   Kill TempFile1
  End If
+ Set ss = Nothing
 End Sub
 
 Private Function GerCount() As Long
@@ -2914,8 +2931,7 @@ Private Function GetHStr(NumberStr As String) As String
  GetHStr = "#" + tStr
 End Function
 
-Private Function IsSpecialString(specialString As String) As Boolean
- Dim ss As Collection, i As Long
+Private Sub CreateSpecialStrings()
  Set ss = New Collection
  With ss
   .Add "PrinterStop"
@@ -2937,9 +2953,6 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "StandardMailDomain"
   .Add "Toolbars"
   .Add "DontUseDocumentSettings"
-  .Add "Papersize"
-  .Add "DeviceHeightPoints"
-  .Add "DeviceWidthPoints"
   .Add "ClientComputerResolveIPAddress"
   .Add "DisableEmail"
   .Add "NoPSCheck"
@@ -2954,6 +2967,10 @@ Private Function IsSpecialString(specialString As String) As Boolean
   .Add "PDFCompressionGreyCompressionJPEGLowFactor"
   .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
  End With
+End Sub
+
+Private Function IsSpecialString(specialString As String) As Boolean
+ Dim i As Long
  IsSpecialString = False
  For i = 1 To ss.Count
   If UCase$(ss(i)) = UCase$(specialString) Then
@@ -2961,7 +2978,6 @@ Private Function IsSpecialString(specialString As String) As Boolean
    Exit For
   End If
  Next i
- Set ss = Nothing
 End Function
 
 Private Function GetKeysAndValuesFromInifile(Section As String, Filename As String) As String
