@@ -6055,7 +6055,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   lsv.ListItems.Clear
@@ -6153,7 +6153,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.cmbProgramFontSize.Text = .ProgramFontSize
+  Frm.cmbProgramFontsize.Text = .ProgramFontSize
   Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
   Frm.chkSpaces.Value = .RemoveSpaces
   Frm.chkRunProgramAfterSaving.Value = .RunProgramAfterSaving
@@ -6175,7 +6175,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtStampString.Text = .StampString
   Frm.chkStampUseOutlineFont.Value = .StampUseOutlineFont
   Frm.txtStandardAuthor.Text = .StandardAuthor
-  Frm.cmbStandardSaveformat.ListIndex = .StandardSaveformat
+  Frm.cmbStandardSaveFormat.ListIndex = .StandardSaveformat
   Frm.cmbTIFFColors.ListIndex = .TIFFColorscount
   Frm.chkUseAutosave.Value = .UseAutosave
   Frm.chkUseAutosaveDirectory.Value = .UseAutosaveDirectory
@@ -6191,135 +6191,212 @@ Public Sub GetOptions(Frm As Form, sOptions As tOptions)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long, tStr As String, lsv As ListView
-50020  With sOptions
-50030  .AdditionalGhostscriptParameters = Frm.txtAdditionalGhostscriptParameters.Text
-50040  .AdditionalGhostscriptSearchpath = Frm.txtAdditionalGhostscriptSearchpath.Text
-50050  .AddWindowsFontpath = Abs(Frm.chkAddWindowsFontpath.Value)
-50060  .AutosaveDirectory = Frm.txtAutosaveDirectory.Text
-50070  .AutosaveFilename = Frm.txtAutosaveFilename.Text
-50080  .AutosaveFormat = Frm.cmbAutosaveFormat.ListIndex
-50090  .AutosaveStartStandardProgram = Abs(Frm.chkAutosaveStartStandardProgram.Value)
-50100  .BitmapResolution = Frm.txtBitmapResolution.Text
-50110  .BMPColorscount = Frm.cmbBMPColors.ListIndex
-50120  .DeviceHeightPoints = Frm.txtCustomPapersizeHeight.Text
-50130  .DeviceWidthPoints = Frm.txtCustomPapersizeWidth.Text
-50140  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
-50150  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
-50160  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50170  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
-50180  .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
-50190  tStr = ""
-50200  Set lsv = Frm.lsvFilenameSubst
-50210  For i = 1 To lsv.ListItems.Count
-50220   If i < lsv.ListItems.Count Then
-50230     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1) & "\"
-50240    Else
-50250     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1)
-50260   End If
-50270  Next i
-50280  .FilenameSubstitutions = tStr
-50290  .FilenameSubstitutionsOnlyInTitle = Abs(Frm.chkFilenameSubst.Value)
-50300  .JPEGColorscount = Frm.cmbJPEGColors.ListIndex
-50310  .JPEGQuality = Frm.txtJPEGQuality.Text
-50320  .NoConfirmMessageSwitchingDefaultprinter = Abs(Frm.chkNoConfirmMessageSwitchingDefaultprinter)
-50330  .NoProcessingAtStartup = Abs(Frm.chkNoProcessingAtStartup)
-50340  .OnePagePerFile = Abs(Frm.chkOnePagePerFile.Value)
-50350  .OptionsDesign = Frm.cmbOptionsDesign.ListIndex
-50360  If Frm.cmbDocumentPapersizes.ListCount > 0 Then
-50370   If Frm.cmbDocumentPapersizes.ListIndex > 0 Then
-50380    .Papersize = Frm.cmbDocumentPapersizes.List(Frm.cmbDocumentPapersizes.ListIndex)
+50020  sOptions = StandardOptions
+50030  With sOptions
+50040  .AdditionalGhostscriptParameters = Frm.txtAdditionalGhostscriptParameters.Text
+50050  .AdditionalGhostscriptSearchpath = Frm.txtAdditionalGhostscriptSearchpath.Text
+50060  .AddWindowsFontpath = Abs(Frm.chkAddWindowsFontpath.Value)
+50070  .AutosaveDirectory = Frm.txtAutosaveDirectory.Text
+50080  .AutosaveFilename = Frm.txtAutosaveFilename.Text
+50090  If LenB(Frm.cmbAutosaveFormat.ListIndex) > 0 Then
+50100   .AutosaveFormat = Frm.cmbAutosaveFormat.ListIndex
+50110  End If
+50120  .AutosaveStartStandardProgram = Abs(Frm.chkAutosaveStartStandardProgram.Value)
+50130  If LenB(Frm.txtBitmapResolution.Text) > 0 Then
+50140   .BitmapResolution = Frm.txtBitmapResolution.Text
+50150  End If
+50160  If LenB(Frm.cmbBMPColors.ListIndex) > 0 Then
+50170   .BMPColorscount = Frm.cmbBMPColors.ListIndex
+50180  End If
+50190  If LenB(Frm.txtCustomPapersizeHeight.Text) > 0 Then
+50200   .DeviceHeightPoints = Frm.txtCustomPapersizeHeight.Text
+50210  End If
+50220  If LenB(Frm.txtCustomPapersizeWidth.Text) > 0 Then
+50230   .DeviceWidthPoints = Frm.txtCustomPapersizeWidth.Text
+50240  End If
+50250  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
+50260  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
+50270  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
+50280  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
+50290  If LenB(Frm.cmbEPSLanguageLevel.ListIndex) > 0 Then
+50300   .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
+50310  End If
+50320  tStr = ""
+50330  Set lsv = Frm.lsvFilenameSubst
+50340  For i = 1 To lsv.ListItems.Count
+50350   If i < lsv.ListItems.Count Then
+50360     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1) & "\"
+50370    Else
+50380     tStr = tStr & lsv.ListItems(i).Text & "|" & lsv.ListItems(i).SubItems(1)
 50390   End If
-50400  End If
-50410  .PCXColorscount = Frm.cmbPCXColors.ListIndex
-50420  .PDFAllowAssembly = Abs(Frm.chkAllowAssembly.Value)
-50430  .PDFAllowDegradedPrinting = Abs(Frm.chkAllowDegradedPrinting.Value)
-50440  .PDFAllowFillIn = Abs(Frm.chkAllowFillIn.Value)
-50450  .PDFAllowScreenReaders = Abs(Frm.chkAllowScreenReaders.Value)
-50460  .PDFColorsCMYKToRGB = Abs(Frm.chkPDFCMYKtoRGB.Value)
-50470  .PDFColorsColorModel = Frm.cmbPDFColorModel.ListIndex
-50480  .PDFColorsPreserveHalftone = Abs(Frm.chkPDFPreserveHalftone.Value)
-50490  .PDFColorsPreserveOverprint = Abs(Frm.chkPDFPreserveOverprint.Value)
-50500  .PDFColorsPreserveTransfer = Abs(Frm.chkPDFPreserveTransfer.Value)
-50510  .PDFCompressionColorCompression = Abs(Frm.chkPDFColorComp.Value)
-50520  .PDFCompressionColorCompressionChoice = Frm.cmbPDFColorComp.ListIndex
-50530  .PDFCompressionColorResample = Abs(Frm.chkPDFColorResample.Value)
-50540  .PDFCompressionColorResampleChoice = Frm.cmbPDFColorResample.ListIndex
-50550  .PDFCompressionColorResolution = Frm.txtPDFColorRes.Text
-50560  .PDFCompressionGreyCompression = Abs(Frm.chkPDFGreyComp.Value)
-50570  .PDFCompressionGreyCompressionChoice = Frm.cmbPDFGreyComp.ListIndex
-50580  .PDFCompressionGreyResample = Abs(Frm.chkPDFGreyResample.Value)
-50590  .PDFCompressionGreyResampleChoice = Frm.cmbPDFGreyResample.ListIndex
-50600  .PDFCompressionGreyResolution = Frm.txtPDFGreyRes.Text
-50610  .PDFCompressionMonoCompression = Abs(Frm.chkPDFMonoComp.Value)
-50620  .PDFCompressionMonoCompressionChoice = Frm.cmbPDFMonoComp.ListIndex
-50630  .PDFCompressionMonoResample = Abs(Frm.chkPDFMonoResample.Value)
-50640  .PDFCompressionMonoResampleChoice = Frm.cmbPDFMonoResample.ListIndex
-50650  .PDFCompressionMonoResolution = Frm.txtPDFMonoRes.Text
-50660  .PDFCompressionTextCompression = Abs(Frm.chkPDFTextComp.Value)
-50670  .PDFDisallowCopy = Abs(Frm.chkAllowCopy.Value)
-50680  .PDFDisallowModifyAnnotations = Abs(Frm.chkAllowModifyAnnotations.Value)
-50690  .PDFDisallowModifyContents = Abs(Frm.chkAllowModifyContents.Value)
-50700  .PDFDisallowPrinting = Abs(Frm.chkAllowPrinting.Value)
-50710  If Frm.cmbPDFEncryptor.ListIndex < 0 Then
-50720    .PDFEncryptor = 0
-50730   Else
-50740    .PDFEncryptor = Frm.cmbPDFEncryptor.ItemData(Frm.cmbPDFEncryptor.ListIndex)
-50750  End If
-50760  .PDFFontsEmbedAll = Abs(Frm.chkPDFEmbedAll.Value)
-50770  .PDFFontsSubSetFonts = Abs(Frm.chkPDFSubSetFonts.Value)
-50780  .PDFFontsSubSetFontsPercent = Frm.txtPDFSubSetPerc.Text
-50790  .PDFGeneralASCII85 = Abs(Frm.chkPDFASCII85.Value)
-50800  .PDFGeneralAutorotate = Frm.cmbPDFRotate.ListIndex
-50810  .PDFGeneralCompatibility = Frm.cmbPDFCompat.ListIndex
-50820  .PDFGeneralOverprint = Frm.cmbPDFOverprint.ListIndex
-50830  .PDFGeneralResolution = Frm.txtPDFRes.Text
-50840  .PDFHighEncryption = Abs(Frm.optEncHigh.Value)
-50850  .PDFLowEncryption = Abs(Frm.optEncLow.Value)
-50860  .PDFOptimize = Abs(Frm.chkPDFOptimize.Value)
-50870  .PDFOwnerPass = Abs(Frm.chkOwnerPass.Value)
-50880  .PDFUserPass = Abs(Frm.chkUserPass.Value)
-50890  .PDFUseSecurity = Abs(Frm.chkUseSecurity.Value)
-50900  .PNGColorscount = Frm.cmbPNGColors.ListIndex
-50910  .PrintAfterSaving = Abs(Frm.chkPrintAfterSaving.Value)
-50920  .PrintAfterSavingDuplex = Abs(Frm.chkPrintAfterSavingDuplex.Value)
-50930  .PrintAfterSavingNoCancel = Abs(Frm.chkPrintAfterSavingNoCancel.Value)
-50940  .PrintAfterSavingPrinter = Frm.cmbPrintAfterSavingPrinter.Text
-50950  .PrintAfterSavingQueryUser = Frm.cmbPrintAfterSavingQueryUser.ListIndex
-50960  .PrintAfterSavingTumble = Frm.cmbPrintAfterSavingTumble.ListIndex
-50970  .PrinterTemppath = Frm.txtTemppath.Text
-50980  .ProcessPriority = Frm.sldProcessPriority.Value
-50990  .ProgramFont = Frm.cmbFonts.List(Frm.cmbFonts.ListIndex)
-51000  .ProgramFontCharset = Frm.cmbCharset.Text
-51010  .ProgramFontSize = Frm.cmbProgramFontSize.Text
-51020  .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
-51030  .RemoveSpaces = Abs(Frm.chkSpaces.Value)
-51040  .RunProgramAfterSaving = Abs(Frm.chkRunProgramAfterSaving.Value)
-51050  .RunProgramAfterSavingProgramname = Frm.cmbRunProgramAfterSavingProgramname.Text
-51060  .RunProgramAfterSavingProgramParameters = Frm.txtRunProgramAfterSavingProgramParameters.Text
-51070  .RunProgramAfterSavingWaitUntilReady = Abs(Frm.chkRunProgramAfterSavingWaitUntilReady.Value)
-51080  .RunProgramAfterSavingWindowstyle = Frm.cmbRunProgramAfterSavingWindowstyle.ListIndex
-51090  .RunProgramBeforeSaving = Abs(Frm.chkRunProgramBeforeSaving.Value)
-51100  .RunProgramBeforeSavingProgramname = Frm.cmbRunProgramBeforeSavingProgramname.Text
-51110  .RunProgramBeforeSavingProgramParameters = Frm.txtRunProgramBeforeSavingProgramParameters.Text
-51120  .RunProgramBeforeSavingWindowstyle = Frm.cmbRunProgramBeforeSavingWindowstyle.ListIndex
-51130  .SaveFilename = Frm.txtSaveFilename.Text
-51140  .SendEmailAfterAutoSaving = Abs(Frm.chkAutosaveSendEmail.Value)
-51150  .SendMailMethod = Frm.cmbSendMailMethod.ListIndex
-51160  .ShowAnimation = Abs(Frm.chkShowAnimation.Value)
-51170  .StampFontColor = OleColorToHTMLColor(Frm.picStampFontColor.BackColor)
-51180  .StampOutlineFontthickness = Frm.txtOutlineFontThickness.Text
-51190  .StampString = Frm.txtStampString.Text
-51200  .StampUseOutlineFont = Abs(Frm.chkStampUseOutlineFont.Value)
-51210  .StandardAuthor = Frm.txtStandardAuthor.Text
-51220  .StandardSaveformat = Frm.cmbStandardSaveformat.ListIndex
-51230  .TIFFColorscount = Frm.cmbTIFFColors.ListIndex
-51240  .UseAutosave = Abs(Frm.chkUseAutosave.Value)
-51250  .UseAutosaveDirectory = Abs(Frm.chkUseAutosaveDirectory.Value)
-51260  .UseCreationDateNow = Abs(Frm.chkUseCreationDateNow.Value)
-51270  .UseCustomPaperSize = Frm.chkUseCustomPapersize.Value
-51280  .UseFixPapersize = Abs(Frm.chkUseFixPaperSize.Value)
-51290  .UseStandardAuthor = Abs(Frm.chkUseStandardAuthor.Value)
-51300  End With
+50400  Next i
+50410  .FilenameSubstitutions = tStr
+50420  .FilenameSubstitutionsOnlyInTitle = Abs(Frm.chkFilenameSubst.Value)
+50430  If LenB(Frm.cmbJPEGColors.ListIndex) > 0 Then
+50440   .JPEGColorscount = Frm.cmbJPEGColors.ListIndex
+50450  End If
+50460  If LenB(Frm.txtJPEGQuality.Text) > 0 Then
+50470   .JPEGQuality = Frm.txtJPEGQuality.Text
+50480  End If
+50490  .NoConfirmMessageSwitchingDefaultprinter = Abs(Frm.chkNoConfirmMessageSwitchingDefaultprinter)
+50500  .NoProcessingAtStartup = Abs(Frm.chkNoProcessingAtStartup)
+50510  .OnePagePerFile = Abs(Frm.chkOnePagePerFile.Value)
+50520  If LenB(Frm.cmbOptionsDesign.ListIndex) > 0 Then
+50530   .OptionsDesign = Frm.cmbOptionsDesign.ListIndex
+50540  End If
+50550  If Frm.cmbDocumentPapersizes.ListCount > 0 Then
+50560   If Frm.cmbDocumentPapersizes.ListIndex > 0 Then
+50570    .Papersize = Frm.cmbDocumentPapersizes.List(Frm.cmbDocumentPapersizes.ListIndex)
+50580   End If
+50590  End If
+50600  If LenB(Frm.cmbPCXColors.ListIndex) > 0 Then
+50610   .PCXColorscount = Frm.cmbPCXColors.ListIndex
+50620  End If
+50630  .PDFAllowAssembly = Abs(Frm.chkAllowAssembly.Value)
+50640  .PDFAllowDegradedPrinting = Abs(Frm.chkAllowDegradedPrinting.Value)
+50650  .PDFAllowFillIn = Abs(Frm.chkAllowFillIn.Value)
+50660  .PDFAllowScreenReaders = Abs(Frm.chkAllowScreenReaders.Value)
+50670  .PDFColorsCMYKToRGB = Abs(Frm.chkPDFCMYKtoRGB.Value)
+50680  If LenB(Frm.cmbPDFColorModel.ListIndex) > 0 Then
+50690   .PDFColorsColorModel = Frm.cmbPDFColorModel.ListIndex
+50700  End If
+50710  .PDFColorsPreserveHalftone = Abs(Frm.chkPDFPreserveHalftone.Value)
+50720  .PDFColorsPreserveOverprint = Abs(Frm.chkPDFPreserveOverprint.Value)
+50730  .PDFColorsPreserveTransfer = Abs(Frm.chkPDFPreserveTransfer.Value)
+50740  .PDFCompressionColorCompression = Abs(Frm.chkPDFColorComp.Value)
+50750  If LenB(Frm.cmbPDFColorComp.ListIndex) > 0 Then
+50760   .PDFCompressionColorCompressionChoice = Frm.cmbPDFColorComp.ListIndex
+50770  End If
+50780  .PDFCompressionColorResample = Abs(Frm.chkPDFColorResample.Value)
+50790  If LenB(Frm.cmbPDFColorResample.ListIndex) > 0 Then
+50800   .PDFCompressionColorResampleChoice = Frm.cmbPDFColorResample.ListIndex
+50810  End If
+50820  If LenB(Frm.txtPDFColorRes.Text) > 0 Then
+50830   .PDFCompressionColorResolution = Frm.txtPDFColorRes.Text
+50840  End If
+50850  .PDFCompressionGreyCompression = Abs(Frm.chkPDFGreyComp.Value)
+50860  If LenB(Frm.cmbPDFGreyComp.ListIndex) > 0 Then
+50870   .PDFCompressionGreyCompressionChoice = Frm.cmbPDFGreyComp.ListIndex
+50880  End If
+50890  .PDFCompressionGreyResample = Abs(Frm.chkPDFGreyResample.Value)
+50900  If LenB(Frm.cmbPDFGreyResample.ListIndex) > 0 Then
+50910   .PDFCompressionGreyResampleChoice = Frm.cmbPDFGreyResample.ListIndex
+50920  End If
+50930  If LenB(Frm.txtPDFGreyRes.Text) > 0 Then
+50940   .PDFCompressionGreyResolution = Frm.txtPDFGreyRes.Text
+50950  End If
+50960  .PDFCompressionMonoCompression = Abs(Frm.chkPDFMonoComp.Value)
+50970  If LenB(Frm.cmbPDFMonoComp.ListIndex) > 0 Then
+50980   .PDFCompressionMonoCompressionChoice = Frm.cmbPDFMonoComp.ListIndex
+50990  End If
+51000  .PDFCompressionMonoResample = Abs(Frm.chkPDFMonoResample.Value)
+51010  If LenB(Frm.cmbPDFMonoResample.ListIndex) > 0 Then
+51020   .PDFCompressionMonoResampleChoice = Frm.cmbPDFMonoResample.ListIndex
+51030  End If
+51040  If LenB(Frm.txtPDFMonoRes.Text) > 0 Then
+51050   .PDFCompressionMonoResolution = Frm.txtPDFMonoRes.Text
+51060  End If
+51070  .PDFCompressionTextCompression = Abs(Frm.chkPDFTextComp.Value)
+51080  .PDFDisallowCopy = Abs(Frm.chkAllowCopy.Value)
+51090  .PDFDisallowModifyAnnotations = Abs(Frm.chkAllowModifyAnnotations.Value)
+51100  .PDFDisallowModifyContents = Abs(Frm.chkAllowModifyContents.Value)
+51110  .PDFDisallowPrinting = Abs(Frm.chkAllowPrinting.Value)
+51120  If Frm.cmbPDFEncryptor.ListIndex < 0 Then
+51130    .PDFEncryptor = 0
+51140   Else
+51150    .PDFEncryptor = Frm.cmbPDFEncryptor.ItemData(Frm.cmbPDFEncryptor.ListIndex)
+51160  End If
+51170  .PDFFontsEmbedAll = Abs(Frm.chkPDFEmbedAll.Value)
+51180  .PDFFontsSubSetFonts = Abs(Frm.chkPDFSubSetFonts.Value)
+51190  If LenB(Frm.txtPDFSubSetPerc.Text) > 0 Then
+51200   .PDFFontsSubSetFontsPercent = Frm.txtPDFSubSetPerc.Text
+51210  End If
+51220  .PDFGeneralASCII85 = Abs(Frm.chkPDFASCII85.Value)
+51230  If LenB(Frm.cmbPDFRotate.ListIndex) > 0 Then
+51240   .PDFGeneralAutorotate = Frm.cmbPDFRotate.ListIndex
+51250  End If
+51260  If LenB(Frm.cmbPDFCompat.ListIndex) > 0 Then
+51270   .PDFGeneralCompatibility = Frm.cmbPDFCompat.ListIndex
+51280  End If
+51290  If LenB(Frm.cmbPDFOverprint.ListIndex) > 0 Then
+51300   .PDFGeneralOverprint = Frm.cmbPDFOverprint.ListIndex
+51310  End If
+51320  If LenB(Frm.txtPDFRes.Text) > 0 Then
+51330   .PDFGeneralResolution = Frm.txtPDFRes.Text
+51340  End If
+51350  .PDFHighEncryption = Abs(Frm.optEncHigh.Value)
+51360  .PDFLowEncryption = Abs(Frm.optEncLow.Value)
+51370  .PDFOptimize = Abs(Frm.chkPDFOptimize.Value)
+51380  .PDFOwnerPass = Abs(Frm.chkOwnerPass.Value)
+51390  .PDFUserPass = Abs(Frm.chkUserPass.Value)
+51400  .PDFUseSecurity = Abs(Frm.chkUseSecurity.Value)
+51410  If LenB(Frm.cmbPNGColors.ListIndex) > 0 Then
+51420   .PNGColorscount = Frm.cmbPNGColors.ListIndex
+51430  End If
+51440  .PrintAfterSaving = Abs(Frm.chkPrintAfterSaving.Value)
+51450  .PrintAfterSavingDuplex = Abs(Frm.chkPrintAfterSavingDuplex.Value)
+51460  .PrintAfterSavingNoCancel = Abs(Frm.chkPrintAfterSavingNoCancel.Value)
+51470  .PrintAfterSavingPrinter = Frm.cmbPrintAfterSavingPrinter.Text
+51480  If LenB(Frm.cmbPrintAfterSavingQueryUser.ListIndex) > 0 Then
+51490   .PrintAfterSavingQueryUser = Frm.cmbPrintAfterSavingQueryUser.ListIndex
+51500  End If
+51510  If LenB(Frm.cmbPrintAfterSavingTumble.ListIndex) > 0 Then
+51520   .PrintAfterSavingTumble = Frm.cmbPrintAfterSavingTumble.ListIndex
+51530  End If
+51540  .PrinterTemppath = Frm.txtTemppath.Text
+51550  If LenB(Frm.sldProcessPriority.Value) > 0 Then
+51560   .ProcessPriority = Frm.sldProcessPriority.Value
+51570  End If
+51580  .ProgramFont = Frm.cmbFonts.List(Frm.cmbFonts.ListIndex)
+51590  If LenB(Frm.cmbCharset.Text) > 0 Then
+51600   .ProgramFontCharset = Frm.cmbCharset.Text
+51610  End If
+51620  If LenB(Frm.cmbProgramFontsize.Text) > 0 Then
+51630   .ProgramFontSize = Frm.cmbProgramFontsize.Text
+51640  End If
+51650  If LenB(Frm.cmbPSLanguageLevel.ListIndex) > 0 Then
+51660   .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
+51670  End If
+51680  .RemoveSpaces = Abs(Frm.chkSpaces.Value)
+51690  .RunProgramAfterSaving = Abs(Frm.chkRunProgramAfterSaving.Value)
+51700  .RunProgramAfterSavingProgramname = Frm.cmbRunProgramAfterSavingProgramname.Text
+51710  .RunProgramAfterSavingProgramParameters = Frm.txtRunProgramAfterSavingProgramParameters.Text
+51720  .RunProgramAfterSavingWaitUntilReady = Abs(Frm.chkRunProgramAfterSavingWaitUntilReady.Value)
+51730  If LenB(Frm.cmbRunProgramAfterSavingWindowstyle.ListIndex) > 0 Then
+51740   .RunProgramAfterSavingWindowstyle = Frm.cmbRunProgramAfterSavingWindowstyle.ListIndex
+51750  End If
+51760  .RunProgramBeforeSaving = Abs(Frm.chkRunProgramBeforeSaving.Value)
+51770  .RunProgramBeforeSavingProgramname = Frm.cmbRunProgramBeforeSavingProgramname.Text
+51780  .RunProgramBeforeSavingProgramParameters = Frm.txtRunProgramBeforeSavingProgramParameters.Text
+51790  If LenB(Frm.cmbRunProgramBeforeSavingWindowstyle.ListIndex) > 0 Then
+51800   .RunProgramBeforeSavingWindowstyle = Frm.cmbRunProgramBeforeSavingWindowstyle.ListIndex
+51810  End If
+51820  .SaveFilename = Frm.txtSaveFilename.Text
+51830  .SendEmailAfterAutoSaving = Abs(Frm.chkAutosaveSendEmail.Value)
+51840  If LenB(Frm.cmbSendMailMethod.ListIndex) > 0 Then
+51850   .SendMailMethod = Frm.cmbSendMailMethod.ListIndex
+51860  End If
+51870  .ShowAnimation = Abs(Frm.chkShowAnimation.Value)
+51880  .StampFontColor = OleColorToHTMLColor(Frm.picStampFontColor.BackColor)
+51890  If LenB(Frm.txtOutlineFontThickness.Text) > 0 Then
+51900   .StampOutlineFontthickness = Frm.txtOutlineFontThickness.Text
+51910  End If
+51920  .StampString = Frm.txtStampString.Text
+51930  .StampUseOutlineFont = Abs(Frm.chkStampUseOutlineFont.Value)
+51940  .StandardAuthor = Frm.txtStandardAuthor.Text
+51950  If LenB(Frm.cmbStandardSaveFormat.ListIndex) > 0 Then
+51960   .StandardSaveformat = Frm.cmbStandardSaveFormat.ListIndex
+51970  End If
+51980  If LenB(Frm.cmbTIFFColors.ListIndex) > 0 Then
+51990   .TIFFColorscount = Frm.cmbTIFFColors.ListIndex
+52000  End If
+52010  .UseAutosave = Abs(Frm.chkUseAutosave.Value)
+52020  .UseAutosaveDirectory = Abs(Frm.chkUseAutosaveDirectory.Value)
+52030  .UseCreationDateNow = Abs(Frm.chkUseCreationDateNow.Value)
+52040  .UseCustomPaperSize = Frm.chkUseCustomPapersize.Value
+52050  .UseFixPapersize = Abs(Frm.chkUseFixPaperSize.Value)
+52060  .UseStandardAuthor = Abs(Frm.chkUseStandardAuthor.Value)
+52070  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

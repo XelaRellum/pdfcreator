@@ -2390,3 +2390,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function AllowedKeypressChars(KeyAscii As Integer) As Integer
+ If InStr(1, "0123456789" & Chr$(8) & Chr$(13), Chr$(KeyAscii)) = 0 Then
+   AllowedKeypressChars = 0
+  Else
+   AllowedKeypressChars = KeyAscii
+ End If
+End Function
+

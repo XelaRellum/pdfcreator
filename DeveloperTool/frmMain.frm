@@ -1887,6 +1887,7 @@ Private Sub CreateModOptions()
  Print #fn, ""
  Print #fn, "Public Sub GetOptions(Frm as Form, sOptions as tOptions)"
  Print #fn, " Dim i as Long, tStr as String, lsv As ListView"
+ Print #fn, " sOptions = StandardOptions"
  Print #fn, " With sOptions"
  For i = 1 To lsvOptions.ListItems.Count
   If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
@@ -1919,9 +1920,15 @@ Private Sub CreateModOptions()
     Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") _
      And LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
      If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
-       Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Abs(frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
+       Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Abs(Frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
       Else
-       Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  frm." & lsvOptions.ListItems(i).SubItems(2)
+       If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Or UCase$(lsvOptions.ListItems(i).SubItems(3)) = "LONG" Then
+         Print #fn, " If LenB(Frm." & lsvOptions.ListItems(i).SubItems(2) & ") > 0 Then"
+         Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " =  Frm." & lsvOptions.ListItems(i).SubItems(2)
+         Print #fn, " End If"
+        Else
+         Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Frm." & lsvOptions.ListItems(i).SubItems(2)
+       End If
      End If
    End Select
   End If
