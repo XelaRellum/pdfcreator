@@ -17,8 +17,8 @@ BMPColorscount|cmbBMPColors.Listindex|Long|1|0|6
 ClientComputerResolveIPAddress||Boolean|0||
 
 ' <Printing>
-DeviceHeightPoints||Double|-1|-1|<
-DeviceWidthPoints||Double|-1|-1|<
+DeviceHeightPoints|txtCustomPapersizeHeight.Text|Double|842|1|<
+DeviceWidthPoints|txtCustomPapersizeWidth.Text|Double|595|1|<
 
 ' <Ghostscript>
 DirectoryGhostscriptBinaries|txtGSbin.Text|String|||
@@ -59,7 +59,7 @@ OptionsEnabled||Boolean|1||
 OptionsVisible||Boolean|1||
 
 ' <Printing>
-Papersize||String|||
+Papersize||String|a4||
 
 ' <Printing Formats Bitmap Colors>
 PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
@@ -205,4 +205,6 @@ UseAutosaveDirectory|chkUseAutosaveDirectory.Value|Boolean|1||
 
 ' <Printing>
 UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||
+UseCustomPaperSize|chkUseCustomPapersize.Value|String|0||
+UseFixPapersize|chkUseFixPaperSize.Value|Boolean|0||
 UseStandardAuthor|chkUseStandardAuthor.Value|Boolean|0||

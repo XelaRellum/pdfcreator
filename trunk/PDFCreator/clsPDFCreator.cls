@@ -556,8 +556,10 @@ On Error GoTo ErrPtnr_OnError
 51420   .Add "UseAutosave"
 51430   .Add "UseAutosaveDirectory"
 51440   .Add "UseCreationDateNow"
-51450   .Add "UseStandardAuthor"
-51460  End With
+51450   .Add "UseCustomPaperSize"
+51460   .Add "UseFixPapersize"
+51470   .Add "UseStandardAuthor"
+51480  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -1894,8 +1896,10 @@ On Error GoTo ErrPtnr_OnError
 51410   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
 51420   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
 51430   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
-51440   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
-51450  End Select
+51440   Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
+51450   Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
+51460   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
+51470  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2086,8 +2090,10 @@ On Error GoTo ErrPtnr_OnError
 51420   .UseAutosave = sOptions.UseAutosave
 51430   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
 51440   .UseCreationDateNow = sOptions.UseCreationDateNow
-51450   .UseStandardAuthor = sOptions.UseStandardAuthor
-51460  End With
+51450   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51460   .UseFixPapersize = sOptions.UseFixPapersize
+51470   .UseStandardAuthor = sOptions.UseStandardAuthor
+51480  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2247,12 +2253,14 @@ On Error GoTo ErrPtnr_OnError
 51410   Case "USEAUTOSAVE": Options.UseAutosave = Value
 51420   Case "USEAUTOSAVEDIRECTORY": Options.UseAutosaveDirectory = Value
 51430   Case "USECREATIONDATENOW": Options.UseCreationDateNow = Value
-51440   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = Value
-51450   Case Else:
-51460    mError.Number = 3
-51470    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
-51480    RaiseEvent eError
-51490  End Select
+51440   Case "USECUSTOMPAPERSIZE": Options.UseCustomPaperSize = Value
+51450   Case "USEFIXPAPERSIZE": Options.UseFixPapersize = Value
+51460   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = Value
+51470   Case Else:
+51480    mError.Number = 3
+51490    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
+51500    RaiseEvent eError
+51510  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2412,8 +2420,10 @@ On Error GoTo ErrPtnr_OnError
 51410   .UseAutosave = sOptions.UseAutosave
 51420   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
 51430   .UseCreationDateNow = sOptions.UseCreationDateNow
-51440   .UseStandardAuthor = sOptions.UseStandardAuthor
-51450  End With
+51440   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51450   .UseFixPapersize = sOptions.UseFixPapersize
+51460   .UseStandardAuthor = sOptions.UseStandardAuthor
+51470  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

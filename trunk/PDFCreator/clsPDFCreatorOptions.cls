@@ -154,4 +154,6 @@ Public Toolbars As Long
 Public UseAutosave As Long
 Public UseAutosaveDirectory As Long
 Public UseCreationDateNow As Long
+Public UseCustomPaperSize As String
+Public UseFixPapersize As Long
 Public UseStandardAuthor As Long
