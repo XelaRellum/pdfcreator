@@ -3530,12 +3530,7 @@ Private Sub cmbCharset_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tStr As String
-50020  allow = "0123456789" & Chr$(8) & Chr$(13)
-50030  tStr = Chr$(KeyAscii)
-50040  If InStr(1, allow, tStr) = 0 Then
-50050    KeyAscii = 0
-50060  End If
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -5134,417 +5129,421 @@ On Error GoTo ErrPtnr_OnError
 55420   chkUseCustomPapersize.Caption = .OptionsUseCustomPapersize
 55430   lblCustomPapersizeWidth.Caption = .OptionsCustomPapersizeWidth
 55440   lblCustomPapersizeHeight.Caption = .OptionsCustomPapersizeHeight
-55450  End With
-55460
-55470  With cmbDocumentPapersizes
-55480   .AddItem "11x17"
-55490   .AddItem "ledger"
-55500   .AddItem "legal"
-55510   .AddItem "letter"
-55520   .AddItem "lettersmall"
-55530   .AddItem "archE"
-55540   .AddItem "archD"
-55550   .AddItem "archC"
-55560   .AddItem "archB"
-55570   .AddItem "archA"
-55580   .AddItem "a0"
-55590   .AddItem "a1"
-55600   .AddItem "a2"
-55610   .AddItem "a3"
-55620   .AddItem "a4"
-55630   .AddItem "a4small"
-55640   .AddItem "a5"
-55650   .AddItem "a6"
-55660   .AddItem "a7"
-55670   .AddItem "a8"
-55680   .AddItem "a9"
-55690   .AddItem "a10"
-55700   .AddItem "isob0"
-55710   .AddItem "isob1"
-55720   .AddItem "isob2"
-55730   .AddItem "isob3"
-55740   .AddItem "isob4"
-55750   .AddItem "isob5"
-55760   .AddItem "isob6"
-55770   .AddItem "c0"
-55780   .AddItem "c1"
-55790   .AddItem "c2"
-55800   .AddItem "c3"
-55810   .AddItem "c4"
-55820   .AddItem "c5"
-55830   .AddItem "c6"
-55840   .AddItem "jisb0"
-55850   .AddItem "jisb1"
-55860   .AddItem "jisb2"
-55870   .AddItem "jisb3"
-55880   .AddItem "jisb4"
-55890   .AddItem "jisb5"
-55900   .AddItem "jisb6"
-55910   .AddItem "b0"
-55920   .AddItem "b1"
-55930   .AddItem "b2"
-55940   .AddItem "b3"
-55950   .AddItem "b4"
-55960   .AddItem "b5"
-55970   .AddItem "flsa"
-55980   .AddItem "flse"
-55990   .AddItem "halfletter"
-56000   .ListIndex = 0
-56010  End With
-56020
-56030  If IsPsAssociate = False Then
-56040    cmdAsso.Enabled = True
-56050   Else
-56060    cmdAsso.Enabled = False
-56070  End If
-56080
-56090  txtPDFRes.Text = 600
-56100  cmbPDFCompat.ListIndex = 1
-56110  cmbPDFRotate.ListIndex = 0
-56120  cmbPDFOverprint.ListIndex = 0
-56130  chkPDFASCII85.Value = 0
-56140
-56150  chkPDFTextComp.Value = 1
-56160
-56170  chkPDFColorComp.Value = 1
-56180  chkPDFColorResample.Value = 0
-56190  cmbPDFColorComp.ListIndex = 0
-56200  cmbPDFColorResample.ListIndex = 0
-56210  txtPDFColorRes.Text = 300
-56220
-56230  chkPDFGreyComp.Value = 1
-56240  chkPDFGreyResample.Value = 0
-56250  cmbPDFGreyComp.ListIndex = 0
-56260  cmbPDFGreyResample.ListIndex = 0
-56270  txtPDFGreyRes.Text = 300
-56280
-56290  chkPDFMonoComp.Value = 1
-56300  chkPDFMonoResample.Value = 0
-56310  cmbPDFMonoComp.ListIndex = 0
-56320  cmbPDFMonoResample.ListIndex = 0
-56330  txtPDFMonoRes.Text = 1200
-56340
-56350  chkPDFEmbedAll.Value = 1
-56360  chkPDFSubSetFonts.Value = 1
-56370  txtPDFSubSetPerc.Text = 100
-56380
-56390  cmbPDFColorModel.ListIndex = 1
-56400  chkPDFCMYKtoRGB.Value = 1
-56410  chkPDFPreserveOverprint.Value = 1
-56420  chkPDFPreserveTransfer.Value = 1
-56430  chkPDFPreserveHalftone.Value = 0
-56440
-56450  cmbPNGColors.ListIndex = 0
-56460  cmbJPEGColors.ListIndex = 0
-56470  cmbBMPColors.ListIndex = 0
-56480  cmbPCXColors.ListIndex = 0
-56490  cmbTIFFColors.ListIndex = 0
-56500  txtBitmapResolution.Text = 150
-56510
-56520 ' chkUseStandardAuthor.Value = 1
-56530  txtStandardAuthor.Text = vbNullString
-56540
-56550  With cmbPSLanguageLevel
-56560   .AddItem "1"
-56570   .AddItem "1.5"
-56580   .AddItem "2"
-56590   .AddItem "3"
-56600  End With
-56610  With cmbEPSLanguageLevel
-56620   .AddItem "1"
-56630   .AddItem "1.5"
-56640   .AddItem "2"
-56650   .AddItem "3"
-56660  End With
-56670
-56680  With lsvFilenameSubst
-56690   .Appearance = ccFlat
-56700   .ColumnHeaders.Clear
-56710   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
-56720   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
-56730   .HideColumnHeaders = True
-56740   .GridLines = True
-56750   .FullRowSelect = True
-56760   .HideSelection = False
-56770  End With
-56780
-56790  With cmbPDFEncryptor
-56800   .Clear
-56810   .AddItem "Ghostscript (>= 8.14)"
-56820   .ItemData(.NewIndex) = 0
-56830   .AddItem "PDFEnc"
-56840   .ItemData(.NewIndex) = 1
-56850
-56860   SecurityIsPossible = True
-56870
-56880   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
-56890    .RemoveItem 1
-56900    .ListIndex = 0
-56910    Options.PDFEncryptor = .ItemData(.ListIndex)
-56920   End If
-56930   If GhostScriptSecurity = False Then
-56940    .RemoveItem 0
-56950   End If
-56960   If .ListCount = 0 Then
-56970     chkUseSecurity.Value = 0
-56980     chkUseSecurity.Enabled = False
-56990     SecurityIsPossible = False
-57000    Else
-57010     For i = 0 To .ListCount - 1
-57020      If .ItemData(i) = Options.PDFEncryptor Then
-57030       .ListIndex = i
-57040       Exit For
-57050      End If
-57060     Next i
-57070     If .ListIndex = -1 Then
-57080      .ListIndex = 0
-57090      Options.PDFEncryptor = .ItemData(.ListIndex)
-57100     End If
-57110   End If
-57120  End With
-57130
-57140  If Options.PDFHighEncryption <> 0 Then
-57150    optEncHigh.Value = True
-57160   Else
-57170    optEncLow.Value = True
-57180  End If
-57190
-57200  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-57210  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-57220  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-57230
-57240  If chkUseStandardAuthor.Value = 1 Then
-57250    txtStandardAuthor.Enabled = True
-57260    txtStandardAuthor.BackColor = &H80000005
-57270   Else
-57280    txtStandardAuthor.Enabled = False
-57290    txtStandardAuthor.BackColor = &H8000000F
-57300  End If
-57310  With Options
-57320   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-57330  End With
-57340  ieb.Refresh
-57350  If chkUseAutosave.Value = 1 Then
-57360    ViewAutosave True
-57370   Else
-57380    ViewAutosave False
-57390  End If
-57400  If chkPrintAfterSaving.Value = 1 Then
-57410    ViewPrintAfterSaving True
-57420   Else
-57430    ViewPrintAfterSaving False
-57440  End If
-57450
-57460  With txtGSbin
-57470   .ToolTipText = .Text
-57480  End With
-57490  With txtGSlib
-57500   .ToolTipText = .Text
-57510  End With
-57520  With txtGSfonts
-57530   .ToolTipText = .Text
-57540  End With
-57550  With txtTemppath
-57560   .ToolTipText = ResolveEnvironment(GetSubstFilename2(.Text))
-57570  End With
-57580
-57590  With sldProcessPriority
-57600   .TextPosition = sldBelowRight
-57610   .TickFrequency = 1
-57620   .TickStyle = sldTopLeft
-57631   Select Case .Value
+55450   lblCustomPapersizeInfo.Caption = .OptionsCustomPapersizeInfo
+55460  End With
+55470
+55480  With cmbDocumentPapersizes
+55490   .AddItem "11x17"
+55500   .AddItem "ledger"
+55510   .AddItem "legal"
+55520   .AddItem "letter"
+55530   .AddItem "lettersmall"
+55540   .AddItem "archE"
+55550   .AddItem "archD"
+55560   .AddItem "archC"
+55570   .AddItem "archB"
+55580   .AddItem "archA"
+55590   .AddItem "a0"
+55600   .AddItem "a1"
+55610   .AddItem "a2"
+55620   .AddItem "a3"
+55630   .AddItem "a4"
+55640   .AddItem "a4small"
+55650   .AddItem "a5"
+55660   .AddItem "a6"
+55670   .AddItem "a7"
+55680   .AddItem "a8"
+55690   .AddItem "a9"
+55700   .AddItem "a10"
+55710   .AddItem "isob0"
+55720   .AddItem "isob1"
+55730   .AddItem "isob2"
+55740   .AddItem "isob3"
+55750   .AddItem "isob4"
+55760   .AddItem "isob5"
+55770   .AddItem "isob6"
+55780   .AddItem "c0"
+55790   .AddItem "c1"
+55800   .AddItem "c2"
+55810   .AddItem "c3"
+55820   .AddItem "c4"
+55830   .AddItem "c5"
+55840   .AddItem "c6"
+55850   .AddItem "jisb0"
+55860   .AddItem "jisb1"
+55870   .AddItem "jisb2"
+55880   .AddItem "jisb3"
+55890   .AddItem "jisb4"
+55900   .AddItem "jisb5"
+55910   .AddItem "jisb6"
+55920   .AddItem "b0"
+55930   .AddItem "b1"
+55940   .AddItem "b2"
+55950   .AddItem "b3"
+55960   .AddItem "b4"
+55970   .AddItem "b5"
+55980   .AddItem "flsa"
+55990   .AddItem "flse"
+56000   .AddItem "halfletter"
+56010   .ListIndex = 0
+56020  End With
+56030
+56040  If IsPsAssociate = False Then
+56050    cmdAsso.Enabled = True
+56060   Else
+56070    cmdAsso.Enabled = False
+56080  End If
+56090
+56100  txtPDFRes.Text = 600
+56110  cmbPDFCompat.ListIndex = 1
+56120  cmbPDFRotate.ListIndex = 0
+56130  cmbPDFOverprint.ListIndex = 0
+56140  chkPDFASCII85.Value = 0
+56150
+56160  chkPDFTextComp.Value = 1
+56170
+56180  chkPDFColorComp.Value = 1
+56190  chkPDFColorResample.Value = 0
+56200  cmbPDFColorComp.ListIndex = 0
+56210  cmbPDFColorResample.ListIndex = 0
+56220  txtPDFColorRes.Text = 300
+56230
+56240  chkPDFGreyComp.Value = 1
+56250  chkPDFGreyResample.Value = 0
+56260  cmbPDFGreyComp.ListIndex = 0
+56270  cmbPDFGreyResample.ListIndex = 0
+56280  txtPDFGreyRes.Text = 300
+56290
+56300  chkPDFMonoComp.Value = 1
+56310  chkPDFMonoResample.Value = 0
+56320  cmbPDFMonoComp.ListIndex = 0
+56330  cmbPDFMonoResample.ListIndex = 0
+56340  txtPDFMonoRes.Text = 1200
+56350
+56360  chkPDFEmbedAll.Value = 1
+56370  chkPDFSubSetFonts.Value = 1
+56380  txtPDFSubSetPerc.Text = 100
+56390
+56400  cmbPDFColorModel.ListIndex = 1
+56410  chkPDFCMYKtoRGB.Value = 1
+56420  chkPDFPreserveOverprint.Value = 1
+56430  chkPDFPreserveTransfer.Value = 1
+56440  chkPDFPreserveHalftone.Value = 0
+56450
+56460  cmbPNGColors.ListIndex = 0
+56470  cmbJPEGColors.ListIndex = 0
+56480  cmbBMPColors.ListIndex = 0
+56490  cmbPCXColors.ListIndex = 0
+56500  cmbTIFFColors.ListIndex = 0
+56510  txtBitmapResolution.Text = 150
+56520
+56530 ' chkUseStandardAuthor.Value = 1
+56540  txtStandardAuthor.Text = vbNullString
+56550
+56560  With cmbPSLanguageLevel
+56570   .AddItem "1"
+56580   .AddItem "1.5"
+56590   .AddItem "2"
+56600   .AddItem "3"
+56610  End With
+56620  With cmbEPSLanguageLevel
+56630   .AddItem "1"
+56640   .AddItem "1.5"
+56650   .AddItem "2"
+56660   .AddItem "3"
+56670  End With
+56680
+56690  With lsvFilenameSubst
+56700   .Appearance = ccFlat
+56710   .ColumnHeaders.Clear
+56720   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
+56730   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
+56740   .HideColumnHeaders = True
+56750   .GridLines = True
+56760   .FullRowSelect = True
+56770   .HideSelection = False
+56780  End With
+56790
+56800  With cmbPDFEncryptor
+56810   .Clear
+56820   .AddItem "Ghostscript (>= 8.14)"
+56830   .ItemData(.NewIndex) = 0
+56840   .AddItem "PDFEnc"
+56850   .ItemData(.NewIndex) = 1
+56860
+56870   SecurityIsPossible = True
+56880
+56890   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
+56900    .RemoveItem 1
+56910    .ListIndex = 0
+56920    Options.PDFEncryptor = .ItemData(.ListIndex)
+56930   End If
+56940   If GhostScriptSecurity = False Then
+56950    .RemoveItem 0
+56960   End If
+56970   If .ListCount = 0 Then
+56980     chkUseSecurity.Value = 0
+56990     chkUseSecurity.Enabled = False
+57000     SecurityIsPossible = False
+57010    Else
+57020     For i = 0 To .ListCount - 1
+57030      If .ItemData(i) = Options.PDFEncryptor Then
+57040       .ListIndex = i
+57050       Exit For
+57060      End If
+57070     Next i
+57080     If .ListIndex = -1 Then
+57090      .ListIndex = 0
+57100      Options.PDFEncryptor = .ItemData(.ListIndex)
+57110     End If
+57120   End If
+57130  End With
+57140
+57150  If Options.PDFHighEncryption <> 0 Then
+57160    optEncHigh.Value = True
+57170   Else
+57180    optEncLow.Value = True
+57190  End If
+57200
+57210  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+57220  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+57230  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+57240
+57250  If chkUseStandardAuthor.Value = 1 Then
+57260    txtStandardAuthor.Enabled = True
+57270    txtStandardAuthor.BackColor = &H80000005
+57280   Else
+57290    txtStandardAuthor.Enabled = False
+57300    txtStandardAuthor.BackColor = &H8000000F
+57310  End If
+57320  With Options
+57330   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+57340  End With
+57350  ieb.Refresh
+57360  If chkUseAutosave.Value = 1 Then
+57370    ViewAutosave True
+57380   Else
+57390    ViewAutosave False
+57400  End If
+57410  If chkPrintAfterSaving.Value = 1 Then
+57420    ViewPrintAfterSaving True
+57430   Else
+57440    ViewPrintAfterSaving False
+57450  End If
+57460
+57470  With txtGSbin
+57480   .ToolTipText = .Text
+57490  End With
+57500  With txtGSlib
+57510   .ToolTipText = .Text
+57520  End With
+57530  With txtGSfonts
+57540   .ToolTipText = .Text
+57550  End With
+57560  With txtTemppath
+57570   .ToolTipText = ResolveEnvironment(GetSubstFilename2(.Text))
+57580  End With
+57590
+57600  With sldProcessPriority
+57610   .TextPosition = sldBelowRight
+57620   .TickFrequency = 1
+57630   .TickStyle = sldTopLeft
+57641   Select Case .Value
          Case 0: 'Idle
-57650     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
-57660    Case 1: 'Normal
-57670     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
-57680    Case 2: 'High
-57690     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
-57700    Case 3: 'Realtime
-57710     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
-57720   End Select
-57730  End With
-57740
-57750  If IsWin9xMe = False Then
-57760    lblProcessPriority.Enabled = True
-57770    sldProcessPriority.Enabled = True
-57780   Else
-57790    lblProcessPriority.Enabled = False
-57800    sldProcessPriority.Enabled = False
-57810  End If
-57820  UpdateSecurityFields
-57830
-57840  If Options.RunProgramAfterSaving Then
-57850    ViewRunProgramAfterSaving True
-57860   Else
-57870    ViewRunProgramAfterSaving False
-57880  End If
-57890  If Options.RunProgramBeforeSaving Then
-57900    ViewRunProgramBeforeSaving True
-57910   Else
-57920    ViewRunProgramBeforeSaving False
-57930  End If
-57940
-57950  Set Files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\", "*.*", SortedByName)
-57960  For i = 1 To Files.Count
-57970   tsf = Split(Files(i), "|")
-57980   SplitPath tsf(1), , Path, Filename, , Ext
-57990   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
+57660     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
+57670    Case 1: 'Normal
+57680     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
+57690    Case 2: 'High
+57700     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
+57710    Case 3: 'Realtime
+57720     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
+57730   End Select
+57740  End With
+57750
+57760  If IsWin9xMe = False Then
+57770    lblProcessPriority.Enabled = True
+57780    sldProcessPriority.Enabled = True
+57790   Else
+57800    lblProcessPriority.Enabled = False
+57810    sldProcessPriority.Enabled = False
+57820  End If
+57830  UpdateSecurityFields
+57840
+57850  If Options.RunProgramAfterSaving Then
+57860    ViewRunProgramAfterSaving True
+57870   Else
+57880    ViewRunProgramAfterSaving False
+57890  End If
+57900  If Options.RunProgramBeforeSaving Then
+57910    ViewRunProgramBeforeSaving True
+57920   Else
+57930    ViewRunProgramBeforeSaving False
+57940  End If
+57950
+57960  Set Files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\", "*.*", SortedByName)
+57970  For i = 1 To Files.Count
+57980   tsf = Split(Files(i), "|")
+57990   SplitPath tsf(1), , Path, Filename, , Ext
+58000   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
    UCase$(Ext) <> "JPG" And UCase$(Ext) <> "BMP" And UCase$(Ext) <> "PCX" And _
    UCase$(Ext) <> "TIF" And UCase$(Ext) <> "EPS" And UCase$(Ext) <> "PS" Then
-58020    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\") Then
-58030      cmbRunProgramAfterSavingProgramname.AddItem tsf(0)
-58040     Else
-58050      cmbRunProgramAfterSavingProgramname.AddItem Filename
-58060    End If
-58070   End If
-58080  Next i
-58090
-58100  Set Files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\", "*.*", SortedByName)
-58110  For i = 1 To Files.Count
-58120   tsf = Split(Files(i), "|")
-58130   SplitPath tsf(1), , Path, Filename, , Ext
-58140   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
+58030    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\") Then
+58040      cmbRunProgramAfterSavingProgramname.AddItem tsf(0)
+58050     Else
+58060      cmbRunProgramAfterSavingProgramname.AddItem Filename
+58070    End If
+58080   End If
+58090  Next i
+58100
+58110  Set Files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\", "*.*", SortedByName)
+58120  For i = 1 To Files.Count
+58130   tsf = Split(Files(i), "|")
+58140   SplitPath tsf(1), , Path, Filename, , Ext
+58150   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
    UCase$(Ext) <> "JPG" And UCase$(Ext) <> "BMP" And UCase$(Ext) <> "PCX" And _
    UCase$(Ext) <> "TIF" And UCase$(Ext) <> "EPS" And UCase$(Ext) <> "PS" Then
-58170    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\") Then
-58180      cmbRunProgramBeforeSavingProgramname.AddItem tsf(0)
-58190     Else
-58200      cmbRunProgramBeforeSavingProgramname.AddItem Filename
-58210    End If
-58220   End If
-58230  Next i
-58240
-58250  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
+58180    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\") Then
+58190      cmbRunProgramBeforeSavingProgramname.AddItem tsf(0)
+58200     Else
+58210      cmbRunProgramBeforeSavingProgramname.AddItem Filename
+58220    End If
+58230   End If
+58240  Next i
+58250
+58260  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
  cmbGhostscript.Clear: Set reg = New clsRegistry
-58270  reg.hkey = HKEY_LOCAL_MACHINE
-58280
-58290  Set gsvers = GetAllGhostscriptversions
-58300
-58310  If gsvers.Count = 0 Then
-58320    cmbGhostscript.Enabled = False
-58330   Else
-58340    For i = 1 To gsvers.Count
-58350     cmbGhostscript.AddItem gsvers.Item(i)
-58360    Next i
-58370    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
-58380    For i = 0 To cmbGhostscript.ListCount - 1
-58390     tStr = ""
-58400     If InStr(cmbGhostscript.List(i), ":") Then
-58410       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-58420       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
-58430        cmbGhostscript.ListIndex = i
-58440        Exit For
-58450       End If
-58460      Else
-58470       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
-58480        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
-58490        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-58500         tsf = Split(cmbGhostscript.List(i), " ")
-58510         reg.Subkey = tsf(UBound(tsf))
-58520         tStr = reg.GetRegistryValue("GS_DLL")
-58530         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-58540          cmbGhostscript.ListIndex = i
-58550          Exit For
-58560         End If
-58570        End If
-58580       End If
-58590       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
-58600        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
-58610        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-58620         tsf = Split(cmbGhostscript.List(i), " ")
-58630         reg.Subkey = tsf(UBound(tsf))
-58640         tStr = reg.GetRegistryValue("GS_DLL")
-58650         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-58660          cmbGhostscript.ListIndex = i
-58670          Exit For
-58680         End If
-58690        End If
-58700       End If
-58710       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
-58720        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
-58730        If InStr(cmbGhostscript.List(i), " ") > 0 Then
-58740         tsf = Split(cmbGhostscript.List(i), " ")
-58750         reg.Subkey = tsf(UBound(tsf))
-58760         tStr = reg.GetRegistryValue("GS_DLL")
-58770         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
-58780          cmbGhostscript.ListIndex = i
-58790          Exit For
-58800         End If
-58810        End If
-58820       End If
-58830     End If
-58840    Next i
-58850  End If
-58860  Set reg = Nothing
-58870  With cmbGhostscript
-58880   If .ListCount = 0 Then
-58890    .Enabled = False
-58900    .BackColor = &H8000000F
-58910   End If
-58920  End With
-58930
-58940  lblFontNameSize.Caption = Options.StampFontname & ", " & Options.StampFontsize
-58950  If lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50 + txtOutlineFontThickness.Width > dmFraProgStamp.Width Then
-58960    txtOutlineFontThickness.Left = dmFraProgStamp.Width - txtOutlineFontThickness.Width - 10
-58970   Else
-58980    txtOutlineFontThickness.Left = lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50
-58990  End If
-59000  txtOutlineFontThickness.Top = lblOutlineFontThickness.Top + (lblOutlineFontThickness.Height - txtOutlineFontThickness.Height) / 2
-59010
-59020  tbstrPDFOptions.ZOrder 1
-59030  tbstrProgActions.ZOrder 1
-59040
-59050  If ShowOnlyOptions = True Then
-59060   FormInTaskbar Me, True, True
-59070   Caption = "PDFCreator - " & Caption
-59080  End If
-59090
-59100  ShowAcceleratorsInForm Me, True
-59110
-59120  ShowOptions Me, Options
-59130  If chkStampUseOutlineFont.Value = 1 Then
-59140    lblOutlineFontThickness.Enabled = True
-59150    txtOutlineFontThickness.Enabled = True
-59160    txtOutlineFontThickness.BackColor = &H80000005
-59170   Else
-59180    lblOutlineFontThickness.Enabled = False
-59190    txtOutlineFontThickness.Enabled = False
-59200    txtOutlineFontThickness.BackColor = &H8000000F
-59210  End If
-59220  If chkUseFixPaperSize.Value = 1 Then
-59230    cmbDocumentPapersizes.Enabled = True
-59240    chkUseCustomPapersize.Enabled = True
-59250    If chkUseCustomPapersize.Value = 1 Then
-59260      lblCustomPapersizeWidth.Enabled = True
-59270      lblCustomPapersizeHeight.Enabled = True
-59280      txtCustomPapersizeWidth.Enabled = True
-59290      txtCustomPapersizeWidth.BackColor = &H80000005
-59300      txtCustomPapersizeHeight.Enabled = True
-59310      txtCustomPapersizeHeight.BackColor = &H80000005
-59320      lblCustomPapersizeInfo.Enabled = True
-59330      cmbDocumentPapersizes.Enabled = False
-59340     Else
-59350      cmbDocumentPapersizes.Enabled = True
-59360      lblCustomPapersizeWidth.Enabled = False
-59370      lblCustomPapersizeHeight.Enabled = False
-59380      txtCustomPapersizeWidth.Enabled = False
-59390      txtCustomPapersizeWidth.BackColor = &H8000000F
-59400      txtCustomPapersizeHeight.Enabled = False
-59410      txtCustomPapersizeHeight.BackColor = &H8000000F
-59420      lblCustomPapersizeInfo.Enabled = False
-59430    End If
-59440   Else
-59450    cmbDocumentPapersizes.Enabled = False
-59460    chkUseCustomPapersize.Enabled = False
-59470    lblCustomPapersizeWidth.Enabled = False
-59480    lblCustomPapersizeHeight.Enabled = False
-59490    txtCustomPapersizeWidth.Enabled = False
-59500    txtCustomPapersizeWidth.BackColor = &H8000000F
-59510    txtCustomPapersizeHeight.Enabled = False
-59520    txtCustomPapersizeHeight.BackColor = &H8000000F
-59530  End If
-59540  Timer1.Enabled = True
-59550  Screen.MousePointer = vbNormal
+58280  reg.hkey = HKEY_LOCAL_MACHINE
+58290
+58300  Set gsvers = GetAllGhostscriptversions
+58310
+58320  If gsvers.Count = 0 Then
+58330    cmbGhostscript.Enabled = False
+58340   Else
+58350    For i = 1 To gsvers.Count
+58360     cmbGhostscript.AddItem gsvers.Item(i)
+58370    Next i
+58380    cmbGhostscript.ListIndex = cmbGhostscript.ListCount - 1
+58390    For i = 0 To cmbGhostscript.ListCount - 1
+58400     tStr = ""
+58410     If InStr(cmbGhostscript.List(i), ":") Then
+58420       reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+58430       If tStr2 = CompletePath(UCase$(Trim$(reg.GetRegistryValue("GhostscriptDirectoryBinaries")))) Then
+58440        cmbGhostscript.ListIndex = i
+58450        Exit For
+58460       End If
+58470      Else
+58480       If InStr(UCase$(cmbGhostscript.List(i)), "AFPL") Then
+58490        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
+58500        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+58510         tsf = Split(cmbGhostscript.List(i), " ")
+58520         reg.Subkey = tsf(UBound(tsf))
+58530         tStr = reg.GetRegistryValue("GS_DLL")
+58540         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+58550          cmbGhostscript.ListIndex = i
+58560          Exit For
+58570         End If
+58580        End If
+58590       End If
+58600       If InStr(UCase$(cmbGhostscript.List(i)), "GNU") Then
+58610        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
+58620        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+58630         tsf = Split(cmbGhostscript.List(i), " ")
+58640         reg.Subkey = tsf(UBound(tsf))
+58650         tStr = reg.GetRegistryValue("GS_DLL")
+58660         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+58670          cmbGhostscript.ListIndex = i
+58680          Exit For
+58690         End If
+58700        End If
+58710       End If
+58720       If InStr(UCase$(cmbGhostscript.List(i)), "GPL") Then
+58730        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
+58740        If InStr(cmbGhostscript.List(i), " ") > 0 Then
+58750         tsf = Split(cmbGhostscript.List(i), " ")
+58760         reg.Subkey = tsf(UBound(tsf))
+58770         tStr = reg.GetRegistryValue("GS_DLL")
+58780         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
+58790          cmbGhostscript.ListIndex = i
+58800          Exit For
+58810         End If
+58820        End If
+58830       End If
+58840     End If
+58850    Next i
+58860  End If
+58870  Set reg = Nothing
+58880  With cmbGhostscript
+58890   If .ListCount = 0 Then
+58900    .Enabled = False
+58910    .BackColor = &H8000000F
+58920   End If
+58930  End With
+58940
+58950  lblFontNameSize.Caption = Options.StampFontname & ", " & Options.StampFontsize
+58960  If lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50 + txtOutlineFontThickness.Width > dmFraProgStamp.Width Then
+58970    txtOutlineFontThickness.Left = dmFraProgStamp.Width - txtOutlineFontThickness.Width - 10
+58980   Else
+58990    txtOutlineFontThickness.Left = lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50
+59000  End If
+59010  txtOutlineFontThickness.Top = lblOutlineFontThickness.Top + (lblOutlineFontThickness.Height - txtOutlineFontThickness.Height) / 2
+59020
+59030  tbstrPDFOptions.ZOrder 1
+59040  tbstrProgActions.ZOrder 1
+59050
+59060  If ShowOnlyOptions = True Then
+59070   FormInTaskbar Me, True, True
+59080   Caption = "PDFCreator - " & Caption
+59090  End If
+59100
+59110  ShowAcceleratorsInForm Me, True
+59120
+59130  ShowOptions Me, Options
+59140  If chkStampUseOutlineFont.Value = 1 Then
+59150    lblOutlineFontThickness.Enabled = True
+59160    txtOutlineFontThickness.Enabled = True
+59170    txtOutlineFontThickness.BackColor = &H80000005
+59180   Else
+59190    lblOutlineFontThickness.Enabled = False
+59200    txtOutlineFontThickness.Enabled = False
+59210    txtOutlineFontThickness.BackColor = &H8000000F
+59220  End If
+59230  If chkUseFixPaperSize.Value = 1 Then
+59240    cmbDocumentPapersizes.Enabled = True
+59250    chkUseCustomPapersize.Enabled = True
+59260    If chkUseCustomPapersize.Value = 1 Then
+59270      lblCustomPapersizeWidth.Enabled = True
+59280      lblCustomPapersizeHeight.Enabled = True
+59290      txtCustomPapersizeWidth.Enabled = True
+59300      txtCustomPapersizeWidth.BackColor = &H80000005
+59310      txtCustomPapersizeHeight.Enabled = True
+59320      txtCustomPapersizeHeight.BackColor = &H80000005
+59330      lblCustomPapersizeInfo.Enabled = True
+59340      cmbDocumentPapersizes.Enabled = True
+59350      lblCustomPapersizeInfo.Enabled = True
+59360     Else
+59370      cmbDocumentPapersizes.Enabled = True
+59380      lblCustomPapersizeWidth.Enabled = False
+59390      lblCustomPapersizeHeight.Enabled = False
+59400      txtCustomPapersizeWidth.Enabled = False
+59410      txtCustomPapersizeWidth.BackColor = &H8000000F
+59420      txtCustomPapersizeHeight.Enabled = False
+59430      txtCustomPapersizeHeight.BackColor = &H8000000F
+59440      lblCustomPapersizeInfo.Enabled = False
+59450      lblCustomPapersizeInfo.Enabled = False
+59460    End If
+59470   Else
+59480    cmbDocumentPapersizes.Enabled = False
+59490    chkUseCustomPapersize.Enabled = False
+59500    lblCustomPapersizeWidth.Enabled = False
+59510    lblCustomPapersizeHeight.Enabled = False
+59520    txtCustomPapersizeWidth.Enabled = False
+59530    txtCustomPapersizeWidth.BackColor = &H8000000F
+59540    txtCustomPapersizeHeight.Enabled = False
+59550    txtCustomPapersizeHeight.BackColor = &H8000000F
+59560    lblCustomPapersizeInfo.Enabled = False
+59570  End If
+59580  Timer1.Enabled = True
+59590  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -6251,15 +6250,7 @@ Private Sub cmbProgramFontSize_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tStr As String
-50020
-50030  allow = "0123456789" & Chr$(8) & Chr$(13)
-50040
-50050  tStr = Chr$(KeyAscii)
-50060
-50070  If InStr(1, allow, tStr) = 0 Then
-50080    KeyAscii = 0
-50090  End If
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -6884,16 +6875,45 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub txtCustomPapersizeHeight_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "txtCustomPapersizeHeight_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtCustomPapersizeWidth_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "txtCustomPapersizeWidth_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub txtOutlineFontThickness_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim allow As String, tStr As String
-50020  allow = "0123456789" & Chr$(8) & Chr$(13)
-50030  tStr = Chr$(KeyAscii)
-50040  If InStr(1, allow, tStr) = 0 Then
-50050    KeyAscii = 0
-50060  End If
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
