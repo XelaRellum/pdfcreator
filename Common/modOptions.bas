@@ -337,7 +337,7 @@ On Error GoTo ErrPtnr_OnError
 51760  End With
 51770  If UseINI Then
 51780    If Not IsWin9xMe Then
-51790     myOptions = ReadOptionsINI(myOptions, CompletePath(GetDefaultAppData) & "PDFCreator.ini", False, False)
+51790     myOptions = ReadOptionsINI(myOptions, CompletePath(GetDefaultAppData) & "PDFCreator.ini", False, False, False)
 51800    End If
 51810   Else
 51820    If Not IsWin9xMe Then
@@ -6055,7 +6055,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   lsv.ListItems.Clear
@@ -6153,7 +6153,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.cmbProgramFontsize.Text = .ProgramFontSize
+  Frm.cmbProgramFontSize.Text = .ProgramFontSize
   Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
   Frm.chkSpaces.Value = .RemoveSpaces
   Frm.chkRunProgramAfterSaving.Value = .RunProgramAfterSaving
@@ -6175,7 +6175,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtStampString.Text = .StampString
   Frm.chkStampUseOutlineFont.Value = .StampUseOutlineFont
   Frm.txtStandardAuthor.Text = .StandardAuthor
-  Frm.cmbStandardSaveFormat.ListIndex = .StandardSaveformat
+  Frm.cmbStandardSaveformat.ListIndex = .StandardSaveformat
   Frm.cmbTIFFColors.ListIndex = .TIFFColorscount
   Frm.chkUseAutosave.Value = .UseAutosave
   Frm.chkUseAutosaveDirectory.Value = .UseAutosaveDirectory
@@ -6217,7 +6217,7 @@ On Error GoTo ErrPtnr_OnError
 50250  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50260  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50270  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50280  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
+50280  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
 50290  If LenB(Frm.cmbEPSLanguageLevel.ListIndex) > 0 Then
 50300   .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
 50310  End If
@@ -6351,8 +6351,8 @@ On Error GoTo ErrPtnr_OnError
 51590  If LenB(Frm.cmbCharset.Text) > 0 Then
 51600   .ProgramFontCharset = Frm.cmbCharset.Text
 51610  End If
-51620  If LenB(Frm.cmbProgramFontsize.Text) > 0 Then
-51630   .ProgramFontSize = Frm.cmbProgramFontsize.Text
+51620  If LenB(Frm.cmbProgramFontSize.Text) > 0 Then
+51630   .ProgramFontSize = Frm.cmbProgramFontSize.Text
 51640  End If
 51650  If LenB(Frm.cmbPSLanguageLevel.ListIndex) > 0 Then
 51660   .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
@@ -6384,8 +6384,8 @@ On Error GoTo ErrPtnr_OnError
 51920  .StampString = Frm.txtStampString.Text
 51930  .StampUseOutlineFont = Abs(Frm.chkStampUseOutlineFont.Value)
 51940  .StandardAuthor = Frm.txtStandardAuthor.Text
-51950  If LenB(Frm.cmbStandardSaveFormat.ListIndex) > 0 Then
-51960   .StandardSaveformat = Frm.cmbStandardSaveFormat.ListIndex
+51950  If LenB(Frm.cmbStandardSaveformat.ListIndex) > 0 Then
+51960   .StandardSaveformat = Frm.cmbStandardSaveformat.ListIndex
 51970  End If
 51980  If LenB(Frm.cmbTIFFColors.ListIndex) > 0 Then
 51990   .TIFFColorscount = Frm.cmbTIFFColors.ListIndex

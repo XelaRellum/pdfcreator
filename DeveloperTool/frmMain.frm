@@ -1172,7 +1172,7 @@ Private Sub CreateModOptions()
  Print #fn, " End With"
  Print #fn, " If UseINI Then"
  Print #fn, "   If Not IsWin9xMe Then"
- Print #fn, "    myOptions = ReadOptionsINI(myOptions, CompletePath(GetDefaultAppData) & ""PDFCreator.ini"", False, False)"
+ Print #fn, "    myOptions = ReadOptionsINI(myOptions, CompletePath(GetDefaultAppData) & ""PDFCreator.ini"", False, False, False)"
  Print #fn, "   End If"
  Print #fn, "  Else"
  Print #fn, "   If Not IsWin9xMe Then"
