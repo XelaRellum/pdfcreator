@@ -10,9 +10,6 @@
 
 Option Explicit
 
-Const maxTime = 30    ' in seconds
-Const sleepTime = 250 ' in milliseconds
-
 Dim objArgs, ifname, fso, PDFCreator, _
  i, AppTitle, Scriptname, ScriptBasename
 
