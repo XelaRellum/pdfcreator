@@ -17,7 +17,7 @@
 
 #define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
-#define GhostscriptLicense "AFPL"
+;#define GhostscriptLicense "AFPL"
 
 #ifdef FastCompilation
  #define CompressionMode="none"
@@ -29,7 +29,7 @@
 
 #Ifdef IncludeGhostscript
 #If (GhostscriptLicense=="GPL")
- #define GhostscriptVersion "8.50"
+ #define GhostscriptVersion "8.54"
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 #If (GhostscriptLicense=="AFPL")
@@ -430,7 +430,7 @@ Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Co
 ; Toolbar
 #IFDEF IncludeToolbar
 Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
-Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: toolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: ietoolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 #ENDIF
 
@@ -629,7 +629,7 @@ Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-exte
 #ENDIF
 
 #IFDEF IncludeToolbar
-Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: " toolbar"; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: ietoolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 
 [UninstallRun]
@@ -671,8 +671,8 @@ Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptV
 #ENDIF
 
 #IFDEF IncludeToolbar
-Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: IExplorerVersionLower55
-Name: toolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: ; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: Not IExplorerVersionLower55; Flags: fixed
+Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: IExplorerVersionLower55
+Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: ; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: Not IExplorerVersionLower55; Flags: fixed
 #ENDIF
 
 Name: languages; Description: {cm:Languages}; Types: full custom
