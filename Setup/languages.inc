@@ -10,6 +10,7 @@ Name: hungarian;          MessagesFile: compiler:Languages\Hungarian.isl
 ;Name: indonesian;         MessagesFile: Innosetup languages files\Indonesian-5.1.0.isl
 Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 ;Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.0.isl
+Name: polish;             MessagesFile: compiler:Languages\Polish.isl
 Name: romanian;           MessagesFile: Innosetup languages files\Romanian-5-5.1.0.isl
 ;Name: russian;            MessagesFile: compiler:Languages\Russian.isl
 Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
