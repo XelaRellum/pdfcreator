@@ -342,6 +342,7 @@ Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Compone
 ;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
@@ -710,6 +711,9 @@ Name: languages\italian; Description: Italian; Types: full custom; Check: IsLang
 
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
+
+Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
+Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
 
 Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
 Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
