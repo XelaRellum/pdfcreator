@@ -16,3 +16,4 @@ Name: romanian;           MessagesFile: Innosetup languages files\Romanian-5-5.1
 Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
 Name: slovenian;          MessagesFile: compiler:Languages\Slovenian.isl
 Name: spanish;            MessagesFile: Innosetup languages files\SpanishStd-2-5.1.0.isl
+Name: swedish;            MessagesFile: Innosetup languages files\Swedish-8-5.1.0.isl

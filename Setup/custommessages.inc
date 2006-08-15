@@ -15,3 +15,4 @@
 #include "Language includes\slovak.inc"
 #include "Language includes\slovenian.inc"
 #include "Language includes\spanish.inc"
+#include "Language includes\swedish.inc"
