@@ -5279,7 +5279,6 @@ On Error GoTo ErrPtnr_OnError
 59560    lblCustomPapersizeInfo.Enabled = False
 59570  End If
 59580  Timer1.Enabled = True
-59590  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -5791,104 +5790,108 @@ On Error GoTo ErrPtnr_OnError
 50060  txtTest.Text = vbNullString
 50070  For i = 33 To 255
 50080   txtTest.Text = txtTest.Text & Chr$(i)
-50090  Next i
-50100  fi = -1
-50110  With cmbFonts
-50120   .Clear
-50130   For i = 1 To Screen.FontCount
-50140    tStr = Trim$(Screen.Fonts(i))
-50150    If Len(tStr) > 0 Then
-50160     cmbFonts.AddItem tStr
-50170    End If
-50180   Next i
-50190   If .ListCount > 0 Then
-50200     For i = 0 To cmbFonts.ListCount - 1
-50210      If SMF.Count > 0 Then
-50220       If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
-50230        fi = i
-50240       End If
-50250      End If
-50260     Next i
-50270    Else
-50280    .ListIndex = 0
-50290   End If
-50300  End With
-50310  With cmbCharset
-50320   .Clear
-50330   .AddItem "0, Western": .ItemData(.NewIndex) = 0
-50340   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
-50350   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
-50360   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
-50370   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
-50380   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
-50390   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
-50400   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
-50410   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
-50420   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
-50430   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
-50440   .Text = 0
-50450  End With
-50460  With cmbProgramFontsize
-50470   .AddItem "8"
-50480   .AddItem "9"
-50490   .AddItem "10"
-50500   .AddItem "11"
-50510   .AddItem "12"
-50520   .AddItem "14"
-50530   .AddItem "16"
-50540   .AddItem "18"
-50550   .AddItem "20"
-50560   .AddItem "22"
-50570   .AddItem "24"
-50580   .AddItem "26"
-50590   .AddItem "28"
-50600   .AddItem "36"
-50610   .AddItem "48"
-50620   .AddItem "72"
-50630  End With
-50640  cmbProgramFontsize.Text = 8
-50650  cmbCharset.Text = cmbCharset.ItemData(0)
-50660  cmbCharset.Text = Options.ProgramFontCharset
-50670  For Each ctl In Controls
-50680   If TypeOf ctl Is ComboBox Then
-50690    ComboSetListWidth ctl
-50700   End If
-50710  Next ctl
-50720
-50730  SetOptimalComboboxHeigth cmbCharset, Me
-50740  SetOptimalComboboxHeigth cmbProgramFontsize, Me
-50750  SetOptimalComboboxHeigth cmbGhostscript, Me
+50090   DoEvents
+50100  Next i
+50110  fi = -1
+50120  With cmbFonts
+50130   .Clear
+50140   For i = 1 To Screen.FontCount
+50150    tStr = Trim$(Screen.Fonts(i))
+50160    If LenB(tStr) > 0 Then
+50170     cmbFonts.AddItem tStr
+50180    End If
+50190    DoEvents
+50200   Next i
+50210   If .ListCount > 0 Then
+50220     For i = 0 To cmbFonts.ListCount - 1
+50230      If SMF.Count > 0 Then
+50240       If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
+50250        fi = i
+50260        Exit For
+50270       End If
+50280      End If
+50290      DoEvents
+50300     Next i
+50310    Else
+50320    .ListIndex = 0
+50330   End If
+50340  End With
+50350  With cmbCharset
+50360   .Clear
+50370   .AddItem "0, Western": .ItemData(.NewIndex) = 0
+50380   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
+50390   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
+50400   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
+50410   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
+50420   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
+50430   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
+50440   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
+50450   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
+50460   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
+50470   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
+50480   .Text = 0
+50490  End With
+50500  With cmbProgramFontsize
+50510   .AddItem "8"
+50520   .AddItem "9"
+50530   .AddItem "10"
+50540   .AddItem "11"
+50550   .AddItem "12"
+50560   .AddItem "14"
+50570   .AddItem "16"
+50580   .AddItem "18"
+50590   .AddItem "20"
+50600   .AddItem "22"
+50610   .AddItem "24"
+50620   .AddItem "26"
+50630   .AddItem "28"
+50640   .AddItem "36"
+50650   .AddItem "48"
+50660   .AddItem "72"
+50670  End With
+50680  cmbProgramFontsize.Text = 8
+50690  cmbCharset.Text = cmbCharset.ItemData(0)
+50700  cmbCharset.Text = Options.ProgramFontCharset
+50710  For Each ctl In Controls
+50720   If TypeOf ctl Is ComboBox Then
+50730    ComboSetListWidth ctl
+50740   End If
+50750  Next ctl
 50760
-50770  Form_Resize
-50780
-50790  cmbProgramFontsize.Width = txtTest.Width - _
+50770  SetOptimalComboboxHeigth cmbCharset, Me
+50780  SetOptimalComboboxHeigth cmbProgramFontsize, Me
+50790  SetOptimalComboboxHeigth cmbGhostscript, Me
+50800
+50810  Form_Resize
+50820
+50830  cmbProgramFontsize.Width = txtTest.Width - _
   (cmbProgramFontsize.Left - txtTest.Left)
-50810
-50820  If fi >= 0 Then
-50830   cmbFonts.ListIndex = fi
-50840   cmbCharset.Text = SMF(1)(2)
-50850   cmbProgramFontsize.Text = SMF(1)(1)
-50860   txtTest.Font = cmbFonts.List(cmbFonts.ListIndex)
-50870   txtTest.Font.Charset = cmbCharset.Text
-50880  End If
-50890
-50900  ShowOptions Me, Options
-50910
-50920  If Options.UseAutosaveDirectory = "1" Then
-50930    ViewAutosaveDirectory True
-50940   Else
-50950    ViewAutosaveDirectory False
-50960  End If
-50970  If Options.UseAutosave = "1" Then
-50980    ViewAutosave True
-50990   Else
-51000    ViewAutosave False
-51010  End If
-51020
-51030  CheckCmdFilenameSubst
-51040  CorrectCmbCharset
-51050  tbstrProgActions.Tabs(2).Selected = True
-51060 ' Call ieb_ItemClick("PROGRAM", "GENERAL")
+50850
+50860  If fi >= 0 Then
+50870   cmbFonts.ListIndex = fi
+50880   cmbCharset.Text = SMF(1)(2)
+50890   cmbProgramFontsize.Text = SMF(1)(1)
+50900   txtTest.Font = cmbFonts.List(cmbFonts.ListIndex)
+50910   txtTest.Font.Charset = cmbCharset.Text
+50920  End If
+50930
+50940  ShowOptions Me, Options
+50950
+50960  If Options.UseAutosaveDirectory = "1" Then
+50970    ViewAutosaveDirectory True
+50980   Else
+50990    ViewAutosaveDirectory False
+51000  End If
+51010  If Options.UseAutosave = "1" Then
+51020    ViewAutosave True
+51030   Else
+51040    ViewAutosave False
+51050  End If
+51060
+51070  CheckCmdFilenameSubst
+51080  CorrectCmbCharset
+51090  tbstrProgActions.Tabs(2).Selected = True
+51100  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
