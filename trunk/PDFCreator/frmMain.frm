@@ -2017,11 +2017,13 @@ On Error GoTo ErrPtnr_OnError
 50200    tlb(1).Visible = True
 50210    txtEmailAddress.Visible = True
 50220    mnViewToolbars(1).Checked = True
-50230   Else
-50240    tlb(1).Visible = False
-50250    txtEmailAddress.Visible = False
-50260    mnViewToolbars(1).Checked = False
-50270  End If
+50230    mnDocument(15).Visible = True
+50240    mnDocument(16).Visible = True
+50250   Else
+50260    tlb(1).Visible = False
+50270    txtEmailAddress.Visible = False
+50280    mnViewToolbars(1).Checked = False
+50290  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
