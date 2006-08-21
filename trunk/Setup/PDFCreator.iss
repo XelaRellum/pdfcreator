@@ -407,6 +407,22 @@ Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; Dest
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
