@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.1.6 (with ISPP) and ISTool 5.1.6
+; Setup created with Inno Setup QuickStart Pack 5.1.7 (with ISPP) and ISTool 5.1.6
 ; Installation from Frank Heindörfer
 
 ;#define Test
@@ -17,7 +17,6 @@
 
 #define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
-;#define GhostscriptLicense "AFPL"
 
 #ifdef FastCompilation
  #define CompressionMode="none"
@@ -28,14 +27,8 @@
 #endif
 
 #Ifdef IncludeGhostscript
-#If (GhostscriptLicense=="GPL")
  #define GhostscriptVersion "8.54"
  #define GhostscriptSetupString "GPLGhostscript"
-#ENDIF
-#If (GhostscriptLicense=="AFPL")
- #define GhostscriptVersion "8.54"
- #define GhostscriptSetupString "AFPLGhostscript"
-#ENDIF
 #ENDIF
 
 #if (fileexists("..\PDFCreator\PDFCreator.exe")==0)
@@ -324,9 +317,7 @@ Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignorever
 Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: program; Flags: ignoreversion
 Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: program; Flags: ignoreversion
 
-;#If (GhostscriptLicense=="AFPL")
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
-;#ENDIF
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 
@@ -459,15 +450,10 @@ Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; Flags: createonlyiffileexists
-;#If (GhostscriptLicense=="AFPL")
 Name: {group}\AFPL License; Filename: {app}\AFPL License.txt; WorkingDir: {app}
-;#ENDIF
-;#If (GhostscriptLicense=="GNU")
 Name: {group}\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
-;#ENDIF
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
-;Name: {group}\{cm:UninstallProgram,{#Appname}}; Filename: {uninstallexe}; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: Not german
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_german.chm; WorkingDir: {app}; Languages: german
