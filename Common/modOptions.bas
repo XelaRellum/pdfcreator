@@ -397,7 +397,8 @@ On Error GoTo ErrPtnr_OnError
 50340      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", HKEY_LOCAL_MACHINE, NoMsg, False)
 50350    End If
 50360  End If
-50370  ReadOptions = myOptions
+50370  myOptions = CorrectOptionsAfterLoading(myOptions)
+50380  ReadOptions = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2307,7 +2308,56 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CorrectOptions()
+Public Function CorrectOptionsAfterLoading(Options As tOptions) As tOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim fns As String, fnsf() As String, nfnsf() As String, i As Long, j As Long
+50020  fns = Options.FilenameSubstitutions
+50030  If LenB(fns) = 0 Then
+50040   CorrectOptionsAfterLoading = Options
+50050   Exit Function
+50060  End If
+50070  If InStr(1, fns, "\") = 0 Then
+50080   CorrectOptionsAfterLoading = Options
+50090   Exit Function
+50100  End If
+50110  fnsf = Split(fns, "\")
+50120  ReDim nfnsf(0)
+50130  nfnsf(0) = fnsf(0)
+50140  For i = 1 To UBound(fnsf)
+50150   For j = LBound(nfnsf) To UBound(nfnsf)
+50160    If nfnsf(j) = fnsf(i) Then
+50170     Exit For
+50180    End If
+50190    DoEvents
+50200   Next j
+50210   If j > UBound(nfnsf) Then
+50220    ReDim Preserve nfnsf(UBound(nfnsf) + 1)
+50230    nfnsf(UBound(nfnsf)) = fnsf(i)
+50240   End If
+50250   DoEvents
+50260  Next i
+50270  fns = nfnsf(0)
+50280  For i = 1 To UBound(nfnsf)
+50290   fns = fns & "\" & nfnsf(i)
+50300   DoEvents
+50310  Next i
+50320  Options.FilenameSubstitutions = fns
+50330  CorrectOptionsAfterLoading = Options
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modOptions", "CorrectOptionsAfterLoading")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub CorrectOptionsBeforeSaving()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -2322,7 +2372,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modOptions", "CorrectOptions")
+Select Case ErrPtnr.OnError("modOptions", "CorrectOptionsBeforeSaving")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2335,7 +2385,7 @@ Public Sub SaveOptions(sOptions As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  CorrectOptions
+50010  CorrectOptionsBeforeSaving
 50020  If InstalledAsServer Then
 50030    If UseINI Then
 50040      SaveOptionsINI sOptions, CompletePath(GetCommonAppData) & "PDFCreator.ini"
@@ -6055,7 +6105,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtGSbin.Text = .DirectoryGhostscriptBinaries
   Frm.txtGSfonts.Text = .DirectoryGhostscriptFonts
   Frm.txtGSlib.Text = .DirectoryGhostscriptLibraries
-  Frm.txtGSResource.Text = .DirectoryGhostscriptResource
+  Frm.txtGSresource.Text = .DirectoryGhostscriptResource
   Frm.cmbEPSLanguageLevel.ListIndex = .EPSLanguageLevel
   Set lsv = Frm.lsvFilenameSubst
   lsv.ListItems.Clear
@@ -6153,7 +6203,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
     End If
   Next i
   Frm.cmbCharset.Text = .ProgramFontCharset
-  Frm.cmbProgramFontSize.Text = .ProgramFontSize
+  Frm.cmbProgramFontsize.Text = .ProgramFontSize
   Frm.cmbPSLanguageLevel.ListIndex = .PSLanguageLevel
   Frm.chkSpaces.Value = .RemoveSpaces
   Frm.chkRunProgramAfterSaving.Value = .RunProgramAfterSaving
@@ -6175,7 +6225,7 @@ Public Sub ShowOptions(Frm As Form, sOptions As tOptions)
   Frm.txtStampString.Text = .StampString
   Frm.chkStampUseOutlineFont.Value = .StampUseOutlineFont
   Frm.txtStandardAuthor.Text = .StandardAuthor
-  Frm.cmbStandardSaveformat.ListIndex = .StandardSaveformat
+  Frm.cmbStandardSaveFormat.ListIndex = .StandardSaveformat
   Frm.cmbTIFFColors.ListIndex = .TIFFColorscount
   Frm.chkUseAutosave.Value = .UseAutosave
   Frm.chkUseAutosaveDirectory.Value = .UseAutosaveDirectory
@@ -6217,7 +6267,7 @@ On Error GoTo ErrPtnr_OnError
 50250  .DirectoryGhostscriptBinaries = Frm.txtGSbin.Text
 50260  .DirectoryGhostscriptFonts = Frm.txtGSfonts.Text
 50270  .DirectoryGhostscriptLibraries = Frm.txtGSlib.Text
-50280  .DirectoryGhostscriptResource = Frm.txtGSResource.Text
+50280  .DirectoryGhostscriptResource = Frm.txtGSresource.Text
 50290  If LenB(Frm.cmbEPSLanguageLevel.ListIndex) > 0 Then
 50300   .EPSLanguageLevel = Frm.cmbEPSLanguageLevel.ListIndex
 50310  End If
@@ -6351,8 +6401,8 @@ On Error GoTo ErrPtnr_OnError
 51590  If LenB(Frm.cmbCharset.Text) > 0 Then
 51600   .ProgramFontCharset = Frm.cmbCharset.Text
 51610  End If
-51620  If LenB(Frm.cmbProgramFontSize.Text) > 0 Then
-51630   .ProgramFontSize = Frm.cmbProgramFontSize.Text
+51620  If LenB(Frm.cmbProgramFontsize.Text) > 0 Then
+51630   .ProgramFontSize = Frm.cmbProgramFontsize.Text
 51640  End If
 51650  If LenB(Frm.cmbPSLanguageLevel.ListIndex) > 0 Then
 51660   .PSLanguageLevel = Frm.cmbPSLanguageLevel.ListIndex
@@ -6384,8 +6434,8 @@ On Error GoTo ErrPtnr_OnError
 51920  .StampString = Frm.txtStampString.Text
 51930  .StampUseOutlineFont = Abs(Frm.chkStampUseOutlineFont.Value)
 51940  .StandardAuthor = Frm.txtStandardAuthor.Text
-51950  If LenB(Frm.cmbStandardSaveformat.ListIndex) > 0 Then
-51960   .StandardSaveformat = Frm.cmbStandardSaveformat.ListIndex
+51950  If LenB(Frm.cmbStandardSaveFormat.ListIndex) > 0 Then
+51960   .StandardSaveformat = Frm.cmbStandardSaveFormat.ListIndex
 51970  End If
 51980  If LenB(Frm.cmbTIFFColors.ListIndex) > 0 Then
 51990   .TIFFColorscount = Frm.cmbTIFFColors.ListIndex

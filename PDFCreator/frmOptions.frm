@@ -4335,7 +4335,7 @@ On Error GoTo ErrPtnr_OnError
 50050  End If
 50060  CorrectCmbCharset
 50070  GetOptions Me, Options
-50080  CorrectOptions
+50080
 50090  SaveOptions Options
 50100  If IsWin9xMe = False Then
 50111   Select Case Options.ProcessPriority
