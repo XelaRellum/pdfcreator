@@ -99,6 +99,7 @@ File=%AppDir%&bs;Languages&bs;slovak.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Langu
 File=%AppDir%&bs;Languages&bs;slovenian.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;slovenian.ini,1,0
 File=%AppDir%&bs;Languages&bs;spanish.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;spanish.ini,1,0
 File=%AppDir%&bs;Languages&bs;swedish.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;swedish.ini,1,0
+File=%AppDir%&bs;Languages&bs;turkish.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;turkish.ini,1,0
 File=%AppDir%&bs;Languages&bs;valencian.ini,C:&bs;PDFCreator&bs;PDFCreator&bs;Languages&bs;valencian.ini,1,0
 Folder=%AppDir%&bs;Scripts
 Folder=%AppDir%&bs;Scripts&bs;RunProgramAfterSaving
