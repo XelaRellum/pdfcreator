@@ -74,7 +74,7 @@ Application_Pathname=%AppDir%\PDFCreator.exe
 
 [CREATE_SETUP]
 OutputFolder=C:&bs;PDFCreator&bs;Setup&bs;Installation
-SetupFilename=zPDFCreator-AD_DeploymentPackage-WithoutToolbar.msi
+SetupFilename=zPDFCreator-0_9_3-AD_DeploymentPackage-WithoutToolbar.msi
 SetupExeFilename=Setup.exe
 SetupIconPathname=
 CreateSelfExtractedSetup=No
