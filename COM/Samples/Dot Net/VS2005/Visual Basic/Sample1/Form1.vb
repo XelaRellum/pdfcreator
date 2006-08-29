@@ -7,6 +7,8 @@ Public Class Form1
 
     Private WithEvents _PDFCreator As PDFCreator.clsPDFCreator
     Private pErr As PDFCreator.clsPDFCreatorError
+    Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
+    Friend WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
 
     Private ReadyState As Boolean
 
@@ -28,7 +30,6 @@ Public Class Form1
 
     Private components As System.ComponentModel.IContainer
 
-    Friend WithEvents StatusBar1 As System.Windows.Forms.StatusBar
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents Button3 As System.Windows.Forms.Button
@@ -39,7 +40,6 @@ Public Class Form1
     Friend WithEvents OpenFileDialog1 As System.Windows.Forms.OpenFileDialog
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Me.StatusBar1 = New System.Windows.Forms.StatusBar
         Me.Button1 = New System.Windows.Forms.Button
         Me.Button2 = New System.Windows.Forms.Button
         Me.Button3 = New System.Windows.Forms.Button
@@ -48,15 +48,10 @@ Public Class Form1
         Me.Button6 = New System.Windows.Forms.Button
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'StatusBar1
-        '
-        Me.StatusBar1.Location = New System.Drawing.Point(0, 118)
-        Me.StatusBar1.Name = "StatusBar1"
-        Me.StatusBar1.Size = New System.Drawing.Size(536, 16)
-        Me.StatusBar1.TabIndex = 2
-        Me.StatusBar1.Text = "Status:"
         '
         'Button1
         '
@@ -115,20 +110,38 @@ Public Class Form1
         'Timer1
         '
         '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 112)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(536, 22)
+        Me.StatusStrip1.TabIndex = 7
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(42, 17)
+        Me.ToolStripStatusLabel1.Text = "Status:"
+        '
         'Form1
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.ClientSize = New System.Drawing.Size(536, 134)
+        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Button6)
         Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.StatusBar1)
         Me.Name = "Form1"
         Me.Text = "Sample1 - PDFCreator COM interface"
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -136,7 +149,8 @@ Public Class Form1
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Dim parameters As String
-        StatusBar1.Text = "Status: Program is started."
+
+        ToolStripStatusLabel1.Text = "Status: Program is started."
 
         pErr = New PDFCreator.clsPDFCreatorError
         _PDFCreator = New PDFCreator.clsPDFCreator
@@ -144,7 +158,7 @@ Public Class Form1
         parameters = "/NoProcessingAtStartup"
 
         If _PDFCreator.cStart(parameters) = False Then
-            StatusBar1.Text = "Status: Error[" & pErr.Number & "]: " & pErr.Description
+            ToolStripStatusLabel1.Text = "Status: Error[" & pErr.Number & "]: " & pErr.Description
         Else
             Button1.Enabled = True
             Button2.Enabled = True
@@ -156,7 +170,7 @@ Public Class Form1
     End Sub
 
     Private Sub PDFCreator_Ready() Handles _PDFCreator.eReady
-        StatusBar1.Text = "Status: """ & _PDFCreator.cOutputFilename & """ was created!"
+        ToolStripStatusLabel1.Text = "Status: """ & _PDFCreator.cOutputFilename & """ was created!"
         _PDFCreator.cPrinterStop = True
         ReadyState = True
     End Sub
@@ -241,10 +255,9 @@ Public Class Form1
                 DefaultPrinter = .cDefaultPrinter
                 .cDefaultPrinter = "PDFCreator"
                 .cPrintFile(fi.FullName)
+                ReadyState = False
                 .cPrinterStop = False
             End With
-
-            ReadyState = False
 
             With Timer1
                 .Interval = maxTime * 1000
