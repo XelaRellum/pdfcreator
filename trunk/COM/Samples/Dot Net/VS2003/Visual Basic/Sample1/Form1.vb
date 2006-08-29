@@ -241,10 +241,9 @@ Public Class Form1
                 DefaultPrinter = .cDefaultPrinter
                 .cDefaultPrinter = "PDFCreator"
                 .cPrintFile(fi.FullName)
+                ReadyState = False
                 .cPrinterStop = False
             End With
-
-            ReadyState = False
 
             With Timer1
                 .Interval = maxTime * 1000

@@ -267,8 +267,8 @@ namespace Sample1
 					DefaultPrinter = _PDFCreator.cDefaultPrinter;
 					_PDFCreator.cDefaultPrinter = "PDFCreator";
 					_PDFCreator.cPrintFile(fi.FullName);
-					_PDFCreator.cPrinterStop = false;
 					ReadyState = false;
+					_PDFCreator.cPrinterStop = false;
 					timer1.Interval = maxTime * 1000;
 					timer1.Enabled = true;
 					while (!ReadyState && timer1.Enabled)
