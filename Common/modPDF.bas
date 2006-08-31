@@ -407,7 +407,7 @@ Public Sub AppendPDFDocInfo(PSFile As String, PDFDocInfo As tPDFDocInfo)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, _
-  tStr As String
+  tStr As String, ttStr As String
 50030  With PDFDocInfo
 50040   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author "
 50050   tStr = EncodeChars(.Author)
@@ -419,18 +419,18 @@ On Error GoTo ErrPtnr_OnError
 50110   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
 50120    Set tzi = New clsTimeZoneInformation
 50130    If tzi.DayLight Then
-50140      tStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
+50140      ttStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
 50150     Else
-50160      tStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
+50160      ttStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
 50170    End If
 50180    If tzi.DaylightToGMT >= 0 Then
-50190      tStr = "+" & tStr
+50190      ttStr = "+" & ttStr
 50200     Else
-50210      tStr = "-" & tStr
+50210      ttStr = "-" & ttStr
 50220    End If
 50230   End If
 50240   If LenB(Trim$(.CreationDate)) > 0 Then
-50250    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & .CreationDate & tStr & ")"
+50250    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & .CreationDate & ttStr & ")"
 50260   End If
 50270   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator "
 50280   tStr = EncodeChars(.Creator)
@@ -447,7 +447,7 @@ On Error GoTo ErrPtnr_OnError
 50390     PDFDocInfoStr = PDFDocInfoStr & "()"
 50400   End If
 50410   If LenB(Trim$(.ModifyDate)) > 0 Then
-50420    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & .ModifyDate & tStr & ")"
+50420    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & .ModifyDate & ttStr & ")"
 50430   End If
 50440   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
 50450    Set tzi = Nothing
@@ -697,7 +697,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDF", "EncodeCharsOld")
+Select Case ErrPtnr.OnError("modPDF", "EncodeCharsOctal")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
