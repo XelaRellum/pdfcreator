@@ -812,12 +812,12 @@ On Error GoTo ErrPtnr_OnError
 50121  Select Case UCase$(Filename)
         Case "GERMAN"
 50140    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_german.chm"
-50150    If Not FileExists(HelpFile) Then
-50160     HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50170    End If
-50180   Case Else
-50190    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50200  End Select
+50150   Case "FRENCH"
+50160    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_french.chm"
+50170  End Select
+50180  If LenB(HelpFile) = 0 Then
+50190   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
+50200  End If
 50210
 50220  If Not FileExists(HelpFile) Then
 50230   MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & HelpFile, vbExclamation

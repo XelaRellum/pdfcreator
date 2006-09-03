@@ -8,11 +8,11 @@
  #define FastCompilation
  #define IncludeToolbar
 #else
-; #define FastCompilation
+ #define FastCompilation
  #define CompileHelp
- #define IncludeGhostscript
- #define IncludeToolbar
- #define Localization
+; #define IncludeGhostscript
+; #define IncludeToolbar
+; #define Localization
 #endif
 
 #define ProgramLicense "GNU"
@@ -69,6 +69,7 @@
  #endif
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
+ #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\french\PDFCreator.hhp" ,".\")
 #endif
 
 #define GetFileVersionVBExe(str S)     Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + Local[3] + Local[4]
@@ -313,9 +314,10 @@ Source: ShFolder\ShFolder.Exe; DestDir: {app}; Components: program; Flags: ignor
 Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignoreversion
 
 
-;Help file
+;Help files
 Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: program; Flags: ignoreversion
 Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: program; Flags: ignoreversion
+Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: program; Flags: ignoreversion
 
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
@@ -456,8 +458,9 @@ Name: {group}\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}
-Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: Not german
+Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: (Not german) AND (Not french)
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_german.chm; WorkingDir: {app}; Languages: german
+Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_french.chm; WorkingDir: {app}; Languages: french
 
 Name: {group}\{cm:Logfile}; Filename: {app}\PDFCreator.exe; Parameters: -ShowOnlyLogfile; WorkingDir: {app}; IconIndex: 0; Check: IsServerInstallation
 Name: {group}\{cm:Settings}; Filename: {app}\PDFCreator.exe; Parameters: -ShowOnlyOptions; WorkingDir: {app}; IconIndex: 0; Check: IsServerInstallation

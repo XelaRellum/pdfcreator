@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Paramètres de ligne de commande</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<a name="top"></a>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">Aide PDFCreator</td>
+  </tr>
+  <tr>
+    <td background="../images/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Paramètres de ligne de commande</p>
+      <p>PDFCreator vous permet de créer des documents via l'interface de ligne de commande.
+        Voici les différentes commandes acceptées par PDFCreator  :</p>
+      <p> <strong>/CheckInstance </strong><br />
+        Si vous utilisez cette option, PDFCreator affiche une boîte de dialogue contenant des informations sur les instances en cours d'exécution (PDFCreator, PDFSpooler et Transtool). Vous pouvez associer cette option avec l'option /NoStart. Si vous voyez la propriété &quot;Local&quot;, c'est qu'il existe une instance locale. Regarder sur le bureau, la barre de tâches ou le gestionnaire de tâches pour localiser l'instance locale. Si vous voyez seulement la propriété &quot;Global&quot;, alors il existe au moins une instance dans une des sessions de vos serveurs. Cette option est utile pour le débogage et pour les administrateurs afin de savoir si une instance de PDFCreator s'exécute sur un serveur.<br />
+        <em>Exemple :</em> PDFCreator.exe /CheckInstance </p>
+      <p><strong>/ClearCache</strong><br />
+        Supprime tous les fichiers temporaires de PDFCreator. Cela est utile si PDFCreator ne peut démarrer à cause d'un fichier temporaire endommagé.<br />
+        <em>Exemple :</em> pdfcreator.exe /ClearCache</p>
+      <p><strong>/DeleteIF</strong><br />
+        Efface le fichier source après l'avoir converti. Cette option doit être utilisée avec l'option  /IF.<br />
+        <em>Exemple :</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /DeleteIF</p>
+      <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br />
+        </strong>Convertit un fichier postscript en PDF ou en bitmap. L'option /OF doit être utilisée avec l'option  /IF. Pour définir le format de sortie, incluez l'extension de fichier correspondante dans le nom du fichier de sortie. <strong>Il n'y a PAS d'espace entre les options et les noms de fichiers.</strong><br />
+        <em>Exemples :</em><br />
+        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;<br />
+        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.tif&quot;</p>
+      <p><strong>/NoAbortIfRunning</strong><br />
+        Ouvre une nouvelle instance de PDFCreator sans vérifier si le programme est déjà en cours d'exécution. Il est utile de combiner cette option avec l'option /NoProcessing.<br />
+        <em>Exemple :</em> pdfcreator.exe /NoAbortIfRunning</p>
+      <p><strong>/NoProcessing</strong><br />
+        Lorsque PDFCreator est lancé avec l'option /NoProcessing , l'ensemble des documents envoyés à PDFCreator ne sont pas convertis. Ils sont stockés dans la file d'attente jusqu'à ce que PDFCreator soit lancé sans l'option /NoProcessing.<br />
+        <em>Exemple :</em> pdfcreator.exe /NoProcessing</p>
+      <p><strong>/NoProcessingAtStartup:</strong> Lorsque vous utilisez cette option, PDFCreator
+        ne convertira pas immédiatement les documents . Vous pouvez lancer manuellement la conversion en allant dans le menu <em><strong>Document</strong></em> et en sélectionnant 
+        <em><strong>Imprimer</strong></em>, ou en décochant la ligne <em><strong>Arrêt</strong></em> dans le menu <em><strong>Imprimante</strong></em>.
+        L'option est utile si vous voulez collecter plusieurs fichiers d'abord, puis les fusionner entre eux en vue de créer un seul pdf.<br />
+        <em>Propriétés :</em><br />
+        0 - Off (Defaut)<br />
+        1 - On</p>
+      <p><strong>/NoStart</strong><br />
+        Lorsque vous utilisez l'option /PF, PDFCreator reste ouvert une fois sa tâche terminée. L'option /NoStart ferme automatiquement PDFCreator à la fin du traitement.<br />
+        <em>Exemple :</em> pdfcreator.exe /NOSTART /PF&quot;C:\help.doc&quot;</p>
+      <p><strong>/OpenOF</strong><br />
+        Ouvre le fichier converti à la fin du traitement. Cette option ne s'utilise qu'avec les options /IF et l'option /OF.<br />
+        <em>Exemple:</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /OpenOF</p>
+      <p><strong>/OptionsFile&lt;option-filename&gt;</strong><br />
+        Précise les paramètres particuliers que doit utiliser PDFCreator.<br />
+        <em>Exemple :</em> pdfcreator.exe /OptionsFile&quot;C:\MyPDFCreator.ini&quot;<br />
+        (Nota: Avec cette option (et un peu de travail) vous pouvez utiliser plus d'une imprimante par poste.)</p>
+      <p><strong>/PF&lt;filename&gt;</strong><br />
+        Imprime un fichier à l'aide du programme par défaut, déterminé par l'extension du fichier. En général, cette option est utile lorsqu'on utilise le mode Enregistrement automatique.
+        Cette option ne peut pas être utilisée avec l'option /OF.
+        <strong>Il n'y a PAS d'espace entre l'option et le nom de fichier</strong>.<br />
+        <em>Exemple :</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;<br />
+        Vous pouvez également utiliser les caractères génériques pour créer des PDF à partir de tous les fichiers d'un dossier particulier.<br />
+        <em>Exemple:</em> pdfcreator.exe /PF&quot;C:\*.doc&quot;</p>
+      <p><strong>/ShowOnlyLogfile</strong><br />
+        Ouvre seulement le fichier journal de PDFCreator. Aucune autre fenêtre n'est ouverte.<br />
+        <em>Exemple:</em> pdfcreator.exe /ShowOnlyLogfile</p>
+      <p><strong>/ShowOnlyOptions</strong><br />
+        Ouvre seulement le panneau de configuration de PDFCreator. Aucune autre fenêtre n'est ouverte.<br />
+        <em>Exemple:</em> pdfcreator.exe /ShowOnlyOptions</p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
