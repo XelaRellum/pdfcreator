@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Actions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">Aide PDFCreator</td>
+  </tr>
+  <tr>
+    <td background="../images/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Actions</p>
+      <p>Dans Actions vous pouvez spécifier les programmes et les scripts qui sont executés avant ou après l'enregistrement de PDFCreator.</p>
+      <p>Le format interne est PostScript. Les programmes qui souhaitent modifier les fichiers avant que PDFCreator ne les convertisse doivent être capables de manipuler ce format. Les programmes intervenant après la conversion reçoivent le PDF final. </p>
+      <p><strong>Attendre que l'application/le script soit prêt(e) :</strong> Cette option définit si PDFCreator attend ou non que le programme soit prêt. Cette option est requise si le programme modifie le fichier avant que PDFCreator ne le convertisse.</p>
+      <p><strong>Paramètres de l'application : </strong>Ces paramètres sont passés à l'application/au script. Classiquement les variables &lt;TempFilename&gt; pour le nom du fichier temporaire créé avant l'enregistrement et &lt;OutputFilename&gt; pour le PDF une fois enregistré. Les noms de fichiers doivent être entourés de guillemets doubles pour éviter les problèmes liés aux espaces dans les noms de fichier. </p>
+      <p><strong>Style de fenêtre :</strong> Cette option permet de définir l'apparence de la fenêtre dans laquelle le programme s'exécute avant ou après l'enregistrement :<br />
+        Cachée : Le programme s'exécute de façon invisible.<br />
+        Normal/Activée : Le programme s'exécute normalement en avant-plan.<br />
+        Réduite/Activée : Le programme s'exécute dans une fenêtre réduite en avant-plan.<br />
+        Agrandie/Activée : Le programme est exécuté dans une fenêtre agrandie et en avant-plan.<br />
+        Normal/non active : Le programme s'exécute normalement en arrière-plan. <br />
+        Réduite/non active : Le programme s'exécute dans une fenêtre réduite en arrière-plan. </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
