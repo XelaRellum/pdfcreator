@@ -6,7 +6,7 @@
 #include "Language includes\french.inc"
 #include "Language includes\german.inc"
 #include "Language includes\hungarian.inc"
-;#include "Language includes\indonesian.inc"
+#include "Language includes\indonesian.inc"
 #include "Language includes\italian.inc"
 #include "Language includes\lithuanian.inc"
 #include "Language includes\polish.inc"
