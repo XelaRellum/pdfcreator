@@ -1180,28 +1180,29 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function ShowParams() As String
+Private Sub ShowParams()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long, tStr As String
-50020  tStr = GSParams(LBound(GSParams))
-50030  For i = LBound(GSParams) + 1 To UBound(GSParams)
-50040   tStr = tStr & vbCrLf & GSParams(i)
-50050  Next i
-50060  IfLoggingWriteLogfile "Ghostscriptparameter:" & vbCrLf & tStr
-50070  ShowParams = "Ghostscriptparameter:" & vbCrLf & tStr
+50020  If Options.Logging <> 0 Then
+50030   tStr = GSParams(LBound(GSParams))
+50040   For i = LBound(GSParams) + 1 To UBound(GSParams)
+50050    tStr = tStr & vbCrLf & GSParams(i)
+50060   Next i
+50070   IfLoggingWriteLogfile "Ghostscriptparameter:" & vbCrLf & tStr
+50080  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
+Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGhostscript", "ShowParams")
 Case 0: Resume
 Case 1: Resume Next
-Case 2: Exit Function
+Case 2: Exit Sub
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
+End Sub
 
 Private Sub AddParams(strValue As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
