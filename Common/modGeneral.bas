@@ -2391,10 +2391,23 @@ End Select
 End Function
 
 Public Function AllowedKeypressChars(KeyAscii As Integer) As Integer
- If InStr(1, "0123456789" & Chr$(8) & Chr$(13), Chr$(KeyAscii)) = 0 Then
-   AllowedKeypressChars = 0
-  Else
-   AllowedKeypressChars = KeyAscii
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If InStr(1, "0123456789" & Chr$(8) & Chr$(13), Chr$(KeyAscii)) = 0 Then
+50020    AllowedKeypressChars = 0
+50030   Else
+50040    AllowedKeypressChars = KeyAscii
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "AllowedKeypressChars")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 

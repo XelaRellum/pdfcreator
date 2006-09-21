@@ -44,6 +44,8 @@
       Public Property Get cProgramRelease(Optional ByVal WithBeta As Boolean = True) As String<br>
       Public Property Get cStandardOption(ByVal PropertyName As String) As Variant<br>
       Public Property Get cStandardOptions() As clsPDFCreatorOptions<br>
+      Public Property Get cStopURLPrinting() As Boolean<br>
+      Public Property Let cStopURLPrinting(ByVal Value As Boolean)<br>
       Public Property Get cVisible() As Boolean<br>
       Public Property Let cVisible(ByVal Value As Boolean)<br>
       Public Property Get cWindowState() As Long<br>
@@ -87,6 +89,7 @@
       Public Sub cPrintFile(ByVal Filename As String)<br>
       Public Sub cPrintPDFCreatorTestpage()<br>
       Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)<br>
+      Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)<br>
       Public Sub cSaveOptions(Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 muss vom Typ clsPDFCreatorOptions sein<br></span>
       Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 muss vom Typ clsPDFCreatorOptions sein<br></span>
       Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)<br>
