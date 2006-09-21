@@ -676,3 +676,35 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Sub PrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim web As InternetExplorer
+50020  Set web = New InternetExplorer
+50030  web.Navigate2 URL
+50040  Do Until web.ReadyState = READYSTATE_COMPLETE
+50050   DoEvents
+50060   If StopURLPrinting = True Then
+50070    Exit Sub
+50080   End If
+50090  Loop
+50100  DoEvents
+50110  Sleep TimeBetweenLoadAndPrint
+50120  DoEvents
+50130  If (web.QueryStatusWB(OLECMDID_PRINT) And OLECMDF_ENABLED) = OLECMDF_ENABLED Then
+50140   web.ExecWB OLECMDID.OLECMDID_PRINT, OLECMDEXECOPT.OLECMDEXECOPT_DONTPROMPTUSER
+50150  End If
+50160  Set web = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "PrintURL")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
