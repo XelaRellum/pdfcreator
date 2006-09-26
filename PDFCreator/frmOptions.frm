@@ -4328,31 +4328,35 @@ Private Sub cmdSave_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tRestart As Boolean
+50010  Dim tRestart As Boolean, tOpt As tOptions
 50020  tRestart = False
 50030  If UCase$(Options.DirectoryGhostscriptBinaries) <> UCase$(txtGSbin.Text) Then
 50040   tRestart = True
 50050  End If
 50060  CorrectCmbCharset
-50070  GetOptions Me, Options
-50080
-50090  SaveOptions Options
-50100  If IsWin9xMe = False Then
-50111   Select Case Options.ProcessPriority
+50070
+50080  tOpt = Options
+50090  GetOptions Me, Options
+50100  Options.StampFontname = tOpt.StampFontname
+50110  Options.StampFontsize = tOpt.StampFontsize
+50120  SaveOptions Options
+50130
+50140  If IsWin9xMe = False Then
+50151   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50130     SetProcessPriority Idle
-50140    Case 1: 'Normal
-50150     SetProcessPriority Normal
-50160    Case 2: 'High
-50170     SetProcessPriority High
-50180    Case 3: 'Realtime
-50190     SetProcessPriority RealTime
-50200   End Select
-50210  End If
-50220  If tRestart = True Then
-50230   Restart = True
-50240  End If
-50250  Unload Me
+50170     SetProcessPriority Idle
+50180    Case 1: 'Normal
+50190     SetProcessPriority Normal
+50200    Case 2: 'High
+50210     SetProcessPriority High
+50220    Case 3: 'Realtime
+50230     SetProcessPriority RealTime
+50240   End Select
+50250  End If
+50260  If tRestart = True Then
+50270   Restart = True
+50280  End If
+50290  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
