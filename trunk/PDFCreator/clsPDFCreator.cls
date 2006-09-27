@@ -27,6 +27,7 @@ Private Const ErrDescr6 = "No valid path '%1' was given!"
 Private Const ErrDescr7 = "The file '%1' is in use!"
 Private Const ErrDescr8 = "Function '%1': Options1 is not a 'clsPDFCreatorOptions' type!"
 Private Const ErrDescr9 = "No valid postscript file '%1' was given!"
+Private Const ErrDescr10 = "Empty array 'Arguments'!"
 
 Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
 Private WithEvents eActionTimer As Timer
@@ -135,6 +136,28 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Property Get cGhostscriptVersion() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim G As tGhostscriptRevision
+50020  G = GetGhostscriptRevision
+50030  cGhostscriptVersion = G.strProduct & vbCrLf & _
+  G.strCopyright & vbCrLf & _
+  CStr(G.intRevision) & vbCrLf & _
+  CStr(G.intRevisionDate)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscript_Version [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
 
 Public Property Get cOutputFilename() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -577,11 +600,7 @@ Public Property Get cOption(ByVal PropertyName As String) As Variant
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If CheckForRunningProgramErrors Then
-50020   RaiseEvent eError
-50030   Exit Property
-50040  End If
-50050  cOption = cGetOptionFromOptions(PropertyName, Options)
+50010  cOption = cGetOptionFromOptions(PropertyName, Options)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -619,11 +638,7 @@ Public Property Get cOptions() As clsPDFCreatorOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If CheckForRunningProgramErrors Then
-50020   RaiseEvent eError
-50030   Exit Property
-50040  End If
-50050  Set cOptions = cGetOptions(Options)
+50010  Set cOptions = cGetOptions(Options)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -1761,6 +1776,47 @@ End Select
 End Sub
 ' --- Public functions/Subroutines - end ---
 
+Public Function cGhostscriptRun(Arguments() As Variant) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim gsArgs() As String, i As Long, c As Collection
+50020  If Not IsArray(Arguments) Then
+50030   mError.Number = 10
+50040   mError.Description = ErrDescr10
+50050   RaiseEvent eError
+50060   Exit Function
+50070  End If
+50080  Set c = New Collection
+50090  For i = LBound(Arguments) To UBound(Arguments)
+50100   If LenB(Trim$(CStr(Arguments(i)))) > 0 Then
+50110    c.Add Trim$(CStr(Arguments(i)))
+50120   End If
+50130  Next i
+50140  If c.Count = 0 Then
+50150   mError.Number = 10
+50160   mError.Description = ErrDescr10
+50170   RaiseEvent eError
+50180   Exit Function
+50190  End If
+50200  c.Add "", , 1
+50210  ReDim gsArgs(c.Count - 1)
+50220  For i = 0 To c.Count - 1
+50230   gsArgs(i) = c(i + 1)
+50240  Next i
+50250  cGhostscriptRun = CallGS(gsArgs)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscript_Run")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 ' --- Private functions/Subroutines - end ---
 Private Sub eActionTimer_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2543,4 +2599,3 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
-
