@@ -283,5 +283,8 @@ Public Class Form1
         System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr)
         pErr = Nothing
         GC.Collect()
+        GC.WaitForPendingFinalizers()
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
     End Sub
 End Class
