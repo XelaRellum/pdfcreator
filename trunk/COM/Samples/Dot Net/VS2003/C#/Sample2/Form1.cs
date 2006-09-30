@@ -215,6 +215,9 @@ namespace Sample2
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr);
 			pErr = null;
 			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
 		}
 	}
 }
