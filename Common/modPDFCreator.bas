@@ -188,12 +188,14 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Temppath As String
 50020  If DirExists(GetPDFCreatorTempfolder) = False Then
-50030   Temppath = CompletePath(GetTempPath)
-50040   MakePath Temppath
-50050   Options.PrinterTemppath = Temppath
-50060   SaveOptions Options
-50070   Options = ReadOptions
-50080  End If
+50030   MakePath GetPDFCreatorTempfolder
+50040  End If
+50050  If DirExists(GetPDFCreatorTempfolder) = False Then
+50060   Temppath = CompletePath(GetTempPath)
+50070   MakePath Temppath
+50080   Options.PrinterTemppath = Temppath
+50090   SaveOptions Options
+50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
