@@ -118,7 +118,7 @@
 				<param name="Local" value="html\print.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Schriftarten Einstellungen">
+				<param name="Name" value="Programm-Schriftarten">
 				<param name="Local" value="html\fontsettings.htm">
 				</OBJECT>
 		</UL>
