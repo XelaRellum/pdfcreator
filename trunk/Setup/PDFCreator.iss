@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.1.8 (with ISPP) and ISTool 5.1.6
+; Setup created with Inno Setup QuickStart Pack 5.1.8 (with ISPP) and ISTool 5.1.8
 ; Installation from Frank Heindörfer
 
 ;#define Test
@@ -439,6 +439,7 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression3.vbs; De
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScripts\URL2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
 Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program; Flags: ignoreversion
 
 ; Toolbar

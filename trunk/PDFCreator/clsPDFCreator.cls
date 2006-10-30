@@ -676,7 +676,7 @@ Public Property Get cStandardOption(ByVal PropertyName As String) As Variant
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cStandardOption = cGetOptionFromOptions(PropertyName, StandardOptions)
+50010  Set cStandardOption = cGetOptionFromOptions(PropertyName, StandardOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
