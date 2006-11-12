@@ -16,6 +16,71 @@ Begin VB.Form frmOptions
    ScaleWidth      =   9165
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin PDFCreator.dmFrame dmFraLanguage 
+      Height          =   5895
+      Left            =   2640
+      TabIndex        =   244
+      Top             =   1320
+      Visible         =   0   'False
+      Width           =   6375
+      _ExtentX        =   11245
+      _ExtentY        =   10398
+      Caption         =   "Language"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Begin VB.CommandButton cmdLanguageInstall 
+         Caption         =   "Install"
+         Height          =   375
+         Left            =   4080
+         TabIndex        =   247
+         Top             =   1080
+         Width           =   1575
+      End
+      Begin VB.CommandButton cmdLanguageRefresh 
+         Caption         =   "Refresh List"
+         Height          =   375
+         Left            =   4080
+         TabIndex        =   246
+         Top             =   600
+         Width           =   1575
+      End
+      Begin MSComctlLib.ListView lvTranslations 
+         Height          =   5175
+         Left            =   120
+         TabIndex        =   245
+         Top             =   600
+         Width           =   3855
+         _ExtentX        =   6800
+         _ExtentY        =   9128
+         View            =   3
+         LabelWrap       =   -1  'True
+         HideSelection   =   -1  'True
+         _Version        =   393217
+         ForeColor       =   -2147483640
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         Appearance      =   1
+         NumItems        =   2
+         BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+            Text            =   "Translation"
+            Object.Width           =   3529
+         EndProperty
+         BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+            SubItemIndex    =   1
+            Text            =   "Version"
+            Object.Width           =   2540
+         EndProperty
+      End
+   End
    Begin PDFCreator.dmFrame dmFraProgDocument2 
       Height          =   2610
       Left            =   2640
@@ -4182,6 +4247,47 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub cmdLanguageInstall_Click()
+    Dim strInstallPath As String
+    Const strDownloadPath = "http://www.pdfforge.org/files/translations/"
+
+    strInstallPath = GetMyAppData() & "\PDFCreator\Languages"
+    
+    If Not DirExists(GetMyAppData() & "\PDFCreator") Then
+        CreateDir GetMyAppData() & "\PDFCreator"
+    End If
+    
+    If Not DirExists(GetMyAppData() & "\PDFCreator\Languages") Then
+        CreateDir GetMyAppData() & "\PDFCreator\Languages"
+    End If
+    
+    If lvTranslations.SelectedItem Is Nothing Then Exit Sub
+    HTTPInstallLanguageFile lvTranslations.SelectedItem.Text, lvTranslations.SelectedItem.SubItems(1), strDownloadPath, strInstallPath
+End Sub
+
+Private Sub cmdLanguageRefresh_Click()
+  Dim strLanguages() As String
+  Dim strFile() As String
+  Dim i As Integer
+  Const strDownloadURL = "http://www.pdfforge.org/products/pdfcreator/translations/list"
+
+    MousePointer = vbHourglass
+    
+    strLanguages = Split(HTTPGetFile(strDownloadURL), vbLf)
+    lvTranslations.ListItems.Clear
+    
+    For i = LBound(strLanguages) To UBound(strLanguages)
+        If ((strLanguages(i) <> vbNullString) And (InStr(1, strLanguages(i), ":"))) Then
+            strFile = Split(strLanguages(i), ":")
+            With lvTranslations.ListItems.Add(, , strFile(0))
+                .SubItems(1) = strFile(1)
+            End With
+        End If
+    Next i
+    
+    MousePointer = vbDefault
+End Sub
+
 Private Sub cmdReset_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -4649,6 +4755,9 @@ On Error GoTo ErrPtnr_OnError
 50520   dmFraProgFont.Top = .Top
 50530   dmFraProgFont.Left = .Left
 50540   dmFraProgFont.Width = dmFraDescription.Width
+       dmFraLanguage.Top = .Top
+       dmFraLanguage.Left = .Left
+       dmFraLanguage.Width = dmFraDescription.Width
 50550   dmFraProgActions.Top = .Top
 50560   dmFraProgActions.Left = .Left
 50570   dmFraProgActions.Width = dmFraDescription.Width
@@ -4749,6 +4858,8 @@ On Error GoTo ErrPtnr_OnError
 51520   ieb.AddItem "Program", "Actions", .OptionsProgramActionsSymbol, 7
 51530   ieb.AddItem "Program", "Print", .OptionsProgramPrintSymbol, 8
 51540   ieb.AddItem "Program", "Fonts", .OptionsProgramFontSymbol, 9
+        ieb.AddItem "Program", "Language", .OptionsLanguages, 9
+        
 51550   ieb.AddGroup "Formats", .OptionsTreeFormats, 0
 51560   ieb.AddItem "Formats", "PDF", .OptionsPDFSymbol, 10
 51570   ieb.AddItem "Formats", "PNG", .OptionsPNGSymbol, 11
@@ -4801,6 +4912,11 @@ On Error GoTo ErrPtnr_OnError
 52040   cmbSendMailMethod.AddItem .OptionsSendMailMethodMapi
 52050   cmbSendMailMethod.AddItem .OptionsSendMailMethodSendmailDLL
 52060
+
+        dmFraLanguage.Caption = .OptionsLanguages
+        cmdLanguageInstall.Caption = .OptionsLanguageInstall
+        cmdLanguageRefresh.Caption = .OptionsLanguageRefresh
+        
 52070   lblGhostscriptversion.Caption = .OptionsGhostscriptversion
 52080   lblAdditionalGhostscriptParameters.Caption = .OptionsAdditionalGhostscriptParameters
 52090   lblAdditionalGhostscriptSearchpath.Caption = .OptionsAdditionalGhostscriptSearchpath
@@ -5653,7 +5769,7 @@ On Error GoTo ErrPtnr_OnError
 50220  dmFraPSGeneral.Visible = False
 50230  cmbPSLanguageLevel.Visible = False
 50240  cmbEPSLanguageLevel.Visible = False
-50250
+50250  dmFraLanguage.Visible = False
 50261  Select Case UCase$(sGroup)
         Case "PROGRAM"
 50281    Select Case UCase$(sItemKey)
@@ -5733,6 +5849,10 @@ On Error GoTo ErrPtnr_OnError
 51020      lblOptions = LanguageStrings.OptionsProgramFontDescription
 51030      dmFraProgFont.Enabled = True
 51040      dmFraProgFont.Visible = True
+          Case "LANGUAGE"
+           lblOptions.Caption = "Language [untranslated]"
+           dmFraLanguage.Enabled = True
+           dmFraLanguage.Visible = True
 51050    End Select
 51060   Case "FORMATS"
 51071    Select Case UCase$(sItemKey)
