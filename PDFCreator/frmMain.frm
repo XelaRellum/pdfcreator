@@ -471,7 +471,7 @@ On Error GoTo ErrPtnr_OnError
 50070   WindowState = ProgramWindowState
 50080  End If
 50090
-50100  ReadAllLanguages LanguagePath
+50100  ReadAllLanguages LanguagePath, True
 50110  InitProgram
 50120
 50130  ShowPaypalMenuimage
@@ -745,15 +745,32 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub ReadAllLanguages(LanguagePath As String)
+Private Sub ReadAllLanguages(LanguagePath As String, Optional UserPath As Boolean = False)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Languagename As String, ini As clsINI, LangFiles As Collection, _
-  i As Long, Version As String, Filename As String
+50010  Dim Languagename As String, ini As clsINI, LangFiles As Collection, UserLangFiles As Collection, _
+  i As Long, j As Long, found As Boolean, Version As String, Filename As String
 50030  mnLanguage(0).Caption = "No languages available."
 50040
 50050  Set LangFiles = GetAllLanguagesFiles(LanguagePath)
+       If UserPath Then
+        Dim UserLanguagePath As String
+        UserLanguagePath = GetMyAppData() & "\PDFCreator\Languages"
+        Set UserLangFiles = GetAllLanguagesFiles(UserLanguagePath)
+        
+        For i = 1 To UserLangFiles.Count
+            For j = 1 To LangFiles.Count
+                If GetFilenameFromPath(LangFiles(j)) = GetFilenameFromPath(UserLangFiles(i)) Then
+                  LangFiles.Remove j
+                  Exit For
+                End If
+            Next j
+            LangFiles.Add UserLangFiles(i)
+        Next i
+       End If
+      
+
 50060  Set ini = New clsINI
 50070  For i = 1 To LangFiles.Count
 50080   ini.Filename = LangFiles.Item(i)

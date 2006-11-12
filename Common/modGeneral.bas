@@ -2411,3 +2411,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function GetFilenameFromPath(strPath As String) As String
+    GetFilenameFromPath = Right(strPath, Len(strPath) - InStrRev(strPath, "\"))
+End Function
