@@ -2412,5 +2412,18 @@ End Select
 End Function
 
 Public Function GetFilenameFromPath(strPath As String) As String
-    GetFilenameFromPath = Right(strPath, Len(strPath) - InStrRev(strPath, "\"))
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010     GetFilenameFromPath = Right(strPath, Len(strPath) - InStrRev(strPath, "\"))
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetFilenameFromPath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function

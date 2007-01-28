@@ -373,13 +373,6 @@ Begin VB.Form frmMain
          Index           =   2
       End
    End
-   Begin VB.Menu mnLanguageMain 
-      Caption         =   "Language"
-      Begin VB.Menu mnLanguage 
-         Caption         =   "-"
-         Index           =   0
-      End
-   End
    Begin VB.Menu mnHelpMain 
       Caption         =   "?"
       Begin VB.Menu mnHelp 
@@ -471,59 +464,58 @@ On Error GoTo ErrPtnr_OnError
 50070   WindowState = ProgramWindowState
 50080  End If
 50090
-50100  ReadAllLanguages LanguagePath, True
-50110  InitProgram
-50120
-50130  ShowPaypalMenuimage
-50140  SetGSRevision
-50150
-50160  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
-50170   SetMenuPrinterStop
-50180  End If
-50190  If PrinterStop = True Then
-50200   mnPrinter(0).Checked = True
-50210  End If
-50220  If Options.OptionsEnabled = 0 Then
-50230   mnPrinter(2).Enabled = False
-50240   tlb(0).Buttons(2).Enabled = False
-50250  End If
-50260  If Options.OptionsVisible = 0 Then
-50270   tlb(0).Buttons(2).Visible = False
-50280   mnPrinter(2).Visible = False
-50290   mnPrinter(3).Visible = False
-50300  End If
-50310
-50320  CheckPrintJobs
-50330  Call SetDocMenuAndToolbar
-50340  If (Options.Toolbars And 1) = 1 Then
-50350    tlb(0).Visible = True
-50360   Else
-50370    tlb(0).Visible = False
-50380  End If
-50390  If (Options.Toolbars And 2) = 2 Then
-50400    tlb(1).Visible = True
-50410    txtEmailAddress.Visible = True
-50420   Else
-50430    tlb(1).Visible = False
-50440    txtEmailAddress.Visible = False
-50450  End If
-50460  If PDFCreatorPrinter = False Or NoProcessing = True Or _
+50100  InitProgram
+50110
+50120  ShowPaypalMenuimage
+50130  SetGSRevision
+50140
+50150  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
+50160   SetMenuPrinterStop
+50170  End If
+50180  If PrinterStop = True Then
+50190   mnPrinter(0).Checked = True
+50200  End If
+50210  If Options.OptionsEnabled = 0 Then
+50220   mnPrinter(2).Enabled = False
+50230   tlb(0).Buttons(2).Enabled = False
+50240  End If
+50250  If Options.OptionsVisible = 0 Then
+50260   tlb(0).Buttons(2).Visible = False
+50270   mnPrinter(2).Visible = False
+50280   mnPrinter(3).Visible = False
+50290  End If
+50300
+50310  CheckPrintJobs
+50320  Call SetDocMenuAndToolbar
+50330  If (Options.Toolbars And 1) = 1 Then
+50340    tlb(0).Visible = True
+50350   Else
+50360    tlb(0).Visible = False
+50370  End If
+50380  If (Options.Toolbars And 2) = 2 Then
+50390    tlb(1).Visible = True
+50400    txtEmailAddress.Visible = True
+50410   Else
+50420    tlb(1).Visible = False
+50430    txtEmailAddress.Visible = False
+50440  End If
+50450  If PDFCreatorPrinter = False Or NoProcessing = True Or _
   Options.NoProcessingAtStartup = 1 Or (PDFCreatorPrinter = True And lsv.ListItems.Count > 1) Then
-50480   If ProgramIsVisible Then
-50490    Visible = True
-50500    SetTopMost frmMain, True, True
-50510    SetTopMost frmMain, False, True
-50520    SetActiveWindow frmMain.hwnd
-50530   End If
-50540  End If
-50550
-50560  ' Only for the first time set interval to 10 ms
-50570  Timer1.Interval = 10
-50580  Timer1.Enabled = True
-50590  Timer2.Interval = 100
-50600  Timer2.Enabled = True
-50610
-50620  ProgramIsStarted = True
+50470   If ProgramIsVisible Then
+50480    Visible = True
+50490    SetTopMost frmMain, True, True
+50500    SetTopMost frmMain, False, True
+50510    SetActiveWindow frmMain.hwnd
+50520   End If
+50530  End If
+50540
+50550  ' Only for the first time set interval to 10 ms
+50560  Timer1.Interval = 10
+50570  Timer1.Enabled = True
+50580  Timer2.Interval = 100
+50590  Timer2.Enabled = True
+50600
+50610  ProgramIsStarted = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -629,7 +621,7 @@ On Error GoTo ErrPtnr_OnError
 50250   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50260  End With
 50270
-50280  SetLanguageMenu
+50280  ChangeLanguage
 50290  If Options.Logging = 1 Then
 50300    mnPrinter(4).Checked = True
 50310   Else
@@ -745,71 +737,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub ReadAllLanguages(LanguagePath As String, Optional UserPath As Boolean = False)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Languagename As String, ini As clsINI, LangFiles As Collection, UserLangFiles As Collection, _
-  i As Long, j As Long, found As Boolean, Version As String, Filename As String
-50030  mnLanguage(0).Caption = "No languages available."
-50040
-50050  Set LangFiles = GetAllLanguagesFiles(LanguagePath)
-       If UserPath Then
-        Dim UserLanguagePath As String
-        UserLanguagePath = GetMyAppData() & "\PDFCreator\Languages"
-        Set UserLangFiles = GetAllLanguagesFiles(UserLanguagePath)
-        
-        For i = 1 To UserLangFiles.Count
-            For j = 1 To LangFiles.Count
-                If GetFilenameFromPath(LangFiles(j)) = GetFilenameFromPath(UserLangFiles(i)) Then
-                  LangFiles.Remove j
-                  Exit For
-                End If
-            Next j
-            LangFiles.Add UserLangFiles(i)
-        Next i
-       End If
-      
-
-50060  Set ini = New clsINI
-50070  For i = 1 To LangFiles.Count
-50080   ini.Filename = LangFiles.Item(i)
-50090   ini.Section = "Common"
-50100   Languagename = ini.GetKeyFromSection("Languagename")
-50110   Version = ini.GetKeyFromSection("Version")
-50120   If Len(Languagename) = 0 Then
-50130    Languagename = "No name available."
-50140   End If
-50150   Load mnLanguage(mnLanguage.Count)
-50160   If IsCompatibleLanguageVersion(Version) = True Then
-50170     mnLanguage(mnLanguage.Count - 1).Caption = Languagename
-50180    Else
-50190     mnLanguage(mnLanguage.Count - 1).Caption = Languagename & " [" & Version & "]"
-50200   End If
-50210   mnLanguage(mnLanguage.Count - 1).Tag = LangFiles.Item(i)
-50220   SplitPath LangFiles.Item(i), , , , Filename
-50230   If UCase$(Options.Language) = UCase$(Filename) Then
-50240    mnLanguage(mnLanguage.Count - 1).Checked = True
-50250   End If
-50260   DoEvents
-50270  Next i
-50280
-50290  If mnLanguage.Count > 1 Then
-50300   mnLanguage(0).Caption = "No languages available."
-50310   mnLanguage(0).Visible = False
-50320  End If
-50330  Set ini = Nothing
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "ReadAllLanguages")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
 
 Private Sub SetLanguageMenu()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -817,85 +744,75 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long, Version As String, reg As clsRegistry, Filename As String
 50020
-50030  For i = mnLanguage.LBound To mnLanguage.UBound
-50040   If UCase$(Languagefile) = UCase$(mnLanguage.Item(i).Tag) Then
-50050     mnLanguage.Item(i).Checked = True
-50060     SplitPath Languagefile, , , , Filename
-50070    Else
-50080     mnLanguage.Item(i).Checked = False
-50090   End If
-50100  Next i
-50110
-50121  Select Case UCase$(Filename)
+50030  Filename = Options.Language
+50041  Select Case UCase$(Filename)
         Case "GERMAN"
-50140    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_german.chm"
-50150   Case "FRENCH"
-50160    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_french.chm"
-50170  End Select
-50180  If LenB(HelpFile) = 0 Then
-50190   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50200  End If
-50210
-50220  If Not FileExists(HelpFile) Then
-50230   MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & HelpFile, vbExclamation
-50240   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50250  End If
-50260
-50270  With LanguageStrings
-50280   Set reg = New clsRegistry
-50290   With reg
-50300    .hkey = HKEY_LOCAL_MACHINE
-50310    .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-50320    Version = .GetRegistryValue("ApplicationVersion")
-50330   End With
-50340   Set reg = Nothing
-50350   Caption = App.Title & " - " & .CommonTitle
-50360
-50370   mnPrinterMain.Caption = .DialogPrinter
-50380   mnPrinter(0).Caption = .DialogPrinterPrinterStop
-50390   mnPrinter(2).Caption = .DialogPrinterOptions
-50400   mnPrinter(4).Caption = .DialogPrinterLogging
-50410   mnPrinter(5).Caption = .DialogPrinterLogfile
-50420   mnPrinter(7).Caption = .DialogPrinterClose
-50430
-50440   mnDocumentMain.Caption = .DialogDocument
-50450   mnDocument(0).Caption = .DialogDocumentPrint
-50460   mnDocument(2).Caption = .DialogDocumentAdd
-50470   mnDocument(3).Caption = .DialogDocumentDelete
-50480   mnDocument(5).Caption = .DialogDocumentTop
-50490   mnDocument(6).Caption = .DialogDocumentUp
-50500   mnDocument(7).Caption = .DialogDocumentDown
-50510   mnDocument(8).Caption = .DialogDocumentBottom
-50520   mnDocument(10).Caption = .DialogDocumentCombine
-50530   mnDocument(12).Caption = .DialogDocumentSave
-50540
-50550   mnDocument(14).Caption = .DialogDocumentCombineAll
-50560   mnDocument(15).Caption = .DialogDocumentCombineAllSend
-50570   mnDocument(16).Caption = .DialogDocumentSend
-50580
-50590   mnViewMain.Caption = .DialogView
-50600   mnView(0).Caption = .DialogViewToolbars
-50610   mnView(2).Caption = .DialogViewStatusbar
-50620   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
-50630   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
-50640
-50650   mnLanguageMain.Caption = .DialogLanguage
-50660
-50670   mnHelpMain.Caption = .DialogInfo
-50680   mnHelp(2).Caption = .DialogInfoPaypal
-50690   mnHelp(4).Caption = .DialogInfoHomepage
-50700   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
-50710   mnHelp(6).Caption = .DialogInfoCheckUpdates
-50720   mnHelp(8).Caption = .DialogInfoInfo
-50730
-50740   lsv.ColumnHeaders("Date").Text = .ListDate
-50750   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
-50760   lsv.ColumnHeaders("Filename").Text = .ListFilename
-50770   lsv.ColumnHeaders("Size").Text = .ListSize
-50780   lsv.ColumnHeaders("Status").Text = .ListStatus
-50790
-50800   txtEmailAddress.ToolTipText = .DialogEmailAddress
-50810  End With
+50060    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_german.chm"
+50070   Case "FRENCH"
+50080    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_french.chm"
+50090  End Select
+50100  If LenB(HelpFile) = 0 Then
+50110   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
+50120  End If
+50130
+50140  If Not FileExists(HelpFile) Then
+50150   MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & HelpFile, vbExclamation
+50160   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
+50170  End If
+50180
+50190  With LanguageStrings
+50200   Set reg = New clsRegistry
+50210   With reg
+50220    .hkey = HKEY_LOCAL_MACHINE
+50230    .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+50240    Version = .GetRegistryValue("ApplicationVersion")
+50250   End With
+50260   Set reg = Nothing
+50270   Caption = App.Title & " - " & .CommonTitle
+50280
+50290   mnPrinterMain.Caption = .DialogPrinter
+50300   mnPrinter(0).Caption = .DialogPrinterPrinterStop
+50310   mnPrinter(2).Caption = .DialogPrinterOptions
+50320   mnPrinter(4).Caption = .DialogPrinterLogging
+50330   mnPrinter(5).Caption = .DialogPrinterLogfile
+50340   mnPrinter(7).Caption = .DialogPrinterClose
+50350
+50360   mnDocumentMain.Caption = .DialogDocument
+50370   mnDocument(0).Caption = .DialogDocumentPrint
+50380   mnDocument(2).Caption = .DialogDocumentAdd
+50390   mnDocument(3).Caption = .DialogDocumentDelete
+50400   mnDocument(5).Caption = .DialogDocumentTop
+50410   mnDocument(6).Caption = .DialogDocumentUp
+50420   mnDocument(7).Caption = .DialogDocumentDown
+50430   mnDocument(8).Caption = .DialogDocumentBottom
+50440   mnDocument(10).Caption = .DialogDocumentCombine
+50450   mnDocument(12).Caption = .DialogDocumentSave
+50460
+50470   mnDocument(14).Caption = .DialogDocumentCombineAll
+50480   mnDocument(15).Caption = .DialogDocumentCombineAllSend
+50490   mnDocument(16).Caption = .DialogDocumentSend
+50500
+50510   mnViewMain.Caption = .DialogView
+50520   mnView(0).Caption = .DialogViewToolbars
+50530   mnView(2).Caption = .DialogViewStatusbar
+50540   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
+50550   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
+50560
+50570   mnHelpMain.Caption = .DialogInfo
+50580   mnHelp(2).Caption = .DialogInfoPaypal
+50590   mnHelp(4).Caption = .DialogInfoHomepage
+50600   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
+50610   mnHelp(6).Caption = .DialogInfoCheckUpdates
+50620   mnHelp(8).Caption = .DialogInfoInfo
+50630
+50640   lsv.ColumnHeaders("Date").Text = .ListDate
+50650   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
+50660   lsv.ColumnHeaders("Filename").Text = .ListFilename
+50670   lsv.ColumnHeaders("Size").Text = .ListSize
+50680   lsv.ColumnHeaders("Status").Text = .ListStatus
+50690
+50700   txtEmailAddress.ToolTipText = .DialogEmailAddress
+50710  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1200,32 +1117,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmMain", "mnPrinter_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub mnLanguage_Click(Index As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim File As String
-50020  Screen.MousePointer = vbHourglass
-50030  LoadLanguage mnLanguage(Index).Tag
-50040  Languagefile = mnLanguage(Index).Tag
-50050  SetLanguageMenu
-50060  SplitPath Languagefile, , , , File
-50070  SetLanguage File
-50080  ShowPaypalMenuimage
-50090  Me.Refresh
-50100  Screen.MousePointer = vbNormal
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "mnLanguage_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2826,6 +2717,24 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmMain", "txtEmailAddress_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub ChangeLanguage()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  SetLanguageMenu
+50020 ' SetLanguageToolbar
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "ChangeLanguage")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

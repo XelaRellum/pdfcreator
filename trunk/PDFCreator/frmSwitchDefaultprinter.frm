@@ -115,12 +115,9 @@ On Error GoTo ErrPtnr_OnError
 50010  Me.Icon = LoadResPicture(2120, vbResIcon)
 50020  Caption = App.EXEName
 50030  ChangeDefaultprinter = False
-50040  With LanguageStrings
-50050   lblSwitchDefaultprinter.Caption = .MessagesMsg35
-50060   chkAskAgain.Caption = .MessagesMsg36
-50070  End With
-50080  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
-50090  ShowAcceleratorsInForm Me, True
+50040  ChangeLanguage
+50050  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
+50060  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -132,3 +129,22 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Sub ChangeLanguage()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lblSwitchDefaultprinter.Caption = LanguageStrings.MessagesMsg35
+50020  chkAskAgain.Caption = LanguageStrings.MessagesMsg36
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmSwitchDefaultprinter", "ChangeLanguage")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
