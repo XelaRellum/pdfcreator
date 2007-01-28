@@ -150,7 +150,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscript_Version [GET]")
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscriptVersion [GET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -1808,7 +1808,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscript_Run")
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscriptRun")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

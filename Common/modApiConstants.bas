@@ -125,6 +125,7 @@ Public Const ICU_NO_META                     As Long = &H8000000
 Public Const ICU_ENCODE_SPACES_ONLY          As Long = &H4000000
 Public Const ICU_BROWSER_MODE                As Long = &H2000000
 
+Public Const INTERNET_FLAG_RELOAD            As Long = &H80000000
 Public Const INTERNET_MAX_HOST_NAME_LENGTH   As Long = 256
 Public Const INTERNET_MAX_USER_NAME_LENGTH   As Long = 128
 Public Const INTERNET_MAX_PASSWORD_LENGTH    As Long = 128
@@ -133,10 +134,11 @@ Public Const INTERNET_MAX_PORT_NUMBER_VALUE  As Long = 65535
 Public Const INTERNET_MAX_PATH_LENGTH        As Long = 2048
 Public Const INTERNET_MAX_SCHEME_LENGTH      As Long = 32
 Public Const INTERNET_MAX_URL_LENGTH         As Long = INTERNET_MAX_SCHEME_LENGTH + 3 + INTERNET_MAX_PATH_LENGTH
-
+Public Const INTERNET_OPEN_TYPE_DIRECT       As Long = 1
 Public Const INTERNET_OPEN_TYPE_PRECONFIG    As Long = 0
+Public Const INTERNET_OPEN_TYPE_PROXY        As Long = 3
 Public Const INTERNET_SERVICE_HTTP           As Long = 3
-Public Const INTERNET_FLAG_RELOAD            As Long = &H80000000
+
 Public Const HTTP_QUERY_CONTENT_LENGTH       As Long = 5
 Public Const HTTP_QUERY_STATUS_CODE          As Long = 19
 Public Const HTTP_QUERY_FILE_URL             As Long = 904

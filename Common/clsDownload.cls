@@ -18,7 +18,7 @@ Option Explicit
 Public Event Update()
 
 ' User agent constant.
-Private Const scUserAgent = "http sample"
+Private Const scUserAgent = "PDFCreator"
 ' INTERNET_OPEN_TYPEs
 Private Const INTERNET_OPEN_TYPE_PRECONFIG = 0                      ' use registry configuration
 ' Type of service to access.

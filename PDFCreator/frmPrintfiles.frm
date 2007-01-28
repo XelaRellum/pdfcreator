@@ -34,11 +34,19 @@ Begin VB.Form frmPrintfiles
       TabIndex        =   3
       Top             =   960
       Width           =   5685
-      _extentx        =   10028
-      _extenty        =   582
-      font            =   "frmPrintfiles.frx":000C
-      brushstyle      =   0
-      color           =   6956042
+      _ExtentX        =   10028
+      _ExtentY        =   582
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      BrushStyle      =   0
+      Color           =   6956042
    End
    Begin VB.Label lbl 
       AutoSize        =   -1  'True
@@ -136,17 +144,16 @@ On Error GoTo ErrPtnr_OnError
 50070  If Files.Count > 1 Then
 50080   Visible = True
 50090  End If
-50100  lbl(0).Caption = LanguageStrings.ListFilename
-50110  lbl(1).Caption = LanguageStrings.ListSize
-50120  With xpPgb
-50130   .Min = 1
-50140   .Max = Files.Count
-50150   .Color = vbGreen
-50160   .Font.Bold = True
-50170   .ShowText = True
-50180  End With
-50190  ShowAcceleratorsInForm Me, True
-50200  Timer1.Enabled = True
+50100  With xpPgb
+50110   .Min = 1
+50120   .Max = Files.Count
+50130   .Color = vbGreen
+50140   .Font.Bold = True
+50150   .ShowText = True
+50160  End With
+50170  ChangeLanguage
+50180  ShowAcceleratorsInForm Me, True
+50190  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -192,6 +199,24 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrintfiles", "Timer1_Timer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub ChangeLanguage()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lbl(0).Caption = LanguageStrings.ListFilename
+50020  lbl(1).Caption = LanguageStrings.ListSize
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrintfiles", "ChangeLanguage")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

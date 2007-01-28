@@ -217,25 +217,14 @@ On Error GoTo ErrPtnr_OnError
 50020  oldMousePointer = Screen.MousePointer
 50030  Me.KeyPreview = True
 50040  Screen.MousePointer = vbNormal
-50050  With LanguageStrings
-50060   Caption = .OptionsPDFEnterPasswords
-50070   dmFraUserPass.Caption = .OptionsUserPass
-50080   dmFraOwnerPass.Caption = .OptionsOwnerPass
-50090   lblUserPass.Caption = .OptionsPDFSetPassword
-50100   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
-50110   lblOwnerPass.Caption = .OptionsPDFSetPassword
-50120   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
-50130   OKButton.Caption = .OptionsPassOK
-50140   CancelButton.Caption = .OptionsPassCancel
-50150   chkSavePasswords.Caption = .OptionsSavePasswords
-50160  End With
-50170  With Options
-50180   dmFraUserPass.Enabled = .PDFUserPass
-50190   dmFraOwnerPass.Enabled = .PDFOwnerPass
-50200  End With
-50210  bSuccess = False
-50220  bFinished = False
-50230  ShowAcceleratorsInForm Me, True
+50050  ChangeLanguage
+50060  With Options
+50070   dmFraUserPass.Enabled = .PDFUserPass
+50080   dmFraOwnerPass.Enabled = .PDFOwnerPass
+50090  End With
+50100  bSuccess = False
+50110  bFinished = False
+50120  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -318,3 +307,30 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Sub ChangeLanguage()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With LanguageStrings
+50020   Caption = .OptionsPDFEnterPasswords
+50030   dmFraUserPass.Caption = .OptionsUserPass
+50040   dmFraOwnerPass.Caption = .OptionsOwnerPass
+50050   lblUserPass.Caption = .OptionsPDFSetPassword
+50060   lblUserPassRepeat.Caption = .OptionsPDFRepeatPassword
+50070   lblOwnerPass.Caption = .OptionsPDFSetPassword
+50080   lblOwnerPassRepeat.Caption = .OptionsPDFRepeatPassword
+50090   OKButton.Caption = .OptionsPassOK
+50100   CancelButton.Caption = .OptionsPassCancel
+50110   chkSavePasswords.Caption = .OptionsSavePasswords
+50120  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPassword", "ChangeLanguage")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub

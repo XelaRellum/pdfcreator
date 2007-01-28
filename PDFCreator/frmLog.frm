@@ -177,39 +177,32 @@ On Error GoTo ErrPtnr_OnError
 50030  With Options
 50040   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50050  End With
-50060  With LanguageStrings
-50070   Caption = .LoggingLogfile
-50080   cmdClose.Caption = .LoggingClose
-50090   cmdClear.Caption = .LoggingClear
-50100   cmdSave.Caption = .PrintingSave
-50110  End With
-50120  chkLogging.Caption = LanguageStrings.DialogPrinterLogging
-50130  If Options.Logging = 1 Then
-50140    chkLogging.Value = 1
-50150   Else
-50160    chkLogging.Value = 0
-50170  End If
-50180  chkLogging.Visible = ShowOnlyLogfile
-50190  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
-50200  If Len(txtLog.Text) = 0 Then
-50210    cmdSave.Enabled = False
-50220    cmdClear.Enabled = False
-50230   Else
-50240    If InStr(txtLog.Text, vbCrLf) > 0 Then
-50250     txtLog.SelStart = Len(txtLog.Text) - InStrRev(txtLog.Text, vbCrLf)
-50260    End If
-50270  End If
-50280  If ShowOnlyLogfile = True Then
-50290   FormInTaskbar Me, True, True
-50300   Caption = "PDFCreator - " & Caption
-50310  End If
-50320  With Screen
-50330   Height = 0.75 * .Height
-50340   Width = 0.75 * .Width
-50350   Move (.Width - Width) / 2, (.Height - Height) / 2
-50360  End With
-50370  ShowAcceleratorsInForm Me, True
-50380  Timer1.Enabled = True
+50060  ChangeLanguage
+50070  If Options.Logging = 1 Then
+50080    chkLogging.Value = 1
+50090   Else
+50100    chkLogging.Value = 0
+50110  End If
+50120  chkLogging.Visible = ShowOnlyLogfile
+50130  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
+50140  If Len(txtLog.Text) = 0 Then
+50150    cmdSave.Enabled = False
+50160    cmdClear.Enabled = False
+50170   Else
+50180    If InStr(txtLog.Text, vbCrLf) > 0 Then
+50190     txtLog.SelStart = Len(txtLog.Text) - InStrRev(txtLog.Text, vbCrLf)
+50200    End If
+50210  End If
+50220  If ShowOnlyLogfile = True Then
+50230   FormInTaskbar Me, True, True
+50240  End If
+50250  With Screen
+50260   Height = 0.75 * .Height
+50270   Width = 0.75 * .Width
+50280   Move (.Width - Width) / 2, (.Height - Height) / 2
+50290  End With
+50300  ShowAcceleratorsInForm Me, True
+50310  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -296,6 +289,32 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmLog", "Timer1_Timer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub ChangeLanguage()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With LanguageStrings
+50020   Caption = .LoggingLogfile
+50030   cmdClose.Caption = .LoggingClose
+50040   cmdClear.Caption = .LoggingClear
+50050   cmdSave.Caption = .PrintingSave
+50060  End With
+50070  chkLogging.Caption = LanguageStrings.DialogPrinterLogging
+50080  If ShowOnlyLogfile = True Then
+50090   Caption = "PDFCreator - " & Caption
+50100  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmLog", "ChangeLanguage")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

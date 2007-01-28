@@ -316,43 +316,47 @@ On Error GoTo ErrPtnr_OnError
 50340  InitLanguagesStrings
 50350  ReadLanguageFromOptions
 50360  LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
-50370  Languagefile = LanguagePath & Options.Language & ".ini"
-50380  If UCase$(Options.Language) = "ESPANOL" And FileExists(Languagefile) = False And _
+50370  If FileExists(CompletePath(GetMyAppData) & "PDFCreator\Languages\" & Options.Language & ".ini") Then
+50380    Languagefile = CompletePath(GetMyAppData) & "PDFCreator\Languages\" & Options.Language & ".ini"
+50390   Else
+50400    Languagefile = LanguagePath & Options.Language & ".ini"
+50410  End If
+50420  If UCase$(Options.Language) = "ESPANOL" And FileExists(Languagefile) = False And _
    FileExists(LanguagePath & "spanish.ini") = True Then
-50400   Languagefile = LanguagePath & "spanish.ini"
-50410   Options.Language = "spanish"
-50420  End If
-50430  If FileExists(Languagefile) = True Then
-50440    LoadLanguage Languagefile
-50450   Else
-50460 '   If Not InstalledAsServer Then
-50470 '    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
-50480 '   End If
-50490    IfLoggingWriteLogfile "Language file >" & Languagefile & _
+50440   Languagefile = LanguagePath & "spanish.ini"
+50450   Options.Language = "spanish"
+50460  End If
+50470  If FileExists(Languagefile) = True Then
+50480    LoadLanguage Languagefile
+50490   Else
+50500 '   If Not InstalledAsServer Then
+50510 '    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & ">" & Languagefile & "<"
+50520 '   End If
+50530    IfLoggingWriteLogfile "Language file >" & Languagefile & _
     "< not found! Error [" & Err.LastDllError & "]"
-50510  End If
-50520
-50530  Options = ReadOptions
-50540
-50550  If LenB(Optionsfile) > 0 Then
-50560   Options = ReadOptionsINI(Options, Optionsfile, False, False)
-50570  End If
+50550  End If
+50560
+50570  Options = ReadOptions
 50580
-50590  If IsWin9xMe = False Then
-50601   Select Case Options.ProcessPriority
+50590  If LenB(Optionsfile) > 0 Then
+50600   Options = ReadOptionsINI(Options, Optionsfile, False, False)
+50610  End If
+50620
+50630  If IsWin9xMe = False Then
+50641   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50620     SetProcessPriority Idle
-50630    Case 1: 'Normal
-50640     SetProcessPriority Normal
-50650    Case 2: 'High
-50660     SetProcessPriority High
-50670    Case 3: 'Realtime
-50680     SetProcessPriority RealTime
-50690   End Select
-50700  End If
-50710
-50720  CreatePDFCreatorTempfolder
-50730  ComputerScreenResolution = ScreenResolution
+50660     SetProcessPriority Idle
+50670    Case 1: 'Normal
+50680     SetProcessPriority Normal
+50690    Case 2: 'High
+50700     SetProcessPriority High
+50710    Case 3: 'Realtime
+50720     SetProcessPriority RealTime
+50730   End Select
+50740  End If
+50750
+50760  CreatePDFCreatorTempfolder
+50770  ComputerScreenResolution = ScreenResolution
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
