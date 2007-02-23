@@ -782,7 +782,7 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  cPrintjobInfos = cGetInfoSpoolfile(ReadInfoSpoolfile(PrintjobFilename))
+50050  Set cPrintjobInfos = cGetInfoSpoolfile(ReadInfoSpoolfile(PrintjobFilename))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -2079,20 +2079,21 @@ Private Function cGetInfoSpoolfile(sInfos As InfoSpoolFile) As clsPDFCreatorInfo
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With cGetInfoSpoolfile
-50020   .Computer = sInfos.Computer
-50030   .Created = sInfos.Created
-50040   .REDMON_DOCNAME = sInfos.REDMON_DOCNAME
-50050   .REDMON_FILENAME = sInfos.REDMON_FILENAME
-50060   .REDMON_JOB = sInfos.REDMON_JOB
-50070   .REDMON_MACHINE = sInfos.REDMON_MACHINE
-50080   .REDMON_PORT = sInfos.REDMON_PORT
-50090   .REDMON_PRINTER = sInfos.REDMON_PRINTER
-50100   .REDMON_SESSIONID = sInfos.REDMON_SESSIONID
-50110   .REDMON_USER = sInfos.REDMON_USER
-50120   .SpoolerAccount = sInfos.SpoolerAccount
-50130   .SpoolFilename = sInfos.SpoolFilename
-50140  End With
+50010  Set cGetInfoSpoolfile = New clsPDFCreatorInfoSpoolFile
+50020  With cGetInfoSpoolfile
+50030   .Computer = sInfos.Computer
+50040   .Created = sInfos.Created
+50050   .REDMON_DOCNAME = sInfos.REDMON_DOCNAME
+50060   .REDMON_FILENAME = sInfos.REDMON_FILENAME
+50070   .REDMON_JOB = sInfos.REDMON_JOB
+50080   .REDMON_MACHINE = sInfos.REDMON_MACHINE
+50090   .REDMON_PORT = sInfos.REDMON_PORT
+50100   .REDMON_PRINTER = sInfos.REDMON_PRINTER
+50110   .REDMON_SESSIONID = sInfos.REDMON_SESSIONID
+50120   .REDMON_USER = sInfos.REDMON_USER
+50130   .SpoolerAccount = sInfos.SpoolerAccount
+50140   .SpoolFilename = sInfos.SpoolFilename
+50150  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
