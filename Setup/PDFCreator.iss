@@ -1,9 +1,10 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.1.8 (with ISPP) and ISTool 5.1.8
+; Setup created with Inno Setup QuickStart Pack 5.1.11 (with ISPP) and ISTool 5.1.8
 ; Installation from Frank Heindörfer
 
 ;#define Test
 
+ #define FastCompilation
 #ifdef Test
  #define FastCompilation
  #define IncludeToolbar
@@ -315,35 +316,35 @@ Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignorever
 
 
 ;Help files
-Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: program; Flags: ignoreversion
-Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: program; Flags: ignoreversion
-Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: program; Flags: ignoreversion
+Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: program HELPfiles\English HELPfiles; Flags: ignoreversion
+Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: program HELPfiles\German HELPfiles; Flags: ignoreversion
+Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: program HELPfiles\French HELPfiles; Flags: ignoreversion
 
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 
 ;Languages
-Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
 
 ;Ini file
 Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
@@ -375,72 +376,71 @@ Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\Run
 Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
 Source: ..\Scripts\RunProgramBeforeSaving\AddPDFDocview.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
 ; Samples: Com
-Source: ..\COM\Samples\VB6\Sample1\Form1.frm; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample1\Form1.frx; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample1\Sample1.RES; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample1\Sample1.vbp; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample1\Sample1.vbw; DestDir: {app}\COM\VB6\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample2\Form1.frm; DestDir: {app}\COM\VB6\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample2\Sample2.vbp; DestDir: {app}\COM\VB6\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample2\Sample2.vbw; DestDir: {app}\COM\VB6\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\DOTNET Scripting Host\readme.txt; DestDir: {app}\COM\DOTNET Scripting Host; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\DOTNET Scripting Host\Sample1.dsh; DestDir: {app}\COM\DOTNET Scripting Host; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\modPDFCreatorAccess2000.bas; DestDir: {app}\COM\MS Office; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CombineAndAddBookmarks.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2TIFF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Convert2TXT.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\GUI.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\SaveOptionsToFile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\ShowLogfile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\ShowOptions.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\ShowPrintjobInfos.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression1.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression2.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestCompression3.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScripts\URL2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program; Flags: ignoreversion
-Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Form1.frm; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Form1.frx; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Sample1.RES; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Sample1.vbp; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample2\Form1.frm; DestDir: {app}\COM\VB6\Sample2; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample2\Sample2.vbp; DestDir: {app}\COM\VB6\Sample2; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
+Source: ..\COM\Samples\DOTNET Scripting Host\readme.txt; DestDir: {app}\COM\DOTNET Scripting Host; Components: program COMsamples COMsamples\DOTNETScriptingHost; Flags: ignoreversion
+Source: ..\COM\Samples\DOTNET Scripting Host\Sample1.dsh; DestDir: {app}\COM\DOTNET Scripting Host; Components: program COMsamples COMsamples\DOTNETScriptingHost; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\modPDFCreatorAccess2000.bas; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineAndAddBookmarks.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2TIFF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2TXT.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\GUI.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\SaveOptionsToFile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowLogfile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowOptions.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowPrintjobInfos.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression1.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression2.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression3.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\URL2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\JScript\Convert2PDF.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\JScript; Flags: ignoreversion
+Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program COMsamples COMsamples\WinBatch; Flags: ignoreversion
 
 ; Toolbar
 #IFDEF IncludeToolbar
@@ -686,65 +686,85 @@ Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000;
 Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: ; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: Not IExplorerVersionLower55; Flags: fixed
 #ENDIF
 
+Name: COMsamples; Description: {cm:COMsamples}; Types: full
+Name: COMsamples\DOTNet; Description: {cm:COMsamplesDOTNet}; Types: full
+Name: COMsamples\DOTNet\VS2003; Description: {cm:COMsamplesDOTNetVS2003}; Types: full
+Name: COMsamples\DOTNet\VS2005; Description: {cm:COMsamplesDOTNetVS2005}; Types: full
+Name: COMsamples\DOTNETScriptingHost; Description: {cm:COMsamplesDOTNETScriptingHost}; Types: full
+Name: COMsamples\MSOffice; Description: {cm:COMsamplesMSOffice}; Types: full
+Name: COMsamples\VisualBasic6; Description: {cm:COMsamplesVisualBasic6}; Types: full
+Name: COMsamples\WinBatch; Description: {cm:COMsamplesWinBatch}; Types: full
+Name: COMsamples\WindowsScriptingHost; Description: {cm:COMsamplesWindowsScriptingHost}; Types: full
+Name: COMsamples\WindowsScriptingHost\JScript; Description: {cm:COMsamplesWindowsScriptingHostJScript}; Types: full
+Name: COMsamples\WindowsScriptingHost\VBScript; Description: {cm:COMsamplesWindowsScriptingHostVBScript}; Types: full
+
+Name: HELPfiles; Description: {cm:HELPfiles}; Types: full custom
+Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full custom; Flags: fixed
+Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full; Check: Not IsLanguage('french')
+Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full custom; Check: IsLanguage('french')
+Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full; Check: Not IsLanguage('german')
+Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full custom; Check: IsLanguage('german')
+
+
 Name: languages; Description: {cm:Languages}; Types: full custom
 
-Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
-Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
+;Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
+;Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
 
 ;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
 ;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
 
-Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
-Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
+;Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
+;Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
 
-Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
-Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch'); Flags: dontinheritcheck
+;Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
+;Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch'); Flags: dontinheritcheck
 
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed dontinheritcheck
 
-Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
-Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
+;Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
+;Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
 Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german'); Flags: dontinheritcheck
 
-Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
-Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
+;Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
+;Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
 
-Name: languages\indonesian; Description: Indonesian; Types: full; Check: Not IsLanguage('indonesian'); Flags: dontinheritcheck
-Name: languages\indonesian; Description: Indonesian; Types: full custom; Check: IsLanguage('indonesian'); Flags: dontinheritcheck
+;Name: languages\indonesian; Description: Indonesian; Types: full; Check: Not IsLanguage('indonesian'); Flags: dontinheritcheck
+;Name: languages\indonesian; Description: Indonesian; Types: full custom; Check: IsLanguage('indonesian'); Flags: dontinheritcheck
 
-Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
-Name: languages\italian; Description: Italian; Types: full custom; Check: IsLanguage('italian'); Flags: dontinheritcheck
+;Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
+;Name: languages\italian; Description: Italian; Types: full custom; Check: IsLanguage('italian'); Flags: dontinheritcheck
 
-Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
-Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
+;Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
+;Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
 
-Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
-Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
+;Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
+;Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
 
-Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
-Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
+;Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
+;Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
 
-Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
-Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
+;Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
+;Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
 
-Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
-Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
+;Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
+;Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
 
-Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
-Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
+;Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
+;Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
 
-Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
-Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
+;Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
+;Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
 
-Name: languages\swedish; Description: Swedish; Types: full; Check: Not IsLanguage('swedish'); Flags: dontinheritcheck
-Name: languages\swedish; Description: Swedish; Types: full custom; Check: IsLanguage('swedish'); Flags: dontinheritcheck
+;Name: languages\swedish; Description: Swedish; Types: full; Check: Not IsLanguage('swedish'); Flags: dontinheritcheck
+;Name: languages\swedish; Description: Swedish; Types: full custom; Check: IsLanguage('swedish'); Flags: dontinheritcheck
 
-Name: languages\turkish; Description: Turkish; Types: full; Check: Not IsLanguage('turkish'); Flags: dontinheritcheck
-Name: languages\turkish; Description: Turkish; Types: full custom; Check: IsLanguage('turkish'); Flags: dontinheritcheck
+;Name: languages\turkish; Description: Turkish; Types: full; Check: Not IsLanguage('turkish'); Flags: dontinheritcheck
+;Name: languages\turkish; Description: Turkish; Types: full custom; Check: IsLanguage('turkish'); Flags: dontinheritcheck
 
-Name: languages\valencian; Description: Valencian; Types: full; Flags: dontinheritcheck
+;Name: languages\valencian; Description: Valencian; Types: full; Flags: dontinheritcheck
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Check: UseDesktopiconCommon
