@@ -1,11 +1,11 @@
-// Convert2PDF.js script
+// Testpage2PDF.js script
 // Part of PDFCreator
 // License: GPL
 // Homepage: http://www.sf.net/projects/pdfcreator
 // Version: 1.0.0.0
-// Date: March, 15. 2007
+// Date: March, 19 2007
 // Author: Frank Heindörfer
-// Comments: This script convert a printable file in a pdf-file using 
+// Comments: Save the test page as pdf-file using
 //           the com interface of PDFCreator.
 
 var maxTime = 30    // in seconds
@@ -24,55 +24,30 @@ if (WScript.Version < 5.1)
  WScript.Quit();
 }
 
-if (WScript.arguments.length == 0)
-{
- WScript.Echo("Syntax: \t" + Scriptname + " <Filename>\r\n\tor use \"Drag and Drop\"!");
- WScript.Quit();
-}
-
 PDFCreator = WScript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_");
 PDFCreator.cStart("/NoProcessingAtStartup");
 
+ReadyState = 0
 PDFCreator.cOption("UseAutosave") = 1;
 PDFCreator.cOption("UseAutosaveDirectory") = 1;
+PDFCreator.cOption("AutosaveDirectory") = fso.GetParentFolderName(WScript.ScriptFullname);
+PDFCreator.cOption("AutosaveFilename") = "Testpage - PDFCreator";
 PDFCreator.cOption("AutosaveFormat") = 0;                             // 0 = PDF
 DefaultPrinter = PDFCreator.cDefaultprinter;
 PDFCreator.cDefaultprinter = "PDFCreator";
 PDFCreator.cClearcache();
+PDFCreator.cPrintPDFCreatorTestpage();
+PDFCreator.cPrinterStop = false;
 
-for (i = 0; i < WScript.arguments.length; i++)
+c = 0
+while ((ReadyState == 0) && (c < (maxTime * 1000 / sleepTime)))
 {
- ifname = WScript.arguments.item(i)
-
- if (!fso.FileExists(ifname))
- {
-   WScript.Echo("Can't find the file: " + ifname);
-   break;
- }
- if (!PDFCreator.cIsPrintable(ifname))
- {
-  WScript.Echos("Converting: " + ifname + "\r\n\r\nAn error is occured: File is not printable!");
-  WScript.Quit();
- }
-
- ReadyState = 0
-
- PDFCreator.cOption("AutosaveDirectory") = fso.GetParentFolderName(ifname);
- PDFCreator.cOption("AutosaveFilename") = fso.GetBaseName(ifname);
- PDFCreator.cPrintfile(ifname);
- PDFCreator.cPrinterStop = false;
-
- c = 0
- while ((ReadyState == 0) && (c < (maxTime * 1000 / sleepTime)))
- {
-  c = c + 1;
-  WScript.Sleep(sleepTime);
- }
- if (ReadyState == 0)
- {
-  WScript.Echo("Converting: " + ifname + "\r\n\r\nAn error is occured: Time is up!");
-  break;
- }
+ c = c + 1;
+ WScript.Sleep(sleepTime);
+}
+if (ReadyState == 0)
+{
+ WScript.Echo("Converting: " + ifname + "\r\n\r\nAn error is occured: Time is up!");
 }
 
 PDFCreator.cDefaultprinter = DefaultPrinter

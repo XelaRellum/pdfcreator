@@ -1,4 +1,4 @@
-' Testpage2PDF script
+' TestEvents.vbs script
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
@@ -8,7 +8,6 @@
 ' Comments: Test the events of the com interface of PDFCreator.
 
 Option Explicit
-
 
 Dim fso, PDFCreator, AppTitle, Scriptbasename
 
@@ -29,7 +28,9 @@ With PDFCreator
  .cTestEvent("Ready")
  .cTestEvent("Error")
  .cTestEvent("Unknown")
+ .cClose
 End With
+
 
 '--- PDFCreator events ---
 

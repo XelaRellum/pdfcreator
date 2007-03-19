@@ -1,4 +1,4 @@
-' Convert2TIFF script
+' Convert2TXT.vbs script
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
