@@ -439,6 +439,10 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDF.vbs; DestDir
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\URL2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\JScript\Convert2PDF.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\JScript\Convert2TIFF.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\JScript\Convert2TXT.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\JScript\Testpage2PDF.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\JScript\TestEvents.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: COMsamples; Flags: ignoreversion
 
 ; Toolbar

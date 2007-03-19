@@ -1,11 +1,11 @@
-// Convert2PDF.js script
+// Convert2TIFF.js script
 // Part of PDFCreator
 // License: GPL
 // Homepage: http://www.sf.net/projects/pdfcreator
 // Version: 1.0.0.0
-// Date: March, 15. 2007
+// Date: March, 19. 2007
 // Author: Frank Heindörfer
-// Comments: This script convert a printable file in a pdf-file using 
+// Comments: This script convert a printable file in a tiff-file using 
 //           the com interface of PDFCreator.
 
 var maxTime = 30    // in seconds
@@ -35,7 +35,7 @@ PDFCreator.cStart("/NoProcessingAtStartup");
 
 PDFCreator.cOption("UseAutosave") = 1;
 PDFCreator.cOption("UseAutosaveDirectory") = 1;
-PDFCreator.cOption("AutosaveFormat") = 0;                             // 0 = PDF
+PDFCreator.cOption("AutosaveFormat") = 5;                             // 5 = TIFF
 DefaultPrinter = PDFCreator.cDefaultprinter;
 PDFCreator.cDefaultprinter = "PDFCreator";
 PDFCreator.cClearcache();
