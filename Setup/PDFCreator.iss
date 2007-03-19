@@ -375,71 +375,71 @@ Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\Run
 Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
 Source: ..\Scripts\RunProgramBeforeSaving\AddPDFDocview.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
 ; Samples: Com
-Source: ..\COM\Samples\VB6\Sample1\Form1.frm; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample1\Form1.frx; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample1\Sample1.RES; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample1\Sample1.vbp; DestDir: {app}\COM\VB6\Sample1; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample2\Form1.frm; DestDir: {app}\COM\VB6\Sample2; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
-Source: ..\COM\Samples\VB6\Sample2\Sample2.vbp; DestDir: {app}\COM\VB6\Sample2; Components: program COMsamples COMsamples\VisualBasic6; Flags: ignoreversion
-Source: ..\COM\Samples\DOTNET Scripting Host\readme.txt; DestDir: {app}\COM\DOTNET Scripting Host; Components: program COMsamples COMsamples\DOTNETScriptingHost; Flags: ignoreversion
-Source: ..\COM\Samples\DOTNET Scripting Host\Sample1.dsh; DestDir: {app}\COM\DOTNET Scripting Host; Components: program COMsamples COMsamples\DOTNETScriptingHost; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2003; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: program COMsamples COMsamples\DOTNet COMsamples\DOTNet\VS2005; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
-Source: ..\COM\Samples\MS Office\modPDFCreatorAccess2000.bas; DestDir: {app}\COM\MS Office; Components: program COMsamples COMsamples\MSOffice; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineAndAddBookmarks.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2TIFF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2TXT.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\GUI.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\SaveOptionsToFile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowLogfile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowOptions.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowPrintjobInfos.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression1.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression2.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression3.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\URL2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\VBScript; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\JScript\Convert2PDF.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: program COMsamples COMsamples\WindowsScriptingHost COMsamples\WindowsScriptingHost\JScript; Flags: ignoreversion
-Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: program COMsamples COMsamples\WinBatch; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Form1.frm; DestDir: {app}\COM\VB6\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Form1.frx; DestDir: {app}\COM\VB6\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Sample1.RES; DestDir: {app}\COM\VB6\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample1\Sample1.vbp; DestDir: {app}\COM\VB6\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample2\Form1.frm; DestDir: {app}\COM\VB6\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\VB6\Sample2\Sample2.vbp; DestDir: {app}\COM\VB6\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\DOTNET Scripting Host\readme.txt; DestDir: {app}\COM\DOTNET Scripting Host; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\DOTNET Scripting Host\Sample1.dsh; DestDir: {app}\COM\DOTNET Scripting Host; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Dot Net\VS2005\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2005\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frm; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\MS Office\modPDFCreatorAccess2000.bas; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineAndAddBookmarks.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2TIFF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Convert2TXT.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\GUI.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\SaveOptionsToFile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowLogfile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowOptions.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowPrintjobInfos.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression1.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression2.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression3.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestEvents.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\Testpage2PDFSendEmail.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\URL2PDF.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\JScript\Convert2PDF.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: COMsamples; Flags: ignoreversion
 
 ; Toolbar
 #IFDEF IncludeToolbar
@@ -687,19 +687,10 @@ Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000;
 #ENDIF
 
 Name: COMsamples; Description: {cm:COMsamples}; Types: full
-Name: COMsamples\DOTNet; Description: {cm:COMsamplesDOTNet}; Types: full
-Name: COMsamples\DOTNet\VS2003; Description: {cm:COMsamplesDOTNetVS2003}; Types: full
-Name: COMsamples\DOTNet\VS2005; Description: {cm:COMsamplesDOTNetVS2005}; Types: full
-Name: COMsamples\DOTNETScriptingHost; Description: {cm:COMsamplesDOTNETScriptingHost}; Types: full
-Name: COMsamples\MSOffice; Description: {cm:COMsamplesMSOffice}; Types: full
-Name: COMsamples\VisualBasic6; Description: {cm:COMsamplesVisualBasic6}; Types: full
-Name: COMsamples\WinBatch; Description: {cm:COMsamplesWinBatch}; Types: full
-Name: COMsamples\WindowsScriptingHost; Description: {cm:COMsamplesWindowsScriptingHost}; Types: full
-Name: COMsamples\WindowsScriptingHost\JScript; Description: {cm:COMsamplesWindowsScriptingHostJScript}; Types: full
-Name: COMsamples\WindowsScriptingHost\VBScript; Description: {cm:COMsamplesWindowsScriptingHostVBScript}; Types: full
 
 Name: HELPfiles; Description: {cm:HELPfiles}; Types: full custom
-Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full custom; Flags: fixed
+Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full; Check: Not IsLanguage('english')
+Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full custom; Check: Not IsLanguage('french') And Not IsLanguage('german')
 Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full; Check: Not IsLanguage('french')
 Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full custom; Check: IsLanguage('french')
 Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full; Check: Not IsLanguage('german')
