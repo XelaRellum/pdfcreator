@@ -444,6 +444,10 @@ Source: ..\COM\Samples\Windows Scripting Host\JScript\Convert2TXT.js; DestDir: {
 Source: ..\COM\Samples\Windows Scripting Host\JScript\Testpage2PDF.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\JScript\TestEvents.js; DestDir: {app}\COM\Windows Scripting Host\JScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\WinBatch\Convert2PDF.wbt; DestDir: {app}\COM\WinBatch; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Perl\Convert2PDF.pl; DestDir: {app}\COM\Perl; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Perl\Convert2TIFF.pl; DestDir: {app}\COM\Perl; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Perl\Convert2TXT.pl; DestDir: {app}\COM\Perl; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Perl\Testpage2PDF.pl; DestDir: {app}\COM\Perl; Components: COMsamples; Flags: ignoreversion
 
 ; Toolbar
 #IFDEF IncludeToolbar
@@ -454,6 +458,7 @@ Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCr
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
+Name: {app}\Perl
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; Flags: createonlyiffileexists
