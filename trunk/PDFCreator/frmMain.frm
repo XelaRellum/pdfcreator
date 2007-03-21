@@ -737,82 +737,67 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-
 Private Sub SetLanguageMenu()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, Version As String, reg As clsRegistry, Filename As String
+50010  Dim i As Long, Version As String, reg As clsRegistry
 50020
-50030  Filename = Options.Language
-50041  Select Case UCase$(Filename)
-        Case "GERMAN"
-50060    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_german.chm"
-50070   Case "FRENCH"
-50080    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_french.chm"
-50090  End Select
-50100  If LenB(HelpFile) = 0 Then
-50110   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50120  End If
-50130
-50140  If Not FileExists(HelpFile) Then
-50150   MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & HelpFile, vbExclamation
-50160   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50170  End If
-50180
-50190  With LanguageStrings
-50200   Set reg = New clsRegistry
-50210   With reg
-50220    .hkey = HKEY_LOCAL_MACHINE
-50230    .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-50240    Version = .GetRegistryValue("ApplicationVersion")
-50250   End With
-50260   Set reg = Nothing
-50270   Caption = App.Title & " - " & .CommonTitle
-50280
-50290   mnPrinterMain.Caption = .DialogPrinter
-50300   mnPrinter(0).Caption = .DialogPrinterPrinterStop
-50310   mnPrinter(2).Caption = .DialogPrinterOptions
-50320   mnPrinter(4).Caption = .DialogPrinterLogging
-50330   mnPrinter(5).Caption = .DialogPrinterLogfile
-50340   mnPrinter(7).Caption = .DialogPrinterClose
-50350
-50360   mnDocumentMain.Caption = .DialogDocument
-50370   mnDocument(0).Caption = .DialogDocumentPrint
-50380   mnDocument(2).Caption = .DialogDocumentAdd
-50390   mnDocument(3).Caption = .DialogDocumentDelete
-50400   mnDocument(5).Caption = .DialogDocumentTop
-50410   mnDocument(6).Caption = .DialogDocumentUp
-50420   mnDocument(7).Caption = .DialogDocumentDown
-50430   mnDocument(8).Caption = .DialogDocumentBottom
-50440   mnDocument(10).Caption = .DialogDocumentCombine
-50450   mnDocument(12).Caption = .DialogDocumentSave
-50460
-50470   mnDocument(14).Caption = .DialogDocumentCombineAll
-50480   mnDocument(15).Caption = .DialogDocumentCombineAllSend
-50490   mnDocument(16).Caption = .DialogDocumentSend
-50500
-50510   mnViewMain.Caption = .DialogView
-50520   mnView(0).Caption = .DialogViewToolbars
-50530   mnView(2).Caption = .DialogViewStatusbar
-50540   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
-50550   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
-50560
-50570   mnHelpMain.Caption = .DialogInfo
-50580   mnHelp(2).Caption = .DialogInfoPaypal
-50590   mnHelp(4).Caption = .DialogInfoHomepage
-50600   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
-50610   mnHelp(6).Caption = .DialogInfoCheckUpdates
-50620   mnHelp(8).Caption = .DialogInfoInfo
-50630
-50640   lsv.ColumnHeaders("Date").Text = .ListDate
-50650   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
-50660   lsv.ColumnHeaders("Filename").Text = .ListFilename
-50670   lsv.ColumnHeaders("Size").Text = .ListSize
-50680   lsv.ColumnHeaders("Status").Text = .ListStatus
-50690
-50700   txtEmailAddress.ToolTipText = .DialogEmailAddress
-50710  End With
+50030  SetHelpfile
+50040
+50050  With LanguageStrings
+50060   Set reg = New clsRegistry
+50070   With reg
+50080    .hkey = HKEY_LOCAL_MACHINE
+50090    .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+50100    Version = .GetRegistryValue("ApplicationVersion")
+50110   End With
+50120   Set reg = Nothing
+50130   Caption = App.Title & " - " & .CommonTitle
+50140
+50150   mnPrinterMain.Caption = .DialogPrinter
+50160   mnPrinter(0).Caption = .DialogPrinterPrinterStop
+50170   mnPrinter(2).Caption = .DialogPrinterOptions
+50180   mnPrinter(4).Caption = .DialogPrinterLogging
+50190   mnPrinter(5).Caption = .DialogPrinterLogfile
+50200   mnPrinter(7).Caption = .DialogPrinterClose
+50210
+50220   mnDocumentMain.Caption = .DialogDocument
+50230   mnDocument(0).Caption = .DialogDocumentPrint
+50240   mnDocument(2).Caption = .DialogDocumentAdd
+50250   mnDocument(3).Caption = .DialogDocumentDelete
+50260   mnDocument(5).Caption = .DialogDocumentTop
+50270   mnDocument(6).Caption = .DialogDocumentUp
+50280   mnDocument(7).Caption = .DialogDocumentDown
+50290   mnDocument(8).Caption = .DialogDocumentBottom
+50300   mnDocument(10).Caption = .DialogDocumentCombine
+50310   mnDocument(12).Caption = .DialogDocumentSave
+50320
+50330   mnDocument(14).Caption = .DialogDocumentCombineAll
+50340   mnDocument(15).Caption = .DialogDocumentCombineAllSend
+50350   mnDocument(16).Caption = .DialogDocumentSend
+50360
+50370   mnViewMain.Caption = .DialogView
+50380   mnView(0).Caption = .DialogViewToolbars
+50390   mnView(2).Caption = .DialogViewStatusbar
+50400   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
+50410   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
+50420
+50430   mnHelpMain.Caption = .DialogInfo
+50440   mnHelp(2).Caption = .DialogInfoPaypal
+50450   mnHelp(4).Caption = .DialogInfoHomepage
+50460   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
+50470   mnHelp(6).Caption = .DialogInfoCheckUpdates
+50480   mnHelp(8).Caption = .DialogInfoInfo
+50490
+50500   lsv.ColumnHeaders("Date").Text = .ListDate
+50510   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
+50520   lsv.ColumnHeaders("Filename").Text = .ListFilename
+50530   lsv.ColumnHeaders("Size").Text = .ListSize
+50540   lsv.ColumnHeaders("Status").Text = .ListStatus
+50550
+50560   txtEmailAddress.ToolTipText = .DialogEmailAddress
+50570  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
