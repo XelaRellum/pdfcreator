@@ -27,7 +27,7 @@
 #endif
 
 #Ifdef IncludeGhostscript
- #define GhostscriptVersion "8.54"
+ #define GhostscriptVersion "8.56"
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 
@@ -313,11 +313,10 @@ Source: ShFolder\ShFolder.Exe; DestDir: {app}; Components: program; Flags: ignor
 ;pdfenc
 Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignoreversion
 
-
 ;Help files
-Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: program HELPfiles\English HELPfiles; Flags: ignoreversion
-Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: program HELPfiles\German HELPfiles; Flags: ignoreversion
-Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: program HELPfiles\French HELPfiles; Flags: ignoreversion
+Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: HELPfiles\English; Flags: ignoreversion
+Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: HELPfiles\German; Flags: ignoreversion
+Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: HELPfiles\French; Flags: ignoreversion
 
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
@@ -458,7 +457,6 @@ Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCr
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
-Name: {app}\Perl
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; Flags: createonlyiffileexists

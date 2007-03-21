@@ -2427,33 +2427,3 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
-Public Sub SetHelpfile()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case UCase$(Options.Language)
-        Case "GERMAN"
-50030    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_german.chm"
-50040   Case "FRENCH"
-50050    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_french.chm"
-50060  End Select
-50070  If LenB(HelpFile) = 0 Then
-50080   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50090  End If
-50100
-50110  If Not FileExists(HelpFile) Then
-50120 '  MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & HelpFile, vbExclamation
-50130   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
-50140  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "SetHelpfile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
