@@ -31,26 +31,27 @@ On Error GoTo ErrPtnr_OnError
 50130     InstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile, AppDir
 50140     WriteInstalldate2Registry
 50150    Else
-50160     InstallAdditionalWindowsPrinter Printername, LogFile, AppDir
-50170   End If
-50180  End If
-50190
-50200  If InstallAction = UnInstall Then
-50210   LogFile = CompletePath(GetTempPathApi) & "PDFCreatorUninstall.txt"
-50220   UnInstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile
-50230  End If
-50240  If InstallAction = Install Or InstallAction = UnInstall Then
-50250   WriteToLog "--------------------------------------------------", LogFile
-50260   WriteToLog "MSI-Installer: Installer2Go", LogFile
-50270   WriteToLog "Computername: " & GetComputerName, LogFile
-50280   WriteToLog "Username: " & GetUsername, LogFile
-50290   WriteToLog "WinDir: " & GetWindowsDirectory, LogFile
-50300   WriteToLog "SysDir: " & GetSystemDirectory, LogFile
-50310   WriteToLog "TempDir: " & GetTempPathApi, LogFile
-50320   WriteToLog "CurrentDir: " & CurDir, LogFile
-50330   WriteToLog "Path: " & Environ$("Path"), LogFile
-50340   WriteToLog "Internet Explorer version: " & GetIExplorerVersion, LogFile
-50350  End If
+50160     UnInstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile
+50170     InstallAdditionalWindowsPrinter Printername, LogFile, AppDir
+50180   End If
+50190  End If
+50200
+50210  If InstallAction = UnInstall Then
+50220   LogFile = CompletePath(GetTempPathApi) & "PDFCreatorUninstall.txt"
+50230   UnInstallWindowsPrinter Monitorname, Portname, Drivername, Printername, LogFile
+50240  End If
+50250  If InstallAction = Install Or InstallAction = UnInstall Then
+50260   WriteToLog "--------------------------------------------------", LogFile
+50270   WriteToLog "MSI-Installer: Installer2Go", LogFile
+50280   WriteToLog "Computername: " & GetComputerName, LogFile
+50290   WriteToLog "Username: " & GetUsername, LogFile
+50300   WriteToLog "WinDir: " & GetWindowsDirectory, LogFile
+50310   WriteToLog "SysDir: " & GetSystemDirectory, LogFile
+50320   WriteToLog "TempDir: " & GetTempPathApi, LogFile
+50330   WriteToLog "CurrentDir: " & CurDir, LogFile
+50340   WriteToLog "Path: " & Environ$("Path"), LogFile
+50350   WriteToLog "Internet Explorer version: " & GetIExplorerVersion, LogFile
+50360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
