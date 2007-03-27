@@ -38,6 +38,11 @@ $PDFCreator->cDefaultPrinter("PDFCreator");
 $PDFCreator->cClearCache();
 $PDFCreator->cPrintPDFCreatorTestpage();
 
+until (($PDFCreator->{cCountOfPrintjobs} != 0) )
+{
+ sleep(1);  # PDFCreator needs time for printing.
+}
+
 my $counter = 0;
 until (($PDFCreator->{cCountOfPrintjobs} == 0) || ($counter > 30))
 {

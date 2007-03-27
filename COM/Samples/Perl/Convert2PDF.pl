@@ -55,7 +55,11 @@ foreach my $ifname (@ARGV)
  } 
 
  $PDFCreator->cPrintfile($ifname);
- sleep(2); # PDFCreator needs time for printing. Check this value for big documents.
+ 
+ until (($PDFCreator->{cCountOfPrintjobs} != 0) )
+ {
+  sleep(1);  # PDFCreator needs time for printing.
+ }
 
  my $counter = 0;
  until (($PDFCreator->{cCountOfPrintjobs} == 0) || ($counter > 300))
