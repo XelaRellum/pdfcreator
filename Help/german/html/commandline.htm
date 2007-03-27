@@ -21,7 +21,13 @@
     <td class="main"><p class="header">Kommandozeilenparameter</p>
       <p>PDFCreator bietet die M&ouml;glichkeit, Dokumente &uuml;ber Kommandozeilenparameter
         zu erstellen. Folgende Parameter werden unterst&uuml;tzt:</p>
-      <p> <strong>/CheckInstance </strong><br>
+      <p><strong>/AddWindowsExplorerIntegration </strong><br>
+	    Dieser Parameter bewirkt, dass PDFCreator sich in den Windows Explorer integriert. Dann 
+        erscheint im Kontextmen&uuml; von druckbaren Dokumenten die M&ouml;glichkeit &quot;Erzeuge 
+        PDF mit PDFCreator&quot;. Diese Funktion erfordert, dass PDFCreator kurzzeitig 
+        zum Standarddrucker wird.<br>
+        <em>Beispiel:</em> PDFCreator.exe /AddWindowsExplorerIntegration</p>
+      <p><strong>/CheckInstance </strong><br>
         Wird dieser Parameter verwendet, zeigt PDFCreator die laufende Instanzen der Programme
         PDFCreator, PDFSpooler und Transtool an. Dieser Parameter kann mit dem Parameter /NoStart
         kombiniert werden. Wird die Eigenschaft "Local" angezeigt existiert eine lokale Instanz.
@@ -94,6 +100,10 @@
         ist. Im Allgemeinen ist diese Option sinnvoll in Verbindung mit dem automatischen
         Speichern. Dieser Parameter kann nicht in Verbindung mit dem /OF Parameter verwendet werden. <strong>Der Parameter hat KEIN Leerzeichen zwischen dem Dateinamen</strong>.<br>
         <em>Beispiel:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;</p>
+      <p><strong>/RemoveWindowsExplorerIntegration </strong><br>
+	    Dieser Parameter bewirkt, dass die Integegration von PDFCreator in den Windows Explorer
+        wieder entfernt wird.<br>
+        <em>Beispiel:</em> PDFCreator.exe /RemoveWindowsExplorerIntegration</p>
       <p><strong>/ShowOnlyLogfile</strong><br>
         &Ouml;ffnet PDFCreator mit dem Protokollfenster. Dieser Parameter ist wichtig, wenn PDFCreator
         im Servermodus installiert wurde und eine Instanz von PDFCreator bereits als Dienst l&auml;uft.

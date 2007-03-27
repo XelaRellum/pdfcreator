@@ -5,7 +5,8 @@ Public InputFilename As String, ShowAnimationWindow As Boolean, _
  ComputerScreenResolution As Long
 
 Private UnLoadFile As Boolean, ClearCacheDir As Boolean, _
- OutputFilename As String, InitSettings As Boolean, frmMainSUP As Long
+ OutputFilename As String, InitSettings As Boolean, frmMainSUP As Long, _
+ AddWindowsExplorerIntegration As Boolean, RemoveWindowsExplorerIntegration As Boolean
 
 Public Sub Main()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -68,76 +69,83 @@ On Error GoTo ErrPtnr_OnError
 50320   Exit Sub
 50330  End If
 50340
-50350  If ClearCacheDir Then
-50360   ClearCache
+50350  If AddWindowsExplorerIntegration = True And RemoveWindowsExplorerIntegration = False Then
+50360   AddExplorerIntegration
 50370  End If
-50380
-50390  PrintFiles
-50400
-50410  If InitSettings Then
-50420   SaveOptions Options
-50430  End If
-50440
-50450  If NoStart Then
-50460   InstanceCounter = InstanceCounter - 1
-50470   Exit Sub
-50480  End If
-50490
-50500  If ShowOnlyOptions Then
-50510   frmOptions.Show vbModal
-50520   InstanceCounter = InstanceCounter - 1
-50530   Exit Sub
-50540  End If
-50550
-50560  If ShowOnlyLogfile Then
-50570   frmLog.Show vbModal
-50580   InstanceCounter = InstanceCounter - 1
-50590   Exit Sub
-50600  End If
-50610
-50620  LoadGhostscriptDLL
-50630
-50640  If PDFCreatorPrinter = False Then
-50650   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
-50660     Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-50670     KillFile Filename
-50680     FileCopy InputFilename, Filename
-50690     If FileExists(InputFilename) And DeleteIF Then
-50700      KillFile InputFilename
-50710     End If
-50720    Else
-50730     ConvertPostscriptFile InputFilename, OutputFilename
-50740     If FileExists(InputFilename) And DeleteIF Then
-50750      KillFile InputFilename
-50760     End If
-50770     If FileExists(OutputFilename) And OpenOF Then
-50780       OpenDocument OutputFilename
-50790     End If
-50800   End If
-50810  End If
-50820
-50830  If ProgramIsRunning(PDFCreator_GUID) Then
-50840    ' There is a local running instance
-50850    If Not NoAbortIfRunning Then
-50860     InstanceCounter = InstanceCounter - 1
-50870     Exit Sub
-50880    End If
-50890   Else
-50900  ' Create a mutex
-50910    Set mutexLocal = New clsMutex
-50920    mutexLocal.CreateMutex PDFCreator_GUID
-50930    Set mutexGlobal = New clsMutex
-50940    ' Check for a global running instance
-50950    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-50960     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-50970    End If
-50980  End If
-50990
-51000  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-51010   InitCommonControls
-51020  End If
-51030
-51040  Load frmMain
+50380  If AddWindowsExplorerIntegration = False And RemoveWindowsExplorerIntegration = True Then
+50390   RemoveExplorerIntegration
+50400  End If
+50410
+50420  If ClearCacheDir Then
+50430   ClearCache
+50440  End If
+50450
+50460  PrintFiles
+50470
+50480  If InitSettings Then
+50490   SaveOptions Options
+50500  End If
+50510
+50520  If NoStart Then
+50530   InstanceCounter = InstanceCounter - 1
+50540   Exit Sub
+50550  End If
+50560
+50570  If ShowOnlyOptions Then
+50580   frmOptions.Show vbModal
+50590   InstanceCounter = InstanceCounter - 1
+50600   Exit Sub
+50610  End If
+50620
+50630  If ShowOnlyLogfile Then
+50640   frmLog.Show vbModal
+50650   InstanceCounter = InstanceCounter - 1
+50660   Exit Sub
+50670  End If
+50680
+50690  LoadGhostscriptDLL
+50700
+50710  If PDFCreatorPrinter = False Then
+50720   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
+50730     Filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+50740     KillFile Filename
+50750     FileCopy InputFilename, Filename
+50760     If FileExists(InputFilename) And DeleteIF Then
+50770      KillFile InputFilename
+50780     End If
+50790    Else
+50800     ConvertPostscriptFile InputFilename, OutputFilename
+50810     If FileExists(InputFilename) And DeleteIF Then
+50820      KillFile InputFilename
+50830     End If
+50840     If FileExists(OutputFilename) And OpenOF Then
+50850       OpenDocument OutputFilename
+50860     End If
+50870   End If
+50880  End If
+50890
+50900  If ProgramIsRunning(PDFCreator_GUID) Then
+50910    ' There is a local running instance
+50920    If Not NoAbortIfRunning Then
+50930     InstanceCounter = InstanceCounter - 1
+50940     Exit Sub
+50950    End If
+50960   Else
+50970  ' Create a mutex
+50980    Set mutexLocal = New clsMutex
+50990    mutexLocal.CreateMutex PDFCreator_GUID
+51000    Set mutexGlobal = New clsMutex
+51010    ' Check for a global running instance
+51020    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+51030     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+51040    End If
+51050  End If
+51060
+51070  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+51080   InitCommonControls
+51090  End If
+51100
+51110  Load frmMain
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -221,49 +229,62 @@ On Error GoTo ErrPtnr_OnError
 50650     InitSettings = False
 50660   End If
 50670
-50680   ' Check running instance
-50690   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
-50700     CheckInstance = True
+50680   ' Windows-Explorer integration
+50690   If UCase$(CommandSwitch("ADD", False)) = "WINDOWSEXPLORERINTEGRATION" Then
+50700     AddWindowsExplorerIntegration = True
 50710    Else
-50720     CheckInstance = False
+50720     AddWindowsExplorerIntegration = False
 50730   End If
-50740
-50750   PrintFilename = CommandSwitch("PF", True)
-50760   InputFilename = CommandSwitch("IF", True)
-50770   OutputFilename = CommandSwitch("OF", True)
-50780
-50790   ' Check delete inputfile after converting
-50800   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
-50810     DeleteIF = True
-50820    Else
-50830     DeleteIF = False
-50840   End If
-50850
-50860   ' Open the outputfile after converting
-50870   If UCase$(CommandSwitch("Open", False)) = "OF" Then
-50880     OpenOF = True
-50890    Else
-50900     OpenOF = False
-50910   End If
-50920
-50930
-50940   cSwitch = CommandSwitch("OPTIONSFILE", True)
-50950   If LenB(cSwitch) > 0 Then
-50960    If FileExists(cSwitch) = True Then
-50970     Optionsfile = cSwitch
-50980    End If
-50990   End If
-51000   If UCase$(CommandSwitch("NO", False)) = "START" Then
-51010     NoStart = True
+50740   If UCase$(CommandSwitch("REMOVE", False)) = "WINDOWSEXPLORERINTEGRATION" Then
+50750     RemoveWindowsExplorerIntegration = True
+50760    Else
+50770     RemoveWindowsExplorerIntegration = False
+50780   End If
+50790
+50800
+50810   ' Check running instance
+50820   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
+50830     CheckInstance = True
+50840    Else
+50850     CheckInstance = False
+50860   End If
+50870
+50880   PrintFilename = CommandSwitch("PF", True)
+50890   InputFilename = CommandSwitch("IF", True)
+50900   OutputFilename = CommandSwitch("OF", True)
+50910
+50920   ' Check delete inputfile after converting
+50930   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
+50940     DeleteIF = True
+50950    Else
+50960     DeleteIF = False
+50970   End If
+50980
+50990   ' Open the outputfile after converting
+51000   If UCase$(CommandSwitch("Open", False)) = "OF" Then
+51010     OpenOF = True
 51020    Else
-51030     NoStart = False
+51030     OpenOF = False
 51040   End If
-51050   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
-51060     NoPSCheck = True
-51070    Else
-51080     NoPSCheck = False
-51090   End If
-51100  End If
+51050
+51060
+51070   cSwitch = CommandSwitch("OPTIONSFILE", True)
+51080   If LenB(cSwitch) > 0 Then
+51090    If FileExists(cSwitch) = True Then
+51100     Optionsfile = cSwitch
+51110    End If
+51120   End If
+51130   If UCase$(CommandSwitch("NO", False)) = "START" Then
+51140     NoStart = True
+51150    Else
+51160     NoStart = False
+51170   End If
+51180   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
+51190     NoPSCheck = True
+51200    Else
+51210     NoPSCheck = False
+51220   End If
+51230  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -462,7 +483,7 @@ On Error GoTo ErrPtnr_OnError
 50630       DoEvents
 50640      Next i
 50650     Else
-50660      MsgBox LanguageStrings.MessagesMsg14
+50660      MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & "B: " & Filename
 50670    End If
 50680    If DefaultPrintername <> vbNullString Then
 50690     SetDefaultprinterInProg DefaultPrintername
@@ -639,7 +660,7 @@ On Error GoTo ErrPtnr_OnError
 50040   If Files.Count > 0 Then
 50050     Load frmPrintfiles
 50060    Else
-50070     MsgBox LanguageStrings.MessagesMsg14
+50070     MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & "C: " & PrintFilename
 50080   End If
 50090   Set Files = Nothing
 50100  End If
@@ -665,7 +686,7 @@ On Error GoTo ErrPtnr_OnError
 50040   If Files.Count > 0 Then
 50050     Load frmPrintfiles
 50060    Else
-50070     MsgBox LanguageStrings.MessagesMsg14
+50070     MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & "D: " & PrintFilename
 50080   End If
 50090   Set Files = Nothing
 50100  End If

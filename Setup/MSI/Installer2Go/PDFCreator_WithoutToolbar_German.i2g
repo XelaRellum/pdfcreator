@@ -11,7 +11,7 @@ SummaryTitle=PDFCreator 0.9.4
 SummarySubject=PDFCreator creates pdfs for free
 SummaryAuthor=Frank Heindörfer, Philip Chinery
 SummaryKeywords=pdf, ghostscript, free
-SummaryComments=PDFCreator easily creates PDFs from any Windows program. Use it like a printer in Word, StarCalc or any other Windows application.
+SummaryComments=PDFCreator kann aus fast jedem Windows-Programm PDF-Dateien erstellen.
 SupportProductURL=http://www.pdfforge.org
 SupportURL=http://www.pdfforge.org
 SupportPhoneNumber=
@@ -60,7 +60,7 @@ FinishDialog=No
 AdvertisementDialog=No
 
 [LICENSE_DIALOG]
-License_Pathname=C:\PDFCreator\Setup\License\Program license - english.rtf
+License_Pathname=C:\PDFCreator\Setup\License\Program license - german.rtf
 
 [README_DIALOG]
 Readme_Pathname=
@@ -75,12 +75,12 @@ Application_Pathname=%AppDir%\PDFCreator.exe
 
 [CREATE_SETUP]
 OutputFolder=C:&bs;PDFCreator&bs;Setup&bs;Installation
-SetupFilename=zPDFCreator-0_9_4-AD_DeploymentPackage-WithoutToolbar.msi
+SetupFilename=zPDFCreator-0_9_4-AD_DeploymentPackage-WithoutToolbar-german.msi
 SetupExeFilename=Setup.exe
 SetupIconPathname=
 CreateSelfExtractedSetup=No
 IncludeMSIRuntime=No
-Language=English
+Language=German
 
 [APPLICATION_FILES]
 Folder=%AppDir%&bs;Languages
@@ -897,7 +897,6 @@ File=%AppDir%&bs;history.txt,C:&bs;PDFCreator&bs;Setup&bs;history.txt,1,0
 File=%AppDir%&bs;SetupLog.txt,C:&bs;PDFCreator&bs;Setup&bs;MSI&bs;Installer2Go&bs;SetupLog.txt,1,0
 File=%AppDir%&bs;PDFCreator_english.chm,C:&bs;PDFCreator&bs;Help&bs;english&bs;PDFCreator_english.chm,1,0
 File=%AppDir%&bs;PDFCreator_german.chm,C:&bs;PDFCreator&bs;Help&bs;german&bs;PDFCreator_german.chm,1,0
-File=%AppDir%&bs;PDFCreator_french.chm,C:&bs;PDFCreator&bs;Help&bs;french&bs;PDFCreator_french.chm,1,0
 File=%AppDir%&bs;PDFSpooler.exe,C:&bs;PDFCreator&bs;PDFSpooler&bs;PDFSpooler.exe,1,2
 Folder=%WinSysDir%&bs;spool
 Folder=%WinSysDir%&bs;spool&bs;drivers
@@ -931,13 +930,13 @@ File=%WinSysDir%&bs;pdfcmnnt.dll,C:&bs;PDFCreator&bs;Setup&bs;MSI&bs;Installer2G
 
 [SHORTCUTS]
 Shortcut=0,%AppSCFolder%&bs;PDFCreator,%AppDir%&bs;PDFCreator.exe,,,,0,1,%AppDir%,
-Shortcut=0,%AppSCFolder%&bs;GNU License,%AppDir%&bs;GNU License.rtf,,,,0,1,%AppDir%,
-Shortcut=0,%AppSCFolder%&bs;AFPL License,%AppDir%&bs;AFPL License.rtf,,,,0,1,%AppDir%,
+Shortcut=0,%AppSCFolder%&bs;GNU Lizenz,%AppDir%&bs;GNU License.rtf,,,,0,1,%AppDir%,
+Shortcut=0,%AppSCFolder%&bs;AFPL Lizenz,%AppDir%&bs;AFPL License.rtf,,,,0,1,%AppDir%,
 Shortcut=0,%AppSCFolder%&bs;Homepage,%AppDir%&bs;Homepage.url,,,,0,1,%AppDir%,Homepage of PDFCreator
-Shortcut=0,%AppSCFolder%&bs;Donate PDFCreator,%AppDir%&bs;Donation.url,,,,0,1,%AppDir%,Donate PDFCreator
-Shortcut=0,%AppSCFolder%&bs;History,%AppDir%&bs;history.txt,,,,0,1,%AppDir%,
+Shortcut=0,%AppSCFolder%&bs;PDFCreator unterstützen,%AppDir%&bs;Donation.url,,,,0,1,%AppDir%,Donate PDFCreator
+Shortcut=0,%AppSCFolder%&bs;PDFCreator Änderungsgeschichte,%AppDir%&bs;history.txt,,,,0,1,%AppDir%,
 Shortcut=0,%AppSCFolder%&bs;TransTool,%AppDir%&bs;Languages&bs;TransTool.exe,,,,0,1,%AppDir%&bs;Languages,
-Shortcut=0,%AppSCFolder%&bs;PDFCreator help,%AppDir%&bs;PDFCreator_english.chm,,,,0,1,%AppDir%,
+Shortcut=0,%AppSCFolder%&bs;PDFCreator Hilfe,%AppDir%&bs;PDFCreator_german.chm,,,,0,1,%AppDir%,
 
 [REGISTRY_ENTRIES]
 KEY=%HKEY_CURRENT_USER%&bs;Software
