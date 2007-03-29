@@ -2037,7 +2037,7 @@ On Error GoTo ErrPtnr_OnError
 50080   End If
 50090   DoEvents
 50100   i = i + 1
-50110  Loop Until envStr = ""
+50110  Loop Until envStr = "" Or i >= 256
 50120  ResolveEnvironment = Str1
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
