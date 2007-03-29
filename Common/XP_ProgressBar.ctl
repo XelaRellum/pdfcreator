@@ -800,7 +800,8 @@ On Error GoTo ErrPtnr_OnError
 50250            'It saves some memory
 50260
 50270       If ((tR.Right * (m_Value / 100)) <= AT.Right) Or Not isAlpha Then
-50280             DrawText m_hDC, ThisText, Len(ThisText), AT, DT_SINGLELINE
+'50280             DrawText m_hDC, ThisText, Len(ThisText), AT, DT_SINGLELINE
+50280             DrawText m_hDC, ThisText, -1, AT, DT_SINGLELINE
 50290       End If
 50300
 50310       SelectObject m_hDC, hFntOld  'Delete the Used Font
@@ -832,7 +833,8 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
 50020       '//--Calculates the Bounding Rects Of the Text using DT_CALCRECT
-50030       DrawText m_hDC, ThisText, Len(ThisText), AT, DT_CALCRECT
+'50030       DrawText m_hDC, ThisText, Len(ThisText), AT, DT_CALCRECT
+50030       DrawText m_hDC, ThisText, -1, AT, DT_CALCRECT
 50040       AT.Left = (tR.Right / 2) - ((AT.Right - AT.Left) / 2)
 50050       AT.Top = (tR.Bottom / 2) - ((AT.Bottom - AT.Top) / 2)
 50060

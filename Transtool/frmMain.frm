@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MsComCtl.ocx"
 Begin VB.Form frmMain 
    Caption         =   "Transtool"
    ClientHeight    =   6435
@@ -1124,60 +1124,67 @@ On Error GoTo ErrPtnr_OnError
 50960   .AddItem "0, Western": .ItemData(.NewIndex) = 0
 50970   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
 50980   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
-50990   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
-51000   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
-51010   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
-51020   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
-51030   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
-51040   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
-51050   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
-51060   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
-51070   .Text = 0
-51080  End With
-51090  If fi >= 0 Then
-51100   cmbFonts.ListIndex = fi
-51110   cmbCharset.Text = SMF(1)(2)
-51120   lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
-51130   lsv.Font.Charset = cmbCharset.Text
-51140   cmbProgramFontsize.Text = SMF(1)(1)
-51150  End If
-51160  With cmbProgramFontsize
-51170   .AddItem "8"
-51180   .AddItem "9"
-51190   .AddItem "10"
-51200   .AddItem "11"
-51210   .AddItem "12"
-51220   .AddItem "14"
-51230   .AddItem "16"
-51240   .AddItem "18"
-51250   .AddItem "20"
-51260   .AddItem "22"
-51270   .AddItem "24"
-51280   .AddItem "26"
-51290   .AddItem "28"
-51300   .AddItem "36"
-51310   .AddItem "48"
-51320   .AddItem "72"
-51330  End With
-51340  For Each ctl In Controls
-51350   If TypeOf ctl Is ComboBox Then
-51360    ComboSetListWidth ctl
-51370   End If
-51380  Next ctl
-51390  cmbCharset.ListIndex = 0
-51400
-51410  SetOptimalComboboxHeigth cmbCharset, Me
-51420  SetOptimalComboboxHeigth cmbProgramFontsize, Me
-51430
-51440  SetPanelControl cmbFonts, stb, "Fonts", True
-51450  SetPanelControl cmbCharset, stb, "Charset", True
-51460  SetPanelControl cmbProgramFontsize, stb, "Fontsize", True
-51470  SetPanelControl xpPgb, stb, "Status", True
-51480
-51490  'Set imgPaypal.Picture = LoadResPicture(1002, vbResBitmap)
-51500  ChangedListitem = False
-51510  SaveFilename = ""
-51520  Timer1.Enabled = True
+50990   .AddItem "128, Japanese": .ItemData(.NewIndex) = 128
+51000   .AddItem "129, Hangeul": .ItemData(.NewIndex) = 129
+51010   .AddItem "130, Hangeul (Johab)": .ItemData(.NewIndex) = 130
+51020   .AddItem "134, Chinese_GB2312": .ItemData(.NewIndex) = 134
+51030   .AddItem "136, Chinese_BIG5": .ItemData(.NewIndex) = 136
+51040   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
+51050   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
+51060   .AddItem "163, Vietnamese": .ItemData(.NewIndex) = 163
+51070   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
+51080   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
+51090   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
+51100   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
+51110   .AddItem "222, Thai": .ItemData(.NewIndex) = 222
+51120   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
+51130   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
+51140   .Text = 0
+51150  End With
+51160  If fi >= 0 Then
+51170   cmbFonts.ListIndex = fi
+51180   cmbCharset.Text = SMF(1)(2)
+51190   lsv.Font.Name = cmbFonts.List(cmbFonts.ListIndex)
+51200   lsv.Font.Charset = cmbCharset.Text
+51210   cmbProgramFontsize.Text = SMF(1)(1)
+51220  End If
+51230  With cmbProgramFontsize
+51240   .AddItem "8"
+51250   .AddItem "9"
+51260   .AddItem "10"
+51270   .AddItem "11"
+51280   .AddItem "12"
+51290   .AddItem "14"
+51300   .AddItem "16"
+51310   .AddItem "18"
+51320   .AddItem "20"
+51330   .AddItem "22"
+51340   .AddItem "24"
+51350   .AddItem "26"
+51360   .AddItem "28"
+51370   .AddItem "36"
+51380   .AddItem "48"
+51390   .AddItem "72"
+51400  End With
+51410  For Each ctl In Controls
+51420   If TypeOf ctl Is ComboBox Then
+51430    ComboSetListWidth ctl
+51440   End If
+51450  Next ctl
+51460  cmbCharset.ListIndex = 0
+51470
+51480  SetOptimalComboboxHeigth cmbCharset, Me
+51490  SetOptimalComboboxHeigth cmbProgramFontsize, Me
+51500
+51510  SetPanelControl cmbFonts, stb, "Fonts", True
+51520  SetPanelControl cmbCharset, stb, "Charset", True
+51530  SetPanelControl cmbProgramFontsize, stb, "Fontsize", True
+51540  SetPanelControl xpPgb, stb, "Status", True
+51550
+51560  'Set imgPaypal.Picture = LoadResPicture(1002, vbResBitmap)
+51570  ChangedListitem = False
+51580  SaveFilename = ""
+51590  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1470,7 +1477,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim h1 As Long, h2 As Long, com As Long
 50020  h1 = GetMenu(Me.hwnd): h2 = GetSubMenu(h1, 2)
 50030  com = GetMenuItemID(h2, 0)
-50040  ModifyMenu h2, com, MF_BYCOMMAND Or MF_BITMAP, com, CLng(ImgPaypal.Picture)
+50040  ModifyMenu h2, com, MF_BYCOMMAND Or MF_BITMAP, com, CLng(imgPaypal.Picture)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

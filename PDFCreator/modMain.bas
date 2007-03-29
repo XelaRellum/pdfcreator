@@ -607,14 +607,19 @@ Public Sub SetFont(Frm As Form, ByVal Fontname As String, ByVal Charset As Long,
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control, eB As isExplorerBar
+50010  Dim ctl As Control, eB As isExplorerBar, ts As TabStrip, df As dmFrame, f As StdFont
 50020
 50030  If LenB(Trim$(Fontname)) = 0 Then
 50040   Exit Sub
 50050  End If
 50060
-50070  For Each ctl In Frm.Controls
-50080   If TypeOf ctl Is Label Or _
+50070  Set f = New StdFont
+50080  f.Name = Fontname
+50090  f.Size = Fontsize
+50100  f.Charset = Charset
+50110
+50120  For Each ctl In Frm.Controls
+50130   If TypeOf ctl Is Label Or _
      TypeOf ctl Is Form Or _
      TypeOf ctl Is ComboBox Or _
      TypeOf ctl Is CheckBox Or _
@@ -623,21 +628,37 @@ On Error GoTo ErrPtnr_OnError
      TypeOf ctl Is StatusBar Or _
      TypeOf ctl Is TextBox Or _
      TypeOf ctl Is Frame Then
-50170    With ctl
-50180     .Font = Fontname
-50190     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
-50200      .Fontsize = Fontsize
-50210     End If
-50220     .Font.Charset = Charset
-50230    End With
-50240   End If
-50250   If TypeOf ctl Is isExplorerBar Then
-50260    Set eB = ctl
-50270    eB.Font.Name = Fontname
-50280    eB.Font.Size = Fontsize
-50290    eB.Font.Charset = Charset
-50300   End If
-50310  Next ctl
+50220    With ctl
+50230     .Font = Fontname
+50240     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
+50250      .Fontsize = Fontsize
+50260     End If
+50270     .Font.Charset = Charset
+50280    End With
+50290   End If
+50300
+50310   If TypeOf ctl Is isExplorerBar Then
+50320    Set eB = ctl
+50330    eB.Font.Name = Fontname
+50340    eB.Font.Size = Fontsize
+50350    eB.Font.Charset = Charset
+50360   End If
+50370   If TypeOf ctl Is TabStrip Then
+50380    Set ts = ctl
+50390    ts.Font.Name = Fontname
+50400    ts.Font.Size = Fontsize
+50410    ts.Font.Charset = Charset
+50420   End If
+50430   If TypeOf ctl Is dmFrame Then
+50440    Set df = ctl
+50450    df.Font.Name = Fontname
+50460    df.Font.Size = Fontsize
+50470    df.Font.Charset = Charset
+50480    Set df.Font = f
+50490   End If
+50500  Next ctl
+50510
+50520  Set f = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

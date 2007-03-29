@@ -2463,7 +2463,8 @@ On Error GoTo ErrPtnr_OnError
 50010     'draw text in the selected position
 50020     m_LastTextHeight = CalcHeightRectText(rtRect.Left, rtRect.Right, sText)
 50030     rtRect.Bottom = rtRect.Top + m_LastTextHeight
-50040     DrawText UserControl.hdc, sText, Len(sText), rtRect, DT_LEFT Or DT_WORDBREAK
+'50040     DrawText UserControl.hdc, sText, Len(sText), rtRect, DT_LEFT Or DT_WORDBREAK
+50040     DrawText UserControl.hdc, sText, -1, rtRect, DT_LEFT Or DT_WORDBREAK
 50050     'Redraw Window
 50060     RedrawWindow UserControl.hwnd, rtRect, ByVal 0&, RDW_INVALIDATE
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2487,7 +2488,8 @@ On Error GoTo ErrPtnr_OnError
 50010     'Calculate vertical height of text Tittle + Text(wrapped)
 50020     Dim rectText As Rect
 50030     SetRect rectText, lLeft, 0, lright, UserControl.ScaleHeight
-50040     CalcHeightRectText = DrawText(UserControl.hdc, sText, Len(sText), rectText, DT_CALCRECT Or DT_LEFT Or DT_WORDBREAK)
+'50040     CalcHeightRectText = DrawText(UserControl.hdc, sText, Len(sText), rectText, DT_CALCRECT Or DT_LEFT Or DT_WORDBREAK)
+50040     CalcHeightRectText = DrawText(UserControl.hdc, sText, -1, rectText, DT_CALCRECT Or DT_LEFT Or DT_WORDBREAK)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -4457,6 +4459,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010     UserControl.Font.Name = newFont.Name
 50020     UserControl.Font.Charset = newFont.Charset
+50030     UserControl.Font.Size = newFont.Size
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
