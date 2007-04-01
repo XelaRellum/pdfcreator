@@ -14,7 +14,7 @@
    <table border="0" cellpadding="4">
    <td>
    <table border="1" cellpadding="4" style="border-collapse:collapse;empty-cells:show;">
-    <tr><th align="left">Propriétés</th></tr>
+    <tr><th align="left">Propri&eacute;t&eacute;s</th></tr>
     <tr>
      <td nowrap>
       Public Property Get cCountOfPrintjobs() As Long<br />
@@ -23,7 +23,7 @@
       Public Property Get cError() As clsPDFCreatorError<br />
       Public Property Get cErrorDetail(ByVal PropertyName As String) As Variant<br />
       Public Property Get cGhostscriptVersion() As String<br />
-      Public Property Get cInstalledAsServer() As Boolean<br />
+	  Public Property Get cInstalledAsServer() As Boolean<br />
       Public Property Get cIsConverted() As Boolean<br />
       Public Property Let cIsConverted(ByVal Value As Boolean)<br />
       Public Property Get cIsLogfileDialogDisplayed() As Boolean<br />
@@ -45,9 +45,9 @@
       Public Property Get cProgramRelease(Optional ByVal WithBeta As Boolean = True) As String<br />
       Public Property Get cStandardOption(ByVal PropertyName As String) As Variant<br />
       Public Property Get cStandardOptions() As clsPDFCreatorOptions<br />
-      Public Property Get cStopURLPrinting() As Boolean<br>
-      Public Property Let cStopURLPrinting(ByVal Value As Boolean)<br>
-      Public Property Get cVisible() As Boolean<br />
+      Public Property Get cStopURLPrinting() As Boolean<br />
+      Public Property Let cStopURLPrinting(ByVal Value As Boolean)<br />
+	  Public Property Get cVisible() As Boolean<br />
       Public Property Let cVisible(ByVal Value As Boolean)<br />
       Public Property Get cWindowState() As Long<br />
       Public Property Let cWindowState(ByVal Value As Long) <span style="color:green">' Value must be '0 = normal' or '1 = minimize' or '2 = maximize'</span><br />
@@ -65,7 +65,7 @@
       Public Function cGetLogfile() As String<br />
       Public Function cGetPDFCreatorPrinters() As Collection<br />
       Public Function cGhostscriptRun(Arguments() As Variant) As Boolean<br />
-      Public Function cIsPrintable(ByVal Filename As String) As Boolean<br />
+	  Public Function cIsPrintable(ByVal Filename As String) As Boolean<br />
       Public Function cReadOptions() As clsPDFCreatorOptions<br />
       Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions<br />
       Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean<br />
@@ -74,7 +74,7 @@
    </table>
    <p></p>
    <table border="1" cellpadding="4" style="border-collapse:collapse;empty-cells:show;">
-    <tr><th align="left">Procédures</th></tr>
+    <tr><th align="left">Proc&eacute;dures</th></tr>
 	<tr>
 	 <td nowrap>
       Public Sub cAddPrintjob(ByVal PostscriptFilename As String)<br />
@@ -91,8 +91,8 @@
       Public Sub cPrintFile(ByVal Filename As String)<br />
       Public Sub cPrintPDFCreatorTestpage()<br />
       Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)<br />
-      Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)<br>
-      Public Sub cSaveOptions(Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 must be a clsPDFCreatorOptions type<br /></span>
+      Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)<br />
+	  Public Sub cSaveOptions(Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 must be a clsPDFCreatorOptions type<br /></span>
       Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 must be a clsPDFCreatorOptions type<br /></span>
       Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)<br />
       Public Sub cShowLogfileDialog(ByVal Value As Boolean)<br />
@@ -104,7 +104,7 @@
    </table>
    <p></p>
    <table border="1" cellpadding="4" style="border-collapse:collapse;empty-cells:show;">
-    <tr><th align="left">Evènements</th></tr>
+    <tr><th align="left">Ev&egrave;nements</th></tr>
     <tr><td nowrap>
      Public Event eError()<br />
      Public Event eReady()<br />
@@ -112,14 +112,14 @@
    </table>
    <p></p>
    <table border="0" cellpadding="2" style="border-collapse:collapse;empty-cells:show;">
-    <tr><th align="left" colspan="2" nowrap>10 messages d'erreurs pour les évènements existent :</th></tr>
-    <tr><td align="right" nowrap>-2</td><td>Evènement inconnu !</td></tr>
+    <tr><th align="left" colspan="2" nowrap>10 messages d'erreurs pour les &eacute;v&egrave;nements existent :</th></tr>
+    <tr><td align="right" nowrap>-2</td><td>Ev&egrave;nement inconnu !</td></tr>
     <tr><td align="right" nowrap>-1</td><td>Test Error Event.</td></tr>
-    <tr><td align="right" nowrap>1</td><td>Le serveur ActiveX n'a pas été démarré ! Merci d'utiliser la fonction "cStart()" pour lancer le serveur ActiveX !</td></tr>
-    <tr><td align="right" nowrap>2</td><td>Une instance de PDFCreator est déjà en cours d'exécution. On ne peut exécuter plus d'une instance !</td></tr>
+    <tr><td align="right" nowrap>1</td><td>Le serveur ActiveX n'a pas &eacute;t&eacute; d&eacute;marr&eacute; ! Merci d'utiliser la fonction "cStart()" pour lancer le serveur ActiveX !</td></tr>
+    <tr><td align="right" nowrap>2</td><td>Une instance de PDFCreator est d&eacute;j&agrave; en cours d'ex&eacute;cution. On ne peut ex&eacute;cuter plus d'une instance !</td></tr>
     <tr><td align="right" nowrap>3</td><td>Nom d'option inconnu '%1' dans '%2' !</td></tr>
     <tr><td align="right" nowrap>4</td><td>Erreur Ghostscript : '%1' !</td></tr>
-    <tr><td align="right" nowrap>5</td><td>Le fichier '%1' n'a pu être trouvé !</td></tr>
+    <tr><td align="right" nowrap>5</td><td>Le fichier '%1' n'a pu &ecirc;tre trouv&eacute; !</td></tr>
     <tr><td align="right" nowrap>6</td><td>Chemin invalide '%1' !</td></tr>
     <tr><td align="right" nowrap>7</td><td>Le fichier '%1' est en cours d'utilisation !</td></tr>
     <tr><td align="right" nowrap>8</td><td>Fonction '%1': Options1 n'est pas de type 'clsPDFCreatorOptions' !</td></tr>

@@ -1,6 +1,6 @@
 PDFCreator Revision History
 ================================
-Copyright (C)2002-2006 Philip Chinery, Frank Heindörfer
+Copyright (C)2002-2007 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 

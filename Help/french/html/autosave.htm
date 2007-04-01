@@ -18,36 +18,36 @@
   </tr>
   <tr>
     <td class="main"><p class="header">Enregistrement automatique</p>
-      <p>L'option Enregistrement automatique permet à l'utilisateur de créer des fichiers PDF automatiquement avec des paramètres prédéfinis, et de l'enregistrer à un emplacement prédéterminé. Quand l'option Enregistrement automatique est activée, PDFCreator ne demande aucun nom de fichier ni de chemin d'enregistrement. Voici la liste des paramètres qui doivent être définis pour utiliser l'enregistrement automatique :</p>
+      <p>L'option Enregistrement automatique permet &agrave; l'utilisateur de cr&eacute;er des fichiers PDF automatiquement avec des param&egrave;tres pr&eacute;d&eacute;finis, et de l'enregistrer &agrave; un emplacement pr&eacute;d&eacute;termin&eacute;. Quand l'option Enregistrement automatique est activ&eacute;e, PDFCreator ne demande aucun nom de fichier ni de chemin d'enregistrement. Voici la liste des param&egrave;tres qui doivent &ecirc;tre d&eacute;finis pour utiliser l'enregistrement automatique :</p>
       <ul>
         <li><strong>Format d'enregistrement automatique :</strong> C'est le format dans lequel vous souhaitez que PDFCreator enregistre les documents convertis.</li>
-        <li><strong>Filename :</strong> Définit le nom du fichier pour tous les documents créés. Les variables &lt;DateTime&gt; incluent la date et l'heure de création dans le nom du fichier.</li>
-        <li><strong>Ajouter un suffixe au nom de fichier :</strong> Le suffixe est une autre variable ajoutée aux nom des documents. Voici la liste des suffixes utilisables :
+        <li><strong>Filename :</strong> D&eacute;finit le nom du fichier pour tous les documents cr&eacute;&eacute;s. Les variables &lt;DateTime&gt; incluent la date et l'heure de cr&eacute;ation dans le nom du fichier.</li>
+        <li><strong>Ajouter un suffixe au nom de fichier :</strong> Le suffixe est une autre variable ajout&eacute;e aux nom des documents. Voici la liste des suffixes utilisables :
           <ul>
             <li>&lt;Author&gt; - Nom de l'auteur du document</li>
             <li>&lt;Computername&gt; - Nom de l'ordinateur.</li>
-            <li>&lt;ClientComputer&gt; - Nom de l'ordinateur ou adresse IP du client qui veut créer le PDF (à utiliser en cas d'installation sur serveur).
-              ll peut aussi être utilisé dans le chemin d'enregistrement automatique pour sauver directement sur le poste client (i.e. &quot;\\&lt;ClientComputer&gt;\c$\files&quot;).</li>
-            <li>&lt;DateTime&gt; - Date et heure auxquelles le PDF est créé.</li>
+            <li>&lt;ClientComputer&gt; - Nom de l'ordinateur ou adresse IP du client qui veut cr&eacute;er le PDF (&agrave; utiliser en cas d'installation sur serveur).
+              ll peut aussi &ecirc;tre utilis&eacute; dans le chemin d'enregistrement automatique pour sauver directement sur le poste client (i.e. &quot;\\&lt;ClientComputer&gt;\c$\files&quot;).</li>
+            <li>&lt;DateTime&gt; - Date et heure auxquelles le PDF est cr&eacute;&eacute;.</li>
             <li>&lt;Username&gt; - Nom d'utilisateur de la session Windows en cours.</li>
           </ul>
         </li>
-        <li><strong>Utiliser ce répertoire pour l'enregistrement automatique :</strong> Ce paramètre optionnel permet de définir un répertoire pour l'enregistrement automatique. Les sufixes suivants peuvent être utilisés dans la définition du répertoire :
+        <li><strong>Utiliser ce r&eacute;pertoire pour l'enregistrement automatique :</strong> Ce param&egrave;tre optionnel permet de d&eacute;finir un r&eacute;pertoire pour l'enregistrement automatique. Les sufixes suivants peuvent &ecirc;tre utilis&eacute;s dans la d&eacute;finition du r&eacute;pertoire :
           <ul>
             <li>&lt;MyFiles&gt; - Chemin du dossier Mes Documents de l'utilisateur en cours.</li>
             <li>&lt;MyDesktop&gt; - Chemin vers le dossier Bureau de l'utilisateur en cours.</li>
             <li>&lt;Temp&gt; - Chemin vers le dossier temporaire de l'utilisateur en cours.</li>
           </ul>
         </li>
-        <li><strong>Ouvrir le document avec l'application par défaut, après l'enregistrement automatique :</strong>
-         Après l'enregistrement automatique, le document converti est ouvert par l'application par défaut associée à son format.
+        <li><strong>Ouvrir le document avec l'application par d&eacute;faut, apr&egrave;s l'enregistrement automatique :</strong>
+         Apr&egrave;s l'enregistrement automatique, le document converti est ouvert par l'application par d&eacute;faut associ&eacute;e &agrave; son format.
         </li>
-        <li><strong>Envoyer un e-mail après l'enregistrement automatique.</strong>
-UNe fois le documetn converti et enregistré, PDFCreator envoie le fichier converti par e-mail.
+        <li><strong>Envoyer un e-mail apr&egrave;s l'enregistrement automatique.</strong>
+UNe fois le documetn converti et enregistr&eacute;, PDFCreator envoie le fichier converti par e-mail.
         </li>
       </ul>
       <p><strong><em>Suffixes RedMon</em></strong><br />
-        Toutes les variables d'environnement RedMon peuvent aussi être utilisées dans PDFCreator.
+        Toutes les variables d'environnement RedMon peuvent aussi &ecirc;tre utilis&eacute;es dans PDFCreator.
         Ces suffixes sont seulement valables lorsqu'on imprime un document. Si vous ajouter un fichier postscript au moniteur d'impression, les suffixes Redmon sont vides. Voici la liste des suffixes Redmon utilisables dans PDFCreator:</p>
       <table border="1" cellpadding="1" style="border-collapse:collapse;empty-cells:show;">
        <tr>
@@ -56,25 +56,25 @@ UNe fois le documetn converti et enregistré, PDFCreator envoie le fichier conver
        </tr>
        <tr>
         <td nowrap><strong>REDMON_DOCNAME_FILE:</strong></td>
-        <td>Si <em>REDMON_DOCNAME</em> correspond à un nom de fichier, cette variable contiendra un nom de fichier.</td>
+        <td>Si <em>REDMON_DOCNAME</em> correspond &agrave; un nom de fichier, cette variable contiendra un nom de fichier.</td>
        </tr>
        <tr>
         <td nowrap><strong>REDMON_DOCNAME_PATH:</strong></td>
-        <td> Si <em>REDMON_DOCNAME</em> correspond à nom de fichier complet, cette variable contiendra le chemin.
-         Si cette variable est utilisée pour le répertoire, tous les fichiers seront enregistrés dans le même répertoire que le fichier imprimé.<br />
-         <strong>Note :</strong> Seules quelques applications (telles que Autocad ou Irfanview) utilisent les noms de fichiers complets. C'est pourquoi ce suffixe ne doit être utilisé sans examiner l'application.
+        <td> Si <em>REDMON_DOCNAME</em> correspond &agrave; nom de fichier complet, cette variable contiendra le chemin.
+         Si cette variable est utilis&eacute;e pour le r&eacute;pertoire, tous les fichiers seront enregistr&eacute;s dans le m&ecirc;me r&eacute;pertoire que le fichier imprim&eacute;.<br />
+         <strong>Note :</strong> Seules quelques applications (telles que Autocad ou Irfanview) utilisent les noms de fichiers complets. C'est pourquoi ce suffixe ne doit &ecirc;tre utilis&eacute; sans examiner l'application.
        </tr>
        <tr>
         <td nowrap><strong>REDMON_FILENAME:</strong></td>
-        <td>Nom du fichier de sortie. S'il est requis de l'utilisateur, le nom de fichier sera utilisé. Un nom de fichier temporaire est utilisé si un fichier temporaire est envoyé à l'imprimante. Cette variable est vide dans PDFCreator si vous utilisez un autre programme avec Redmon.</td>
+        <td>Nom du fichier de sortie. S'il est requis de l'utilisateur, le nom de fichier sera utilis&eacute;. Un nom de fichier temporaire est utilis&eacute; si un fichier temporaire est envoy&eacute; &agrave; l'imprimante. Cette variable est vide dans PDFCreator si vous utilisez un autre programme avec Redmon.</td>
        </tr>
        <tr>
         <td nowrap><strong>REDMON_JOB:</strong></td>
-        <td>Numéro de la tâche, représenté par un entier.</td>
+        <td>Num&eacute;ro de la t&acirc;che, repr&eacute;sent&eacute; par un entier.</td>
        </tr>
        <tr>
         <td nowrap><strong>REDMON_MACHINE:</strong></td>
-        <td>Nom de la machine qui a créé la tâche (e.g. &quot;\\MyComputer&quot;).</td>
+        <td>Nom de la machine qui a cr&eacute;&eacute; la t&acirc;che (e.g. &quot;\\MyComputer&quot;).</td>
        </tr>
        <tr>
         <td nowrap><strong>REDMON_PORT:</strong></td>
@@ -87,17 +87,17 @@ UNe fois le documetn converti et enregistré, PDFCreator envoie le fichier conver
        </tr>
        <tr>
         <td nowrap><strong>REDMON_USER:</strong></td>
-        <td>Nom de l'utilisateur propréitaire de la tâche (e.g. &quot;JOHNDOE&quot;).</td>
+        <td>Nom de l'utilisateur propr&eacute;itaire de la t&acirc;che (e.g. &quot;JOHNDOE&quot;).</td>
        </tr>
        <tr>
         <td nowrap><strong>REDMON_SESSIONID:</strong></td>
         <td>Id de session de la session client du Windows Terminal Server. Zero si Windows Terminal
-         Server n'est pas utilisé.</td>
+         Server n'est pas utilis&eacute;.</td>
        </tr>
       </table>
-      <p>Avec le mode Enregistrement automatique vous pouvez soit décider d'enregistrer dans un répertoire déterminé, soit laisser PDFCreator enregistrer directement sur le bureau. <strong>Note :</strong>
-        Vous pouvez utiliser les options de sécurité PDF dans le mode Enregistrement automatique à l'aide des paramètres cachés PDFOwnerPasswordString
-        et PDFUserPasswordString. Pour plus d'informations sur les paramètres cachés, cliquez <a href="hiddensettings.htm">ici</a>.</p></td>
+      <p>Avec le mode Enregistrement automatique vous pouvez soit d&eacute;cider d'enregistrer dans un r&eacute;pertoire d&eacute;termin&eacute;, soit laisser PDFCreator enregistrer directement sur le bureau. <strong>Note :</strong>
+        Vous pouvez utiliser les options de s&eacute;curit&eacute; PDF dans le mode Enregistrement automatique &agrave; l'aide des param&egrave;tres cach&eacute;s PDFOwnerPasswordString
+        et PDFUserPasswordString. Pour plus d'informations sur les param&egrave;tres cach&eacute;s, cliquez <a href="hiddensettings.htm">ici</a>.</p></td>
   </tr>
 </table>
 </body>
