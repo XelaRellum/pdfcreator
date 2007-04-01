@@ -18,44 +18,44 @@
   </tr>
   <tr>
     <td class="main"><p class="header">Options de PDFCreator</p>
-      <p>Depuis la version 0.8.1 RC8, PDFCreator enregistre tous les réglages dans le registre. 
-        Si vous choisissez l'installation &quot;Standard&quot;, PDFCreator enregistre les réglages à cet emplacement du registre : <em><strong>HKCU\Software\PDFCreator</strong></em>
-      <p>Si votre système d'exploitation est Windows 2000 ou une version ultérieure, le panneau de réglages stocke quelques paramètres pour l'utilisateur par défaut à l'emplacement suivant du registre :
+      <p>Depuis la version 0.8.1 RC8, PDFCreator enregistre tous les r&eacute;glages dans le registre. 
+        Si vous choisissez l'installation &quot;Standard&quot;, PDFCreator enregistre les r&eacute;glages &agrave; cet emplacement du registre : <em><strong>HKCU\Software\PDFCreator</strong></em>
+      <p>Si votre syst&egrave;me d'exploitation est Windows 2000 ou une version ult&eacute;rieure, le panneau de r&eacute;glages stocke quelques param&egrave;tres pour l'utilisateur par d&eacute;faut &agrave; l'emplacement suivant du registre :
         <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em> <br />
         <br />
-        En cas d'installation de type &quot;Serveur&quot;, les réglages sont enregistrés à l'endroit suivant du registre : <em><strong>HKLM\Software\PDFCreator</strong></em> <br>
+        En cas d'installation de type &quot;Serveur&quot;, les r&eacute;glages sont enregistr&eacute;s &agrave; l'endroit suivant du registre : <em><strong>HKLM\Software\PDFCreator</strong></em> <br>
         <br />
-        Alors que la localisation par défaut des réglages est le registre, il est également possible de stocker les réglages selon l'ancien système des fichiers .ini. Dans ce cas PDFCreator stocke tous les réglages dans des fichiers .ini. On peut aussi ajouter un fichier .ini externe comme fichier par défaut.
-        Pour plus d'information utiliser le paramètre /? du programme d'installation. <br />
-        <strong>Attention :</strong> Des problèmes peuvent survenir avec des profils basés sur serveur lorsque le dossier Application Data est sur un lecteur réseau. Dans ce cas les installations sur serveur ne peuvent utiliser l'ancien système .ini.<br />
+        Alors que la localisation par d&eacute;faut des r&eacute;glages est le registre, il est &eacute;galement possible de stocker les r&eacute;glages selon l'ancien syst&egrave;me des fichiers .ini. Dans ce cas PDFCreator stocke tous les r&eacute;glages dans des fichiers .ini. On peut aussi ajouter un fichier .ini externe comme fichier par d&eacute;faut.
+        Pour plus d'information utiliser le param&egrave;tre /? du programme d'installation. <br />
+        <strong>Attention :</strong> Des probl&egrave;mes peuvent survenir avec des profils bas&eacute;s sur serveur lorsque le dossier Application Data est sur un lecteur r&eacute;seau. Dans ce cas les installations sur serveur ne peuvent utiliser l'ancien syst&egrave;me .ini.<br />
         <br />
-        Si vous choisissez l'installation &quot;Standard&quot; et utilisez l'enregistrement dans les fichiers .ini, les réglages sont enregistrés dans le dossier Application Data du répertoire de l'utilisateur:<br />
+        Si vous choisissez l'installation &quot;Standard&quot; et utilisez l'enregistrement dans les fichiers .ini, les r&eacute;glages sont enregistr&eacute;s dans le dossier Application Data du r&eacute;pertoire de l'utilisateur:<br />
         <em>Exemple :</em> C:\Documents and Settings\[user profile]\Application Data\PDFCreator <br />
         <br />
-        Si votre système d'exploitation est Windows 2000 ou une version ultérieure, le panneau de réglages enregistre quelques réglages pour l'utilisateur par défaut dans le répertoire suivant :<br />
+        Si votre syst&egrave;me d'exploitation est Windows 2000 ou une version ult&eacute;rieure, le panneau de r&eacute;glages enregistre quelques r&eacute;glages pour l'utilisateur par d&eacute;faut dans le r&eacute;pertoire suivant :<br />
         <em>Exemple : </em>C:\Documents and Settings\Default User\Application Data\PDFCreator <br />
         <br />
-        Dans une installation de PDFCreator de type &quot;Serveur&quot;, les réglages sont enregistrés dans le répetoire suivant :<br :>
+        Dans une installation de PDFCreator de type &quot;Serveur&quot;, les r&eacute;glages sont enregistr&eacute;s dans le r&eacute;petoire suivant :<br :>
         C:\Documents and Settings\All User\Application Data\PDFCreator <br />
         <br :>
-        <strong>Procédure pour lire les paramètres</strong>      
-      <p>Sous Windows 2000 ou une version ultérieure, PDFCreator lit les paramètres de l'utilisateur par défaut en priorité. S'il n'existe pas de paramaètres à cet endroit, PDFCreator utilisera des paramètres externes. Ensuite, PDFCreator lit les paramètres de l'utilisateur courant. Seuls les réglages de l'utilisateur courant trouvés par PDFCreator remplaceront les réglages de l'utilisateur par défaut. Enfin, PDFCreator recherche les réglages de la machine dans <br />
+        <strong>Proc&eacute;dure pour lire les param&egrave;tres</strong>      
+      <p>Sous Windows 2000 ou une version ult&eacute;rieure, PDFCreator lit les param&egrave;tres de l'utilisateur par d&eacute;faut en priorit&eacute;. S'il n'existe pas de parama&egrave;tres &agrave; cet endroit, PDFCreator utilisera des param&egrave;tres externes. Ensuite, PDFCreator lit les param&egrave;tres de l'utilisateur courant. Seuls les r&eacute;glages de l'utilisateur courant trouv&eacute;s par PDFCreator remplaceront les r&eacute;glages de l'utilisateur par d&eacute;faut. Enfin, PDFCreator recherche les r&eacute;glages de la machine dans <br />
         <em>HKLM\Software\PDFCreator</em> <br />
         ou <br />
         <em>C:\Documents and Settings\All User\Application Data\PDFCreator</em>.<br />
-        Seuls les réglages de la machine trouvés par PDFCreator remplaceront les réglages de l'utilisateur. Grâce à se fonctionnement, les administrateurs peuvent définir des réglages pour tous les utilisateurs.<br :>
+        Seuls les r&eacute;glages de la machine trouv&eacute;s par PDFCreator remplaceront les r&eacute;glages de l'utilisateur. Gr&acirc;ce &agrave; se fonctionnement, les administrateurs peuvent d&eacute;finir des r&eacute;glages pour tous les utilisateurs.<br :>
         <br />
-        <strong>Procedure d'enregistrement des réglages</strong>     
-      <p>Si vous utilisez l'installation &quot;Standard&quot; de PDFCreator, les réglages sont stockés dans l'un des emplacements suivants : <br :>
+        <strong>Procedure d'enregistrement des r&eacute;glages</strong>     
+      <p>Si vous utilisez l'installation &quot;Standard&quot; de PDFCreator, les r&eacute;glages sont stock&eacute;s dans l'un des emplacements suivants : <br :>
         <em>HKCU\Software\PDFCreator</em> <br />
         ou <br />
         <em>C:\Documents and Settings\[user profile]\Application Data\PDFCreator </em><br />
         <br />
-        Si vous choisissez l'installation &quot;Serveur&quot; de PDFCreator, les réglages sont enregistrés dans l'un des emplacements suivants : <br />
+        Si vous choisissez l'installation &quot;Serveur&quot; de PDFCreator, les r&eacute;glages sont enregistr&eacute;s dans l'un des emplacements suivants : <br />
         <em>HKLM\Software\PDFCreator </em><br />
         ou <br :>
         <em>C:\Documents and Settings\All User\Application Data\PDFCreator</em>      
-      <p> <strong>Astuce :</strong>&nbsp; Si vous voulez utiliser des réglages différents de ceux par défaut,  utilisez les options  /REGFile= ou /INIFile= du programme d'installation. Pour plus d'informations sur les options du programme d'installation, utilisez l'option /?.</td>
+      <p> <strong>Astuce :</strong>&nbsp; Si vous voulez utiliser des r&eacute;glages diff&eacute;rents de ceux par d&eacute;faut,  utilisez les options  /REGFile= ou /INIFile= du programme d'installation. Pour plus d'informations sur les options du programme d'installation, utilisez l'option /?.</td>
   </tr>
 </table>
 </body>
