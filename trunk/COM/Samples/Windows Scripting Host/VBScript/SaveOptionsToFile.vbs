@@ -1,7 +1,8 @@
 ' SaveOptionsToFile script
 ' Part of PDFCreator
 ' License: GPL
-' Homepage: http://www.sf.net/projects/pdfcreator
+' Homepage: http://www.pdfforge.org/products/pdfcreator
+' Windows Scripting Host version: 5.1
 ' Version: 2.0.0.0
 ' Date: Aprl, 14. 2005
 ' Author: Frank Heindörfer

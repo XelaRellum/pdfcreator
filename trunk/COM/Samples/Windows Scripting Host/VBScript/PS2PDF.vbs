@@ -1,7 +1,8 @@
 ' PS2PDF script
 ' Part of PDFCreator
 ' License: GPL
-' Homepage: http://www.sf.net/projects/pdfcreator
+' Homepage: http://www.pdfforge.org/products/pdfcreator
+' Windows Scripting Host version: 5.1
 ' Version: 1.0.0.0
 ' Date: July, 17. 2005
 ' Author: Frank Heindörfer
