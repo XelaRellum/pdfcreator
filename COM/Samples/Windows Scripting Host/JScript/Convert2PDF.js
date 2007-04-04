@@ -1,6 +1,8 @@
 // Convert2PDF.js script
 // Part of PDFCreator
 // License: GPL
+// Homepage: http://www.pdfforge.org/products/pdfcreator
+// Windows Scripting Host version: 5.1
 // Homepage: http://www.sf.net/projects/pdfcreator
 // Version: 1.0.0.0
 // Date: March, 15. 2007
