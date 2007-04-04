@@ -1,7 +1,8 @@
 # Convert2PDF.rb script
 # Part of PDFCreator
 # License: GPL
-# Homepage: http://www.sf.net/projects/pdfcreator
+# Homepage: http://www.pdfforge.org/products/pdfcreator
+# Ruby version: 1.8.4.0
 # Version: 1.0.0.0
 # Date: April, 4. 2007
 # Author: Frank Heindörfer

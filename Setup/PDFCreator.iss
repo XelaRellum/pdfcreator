@@ -447,6 +447,9 @@ Source: ..\COM\Samples\Perl\Convert2PDF.pl; DestDir: {app}\COM\Perl; Components:
 Source: ..\COM\Samples\Perl\Convert2TIFF.pl; DestDir: {app}\COM\Perl; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Perl\Convert2TXT.pl; DestDir: {app}\COM\Perl; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Perl\Testpage2PDF.pl; DestDir: {app}\COM\Perl; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Ruby\Convert2PDF.rb; DestDir: {app}\COM\Ruby; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Ruby\Convert2TIFF.rb; DestDir: {app}\COM\Ruby; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Ruby\Testpage2PDF.rb; DestDir: {app}\COM\Ruby; Components: COMsamples; Flags: ignoreversion
 
 ; Toolbar
 #IFDEF IncludeToolbar
