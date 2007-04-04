@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.0.0.0
-' Date: September, 1. 2005
+' Version: 1.0.0.1
+' Date: April, 4. 2007
 ' Author: Frank Heindörfer
 ' Comments: This script convert a printable file in a pdf-file using 
 '           the com interface of PDFCreator.
@@ -44,6 +44,7 @@ With PDFCreator
  DefaultPrinter = .cDefaultprinter
  .cDefaultprinter = "PDFCreator"
  .cClearcache
+ .cPrinterStop = false
 End With
 
 For i = 0 to objArgs.Count - 1
@@ -63,7 +64,6 @@ For i = 0 to objArgs.Count - 1
   .cOption("AutosaveDirectory") = fso.GetParentFolderName(ifname)
   .cOption("AutosaveFilename") = fso.GetBaseName(ifname)
   .cPrintfile cStr(ifname)
-  .cPrinterStop = false
 
   c = 0
   Do While (ReadyState = 0) and (c < (maxTime * 1000 / sleepTime))

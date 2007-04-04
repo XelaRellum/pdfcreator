@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.0.0.0
-' Date: September, 1. 2005
+' Version: 1.0.0.1
+' Date: April, 4. 2007
 ' Author: Frank Heindörfer
 ' Comments: This script convert a printable file in a tiff-file using 
 '           the com interface of PDFCreator.
@@ -42,7 +42,7 @@ With PDFCreator
  .cOption("UseAutosave") = 1
  .cOption("UseAutosaveDirectory") = 1
  .cOption("AutosaveFormat") = 5          ' 5 = TIFF
- .cOption("BitmapResolution") = 72
+ .cOption("BitmapResolution") = 150
  DefaultPrinter = .cDefaultprinter
  .cDefaultprinter = "PDFCreator"
  .cClearcache
