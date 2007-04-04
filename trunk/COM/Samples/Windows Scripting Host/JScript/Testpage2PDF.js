@@ -1,7 +1,8 @@
 // Testpage2PDF.js script
 // Part of PDFCreator
 // License: GPL
-// Homepage: http://www.sf.net/projects/pdfcreator
+// Homepage: http://www.pdfforge.org/products/pdfcreator
+// Windows Scripting Host version: 5.1
 // Version: 1.0.0.0
 // Date: March, 19 2007
 // Author: Frank Heindörfer
