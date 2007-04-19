@@ -482,9 +482,9 @@ On Error GoTo ErrPtnr_OnError
 50490    Else
 50500     tStr = CStr(tDate)
 50510   End If
-50520   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50530   'tStr = CStr(tDate)
-50540   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50520   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
+50530
+50540   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
 50550  End With
 50560  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
 50570   cmdOptions.Enabled = False
