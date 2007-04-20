@@ -22,45 +22,45 @@
          Wird die "Standardinstallation" gew&auml;hlt speichert PDFCreator alle Einstellungen unter den
         folgendem Schl&uuml;ssel: <em><strong>HKCU\Software\PDFCreator</strong></em>
       <p>Bei einem Betriebssystem von Windows 2000 und dar&uuml;ber, speichert das Setup einige Einstellungen
-         f&uuml;r den Standardbenutzer unter dem Schl&uuml;ssel: <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em><br>
-        <br>
-        Bei der "Serverinstallation" werden die Einstellungen unter dem Schl&uuml;ssel: <em><strong>HKLM\Software\PDFCreator</strong></em> gespeichert.<br>
-        <br>
+         f&uuml;r den Standardbenutzer unter dem Schl&uuml;ssel: <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em><br />
+        <br />
+        Bei der "Serverinstallation" werden die Einstellungen unter dem Schl&uuml;ssel: <em><strong>HKLM\Software\PDFCreator</strong></em> gespeichert.<br />
+        <br />
         Unter Umst&auml;nden kann es sinvoll sein, die Einstellungen nicht in der Registry zu speichern, sonder den alten INI-Datei Modus zu verwenden.
         In diesem fall verwendet PDFCreator ini-Dateien zum Speichern seiner Einstellungen. W&auml;hrend des Setups kann sogar eine Standard-INI-Datei
-        mit &uuml;bergeben werden. F&uuml;r mehr Informationen verwenden Sie bitte den Setup-Parameter /?. <br>
+        mit &uuml;bergeben werden. F&uuml;r mehr Informationen verwenden Sie bitte den Setup-Parameter /?. <br />
         <strong>Achtung:</strong> Es gibt Probleme beim Verwenden von servergespeicherten Profilen und wenn der Anwendungsdaten-Pfad sich auf einem
-        Netzlaufwerk befindet. In diesem fall kann nicht der alte INI-Datei-Modus verwendet werden. <br> <br>
+        Netzlaufwerk befindet. In diesem fall kann nicht der alte INI-Datei-Modus verwendet werden. <br /> <br />
         Wird die "Standardinstallation" zusammen mit dem alten INI-Datei-Modus gew&auml;hlt, speichert PDFCreator alle Einstellungen unter dem 
-        Anwendungsdatenpfad des Benutzers gespeichert: <br>
-        <em>Beispiel:</em> C:\Dokumente und Einstellungen\[Benutzerprofil]\Anwendungsdaten\PDFCreator <br>
-        <br>Bei einem Betriebssystem von Windows 2000 und dar&uuml;ber, speichert das Setup einige Einstellungen
-        f&uuml;r den Standardbenutzer in das folgende Verzeichnis: <br>
-        <em>Beispiel: </em>C:\Dokumente und Einstellungen\Default User\Anwendungsdaten\PDFCreator <br>
-        <br>Bei der "Serverinstallation" werden die Einstellungen in das folgende Verzeichnis gespeichert:<br>
-        C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator <br>
-        <br>
+        Anwendungsdatenpfad des Benutzers gespeichert: <br />
+        <em>Beispiel:</em> C:\Dokumente und Einstellungen\[Benutzerprofil]\Anwendungsdaten\PDFCreator <br />
+        <br />Bei einem Betriebssystem von Windows 2000 und dar&uuml;ber, speichert das Setup einige Einstellungen
+        f&uuml;r den Standardbenutzer in das folgende Verzeichnis: <br />
+        <em>Beispiel: </em>C:\Dokumente und Einstellungen\Default User\Anwendungsdaten\PDFCreator <br />
+        <br />Bei der "Serverinstallation" werden die Einstellungen in das folgende Verzeichnis gespeichert:<br />
+        C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator <br />
+        <br />
       <strong>Vorgehensweise beim Lesen der Einstellungen</strong>      
       <p>Bei einem Betriebssystem von Windows 2000 und dar&uuml;ber liest PDFCreator zuerst die Einstellungen des Standardbenutzers.
         Sind dort keine Einstellungen vorhanden, verwendet PDFCreator interne Standardeinstellungen. Danach liest PDFCreator die Einstellungen des Benutzer.
-        Alle gefundenen Einstellungen &uuml;berschreiben die Standardeinstellungen. Abschlie&szlig;end &uuml;berpr&uuml;ft PDFCreator ob Rechnereinstellungen in<br> 
-        <em>HKLM\Software\PDFCreator</em><br>
-        oder<br>
-        <em>C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator</em><br>
+        Alle gefundenen Einstellungen &uuml;berschreiben die Standardeinstellungen. Abschlie&szlig;end &uuml;berpr&uuml;ft PDFCreator ob Rechnereinstellungen in<br /> 
+        <em>HKLM\Software\PDFCreator</em><br />
+        oder<br />
+        <em>C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator</em><br />
         vorhanden sind.  Gefundenen Rechnereinstellungen &uuml;berschreiben die Einstellungen des Benutzers.
-        Damit wird es Administratoren erm&ouml;glicht, Einstellungen f&uuml;r alle Benutzer festzulegen.<br>
-        <br>
+        Damit wird es Administratoren erm&ouml;glicht, Einstellungen f&uuml;r alle Benutzer festzulegen.<br />
+        <br />
         <strong>Vorgehensweise beim Speichern der Einstellungen</strong>     
-      <p>Wurde die "Standardinstallation" gew&auml;hlt, speichert PDFCreator die Einstellungen entweder unter: <br>
-        <em>HKCU\Software\PDFCreator</em> <br>
-        oder unter <br>
-        <em>C:\Dokumente und Einstellungen\[Benutzerprofil]\Anwendungsdaten\PDFCreator </em><br>
-        <br>
-        Wurde die "Serverinstallation" gew&auml;hlt, speichert PDFCreator die Einstellungen entweder unter: <br>
-        <em>HKLM\Software\PDFCreator </em><br>
-        oder unter<br>
+      <p>Wurde die "Standardinstallation" gew&auml;hlt, speichert PDFCreator die Einstellungen entweder unter: <br />
+        <em>HKCU\Software\PDFCreator</em> <br />
+        oder unter <br />
+        <em>C:\Dokumente und Einstellungen\[Benutzerprofil]\Anwendungsdaten\PDFCreator </em><br />
+        <br />
+        Wurde die "Serverinstallation" gew&auml;hlt, speichert PDFCreator die Einstellungen entweder unter: <br />
+        <em>HKLM\Software\PDFCreator </em><br />
+        oder unter<br />
         <em>C:\Dokumente und Einstellungen\All User\Anwendungsdaten\PDFCreator
-      </em></p><br>
+      </em></p><br />
       <p> <strong>Hinweis:</strong> Werden andere Einstellungen als Standardwerte ben&ouml;tigt, k&ouml;nnen die Kommandozeilenparameter
         /REGFile= oder /INIfile= des Setupprogrammes verwendet werden (gilt nicht f&uuml;r das MSI-Installationspaket!). F&uuml;r weitere
         Informationen verwenden Sie den Kommandozeilenparameter /?.</p></td>

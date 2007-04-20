@@ -21,15 +21,15 @@
     <td class="main"><p class="header">Command Line Parameters</p>
       <p>PDFCreator enables you to create documents via the command line interface.
         Here are the different commands that PDFCreator supports:</p>
-      <p><strong>/AddWindowsExplorerIntegration </strong><br>
+      <p><strong>/AddWindowsExplorerIntegration </strong><br />
         Whith this switch PDFCreator integrates itself with the Windows shell. When you 
         right-click on selected documents in Windows Explorer a new menu item 
         will appear called &quot;Create PDF with PDFCreator&quot;. This enables 
         the user to quickly convert documents to PDF without having to open the 
         document. Note that this functionality requires PDFCreator to be temporarily 
-        assigned the default printer status.<br>
+        assigned the default printer status.<br />
         <em>Example:</em> PDFCreator.exe /AddWindowsExplorerIntegration</p>
-      <p> <strong>/CheckInstance </strong><br>
+      <p> <strong>/CheckInstance </strong><br />
         If you use this switch PDFCreaor shows a message box with the information about
         running instances of PDFCreator, PDFSpooler and Transtool. You can combine this
         parameter with the switch /NoStart. If you see the property "Local" there exists
@@ -37,34 +37,34 @@
         the local instance. If you see only the property "Global" than there exists at
         least one instance in one of your terminal server sessions. This switch is usefull
         for debugging and for administrators to check if there is a running instance of
-        PDFCreator on a terminal server.<br>
+        PDFCreator on a terminal server.<br />
         <em>Example:</em> PDFCreator.exe /CheckInstance </p>
-      <p><strong>/ClearCache</strong><br>
+      <p><strong>/ClearCache</strong><br />
         Clears all PDFCreator temporary files. This is useful if PDFCreator will
-        not start because of a corrupt temp file.<br>
+        not start because of a corrupt temp file.<br />
         <em>Example:</em> pdfcreator.exe /ClearCache</p>
-      <p><strong>/DeleteIF</strong><br>
+      <p><strong>/DeleteIF</strong><br />
         Delete the input file after converting. This parameter can only be used in conjunction
-        with the /IF parameter.<br>
+        with the /IF parameter.<br />
         <em>Example:</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /DeleteIF</p>
-      <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br>
+      <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br />
         </strong>Convert a postscript file to a PDF or bitmap. The /OF parameter
         must be used in conjunction with the /IF parameter. To set the output
         file format, include the file extension in the output file name. <strong>There
-        is NO space between the parameters and the file names.</strong><br>
-        <em>Examples:</em><br>
-        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;<br>
+        is NO space between the parameters and the file names.</strong><br />
+        <em>Examples:</em><br />
+        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;<br />
         pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.tif&quot;</p>
-      <p><strong>/NoAbortIfRunning</strong><br>
+      <p><strong>/NoAbortIfRunning</strong><br />
         Opens a new instance of PDFCreator without checking if the program is
         already running. It is useful to combine this parameter with the /NoProcessing
-        parameter.<br>
+        parameter.<br />
         <em>Example:</em> pdfcreator.exe /NoAbortIfRunning</p>
-      <p><strong>/NoProcessing</strong><br>
+      <p><strong>/NoProcessing</strong><br />
         When PDFCreator is opened with the /NoProcessing option, all documents
         that are sent to PDFCreator are not processed immediately. They are stored
         in the print queue until PDFCreator is opened without the /NoProcessing
-        option.<br>
+        option.<br />
         <em>Example:</em> pdfcreator.exe /NoProcessing</p>
       <p><strong>/NoProcessingAtStartup:</strong> When you use this parameter, PDFCreator
         will start without processing any documents. You can manually start processing
@@ -72,41 +72,41 @@
         <em><strong>Print</strong></em> or by unchecking the <em><strong>Printer
         Stop</strong></em> option in the <em><strong>Printer</strong></em> menu.
         The setting is useful if you want collect some files first, then combine
-        the files into one and create a pdf.<br>
-        <em>Properties:</em><br>
-        0 - Off (Default)<br>
+        the files into one and create a pdf.<br />
+        <em>Properties:</em><br />
+        0 - Off (Default)<br />
         1 - On</p>
-      <p><strong>/NoStart</strong><br>
+      <p><strong>/NoStart</strong><br />
         When you use the /PF parameter, PDFCreator stays open after it's done
         its task. The /NoStart parameter automatically closes PDFCreator after
-        it is done.<br>
+        it is done.<br />
         <em>Example:</em> pdfcreator.exe /NOSTART /PF&quot;C:\help.doc&quot;</p>
-      <p><strong>/OpenOF</strong><br>
+      <p><strong>/OpenOF</strong><br />
         Open the output file after converting. This parameter can only be used in conjunction
-        with the /IF and the /OF parameter.<br>
+        with the /IF and the /OF parameter.<br />
         <em>Example:</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /OpenOF</p>
-      <p><strong>/OptionsFile&lt;option-filename&gt;</strong><br>
-        Specifies the particular options file PDFCreator should use.<br>
-        <em>Examples:</em> pdfcreator.exe /OptionsFile&quot;C:\MyPDFCreator.ini&quot;<br>
+      <p><strong>/OptionsFile&lt;option-filename&gt;</strong><br />
+        Specifies the particular options file PDFCreator should use.<br />
+        <em>Examples:</em> pdfcreator.exe /OptionsFile&quot;C:\MyPDFCreator.ini&quot;<br />
         (Hint: With this parameter (and a work around) you can use more than one
         printer on a machine.)</p>
-      <p><strong>/PF&lt;filename&gt;</strong><br>
+      <p><strong>/PF&lt;filename&gt;</strong><br />
         Print a file with the standard program linking with the extension of the
         file. In general, this option is useful in connection with Auto-Save mode.
         It is not possible to use this parameter in conjunction with the /OF parameter.
-        <strong>There is NO space between the parameter and the file name</strong>.<br>
-        <em>Example:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;<br>
+        <strong>There is NO space between the parameter and the file name</strong>.<br />
+        <em>Example:</em> pdfcreator.exe /PF&quot;C:\help.doc&quot;<br />
         You can also use wildcards to create PDF's of all documents in a specified
-        folder.<br>
+        folder.<br />
         <em>Example:</em> pdfcreator.exe /PF&quot;C:\*.doc&quot;</p>
-      <p><strong>/RemoveWindowsExplorerIntegration </strong><br>
-        Whith this switch you remove the PDFCreator Windows shell integration.<br>
+      <p><strong>/RemoveWindowsExplorerIntegration </strong><br />
+        Whith this switch you remove the PDFCreator Windows shell integration.<br />
         <em>Example:</em> PDFCreator.exe /RemoveWindowsExplorerIntegration</p>
-      <p><strong>/ShowOnlyLogfile</strong><br>
-        Opens PDFCreator in the log file. No other windows are opened.<br>
+      <p><strong>/ShowOnlyLogfile</strong><br />
+        Opens PDFCreator in the log file. No other windows are opened.<br />
         <em>Example:</em> pdfcreator.exe /ShowOnlyLogfile</p>
-      <p><strong>/ShowOnlyOptions</strong><br>
-        Opens PDFCreator in the Options Panel. No other windows are opened.<br>
+      <p><strong>/ShowOnlyOptions</strong><br />
+        Opens PDFCreator in the Options Panel. No other windows are opened.<br />
         <em>Example:</em> pdfcreator.exe /ShowOnlyOptions</p>
     </td>
   </tr>
