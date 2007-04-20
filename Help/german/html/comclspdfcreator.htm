@@ -17,41 +17,42 @@
     <tr><th align="left">Properties</th></tr>
     <tr>
      <td nowrap>
-      Public Property Get cCountOfPrintjobs() As Long<br>
-      Public Property Get cDefaultPrinter() As String<br>
-      Public Property Let cDefaultPrinter(ByVal Printername As String)<br>
-      Public Property Get cError() As clsPDFCreatorError<br>
-      Public Property Get cErrorDetail(ByVal PropertyName As String) As Variant<br>
-      Public Property Get cGhostscriptVersion() As String<br>
-      Public Property Get cInstalledAsServer() As Boolean<br>
-      Public Property Get cIsConverted() As Boolean<br>
-      Public Property Let cIsConverted(ByVal Value As Boolean)<br>
-      Public Property Get cIsLogfileDialogDisplayed() As Boolean<br>
-      Public Property Get cIsOptionsDialogDisplayed() As Boolean<br>
-      Public Property Get cOption(ByVal PropertyName As String) As Variant<br>
-      Public Property Let cOption(ByVal PropertyName As String, ByVal Value As Variant)<br>
-      Public Property Get cOptions() As clsPDFCreatorOptions<br>
-      Public Property Set cOptions(ByVal Options1 As clsPDFCreatorOptions)<br>
-      Public Property Get cOptionsNames() As Collection<br>
-      Public Property Get cOutputFilename() As String<br>
-      Public Property Get cPDFCreatorApplicationPath() As String<br>
-      Public Property Get cPostscriptInfo(ByVal PostscriptFilename As String, ByVal PropertyName As String) As String  <span style="color:green">' G&uuml;ltige Werte f&uuml;r PropertyName sind: BoundingBox, CreateFor, CreationDate, Creator, DocumentData, DocumentNeededResources, DocumentSuppliedResources, LanguageLevel, Orientation, PageOrder, Pages, TargetDevice, Title</span><br>
-      Public Property Get cPrinterStop() As Boolean<br>
-      Public Property Let cPrinterStop(ByVal Value As Boolean)<br>
-      Public Property Get cPrintjobFilename(ByVal JobNumber As Long) As String<br>
-      Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String<br>
-      Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile<br>
-      Public Property Get cProgramIsRunning() As Boolean<br>
-      Public Property Get cProgramRelease(Optional ByVal WithBeta As Boolean = True) As String<br>
-      Public Property Get cStandardOption(ByVal PropertyName As String) As Variant<br>
-      Public Property Get cStandardOptions() As clsPDFCreatorOptions<br>
-      Public Property Get cStopURLPrinting() As Boolean<br>
-      Public Property Let cStopURLPrinting(ByVal Value As Boolean)<br>
-      Public Property Get cVisible() As Boolean<br>
-      Public Property Let cVisible(ByVal Value As Boolean)<br>
-      Public Property Get cWindowState() As Long<br>
-      Public Property Let cWindowState(ByVal Value As Long) <span style="color:green">' Folgende Werte sind erlaubt '0 = Normal' oder '1 = Minimiert' oder '2 = Maximiert'</span><br>
-      Public Property Get cWindowsVersion() As String<br>
+      Public Property Get cCountOfPrintjobs() As Long<br />
+      Public Property Get cDefaultPrinter() As String<br />
+      Public Property Let cDefaultPrinter(ByVal Printername As String)<br />
+      Public Property Get cError() As clsPDFCreatorError<br />
+      Public Property Get cErrorDetail(ByVal PropertyName As String) As Variant<br />
+      Public Property Get cGhostscriptVersion() As String<br />
+      Public Property Get cInstalledAsServer() As Boolean<br />
+      Public Property Get cInstanceCounter() As Long<br />
+      Public Property Get cIsConverted() As Boolean<br />
+      Public Property Let cIsConverted(ByVal Value As Boolean)<br />
+      Public Property Get cIsLogfileDialogDisplayed() As Boolean<br />
+      Public Property Get cIsOptionsDialogDisplayed() As Boolean<br />
+      Public Property Get cOption(ByVal PropertyName As String) As Variant<br />
+      Public Property Let cOption(ByVal PropertyName As String, ByVal Value As Variant)<br />
+      Public Property Get cOptions() As clsPDFCreatorOptions<br />
+      Public Property Set cOptions(ByVal Options1 As clsPDFCreatorOptions)<br />
+      Public Property Get cOptionsNames() As Collection<br />
+      Public Property Get cOutputFilename() As String<br />
+      Public Property Get cPDFCreatorApplicationPath() As String<br />
+      Public Property Get cPostscriptInfo(ByVal PostscriptFilename As String, ByVal PropertyName As String) As String  <span style="color:green">' G&uuml;ltige Werte f&uuml;r PropertyName sind: BoundingBox, CreateFor, CreationDate, Creator, DocumentData, DocumentNeededResources, DocumentSuppliedResources, LanguageLevel, Orientation, PageOrder, Pages, TargetDevice, Title</span><br />
+      Public Property Get cPrinterStop() As Boolean<br />
+      Public Property Let cPrinterStop(ByVal Value As Boolean)<br />
+      Public Property Get cPrintjobFilename(ByVal JobNumber As Long) As String<br />
+      Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String<br />
+      Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile<br />
+      Public Property Get cProgramIsRunning() As Boolean<br />
+      Public Property Get cProgramRelease(Optional ByVal WithBeta As Boolean = True) As String<br />
+      Public Property Get cStandardOption(ByVal PropertyName As String) As Variant<br />
+      Public Property Get cStandardOptions() As clsPDFCreatorOptions<br />
+      Public Property Get cStopURLPrinting() As Boolean<br />
+      Public Property Let cStopURLPrinting(ByVal Value As Boolean)<br />
+      Public Property Get cVisible() As Boolean<br />
+      Public Property Let cVisible(ByVal Value As Boolean)<br />
+      Public Property Get cWindowState() As Long<br />
+      Public Property Let cWindowState(ByVal Value As Long) <span style="color:green">' Folgende Werte sind erlaubt '0 = Normal' oder '1 = Minimiert' oder '2 = Maximiert'</span><br />
+      Public Property Get cWindowsVersion() As String<br />
      </td>
     </tr>
    </table>
@@ -60,15 +61,15 @@
     <tr><th align="left">Functions</th></tr>
 	<tr>
 	 <td nowrap>
-      Public Function cClose() As Boolean<br>
-      Public Function cCloseRunningSession() As Boolean<br>
-      Public Function cGetLogfile() As String<br>
-      Public Function cGetPDFCreatorPrinters() As Collection<br>
-      Public Function cGhostscriptRun(Arguments() As Variant) As Boolean<br>
-      Public Function cIsPrintable(ByVal Filename As String) As Boolean<br>
-      Public Function cReadOptions() As clsPDFCreatorOptions<br>
-      Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions<br>
-      Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean<br>
+      Public Function cClose() As Boolean<br />
+      Public Function cCloseRunningSession() As Boolean '<span style="color:green">Diese Funktion ist veraltet und sollte in zuk&uuml;nftigen Anwendungen nicht mehr verwendet werden! Stattdessen sollte ausschlie&szlig;lich die Function "cClose()" verwendet werden.</span><br />
+      Public Function cGetLogfile() As String<br />
+      Public Function cGetPDFCreatorPrinters() As Collection<br />
+      Public Function cGhostscriptRun(Arguments() As Variant) As Boolean<br />
+      Public Function cIsPrintable(ByVal Filename As String) As Boolean<br />
+      Public Function cReadOptions() As clsPDFCreatorOptions<br />
+      Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions<br />
+      Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean<br />
      </td>
 	</tr>
    </table>
@@ -77,28 +78,28 @@
     <tr><th align="left">Subroutines</th></tr>
 	<tr>
 	 <td nowrap>
-      Public Sub cAddPrintjob(ByVal PostscriptFilename As String)<br>
-      Public Sub cClearCache()<br>
-      Public Sub cClearLogfile()<br>
-      Public Sub cCombineAll()<br>
-      Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String)<br>
-      Public Sub cDeletePrintjob(ByVal JobNumber As Long)<br>
-      Public Sub cErrorClear()<br>
-      Public Sub cMovePrintjobBottom(ByVal JobNumber As Long)<br>
-      Public Sub cMovePrintjobDown(ByVal JobNumber As Long)<br>
-      Public Sub cMovePrintjobTop(ByVal JobNumber As Long)<br>
-      Public Sub cMovePrintjobUp(ByVal JobNumber As Long)<br>
-      Public Sub cPrintFile(ByVal Filename As String)<br>
-      Public Sub cPrintPDFCreatorTestpage()<br>
-      Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)<br>
-      Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)<br>
-      Public Sub cSaveOptions(Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 muss vom Typ clsPDFCreatorOptions sein<br></span>
-      Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 muss vom Typ clsPDFCreatorOptions sein<br></span>
-      Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)<br>
-      Public Sub cShowLogfileDialog(ByVal Value As Boolean)<br>
-      Public Sub cShowOptionsDialog(ByVal Value As Boolean)<br>
-      Public Sub cTestEvent(ByVal EventName As String)<br>
-      Public Sub cWriteToLogfile(ByVal LogStr As String)<br>
+      Public Sub cAddPrintjob(ByVal PostscriptFilename As String)<br />
+      Public Sub cClearCache()<br />
+      Public Sub cClearLogfile()<br />
+      Public Sub cCombineAll()<br />
+      Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String)<br />
+      Public Sub cDeletePrintjob(ByVal JobNumber As Long)<br />
+      Public Sub cErrorClear()<br />
+      Public Sub cMovePrintjobBottom(ByVal JobNumber As Long)<br />
+      Public Sub cMovePrintjobDown(ByVal JobNumber As Long)<br />
+      Public Sub cMovePrintjobTop(ByVal JobNumber As Long)<br />
+      Public Sub cMovePrintjobUp(ByVal JobNumber As Long)<br />
+      Public Sub cPrintFile(ByVal Filename As String)<br />
+      Public Sub cPrintPDFCreatorTestpage()<br />
+      Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)<br />
+      Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)<br />
+      Public Sub cSaveOptions(Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 muss vom Typ clsPDFCreatorOptions sein</span><br />
+      Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) '<span style="color:green"> Options1 muss vom Typ clsPDFCreatorOptions sein</span><br />
+      Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)<br />
+      Public Sub cShowLogfileDialog(ByVal Value As Boolean)<br />
+      Public Sub cShowOptionsDialog(ByVal Value As Boolean)<br />
+      Public Sub cTestEvent(ByVal EventName As String)<br />
+      Public Sub cWriteToLogfile(ByVal LogStr As String)<br />
      </td>
 	</tr>
    </table>
@@ -106,8 +107,8 @@
    <table border="1" cellpadding="4" style="border-collapse:collapse;empty-cells:show;">
     <tr><th align="left">Events</th></tr>
     <tr><td nowrap>
-     Public Event eError()<br>
-     Public Event eReady()<br>
+     Public Event eError()<br />
+     Public Event eReady()<br />
     </td></tr>
    </table>
    <p></p>

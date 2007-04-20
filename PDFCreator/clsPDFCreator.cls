@@ -58,12 +58,6 @@ Private Sub Class_Terminate()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  InstanceCounter = InstanceCounter - 1
-50020  If InstanceCounter = 0 Then
-50030   cCloseRunningSession
-50040  End If
-50050  Set mError = Nothing
-50060  Set mForm = Nothing
-50070  Set eActionTimer = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1024,6 +1018,23 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
+
+Public Property Get cInstanceCounter() As Long
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cInstanceCounter = InstanceCounter
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cInstanceCounter [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---
@@ -1220,16 +1231,42 @@ End Select
 End Sub
 
 Public Function cClose() As Boolean
+ On Error Resume Next
+ Dim f As Form
+ cVisible = False
+ cClose = False
+ Set eActionTimer = Nothing
+ For Each f In Forms
+  If Not f Is Nothing Then
+   If UCase$(f.Name) <> "FRMMAIN" Then
+    Unload f
+    cClose = True
+   End If
+  End If
+ Next f
+ If Not mForm Is Nothing Then
+  With mForm
+   .Timer1.Enabled = False
+   .Timer2.Enabled = False
+   .Timer3.Enabled = False
+  End With
+  Unload mForm
+  Set mForm = Nothing
+  ProgramIsStarted = False
+  cClose = True
+ End If
+ Set mError = Nothing
+End Function
+
+Public Function cCloseRunningSession() As Boolean ' This function is deprecated. Use "cClose()"!
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If ProgramIsStarted And InstanceCounter = 1 Then
-50020   cClose = cCloseRunningSession
-50030  End If
+50010  cCloseRunningSession = cClose
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cClose")
+Select Case ErrPtnr.OnError("clsPDFCreator", "cCloseRunningSession")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1237,34 +1274,8 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
-Public Function cCloseRunningSession() As Boolean
- On Error Resume Next
- Dim f As Form
- cVisible = False
- cCloseRunningSession = False
- For Each f In Forms
-  If Not f Is Nothing Then
-   If UCase$(f.Name) <> "FRMMAIN" Then
-    Unload f
-    cCloseRunningSession = True
-   End If
-  End If
- Next f
- If Not mForm Is Nothing Then
-  With mForm
-   .Timer1 = False
-   .Timer2 = False
-   .Timer3 = False
-  End With
-  Unload mForm
-  Set mForm = Nothing
-  ProgramIsStarted = False
-  cCloseRunningSession = True
- End If
-End Function
-
-Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean
+ 
+ Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
