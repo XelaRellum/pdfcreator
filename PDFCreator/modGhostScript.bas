@@ -238,11 +238,17 @@ Private Function CallGhostscript(Comment As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim LastStop As Currency, res As Boolean, c As Currency
-50020  LastStop = ExactTimer_Value()
-50030  res = CallGS(GSParams)
-50040  c = ExactTimer_Value() - LastStop
-50050  IfLoggingWriteLogfile "Time for converting [" & Comment & "]: " & _
- Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
+50020  If PerformanceTimer Then
+50030   LastStop = ExactTimer_Value()
+50040  End If
+50050  res = CallGS(GSParams)
+50060  If PerformanceTimer Then
+50070    c = ExactTimer_Value() - LastStop
+50080    IfLoggingWriteLogfile "Time for converting [" & Comment & "]: " & _
+    Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
+50100   Else
+50110    IfLoggingWriteLogfile "Time for converting -> No performance timer [" & Comment & "]"
+50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1016,11 +1022,25 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams PDFOutputFilename
 50190
 50200  GSParams(0) = "pdfopt"
-50210  LastStop = ExactTimer_Value()
-50220  OptimizePDF = CallGS(GSParams)
-50230  c = ExactTimer_Value() - LastStop
-50240  IfLoggingWriteLogfile "Time for optimizing: " & _
- Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
+50210   If PerformanceTimer Then
+50220    c = ExactTimer_Value() - LastStop
+50230    IfLoggingWriteLogfile "Time for converting [" & Comment & "]: " & _
+    Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
+50250   Else
+50260    IfLoggingWriteLogfile "Time for converting -> No performance timer [" & Comment & "]"
+50270  End If
+50280
+50290  If PerformanceTimer Then
+50300   LastStop = ExactTimer_Value()
+50310  End If
+50320  OptimizePDF = CallGS(GSParams)
+50330  If PerformanceTimer Then
+50340    c = ExactTimer_Value() - LastStop
+50350    IfLoggingWriteLogfile "Time for optimizing: " & _
+    Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
+50370   Else
+50380    IfLoggingWriteLogfile "Time for optimizing: No performance timer"
+50390  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
