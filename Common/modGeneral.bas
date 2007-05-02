@@ -209,10 +209,10 @@ Public Sub ComboSetListWidth(oCombo As Object, Optional ByVal nFixWidth As Varia
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With oCombo
-50020   If IsMissing(nScaleMode) Or IsMissing(nFixWidth) Then
+50020   If isMissing(nScaleMode) Or isMissing(nFixWidth) Then
 50030    nScaleMode = .Parent.ScaleMode
 50040   End If
-50050   If IsMissing(nFixWidth) Then
+50050   If isMissing(nFixWidth) Then
 50060    Dim i As Long, nWidth As Long
 50070    nFixWidth = 0
 50080    For i = 0 To .ListCount - 1
@@ -1702,10 +1702,12 @@ On Error GoTo ErrPtnr_OnError
 50060  End If
 50070  ErrorMsg = String(256, 0)
 50080  ErrorMsg = Left$(ErrorMsg, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM Or FORMAT_MESSAGE_IGNORE_INSERTS, 0, ErrNum, 0&, ErrorMsg, Len(ErrorMsg), ByVal 0))
-50090  If Mid(ErrorMsg, Len(ErrorMsg) - 1) = vbCrLf Then
-50100   ErrorMsg = Mid(ErrorMsg, 1, Len(ErrorMsg) - 2)
-50110  End If
-50120  RaiseAPIError = ErrNum & ": " & ErrorMsg
+50090  If Len(ErrorMsg) > 2 Then
+50100   If Mid(ErrorMsg, Len(ErrorMsg) - 1) = vbCrLf Then
+50110    ErrorMsg = Mid(ErrorMsg, 1, Len(ErrorMsg) - 2)
+50120   End If
+50130  End If
+50140  RaiseAPIError = ErrNum & ": " & ErrorMsg
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
