@@ -1024,10 +1024,10 @@ On Error GoTo ErrPtnr_OnError
 50200  GSParams(0) = "pdfopt"
 50210   If PerformanceTimer Then
 50220    c = ExactTimer_Value() - LastStop
-50230    IfLoggingWriteLogfile "Time for converting [" & Comment & "]: " & _
+50230    IfLoggingWriteLogfile "Time for converting: " & _
     Format$(Int(c) * (1 / 86400), "hh:nn:ss:") & Format$(((c) - Int(c)) * 1000, "000")
 50250   Else
-50260    IfLoggingWriteLogfile "Time for converting -> No performance timer [" & Comment & "]"
+50260    IfLoggingWriteLogfile "Time for converting -> No performance timer"
 50270  End If
 50280
 50290  If PerformanceTimer Then
