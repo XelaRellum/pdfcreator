@@ -17,6 +17,7 @@ BMPColorscount|cmbBMPColors.Listindex|Long|1|0|6
 ClientComputerResolveIPAddress||Boolean|0||
 
 ' <Printing>
+Counter||Currency|0|0|922337203685477
 DeviceHeightPoints|txtCustomPapersizeHeight.Text|Double|842|1|<
 DeviceWidthPoints|txtCustomPapersizeWidth.Text|Double|595|1|<
 
