@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
@@ -430,6 +430,9 @@ Attribute m_frmSysTray.VB_VarHelpID = -1
 Private Const TimerIntervall = 500
 
 Private Printjobs As Collection
+
+Public InTimer1 As Boolean
+Public InTimer2 As Boolean
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1179,28 +1182,30 @@ Private Sub Timer1_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Timer1.Enabled = False
-50020  DoEvents
-50030  If FileExists(GetPDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
-50040   Unload Me
-50050   Exit Sub
-50060  End If
-50070  CheckPrintJobs
-50080  If Not NoProcessing Then
-50090   CheckForPrinting
-50100  End If
-50110  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("IF", True)) > 0 And ShellAndWaitingIsRunning = False Then
-50120   Unload Me
-50130   Exit Sub
-50140  End If
-50150  If lsv.ListItems.Count = 1 Then
-50160   If lsv.SelectedItem.Index <> 1 Then
-50170    lsv.ListItems(1).Selected = True
-50180   End If
-50190  End If
-50200  DoEvents
-50210  Timer1.Interval = TimerIntervall
-50220  Timer1.Enabled = True
+50010  InTimer1 = True
+50020  Timer1.Enabled = False
+50030  DoEvents
+50040  If FileExists(GetPDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
+50050   Unload Me
+50060   Exit Sub
+50070  End If
+50080  CheckPrintJobs
+50090  If Not NoProcessing Then
+50100   CheckForPrinting
+50110  End If
+50120  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("IF", True)) > 0 And ShellAndWaitingIsRunning = False Then
+50130   Unload Me
+50140   Exit Sub
+50150  End If
+50160  If lsv.ListItems.Count = 1 Then
+50170   If lsv.SelectedItem.Index <> 1 Then
+50180    lsv.ListItems(1).Selected = True
+50190   End If
+50200  End If
+50210  DoEvents
+50220  Timer1.Interval = TimerIntervall
+50230  Timer1.Enabled = True
+50240  InTimer1 = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1820,6 +1825,7 @@ End Function
 
 Private Sub Timer2_Timer()
  On Error Resume Next
+ InTimer2 = True
  If mutexLocal.CheckMutex(PDFCreator_GUID) = False Then
  ' Create a lokal mutex
    mutexLocal.CreateMutex PDFCreator_GUID
@@ -1828,6 +1834,7 @@ Private Sub Timer2_Timer()
  ' Create a global mutex
    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
  End If
+ InTimer2 = False
 End Sub
 
 Private Sub InitToolbar()
