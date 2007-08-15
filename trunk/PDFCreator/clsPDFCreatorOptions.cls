@@ -22,6 +22,7 @@ Public AutosaveStartStandardProgram As Long
 Public BitmapResolution As Long
 Public BMPColorscount As Long
 Public ClientComputerResolveIPAddress As Long
+Public Counter As Currency
 Public DeviceHeightPoints As Double
 Public DeviceWidthPoints As Double
 Public DirectoryGhostscriptBinaries As String

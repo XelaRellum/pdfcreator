@@ -986,6 +986,9 @@ On Error GoTo ErrPtnr_OnError
 50550    CreateTXT GSInputFile, Options
 50560    CreateTextFile GSOutputFile, GS_OutStr
 50570  End Select
+50580
+50590  Options.Counter = Options.Counter + 1
+50600  SaveOption Options, "Counter"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

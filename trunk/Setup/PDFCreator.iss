@@ -177,7 +177,7 @@ WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
 
 MinVersion=4.0.950,4.0.1381
-OnlyBelowVersion=0,6.0
+;OnlyBelowVersion=0,6.0
 
 [InstallDelete]
 #Ifdef GhostscriptVersion

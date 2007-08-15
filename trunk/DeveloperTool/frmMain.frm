@@ -4,8 +4,8 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
-   ClientLeft      =   165
-   ClientTop       =   855
+   ClientLeft      =   225
+   ClientTop       =   825
    ClientWidth     =   12930
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -606,6 +606,10 @@ Private Function CheckType(TypeStr As String) As Boolean
   CheckType = True
   Exit Function
  End If
+ If UCase$(TypeStr) = "CURRENCY" Then
+  CheckType = True
+  Exit Function
+ End If
 End Function
 
 Private Sub cmdIncFile_Click(Index As Integer)
@@ -972,6 +976,9 @@ Private Function ConvertType(TypeStr As String, convTypeTo As vType)
    If UCase$(Mid$(TypeStr, 1, 1)) = "D" Then
     ConvertType = "D"
    End If
+   If UCase$(Mid$(TypeStr, 1, 1)) = "C" Then
+    ConvertType = "C"
+   End If
   End If
   If convTypeTo = LongString Then
    If UCase$(Mid$(TypeStr, 1, 1)) = "B" Then
@@ -985,6 +992,9 @@ Private Function ConvertType(TypeStr As String, convTypeTo As vType)
    End If
    If UCase$(Mid$(TypeStr, 1, 1)) = "D" Then
     ConvertType = "Double"
+   End If
+   If UCase$(Mid$(TypeStr, 1, 1)) = "C" Then
+    ConvertType = "Currency"
    End If
   End If
  End If
@@ -1289,6 +1299,50 @@ Private Sub CreateModOptions()
     Print #fn, "  If IsNumeric(tStr) Then"
     Print #fn, "    If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CLng(lsvOptions.ListItems(i).SubItems(6)) & " Then"
     Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+  End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "CURRENCY" Then
+   Print #fn, "  tStr = hOpt.Retrieve(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
+   If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CCur(tStr)"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CCur(tStr) >= " & CCur(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CCur(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
+    Print #fn, "  If IsNumeric(tStr) Then"
+    Print #fn, "    If CCur(tStr) >= " & CCur(lsvOptions.ListItems(i).SubItems(5)) & " And CCur(tStr) <= " & CCur(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CCur(tStr)"
     Print #fn, "     Else"
     Print #fn, "      If UseStandard Then"
     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
@@ -1639,6 +1693,50 @@ Private Sub CreateModOptions()
     Print #fn, "  If Isnumeric(tStr) Then"
     Print #fn, "    If CLng(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " And CLng(tStr) <= " & CLng(lsvOptions.ListItems(i).SubItems(6)) & " Then"
     Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CLng(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+  End If
+  If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "CURRENCY" Then
+   Print #fn, "  tStr = reg.GetRegistryValue(""" & lsvOptions.ListItems(i).SubItems(1) & """)"
+   If lsvOptions.ListItems(i).SubItems(5) = ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If Isnumeric(tStr) Then"
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = CCur(tStr)"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) = "<" Then
+    Print #fn, "  If Isnumeric(tStr) Then"
+    Print #fn, "    If CCur(tStr) >= " & CLng(lsvOptions.ListItems(i).SubItems(5)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CCur(tStr)"
+    Print #fn, "     Else"
+    Print #fn, "      If UseStandard Then"
+    Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "      End If"
+    Print #fn, "    End If"
+    Print #fn, "   Else"
+    Print #fn, "    If UseStandard Then"
+    Print #fn, "     ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
+    Print #fn, "    End If"
+    Print #fn, "  End If"
+    ma = True
+   End If
+   If lsvOptions.ListItems(i).SubItems(5) <> ">" And lsvOptions.ListItems(i).SubItems(6) <> "<" Then
+    Print #fn, "  If Isnumeric(tStr) Then"
+    Print #fn, "    If CCur(tStr) >= " & CCur(lsvOptions.ListItems(i).SubItems(5)) & " And CCur(tStr) <= " & CCur(lsvOptions.ListItems(i).SubItems(6)) & " Then"
+    Print #fn, "      ." & lsvOptions.ListItems(i).SubItems(1) & " = CCur(tStr)"
     Print #fn, "     Else"
     Print #fn, "      If UseStandard Then"
     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = " & lsvOptions.ListItems(i).SubItems(4)
@@ -2442,6 +2540,8 @@ Private Sub LoadOptions(Filename As String)
                Item.SubItems(i + 1) = "Long"
               Case "S":
                Item.SubItems(i + 1) = "String"
+              Case "C":
+               Item.SubItems(i + 1) = "Currency"
               Case Else:
                aw = MsgBox("Typeerror (unknown type '" & tStrf(i) & "') in line " & c, vbExclamation Or vbOKCancel)
              End Select
@@ -2837,6 +2937,9 @@ Private Sub ShowOption()
   End If
   If UCase$(lsvOptions.SelectedItem.SubItems(3)) = "DOUBLE" Then
    .cmbType.ListIndex = 4
+  End If
+  If UCase$(lsvOptions.SelectedItem.SubItems(3)) = "CURRENCY" Then
+   .cmbType.ListIndex = 5
   End If
 
   .txt(2).Text = lsvOptions.SelectedItem.SubItems(4)

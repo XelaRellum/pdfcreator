@@ -166,7 +166,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmd_Click(Index As Integer)
- Dim item As ListItem, aw As Long, _
+ Dim Item As ListItem, aw As Long, _
   Str1 As String, Str2 As String, Str3 As String, Str4 As String, Str5 As String, Str6 As String
  Select Case Index
   Case 0:
@@ -221,6 +221,7 @@ Private Sub Form_Load()
   .AddItem "Long"
   .AddItem "String"
   .AddItem "Double"
+  .AddItem "Currency"
   .ListIndex = 3
  End With
 End Sub
