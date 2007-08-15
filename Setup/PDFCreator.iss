@@ -96,8 +96,13 @@
  #define AppVersionStr       AppVersion + " Beta " + BetaVersion
  #define SetupAppVersionStr  SetupAppVersion + "_" + "Beta_" + BetaVersion
 #ELSE
- #define AppVersionStr       AppVersion
- #define SetupAppVersionStr  SetupAppVersion
+ #IF (ReleaseCandidate!="")
+  #define AppVersionStr       AppVersion + " RC" + ReleaseCandidate
+  #define SetupAppVersionStr  SetupAppVersion + "_" + "RC" + ReleaseCandidate
+ #ELSE
+  #define AppVersionStr       AppVersion
+  #define SetupAppVersionStr  SetupAppVersion
+ #ENDIF
 #ENDIF
 
 #define AppID                "{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D}"
@@ -126,7 +131,7 @@
 #define DefaultPrintername          "PDFCreator"
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "0.9.2"
+#define UpdateIsPossibleMinVersion "0.9.5"
 
 #IFDEF IncludeToolbar
  #include "ToolbarForm.isd"
@@ -202,8 +207,8 @@ Source: ..\SystemFiles\PSAPI.DLL; DestDir: {sys}; Components: program; Flags: 32
 Source: ..\SystemFiles\MSVBVM60.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
 
 Source: ..\SystemFiles\MSMPIDE.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt
-Source: ..\SystemFiles\OLEPRO32.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
-Source: ..\SystemFiles\OLEAUT32.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall
+Source: ..\SystemFiles\OLEPRO32.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall; OnlyBelowVersion: 0,6.0
+Source: ..\SystemFiles\OLEAUT32.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace regserver uninsneveruninstall; OnlyBelowVersion: 0,6.0
 
 ;Language satellite system files
 ;http://msdn.microsoft.com/vbasic/downloads/tools/ipdk.aspx
@@ -296,7 +301,7 @@ Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags:
 Source: ..\SystemFiles\MSCOMCTL.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSMAPI32.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
 
-Source: ..\SystemFiles\STDOLE2.TLB; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall regtypelib
+Source: ..\SystemFiles\STDOLE2.TLB; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall regtypelib; OnlyBelowVersion: 0,6.0
 
 ;Program files
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
@@ -316,7 +321,7 @@ Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignorever
 ;Help files
 Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: HELPfiles\English; Flags: ignoreversion
 Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: HELPfiles\German; Flags: ignoreversion
-Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: HELPfiles\French; Flags: ignoreversion
+;Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: HELPfiles\French; Flags: ignoreversion
 
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
@@ -328,7 +333,7 @@ Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion c
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
@@ -459,10 +464,11 @@ Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCr
 #ENDIF
 
 [Dirs]
-Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall
+Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; OnlyBelowVersion: 0,5.2
+Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; Permissions: users-modify; MinVersion: 0,6.0
 
 [Icons]
-Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; Flags: createonlyiffileexists
+Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; IconFilename: {app}\{#AppExename}; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\AFPL License; Filename: {app}\AFPL License.txt; WorkingDir: {app}
 Name: {group}\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
@@ -480,6 +486,8 @@ Name: {group}\{cm:Settings}; Filename: {app}\PDFCreator.exe; Parameters: -ShowOn
 Name: {commondesktop}\PDFCreator; Filename: {app}\PDFCreator.exe; WorkingDir: {app}; IconIndex: 0; Tasks: desktopicon\common
 Name: {userdesktop}\PDFCreator; Filename: {app}\PDFCreator.exe; WorkingDir: {app}; IconIndex: 0; Tasks: desktopicon\user
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\PDFCreator; Filename: {app}\PDFCreator.exe; WorkingDir: {app}; IconIndex: 0; Tasks: quicklaunchicon
+
+Name: {commonstartup}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; IconFilename: {app}\{#AppExename}; IconIndex: 0; Flags: runminimized; Check: IsServerInstallation
 
 [INI]
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: URL; String: http://www.pdfforge.org; Components: program
@@ -518,7 +526,8 @@ Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPr
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Output; ValueData: 0; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Printer; ValueData: {code:GetPrintername}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Printerror; ValueData: 0; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Flags: uninsdeletevalue; OnlyBelowVersion: 0,6.0
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 1; Flags: uninsdeletevalue; MinVersion: 0,6.0
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: ShowWindow; ValueData: 0; Flags: uninsdeletevalue
 
 ;Uninstall - Deletekey
@@ -699,13 +708,13 @@ Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000;
 Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: ; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: Not IExplorerVersionLower55; Flags: fixed
 #ENDIF
 
-Name: COMsamples; Description: {cm:COMsamples}; Types: full
+Name: COMsamples; Description: {cm:COMsamples}; Types: full custom
 
 Name: HELPfiles; Description: {cm:HELPfiles}; Types: full custom
 Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full; Check: Not IsLanguage('english')
 Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full custom; Check: Not IsLanguage('french') And Not IsLanguage('german')
-Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full; Check: Not IsLanguage('french')
-Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full custom; Check: IsLanguage('french')
+;Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full; Check: Not IsLanguage('french')
+;Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full custom; Check: IsLanguage('french')
 Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full; Check: Not IsLanguage('german')
 Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full custom; Check: IsLanguage('german')
 
@@ -726,8 +735,8 @@ Name: languages; Description: {cm:Languages}; Types: full custom
 
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed dontinheritcheck
 
-Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
-Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
+;Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
+;Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
 Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german'); Flags: dontinheritcheck
@@ -988,9 +997,10 @@ var progTitel, progHandle: TArrayOfString;
     SCPage:TWizardPage;
     PrinternamePage: TInputQueryWizardpage;
     PrinterdriverPage : TInputOptionWizardPage;
-    Standardmodus: TRadioButton;
-    ServerDescriptionPage: TOutputMsgWizardPage;
-    PrinterInstallationSuccessfully: Boolean;
+    StandardmodusRB, ServermodusRB: TRadioButton;
+    StandardmodusLabel: TLabel;
+    ServerDescriptionPage, VistaNotePage: TOutputMsgWizardPage;
+    PrinterInstallationSuccessfully, Servermodus: Boolean;
 
 function IsX64: Boolean;
 begin
@@ -1071,7 +1081,7 @@ begin
   TempDir:=ExpandConstant('{userappdata}')+ '\PDFCreator\' + ExpandConstant('{username}');
  If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then // Win2k and above
   TempDir:=ExpandConstant('{%tmp}')+ '\PDFCreator';
- If Length(TempDir) = 0 Then
+ If (Length(TempDir) = 0) or (Servermodus = true) Then
   TempDir := ExpandConstant('{app}') + '\Temp';
  Result:=TempDir;
 end;
@@ -1080,6 +1090,14 @@ function IsLanguage(LangName: String): Boolean;
 begin
  If LowerCase(LangName)=Lowercase(ActiveLanguage) then
   Result:=True;
+end;
+
+function IsServerMode(): Boolean;
+begin
+ If Servermodus = true then
+   Result:=True
+  Else
+   Result:=False
 end;
 
 procedure SetDummyRunOnce;
@@ -1835,18 +1853,18 @@ end;
 
 function GetIniPath(Default:String):String;
 begin
- if Standardmodus.Checked = True then
-   Result:=ExpandConstant('{userappdata}')+'\PDFCreator'
+ if Servermodus then
+   Result:=ExpandConstant('{commonappdata}')
   else
-   Result:=ExpandConstant('{commonappdata}');
+   Result:=ExpandConstant('{userappdata}')+'\PDFCreator';
 end;
 
 function IsServerInstallation: Boolean;
 begin
- if Standardmodus.Checked = True then
-   Result:=false
+ if Servermodus then
+   Result:=true
   else
-   Result:=true;
+   Result:=false;
 end;
 
 procedure IntegrateWinexplorer;
@@ -2181,13 +2199,16 @@ begin
     else
      Result := False
   else
-   if Standardmodus.Checked = True then
+   if Servermodus = False then
      if (PageID = PrinterdriverPage.ID) or (PageID = ServerDescriptionPage.ID) then
        Result := True
       else
        Result := False
     else
-     Result:=False
+     Result:=False;
+ If InstallOnThisVersion('0,6.0','0,0')=irInstall then // Only Vista and above
+  If (PageID = ServerDescriptionPage.ID) or (PageID = SCPage.ID) or (PageID = PrinterdriverPage.ID) then
+     Result := True
 end;
 
 function CheckMonitorname(MonitornameStr: String): Boolean;
@@ -2922,16 +2943,33 @@ begin
   ToolbarForm_CreatePage(wpSelectDir);
 #ENDIF
 
- SCPage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
-  ExpandConstant('{cm:InstallationTypeDescription}'));
+ If InstallOnThisVersion('0,6.0','0,0')=irInstall then begin // Only Vista and above
+   VistaNotePage := CreateOutputMsgPage(wpLicense,ExpandConstant('{cm:VistaInstallation}'),
+    ExpandConstant('{cm:VistaInstallationDescription}'),ExpandConstant('{cm:VistaInstallationMessage}'));
+   CreateLabel(0,45,400,200,ExpandConstant('{cm:VistaInstallationNote1}'),clWindowText,VistaNotePage);
+   VistaNotePage.MsgLabel.Font.Style := [fsBold];
+   VistaNotePage.MsgLabel.Height := 24;
+   SCPage:=CreateCustomPage(VistaNotePage.ID, ExpandConstant('{cm:InstallationType}'),
+    ExpandConstant('{cm:InstallationTypeDescription}'));
+  end else begin
+   SCPage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
+    ExpandConstant('{cm:InstallationTypeDescription}'));
+ end;
 
  CreateLabel(0,10,450,15,ExpandConstant('{cm:InstallationTypeDescription2}'),clWindowText,SCPage);
- Standardmodus:=CreateRadioButton(16,45,200,15,ExpandConstant('{cm:StandardInstallation}'),True,SCPage);
- CreateLabel(35, 65,350,350,ExpandConstant('{cm:StandardInstallationDescription}'),clWindowText,SCPage);
- CreateRadioButton(16,130,200,15,ExpandConstant('{cm:ServerInstallation}'),False,SCPage);
+ StandardmodusRB:=CreateRadioButton(16,45,200,15,ExpandConstant('{cm:StandardInstallation}'),True,SCPage);
+ StandardmodusLabel:=CreateLabel(35, 65,350,350,ExpandConstant('{cm:StandardInstallationDescription}'),clWindowText,SCPage);
+ ServermodusRB:=CreateRadioButton(16,130,200,15,ExpandConstant('{cm:ServerInstallation}'),False,SCPage);
  CreateLabel(35,150,350,350,ExpandConstant('{cm:ServerInstallationDescription}'),clWindowText,SCPage);
  ServerDescriptionPage:=CreateOutputMsgPage(SCPage.ID,ExpandConstant('{cm:ServerMode}'),
   ExpandConstant('{cm:ServerModeDescription}'),ExpandConstant('{cm:ServerModeMessage}'));
+ If InstallOnThisVersion('0,6.0','0,0')=irInstall then begin // Only Vista and above
+  StandardmodusRB.Enabled := false;
+  StandardmodusLabel.Enabled := false;
+  ServermodusRB.Checked := true;
+  Servermodus := true;
+ end;
+
  PrinternamePage:=CreateInputQuerypage(ServerDescriptionPage.ID,
   ExpandConstant('{cm:Printername}'), ExpandConstant('{cm:PrinternameDescription}'),
   ExpandConstant('{cm:PrinternameMessage}'));

@@ -3,7 +3,7 @@
 ;#include "Language includes\chinese_simplified.inc"
 ;#include "Language includes\dutch.inc"
 #include "Language includes\english.inc"
-#include "Language includes\french.inc"
+;#include "Language includes\french.inc"
 #include "Language includes\german.inc"
 ;#include "Language includes\hungarian.inc"
 ;#include "Language includes\indonesian.inc"
