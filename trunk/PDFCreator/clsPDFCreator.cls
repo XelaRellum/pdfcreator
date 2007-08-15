@@ -32,6 +32,7 @@ Private Const ErrDescr10 = "Empty array 'Arguments'!"
 Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
 Private WithEvents eActionTimer As Timer
 Attribute eActionTimer.VB_VarHelpID = -1
+Private In_eActionTimer As Boolean
 
 ' --- Class subroutines - begin ---
 Private Sub Class_Initialize()
@@ -1234,9 +1235,15 @@ End Sub
 Public Function cClose() As Boolean
  On Error Resume Next
  Dim f As Form
+ Do
+  DoEvents
+ Loop Until ProgramIsStarted = True
  cVisible = False
  cClose = False
  Set eActionTimer = Nothing
+ Do
+  DoEvents
+ Loop Until In_eActionTimer = False
  For Each f In Forms
   If Not f Is Nothing Then
    If UCase$(f.Name) <> "FRMMAIN" Then
@@ -1249,10 +1256,18 @@ Public Function cClose() As Boolean
   With mForm
    .Timer1.Enabled = False
    .Timer2.Enabled = False
-   .Timer3.Enabled = False
+   Do
+    DoEvents
+   Loop Until .InTimer1 = False
+   Do
+    DoEvents
+   Loop Until .InTimer2 = False
   End With
   Unload mForm
   Set mForm = Nothing
+  Do
+   DoEvents
+  Loop Until Forms.Count = 0
   ProgramIsStarted = False
   cClose = True
  End If
@@ -1834,17 +1849,19 @@ Private Sub eActionTimer_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If ReadyConverting Then
-50020   RaiseEvent eReady
-50030   ReadyConverting = False
-50040  End If
-50050  If GhostscriptError < 0 Then
-50060   mError.Number = 4
-50070   mError.Description = ErrDescr4
-50080   RaiseEvent eError
-50090   GhostscriptError = 0
-50100  End If
-50110  DoEvents
+50010  In_eActionTimer = True
+50020  If ReadyConverting Then
+50030   RaiseEvent eReady
+50040   ReadyConverting = False
+50050  End If
+50060  If GhostscriptError < 0 Then
+50070   mError.Number = 4
+50080   mError.Description = ErrDescr4
+50090   RaiseEvent eError
+50100   GhostscriptError = 0
+50110  End If
+50120  DoEvents
+50130  In_eActionTimer = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
