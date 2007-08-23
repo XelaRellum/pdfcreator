@@ -315,8 +315,8 @@ On Error GoTo ErrPtnr_OnError
 50420  lbl(4).Left = fraAbout.Width - lbl(4).Width - lbl(0).Left
 50430  cmd.Top = fraAbout.Top + fraAbout.Height + 100
 50440  Me.Height = cmd.Top + cmd.Height + (Me.Height - Me.ScaleHeight) + 100
-50450  ImgPaypal.Top = lbl(0).Top
-50460  ImgPaypal.Left = fraAbout.Width - ImgPaypal.Width - lbl(0).Left
+50450  imgPaypal.Top = lbl(0).Top
+50460  imgPaypal.Left = fraAbout.Width - imgPaypal.Width - lbl(0).Left
 50470  Timer2.Interval = 40
 50480  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -343,7 +343,7 @@ On Error GoTo ErrPtnr_OnError
 50060
 50070  With frmMain.picAbout
 50080   .Cls
-50090   BitBlt .hdc, 0, 0, .Width, .Height, dc, 0, 0, vbSrcCopy
+50090   BitBlt .hDC, 0, 0, .Width, .Height, dc, 0, 0, vbSrcCopy
 50100  End With
 50110
 50120  ReleaseDC Me.hwnd, dc
@@ -369,7 +369,7 @@ Private Sub ImgPaypal_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  OpenDocument Paypal
+50010  OpenDocument PaypalTransTool
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -386,7 +386,7 @@ Private Sub ImgPaypal_DblClick()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  OpenDocument Paypal
+50010  OpenDocument PaypalTransTool
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -535,8 +535,8 @@ On Error GoTo ErrPtnr_OnError
 50050  With picBuffer
 50060
 50070 '  Set .Picture = LoadResPicture(1001, vbResBitmap)
-50080   Call BitBlt(.hdc, 0, .ScaleTop, .ScaleWidth, _
-   .ScaleHeight, picBackground.hdc, 0, 0, vbSrcCopy)
+50080   Call BitBlt(.hDC, 0, .ScaleTop, .ScaleWidth, _
+   .ScaleHeight, picBackground.hDC, 0, 0, vbSrcCopy)
 50100   .Refresh
 50110
 50120   ' Shaddow
@@ -561,8 +561,8 @@ On Error GoTo ErrPtnr_OnError
 50310    picBuffer.Print tLine.Text
 50320    tL = tL + tLine.Font.Size + 12
 50330   Next i
-50340   Call BitBlt(picAbout.hdc, picBorder, picAbout.ScaleTop + picBorder, picAbout.ScaleWidth - 2 * picBorder, _
-   picAbout.ScaleHeight - 2 * picBorder, .hdc, picBorder, picBorder, vbSrcCopy)
+50340   Call BitBlt(picAbout.hDC, picBorder, picAbout.ScaleTop + picBorder, picAbout.ScaleWidth - 2 * picBorder, _
+   picAbout.ScaleHeight - 2 * picBorder, .hDC, picBorder, picBorder, vbSrcCopy)
 50360   picAbout.Refresh
 50370
 50380   yOffs = yOffs - 1

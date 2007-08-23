@@ -7,13 +7,14 @@ Public Const TransTool_GUID = "{B7BCA0D2-7305-4318-BA7A-01B028D910EB}"
 Public Const PDFSpooler_GUID = "{C387A397-047A-4354-AE89-F75B1B550257}"
 Public Const UnInst_GUID = "{D95872D0-0DE7-4C01-859C-1BAE47FB1C6B}"
 Public Const WM_GUID = "{5E59D3A8-BDDD-E0F0-6D3B-A8E147725130}"
-Public Const Paypal = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal01%40heindoerfer%2ecom&item_name=PDFCreator&no_shipping=2&no_note=1&tax=0&currency_code=EUR&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"
+Public Const PaypalPDFCreator = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal01%40heindoerfer%2ecom&item_name=PDFCreator&no_shipping=2&no_note=1&tax=0&currency_code=EUR&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"
+Public Const PaypalTransTool = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal01%40heindoerfer%2ecom&item_name=TransTool&no_shipping=2&no_note=1&tax=0&currency_code=EUR&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8"
 Public Const Homepage = "http://www.pdfforge.org/"
 Public Const Sourceforge = "http://www.sourceforge.net/projects/pdfcreator"
 Public Const UpdateURL = "http://www.pdfforge.org/products/pdfcreator/update.txt"
 Public Const PDFCreatorLogfile = "PDFCreator.log"
 Public Const PDFCreatorSpoolDirectory = "PDFCreatorSpool"
-Public Const CompatibleLanguageVersion = "0.9.4"
+Public Const CompatibleLanguageVersion = "0.9.5"
 
 Public CancelPrintfiles As Boolean
 Public ChangeDefaultprinter As Boolean
