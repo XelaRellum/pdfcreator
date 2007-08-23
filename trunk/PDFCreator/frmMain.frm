@@ -1031,7 +1031,7 @@ On Error GoTo ErrPtnr_OnError
         Case 0:
 50050    Call HTMLHelp_ShowTopic("html\welcome.htm")
 50060   Case 2:
-50070    OpenDocument Paypal
+50070    OpenDocument PaypalPDFCreator
 50080   Case 4:
 50090    OpenDocument Homepage
 50100   Case 5:

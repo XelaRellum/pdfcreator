@@ -117,7 +117,7 @@ On Error GoTo ErrPtnr_OnError
 50050  Set ini = New clsINI
 50060  ini.Filename = IniFile
 50070  If ini.CheckIniFile = False Then
-50080   MsgBox "Template file '" & Filename & "' not found!", vbCritical
+50080 '  MsgBox "Template file '" & Filename & "' not found!", vbCritical
 50090   Exit Function
 50100  End If
 50110  Set secs = ini.GetAllSectionsFromInifile(, True)
