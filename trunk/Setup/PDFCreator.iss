@@ -321,7 +321,7 @@ Source: pdfenc\pdfenc.exe; DestDir: {app}; Components: program; Flags: ignorever
 ;Help files
 Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: HELPfiles\English; Flags: ignoreversion
 Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: HELPfiles\German; Flags: ignoreversion
-;Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: HELPfiles\French; Flags: ignoreversion
+Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: HELPfiles\French; Flags: ignoreversion
 
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
@@ -713,8 +713,8 @@ Name: COMsamples; Description: {cm:COMsamples}; Types: full custom
 Name: HELPfiles; Description: {cm:HELPfiles}; Types: full custom
 Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full; Check: Not IsLanguage('english')
 Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full custom; Check: Not IsLanguage('french') And Not IsLanguage('german')
-;Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full; Check: Not IsLanguage('french')
-;Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full custom; Check: IsLanguage('french')
+Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full; Check: Not IsLanguage('french')
+Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full custom; Check: IsLanguage('french')
 Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full; Check: Not IsLanguage('german')
 Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full custom; Check: IsLanguage('german')
 
