@@ -2275,6 +2275,8 @@ begin
   end;
   Printername := PrinternamePage.Values[0];
  end
+ if CurPageID = PrinternamePage.ID then
+  Servermodus := ServermodusRB.Checked;
  Result:=True;
 end;
 
