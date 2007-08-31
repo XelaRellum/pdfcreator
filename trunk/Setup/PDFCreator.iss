@@ -130,6 +130,8 @@
 #define DefaultPrinterDrivername    "PDFCreator"
 #define DefaultPrintername          "PDFCreator"
 
+#include "PostscriptPrinterSettings.inc"
+
 ;#define UpdateIsPossible
 #define UpdateIsPossibleMinVersion "0.9.5"
 
@@ -333,7 +335,7 @@ Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion c
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
@@ -475,10 +477,9 @@ Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flag
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\{cm:Donation}; Filename: {app}\{cm:Donation}.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 21
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 20
-Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: (Not german)
-; AND (Not french)
+Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: (Not german) AND (Not french)
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_german.chm; WorkingDir: {app}; Languages: german
-;Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_french.chm; WorkingDir: {app}; Languages: french
+Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_french.chm; WorkingDir: {app}; Languages: french
 
 Name: {group}\{cm:Logfile}; Filename: {app}\PDFCreator.exe; Parameters: -ShowOnlyLogfile; WorkingDir: {app}; IconIndex: 0; Check: IsServerInstallation
 Name: {group}\{cm:Settings}; Filename: {app}\PDFCreator.exe; Parameters: -ShowOnlyOptions; WorkingDir: {app}; IconIndex: 0; Check: IsServerInstallation
@@ -529,6 +530,13 @@ Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPr
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Flags: uninsdeletevalue; OnlyBelowVersion: 0,6.0
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 1; Flags: uninsdeletevalue; MinVersion: 0,6.0
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: ShowWindow; ValueData: 0; Flags: uninsdeletevalue
+
+;PrinterDriver settings
+;Root: HKLM; SubKey: System\CurrentControlSet\Control\Print\Printers\PDFCreator; ValueType: binary; ValueName: Default DevMode; ValueData: {#PrinterDriverSettings1}; Flags: uninsdeletevalue; MinVersion: 4.0.950,0; OnlyBelowVersion: 0,0
+Root: HKU; SubKey: .DEFAULT\Printers\DevModePerUser; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
+Root: HKU; SubKey: .DEFAULT\Printers\DevModes2; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
+Root: HKCU; SubKey: Printers\DevModePerUser; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
+Root: HKCU; SubKey: Printers\DevModes2; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
 
 ;Uninstall - Deletekey
 Root: HKLM; Subkey: {#PrintReg}Printers\{code:GetPrintername}; Flags: uninsdeletekey dontcreatekey
@@ -735,8 +743,8 @@ Name: languages; Description: {cm:Languages}; Types: full custom
 
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed dontinheritcheck
 
-;Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
-;Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
+Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
+Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
 Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german'); Flags: dontinheritcheck
