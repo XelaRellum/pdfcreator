@@ -3,8 +3,8 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    Caption         =   "Transtool"
    ClientHeight    =   6435
-   ClientLeft      =   165
-   ClientTop       =   855
+   ClientLeft      =   225
+   ClientTop       =   825
    ClientWidth     =   9915
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -89,23 +89,23 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   5
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":548A
+            Picture         =   "frmMain.frx":628A
             Key             =   "open"
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5824
+            Picture         =   "frmMain.frx":6624
             Key             =   "save"
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5BBE
+            Picture         =   "frmMain.frx":69BE
             Key             =   "search"
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5F58
+            Picture         =   "frmMain.frx":6D58
             Key             =   "empty"
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":62F2
+            Picture         =   "frmMain.frx":70F2
             Key             =   "unmark"
          EndProperty
       EndProperty
@@ -137,11 +137,11 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   2
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":668C
+            Picture         =   "frmMain.frx":748C
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6ADE
+            Picture         =   "frmMain.frx":78DE
             Key             =   ""
          EndProperty
       EndProperty
@@ -232,7 +232,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   0
-      Picture         =   "frmMain.frx":6F30
+      Picture         =   "frmMain.frx":7D30
       Top             =   840
       Width           =   930
    End
@@ -1560,7 +1560,7 @@ On Error GoTo ErrPtnr_OnError
 50090    If i <= col.Count Then
 50100     SplitPath col(i), , Path, , File
 50110     mnFile(mnFileRecentFilesStart + i - 1).Caption = "&" & i & " " & _
-     ShortenPath(Me.hDC, CompletePath(Path) & File, 200)
+     ShortenPath(Me.hdc, CompletePath(Path) & File, 200)
 50130     mnFile(mnFileRecentFilesStart + i - 1).Tag = col(i)
 50140     mnFile(mnFileRecentFilesStart + i - 1).Visible = True
 50150     If mnFile(mnFile.Count - 2).Visible = False Then

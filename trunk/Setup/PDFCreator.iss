@@ -339,7 +339,8 @@ Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\japanese.ini; DestDir: {app}\languages; Components: languages\japanese; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
@@ -460,8 +461,8 @@ Source: ..\COM\Samples\Ruby\Testpage2PDF.rb; DestDir: {app}\COM\Ruby; Components
 
 ; Toolbar
 #IFDEF IncludeToolbar
-Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
-Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: ietoolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,6.0
+Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: ietoolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,6.0
 #ENDIF
 #ENDIF
 
@@ -712,8 +713,8 @@ Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptV
 #ENDIF
 
 #IFDEF IncludeToolbar
-Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: IExplorerVersionLower55
-Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: ; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: Not IExplorerVersionLower55; Flags: fixed
+Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,6.0; Check: IExplorerVersionLower55
+Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,6.0; Check: Not IExplorerVersionLower55; Flags: fixed
 #ENDIF
 
 Name: COMsamples; Description: {cm:COMsamples}; Types: full custom
@@ -755,8 +756,11 @@ Name: languages\german; Description: German; Types: full custom; Check: IsLangua
 ;Name: languages\indonesian; Description: Indonesian; Types: full; Check: Not IsLanguage('indonesian'); Flags: dontinheritcheck
 ;Name: languages\indonesian; Description: Indonesian; Types: full custom; Check: IsLanguage('indonesian'); Flags: dontinheritcheck
 
-;Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
-;Name: languages\italian; Description: Italian; Types: full custom; Check: IsLanguage('italian'); Flags: dontinheritcheck
+Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
+Name: languages\italian; Description: Italian; Types: full custom; Check: IsLanguage('italian'); Flags: dontinheritcheck
+
+Name: languages\japanese; Description: Japanese; Types: full; Check: Not IsLanguage('japanese'); Flags: dontinheritcheck
+Name: languages\japanese; Description: Japanese; Types: full custom; Check: IsLanguage('japanese'); Flags: dontinheritcheck
 
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
@@ -2949,7 +2953,7 @@ end;
 procedure InitializeWizard();
 begin
 #IFDEF IncludeToolbar
- If InstallOnThisVersion('4.1.1998,5.0.2195','0,0')=irInstall then // Not Win95, Not WinNT4
+ If InstallOnThisVersion('4.1.1998,5.0.2195','0, 6.0')=irInstall then // Not Win95, Not WinNT4, Not Vista
   ToolbarForm_CreatePage(wpSelectDir);
 #ENDIF
 
