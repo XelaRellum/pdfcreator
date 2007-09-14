@@ -48,19 +48,11 @@ Begin VB.Form frmSearch
       TabIndex        =   13
       Top             =   3885
       Width           =   1380
-      _ExtentX        =   2434
-      _ExtentY        =   397
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BrushStyle      =   0
-      Color           =   65280
+      _extentx        =   2434
+      _extenty        =   397
+      font            =   "frmSearch.frx":000C
+      brushstyle      =   0
+      color           =   65280
    End
    Begin TransTool.dmFrame dmFraSettings 
       Height          =   1275
@@ -68,18 +60,10 @@ Begin VB.Form frmSearch
       TabIndex        =   11
       Top             =   1785
       Width           =   4530
-      _ExtentX        =   7990
-      _ExtentY        =   2249
-      Caption         =   "Settings"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   7990
+      _extenty        =   2249
+      caption         =   "Settings"
+      font            =   "frmSearch.frx":0038
       Begin VB.CheckBox chkWholeWord 
          Appearance      =   0  '2D
          Caption         =   "&Whole word"
@@ -125,18 +109,10 @@ Begin VB.Form frmSearch
       TabIndex        =   7
       Top             =   105
       Width           =   4530
-      _ExtentX        =   7990
-      _ExtentY        =   2805
-      Caption         =   "Search"
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   7990
+      _extenty        =   2805
+      caption         =   "Search"
+      font            =   "frmSearch.frx":0064
       Begin VB.ComboBox cmbSearchtext 
          Appearance      =   0  '2D
          BeginProperty Font 
@@ -347,47 +323,48 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long
-50020  lsvColor = frmMain.lsv.ForeColor
-50030  lsvBold = frmMain.lsv.Font.Bold
-50040  Me.Caption = "Search"
-50050  With cmbColumn
-50060   .AddItem "All"
-50070   .ItemData(.NewIndex) = 0
-50080   .AddItem "Translated text"
-50090   .ItemData(.NewIndex) = 1
-50100   .AddItem "English text"
-50110   .ItemData(.NewIndex) = 4
-50120   .AddItem "Section"
-50130   .ItemData(.NewIndex) = 2
-50140   .AddItem "Key"
-50150   .ItemData(.NewIndex) = 3
-50160   .ListIndex = 0
-50170  End With
-50180  With xpPgb
-50190   .Scrolling = ccScrollingStandard
-50200   .ShowText = True
-50210   .Color = RGB(&H80, &HFF, &H80)
-50220   .Font.Bold = True
-50230   .Visible = False
-50240  End With
-50250  With stb.Panels
-50260   .Clear
-50270   .Add , "Status"
-50280   .Add , "FoundIndex"
-50290   .Add , "Progress"
-50300  End With
-50310
-50320  With stb
-50330   .Panels("Status").ToolTipText = .Panels("Status").key
-50340   .Panels("FoundIndex").ToolTipText = .Panels("FoundIndex").key
-50350   .Panels("Progress").ToolTipText = .Panels("Progress").key
-50360  End With
-50370
-50380  Set cmbSearchtext.Font = frmMain.lsv.Font
-50390
-50400  Set hLItems = New Collection
-50410  SetLastSearchstrings
-50420  ShowAcceleratorsInForm Me, True
+50020  Me.Icon = frmMain.Icon
+50030  lsvColor = frmMain.lsv.ForeColor
+50040  lsvBold = frmMain.lsv.Font.Bold
+50050  Me.Caption = "Search"
+50060  With cmbColumn
+50070   .AddItem "All"
+50080   .ItemData(.NewIndex) = 0
+50090   .AddItem "Translated text"
+50100   .ItemData(.NewIndex) = 1
+50110   .AddItem "English text"
+50120   .ItemData(.NewIndex) = 4
+50130   .AddItem "Section"
+50140   .ItemData(.NewIndex) = 2
+50150   .AddItem "Key"
+50160   .ItemData(.NewIndex) = 3
+50170   .ListIndex = 0
+50180  End With
+50190  With xpPgb
+50200   .Scrolling = ccScrollingStandard
+50210   .ShowText = True
+50220   .Color = RGB(&H80, &HFF, &H80)
+50230   .Font.Bold = True
+50240   .Visible = False
+50250  End With
+50260  With stb.Panels
+50270   .Clear
+50280   .Add , "Status"
+50290   .Add , "FoundIndex"
+50300   .Add , "Progress"
+50310  End With
+50320
+50330  With stb
+50340   .Panels("Status").ToolTipText = .Panels("Status").key
+50350   .Panels("FoundIndex").ToolTipText = .Panels("FoundIndex").key
+50360   .Panels("Progress").ToolTipText = .Panels("Progress").key
+50370  End With
+50380
+50390  Set cmbSearchtext.Font = frmMain.lsv.Font
+50400
+50410  Set hLItems = New Collection
+50420  SetLastSearchstrings
+50430  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

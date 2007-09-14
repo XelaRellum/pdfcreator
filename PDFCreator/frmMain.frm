@@ -4,8 +4,8 @@ Begin VB.Form frmMain
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
    ClientHeight    =   3765
-   ClientLeft      =   165
-   ClientTop       =   855
+   ClientLeft      =   225
+   ClientTop       =   825
    ClientWidth     =   9510
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -32,15 +32,15 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   3
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":548A
+            Picture         =   "frmMain.frx":628A
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5A24
+            Picture         =   "frmMain.frx":6824
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5FBE
+            Picture         =   "frmMain.frx":6DBE
             Key             =   ""
          EndProperty
       EndProperty
@@ -66,71 +66,71 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   17
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6558
+            Picture         =   "frmMain.frx":7358
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6AF2
+            Picture         =   "frmMain.frx":78F2
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":708C
+            Picture         =   "frmMain.frx":7E8C
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":7626
+            Picture         =   "frmMain.frx":8426
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":7780
+            Picture         =   "frmMain.frx":8580
             Key             =   ""
          EndProperty
          BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":7D1A
+            Picture         =   "frmMain.frx":8B1A
             Key             =   ""
          EndProperty
          BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":82B4
+            Picture         =   "frmMain.frx":90B4
             Key             =   ""
          EndProperty
          BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":884E
+            Picture         =   "frmMain.frx":964E
             Key             =   ""
          EndProperty
          BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":8BE8
+            Picture         =   "frmMain.frx":99E8
             Key             =   ""
          EndProperty
          BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":8F82
+            Picture         =   "frmMain.frx":9D82
             Key             =   ""
          EndProperty
          BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":931C
+            Picture         =   "frmMain.frx":A11C
             Key             =   ""
          EndProperty
          BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":96B6
+            Picture         =   "frmMain.frx":A4B6
             Key             =   ""
          EndProperty
          BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":9A50
+            Picture         =   "frmMain.frx":A850
             Key             =   ""
          EndProperty
          BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":9DEA
+            Picture         =   "frmMain.frx":ABEA
             Key             =   ""
          EndProperty
          BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":A184
+            Picture         =   "frmMain.frx":AF84
             Key             =   ""
          EndProperty
          BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":A51E
+            Picture         =   "frmMain.frx":B31E
             Key             =   ""
          EndProperty
          BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":A8B8
+            Picture         =   "frmMain.frx":B6B8
             Key             =   ""
          EndProperty
       EndProperty
@@ -222,7 +222,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   1890
-      Picture         =   "frmMain.frx":AC52
+      Picture         =   "frmMain.frx":BA52
       Top             =   2940
       Visible         =   0   'False
       Width           =   930

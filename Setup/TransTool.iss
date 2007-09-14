@@ -77,7 +77,7 @@
 #define UninstallRegStr2     "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + UninstallIDStr2
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "2.7.0"
+#define UpdateIsPossibleMinVersion "2.9.0"
 
 #IFDEF IncludeToolbar
  #include "ToolbarForm.isd"
@@ -96,13 +96,14 @@ AppPublisherURL={#Homepage}
 AppSupportURL={#Homepage}
 AppUpdatesURL={#Homepage}
 AppVersion={#AppVersion}
-Compression=none
+Compression=lzma/ultra
 CreateUninstallRegKey=false
 DefaultDirName={reg:HKLM\{#UninstallRegStr2},Inno Setup: App Path|{pf}\{#AppName}}
 DefaultGroupName={#AppName}
 DisableDirPage=false
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
+InternalCompressLevel=ultra
 
 LicenseFile=.\License\TransTool license - english.rtf
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}
@@ -118,8 +119,8 @@ VersionInfoCompany=Frank Heindörfer
 VersionInfoDescription=TransTool basically is a tool written for PDFCreator, to enable users to translate PDFCreators language files. It can be used to translate all kinds of programs that use INI files.
 VersionInfoTextVersion={#AppVersion}
 
-WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
-WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
+WizardImageFile=..\Pictures\Setup\TransToolBig.bmp
+WizardSmallImageFile=..\Pictures\Setup\TransTool.bmp
 
 [InstallDelete]
 Name: {app}\unload.tmp; Type: files; Components: program
@@ -161,7 +162,7 @@ Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCr
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; IconFilename: {app}\{#AppExename}; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
-Name: {group}\{cm:Donation}; Filename: {app}\{cm:Donation}.url; WorkingDir: {app}; IconFilename: {app}\TransTool.exe; IconIndex: 2
+Name: {group}\Donate TransTool; Filename: {app}\Donate TransTool.url; WorkingDir: {app}; IconFilename: {app}\TransTool.exe; IconIndex: 2
 Name: {group}\{cm:ProgramOnTheWeb,TransTool}; Filename: {app}\TransTool.url; WorkingDir: {app}; IconFilename: {app}\TransTool.exe; IconIndex: 1
 
 Name: {commondesktop}\TransTool; Filename: {app}\TransTool.exe; WorkingDir: {app}; IconIndex: 0; Tasks: desktopicon\common
@@ -173,9 +174,9 @@ Filename: {app}\TransTool.url; Section: InternetShortcut; Key: URL; String: http
 Filename: {app}\TransTool.url; Section: InternetShortcut; Key: Iconindex; String: 20; Components: program
 Filename: {app}\TransTool.url; Section: InternetShortcut; Key: IconFile; String: {app}\TransTool.exe; Components: program
 
-Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=TransTool&no_note=1&tax=0&currency_code=EUR; Components: program
-Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; String: 21; Components: program
-Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: IconFile; String: {app}\TransTool.exe; Components: program
+Filename: {app}\Donate TransTool.url; Section: InternetShortcut; Key: URL; String: http://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=TransTool&no_note=1&tax=0&currency_code=EUR; Components: program
+Filename: {app}\Donate TransTool.url; Section: InternetShortcut; Key: Iconindex; String: 21; Components: program
+Filename: {app}\Donate TransTool.url; Section: InternetShortcut; Key: IconFile; String: {app}\TransTool.exe; Components: program
 
 [Registry]
 ;Uninstall - Software
@@ -212,7 +213,7 @@ Filename: {app}\TransTool.exe; WorkingDir: {app}; Description: {cm:LaunchProgram
 #ENDIF
 
 #IFDEF IncludeToolbar
-Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: ietoolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: ietoolbar
 #ENDIF
 
 [UninstallDelete]

@@ -75,7 +75,7 @@ Begin VB.Form frmAbout
       Begin VB.Image ImgPaypal 
          Height          =   465
          Left            =   5265
-         Picture         =   "frmAbout.frx":548A
+         Picture         =   "frmAbout.frx":000C
          Top             =   210
          Width           =   930
       End
@@ -128,7 +128,7 @@ Begin VB.Form frmAbout
       ForeColor       =   &H80000008&
       Height          =   4500
       Left            =   120
-      Picture         =   "frmAbout.frx":57EF
+      Picture         =   "frmAbout.frx":0371
       ScaleHeight     =   4500
       ScaleWidth      =   6000
       TabIndex        =   3
@@ -217,44 +217,45 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lbl(0).Caption = App.ProductName & " " & App.Major & "." & App.Minor & "." & App.Revision
-50020  lbl(1).Caption = "License: GNU GENERAL PUBLIC LICENSE"
-50030  lbl(2).Caption = "Author: Frank Heindörfer, Philip Chinery (c) 2004"
-50040  lbl(3).Caption = Homepage
-50050  lbl(3).DragIcon = LoadResPicture(2001, vbResCursor)
-50060  lbl(4).Caption = Sourceforge
-50070  lbl(4).DragIcon = LoadResPicture(2001, vbResCursor)
-50080  txtDescription.Text = "TransTool is a part from PDFCreator. With TransTool you can create and edit language files for PDFCreator. Language files are normal ini files."
-50090  sCol1 = lbl(3).ForeColor
-50100  sCol2 = lbl(4).ForeColor
-50110
-50120  With picAbout
-50130   .AutoRedraw = True
-50140   .ScaleMode = vbPixels
-50150
-50160   .Visible = True
-50170  End With
-50180  SetAboutText
-50190  With picBuffer
-50200   .Width = picAbout.Width
-50210   .Height = picAbout.Height
-50220   .ScaleMode = vbPixels
-50230   .AutoRedraw = True
-50240   .Visible = False
-50250   yOffs = .Height \ Screen.TwipsPerPixelY
-50260  End With
-50270  With picBackground
-50280   .Width = picAbout.Width
-50290   .Height = picAbout.Height
-50300   .ScaleMode = vbPixels
-50310   .AutoRedraw = True
-50320   .Visible = False
-50330   Set .Picture = picAbout.Picture
-50340  End With
-50350  ShowAcceleratorsInForm Me, True
-50360  Timer1.Enabled = True
-50370  Timer2.Interval = 50
-50380  Timer2.Enabled = True
+50010  Me.Icon = frmMain.Icon
+50020
+50030  lbl(0).Caption = App.ProductName & " " & App.Major & "." & App.Minor & "." & App.Revision
+50040  lbl(1).Caption = "License: GNU GENERAL PUBLIC LICENSE"
+50050  lbl(2).Caption = "Author: Frank Heindörfer, Philip Chinery (c) 2004"
+50060  lbl(3).Caption = Homepage
+50070  lbl(3).DragIcon = LoadResPicture(2001, vbResCursor)
+50080  lbl(4).Caption = Sourceforge
+50090  lbl(4).DragIcon = LoadResPicture(2001, vbResCursor)
+50100  txtDescription.Text = "TransTool is a part from PDFCreator. With TransTool you can create and edit language files for PDFCreator. Language files are normal ini files."
+50110  sCol1 = lbl(3).ForeColor
+50120  sCol2 = lbl(4).ForeColor
+50130
+50140  With picAbout
+50150   .AutoRedraw = True
+50160   .ScaleMode = vbPixels
+50170   .Visible = True
+50180  End With
+50190  SetAboutText
+50200  With picBuffer
+50210   .Width = picAbout.Width
+50220   .Height = picAbout.Height
+50230   .ScaleMode = vbPixels
+50240   .AutoRedraw = True
+50250   .Visible = False
+50260   yOffs = .Height \ Screen.TwipsPerPixelY
+50270  End With
+50280  With picBackground
+50290   .Width = picAbout.Width
+50300   .Height = picAbout.Height
+50310   .ScaleMode = vbPixels
+50320   .AutoRedraw = True
+50330   .Visible = False
+50340   Set .Picture = picAbout.Picture
+50350  End With
+50360  ShowAcceleratorsInForm Me, True
+50370  Timer1.Enabled = True
+50380  Timer2.Interval = 50
+50390  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -343,7 +344,7 @@ On Error GoTo ErrPtnr_OnError
 50060
 50070  With frmMain.picAbout
 50080   .Cls
-50090   BitBlt .hDC, 0, 0, .Width, .Height, dc, 0, 0, vbSrcCopy
+50090   BitBlt .hdc, 0, 0, .Width, .Height, dc, 0, 0, vbSrcCopy
 50100  End With
 50110
 50120  ReleaseDC Me.hwnd, dc
@@ -535,8 +536,8 @@ On Error GoTo ErrPtnr_OnError
 50050  With picBuffer
 50060
 50070 '  Set .Picture = LoadResPicture(1001, vbResBitmap)
-50080   Call BitBlt(.hDC, 0, .ScaleTop, .ScaleWidth, _
-   .ScaleHeight, picBackground.hDC, 0, 0, vbSrcCopy)
+50080   Call BitBlt(.hdc, 0, .ScaleTop, .ScaleWidth, _
+   .ScaleHeight, picBackground.hdc, 0, 0, vbSrcCopy)
 50100   .Refresh
 50110
 50120   ' Shaddow
@@ -561,8 +562,8 @@ On Error GoTo ErrPtnr_OnError
 50310    picBuffer.Print tLine.Text
 50320    tL = tL + tLine.Font.Size + 12
 50330   Next i
-50340   Call BitBlt(picAbout.hDC, picBorder, picAbout.ScaleTop + picBorder, picAbout.ScaleWidth - 2 * picBorder, _
-   picAbout.ScaleHeight - 2 * picBorder, .hDC, picBorder, picBorder, vbSrcCopy)
+50340   Call BitBlt(picAbout.hdc, picBorder, picAbout.ScaleTop + picBorder, picAbout.ScaleWidth - 2 * picBorder, _
+   picAbout.ScaleHeight - 2 * picBorder, .hdc, picBorder, picBorder, vbSrcCopy)
 50360   picAbout.Refresh
 50370
 50380   yOffs = yOffs - 1
