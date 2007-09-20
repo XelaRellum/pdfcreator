@@ -11,6 +11,7 @@ Name: german;             MessagesFile: compiler:Languages\German.isl; LicenseFi
 Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 Name: japanese;           MessagesFile: Innosetup languages files\Japanese-5-5.1.11.isl
 ;Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.0.isl
+Name: norwegian_bokmal;   MessagesFile: compiler:Languages\Norwegian.isl
 ;Name: polish;             MessagesFile: compiler:Languages\Polish.isl
 ;Name: romanian;           MessagesFile: Innosetup languages files\Romanian-5-5.1.0.isl
 ;Name: russian;            MessagesFile: compiler:Languages\Russian.isl
