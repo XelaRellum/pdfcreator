@@ -342,6 +342,7 @@ Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components
 Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\japanese.ini; DestDir: {app}\languages; Components: languages\japanese; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
@@ -720,8 +721,8 @@ Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 900000;
 Name: COMsamples; Description: {cm:COMsamples}; Types: full custom
 
 Name: HELPfiles; Description: {cm:HELPfiles}; Types: full custom
-Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full; Check: Not IsLanguage('english')
-Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full custom; Check: Not IsLanguage('french') And Not IsLanguage('german')
+Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full; Check: IsLanguage('german') or IsLanguage('french')
+Name: HELPfiles\English; Description: {cm:HELPfilesEnglish}; Types: full custom; Check: IsLanguage('english') Or ((Not IsLanguage('german')) And (Not IsLanguage('french')))
 Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full; Check: Not IsLanguage('french')
 Name: HELPfiles\French; Description: {cm:HELPfilesFrench}; Types: full custom; Check: IsLanguage('french')
 Name: HELPfiles\German; Description: {cm:HELPfilesGerman}; Types: full; Check: Not IsLanguage('german')
@@ -764,6 +765,9 @@ Name: languages\japanese; Description: Japanese; Types: full custom; Check: IsLa
 
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
+
+Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full; Check: Not IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
+Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full custom; Check: IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
 
 ;Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
 ;Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck

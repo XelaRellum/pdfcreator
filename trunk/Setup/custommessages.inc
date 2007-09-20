@@ -10,6 +10,7 @@
 #include "Language includes\italian.inc"
 #include "Language includes\japanese.inc"
 ;#include "Language includes\lithuanian.inc"
+#include "Language includes\norwegian_bokmal.inc"
 ;#include "Language includes\polish.inc"
 ;#include "Language includes\romanian.inc"
 ;#include "Language includes\russian.inc"
