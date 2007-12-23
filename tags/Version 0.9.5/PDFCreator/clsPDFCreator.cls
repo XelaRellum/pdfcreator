@@ -1,0 +1,2649 @@
+VERSION 1.0 CLASS
+BEGIN
+  MultiUse = -1  'True
+  Persistable = 0  'NotPersistable
+  DataBindingBehavior = 0  'vbNone
+  DataSourceBehavior  = 0  'vbNone
+  MTSTransactionMode  = 0  'NotAnMTSObject
+END
+Attribute VB_Name = "clsPDFCreator"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+
+Public Event eReady()
+Public Event eError()
+
+Private Const ErrDescr_2 = "Unknown Event!"
+Private Const ErrDescr_1 = "Test Error Event."
+Private Const ErrDescr1 = "The ActiveX-Server has not been started! Please use function ""cStart()"" to start the ActiveX-Server!"
+Private Const ErrDescr2 = "An instance of the PDFCreator is already running. It is not allowed to have more than one instance running!"
+Private Const ErrDescr3 = "Unknown Options Name '%1' in '%2'!"
+Private Const ErrDescr4 = "Ghostscript Error: '%1'!"
+Private Const ErrDescr5 = "The file '%1' could not be found!"
+Private Const ErrDescr6 = "No valid path '%1' was given!"
+Private Const ErrDescr7 = "The file '%1' is in use!"
+Private Const ErrDescr8 = "Function '%1': Options1 is not a 'clsPDFCreatorOptions' type!"
+Private Const ErrDescr9 = "No valid postscript file '%1' was given!"
+Private Const ErrDescr10 = "Empty array 'Arguments'!"
+
+Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
+Private WithEvents eActionTimer As Timer
+Attribute eActionTimer.VB_VarHelpID = -1
+Private In_eActionTimer As Boolean
+
+' --- Class subroutines - begin ---
+Private Sub Class_Initialize()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set mError = New clsPDFCreatorError
+50020  InstanceCounter = InstanceCounter + 1
+50030  If InstanceCounter = 1 Then
+50040   ProgramIsVisible = True
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "Class_Initialize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Class_Terminate()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  InstanceCounter = InstanceCounter - 1
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "Class_Terminate")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+' --- Class subroutines - end ---
+
+' --- Public properties - begin ---
+Public Property Get cError() As clsPDFCreatorError
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cError = mError
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cError [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cErrorDetail(ByVal PropertyName As String) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case UCase$(PropertyName)
+        Case "DESCRIPTION": cErrorDetail = mError.Description
+50030   Case "NUMBER": cErrorDetail = mError.Number
+50040   Case Else:
+50050    mError.Number = 3
+50060    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cErrorDetail")
+50070    RaiseEvent eError
+50080  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cErrorDetail [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Sub cErrorClear()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  mError.Number = 0
+50020  mError.Description = ""
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cErrorClear")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Property Get cGhostscriptVersion() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim G As tGhostscriptRevision
+50020  G = GetGhostscriptRevision
+50030  cGhostscriptVersion = G.strProduct & vbCrLf & _
+  G.strCopyright & vbCrLf & _
+  CStr(G.intRevision) & vbCrLf & _
+  CStr(G.intRevisionDate)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscriptVersion [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cOutputFilename() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  cOutputFilename = ConvertedOutputFilename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOutputFilename [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cPDFCreatorApplicationPath() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cPDFCreatorApplicationPath = GetPDFCreatorApplicationPath
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPDFCreatorApplicationPath [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cIsLogfileDialogDisplayed() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim f As Form
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Property
+50050  End If
+50060  cIsLogfileDialogDisplayed = False
+50070  For Each f In Forms
+50080   If UCase$(f.Name) = "FRMLOG" Then
+50090    cIsLogfileDialogDisplayed = True
+50100   End If
+50110  Next f
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsLogfileDialogDisplayed [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cIsOptionsDialogDisplayed() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim f As Form
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Property
+50050  End If
+50060  cIsOptionsDialogDisplayed = False
+50070  For Each f In Forms
+50080   If UCase$(f.Name) = "FRMOPTIONS" Then
+50090    cIsOptionsDialogDisplayed = True
+50100   End If
+50110  Next f
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsOptionsDialogDisplayed [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cProgramRelease(Optional ByVal WithBeta As Boolean = True) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cProgramRelease = GetProgramRelease(WithBeta)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cProgramRelease [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cProgramIsRunning() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cProgramIsRunning = ProgramIsRunning(PDFCreator_GUID)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cProgramIsRunning [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cWindowsVersion() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cWindowsVersion = GetWinVersionStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cWindowsVersion [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cVisible() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  cVisible = ProgramIsVisible
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cVisible [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cVisible(ByVal Value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim f As Form
+50020  ProgramIsVisible = Value
+50030
+50040  If cProgramIsRunning Then
+50050   Set mForm = frmMain
+50060  End If
+50070
+50080  If Not mForm Is Nothing Then
+50090   For Each f In Forms
+50100    If Not f Is Nothing Then
+50110     If UCase$(f.Name) <> "FRMSYSTRAY" Then
+50120      f.Visible = ProgramIsVisible
+50130     End If
+50140    End If
+50150   Next f
+50160   If ProgramIsVisible Then
+50170     If mForm.WindowState = vbMinimized Then
+50180       FormInTaskbar mForm, False, False, False
+50190       mForm.SystrayEnter
+50200      Else
+50210       mForm.SysTrayLeave
+50220       FormInTaskbar mForm, True, False, True
+50230     End If
+50240    Else
+50250     If mForm.WindowState = vbMinimized Then
+50260      mForm.SysTrayLeave
+50270     End If
+50280   End If
+50290  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cVisible [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cInstalledAsServer() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cInstalledAsServer = InstalledAsServer
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cInstalledAsServer [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cPrinterStop() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  cPrinterStop = PrinterStop
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrinterStop [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cPrinterStop(ByVal Value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  If Not mForm Is Nothing Then
+50060   If Value Then
+50070     If Not PrinterStop Then
+50080      mForm.SetMenuPrinterStop
+50090     End If
+50100    Else
+50110     If PrinterStop Then
+50120      mForm.SetMenuPrinterStop
+50130     End If
+50140   End If
+50150  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrinterStop [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cOptionsNames() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cOptionsNames = New Collection
+50020  With cOptionsNames
+50030   .Add "AdditionalGhostscriptParameters"
+50040   .Add "AdditionalGhostscriptSearchpath"
+50050   .Add "AddWindowsFontpath"
+50060   .Add "AutosaveDirectory"
+50070   .Add "AutosaveFilename"
+50080   .Add "AutosaveFormat"
+50090   .Add "AutosaveStartStandardProgram"
+50100   .Add "BitmapResolution"
+50110   .Add "BMPColorscount"
+50120   .Add "ClientComputerResolveIPAddress"
+50130   .Add "Counter"
+50140   .Add "DeviceHeightPoints"
+50150   .Add "DeviceWidthPoints"
+50160   .Add "DirectoryGhostscriptBinaries"
+50170   .Add "DirectoryGhostscriptFonts"
+50180   .Add "DirectoryGhostscriptLibraries"
+50190   .Add "DirectoryGhostscriptResource"
+50200   .Add "DisableEmail"
+50210   .Add "DontUseDocumentSettings"
+50220   .Add "EPSLanguageLevel"
+50230   .Add "FilenameSubstitutions"
+50240   .Add "FilenameSubstitutionsOnlyInTitle"
+50250   .Add "JPEGColorscount"
+50260   .Add "JPEGQuality"
+50270   .Add "Language"
+50280   .Add "LastSaveDirectory"
+50290   .Add "Logging"
+50300   .Add "LogLines"
+50310   .Add "NoConfirmMessageSwitchingDefaultprinter"
+50320   .Add "NoProcessingAtStartup"
+50330   .Add "NoPSCheck"
+50340   .Add "OnePagePerFile"
+50350   .Add "OptionsDesign"
+50360   .Add "OptionsEnabled"
+50370   .Add "OptionsVisible"
+50380   .Add "Papersize"
+50390   .Add "PCXColorscount"
+50400   .Add "PDFAllowAssembly"
+50410   .Add "PDFAllowDegradedPrinting"
+50420   .Add "PDFAllowFillIn"
+50430   .Add "PDFAllowScreenReaders"
+50440   .Add "PDFColorsCMYKToRGB"
+50450   .Add "PDFColorsColorModel"
+50460   .Add "PDFColorsPreserveHalftone"
+50470   .Add "PDFColorsPreserveOverprint"
+50480   .Add "PDFColorsPreserveTransfer"
+50490   .Add "PDFCompressionColorCompression"
+50500   .Add "PDFCompressionColorCompressionChoice"
+50510   .Add "PDFCompressionColorCompressionJPEGHighFactor"
+50520   .Add "PDFCompressionColorCompressionJPEGLowFactor"
+50530   .Add "PDFCompressionColorCompressionJPEGMaximumFactor"
+50540   .Add "PDFCompressionColorCompressionJPEGMediumFactor"
+50550   .Add "PDFCompressionColorCompressionJPEGMinimumFactor"
+50560   .Add "PDFCompressionColorResample"
+50570   .Add "PDFCompressionColorResampleChoice"
+50580   .Add "PDFCompressionColorResolution"
+50590   .Add "PDFCompressionGreyCompression"
+50600   .Add "PDFCompressionGreyCompressionChoice"
+50610   .Add "PDFCompressionGreyCompressionJPEGHighFactor"
+50620   .Add "PDFCompressionGreyCompressionJPEGLowFactor"
+50630   .Add "PDFCompressionGreyCompressionJPEGMaximumFactor"
+50640   .Add "PDFCompressionGreyCompressionJPEGMediumFactor"
+50650   .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
+50660   .Add "PDFCompressionGreyResample"
+50670   .Add "PDFCompressionGreyResampleChoice"
+50680   .Add "PDFCompressionGreyResolution"
+50690   .Add "PDFCompressionMonoCompression"
+50700   .Add "PDFCompressionMonoCompressionChoice"
+50710   .Add "PDFCompressionMonoResample"
+50720   .Add "PDFCompressionMonoResampleChoice"
+50730   .Add "PDFCompressionMonoResolution"
+50740   .Add "PDFCompressionTextCompression"
+50750   .Add "PDFDisallowCopy"
+50760   .Add "PDFDisallowModifyAnnotations"
+50770   .Add "PDFDisallowModifyContents"
+50780   .Add "PDFDisallowPrinting"
+50790   .Add "PDFEncryptor"
+50800   .Add "PDFFontsEmbedAll"
+50810   .Add "PDFFontsSubSetFonts"
+50820   .Add "PDFFontsSubSetFontsPercent"
+50830   .Add "PDFGeneralASCII85"
+50840   .Add "PDFGeneralAutorotate"
+50850   .Add "PDFGeneralCompatibility"
+50860   .Add "PDFGeneralOverprint"
+50870   .Add "PDFGeneralResolution"
+50880   .Add "PDFHighEncryption"
+50890   .Add "PDFLowEncryption"
+50900   .Add "PDFOptimize"
+50910   .Add "PDFOwnerPass"
+50920   .Add "PDFOwnerPasswordString"
+50930   .Add "PDFUpdateMetadata"
+50940   .Add "PDFUserPass"
+50950   .Add "PDFUserPasswordString"
+50960   .Add "PDFUseSecurity"
+50970   .Add "PNGColorscount"
+50980   .Add "PrintAfterSaving"
+50990   .Add "PrintAfterSavingDuplex"
+51000   .Add "PrintAfterSavingNoCancel"
+51010   .Add "PrintAfterSavingPrinter"
+51020   .Add "PrintAfterSavingQueryUser"
+51030   .Add "PrintAfterSavingTumble"
+51040   .Add "PrinterStop"
+51050   .Add "PrinterTemppath"
+51060   .Add "ProcessPriority"
+51070   .Add "ProgramFont"
+51080   .Add "ProgramFontCharset"
+51090   .Add "ProgramFontSize"
+51100   .Add "PSLanguageLevel"
+51110   .Add "RemoveAllKnownFileExtensions"
+51120   .Add "RemoveSpaces"
+51130   .Add "RunProgramAfterSaving"
+51140   .Add "RunProgramAfterSavingProgramname"
+51150   .Add "RunProgramAfterSavingProgramParameters"
+51160   .Add "RunProgramAfterSavingWaitUntilReady"
+51170   .Add "RunProgramAfterSavingWindowstyle"
+51180   .Add "RunProgramBeforeSaving"
+51190   .Add "RunProgramBeforeSavingProgramname"
+51200   .Add "RunProgramBeforeSavingProgramParameters"
+51210   .Add "RunProgramBeforeSavingWindowstyle"
+51220   .Add "SaveFilename"
+51230   .Add "SendEmailAfterAutoSaving"
+51240   .Add "SendMailMethod"
+51250   .Add "ShowAnimation"
+51260   .Add "StampFontColor"
+51270   .Add "StampFontname"
+51280   .Add "StampFontsize"
+51290   .Add "StampOutlineFontthickness"
+51300   .Add "StampString"
+51310   .Add "StampUseOutlineFont"
+51320   .Add "StandardAuthor"
+51330   .Add "StandardCreationdate"
+51340   .Add "StandardDateformat"
+51350   .Add "StandardKeywords"
+51360   .Add "StandardMailDomain"
+51370   .Add "StandardModifydate"
+51380   .Add "StandardSaveformat"
+51390   .Add "StandardSubject"
+51400   .Add "StandardTitle"
+51410   .Add "StartStandardProgram"
+51420   .Add "TIFFColorscount"
+51430   .Add "Toolbars"
+51440   .Add "UseAutosave"
+51450   .Add "UseAutosaveDirectory"
+51460   .Add "UseCreationDateNow"
+51470   .Add "UseCustomPaperSize"
+51480   .Add "UseFixPapersize"
+51490   .Add "UseStandardAuthor"
+51500  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOptionsNames [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cOption(ByVal PropertyName As String) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cOption = cGetOptionFromOptions(PropertyName, Options)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOption [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cOption(ByVal PropertyName As String, ByVal Value As Variant)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  cLetOption PropertyName, Value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOption [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cOptions() As clsPDFCreatorOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cOptions = cGetOptions(Options)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOptions [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Set cOptions(ByVal Options1 As clsPDFCreatorOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  Options = cLetOptions(Options1)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOptions [SET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cStandardOption(ByVal PropertyName As String) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cStandardOption = cGetOptionFromOptions(PropertyName, StandardOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cStandardOption [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cStandardOptions() As clsPDFCreatorOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cStandardOptions = cGetOptions(StandardOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cStandardOptions [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cPostscriptInfo(ByVal PostscriptFilename As String, ByVal PropertyName As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim PSHeader As tPSHeader
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Property
+50050  End If
+50060  If FileExists(PostscriptFilename) = False Then
+50070   mError.Number = 5
+50080   mError.Description = Replace$(ErrDescr5, "%1", PostscriptFilename)
+50090   RaiseEvent eError
+50100   Exit Property
+50110  End If
+50120  If FileInUse(PostscriptFilename) Then
+50130   mError.Number = 7
+50140   mError.Description = Replace$(ErrDescr7, "%1", PostscriptFilename)
+50150   RaiseEvent eError
+50160   Exit Property
+50170  End If
+50180  PSHeader = GetPSHeader(PostscriptFilename)
+50190  With PSHeader
+50201   Select Case True
+         Case ("BoundingBox") = PropertyName
+50220     cPostscriptInfo = .BoundingBox.Comment
+50230    Case ("CreateFor") = PropertyName
+50240     cPostscriptInfo = .CreateFor.Comment
+50250    Case ("CreationDate") = PropertyName
+50260     cPostscriptInfo = .CreationDate.Comment
+50270    Case ("Creator") = PropertyName
+50280     cPostscriptInfo = .Creator.Comment
+50290    Case ("DocumentData") = PropertyName
+50300     cPostscriptInfo = .DocumentData.Comment
+50310    Case ("DocumentNeededResources") = PropertyName
+50320     cPostscriptInfo = .DocumentNeededResources.Comment
+50330    Case ("DocumentSuppliedResources") = PropertyName
+50340     cPostscriptInfo = .DocumentSuppliedResources.Comment
+50350    Case ("LanguageLevel") = PropertyName
+50360     cPostscriptInfo = .LanguageLevel.Comment
+50370    Case ("Orientation") = PropertyName
+50380     cPostscriptInfo = .Orientation.Comment
+50390    Case ("PageOrder") = PropertyName
+50400     cPostscriptInfo = .PageOrder.Comment
+50410    Case ("Pages") = PropertyName
+50420     cPostscriptInfo = .Pages.Comment
+50430    Case ("TargetDevice") = PropertyName
+50440     cPostscriptInfo = .TargetDevice.Comment
+50450    Case ("Title") = PropertyName
+50460     cPostscriptInfo = .Title.Comment
+50470    Case Else
+50480     mError.Number = 3
+50490     mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cPostscriptInfo")
+50500     RaiseEvent eError
+50510   End Select
+50520  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPostscriptInfo [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  Set cPrintjobInfos = cGetInfoSpoolfile(ReadInfoSpoolfile(PrintjobFilename))
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintjobInfos [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  cPrintjobInfo = cGetPrintjobInfoFromPrintjobInfos(PropertyName, ReadInfoSpoolfile(PrintjobFilename), "cPrintjobInfo")
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintjobInfo [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cCountOfPrintjobs() As Long
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  If Not mForm Is Nothing Then
+50060   cCountOfPrintjobs = mForm.lsv.ListItems.Count
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cCountOfPrintjobs [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cPrintjobFilename(ByVal JobNumber As Long) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  If Not mForm Is Nothing Then
+50060   If JobNumber > 0 And JobNumber <= mForm.lsv.ListItems.Count Then
+50070    cPrintjobFilename = mForm.lsv.ListItems(JobNumber).SubItems(4)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintjobFilename [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cDefaultPrinter() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  cDefaultPrinter = Printer.DeviceName
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cDefaultPrinter [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cDefaultPrinter(ByVal Printername As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  SetDefaultprinterInProg Printername
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cDefaultPrinter [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cStopURLPrinting() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  cStopURLPrinting = StopURLPrinting
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cStopURLPrinting [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cStopURLPrinting(ByVal Value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  StopURLPrinting = Value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cStopURLPrinting [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+
+Public Property Get cWindowState() As Long
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cWindowState = ProgramWindowState
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cWindowState [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cWindowState(ByVal Value As Long) ' Value must be '0 = normal' or '1 = minimized' or '2 = maximized'
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Value = vbNormal Or Value = vbMinimized Or Value = vbMaximized Then
+50020   ProgramWindowState = Value
+50030   If Not mForm Is Nothing Then
+50040    If mForm.WindowState = vbMinimized And ProgramWindowState <> vbMinimized Then
+50050     mForm.ShowFrmMain
+50060    End If
+50070    mForm.WindowState = Value
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cWindowState [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cIsConverted() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cIsConverted = IsConverted
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsConverted [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cIsConverted(ByVal Value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  IsConverted = Value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsConverted [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cInstanceCounter() As Long
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cInstanceCounter = InstanceCounter
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cInstanceCounter [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+' --- Public properties - end ---
+
+' --- Public functions/Subroutines - begin ---
+Public Sub cAddPrintjob(ByVal PostscriptFilename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, Ext As String, tFilename As String
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Sub
+50050  End If
+50060  If IsValidPath(PostscriptFilename) = False Then
+50070   mError.Number = 6
+50080   mError.Description = Replace$(ErrDescr6, "%1", PostscriptFilename)
+50090   RaiseEvent eError
+50100   Exit Sub
+50110  End If
+50120  If FileExists(PostscriptFilename) = False Then
+50130   mError.Number = 5
+50140   mError.Description = Replace$(ErrDescr5, "%1", PostscriptFilename)
+50150   RaiseEvent eError
+50160   Exit Sub
+50170  End If
+50180  If IsPostscriptFile(PostscriptFilename) = True Then
+50190    tFilename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+50200    FileCopy PostscriptFilename, tFilename
+50210   Else
+50220    mError.Number = 9
+50230    mError.Description = Replace$(ErrDescr9, "%1", PostscriptFilename)
+50240    RaiseEvent eError
+50250    Exit Sub
+50260  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cAddPrintjob")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cDeletePrintjob(ByVal JobNumber As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Sub
+50050  End If
+50060  If Not mForm Is Nothing Then
+50070   If JobNumber > 0 And JobNumber <= mForm.lsv.ListItems.Count Then
+50080    For i = 1 To mForm.lsv.ListItems.Count
+50090     mForm.lsv.ListItems(i).Selected = False
+50100    Next i
+50110    mForm.lsv.ListItems(JobNumber).Selected = True
+50120    mForm.DocumentDelete
+50130   End If
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cDeletePrintjob")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cMovePrintjobBottom(ByVal JobNumber As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Sub
+50050  End If
+50060  If Not mForm Is Nothing Then
+50070   If JobNumber > 0 And JobNumber < mForm.lsv.ListItems.Count Then
+50080    For i = 1 To mForm.lsv.ListItems.Count
+50090     mForm.lsv.ListItems(i).Selected = False
+50100    Next i
+50110    mForm.lsv.ListItems(JobNumber).Selected = True
+50120    mForm.DocumentBottom
+50130   End If
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cMovePrintjobBottom")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cMovePrintjobTop(ByVal JobNumber As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Sub
+50050  End If
+50060  If Not mForm Is Nothing Then
+50070   If JobNumber > 1 And JobNumber <= mForm.lsv.ListItems.Count Then
+50080    For i = 1 To mForm.lsv.ListItems.Count
+50090     mForm.lsv.ListItems(i).Selected = False
+50100    Next i
+50110    mForm.lsv.ListItems(JobNumber).Selected = True
+50120    mForm.DocumentTop
+50130   End If
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cMovePrintjobTop")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cMovePrintjobUp(ByVal JobNumber As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Sub
+50050  End If
+50060  If Not mForm Is Nothing Then
+50070   If JobNumber > 1 And JobNumber <= mForm.lsv.ListItems.Count Then
+50080    For i = 1 To mForm.lsv.ListItems.Count
+50090     mForm.lsv.ListItems(i).Selected = False
+50100    Next i
+50110    mForm.lsv.ListItems(JobNumber).Selected = True
+50120    mForm.DocumentUp
+50130   End If
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cMovePrintjobUp")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cMovePrintjobDown(ByVal JobNumber As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Sub
+50050  End If
+50060  If Not mForm Is Nothing Then
+50070   If JobNumber > 0 And JobNumber < mForm.lsv.ListItems.Count Then
+50080    For i = 1 To mForm.lsv.ListItems.Count
+50090     mForm.lsv.ListItems(i).Selected = False
+50100    Next i
+50110    mForm.lsv.ListItems(JobNumber).Selected = True
+50120    mForm.DocumentDown
+50130   End If
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cMovePrintjobDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function cClose() As Boolean
+ On Error Resume Next
+ Dim f As Form
+ Do
+  DoEvents
+ Loop Until ProgramIsStarted = True
+ cVisible = False
+ cClose = False
+ Set eActionTimer = Nothing
+ Do
+  DoEvents
+ Loop Until In_eActionTimer = False
+ For Each f In Forms
+  If Not f Is Nothing Then
+   If UCase$(f.Name) <> "FRMMAIN" Then
+    Unload f
+    cClose = True
+   End If
+  End If
+ Next f
+ If Not mForm Is Nothing Then
+  With mForm
+   .Timer1.Enabled = False
+   .Timer2.Enabled = False
+   Do
+    DoEvents
+   Loop Until .InTimer1 = False
+   Do
+    DoEvents
+   Loop Until .InTimer2 = False
+  End With
+  Unload mForm
+  Set mForm = Nothing
+  Do
+   DoEvents
+  Loop Until Forms.Count = 0
+  ProgramIsStarted = False
+  cClose = True
+ End If
+ Set mError = Nothing
+End Function
+
+Public Function cCloseRunningSession() As Boolean ' This function is deprecated. Use "cClose()"!
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cCloseRunningSession = cClose
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cCloseRunningSession")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+ 
+ Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If cProgramIsRunning And Not ForceInitialize Then
+50020   With mError
+50030    .Number = 2
+50040    .Description = ErrDescr2
+50050   End With
+50060   RaiseEvent eError
+50070   cStart = False
+50080   Exit Function
+50090  End If
+50100  mProgramIsRunning = False
+50110  StartProgram Params
+50120  Set mForm = frmMain
+50130  Set eActionTimer = mForm.Timer3
+50140  eActionTimer.Enabled = True
+50150  cStart = True
+50160  cVisible = ProgramIsVisible
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cStart")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub cClearCache()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  ClearCache
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cClearCache")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cClearLogfile()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  ClearLogfile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cClearLogfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  ConvertPostscriptFile InputFilename, OutputFilename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cConvertPostscriptfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cTestEvent(ByVal EventName As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case UCase$(EventName)
+        Case "ERROR"
+50030    With mError
+50040     .Number = -1
+50050     .Description = ErrDescr_1
+50060    End With
+50070    RaiseEvent eError
+50080   Case "READY"
+50090    RaiseEvent eReady
+50100   Case Else
+50110    With mError
+50120     .Number = -2
+50130     .Description = ErrDescr_2
+50140    End With
+50150    RaiseEvent eError
+50160  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cTestEvent")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cShowLogfileDialog(ByVal Value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  If Value Then
+50060    frmLog.Show
+50070   Else
+50080    If Not frmLog Is Nothing Then
+50090     Unload frmLog
+50100    End If
+50110   End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cShowLogfileDialog")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cShowOptionsDialog(ByVal Value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  If Value Then
+50060    frmOptions.Show
+50070   Else
+50080    If Not frmOptions Is Nothing Then
+50090     Unload frmOptions
+50100    End If
+50110   End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cShowOptionsDialog")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim mail As clsPDFCreatorMail
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Sub
+50050  End If
+50060  Set mail = New clsPDFCreatorMail
+50070  If mail.Send(OutputFilename, Options.StandardSubject, Options.SendMailMethod, Recipients) <> 0 Then
+50080   MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+50090  End If
+50100  Set mail = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cSendMail")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function cIsPrintable(ByVal Filename As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cIsPrintable = IsPrintable(Filename)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsPrintable")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub cCombineAll()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  If Not mForm Is Nothing Then
+50060   mForm.CombineAll
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cCombineAll")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function cGetPDFCreatorPrinters() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cGetPDFCreatorPrinters = GetPDFCreatorPrinters
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetPDFCreatorPrinters")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cGetLogfile() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Function
+50040  End If
+50050  cGetLogfile = ReadLogfile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetLogfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub cWriteToLogfile(ByVal LogStr As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  IfLoggingWriteLogfile LogStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cWriteToLogfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cPrintFile(ByVal Filename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  PrintFile Filename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  PrintURL URL, TimeBetweenLoadAndPrint
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintURL")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cPrintPDFCreatorTestpage()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040   Else
+50050  End If
+50060  PrintTestpage mForm
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintPDFCreatorTestpage")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tPrintername As String
+50020  If LenB(Printername) = 0 Then
+50030    tPrintername = cDefaultPrinter
+50040   Else
+50050    tPrintername = Printername
+50060  End If
+50070  ShellAndWait 0, "open", "RUNDLL32.EXE", "PRINTUI.DLL,PrintUIEntry /n """ & tPrintername & """ /k", GetPDFCreatorApplicationPath, wNormal, WCNone
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintPrinterTestpage")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function cReadOptions() As clsPDFCreatorOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Function
+50040  End If
+50050  Set cReadOptions = cGetOptions(ReadOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cReadOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub cSaveOptions(Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  If Not IsMissing(Options1) Then
+50060    If TypeOf Options1 Is clsPDFCreatorOptions Then
+50070      SaveOptions cLetOptions(Options1)
+50080     Else
+50090      mError.Number = 8
+50100      mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
+50110      RaiseEvent eError
+50120      Exit Sub
+50130    End If
+50140   Else
+50150    SaveOptions Options
+50160  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cSaveOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim dummyOptions As tOptions
+50020  If CheckForRunningProgramErrors Then
+50030   RaiseEvent eError
+50040   Exit Function
+50050  End If
+50060  If IsValidPath(INIFilename) = False Then
+50070   mError.Number = 6
+50080   mError.Description = Replace$(ErrDescr6, "%1", INIFilename)
+50090   RaiseEvent eError
+50100   Exit Function
+50110  End If
+50120  If FileExists(INIFilename) = False Then
+50130   mError.Number = 5
+50140   mError.Description = Replace$(ErrDescr5, "%1", INIFilename)
+50150   RaiseEvent eError
+50160   Exit Function
+50170  End If
+50180  Set cReadOptionsFromFile = cGetOptions(ReadOptionsINI(dummyOptions, INIFilename, True, True))
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cReadOptionsFromFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Sub
+50040  End If
+50050  If Not IsMissing(Options1) Then
+50060    If TypeOf Options1 Is clsPDFCreatorOptions Then
+50070      SaveOptionsINI cLetOptions(Options1), INIFilename
+50080     Else
+50090      mError.Number = 8
+50100      mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptionsToFile")
+50110      RaiseEvent eError
+50120      Exit Sub
+50130    End If
+50140   Else
+50150    SaveOptionsINI Options, INIFilename
+50160  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cSaveOptionsToFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+' --- Public functions/Subroutines - end ---
+
+Public Function cGhostscriptRun(Arguments() As Variant) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim gsArgs() As String, i As Long, c As Collection
+50020  If Not IsArray(Arguments) Then
+50030   mError.Number = 10
+50040   mError.Description = ErrDescr10
+50050   RaiseEvent eError
+50060   Exit Function
+50070  End If
+50080  Set c = New Collection
+50090  For i = LBound(Arguments) To UBound(Arguments)
+50100   If LenB(Trim$(CStr(Arguments(i)))) > 0 Then
+50110    c.Add Trim$(CStr(Arguments(i)))
+50120   End If
+50130  Next i
+50140  If c.Count = 0 Then
+50150   mError.Number = 10
+50160   mError.Description = ErrDescr10
+50170   RaiseEvent eError
+50180   Exit Function
+50190  End If
+50200  c.Add "", , 1
+50210  ReDim gsArgs(c.Count - 1)
+50220  For i = 0 To c.Count - 1
+50230   gsArgs(i) = c(i + 1)
+50240  Next i
+50250  cGhostscriptRun = CallGS(gsArgs)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGhostscriptRun")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+' --- Private functions/Subroutines - end ---
+Private Sub eActionTimer_Timer()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  In_eActionTimer = True
+50020  If ReadyConverting Then
+50030   RaiseEvent eReady
+50040   ReadyConverting = False
+50050  End If
+50060  If GhostscriptError < 0 Then
+50070   mError.Number = 4
+50080   mError.Description = ErrDescr4
+50090   RaiseEvent eError
+50100   GhostscriptError = 0
+50110  End If
+50120  DoEvents
+50130  In_eActionTimer = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "eActionTimer_Timer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Function CheckForRunningProgramErrors() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  CheckForRunningProgramErrors = False
+50020  If ProgramIsStarted = False Then
+50030   With mError
+50040    .Number = 1
+50050    .Description = ErrDescr1
+50060   End With
+50070   CheckForRunningProgramErrors = True
+50080   Exit Function
+50090  End If
+50100  If mProgramIsRunning Then
+50110   With mError
+50120    .Number = 2
+50130    .Description = ErrDescr2
+50140   End With
+50150   CheckForRunningProgramErrors = True
+50160   Exit Function
+50170  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "CheckForRunningProgramErrors")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function cGetPrintjobInfoFromPrintjobInfos(PropertyName As String, sInfo As InfoSpoolFile, FunctionName As String) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case UCase$(PropertyName)
+        Case "COMPUTER": cGetPrintjobInfoFromPrintjobInfos = sInfo.Computer
+50030   Case "CREATED": cGetPrintjobInfoFromPrintjobInfos = sInfo.Created
+50040   Case "REDMON_DOCNAME": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_DOCNAME
+50050   Case "REDMON_FILENAME": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_FILENAME
+50060   Case "REDMON_JOB": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_JOB
+50070   Case "REDMON_MACHINE": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_MACHINE
+50080   Case "REDMON_PORT": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_PORT
+50090   Case "REDMON_PRINTER": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_PRINTER
+50100   Case "REDMON_SESSIONID": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_SESSIONID
+50110   Case "REDMON_USER": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_USER
+50120   Case "SPOOLERACCOUNT": cGetPrintjobInfoFromPrintjobInfos = sInfo.SpoolerAccount
+50130   Case "SPOOLFILENAME": cGetPrintjobInfoFromPrintjobInfos = sInfo.SpoolFilename
+50140   Case Else:
+50150    mError.Number = 3
+50160    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in " & FunctionName)
+50170    RaiseEvent eError
+50180  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetPrintjobInfoFromPrintjobInfos")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case UCase$(PropertyName)
+        Case "ADDITIONALGHOSTSCRIPTPARAMETERS": cGetOptionFromOptions = Options.AdditionalGhostscriptParameters
+50030   Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": cGetOptionFromOptions = Options.AdditionalGhostscriptSearchpath
+50040   Case "ADDWINDOWSFONTPATH": cGetOptionFromOptions = Options.AddWindowsFontpath
+50050   Case "AUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.AutosaveDirectory
+50060   Case "AUTOSAVEFILENAME": cGetOptionFromOptions = Options.AutosaveFilename
+50070   Case "AUTOSAVEFORMAT": cGetOptionFromOptions = Options.AutosaveFormat
+50080   Case "AUTOSAVESTARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.AutosaveStartStandardProgram
+50090   Case "BITMAPRESOLUTION": cGetOptionFromOptions = Options.BitmapResolution
+50100   Case "BMPCOLORSCOUNT": cGetOptionFromOptions = Options.BMPColorscount
+50110   Case "CLIENTCOMPUTERRESOLVEIPADDRESS": cGetOptionFromOptions = Options.ClientComputerResolveIPAddress
+50120   Case "COUNTER": cGetOptionFromOptions = Options.Counter
+50130   Case "DEVICEHEIGHTPOINTS": cGetOptionFromOptions = Options.DeviceHeightPoints
+50140   Case "DEVICEWIDTHPOINTS": cGetOptionFromOptions = Options.DeviceWidthPoints
+50150   Case "DIRECTORYGHOSTSCRIPTBINARIES": cGetOptionFromOptions = Options.DirectoryGhostscriptBinaries
+50160   Case "DIRECTORYGHOSTSCRIPTFONTS": cGetOptionFromOptions = Options.DirectoryGhostscriptFonts
+50170   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": cGetOptionFromOptions = Options.DirectoryGhostscriptLibraries
+50180   Case "DIRECTORYGHOSTSCRIPTRESOURCE": cGetOptionFromOptions = Options.DirectoryGhostscriptResource
+50190   Case "DISABLEEMAIL": cGetOptionFromOptions = Options.DisableEmail
+50200   Case "DONTUSEDOCUMENTSETTINGS": cGetOptionFromOptions = Options.DontUseDocumentSettings
+50210   Case "EPSLANGUAGELEVEL": cGetOptionFromOptions = Options.EPSLanguageLevel
+50220   Case "FILENAMESUBSTITUTIONS": cGetOptionFromOptions = Options.FilenameSubstitutions
+50230   Case "FILENAMESUBSTITUTIONSONLYINTITLE": cGetOptionFromOptions = Options.FilenameSubstitutionsOnlyInTitle
+50240   Case "JPEGCOLORSCOUNT": cGetOptionFromOptions = Options.JPEGColorscount
+50250   Case "JPEGQUALITY": cGetOptionFromOptions = Options.JPEGQuality
+50260   Case "LANGUAGE": cGetOptionFromOptions = Options.Language
+50270   Case "LASTSAVEDIRECTORY": cGetOptionFromOptions = Options.LastSaveDirectory
+50280   Case "LOGGING": cGetOptionFromOptions = Options.Logging
+50290   Case "LOGLINES": cGetOptionFromOptions = Options.LogLines
+50300   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": cGetOptionFromOptions = Options.NoConfirmMessageSwitchingDefaultprinter
+50310   Case "NOPROCESSINGATSTARTUP": cGetOptionFromOptions = Options.NoProcessingAtStartup
+50320   Case "NOPSCHECK": cGetOptionFromOptions = Options.NoPSCheck
+50330   Case "ONEPAGEPERFILE": cGetOptionFromOptions = Options.OnePagePerFile
+50340   Case "OPTIONSDESIGN": cGetOptionFromOptions = Options.OptionsDesign
+50350   Case "OPTIONSENABLED": cGetOptionFromOptions = Options.OptionsEnabled
+50360   Case "OPTIONSVISIBLE": cGetOptionFromOptions = Options.OptionsVisible
+50370   Case "PAPERSIZE": cGetOptionFromOptions = Options.Papersize
+50380   Case "PCXCOLORSCOUNT": cGetOptionFromOptions = Options.PCXColorscount
+50390   Case "PDFALLOWASSEMBLY": cGetOptionFromOptions = Options.PDFAllowAssembly
+50400   Case "PDFALLOWDEGRADEDPRINTING": cGetOptionFromOptions = Options.PDFAllowDegradedPrinting
+50410   Case "PDFALLOWFILLIN": cGetOptionFromOptions = Options.PDFAllowFillIn
+50420   Case "PDFALLOWSCREENREADERS": cGetOptionFromOptions = Options.PDFAllowScreenReaders
+50430   Case "PDFCOLORSCMYKTORGB": cGetOptionFromOptions = Options.PDFColorsCMYKToRGB
+50440   Case "PDFCOLORSCOLORMODEL": cGetOptionFromOptions = Options.PDFColorsColorModel
+50450   Case "PDFCOLORSPRESERVEHALFTONE": cGetOptionFromOptions = Options.PDFColorsPreserveHalftone
+50460   Case "PDFCOLORSPRESERVEOVERPRINT": cGetOptionFromOptions = Options.PDFColorsPreserveOverprint
+50470   Case "PDFCOLORSPRESERVETRANSFER": cGetOptionFromOptions = Options.PDFColorsPreserveTransfer
+50480   Case "PDFCOMPRESSIONCOLORCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionColorCompression
+50490   Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionColorCompressionChoice
+50500   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGHighFactor
+50510   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGLowFactor
+50520   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMaximumFactor
+50530   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMediumFactor
+50540   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMinimumFactor
+50550   Case "PDFCOMPRESSIONCOLORRESAMPLE": cGetOptionFromOptions = Options.PDFCompressionColorResample
+50560   Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionColorResampleChoice
+50570   Case "PDFCOMPRESSIONCOLORRESOLUTION": cGetOptionFromOptions = Options.PDFCompressionColorResolution
+50580   Case "PDFCOMPRESSIONGREYCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionGreyCompression
+50590   Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionChoice
+50600   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGHighFactor
+50610   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGLowFactor
+50620   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMaximumFactor
+50630   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMediumFactor
+50640   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMinimumFactor
+50650   Case "PDFCOMPRESSIONGREYRESAMPLE": cGetOptionFromOptions = Options.PDFCompressionGreyResample
+50660   Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionGreyResampleChoice
+50670   Case "PDFCOMPRESSIONGREYRESOLUTION": cGetOptionFromOptions = Options.PDFCompressionGreyResolution
+50680   Case "PDFCOMPRESSIONMONOCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionMonoCompression
+50690   Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionMonoCompressionChoice
+50700   Case "PDFCOMPRESSIONMONORESAMPLE": cGetOptionFromOptions = Options.PDFCompressionMonoResample
+50710   Case "PDFCOMPRESSIONMONORESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionMonoResampleChoice
+50720   Case "PDFCOMPRESSIONMONORESOLUTION": cGetOptionFromOptions = Options.PDFCompressionMonoResolution
+50730   Case "PDFCOMPRESSIONTEXTCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionTextCompression
+50740   Case "PDFDISALLOWCOPY": cGetOptionFromOptions = Options.PDFDisallowCopy
+50750   Case "PDFDISALLOWMODIFYANNOTATIONS": cGetOptionFromOptions = Options.PDFDisallowModifyAnnotations
+50760   Case "PDFDISALLOWMODIFYCONTENTS": cGetOptionFromOptions = Options.PDFDisallowModifyContents
+50770   Case "PDFDISALLOWPRINTING": cGetOptionFromOptions = Options.PDFDisallowPrinting
+50780   Case "PDFENCRYPTOR": cGetOptionFromOptions = Options.PDFEncryptor
+50790   Case "PDFFONTSEMBEDALL": cGetOptionFromOptions = Options.PDFFontsEmbedAll
+50800   Case "PDFFONTSSUBSETFONTS": cGetOptionFromOptions = Options.PDFFontsSubSetFonts
+50810   Case "PDFFONTSSUBSETFONTSPERCENT": cGetOptionFromOptions = Options.PDFFontsSubSetFontsPercent
+50820   Case "PDFGENERALASCII85": cGetOptionFromOptions = Options.PDFGeneralASCII85
+50830   Case "PDFGENERALAUTOROTATE": cGetOptionFromOptions = Options.PDFGeneralAutorotate
+50840   Case "PDFGENERALCOMPATIBILITY": cGetOptionFromOptions = Options.PDFGeneralCompatibility
+50850   Case "PDFGENERALOVERPRINT": cGetOptionFromOptions = Options.PDFGeneralOverprint
+50860   Case "PDFGENERALRESOLUTION": cGetOptionFromOptions = Options.PDFGeneralResolution
+50870   Case "PDFHIGHENCRYPTION": cGetOptionFromOptions = Options.PDFHighEncryption
+50880   Case "PDFLOWENCRYPTION": cGetOptionFromOptions = Options.PDFLowEncryption
+50890   Case "PDFOPTIMIZE": cGetOptionFromOptions = Options.PDFOptimize
+50900   Case "PDFOWNERPASS": cGetOptionFromOptions = Options.PDFOwnerPass
+50910   Case "PDFOWNERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFOwnerPasswordString
+50920   Case "PDFUPDATEMETADATA": cGetOptionFromOptions = Options.PDFUpdateMetadata
+50930   Case "PDFUSERPASS": cGetOptionFromOptions = Options.PDFUserPass
+50940   Case "PDFUSERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFUserPasswordString
+50950   Case "PDFUSESECURITY": cGetOptionFromOptions = Options.PDFUseSecurity
+50960   Case "PNGCOLORSCOUNT": cGetOptionFromOptions = Options.PNGColorscount
+50970   Case "PRINTAFTERSAVING": cGetOptionFromOptions = Options.PrintAfterSaving
+50980   Case "PRINTAFTERSAVINGDUPLEX": cGetOptionFromOptions = Options.PrintAfterSavingDuplex
+50990   Case "PRINTAFTERSAVINGNOCANCEL": cGetOptionFromOptions = Options.PrintAfterSavingNoCancel
+51000   Case "PRINTAFTERSAVINGPRINTER": cGetOptionFromOptions = Options.PrintAfterSavingPrinter
+51010   Case "PRINTAFTERSAVINGQUERYUSER": cGetOptionFromOptions = Options.PrintAfterSavingQueryUser
+51020   Case "PRINTAFTERSAVINGTUMBLE": cGetOptionFromOptions = Options.PrintAfterSavingTumble
+51030   Case "PRINTERSTOP": cGetOptionFromOptions = Options.PrinterStop
+51040   Case "PRINTERTEMPPATH": cGetOptionFromOptions = Options.PrinterTemppath
+51050   Case "PROCESSPRIORITY": cGetOptionFromOptions = Options.ProcessPriority
+51060   Case "PROGRAMFONT": cGetOptionFromOptions = Options.ProgramFont
+51070   Case "PROGRAMFONTCHARSET": cGetOptionFromOptions = Options.ProgramFontCharset
+51080   Case "PROGRAMFONTSIZE": cGetOptionFromOptions = Options.ProgramFontSize
+51090   Case "PSLANGUAGELEVEL": cGetOptionFromOptions = Options.PSLanguageLevel
+51100   Case "REMOVEALLKNOWNFILEEXTENSIONS": cGetOptionFromOptions = Options.RemoveAllKnownFileExtensions
+51110   Case "REMOVESPACES": cGetOptionFromOptions = Options.RemoveSpaces
+51120   Case "RUNPROGRAMAFTERSAVING": cGetOptionFromOptions = Options.RunProgramAfterSaving
+51130   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramname
+51140   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramParameters
+51150   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": cGetOptionFromOptions = Options.RunProgramAfterSavingWaitUntilReady
+51160   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramAfterSavingWindowstyle
+51170   Case "RUNPROGRAMBEFORESAVING": cGetOptionFromOptions = Options.RunProgramBeforeSaving
+51180   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramname
+51190   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramParameters
+51200   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramBeforeSavingWindowstyle
+51210   Case "SAVEFILENAME": cGetOptionFromOptions = Options.SaveFilename
+51220   Case "SENDEMAILAFTERAUTOSAVING": cGetOptionFromOptions = Options.SendEmailAfterAutoSaving
+51230   Case "SENDMAILMETHOD": cGetOptionFromOptions = Options.SendMailMethod
+51240   Case "SHOWANIMATION": cGetOptionFromOptions = Options.ShowAnimation
+51250   Case "STAMPFONTCOLOR": cGetOptionFromOptions = Options.StampFontColor
+51260   Case "STAMPFONTNAME": cGetOptionFromOptions = Options.StampFontname
+51270   Case "STAMPFONTSIZE": cGetOptionFromOptions = Options.StampFontsize
+51280   Case "STAMPOUTLINEFONTTHICKNESS": cGetOptionFromOptions = Options.StampOutlineFontthickness
+51290   Case "STAMPSTRING": cGetOptionFromOptions = Options.StampString
+51300   Case "STAMPUSEOUTLINEFONT": cGetOptionFromOptions = Options.StampUseOutlineFont
+51310   Case "STANDARDAUTHOR": cGetOptionFromOptions = Options.StandardAuthor
+51320   Case "STANDARDCREATIONDATE": cGetOptionFromOptions = Options.StandardCreationdate
+51330   Case "STANDARDDATEFORMAT": cGetOptionFromOptions = Options.StandardDateformat
+51340   Case "STANDARDKEYWORDS": cGetOptionFromOptions = Options.StandardKeywords
+51350   Case "STANDARDMAILDOMAIN": cGetOptionFromOptions = Options.StandardMailDomain
+51360   Case "STANDARDMODIFYDATE": cGetOptionFromOptions = Options.StandardModifydate
+51370   Case "STANDARDSAVEFORMAT": cGetOptionFromOptions = Options.StandardSaveformat
+51380   Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
+51390   Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
+51400   Case "STARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.StartStandardProgram
+51410   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
+51420   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
+51430   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
+51440   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
+51450   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
+51460   Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
+51470   Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
+51480   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
+51490  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetOptionFromOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function cGetInfoSpoolfile(sInfos As InfoSpoolFile) As clsPDFCreatorInfoSpoolFile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cGetInfoSpoolfile = New clsPDFCreatorInfoSpoolFile
+50020  With cGetInfoSpoolfile
+50030   .Computer = sInfos.Computer
+50040   .Created = sInfos.Created
+50050   .REDMON_DOCNAME = sInfos.REDMON_DOCNAME
+50060   .REDMON_FILENAME = sInfos.REDMON_FILENAME
+50070   .REDMON_JOB = sInfos.REDMON_JOB
+50080   .REDMON_MACHINE = sInfos.REDMON_MACHINE
+50090   .REDMON_PORT = sInfos.REDMON_PORT
+50100   .REDMON_PRINTER = sInfos.REDMON_PRINTER
+50110   .REDMON_SESSIONID = sInfos.REDMON_SESSIONID
+50120   .REDMON_USER = sInfos.REDMON_USER
+50130   .SpoolerAccount = sInfos.SpoolerAccount
+50140   .SpoolFilename = sInfos.SpoolFilename
+50150  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetInfoSpoolfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function cGetOptions(sOptions As tOptions) As clsPDFCreatorOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cGetOptions = New clsPDFCreatorOptions
+50020  With cGetOptions
+50030   .AdditionalGhostscriptParameters = sOptions.AdditionalGhostscriptParameters
+50040   .AdditionalGhostscriptSearchpath = sOptions.AdditionalGhostscriptSearchpath
+50050   .AddWindowsFontpath = sOptions.AddWindowsFontpath
+50060   .AutosaveDirectory = sOptions.AutosaveDirectory
+50070   .AutosaveFilename = sOptions.AutosaveFilename
+50080   .AutosaveFormat = sOptions.AutosaveFormat
+50090   .AutosaveStartStandardProgram = sOptions.AutosaveStartStandardProgram
+50100   .BitmapResolution = sOptions.BitmapResolution
+50110   .BMPColorscount = sOptions.BMPColorscount
+50120   .ClientComputerResolveIPAddress = sOptions.ClientComputerResolveIPAddress
+50130   .Counter = sOptions.Counter
+50140   .DeviceHeightPoints = sOptions.DeviceHeightPoints
+50150   .DeviceWidthPoints = sOptions.DeviceWidthPoints
+50160   .DirectoryGhostscriptBinaries = sOptions.DirectoryGhostscriptBinaries
+50170   .DirectoryGhostscriptFonts = sOptions.DirectoryGhostscriptFonts
+50180   .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
+50190   .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
+50200   .DisableEmail = sOptions.DisableEmail
+50210   .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
+50220   .EPSLanguageLevel = sOptions.EPSLanguageLevel
+50230   .FilenameSubstitutions = sOptions.FilenameSubstitutions
+50240   .FilenameSubstitutionsOnlyInTitle = sOptions.FilenameSubstitutionsOnlyInTitle
+50250   .JPEGColorscount = sOptions.JPEGColorscount
+50260   .JPEGQuality = sOptions.JPEGQuality
+50270   .Language = sOptions.Language
+50280   .LastSaveDirectory = sOptions.LastSaveDirectory
+50290   .Logging = sOptions.Logging
+50300   .LogLines = sOptions.LogLines
+50310   .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
+50320   .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
+50330   .NoPSCheck = sOptions.NoPSCheck
+50340   .OnePagePerFile = sOptions.OnePagePerFile
+50350   .OptionsDesign = sOptions.OptionsDesign
+50360   .OptionsEnabled = sOptions.OptionsEnabled
+50370   .OptionsVisible = sOptions.OptionsVisible
+50380   .Papersize = sOptions.Papersize
+50390   .PCXColorscount = sOptions.PCXColorscount
+50400   .PDFAllowAssembly = sOptions.PDFAllowAssembly
+50410   .PDFAllowDegradedPrinting = sOptions.PDFAllowDegradedPrinting
+50420   .PDFAllowFillIn = sOptions.PDFAllowFillIn
+50430   .PDFAllowScreenReaders = sOptions.PDFAllowScreenReaders
+50440   .PDFColorsCMYKToRGB = sOptions.PDFColorsCMYKToRGB
+50450   .PDFColorsColorModel = sOptions.PDFColorsColorModel
+50460   .PDFColorsPreserveHalftone = sOptions.PDFColorsPreserveHalftone
+50470   .PDFColorsPreserveOverprint = sOptions.PDFColorsPreserveOverprint
+50480   .PDFColorsPreserveTransfer = sOptions.PDFColorsPreserveTransfer
+50490   .PDFCompressionColorCompression = sOptions.PDFCompressionColorCompression
+50500   .PDFCompressionColorCompressionChoice = sOptions.PDFCompressionColorCompressionChoice
+50510   .PDFCompressionColorCompressionJPEGHighFactor = sOptions.PDFCompressionColorCompressionJPEGHighFactor
+50520   .PDFCompressionColorCompressionJPEGLowFactor = sOptions.PDFCompressionColorCompressionJPEGLowFactor
+50530   .PDFCompressionColorCompressionJPEGMaximumFactor = sOptions.PDFCompressionColorCompressionJPEGMaximumFactor
+50540   .PDFCompressionColorCompressionJPEGMediumFactor = sOptions.PDFCompressionColorCompressionJPEGMediumFactor
+50550   .PDFCompressionColorCompressionJPEGMinimumFactor = sOptions.PDFCompressionColorCompressionJPEGMinimumFactor
+50560   .PDFCompressionColorResample = sOptions.PDFCompressionColorResample
+50570   .PDFCompressionColorResampleChoice = sOptions.PDFCompressionColorResampleChoice
+50580   .PDFCompressionColorResolution = sOptions.PDFCompressionColorResolution
+50590   .PDFCompressionGreyCompression = sOptions.PDFCompressionGreyCompression
+50600   .PDFCompressionGreyCompressionChoice = sOptions.PDFCompressionGreyCompressionChoice
+50610   .PDFCompressionGreyCompressionJPEGHighFactor = sOptions.PDFCompressionGreyCompressionJPEGHighFactor
+50620   .PDFCompressionGreyCompressionJPEGLowFactor = sOptions.PDFCompressionGreyCompressionJPEGLowFactor
+50630   .PDFCompressionGreyCompressionJPEGMaximumFactor = sOptions.PDFCompressionGreyCompressionJPEGMaximumFactor
+50640   .PDFCompressionGreyCompressionJPEGMediumFactor = sOptions.PDFCompressionGreyCompressionJPEGMediumFactor
+50650   .PDFCompressionGreyCompressionJPEGMinimumFactor = sOptions.PDFCompressionGreyCompressionJPEGMinimumFactor
+50660   .PDFCompressionGreyResample = sOptions.PDFCompressionGreyResample
+50670   .PDFCompressionGreyResampleChoice = sOptions.PDFCompressionGreyResampleChoice
+50680   .PDFCompressionGreyResolution = sOptions.PDFCompressionGreyResolution
+50690   .PDFCompressionMonoCompression = sOptions.PDFCompressionMonoCompression
+50700   .PDFCompressionMonoCompressionChoice = sOptions.PDFCompressionMonoCompressionChoice
+50710   .PDFCompressionMonoResample = sOptions.PDFCompressionMonoResample
+50720   .PDFCompressionMonoResampleChoice = sOptions.PDFCompressionMonoResampleChoice
+50730   .PDFCompressionMonoResolution = sOptions.PDFCompressionMonoResolution
+50740   .PDFCompressionTextCompression = sOptions.PDFCompressionTextCompression
+50750   .PDFDisallowCopy = sOptions.PDFDisallowCopy
+50760   .PDFDisallowModifyAnnotations = sOptions.PDFDisallowModifyAnnotations
+50770   .PDFDisallowModifyContents = sOptions.PDFDisallowModifyContents
+50780   .PDFDisallowPrinting = sOptions.PDFDisallowPrinting
+50790   .PDFEncryptor = sOptions.PDFEncryptor
+50800   .PDFFontsEmbedAll = sOptions.PDFFontsEmbedAll
+50810   .PDFFontsSubSetFonts = sOptions.PDFFontsSubSetFonts
+50820   .PDFFontsSubSetFontsPercent = sOptions.PDFFontsSubSetFontsPercent
+50830   .PDFGeneralASCII85 = sOptions.PDFGeneralASCII85
+50840   .PDFGeneralAutorotate = sOptions.PDFGeneralAutorotate
+50850   .PDFGeneralCompatibility = sOptions.PDFGeneralCompatibility
+50860   .PDFGeneralOverprint = sOptions.PDFGeneralOverprint
+50870   .PDFGeneralResolution = sOptions.PDFGeneralResolution
+50880   .PDFHighEncryption = sOptions.PDFHighEncryption
+50890   .PDFLowEncryption = sOptions.PDFLowEncryption
+50900   .PDFOptimize = sOptions.PDFOptimize
+50910   .PDFOwnerPass = sOptions.PDFOwnerPass
+50920   .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
+50930   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
+50940   .PDFUserPass = sOptions.PDFUserPass
+50950   .PDFUserPasswordString = sOptions.PDFUserPasswordString
+50960   .PDFUseSecurity = sOptions.PDFUseSecurity
+50970   .PNGColorscount = sOptions.PNGColorscount
+50980   .PrintAfterSaving = sOptions.PrintAfterSaving
+50990   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
+51000   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
+51010   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
+51020   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
+51030   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
+51040   .PrinterStop = sOptions.PrinterStop
+51050   .PrinterTemppath = sOptions.PrinterTemppath
+51060   .ProcessPriority = sOptions.ProcessPriority
+51070   .ProgramFont = sOptions.ProgramFont
+51080   .ProgramFontCharset = sOptions.ProgramFontCharset
+51090   .ProgramFontSize = sOptions.ProgramFontSize
+51100   .PSLanguageLevel = sOptions.PSLanguageLevel
+51110   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
+51120   .RemoveSpaces = sOptions.RemoveSpaces
+51130   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
+51140   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
+51150   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
+51160   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
+51170   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
+51180   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
+51190   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
+51200   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
+51210   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
+51220   .SaveFilename = sOptions.SaveFilename
+51230   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+51240   .SendMailMethod = sOptions.SendMailMethod
+51250   .ShowAnimation = sOptions.ShowAnimation
+51260   .StampFontColor = sOptions.StampFontColor
+51270   .StampFontname = sOptions.StampFontname
+51280   .StampFontsize = sOptions.StampFontsize
+51290   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+51300   .StampString = sOptions.StampString
+51310   .StampUseOutlineFont = sOptions.StampUseOutlineFont
+51320   .StandardAuthor = sOptions.StandardAuthor
+51330   .StandardCreationdate = sOptions.StandardCreationdate
+51340   .StandardDateformat = sOptions.StandardDateformat
+51350   .StandardKeywords = sOptions.StandardKeywords
+51360   .StandardMailDomain = sOptions.StandardMailDomain
+51370   .StandardModifydate = sOptions.StandardModifydate
+51380   .StandardSaveformat = sOptions.StandardSaveformat
+51390   .StandardSubject = sOptions.StandardSubject
+51400   .StandardTitle = sOptions.StandardTitle
+51410   .StartStandardProgram = sOptions.StartStandardProgram
+51420   .TIFFColorscount = sOptions.TIFFColorscount
+51430   .Toolbars = sOptions.Toolbars
+51440   .UseAutosave = sOptions.UseAutosave
+51450   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51460   .UseCreationDateNow = sOptions.UseCreationDateNow
+51470   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51480   .UseFixPapersize = sOptions.UseFixPapersize
+51490   .UseStandardAuthor = sOptions.UseStandardAuthor
+51500  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Sub cLetOption(PropertyName As String, Value As Variant)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50011  Select Case UCase$(PropertyName)
+        Case "ADDITIONALGHOSTSCRIPTPARAMETERS": Options.AdditionalGhostscriptParameters = Value
+50030   Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": Options.AdditionalGhostscriptSearchpath = Value
+50040   Case "ADDWINDOWSFONTPATH": Options.AddWindowsFontpath = Value
+50050   Case "AUTOSAVEDIRECTORY": Options.AutosaveDirectory = Value
+50060   Case "AUTOSAVEFILENAME": Options.AutosaveFilename = Value
+50070   Case "AUTOSAVEFORMAT": Options.AutosaveFormat = Value
+50080   Case "AUTOSAVESTARTSTANDARDPROGRAM": Options.AutosaveStartStandardProgram = Value
+50090   Case "BITMAPRESOLUTION": Options.BitmapResolution = Value
+50100   Case "BMPCOLORSCOUNT": Options.BMPColorscount = Value
+50110   Case "CLIENTCOMPUTERRESOLVEIPADDRESS": Options.ClientComputerResolveIPAddress = Value
+50120   Case "COUNTER": Options.Counter = Value
+50130   Case "DEVICEHEIGHTPOINTS": Options.DeviceHeightPoints = Value
+50140   Case "DEVICEWIDTHPOINTS": Options.DeviceWidthPoints = Value
+50150   Case "DIRECTORYGHOSTSCRIPTBINARIES": Options.DirectoryGhostscriptBinaries = Value
+50160   Case "DIRECTORYGHOSTSCRIPTFONTS": Options.DirectoryGhostscriptFonts = Value
+50170   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": Options.DirectoryGhostscriptLibraries = Value
+50180   Case "DIRECTORYGHOSTSCRIPTRESOURCE": Options.DirectoryGhostscriptResource = Value
+50190   Case "DISABLEEMAIL": Options.DisableEmail = Value
+50200   Case "DONTUSEDOCUMENTSETTINGS": Options.DontUseDocumentSettings = Value
+50210   Case "EPSLANGUAGELEVEL": Options.EPSLanguageLevel = Value
+50220   Case "FILENAMESUBSTITUTIONS": Options.FilenameSubstitutions = Value
+50230   Case "FILENAMESUBSTITUTIONSONLYINTITLE": Options.FilenameSubstitutionsOnlyInTitle = Value
+50240   Case "JPEGCOLORSCOUNT": Options.JPEGColorscount = Value
+50250   Case "JPEGQUALITY": Options.JPEGQuality = Value
+50260   Case "LANGUAGE": Options.Language = Value
+50270   Case "LASTSAVEDIRECTORY": Options.LastSaveDirectory = Value
+50280   Case "LOGGING": Options.Logging = Value
+50290   Case "LOGLINES": Options.LogLines = Value
+50300   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": Options.NoConfirmMessageSwitchingDefaultprinter = Value
+50310   Case "NOPROCESSINGATSTARTUP": Options.NoProcessingAtStartup = Value
+50320   Case "NOPSCHECK": Options.NoPSCheck = Value
+50330   Case "ONEPAGEPERFILE": Options.OnePagePerFile = Value
+50340   Case "OPTIONSDESIGN": Options.OptionsDesign = Value
+50350   Case "OPTIONSENABLED": Options.OptionsEnabled = Value
+50360   Case "OPTIONSVISIBLE": Options.OptionsVisible = Value
+50370   Case "PAPERSIZE": Options.Papersize = Value
+50380   Case "PCXCOLORSCOUNT": Options.PCXColorscount = Value
+50390   Case "PDFALLOWASSEMBLY": Options.PDFAllowAssembly = Value
+50400   Case "PDFALLOWDEGRADEDPRINTING": Options.PDFAllowDegradedPrinting = Value
+50410   Case "PDFALLOWFILLIN": Options.PDFAllowFillIn = Value
+50420   Case "PDFALLOWSCREENREADERS": Options.PDFAllowScreenReaders = Value
+50430   Case "PDFCOLORSCMYKTORGB": Options.PDFColorsCMYKToRGB = Value
+50440   Case "PDFCOLORSCOLORMODEL": Options.PDFColorsColorModel = Value
+50450   Case "PDFCOLORSPRESERVEHALFTONE": Options.PDFColorsPreserveHalftone = Value
+50460   Case "PDFCOLORSPRESERVEOVERPRINT": Options.PDFColorsPreserveOverprint = Value
+50470   Case "PDFCOLORSPRESERVETRANSFER": Options.PDFColorsPreserveTransfer = Value
+50480   Case "PDFCOMPRESSIONCOLORCOMPRESSION": Options.PDFCompressionColorCompression = Value
+50490   Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": Options.PDFCompressionColorCompressionChoice = Value
+50500   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": Options.PDFCompressionColorCompressionJPEGHighFactor = Value
+50510   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": Options.PDFCompressionColorCompressionJPEGLowFactor = Value
+50520   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": Options.PDFCompressionColorCompressionJPEGMaximumFactor = Value
+50530   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": Options.PDFCompressionColorCompressionJPEGMediumFactor = Value
+50540   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": Options.PDFCompressionColorCompressionJPEGMinimumFactor = Value
+50550   Case "PDFCOMPRESSIONCOLORRESAMPLE": Options.PDFCompressionColorResample = Value
+50560   Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": Options.PDFCompressionColorResampleChoice = Value
+50570   Case "PDFCOMPRESSIONCOLORRESOLUTION": Options.PDFCompressionColorResolution = Value
+50580   Case "PDFCOMPRESSIONGREYCOMPRESSION": Options.PDFCompressionGreyCompression = Value
+50590   Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": Options.PDFCompressionGreyCompressionChoice = Value
+50600   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": Options.PDFCompressionGreyCompressionJPEGHighFactor = Value
+50610   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": Options.PDFCompressionGreyCompressionJPEGLowFactor = Value
+50620   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": Options.PDFCompressionGreyCompressionJPEGMaximumFactor = Value
+50630   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": Options.PDFCompressionGreyCompressionJPEGMediumFactor = Value
+50640   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": Options.PDFCompressionGreyCompressionJPEGMinimumFactor = Value
+50650   Case "PDFCOMPRESSIONGREYRESAMPLE": Options.PDFCompressionGreyResample = Value
+50660   Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": Options.PDFCompressionGreyResampleChoice = Value
+50670   Case "PDFCOMPRESSIONGREYRESOLUTION": Options.PDFCompressionGreyResolution = Value
+50680   Case "PDFCOMPRESSIONMONOCOMPRESSION": Options.PDFCompressionMonoCompression = Value
+50690   Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": Options.PDFCompressionMonoCompressionChoice = Value
+50700   Case "PDFCOMPRESSIONMONORESAMPLE": Options.PDFCompressionMonoResample = Value
+50710   Case "PDFCOMPRESSIONMONORESAMPLECHOICE": Options.PDFCompressionMonoResampleChoice = Value
+50720   Case "PDFCOMPRESSIONMONORESOLUTION": Options.PDFCompressionMonoResolution = Value
+50730   Case "PDFCOMPRESSIONTEXTCOMPRESSION": Options.PDFCompressionTextCompression = Value
+50740   Case "PDFDISALLOWCOPY": Options.PDFDisallowCopy = Value
+50750   Case "PDFDISALLOWMODIFYANNOTATIONS": Options.PDFDisallowModifyAnnotations = Value
+50760   Case "PDFDISALLOWMODIFYCONTENTS": Options.PDFDisallowModifyContents = Value
+50770   Case "PDFDISALLOWPRINTING": Options.PDFDisallowPrinting = Value
+50780   Case "PDFENCRYPTOR": Options.PDFEncryptor = Value
+50790   Case "PDFFONTSEMBEDALL": Options.PDFFontsEmbedAll = Value
+50800   Case "PDFFONTSSUBSETFONTS": Options.PDFFontsSubSetFonts = Value
+50810   Case "PDFFONTSSUBSETFONTSPERCENT": Options.PDFFontsSubSetFontsPercent = Value
+50820   Case "PDFGENERALASCII85": Options.PDFGeneralASCII85 = Value
+50830   Case "PDFGENERALAUTOROTATE": Options.PDFGeneralAutorotate = Value
+50840   Case "PDFGENERALCOMPATIBILITY": Options.PDFGeneralCompatibility = Value
+50850   Case "PDFGENERALOVERPRINT": Options.PDFGeneralOverprint = Value
+50860   Case "PDFGENERALRESOLUTION": Options.PDFGeneralResolution = Value
+50870   Case "PDFHIGHENCRYPTION": Options.PDFHighEncryption = Value
+50880   Case "PDFLOWENCRYPTION": Options.PDFLowEncryption = Value
+50890   Case "PDFOPTIMIZE": Options.PDFOptimize = Value
+50900   Case "PDFOWNERPASS": Options.PDFOwnerPass = Value
+50910   Case "PDFOWNERPASSWORDSTRING": Options.PDFOwnerPasswordString = Value
+50920   Case "PDFUPDATEMETADATA": Options.PDFUpdateMetadata = Value
+50930   Case "PDFUSERPASS": Options.PDFUserPass = Value
+50940   Case "PDFUSERPASSWORDSTRING": Options.PDFUserPasswordString = Value
+50950   Case "PDFUSESECURITY": Options.PDFUseSecurity = Value
+50960   Case "PNGCOLORSCOUNT": Options.PNGColorscount = Value
+50970   Case "PRINTAFTERSAVING": Options.PrintAfterSaving = Value
+50980   Case "PRINTAFTERSAVINGDUPLEX": Options.PrintAfterSavingDuplex = Value
+50990   Case "PRINTAFTERSAVINGNOCANCEL": Options.PrintAfterSavingNoCancel = Value
+51000   Case "PRINTAFTERSAVINGPRINTER": Options.PrintAfterSavingPrinter = Value
+51010   Case "PRINTAFTERSAVINGQUERYUSER": Options.PrintAfterSavingQueryUser = Value
+51020   Case "PRINTAFTERSAVINGTUMBLE": Options.PrintAfterSavingTumble = Value
+51030   Case "PRINTERSTOP": Options.PrinterStop = Value
+51040   Case "PRINTERTEMPPATH": Options.PrinterTemppath = Value
+51050   Case "PROCESSPRIORITY": Options.ProcessPriority = Value
+51060   Case "PROGRAMFONT": Options.ProgramFont = Value
+51070   Case "PROGRAMFONTCHARSET": Options.ProgramFontCharset = Value
+51080   Case "PROGRAMFONTSIZE": Options.ProgramFontSize = Value
+51090   Case "PSLANGUAGELEVEL": Options.PSLanguageLevel = Value
+51100   Case "REMOVEALLKNOWNFILEEXTENSIONS": Options.RemoveAllKnownFileExtensions = Value
+51110   Case "REMOVESPACES": Options.RemoveSpaces = Value
+51120   Case "RUNPROGRAMAFTERSAVING": Options.RunProgramAfterSaving = Value
+51130   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": Options.RunProgramAfterSavingProgramname = Value
+51140   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": Options.RunProgramAfterSavingProgramParameters = Value
+51150   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": Options.RunProgramAfterSavingWaitUntilReady = Value
+51160   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": Options.RunProgramAfterSavingWindowstyle = Value
+51170   Case "RUNPROGRAMBEFORESAVING": Options.RunProgramBeforeSaving = Value
+51180   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": Options.RunProgramBeforeSavingProgramname = Value
+51190   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options.RunProgramBeforeSavingProgramParameters = Value
+51200   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options.RunProgramBeforeSavingWindowstyle = Value
+51210   Case "SAVEFILENAME": Options.SaveFilename = Value
+51220   Case "SENDEMAILAFTERAUTOSAVING": Options.SendEmailAfterAutoSaving = Value
+51230   Case "SENDMAILMETHOD": Options.SendMailMethod = Value
+51240   Case "SHOWANIMATION": Options.ShowAnimation = Value
+51250   Case "STAMPFONTCOLOR": Options.StampFontColor = Value
+51260   Case "STAMPFONTNAME": Options.StampFontname = Value
+51270   Case "STAMPFONTSIZE": Options.StampFontsize = Value
+51280   Case "STAMPOUTLINEFONTTHICKNESS": Options.StampOutlineFontthickness = Value
+51290   Case "STAMPSTRING": Options.StampString = Value
+51300   Case "STAMPUSEOUTLINEFONT": Options.StampUseOutlineFont = Value
+51310   Case "STANDARDAUTHOR": Options.StandardAuthor = Value
+51320   Case "STANDARDCREATIONDATE": Options.StandardCreationdate = Value
+51330   Case "STANDARDDATEFORMAT": Options.StandardDateformat = Value
+51340   Case "STANDARDKEYWORDS": Options.StandardKeywords = Value
+51350   Case "STANDARDMAILDOMAIN": Options.StandardMailDomain = Value
+51360   Case "STANDARDMODIFYDATE": Options.StandardModifydate = Value
+51370   Case "STANDARDSAVEFORMAT": Options.StandardSaveformat = Value
+51380   Case "STANDARDSUBJECT": Options.StandardSubject = Value
+51390   Case "STANDARDTITLE": Options.StandardTitle = Value
+51400   Case "STARTSTANDARDPROGRAM": Options.StartStandardProgram = Value
+51410   Case "TIFFCOLORSCOUNT": Options.TIFFColorscount = Value
+51420   Case "TOOLBARS": Options.Toolbars = Value
+51430   Case "USEAUTOSAVE": Options.UseAutosave = Value
+51440   Case "USEAUTOSAVEDIRECTORY": Options.UseAutosaveDirectory = Value
+51450   Case "USECREATIONDATENOW": Options.UseCreationDateNow = Value
+51460   Case "USECUSTOMPAPERSIZE": Options.UseCustomPaperSize = Value
+51470   Case "USEFIXPAPERSIZE": Options.UseFixPapersize = Value
+51480   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = Value
+51490   Case Else:
+51500    mError.Number = 3
+51510    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
+51520    RaiseEvent eError
+51530  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cLetOption")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Function cLetOptions(sOptions As Variant) As tOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With cLetOptions
+50020   .AdditionalGhostscriptParameters = sOptions.AdditionalGhostscriptParameters
+50030   .AdditionalGhostscriptSearchpath = sOptions.AdditionalGhostscriptSearchpath
+50040   .AddWindowsFontpath = sOptions.AddWindowsFontpath
+50050   .AutosaveDirectory = sOptions.AutosaveDirectory
+50060   .AutosaveFilename = sOptions.AutosaveFilename
+50070   .AutosaveFormat = sOptions.AutosaveFormat
+50080   .AutosaveStartStandardProgram = sOptions.AutosaveStartStandardProgram
+50090   .BitmapResolution = sOptions.BitmapResolution
+50100   .BMPColorscount = sOptions.BMPColorscount
+50110   .ClientComputerResolveIPAddress = sOptions.ClientComputerResolveIPAddress
+50120   .Counter = sOptions.Counter
+50130   .DeviceHeightPoints = sOptions.DeviceHeightPoints
+50140   .DeviceWidthPoints = sOptions.DeviceWidthPoints
+50150   .DirectoryGhostscriptBinaries = sOptions.DirectoryGhostscriptBinaries
+50160   .DirectoryGhostscriptFonts = sOptions.DirectoryGhostscriptFonts
+50170   .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
+50180   .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
+50190   .DisableEmail = sOptions.DisableEmail
+50200   .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
+50210   .EPSLanguageLevel = sOptions.EPSLanguageLevel
+50220   .FilenameSubstitutions = sOptions.FilenameSubstitutions
+50230   .FilenameSubstitutionsOnlyInTitle = sOptions.FilenameSubstitutionsOnlyInTitle
+50240   .JPEGColorscount = sOptions.JPEGColorscount
+50250   .JPEGQuality = sOptions.JPEGQuality
+50260   .Language = sOptions.Language
+50270   .LastSaveDirectory = sOptions.LastSaveDirectory
+50280   .Logging = sOptions.Logging
+50290   .LogLines = sOptions.LogLines
+50300   .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
+50310   .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
+50320   .NoPSCheck = sOptions.NoPSCheck
+50330   .OnePagePerFile = sOptions.OnePagePerFile
+50340   .OptionsDesign = sOptions.OptionsDesign
+50350   .OptionsEnabled = sOptions.OptionsEnabled
+50360   .OptionsVisible = sOptions.OptionsVisible
+50370   .Papersize = sOptions.Papersize
+50380   .PCXColorscount = sOptions.PCXColorscount
+50390   .PDFAllowAssembly = sOptions.PDFAllowAssembly
+50400   .PDFAllowDegradedPrinting = sOptions.PDFAllowDegradedPrinting
+50410   .PDFAllowFillIn = sOptions.PDFAllowFillIn
+50420   .PDFAllowScreenReaders = sOptions.PDFAllowScreenReaders
+50430   .PDFColorsCMYKToRGB = sOptions.PDFColorsCMYKToRGB
+50440   .PDFColorsColorModel = sOptions.PDFColorsColorModel
+50450   .PDFColorsPreserveHalftone = sOptions.PDFColorsPreserveHalftone
+50460   .PDFColorsPreserveOverprint = sOptions.PDFColorsPreserveOverprint
+50470   .PDFColorsPreserveTransfer = sOptions.PDFColorsPreserveTransfer
+50480   .PDFCompressionColorCompression = sOptions.PDFCompressionColorCompression
+50490   .PDFCompressionColorCompressionChoice = sOptions.PDFCompressionColorCompressionChoice
+50500   .PDFCompressionColorCompressionJPEGHighFactor = sOptions.PDFCompressionColorCompressionJPEGHighFactor
+50510   .PDFCompressionColorCompressionJPEGLowFactor = sOptions.PDFCompressionColorCompressionJPEGLowFactor
+50520   .PDFCompressionColorCompressionJPEGMaximumFactor = sOptions.PDFCompressionColorCompressionJPEGMaximumFactor
+50530   .PDFCompressionColorCompressionJPEGMediumFactor = sOptions.PDFCompressionColorCompressionJPEGMediumFactor
+50540   .PDFCompressionColorCompressionJPEGMinimumFactor = sOptions.PDFCompressionColorCompressionJPEGMinimumFactor
+50550   .PDFCompressionColorResample = sOptions.PDFCompressionColorResample
+50560   .PDFCompressionColorResampleChoice = sOptions.PDFCompressionColorResampleChoice
+50570   .PDFCompressionColorResolution = sOptions.PDFCompressionColorResolution
+50580   .PDFCompressionGreyCompression = sOptions.PDFCompressionGreyCompression
+50590   .PDFCompressionGreyCompressionChoice = sOptions.PDFCompressionGreyCompressionChoice
+50600   .PDFCompressionGreyCompressionJPEGHighFactor = sOptions.PDFCompressionGreyCompressionJPEGHighFactor
+50610   .PDFCompressionGreyCompressionJPEGLowFactor = sOptions.PDFCompressionGreyCompressionJPEGLowFactor
+50620   .PDFCompressionGreyCompressionJPEGMaximumFactor = sOptions.PDFCompressionGreyCompressionJPEGMaximumFactor
+50630   .PDFCompressionGreyCompressionJPEGMediumFactor = sOptions.PDFCompressionGreyCompressionJPEGMediumFactor
+50640   .PDFCompressionGreyCompressionJPEGMinimumFactor = sOptions.PDFCompressionGreyCompressionJPEGMinimumFactor
+50650   .PDFCompressionGreyResample = sOptions.PDFCompressionGreyResample
+50660   .PDFCompressionGreyResampleChoice = sOptions.PDFCompressionGreyResampleChoice
+50670   .PDFCompressionGreyResolution = sOptions.PDFCompressionGreyResolution
+50680   .PDFCompressionMonoCompression = sOptions.PDFCompressionMonoCompression
+50690   .PDFCompressionMonoCompressionChoice = sOptions.PDFCompressionMonoCompressionChoice
+50700   .PDFCompressionMonoResample = sOptions.PDFCompressionMonoResample
+50710   .PDFCompressionMonoResampleChoice = sOptions.PDFCompressionMonoResampleChoice
+50720   .PDFCompressionMonoResolution = sOptions.PDFCompressionMonoResolution
+50730   .PDFCompressionTextCompression = sOptions.PDFCompressionTextCompression
+50740   .PDFDisallowCopy = sOptions.PDFDisallowCopy
+50750   .PDFDisallowModifyAnnotations = sOptions.PDFDisallowModifyAnnotations
+50760   .PDFDisallowModifyContents = sOptions.PDFDisallowModifyContents
+50770   .PDFDisallowPrinting = sOptions.PDFDisallowPrinting
+50780   .PDFEncryptor = sOptions.PDFEncryptor
+50790   .PDFFontsEmbedAll = sOptions.PDFFontsEmbedAll
+50800   .PDFFontsSubSetFonts = sOptions.PDFFontsSubSetFonts
+50810   .PDFFontsSubSetFontsPercent = sOptions.PDFFontsSubSetFontsPercent
+50820   .PDFGeneralASCII85 = sOptions.PDFGeneralASCII85
+50830   .PDFGeneralAutorotate = sOptions.PDFGeneralAutorotate
+50840   .PDFGeneralCompatibility = sOptions.PDFGeneralCompatibility
+50850   .PDFGeneralOverprint = sOptions.PDFGeneralOverprint
+50860   .PDFGeneralResolution = sOptions.PDFGeneralResolution
+50870   .PDFHighEncryption = sOptions.PDFHighEncryption
+50880   .PDFLowEncryption = sOptions.PDFLowEncryption
+50890   .PDFOptimize = sOptions.PDFOptimize
+50900   .PDFOwnerPass = sOptions.PDFOwnerPass
+50910   .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
+50920   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
+50930   .PDFUserPass = sOptions.PDFUserPass
+50940   .PDFUserPasswordString = sOptions.PDFUserPasswordString
+50950   .PDFUseSecurity = sOptions.PDFUseSecurity
+50960   .PNGColorscount = sOptions.PNGColorscount
+50970   .PrintAfterSaving = sOptions.PrintAfterSaving
+50980   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
+50990   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
+51000   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
+51010   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
+51020   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
+51030   .PrinterStop = sOptions.PrinterStop
+51040   .PrinterTemppath = sOptions.PrinterTemppath
+51050   .ProcessPriority = sOptions.ProcessPriority
+51060   .ProgramFont = sOptions.ProgramFont
+51070   .ProgramFontCharset = sOptions.ProgramFontCharset
+51080   .ProgramFontSize = sOptions.ProgramFontSize
+51090   .PSLanguageLevel = sOptions.PSLanguageLevel
+51100   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
+51110   .RemoveSpaces = sOptions.RemoveSpaces
+51120   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
+51130   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
+51140   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
+51150   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
+51160   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
+51170   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
+51180   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
+51190   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
+51200   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
+51210   .SaveFilename = sOptions.SaveFilename
+51220   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+51230   .SendMailMethod = sOptions.SendMailMethod
+51240   .ShowAnimation = sOptions.ShowAnimation
+51250   .StampFontColor = sOptions.StampFontColor
+51260   .StampFontname = sOptions.StampFontname
+51270   .StampFontsize = sOptions.StampFontsize
+51280   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+51290   .StampString = sOptions.StampString
+51300   .StampUseOutlineFont = sOptions.StampUseOutlineFont
+51310   .StandardAuthor = sOptions.StandardAuthor
+51320   .StandardCreationdate = sOptions.StandardCreationdate
+51330   .StandardDateformat = sOptions.StandardDateformat
+51340   .StandardKeywords = sOptions.StandardKeywords
+51350   .StandardMailDomain = sOptions.StandardMailDomain
+51360   .StandardModifydate = sOptions.StandardModifydate
+51370   .StandardSaveformat = sOptions.StandardSaveformat
+51380   .StandardSubject = sOptions.StandardSubject
+51390   .StandardTitle = sOptions.StandardTitle
+51400   .StartStandardProgram = sOptions.StartStandardProgram
+51410   .TIFFColorscount = sOptions.TIFFColorscount
+51420   .Toolbars = sOptions.Toolbars
+51430   .UseAutosave = sOptions.UseAutosave
+51440   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51450   .UseCreationDateNow = sOptions.UseCreationDateNow
+51460   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51470   .UseFixPapersize = sOptions.UseFixPapersize
+51480   .UseStandardAuthor = sOptions.UseStandardAuthor
+51490  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cLetOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+' --- Private functions/Subroutines - end ---
+
