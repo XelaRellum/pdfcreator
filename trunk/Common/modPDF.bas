@@ -39,6 +39,12 @@ Public Type tPDFDocInfo
  Title As String
 End Type
 
+Public Enum eCodePage
+ CP_NoEncoding = 0
+ CP_UTF8 = 65001
+ CP_UTF16 = 65002
+End Enum
+
 Public Function GetPSTitle(Filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -408,82 +414,104 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function GetMetadataString(PDFDocInfo As tPDFDocInfo) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, _
+  tStr As String, ttStr As String, CodePage As Long
+50030  CodePage = eCodePage.CP_NoEncoding
+50040  With PDFDocInfo
+50050   PDFDocInfoStr = PDFDocInfoStr & Chr$(13)
+50060   If LenB(Trim$(.Author)) > 0 Then
+50070     tStr = EncodeChars(CodePage, .Author)
+50080    Else
+50090     tStr = "()"
+50100   End If
+50110   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author " & tStr
+50120   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50130    Set tzi = New clsTimeZoneInformation
+50140    If tzi.DayLight Then
+50150      ttStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
+50160     Else
+50170      ttStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
+50180    End If
+50190    If tzi.DaylightToGMT >= 0 Then
+50200      ttStr = "+" & ttStr
+50210     Else
+50220      ttStr = "-" & ttStr
+50230    End If
+50240   End If
+50250   If LenB(Trim$(.CreationDate)) > 0 Then
+50260     tStr = "(D:" & .CreationDate & ttStr & ")"
+50270    Else
+50280     tStr = "()"
+50290   End If
+50300   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate " & tStr
+50310   If LenB(.Creator) > 0 Then
+50320     tStr = EncodeChars(CodePage, .Creator)
+50330    Else
+50340     tStr = "()"
+50350   End If
+50360   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator " & tStr
+50370   If LenB(Trim$(.Keywords)) > 0 Then
+50380     tStr = EncodeChars(CodePage, .Keywords)
+50390    Else
+50400     tStr = "()"
+50410   End If
+50420   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords " & tStr
+50430   If LenB(Trim$(.ModifyDate)) > 0 Then
+50440     tStr = "(D:" & .ModifyDate & ttStr & ")"
+50450    Else
+50460     tStr = "()"
+50470   End If
+50480   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate " & tStr
+50490   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
+50500    Set tzi = Nothing
+50510   End If
+50520   If LenB(Trim$(.Subject)) > 0 Then
+50530     tStr = EncodeChars(CodePage, .Subject)
+50540    Else
+50550     tStr = "()"
+50560   End If
+50570   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject " & tStr
+50580   If LenB(Trim$(.Title)) > 0 Then
+50590     tStr = EncodeChars(CodePage, .Title)
+50600    Else
+50610     tStr = "()"
+50620   End If
+50630   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title " & tStr
+50640  End With
+50650  GetMetadataString = PDFDocInfoStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDF", "GetMetadataString")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Sub AppendPDFDocInfo(PSFile As String, PDFDocInfo As tPDFDocInfo)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, _
-  tStr As String, ttStr As String
-50030  With PDFDocInfo
-50040   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Author "
-50050   tStr = EncodeChars(.Author)
-50060   If LenB(tStr) > 0 Then
-50070     PDFDocInfoStr = PDFDocInfoStr & tStr
-50080    Else
-50090     PDFDocInfoStr = PDFDocInfoStr & "()"
-50100   End If
-50110   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-50120    Set tzi = New clsTimeZoneInformation
-50130    If tzi.DayLight Then
-50140      ttStr = Format(TimeSerial(0, tzi.DaylightToGMT, 0), "hh'mm'")
-50150     Else
-50160      ttStr = Format(TimeSerial(0, tzi.NormaltimeToGMT, 0), "hh'mm'")
-50170    End If
-50180    If tzi.DaylightToGMT >= 0 Then
-50190      ttStr = "+" & ttStr
-50200     Else
-50210      ttStr = "-" & ttStr
-50220    End If
-50230   End If
-50240   If LenB(Trim$(.CreationDate)) > 0 Then
-50250    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/CreationDate (D:" & .CreationDate & ttStr & ")"
-50260   End If
-50270   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Creator "
-50280   tStr = EncodeChars(.Creator)
-50290   If LenB(tStr) > 0 Then
-50300     PDFDocInfoStr = PDFDocInfoStr & tStr
-50310    Else
-50320     PDFDocInfoStr = PDFDocInfoStr & "()"
-50330   End If
-50340   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords "
-50350   tStr = EncodeChars(.Keywords)
-50360   If LenB(tStr) > 0 Then
-50370     PDFDocInfoStr = PDFDocInfoStr & tStr
-50380    Else
-50390     PDFDocInfoStr = PDFDocInfoStr & "()"
-50400   End If
-50410   If LenB(Trim$(.ModifyDate)) > 0 Then
-50420    PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/ModDate (D:" & .ModifyDate & ttStr & ")"
-50430   End If
-50440   If LenB(.CreationDate) > 0 Or LenB(.ModifyDate) > 0 Then
-50450    Set tzi = Nothing
-50460   End If
-50470   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject "
-50480   tStr = EncodeChars(.Subject)
-50490   If LenB(tStr) > 0 Then
-50500     PDFDocInfoStr = PDFDocInfoStr & tStr
-50510    Else
-50520     PDFDocInfoStr = PDFDocInfoStr & "()"
-50530   End If
-50540   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Title "
-50550   tStr = EncodeChars(.Title)
-50560   If LenB(tStr) > 0 Then
-50570     PDFDocInfoStr = PDFDocInfoStr & tStr
-50580    Else
-50590     PDFDocInfoStr = PDFDocInfoStr & "()"
-50600   End If
-50610  End With
-50620  If FileExists(PSFile) = True And LenB(PDFDocInfoStr) > 0 Then
-50630   DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
-50640   DocInfoStr = DocInfoStr & Chr$(13) & "["
-50650   DocInfoStr = DocInfoStr & Chr$(13) & PDFDocInfoStr
-50660   DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
-50670   DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
-50680   fn = FreeFile
-50690   Open PSFile For Append As fn
-50700   Print #fn, DocInfoStr;
-50710   Close #fn
-50720  End If
+50010  Dim fn As Long, MetadataString As String, DocInfoStr As String
+50020  MetadataString = GetMetadataString(PDFDocInfo)
+50030  If FileExists(PSFile) = True And LenB(MetadataString) > 0 Then
+50040   DocInfoStr = Chr$(13) & "/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse"
+50050   DocInfoStr = DocInfoStr & Chr$(13) & "["
+50060   DocInfoStr = DocInfoStr & Chr$(13) & MetadataString
+50070   DocInfoStr = DocInfoStr & Chr$(13) & "/DOCINFO pdfmark"
+50080   DocInfoStr = DocInfoStr & Chr$(13) & "%%EOF"
+50090   fn = FreeFile
+50100   Open PSFile For Append As fn
+50110   Print #fn, DocInfoStr;
+50120   Close #fn
+50130  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -656,18 +684,87 @@ Public Function FormatPrintDocumentDate(tDate As String) As String
  FormatPrintDocumentDate = CStr(DateSerial(Y, m, d)) + Mid(tDate, InStr(tDate, " "))
 End Function
 
-Public Function EncodeChars(ByVal Str1 As String) As String ' UTF-16 conversion
+Private Property Get MCh(ByRef Str1 As String, ByVal i As Long) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tStr As String
-50020  If LenB(Str1) = 0 Then
-50030   Exit Function
-50040  End If
-50050  For i = 1 To Len(Str1)
-50060   tStr = tStr & String(4 - Len(Hex(AscW(Mid$(Str1, i, 1)))), "0") & Hex(AscW(Mid$(Str1, i, 1)))
-50070  Next i
-50080  EncodeChars = "<FEFF" & tStr & ">"
+50010  MoveMemoryLong MCh, StrPtr(Str1) + ((i - 1) * 2), 2
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDF", "MCh [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Function EncodeChars(ByVal CodePage As eCodePage, ByVal Str1 As String) As String ' UTF-16, UTF-8 conversion
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, tStr As String, Size As Long, Buffer() As Byte, c As Long, tL As Long
+50020
+50030  If LenB(Str1) = 0 Then
+50040   Exit Function
+50050  End If
+50061  Select Case CodePage
+        Case eCodePage.CP_NoEncoding
+50080    EncodeChars = "(" & Str1 & ")"
+50090   Case eCodePage.CP_UTF8
+50100    For i = 1 To Len(Str1)
+50110     c = AscW(Mid$(Str1, i, 1))
+50121     Select Case c
+           Case 0 To &H7F&
+50140       tStr = tStr & String(2 - Len(Hex(c)), "0") & Hex(c)
+50150      Case &H80& To &H7FF&
+50160       tL = &HC0& Or ((c And &H3FC0&) \ &H40&)
+50170       tStr = tStr & String(2 - Len(Hex(tL)), "0") & Hex(tL)
+50180       tL = &H80& Or (c And &H3F&)
+50190       tStr = tStr & String(2 - Len(Hex(tL)), "0") & Hex(tL)
+50200      Case &H800& To &HFFFF&
+50210       tL = &HE0& Or ((c And &HF000&) \ &H1000&)
+50220       tStr = tStr & String(2 - Len(Hex(tL)), "0") & Hex(tL)
+50230       tL = &H80& Or ((c And &HFC0&) \ &H40&)
+50240       tStr = tStr & String(2 - Len(Hex(tL)), "0") & Hex(tL)
+50250       tL = &H80& Or (c And &H3F&)
+50260       tStr = tStr & String(2 - Len(Hex(tL)), "0") & Hex(tL)
+50270     End Select
+50280    Next i
+50290    EncodeChars = "<BFBBEF" & tStr & ">"
+50300 '  Case eCodePage.CP_UTF8
+50310 '   Size = 3
+50320 '   ReDim Buffer(0 To 2)
+50330 '   MoveMemoryLongToByte Buffer(0), ESignatureUTF8, 3
+50340 '   For i = 1 To Len(Str1)
+50350 '    c = MCh(Str1, i)
+50360 '    Select Case c
+50370 '     Case 0 To &H7F&
+50380 '      ReDim Preserve Buffer(0 To Size)
+50390 '      Buffer(Size) = c
+50400 '      Size = Size + 1
+50410 '     Case &H80& To &H7FF&
+50420 '      ReDim Preserve Buffer(0 To Size + 1)
+50430 '      Buffer(Size) = &HC0& Or ((c And &H3FC0&) \ &H40&)
+50440 '      Buffer(Size + 1) = &H80& Or (c And &H3F&)
+50450 '      Size = Size + 2
+50460 '     Case &H800& To &HFFFF&
+50470 '      ReDim Preserve Buffer(0 To Size + 2)
+50480 '      Buffer(Size) = &HE0& Or ((c And &HF000&) \ &H1000&)
+50490 '      Buffer(Size + 1) = &H80& Or ((c And &HFC0&) \ &H40&)
+50500 '      Buffer(Size + 2) = &H80& Or (c And &H3F&)
+50510 '      Size = Size + 3
+50520 '     End Select
+50530 '    Next i
+50540   Case eCodePage.CP_UTF16
+50550    For i = 1 To Len(Str1)
+50560     c = AscW(Mid$(Str1, i, 1))
+50570     tStr = tStr & String(4 - Len(Hex(c)), "0") & Hex(c)
+50580    Next i
+50590    EncodeChars = "<FEFF" & tStr & ">"
+50600  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

@@ -2,9 +2,9 @@
 # Part of PDFCreator
 # License: GPL
 # Homepage: http://www.pdfforge.org/products/pdfcreator
-# Ruby version: 1.8.4.0
-# Version: 1.0.0.0
-# Date: April, 3. 2007
+# Ruby version: 1.8.6.0
+# Version: 1.0.0.1
+# Date: December, 4. 2007
 # Author: Frank Heindörfer
 # Comments: Save the test page as pdf-file using
 #           the com interface of PDFCreator.

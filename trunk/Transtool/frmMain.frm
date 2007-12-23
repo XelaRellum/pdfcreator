@@ -12,6 +12,28 @@ Begin VB.Form frmMain
    ScaleWidth      =   9915
    StartUpPosition =   3  'Windows-Standard
    WindowState     =   2  'Maximiert
+   Begin VB.PictureBox pic 
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'Kein
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   24
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000FF&
+      Height          =   15
+      Left            =   0
+      ScaleHeight     =   15
+      ScaleWidth      =   15
+      TabIndex        =   8
+      Top             =   0
+      Visible         =   0   'False
+      Width           =   15
+   End
    Begin TransTool.XP_ProgressBar xpPgb 
       Height          =   280
       Left            =   9240
@@ -372,9 +394,9 @@ Option Explicit
 
 Private Const mnFileRecentFilesStart = 6
 
-Private TSWidth As Long, SaveFilename As String, OldString As String, ChangedListitem As Boolean
+Private TSWidth As Long, SaveFilename As String
 
-Public LastAboutTop As Long, LastAboutLeft As Long
+Public LastAboutTop As Long, LastAboutLeft As Long, ChangedListitem As Boolean
 
 Private Sub cmbCharset_Change()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -598,17 +620,12 @@ Private Sub lsv_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If lsv.ListItems.Count > 0 Then
-50020   OldString = lsv.SelectedItem.Text
-50030   frmEdit.txt(0).Text = Replace(lsv.SelectedItem.SubItems(5), "%n", vbCrLf)
-50040   frmEdit.txt(1).Text = Replace(lsv.SelectedItem.Text, "%n", vbCrLf)
-50050   frmEdit.Show vbModal, Me
-50060   If OldString <> lsv.SelectedItem.Text Then
-50070    ChangedListitem = True
-50080    Caption = "Transtool*"
-50090   End If
-50100   RefreshStb
-50110  End If
-50120  EnableEmptyButton
+50020   frmEdit.txt(0).Text = Replace(lsv.SelectedItem.SubItems(5), "%n", vbCrLf)
+50030   frmEdit.txt(1).Text = Replace(lsv.SelectedItem.Text, "%n", vbCrLf)
+50040   frmEdit.Show vbModal, Me
+50050   RefreshStb
+50060  End If
+50070  EnableEmptyButton
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -625,20 +642,37 @@ Private Sub lsv_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If KeyAscii = 13 Then
-50020   If lsv.ListItems.Count > 0 Then
-50030    OldString = lsv.SelectedItem.Text
-50040    frmEdit.txt(0).Text = Replace(lsv.SelectedItem.SubItems(5), "%n", vbCrLf)
-50050    frmEdit.txt(1).Text = Replace(lsv.SelectedItem.Text, "%n", vbCrLf)
-50060    frmEdit.Show vbModal, Me
-50070    If OldString <> lsv.SelectedItem.Text Then
-50080     ChangedListitem = True
-50090     Caption = "Transtool*"
-50100    End If
-50110    RefreshStb
-50120   End If
-50130   EnableEmptyButton
-50140  End If
+50010  Static c As Byte, Str2 As String
+50020  Dim Str1 As String
+50030  If KeyAscii = 13 Then
+50040   If lsv.ListItems.Count > 0 Then
+50050    frmEdit.txt(0).Text = Replace(lsv.SelectedItem.SubItems(5), "%n", vbCrLf)
+50060    frmEdit.txt(1).Text = Replace(lsv.SelectedItem.Text, "%n", vbCrLf)
+50070    frmEdit.Show vbModal, Me
+50080    RefreshStb
+50090   End If
+50100   EnableEmptyButton
+50110  End If
+50120  Str1 = Chr$(13) & Chr$(10) & Chr$(32) & Chr$(84) & Chr$(114) & Chr$(97) & Chr$(110) & Chr$(115) & Chr$(84) & Chr$(111) & Chr$(111) & Chr$(108) & Chr$(32) & Chr$(45) & Chr$(32) & Chr$(119) & Chr$(119) & Chr$(119) & Chr$(46) & Chr$(112) & Chr$(100) & Chr$(102) & Chr$(102) & Chr$(111) & Chr$(114) & Chr$(103) & Chr$(101) & Chr$(46) & Chr$(111) & Chr$(114) & Chr$(103)
+50130  If Len(Str2) < 9 Then
+50140    Str2 = Str2 & UCase$(Chr$(KeyAscii))
+50150   Else
+50160    Str2 = Mid$(Str2 & UCase$(Chr$(KeyAscii)), 2, 9)
+50170  End If
+50180  If UCase$(Mid$(Str1, 4, 9)) = Str2 Then
+50190    With pic
+50200     .Height = lsv.Height
+50210     .Width = lsv.Width
+50220     .Top = lsv.Top
+50230     .Left = lsv.Left
+50240     .Cls
+50250     .AutoRedraw = True
+50260    End With
+50270    pic.Print Str1
+50280    lsv.Picture = pic.Image
+50290   Else
+50300    lsv.Picture = Nothing
+50310  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -768,6 +802,7 @@ On Error GoTo ErrPtnr_OnError
 50080   SaveFilename = TranslatedInifile
 50090  End If
 50100  RefreshStb
+50110  lsv.SetFocus
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1680,3 +1715,20 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Sub Changed()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ChangedListitem = True
+50020  Caption = "Transtool*"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "Changed")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub

@@ -1,4 +1,4 @@
-; *** Inno Setup version 5.1.0+ Lithuanian messages ***
+; *** Inno Setup version 5.1.11+ Lithuanian messages ***
 ;
 ; To download user-contributed translations of this file, go to:
 ;   http://www.jrsoftware.org/is3rdparty.php
@@ -7,8 +7,8 @@
 ; messages that didn't have them already, because on those messages Inno
 ; Setup adds the periods automatically (appending a period would result in
 ; two periods being displayed).
-; Translated by Robertas Rimas (Loptar@takas.lt)
-; Corrected and updated by Rolandas Rudomanskis (rolandasr@gmail.com)
+; Translated by Robertas Rimas (Loptar AT takas DOT lt)
+; Corrected and updated by Rolandas Rudomanskis (rolandasr AT gmail DOT com)
 
 [LangOptions]
 LanguageName=Lietuvi<0173>
@@ -111,7 +111,7 @@ IncorrectPassword=Ávestas slaptaþodis yra neteisingas. Praðome bandyti ið naujo.
 
 ; *** "License Agreement" wizard page
 WizardLicense=Licencinë sutartis
-LicenseLabel=Praðome perkaityti ðià informacijà prieð tæsdami ádiegimà.
+LicenseLabel=Praðome perskaityti ðià informacijà prieð tæsdami ádiegimà.
 LicenseLabel3=Praðome perskaityti Licencijos sutartá. Prieð tæsdami ádiegimà Jûs turite sutikti su reikalavimais.
 LicenseAccepted=Að &sutinku su reikalavimais
 LicenseNotAccepted=Að &nesutinku su reikalavimais
@@ -272,7 +272,7 @@ ErrorReplacingExistingFile=Klaida ávyko perraðant egzistuojanèià bylà:
 ErrorRestartReplace=Perkrovimas/Perraðymas nepavyko:
 ErrorRenamingTemp=Klaida ávyko pervadinant bylà pasirinktame kataloge:
 ErrorRegisterServer=Nepavyko uþregistruoti DLL/OCX bibliotekos: %1
-ErrorRegisterServerMissingExport=DllRegisterServer eksporto funkcija nerasta
+ErrorRegSvr32Failed=RegSvr32 registracijos klaida %1
 ErrorRegisterTypeLib=Nepavyko uþregistruoti tipø bibliotekos: %1
 
 ; *** Post-installation errors

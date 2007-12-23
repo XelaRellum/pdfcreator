@@ -3,8 +3,8 @@
 ' License: GPL
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: September, 1. 2005
+' Version: 2.0.0.0
+' Date: September, 20. 2007
 ' Author: Frank Heindörfer
 ' Comments: This script shows the logfile of PDFCreator.
 
@@ -12,7 +12,7 @@ Option Explicit
 
 Const HTMLFile = "PDFCreator_logfile.htm"
 
-Dim fso, WshShell, PDFCreator, opt, AppTitle, ScriptBasename
+Dim fso, WshShell, PDFCreator, opt, AppTitle, ScriptBasename, ProgramIsRunning
 
 Set fso = CreateObject("Scripting.FileSystemObject")
 
@@ -26,13 +26,16 @@ If CDbl(Replace(WScript.Version,".",",")) < 5.1 then
 End if
 
 Set PDFCreator = Wscript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_")
+ProgramIsRunning = PDFCreator.cProgramIsRunning
 PDFCreator.cVisible = False
-PDFCreator.cStart "/NoProcessingAtStartup"
+PDFCreator.cStart "/NoProcessingAtStartup", true
 
 CreateHTMLFile HTMLFile, Header & LogFile & Footer
 
-WScript.Sleep 200
-PDFCreator.cClose
+If ProgramIsRunning = false then
+ WScript.Sleep 200
+ PDFCreator.cClose
+End If 
 
 Set WshShell = WScript.CreateObject("WScript.Shell")
 WshShell.Run HTMLFile

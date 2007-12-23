@@ -1,11 +1,11 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
-   ClientLeft      =   225
-   ClientTop       =   825
+   ClientLeft      =   165
+   ClientTop       =   855
    ClientWidth     =   12930
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -513,6 +513,11 @@ Private EditItem As Boolean, TempFile1 As String, _
  ChangeOptions As Boolean, ChangeLanguages As Boolean, ChangeTestpage As Boolean, _
  ChangeStamppage As Boolean, LastIncFile As String, ss As Collection
 
+Private Const headerComment1 As String = "Option Explicit" & vbCrLf
+Private Const headerComment2 As String = "' Automatically generated with DeveloperTool by Frank Heindörfer"
+Private Const headerYear As String = "' 2003 - 2007"
+Private Const headerEmail As String = "' Email: thesmilyface@users.sourceforge.net"
+
 Public Function AddLanguagesItem(Str1 As String, Str2 As String, Str3 As String, Str4 As String) As Boolean
  Dim Item As ListItem, i As Long
  AddLanguagesItem = True
@@ -1010,11 +1015,10 @@ Private Sub CreateModLanguages()
 
  Open Filename For Output As #fn
  Print #fn, "Attribute VB_Name = ""modLanguage"""
- Print #fn, "Option Explicit"
- Print #fn, ""
- Print #fn, "' Module automatically generated with LanguagesTool from Frank Heindörfer"
- Print #fn, "' 2004"
- Print #fn, "' Email: thesmilyface@users.sourceforge.net"
+ Print #fn, headerComment1
+ Print #fn, headerComment2
+ Print #fn, headerYear
+ Print #fn, headerEmail
  Print #fn, ""
  Print #fn, "Public Type tLanguageStrings"
 
@@ -1105,11 +1109,10 @@ Private Sub CreateModOptions()
  Filename = App.Path & "\..\Common\modOptions.bas"
  Open Filename For Output As #fn
  Print #fn, "Attribute VB_Name = ""modOptions"""
- Print #fn, "Option Explicit"
- Print #fn, ""
- Print #fn, "' Module automatically generated with LanguagesTool from Frank Heindörfer"
- Print #fn, "' 2003"
- Print #fn, "' Email: thesmilyface@users.sourceforge.net"
+ Print #fn, headerComment1
+ Print #fn, headerComment2
+ Print #fn, headerYear
+ Print #fn, headerEmail
  Print #fn, ""
  Print #fn, "Public Type tOptions"
  For i = 1 To lsvOptions.ListItems.Count
@@ -1125,6 +1128,7 @@ Private Sub CreateModOptions()
  Print #fn, "Public Options As tOptions"
  Print #fn, ""
  Print #fn, "Public Function StandardOptions() As tOptions"
+ Print #fn, " Const Hash As String = ""0001B4FD-9EA3-4D90-A79E-FD14BA3AB01D"""
  Print #fn, " Dim myOptions As tOptions, reg as clsRegistry"
  Print #fn, " With myOptions"
  For i = 1 To lsvOptions.ListItems.Count
@@ -1194,7 +1198,7 @@ Private Sub CreateModOptions()
  Print #fn, ""
 
  Print #fn, "Public Function ReadOptions(Optional NoMsg As Boolean = False, Optional hProfile As hkey = HKEY_CURRENT_USER) As tOptions"
- Print #fn, " Dim myOptions As tOptions"
+ Print #fn, " Dim myOptions As tOptions, Str1 as String"
  Print #fn, " If InstalledAsServer Then"
  Print #fn, "   If UseINI Then"
  Print #fn, "     WriteToSpecialLogfile ""INI-Read options: CommonAppData"""
@@ -1230,6 +1234,7 @@ Private Sub CreateModOptions()
  Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg, False)"
  Print #fn, "   End If"
  Print #fn, " End If"
+ Print #fn, " Str1 = ""7777772E706466666F7267652E6F7267"""
  Print #fn, " myOptions = CorrectOptionsAfterLoading(myOptions)"
  Print #fn, " ReadOptions = myOptions"
  Print #fn, "End Function"
@@ -1962,115 +1967,6 @@ Private Sub CreateModOptions()
   .SortKey = 1
   .Sorted = True
  End With
- Print #fn, "Public Sub ShowOptions(Frm as Form, sOptions as tOptions)"
- Print #fn, " On Error Resume Next"
- Print #fn, " Dim i as Long, tList() as String, tStrA() As String, lsv As ListView"
- Print #fn, " With sOptions"
- For i = 1 To lsvOptions.ListItems.Count
-  If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
-   Select Case True
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase("Programfont")
-     Print #fn, "  For i=0 to frm.cmbFonts.Listcount - 1"
-     Print #fn, "    If Ucase$(frm.cmbFonts.List(i)) = Ucase$(." & lsvOptions.ListItems(i).SubItems(1) & ") Then"
-     Print #fn, "     frm.cmbFonts.Listindex = i"
-     Print #fn, "     Exit For"
-     Print #fn, "    End If"
-     Print #fn, "  Next i"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions")
-     Print #fn, "  Set lsv = Frm.lsvFilenameSubst"
-     Print #fn, "  lsv.ListItems.Clear"
-     Print #fn, "  tList = Split(.FilenameSubstitutions, ""\"")"
-     Print #fn, "  For i = 0 To UBound(tList)"
-     Print #fn, "   If InStr(tList(i), ""|"") <= 0 Then"
-     Print #fn, "    tList(i) = tList(i) & ""|"""
-     Print #fn, "   End If"
-     Print #fn, "   If UBound(Split(tList(i), ""|"")) = 1 Then"
-     Print #fn, "    tStrA = Split(tList(i), ""|"")"
-     Print #fn, "    lsv.ListItems.Add , , tStrA(0)"
-     Print #fn, "    lsv.ListItems(lsv.ListItems.Count).SubItems(1) = tStrA(1)"
-     Print #fn, "   End If"
-     Print #fn, "  Next i"
-     Print #fn, "  If lsv.ListItems.Count > 0 Then"
-     Print #fn, "   lsv.ListItems(1).Selected = True"
-     Print #fn, "   Frm.txtFilenameSubst(0).Text = lsv.ListItems(1).Text"
-     Print #fn, "   Frm.txtFilenameSubst(0).ToolTipText = Frm.txtFilenameSubst(0).Text"
-     Print #fn, "   Frm.txtFilenameSubst(1).Text = lsv.ListItems(1).SubItems(1)"
-     Print #fn, "   Frm.txtFilenameSubst(1).ToolTipText = Frm.txtFilenameSubst(1).Text"
-     Print #fn, "  End If"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontColor")
-     Print #fn, "  Frm.picStampFontColor.BackColor = HTMLcolorToOleColor(." & lsvOptions.ListItems(i).SubItems(1) & ")"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontname")
-     Print #fn, "  Frm.lblFontNameSize.Caption = .StampFontname & "", "" & .StampFontsize"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Papersize")
-     Print #fn, "  With Frm.cmbDocumentPapersizes"
-     Print #fn, "   For i = 0 To .ListCount - 1"
-     Print #fn, "    If UCase$(.List(i)) = UCase$(Options.Papersize) Then"
-     Print #fn, "     .ListIndex = i"
-     Print #fn, "     Exit For"
-     Print #fn, "    End If"
-     Print #fn, "   Next i"
-     Print #fn, "  End With"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And _
-         UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") And _
-         LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
-     Print #fn, "  frm." & lsvOptions.ListItems(i).SubItems(2) & " = ." & lsvOptions.ListItems(i).SubItems(1)
-   End Select
-  End If
- Next i
- Print #fn, " End With"
- Print #fn, "End Sub"
- Print #fn, ""
- Print #fn, "Public Sub GetOptions(Frm as Form, sOptions as tOptions)"
- Print #fn, " Dim i as Long, tStr as String, lsv As ListView"
- Print #fn, " sOptions = StandardOptions"
- Print #fn, " With sOptions"
- For i = 1 To lsvOptions.ListItems.Count
-  If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
-   Select Case True
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions")
-     Print #fn, " tStr="""""
-     Print #fn, " Set lsv = Frm.lsvFilenameSubst"
-     Print #fn, " For i = 1 To lsv.ListItems.Count"
-     Print #fn, "  If i < lsv.ListItems.Count Then"
-     Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1) & ""\"""
-     Print #fn, "   Else"
-     Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1)"
-     Print #fn, "  End If"
-     Print #fn, " Next i"
-     Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("PDFEncryptor") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible")
-     Print #fn, " If Frm.cmbPDFEncryptor.ListIndex < 0 Then"
-     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " = 0"
-     Print #fn, "  Else"
-     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " =  frm." & lsvOptions.ListItems(i).SubItems(2)
-     Print #fn, " End If"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontcolor")
-     Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = OleColorToHTMLColor(frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Papersize")
-     Print #fn, " If Frm.cmbDocumentPapersizes.ListCount > 0 Then"
-     Print #fn, "  If Frm.cmbDocumentPapersizes.ListIndex > 0 Then"
-     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " = Frm.cmbDocumentPapersizes.List(Frm.cmbDocumentPapersizes.ListIndex)"
-     Print #fn, "  End If"
-     Print #fn, " End If"
-    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") _
-     And LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
-     If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
-       Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Abs(Frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
-      Else
-       If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Or UCase$(lsvOptions.ListItems(i).SubItems(3)) = "LONG" Then
-         Print #fn, " If LenB(Frm." & lsvOptions.ListItems(i).SubItems(2) & ") > 0 Then"
-         Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " =  Frm." & lsvOptions.ListItems(i).SubItems(2)
-         Print #fn, " End If"
-        Else
-         Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Frm." & lsvOptions.ListItems(i).SubItems(2)
-       End If
-     End If
-   End Select
-  End If
- Next i
- Print #fn, " End With"
- Print #fn, "End Sub"
- Print #fn, ""
  Print #fn, "Public Sub SetPrinterStop(StopPrinter as Boolean)"
  Print #fn, " If StopPrinter = True Then"
  Print #fn, "   Options.PrinterStop = 1"
@@ -2190,6 +2086,126 @@ Private Sub CreateModOptions()
  Print #fn, ""
  Close #fn
 
+ Filename = App.Path & "\..\Common\modOptions2.bas"
+ Open Filename For Output As #fn
+ Print #fn, "Attribute VB_Name = ""modOptions2"""
+ Print #fn, headerComment1
+ Print #fn, headerComment2
+ Print #fn, headerYear
+ Print #fn, headerEmail
+ Print #fn, ""
+ Print #fn, "Public Sub ShowOptions(Frm as Form, sOptions as tOptions)"
+ Print #fn, " On Error Resume Next"
+ Print #fn, " Dim i as Long, tList() as String, tStrA() As String, lsv As ListView"
+ Print #fn, " With sOptions"
+ For i = 1 To lsvOptions.ListItems.Count
+  If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
+   Select Case True
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase("Programfont")
+     Print #fn, "  For i=0 to frm.cmbFonts.Listcount - 1"
+     Print #fn, "    If Ucase$(frm.cmbFonts.List(i)) = Ucase$(." & lsvOptions.ListItems(i).SubItems(1) & ") Then"
+     Print #fn, "     frm.cmbFonts.Listindex = i"
+     Print #fn, "     Exit For"
+     Print #fn, "    End If"
+     Print #fn, "  Next i"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions")
+     Print #fn, "  Set lsv = Frm.lsvFilenameSubst"
+     Print #fn, "  lsv.ListItems.Clear"
+     Print #fn, "  tList = Split(.FilenameSubstitutions, ""\"")"
+     Print #fn, "  For i = 0 To UBound(tList)"
+     Print #fn, "   If InStr(tList(i), ""|"") <= 0 Then"
+     Print #fn, "    tList(i) = tList(i) & ""|"""
+     Print #fn, "   End If"
+     Print #fn, "   If UBound(Split(tList(i), ""|"")) = 1 Then"
+     Print #fn, "    tStrA = Split(tList(i), ""|"")"
+     Print #fn, "    lsv.ListItems.Add , , tStrA(0)"
+     Print #fn, "    lsv.ListItems(lsv.ListItems.Count).SubItems(1) = tStrA(1)"
+     Print #fn, "   End If"
+     Print #fn, "  Next i"
+     Print #fn, "  If lsv.ListItems.Count > 0 Then"
+     Print #fn, "   lsv.ListItems(1).Selected = True"
+     Print #fn, "   Frm.txtFilenameSubst(0).Text = lsv.ListItems(1).Text"
+     Print #fn, "   Frm.txtFilenameSubst(0).ToolTipText = Frm.txtFilenameSubst(0).Text"
+     Print #fn, "   Frm.txtFilenameSubst(1).Text = lsv.ListItems(1).SubItems(1)"
+     Print #fn, "   Frm.txtFilenameSubst(1).ToolTipText = Frm.txtFilenameSubst(1).Text"
+     Print #fn, "  End If"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontColor")
+     Print #fn, "  Frm.picStampFontColor.BackColor = HTMLcolorToOleColor(." & lsvOptions.ListItems(i).SubItems(1) & ")"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontname")
+     Print #fn, "  Frm.lblFontNameSize.Caption = .StampFontname & "", "" & .StampFontsize"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Papersize")
+     Print #fn, "  With Frm.cmbDocumentPapersizes"
+     Print #fn, "   For i = 0 To .ListCount - 1"
+     Print #fn, "    If UCase$(.List(i)) = UCase$(Options.Papersize) Then"
+     Print #fn, "     .ListIndex = i"
+     Print #fn, "     Exit For"
+     Print #fn, "    End If"
+     Print #fn, "   Next i"
+     Print #fn, "  End With"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And _
+         UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") And _
+         LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
+     Print #fn, "  frm." & lsvOptions.ListItems(i).SubItems(2) & " = ." & lsvOptions.ListItems(i).SubItems(1)
+   End Select
+  End If
+ Next i
+ Print #fn, " End With"
+ Print #fn, "End Sub"
+ Print #fn, ""
+ Print #fn, "Public Sub GetOptions(Frm as Form, sOptions as tOptions)"
+ Print #fn, " Dim i as Long, tStr as String, lsv As ListView"
+ Print #fn, " sOptions = StandardOptions"
+ Print #fn, " With sOptions"
+ For i = 1 To lsvOptions.ListItems.Count
+  If IsSpecialString(lsvOptions.ListItems(i).SubItems(1)) = False Then
+   Select Case True
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("FilenameSubstitutions")
+     Print #fn, " tStr="""""
+     Print #fn, " Set lsv = Frm.lsvFilenameSubst"
+     Print #fn, " For i = 1 To lsv.ListItems.Count"
+     Print #fn, "  If i < lsv.ListItems.Count Then"
+     Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1) & ""\"""
+     Print #fn, "   Else"
+     Print #fn, "    tStr = tStr & lsv.ListItems(i).Text & ""|"" & lsv.ListItems(i).SubItems(1)"
+     Print #fn, "  End If"
+     Print #fn, " Next i"
+     Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = tStr"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("PDFEncryptor") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible")
+     Print #fn, " If Frm.cmbPDFEncryptor.ListIndex < 0 Then"
+     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " = 0"
+     Print #fn, "  Else"
+     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " =  frm." & lsvOptions.ListItems(i).SubItems(2)
+     Print #fn, " End If"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("StampFontcolor")
+     Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " = OleColorToHTMLColor(frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) = UCase$("Papersize")
+     Print #fn, " If Frm.cmbDocumentPapersizes.ListCount > 0 Then"
+     Print #fn, "  If Frm.cmbDocumentPapersizes.ListIndex > 0 Then"
+     Print #fn, "   ." & lsvOptions.ListItems(i).SubItems(1) & " = Frm.cmbDocumentPapersizes.List(Frm.cmbDocumentPapersizes.ListIndex)"
+     Print #fn, "  End If"
+     Print #fn, " End If"
+    Case UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsEnabled") And UCase$(lsvOptions.ListItems(i).SubItems(1)) <> UCase$("OptionsVisible") _
+     And LenB(lsvOptions.ListItems(i).SubItems(2)) > 0
+     If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "BOOLEAN" Then
+       Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Abs(Frm." & lsvOptions.ListItems(i).SubItems(2) & ")"
+      Else
+       If UCase$(lsvOptions.ListItems(i).SubItems(3)) = "DOUBLE" Or UCase$(lsvOptions.ListItems(i).SubItems(3)) = "LONG" Then
+         Print #fn, " If LenB(Frm." & lsvOptions.ListItems(i).SubItems(2) & ") > 0 Then"
+         Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " =  Frm." & lsvOptions.ListItems(i).SubItems(2)
+         Print #fn, " End If"
+        Else
+         Print #fn, " ." & lsvOptions.ListItems(i).SubItems(1) & " =  Frm." & lsvOptions.ListItems(i).SubItems(2)
+       End If
+     End If
+   End Select
+  End If
+ Next i
+ Print #fn, " End With"
+ Print #fn, "End Sub"
+ Close #fn
+
+
+
  Dim inStrF As String, outStrF As String, replStr As String, _
   tStr1 As String, tStr2 As String
  Filename2 = App.Path & "\..\PDFCreator\clsPDFCreator.cls"
@@ -2218,7 +2234,8 @@ Private Sub CreateModOptions()
  replStr = replStr & vbCrLf & "Attribute VB_Creatable = True"
  replStr = replStr & vbCrLf & "Attribute VB_PredeclaredId = False"
  replStr = replStr & vbCrLf & "Attribute VB_Exposed = True"
- replStr = replStr & vbCrLf & "Option Explicit"
+ replStr = replStr & vbCrLf & headerComment1 & vbCrLf
+ replStr = replStr & vbCrLf & headerComment2
  
  For i = 1 To lsvOptions.ListItems.Count
   Select Case UCase$(lsvOptions.ListItems(i).SubItems(3))
@@ -3113,6 +3130,7 @@ Private Sub CreateSpecialStrings()
   .Add "PDFCompressionGreyCompressionJPEGMediumFactor"
   .Add "PDFCompressionGreyCompressionJPEGLowFactor"
   .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
+  .Add "PDFUpdateMetadata"
  End With
 End Sub
 
@@ -3182,7 +3200,8 @@ Private Sub CreateModTestpage(Filename As String, Str1 As String)
  Open Filename For Output As #fn
  
  Print #fn, "Attribute VB_Name = ""modTestpage"""
- Print #fn, "Option Explicit"
+ Print #fn, headerComment1
+ Print #fn, headerComment2
  Print #fn, ""
  Print #fn, "Public Function GetTestpage() As String"
  Print #fn, " Dim tStr As String"

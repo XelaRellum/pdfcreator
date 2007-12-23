@@ -805,3 +805,14 @@ Public Enum SHGFP_TYPE
  SHGFP_TYPE_CURRENT = 0
  SHGFP_TYPE_DEFAULT = 1
 End Enum
+
+Public Enum EEncodingSignature
+ ESignatureUTF8Mask = &HFFFFFF
+ ESignatureUTF8 = &HBFBBEF
+ ESignatureUTF16Mask = &HFFFF&
+ ESignatureUTF16BE = &HFFFE&
+ ESignatureUTF16LE = &HFEFF&
+ ESignatureUTF32BE = &HFFFE0000
+ ESignatureUTF32LE = &HFEFF&
+End Enum
+

@@ -70,8 +70,8 @@ Public Sub WriteToSpecialLogfile(StatusText As String, Optional CreateFile As Bo
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim FName As String, fn As Long, Path As String, Drive As String
-50020  If enableSpecialLogging = True Then
-50030
+50020
+50030  If enableSpecialLogging = True Then
 50040   Path = LTrim(Environ$("Systemdrive"))
 50050   If LenB(Path) = 0 Then
 50060    SplitPath LTrim(Environ$("Windir")), Drive
@@ -84,14 +84,15 @@ On Error GoTo ErrPtnr_OnError
 50130   fn = FreeFile
 50140   If FileExists(FName) = False Or CreateFile = True Then
 50150     Open FName For Output As #fn
-50160     Print #fn, "Windowsversion: " & GetWinVersionStr
-50170     Print #fn, "PDFCreator-Revision: " & GetProgramReleaseStr
-50180    Else
-50190     Open FName For Append As #fn
-50200   End If
-50210   Print #fn, StatusText
-50220   Close #fn
-50230  End If
+50160     Print #fn, "Start: " & Now
+50170     Print #fn, "Windowsversion: " & GetWinVersionStr
+50180     Print #fn, "PDFCreator-Revision: " & GetProgramReleaseStr
+50190    Else
+50200     Open FName For Append As #fn
+50210   End If
+50220   Print #fn, StatusText
+50230   Close #fn
+50240  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
