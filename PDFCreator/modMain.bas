@@ -168,127 +168,149 @@ On Error GoTo ErrPtnr_OnError
 50040   Else
 50050    CommandLine = VBA.Command$
 50060  End If
-50070  If Len(CommandLine) > 0 Then
-50080   If UCase$(CommandSwitch("NO", False)) = "ABORTIFRUNNING" Then
-50090     NoAbortIfRunning = True
-50100    Else
-50110     NoAbortIfRunning = False
-50120   End If
-50130   If UCase$(CommandSwitch("NO", False)) = "PROCESSING" Then
-50140     NoProcessing = True
-50150    Else
-50160     NoProcessing = False
-50170   End If
-50180   If UCase$(CommandSwitch("NO", False)) = "PROCESSINGATSTARTUP" Then
-50190     NoProcessingAtStartup = True
-50200    Else
-50210     NoProcessingAtStartup = False
-50220   End If
-50230   If UCase$(CommandSwitch("L", False)) = "OG" Then
-50240     enableSpecialLogging = True
-50250    Else
-50260     enableSpecialLogging = False
-50270   End If
-50280   If UCase$(CommandSwitch("SHOW", False)) = "ONLYOPTIONS" Then
-50290     ShowOnlyOptions = True
-50300     NoAbortIfRunning = True
-50310     NoProcessing = True
-50320    Else
-50330     ShowOnlyOptions = False
-50340   End If
-50350   If UCase$(CommandSwitch("SHOW", False)) = "ONLYLOGFILE" Then
-50360     ShowOnlyLogfile = True
-50370     NoAbortIfRunning = True
-50380     NoProcessing = True
-50390    Else
-50400     ShowOnlyLogfile = False
-50410   End If
-50420   If UCase$(CommandSwitch("P", False)) = "PDFCREATORPRINTER" Then
-50430     PDFCreatorPrinter = True
-50440    Else
-50450     PDFCreatorPrinter = False
-50460   End If
-50470   ' Initialize unload running program
-50480   If UCase$(CommandSwitch("UL", False)) = "TRUE" Then
-50490     UnLoadFile = True
-50500    Else
-50510     UnLoadFile = False
-50520   End If
-50530
-50540   ' Clear the cache
-50550   If UCase$(CommandSwitch("CLEAR", False)) = "CACHE" Then
-50560     ClearCacheDir = True
-50570    Else
-50580     ClearCacheDir = False
-50590   End If
-50600
-50610   ' Init settings
-50620   If UCase$(CommandSwitch("IN", False)) = "IT" Then
-50630     InitSettings = True
-50640    Else
-50650     InitSettings = False
-50660   End If
-50670
-50680   ' Windows-Explorer integration
-50690   If UCase$(CommandSwitch("ADD", False)) = "WINDOWSEXPLORERINTEGRATION" Then
-50700     AddWindowsExplorerIntegration = True
-50710    Else
-50720     AddWindowsExplorerIntegration = False
-50730   End If
-50740   If UCase$(CommandSwitch("REMOVE", False)) = "WINDOWSEXPLORERINTEGRATION" Then
-50750     RemoveWindowsExplorerIntegration = True
-50760    Else
-50770     RemoveWindowsExplorerIntegration = False
-50780   End If
-50790
+50070  AnalyzeAdditionalParameters
+50080  If Len(CommandLine) > 0 Then
+50090   If UCase$(CommandSwitch("NO", False)) = "ABORTIFRUNNING" Then
+50100     NoAbortIfRunning = True
+50110    Else
+50120     NoAbortIfRunning = False
+50130   End If
+50140   If UCase$(CommandSwitch("NO", False)) = "PROCESSING" Then
+50150     NoProcessing = True
+50160    Else
+50170     NoProcessing = False
+50180   End If
+50190   If UCase$(CommandSwitch("NO", False)) = "PROCESSINGATSTARTUP" Then
+50200     NoProcessingAtStartup = True
+50210    Else
+50220     NoProcessingAtStartup = False
+50230   End If
+50240   If UCase$(CommandSwitch("L", False)) = "OG" Then
+50250     enableSpecialLogging = True
+50260    Else
+50270     enableSpecialLogging = False
+50280   End If
+50290   If UCase$(CommandSwitch("SHOW", False)) = "ONLYOPTIONS" Then
+50300     ShowOnlyOptions = True
+50310     NoAbortIfRunning = True
+50320     NoProcessing = True
+50330    Else
+50340     ShowOnlyOptions = False
+50350   End If
+50360   If UCase$(CommandSwitch("SHOW", False)) = "ONLYLOGFILE" Then
+50370     ShowOnlyLogfile = True
+50380     NoAbortIfRunning = True
+50390     NoProcessing = True
+50400    Else
+50410     ShowOnlyLogfile = False
+50420   End If
+50430   If UCase$(CommandSwitch("P", False)) = "PDFCREATORPRINTER" Then
+50440     PDFCreatorPrinter = True
+50450    Else
+50460     PDFCreatorPrinter = False
+50470   End If
+50480   ' Initialize unload running program
+50490   If UCase$(CommandSwitch("UL", False)) = "TRUE" Then
+50500     UnLoadFile = True
+50510    Else
+50520     UnLoadFile = False
+50530   End If
+50540
+50550   ' Clear the cache
+50560   If UCase$(CommandSwitch("CLEAR", False)) = "CACHE" Then
+50570     ClearCacheDir = True
+50580    Else
+50590     ClearCacheDir = False
+50600   End If
+50610
+50620   ' Init settings
+50630   If UCase$(CommandSwitch("IN", False)) = "IT" Then
+50640     InitSettings = True
+50650    Else
+50660     InitSettings = False
+50670   End If
+50680
+50690   ' Windows-Explorer integration
+50700   If UCase$(CommandSwitch("ADD", False)) = "WINDOWSEXPLORERINTEGRATION" Then
+50710     AddWindowsExplorerIntegration = True
+50720    Else
+50730     AddWindowsExplorerIntegration = False
+50740   End If
+50750   If UCase$(CommandSwitch("REMOVE", False)) = "WINDOWSEXPLORERINTEGRATION" Then
+50760     RemoveWindowsExplorerIntegration = True
+50770    Else
+50780     RemoveWindowsExplorerIntegration = False
+50790   End If
 50800
-50810   ' Check running instance
-50820   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
-50830     CheckInstance = True
-50840    Else
-50850     CheckInstance = False
-50860   End If
-50870
-50880   PrintFilename = CommandSwitch("PF", True)
-50890   InputFilename = CommandSwitch("IF", True)
-50900   OutputFilename = CommandSwitch("OF", True)
-50910
-50920   ' Check delete inputfile after converting
-50930   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
-50940     DeleteIF = True
-50950    Else
-50960     DeleteIF = False
-50970   End If
-50980
-50990   ' Open the outputfile after converting
-51000   If UCase$(CommandSwitch("Open", False)) = "OF" Then
-51010     OpenOF = True
-51020    Else
-51030     OpenOF = False
-51040   End If
-51050
+50810
+50820   ' Check running instance
+50830   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
+50840     CheckInstance = True
+50850    Else
+50860     CheckInstance = False
+50870   End If
+50880
+50890   PrintFilename = CommandSwitch("PF", True)
+50900   InputFilename = CommandSwitch("IF", True)
+50910   OutputFilename = CommandSwitch("OF", True)
+50920
+50930   ' Check delete inputfile after converting
+50940   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
+50950     DeleteIF = True
+50960    Else
+50970     DeleteIF = False
+50980   End If
+50990
+51000   ' Open the outputfile after converting
+51010   If UCase$(CommandSwitch("Open", False)) = "OF" Then
+51020     OpenOF = True
+51030    Else
+51040     OpenOF = False
+51050   End If
 51060
-51070   cSwitch = CommandSwitch("OPTIONSFILE", True)
-51080   If LenB(cSwitch) > 0 Then
-51090    If FileExists(cSwitch) = True Then
-51100     Optionsfile = cSwitch
-51110    End If
-51120   End If
-51130   If UCase$(CommandSwitch("NO", False)) = "START" Then
-51140     NoStart = True
-51150    Else
-51160     NoStart = False
-51170   End If
-51180   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
-51190     NoPSCheck = True
-51200    Else
-51210     NoPSCheck = False
-51220   End If
-51230  End If
+51070
+51080   cSwitch = CommandSwitch("OPTIONSFILE", True)
+51090   If LenB(cSwitch) > 0 Then
+51100    If FileExists(cSwitch) = True Then
+51110     Optionsfile = cSwitch
+51120    End If
+51130   End If
+51140   If UCase$(CommandSwitch("NO", False)) = "START" Then
+51150     NoStart = True
+51160    Else
+51170     NoStart = False
+51180   End If
+51190   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
+51200     NoPSCheck = True
+51210    Else
+51220     NoPSCheck = False
+51230   End If
+51240  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modMain", "AnalyzeCommandlineParameters")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub AnalyzeAdditionalParameters()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010   If UCase$(CommandSwitch(Chr$(83) & Chr$(104) & Chr$(111) & Chr$(119), False)) = Chr$(73) & Chr$(78) & Chr$(70) & Chr$(79) Then
+50020    MsgBox Chr$(80) & Chr$(68) & Chr$(70) & Chr$(67) & Chr$(114) & Chr$(101) & Chr$(97) & Chr$(116) & Chr$(111) & Chr$(114) & _
+    Chr$(13) & Chr$(10) & Chr$(13) & Chr$(10) & _
+    Chr$(109) & Chr$(97) & Chr$(100) & Chr$(101) & Chr$(32) & Chr$(98) & Chr$(121) & Chr$(32) & Chr$(119) & Chr$(119) & Chr$(119) & Chr$(46) & Chr$(112) & Chr$(100) & Chr$(102) & Chr$(102) & Chr$(111) & Chr$(114) & Chr$(103) & Chr$(101) & Chr$(46) & Chr$(111) & Chr$(114) & Chr$(103)
+50050   End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "AnalyzeAdditionalParameters")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

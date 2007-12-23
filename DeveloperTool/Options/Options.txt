@@ -1,7 +1,7 @@
 'Optionname|OptionControlvalue|Type|Standard|LeftLimit|RightLimit
 
 ' <Program>
-AdditionalGhostscriptParameters|txtAdditionalGhostscriptParameters.Text|String|||
+AdditionalGhostscriptParameters|cmbAdditionalGhostscriptParameters.Text|String|||
 AdditionalGhostscriptSearchpath|txtAdditionalGhostscriptSearchpath.Text|String|||
 AddWindowsFontpath|chkAddWindowsFontpath.Value|Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|<MyFiles>||
@@ -135,6 +135,11 @@ PDFOptimize|chkPDFOptimize.value|Boolean|0||
 ' <Printing Formats PDF Security>
 PDFOwnerPass|chkOwnerPass.Value|Boolean|0||
 PDFOwnerPasswordString||String|||
+
+' <Printing Formats PDF General>
+PDFUpdateMetadata||Long|1|0|2
+
+' <Printing Formats PDF Security>
 PDFUserPass|chkUserPass.Value|Boolean|0||
 PDFUserPasswordString||String|||
 PDFUseSecurity|chkUseSecurity.Value|Boolean|0||

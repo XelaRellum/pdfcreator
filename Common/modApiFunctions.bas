@@ -110,6 +110,7 @@ Public Declare Function lstrlenW Lib "kernel32.dll" (lpString As Any) As Long
 Public Declare Sub MoveMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (pDest As Any, pSource As Any, ByVal dwLength As Long)
 Public Declare Sub MoveMemory2 Lib "kernel32.dll" Alias "RtlMoveMemory" (Dest As Any, ByVal Source As Long, ByVal Length As Long)
 Public Declare Sub MoveMemoryLong Lib "kernel32.dll" Alias "RtlMoveMemory" (ByVal pDest As Long, ByVal pSource As Long, ByVal dwLength As Long)
+Public Declare Sub MoveMemoryLongToByte Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef Destination As Byte, ByRef Source As Long, ByVal Length As Long)
 Public Declare Function OpenProcess Lib "kernel32.dll" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
 Public Declare Function OpenProcessToken Lib "advapi32.dll" (ByVal ProcessHandle As Long, ByVal DesiredAccess As Long, TokenHandle As Long) As Long
 Public Declare Function ProcessFirst Lib "kernel32.dll" Alias "Process32First" (ByVal hSnapshot As Long, uProcess As PROCESSENTRY32) As Long
@@ -123,7 +124,7 @@ Public Declare Function SetThreadPriority Lib "kernel32.dll" (ByVal hThread As L
 Public Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
 Public Declare Function TerminateProcess Lib "kernel32.dll" (ByVal hProcess As Long, ByVal uExitCode As Long) As Long
 Public Declare Function WaitForSingleObject Lib "kernel32.dll" (ByVal hHandle As Long, ByVal dwMilliseconds As Long) As Long
-Public Declare Function WideCharToMultiByte Lib "kernel32.dll" (ByVal codepage As Long, ByVal dwFlags As Long, lpWideCharStr As Any, ByVal cchWideChar As Long, lpMultiByteStr As Any, ByVal cchMultiByte As Long, ByVal lpDefaultChar As String, ByVal lpUsedDefaultChar As Long) As Long
+Public Declare Function WideCharToMultiByte Lib "kernel32.dll" (ByVal CodePage As Long, ByVal dwFlags As Long, lpWideCharStr As Any, ByVal cchWideChar As Long, lpMultiByteStr As Any, ByVal cchMultiByte As Long, ByVal lpDefaultChar As String, ByVal lpUsedDefaultChar As Long) As Long
 Public Declare Function WriteFile Lib "kernel32.dll" (ByVal hFile As Long, ByVal lpBuffer As String, ByVal nNumberOfBytesToWrite As Long, lpNumberOfBytesWritten As Long, lpOverlapped As Any) As Long
 Public Declare Function WritePrivateProfileSection Lib "kernel32.dll" Alias "WritePrivateProfileSectionA" (ByVal Section As String, ByVal key As String, ByVal Filename As String) As Long
 'Public Declare Function WritePrivateProfileString Lib "kernel32.dll" Alias "WritePrivateProfileStringA" (ByVal lpSectionName As String, ByVal lpKeyName As Any, ByVal lpString As Any, ByVal lpFileName As String) As Long

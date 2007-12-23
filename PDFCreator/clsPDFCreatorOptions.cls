@@ -12,6 +12,9 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+
+
+' Automatically generated with DeveloperTool by Frank Heindörfer
 Public AdditionalGhostscriptParameters As String
 Public AdditionalGhostscriptSearchpath As String
 Public AddWindowsFontpath As Long
@@ -102,6 +105,7 @@ Public PDFLowEncryption As Long
 Public PDFOptimize As Long
 Public PDFOwnerPass As Long
 Public PDFOwnerPasswordString As String
+Public PDFUpdateMetadata As Long
 Public PDFUserPass As Long
 Public PDFUserPasswordString As String
 Public PDFUseSecurity As Long

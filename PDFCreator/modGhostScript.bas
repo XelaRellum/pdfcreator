@@ -316,68 +316,71 @@ On Error GoTo ErrPtnr_OnError
 50490
 50500  End If
 50510  tEnc = False
-50520  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And _
-    SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
-50540    If SetEncryptionParams(encPDF, "", "") = True Then
-50550     tEnc = True
-50560    If Len(encPDF.OwnerPass) > 0 Then
-50570      AddParams "-sOwnerPassword=" & encPDF.OwnerPass & ""
-50580     End If
-50590     If Len(encPDF.UserPass) > 0 Then
-50600      AddParams "-sUserPassword=" & encPDF.UserPass
+50520  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
+50530   If SetEncryptionParams(encPDF, "", "") = True Then
+50540     tEnc = True
+50550     If Len(encPDF.OwnerPass) > 0 Then
+50560       AddParams "-sOwnerPassword=" & encPDF.OwnerPass
+50570      Else
+50580       If Len(encPDF.UserPass) > 0 Then
+50590        AddParams "-sOwnerPassword=" & encPDF.UserPass
+50600       End If
 50610     End If
-50620     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50630     If GS_COMPATIBILITY = "1.4" Then
-50640       AddParams "-dEncryptionR=3"
-50650      Else
-50660       AddParams "-dEncryptionR=2"
-50670     End If
-50680     If encPDF.EncryptionLevel = encLow Then
-50690       AddParams "-dKeyLength=40"
-50700      Else
-50710       AddParams "-dKeyLength=128"
-50720     End If
-50730    Else
-50740     If Options.UseAutosave = 0 Then
-50750      MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50760     End If
-50770   End If
-50780  End If
-50790  AddParams "-sOutputFile=" & GSOutputFile
-50800
-50810  If Options.DontUseDocumentSettings = 0 Then
-50820   SetColorParams
-50830   SetGreyParams
-50840   SetMonoParams
-50850
-50860   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50870   AddParams "-dUCRandBGInfo=/Preserve"
-50880   AddParams "-dUseFlateCompression=true"
-50890   AddParams "-dParseDSCCommentsForDocInfo=true"
-50900   AddParams "-dParseDSCComments=true"
-50910   AddParams "-dOPM=" & GS_OVERPRINT
-50920   AddParams "-dOffOptimizations=0"
-50930   AddParams "-dLockDistillerParams=false"
-50940   AddParams "-dGrayImageDepth=-1"
-50950   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50960   AddParams "-dDefaultRenderingIntent=/Default"
-50970   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50980   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50990   AddParams "-dDetectBlends=true"
-51000
-51010   AddAdditionalGhostscriptParameters
-51020
-51030   AddParamCommands
-51040  End If
+50620     If Len(encPDF.UserPass) > 0 Then
+50630      AddParams "-sUserPassword=" & encPDF.UserPass
+50640     End If
+50650     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
+50660     If GS_COMPATIBILITY = "1.4" Then
+50670       AddParams "-dEncryptionR=3"
+50680      Else
+50690       AddParams "-dEncryptionR=2"
+50700     End If
+50710     If encPDF.EncryptionLevel = encLow Then
+50720       AddParams "-dKeyLength=40"
+50730      Else
+50740       AddParams "-dKeyLength=128"
+50750     End If
+50760    Else
+50770     If Options.UseAutosave = 0 Then
+50780      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50790     End If
+50800   End If
+50810  End If
+50820  AddParams "-sOutputFile=" & GSOutputFile
+50830
+50840  If Options.DontUseDocumentSettings = 0 Then
+50850   SetColorParams
+50860   SetGreyParams
+50870   SetMonoParams
+50880
+50890   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50900   AddParams "-dUCRandBGInfo=/Preserve"
+50910   AddParams "-dUseFlateCompression=true"
+50920   AddParams "-dParseDSCCommentsForDocInfo=true"
+50930   AddParams "-dParseDSCComments=true"
+50940   AddParams "-dOPM=" & GS_OVERPRINT
+50950   AddParams "-dOffOptimizations=0"
+50960   AddParams "-dLockDistillerParams=false"
+50970   AddParams "-dGrayImageDepth=-1"
+50980   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50990   AddParams "-dDefaultRenderingIntent=/Default"
+51000   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+51010   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+51020   AddParams "-dDetectBlends=true"
+51030
+51040   AddAdditionalGhostscriptParameters
 51050
-51060  AddParams "-f"
-51070  AddParams GSInputFile
-51080  ShowParams
-51090  If tEnc = True Then
-51100    CallGhostscript "PDF with encryption"
-51110   Else
-51120    CallGhostscript "PDF without encryption"
-51130  End If
+51060   AddParamCommands
+51070  End If
+51080
+51090  AddParams "-f"
+51100  AddParams GSInputFile
+51110  ShowParams
+51120  If tEnc = True Then
+51130    CallGhostscript "PDF with encryption"
+51140   Else
+51150    CallGhostscript "PDF without encryption"
+51160  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -930,7 +933,7 @@ Public Function CallGScript(GSInputFile As String, GSOutputFile As String, _
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim enc As Boolean, encPDF As EncryptData, retEnc As Boolean, _
-  Tempfile As String, tL As Long
+  Tempfile As String, tL As Long, m As Object
 50030  GSInit Options
 50041  Select Case Ghostscriptdevice
         Case 0: 'PDF
@@ -967,28 +970,44 @@ On Error GoTo ErrPtnr_OnError
 50360         CreatePDF GSInputFile, GSOutputFile, Options
 50370       End If
 50380     End If
-50390    End With
-50400   Case 1: 'PNG
-50410    CreatePNG GSInputFile, GSOutputFile, Options
-50420   Case 2: 'JPEG
-50430    CreateJPEG GSInputFile, GSOutputFile, Options
-50440   Case 3: 'BMP
-50450    CreateBMP GSInputFile, GSOutputFile, Options
-50460   Case 4: 'PCX
-50470    CreatePCX GSInputFile, GSOutputFile, Options
-50480   Case 5: 'TIFF
-50490    CreateTIFF GSInputFile, GSOutputFile, Options
-50500   Case 6: 'PS
-50510    CreatePS GSInputFile, GSOutputFile, Options
-50520   Case 7: 'EPS
-50530    CreateEPS GSInputFile, GSOutputFile, Options
-50540   Case 8: 'TXT
-50550    CreateTXT GSInputFile, Options
-50560    CreateTextFile GSOutputFile, GS_OutStr
-50570  End Select
-50580
-50590  Options.Counter = Options.Counter + 1
-50600  SaveOption Options, "Counter"
+50390     If PDFUpdateMetadataIsPossible Then
+50400      If .PDFUpdateMetadata > 0 Then
+50410       If .PDFUpdateMetadata = 2 Or _
+       (.PDFUpdateMetadata = 1 And (InStr(1, .AdditionalGhostscriptParameters, "dpdfa", vbTextCompare) > 0)) Then
+50430        Set m = CreateObject("pdfForge.pdf.pdf")
+50440        Tempfile = GetTempFile(GetTempPath, "~MP")
+50450        KillFile Tempfile
+50460        Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
+50470        If FileExists(Tempfile) Then
+50480         If KillFile(GSOutputFile) Then
+50490          Name Tempfile As GSOutputFile
+50500         End If
+50510        End If
+50520       End If
+50530      End If
+50540     End If
+50550    End With
+50560   Case 1: 'PNG
+50570    CreatePNG GSInputFile, GSOutputFile, Options
+50580   Case 2: 'JPEG
+50590    CreateJPEG GSInputFile, GSOutputFile, Options
+50600   Case 3: 'BMP
+50610    CreateBMP GSInputFile, GSOutputFile, Options
+50620   Case 4: 'PCX
+50630    CreatePCX GSInputFile, GSOutputFile, Options
+50640   Case 5: 'TIFF
+50650    CreateTIFF GSInputFile, GSOutputFile, Options
+50660   Case 6: 'PS
+50670    CreatePS GSInputFile, GSOutputFile, Options
+50680   Case 7: 'EPS
+50690    CreateEPS GSInputFile, GSOutputFile, Options
+50700   Case 8: 'TXT
+50710    CreateTXT GSInputFile, Options
+50720    CreateTextFile GSOutputFile, GS_OutStr
+50730  End Select
+50740
+50750  Options.Counter = Options.Counter + 1
+50760  SaveOption Options, "Counter"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1879,20 +1898,21 @@ Private Sub AddAdditionalGhostscriptParameters()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tStr As String, tStrf() As String, i As Long
-50020  tStr = Trim$(Options.AdditionalGhostscriptParameters)
-50030  If LenB(tStr) > 0 Then
-50040   If InStr(1, tStr, "|") > 0 Then
-50050     tStrf = Split(tStr, "|")
-50060     For i = LBound(tStrf) To UBound(tStrf)
-50070      tStr = Trim$(tStrf(i))
-50080      If LenB(tStr) > 0 Then
-50090       AddParams tStr
-50100      End If
-50110     Next i
-50120    Else
-50130     AddParams tStr
-50140   End If
-50150  End If
+50020  tStr = Replace$(Trim$(Options.AdditionalGhostscriptParameters), "<app>", GetPDFCreatorApplicationPath, , , vbTextCompare)
+50030  tStr = Replace$(Trim$(tStr), "<gslib>", CompletePath(Options.DirectoryGhostscriptLibraries), , , vbTextCompare)
+50040  If LenB(tStr) > 0 Then
+50050   If InStr(1, tStr, "|") > 0 Then
+50060     tStrf = Split(tStr, "|")
+50070     For i = LBound(tStrf) To UBound(tStrf)
+50080      tStr = Trim$(tStrf(i))
+50090      If LenB(tStr) > 0 Then
+50100       AddParams tStr
+50110      End If
+50120     Next i
+50130    Else
+50140     AddParams tStr
+50150   End If
+50160  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

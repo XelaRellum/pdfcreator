@@ -3,16 +3,14 @@
 ' License: GPL
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 2.0.0.0
-' Date: Aprl, 14. 2005
+' Version: 3.1.0.0
+' Date: December, 24. 2007
 ' Author: Frank Heindörfer
-' Comments: Save the pdfcreator as ini-file.
+' Comments: Save the pdfcreator options as ini-file.
 
 Option Explicit
 
-Const sleepTime = 250 ' in milliseconds
-
-Dim fso, PDFCreator, AppTitle, Scriptbasename, PDFCreatorOptions
+Dim fso, PDFCreator, AppTitle, Scriptbasename, PDFCreatorOptions, ProgramIsRunning
 
 Set fso = CreateObject("Scripting.FileSystemObject")
 
@@ -28,10 +26,13 @@ End if
 Set PDFCreator = Wscript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_")
 
 With PDFCreator
- .cStart "/NoProcessingAtStartup"
+ ProgramIsRunning = .cProgramIsRunning
+ .cStart "/NoProcessingAtStartup", true
  .cSaveOptionsToFile fso.GetParentFolderName(Wscript.ScriptFullname) & "\PDFCreator.ini"
  WScript.Sleep sleepTime
- .cClose
+ If ProgramIsRunning = false then
+  .cClose
+ End If 
 End With
 
 '--- PDFCreator events ---

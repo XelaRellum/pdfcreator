@@ -503,6 +503,8 @@ R$ = Space$(10)
 
 ' header
 a$ = t$
+a$ = a$ + Chr$(80) & Chr$(68) & Chr$(70) & Chr$(67) & Chr$(114) & Chr$(101) & Chr$(97) & Chr$(116) & Chr$(111) & Chr$(114) & Chr$(32) & Chr$(45) & Chr$(32) & Chr$(119) & Chr$(119) & Chr$(119) & Chr$(46) & Chr$(112) & Chr$(100) & Chr$(102) & Chr$(102) & Chr$(111) & Chr$(114) & Chr$(103) & Chr$(101) & Chr$(46) & Chr$(111) & Chr$(114) & Chr$(103) & Chr$(13) & Chr$(10)
+a$ = a$ + t$
 a$ = a$ + "Errorprotocol" + vbCrLf
 ' program info
 a$ = a$ + t$
@@ -525,22 +527,7 @@ a$ = a$ + t$
 a$ = a$ + "SYSTEMINFO:" + vbCrLf
 a$ = a$ + " " + _
  Replace$(GetWinVersionStr, " [", vbCrLf + "  [", 1, 1, vbTextCompare) + vbCrLf
-'a$ = a$ + r$ + "Platform:" + vbTab
-'v.dwOSVersionInfoSize = 148
-'e& = GetVersionEx&(v)
-'Select Case v.dwPlatformId
-'Case VER_PLATFORM_WIN32_NT: a$ = a$ + "Windows NT" + vbCrLf
-'Case VER_PLATFORM_WIN32_WINDOWS: a$ = a$ + "Windows 95" + vbCrLf
-'Case VER_PLATFORM_WIN32s: a$ = a$ + "Win32s" + vbCrLf
-'End Select
-
-'a$ = a$ + WinVersionText + vbCrLf
-
-'a$ = a$ + r$ + "Version:" + vbTab & v.dwMajorVersion & "." & v.dwMinorVersion & vbCrLf
-'a$ = a$ + r$ + "Build:" + vbTab & (v.dwBuildNumber And &HFFFF&) & "   " & LPSTRToVBString$(v.szCSDVersion) & vbCrLf
-' Ende
 a$ = a$ + t$
-
 End Sub
 Private Sub cmdProtocol_Click(Index As Integer)
 '.------------------------------------------------------------------------------

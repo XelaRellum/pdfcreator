@@ -879,12 +879,11 @@ Private Function Create_eDoc() As String
 ErrorHandler:
  Screen.MousePointer = vbNormal
  tErrNumber = Err.Number
- tStr = Err.Number & ", " & Err.Description
+ tStr = "Methode ""Create_eDoc"": " & Err.Number & ", " & Err.Description
  On Error GoTo 0
  On Error Resume Next
  Me.Hide
  If tErrNumber <> 32755 Then
-  MsgBox Err.Description
   KillFile PDFSpoolfile
   IfLoggingWriteLogfile "Error: " & tStr
   IfLoggingShowLogfile frmLog, frmMain

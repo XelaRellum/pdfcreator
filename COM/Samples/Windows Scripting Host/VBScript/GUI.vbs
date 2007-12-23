@@ -3,15 +3,15 @@
 ' License: GPL
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: September, 1. 2005
+' Version: 2.0.0.0
+' Date: September, 20. 2007
 ' Author: Frank Heindörfer
 ' Comments: This script shows the gui functions 
 '           of the com interface of PDFCreator.
 
 Option Explicit
 
-Dim fso, PDFCreator, aw, ScriptBaseName, AppTitle
+Dim fso, PDFCreator, aw, ScriptBaseName, AppTitle, ProgramIsRunning
 
 Set fso = CreateObject("Scripting.FileSystemObject")
 
@@ -29,10 +29,16 @@ Set PDFCreator = Wscript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_")
 MsgBox "This script shows the gui functions of the com interface of PDFCreator.", vbInformation + vbSystemModal, AppTitle
 
 With PDFCreator
+ ProgramIsRunning = .cProgramIsRunning
  MsgBox "Set Visible = False", vbInformation + vbSystemModal
  .cVisible = False
- MsgBox "Start PDFCreator. PDFCreator is not on the desktop or in the systray.", vbInformation + vbSystemModal, AppTitle
- .cStart "/NoProcessingAtStartup"
+ If ProgramIsRunning = false then
+   MsgBox "Start PDFCreator. PDFCreator is not on the desktop or in the systray.", vbInformation + vbSystemModal, AppTitle
+   .cStart "/NoProcessingAtStartup"
+  Else
+   MsgBox "Get the current PDFCreator session. PDFCreator is not on the desktop or in the systray.", vbInformation + vbSystemModal, AppTitle
+  .cStart "/NoProcessingAtStartup", true
+ End If
  MsgBox "Set Visible = True", vbInformation + vbSystemModal, AppTitle
  .cVisible = true
  MsgBox "PDFCreator is on the desktop or in the systray now.", vbInformation + vbSystemModal, AppTitle
@@ -50,7 +56,7 @@ With PDFCreator
  .cShowOptionsDialog True
  Wscript.Sleep 250
  MsgBox "PDFCreator closes the options dialog." & vbcrlf & _
-  "This is the same like the user press cancel.", vbInformation + vbSystemModal, AppTitle
+  "This is the same like the user press 'Cancel'.", vbInformation + vbSystemModal, AppTitle
  .cShowOptionsDialog False
  MsgBox "Show the logfile dialog.", vbInformation + vbSystemModal, AppTitle
  .cShowLogfileDialog True
@@ -66,10 +72,12 @@ With PDFCreator
  .cShowLogfileDialog True
  Wscript.Sleep 250
  MsgBox "PDFCreator closes the logfile dialog." & vbcrlf & _
-  "This is the same like the user press cancel.", vbInformation + vbSystemModal, AppTitle
+  "This is the same like the user press 'Close'.", vbInformation + vbSystemModal, AppTitle
  .cShowlogfileDialog False
  WScript.Sleep 200
- .cClose
+ If ProgramIsRunning = false then
+  .cClose
+ End If 
 End With
  
 MsgBox "Ready", vbInformation + vbSystemModal, AppTitle

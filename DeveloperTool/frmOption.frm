@@ -177,7 +177,7 @@ Private Sub cmd_Click(Index As Integer)
    End If
    txt(1).Text = Trim$(txt(1).Text)
    If txt(1).Text = "" Then
-    aw = MsgBox("If you use an empty objectname, you must add the string in the function 'IsSpecialString' in 'frmMain'!", vbExclamation Or vbOKCancel)
+    aw = MsgBox("If you use an empty objectname, you must add the string in the function 'CreateSpecialStrings' in 'frmMain'!", vbExclamation Or vbOKCancel)
     If aw = vbCancel Then
      Exit Sub
     End If

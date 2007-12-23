@@ -3,8 +3,8 @@
 ' License: GPL
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.1
-' Date: April, 4. 2007
+' Version: 1.1.0.0
+' Date: December, 24. 2007
 ' Author: Frank Heindörfer
 ' Comments: This script convert a printable file in a pdf-file using 
 '           the com interface of PDFCreator.
@@ -58,7 +58,7 @@ For i = 0 to objArgs.Count - 1
   if Not .cIsPrintable(CStr(ifname)) Then
    MsgBox "Converting: " & ifname & vbcrlf & vbcrlf & _
     "An error is occured: File is not printable!", vbExclamation + vbSystemModal, AppTitle
-   WScript.Quit
+   Exit For
   End if
 
   ReadyState = 0

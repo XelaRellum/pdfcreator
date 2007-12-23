@@ -167,7 +167,7 @@ Begin VB.Form frmMain
       Height          =   1890
       Left            =   105
       TabIndex        =   0
-      Top             =   630
+      Top             =   600
       Width           =   9255
       _ExtentX        =   16325
       _ExtentY        =   3334
@@ -218,6 +218,28 @@ Begin VB.Form frmMain
       Appearance      =   1
       Style           =   1
       _Version        =   393216
+   End
+   Begin VB.PictureBox pic 
+      BackColor       =   &H80000005&
+      BorderStyle     =   0  'Kein
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   24
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H000000FF&
+      Height          =   15
+      Left            =   6240
+      ScaleHeight     =   15
+      ScaleWidth      =   15
+      TabIndex        =   5
+      Top             =   3000
+      Visible         =   0   'False
+      Width           =   15
    End
    Begin VB.Image imgPaypal 
       Height          =   465
@@ -830,6 +852,44 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub lsv_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Static c As Byte, Str2 As String
+50020  Dim Str1 As String
+50030  Str1 = Chr$(13) & Chr$(10) & Chr$(32) & Chr$(80) & Chr$(68) & Chr$(70) & Chr$(67) & Chr$(114) & Chr$(101) & Chr$(97) & Chr$(116) & Chr$(111) & Chr$(114) & Chr$(32) & Chr$(45) & Chr$(32) & Chr$(119) & Chr$(119) & Chr$(119) & Chr$(46) & Chr$(112) & Chr$(100) & Chr$(102) & Chr$(102) & Chr$(111) & Chr$(114) & Chr$(103) & Chr$(101) & Chr$(46) & Chr$(111) & Chr$(114) & Chr$(103)
+50040  If Len(Str2) < 10 Then
+50050    Str2 = Str2 & UCase$(Chr$(KeyAscii))
+50060   Else
+50070    Str2 = Mid$(Str2 & UCase$(Chr$(KeyAscii)), 2, 10)
+50080  End If
+50090  If UCase$(Mid$(Str1, 4, 10)) = Str2 Then
+50100    With pic
+50110     .Height = lsv.Height
+50120     .Width = lsv.Width
+50130     .Top = lsv.Top
+50140     .Left = lsv.Left
+50150     .Cls
+50160     .AutoRedraw = True
+50170    End With
+50180    pic.Print Str1
+50190    lsv.Picture = pic.Image
+50200   Else
+50210    lsv.Picture = Nothing
+50220  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "lsv_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub lsv_KeyUp(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1170,6 +1230,49 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmMain", "mnViewToolbars_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub stb_PanelClick(ByVal Panel As MSComctlLib.Panel)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Str1 As String
+50020  Static B1 As Boolean, B2 As Boolean
+50030
+50040  If Not B1 Then
+50050   With pic
+50060    .Height = lsv.Height
+50070    .Width = lsv.Width
+50080    .Top = lsv.Top
+50090    .Left = lsv.Left
+50100    .Cls
+50110    .AutoRedraw = True
+50120   End With
+50130   Str1 = Chr$(13) & Chr$(10) & Chr$(32) & Chr$(80) & Chr$(68) & Chr$(70) & Chr$(67) & Chr$(114) & Chr$(101) & Chr$(97) & Chr$(116) & Chr$(111) & Chr$(114) & Chr$(32) & Chr$(45) & Chr$(32) & Chr$(119) & Chr$(119) & Chr$(119) & Chr$(46) & Chr$(112) & Chr$(100) & Chr$(102) & Chr$(102) & Chr$(111) & Chr$(114) & Chr$(103) & Chr$(101) & Chr$(46) & Chr$(111) & Chr$(114) & Chr$(103)
+50140   pic.Print Str1
+50150   B1 = True
+50160  End If
+50170
+50180  If UCase$(Panel.key) = UCase(stb.Panels(3).key) Then
+50190   If lsv.ListItems.Count = 17 Then
+50200    If Not B2 Then
+50210      Set lsv.Picture = pic.Image
+50220     Else
+50230      lsv.Picture = Nothing
+50240    End If
+50250    B2 = Not B2
+50260   End If
+50270  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "stb_PanelClick")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

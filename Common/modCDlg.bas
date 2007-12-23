@@ -1,7 +1,7 @@
 Attribute VB_Name = "modCDlg"
 Option Explicit
 
-Public Function OpenFileDialog(Files As Collection, Optional InitFilename As String = "", _
+Public Function OpenFileDialog(files As Collection, Optional InitFilename As String = "", _
  Optional Filter As String, Optional DefaultFileExtension As String = "*.*", _
  Optional InitDir As String = "", Optional DialogTitle As String = "", _
  Optional Flags As OpenSaveFlags, Optional hwnd As Long = 0, Optional FilterIndex As Long = 1) As Long
@@ -42,7 +42,7 @@ On Error GoTo ErrPtnr_OnError
 50320   .Flags = Flags
 50330  End With
 50340
-50350  Set Files = New Collection
+50350  Set files = New Collection
 50360  If GetOpenFileName(ofn) <> 0 Then
 50370    buff = Trim$(Replace$(Left$(ofn.sFile, Len(ofn.sFile) - 2), vbNullChar & vbNullChar, ""))
 50380    Do While Right$(buff, 1) = vbNullChar
@@ -54,14 +54,14 @@ On Error GoTo ErrPtnr_OnError
 50440       buffA = Split(buff, vbNullChar)
 50450       For i = LBound(buffA) + 1 To UBound(buffA)
 50460        If Len(buffA(i)) > 0 Then
-50470         Files.Add CompletePath(buffA(0)) & buffA(i)
+50470         files.Add CompletePath(buffA(0)) & buffA(i)
 50480        End If
 50490       Next i
 50500      Else
-50510       Files.Add buff
+50510       files.Add buff
 50520     End If
 50530    End If
-50540    OpenFileDialog = Files.Count
+50540    OpenFileDialog = files.Count
 50550   Else
 50560    OpenFileDialog = -1
 50570  End If

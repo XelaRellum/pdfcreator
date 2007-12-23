@@ -1,30 +1,48 @@
 VERSION 5.00
 Begin VB.Form frmEdit 
    Caption         =   "Form1"
-   ClientHeight    =   1725
+   ClientHeight    =   1920
    ClientLeft      =   60
    ClientTop       =   240
    ClientWidth     =   6330
    LinkTopic       =   "Form1"
-   ScaleHeight     =   1725
+   ScaleHeight     =   1920
    ScaleWidth      =   6330
    StartUpPosition =   2  'Bildschirmmitte
+   Begin VB.CommandButton cmd 
+      Caption         =   "&Down"
+      Height          =   435
+      Index           =   3
+      Left            =   960
+      TabIndex        =   7
+      Top             =   1320
+      Width           =   1065
+   End
+   Begin VB.CommandButton cmd 
+      Caption         =   "&Up"
+      Height          =   435
+      Index           =   2
+      Left            =   2160
+      TabIndex        =   6
+      Top             =   1320
+      Width           =   1065
+   End
    Begin VB.CommandButton cmd 
       Cancel          =   -1  'True
       Caption         =   "&Cancel"
       Height          =   435
       Index           =   1
-      Left            =   3990
+      Left            =   3870
       TabIndex        =   2
-      Top             =   1155
+      Top             =   1275
       Width           =   1065
    End
    Begin TransTool.dmFrame dmFra 
       Height          =   975
       Index           =   1
-      Left            =   3240
+      Left            =   3120
       TabIndex        =   5
-      Top             =   120
+      Top             =   240
       Width           =   3015
       _ExtentX        =   5318
       _ExtentY        =   1720
@@ -54,9 +72,9 @@ Begin VB.Form frmEdit
    Begin TransTool.dmFrame dmFra 
       Height          =   960
       Index           =   0
-      Left            =   105
+      Left            =   -15
       TabIndex        =   3
-      Top             =   105
+      Top             =   225
       Width           =   3060
       _ExtentX        =   5398
       _ExtentY        =   1693
@@ -88,9 +106,9 @@ Begin VB.Form frmEdit
       Caption         =   "&Save"
       Height          =   435
       Index           =   0
-      Left            =   5145
+      Left            =   5025
       TabIndex        =   1
-      Top             =   1155
+      Top             =   1275
       Width           =   1065
    End
 End
@@ -107,15 +125,70 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case Index
         Case 0
-50030    If frmMain.lsv.SelectedItem.Index > 0 Then
-50040     frmMain.lsv.SelectedItem.Text = Replace(txt(1).Text, vbCrLf, "%n", 1, , vbTextCompare)
-50050    End If
-50060  End Select
-50070  Unload Me
+50030    If frmMain.lsv.SelectedItem.Text <> Replace(txt(1).Text, vbCrLf, "%n", 1, , vbTextCompare) Then
+50040     frmMain.Changed
+50050     frmMain.lsv.SelectedItem.Text = Replace(txt(1).Text, vbCrLf, "%n", 1, , vbTextCompare)
+50060    End If
+50070    Unload Me
+50080   Case 1
+50090    Unload Me
+50100   Case 2
+50110    If frmMain.lsv.SelectedItem.Text <> Replace(txt(1).Text, vbCrLf, "%n", 1, , vbTextCompare) Then
+50120     frmMain.Changed
+50130     frmMain.lsv.SelectedItem.Text = Replace(txt(1).Text, vbCrLf, "%n", 1, , vbTextCompare)
+50140    End If
+50150    frmMain.lsv.ListItems(frmMain.lsv.SelectedItem.Index - 1).Selected = True
+50160    frmEdit.txt(0).Text = Replace(frmMain.lsv.SelectedItem.SubItems(5), "%n", vbCrLf)
+50170    frmEdit.txt(1).Text = Replace(frmMain.lsv.SelectedItem.Text, "%n", vbCrLf)
+50180    frmEdit.txt(1).SetFocus
+50190    SetButtons
+50200   Case 3
+50210    If frmMain.lsv.SelectedItem.Text <> Replace(txt(1).Text, vbCrLf, "%n", 1, , vbTextCompare) Then
+50220     frmMain.Changed
+50230     frmMain.lsv.SelectedItem.Text = Replace(txt(1).Text, vbCrLf, "%n", 1, , vbTextCompare)
+50240    End If
+50250    frmMain.lsv.ListItems(frmMain.lsv.SelectedItem.Index + 1).Selected = True
+50260    frmEdit.txt(0).Text = Replace(frmMain.lsv.SelectedItem.SubItems(5), "%n", vbCrLf)
+50270    frmEdit.txt(1).Text = Replace(frmMain.lsv.SelectedItem.Text, "%n", vbCrLf)
+50280    frmEdit.txt(1).SetFocus
+50290    SetButtons
+50300  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmEdit", "cmd_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub SetButtons()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If frmMain.lsv.ListItems.Count = 1 Then
+50020   cmd(2).Enabled = False
+50030   cmd(3).Enabled = False
+50040   Exit Sub
+50050  End If
+50061  Select Case frmMain.lsv.SelectedItem.Index
+        Case 1
+50080    cmd(2).Enabled = False
+50090    cmd(3).Enabled = True
+50100   Case frmMain.lsv.ListItems.Count
+50110    cmd(2).Enabled = True
+50120    cmd(3).Enabled = False
+50130   Case Else
+50140    cmd(2).Enabled = True
+50150    cmd(3).Enabled = True
+50160  End Select
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmEdit", "SetButtons")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -137,6 +210,7 @@ On Error GoTo ErrPtnr_OnError
 50070  dmFra(1).Caption = "Translated text"
 50080  Set txt(1).Font = frmMain.lsv.Font
 50090  ShowAcceleratorsInForm Me, True
+50100  SetButtons
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -192,7 +266,15 @@ On Error GoTo ErrPtnr_OnError
 50370    .Top = cmd(0).Top
 50380    .Left = dmFra(1).Left
 50390   End With
-50400  End If
+50400   With cmd(2)
+50410    .Top = cmd(0).Top
+50420    .Left = Me.Width / 2 - .Width - 50
+50430   End With
+50440   With cmd(3)
+50450    .Top = cmd(0).Top
+50460    .Left = Me.Width / 2 + 50
+50470   End With
+50480  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

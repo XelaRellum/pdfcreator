@@ -4,6 +4,24 @@ Copyright (C)2002-2007 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
+Version 0.9.5 (December 24, 2007)
+-------------------------------------------------------------------------------
+Improvements:  Using GPL-Ghostscript 8.61 now.
+- Added french help file.
+- New com-function: cPrintURL added.
+- Added some new com-samples.
+- Added a counter for filenames.
+- Improved setup now supports silent install for server mode (with /LoadInf and /SaveInf).
+- Support for PDF/A (1b) and PDF/X (X-3:2002, X-3:2003 and X-4) via additional Ghostscript parameters (predefined).
+- Support for signing PDFs via Actions and a VB-Script.
+
+Bug Fixes:
+- Fixed some minor bugs.
+
+Known issues:
+- Only basic Vista support.
+- No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 Version 0.9.3 (August 25, 2006)
 -------------------------------------------------------------------------------
 Improvements:
