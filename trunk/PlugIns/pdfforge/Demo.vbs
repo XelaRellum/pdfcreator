@@ -1,4 +1,4 @@
-' CreateTestpage script
+' Createa test-document script showing some functions of the  pdfforge.dll.
 ' Part of PDFCreator\pdfforge.dll
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
@@ -6,7 +6,7 @@
 ' Version: 1.0.0.0
 ' Date: December, 24. 2007
 ' Author: Frank Heindörfer
-' Comments: Shows some functions of pdfforge.dll.
+' Comments: Shows some functions of the pdfforge.dll.
 
 Option Explicit
 
