@@ -1,4 +1,4 @@
-Name:     pdfforge.org
+Name:     pdfforge.dll
 Author:   Frank Heindörfer
 Email:    software@heindoerfer.com
 Homepage: http://www.pdfforge.org
