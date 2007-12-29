@@ -138,7 +138,7 @@ On Error GoTo ErrPtnr_OnError
 50130  ColorsPreserveTransfer(0) = "Remove": ColorsPreserveTransfer(1) = "Preserve"
 50140
 50150  PNGColorscount(0) = "png16m": PNGColorscount(1) = "png256"
-50160  PNGColorscount(2) = "png16": PNGColorscount(3) = "png2"
+50160  PNGColorscount(2) = "png16": PNGColorscount(3) = "pngmono"
 50170  PNGColorscount(4) = "pnggray"
 50180
 50190  JPEGColorscount(0) = "jpeg": JPEGColorscount(1) = "jpeggray"
@@ -1778,12 +1778,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CheckForStamping(Filename As String)
+Public Sub CheckForStamping(filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim StampPage As String, tStr As String, R As String, G As String, B As String, _
-  Stampfile As String, Path As String, ff As Long, Files As Collection, _
+  Stampfile As String, Path As String, ff As Long, files As Collection, _
   StampString As String, StampFontsize As Double, _
   StampOutlineFontthickness As Double
 50050  StampString = RemoveLeadingAndTrailingQuotes(Trim$(Options.StampString))
@@ -1833,13 +1833,13 @@ On Error GoTo ErrPtnr_OnError
 50490   Open Stampfile For Output As #ff
 50500   Print #ff, StampPage
 50510   Close #ff
-50520   Set Files = New Collection
-50530   Files.Add Stampfile
-50540   Files.Add Filename
+50520   Set files = New Collection
+50530   files.Add Stampfile
+50540   files.Add filename
 50550   Stampfile = GetTempFile(Path, "~ST")
 50560   KillFile Stampfile
-50570   CombineFiles Stampfile, Files
-50580   Name Stampfile As Filename
+50570   CombineFiles Stampfile, files
+50580   Name Stampfile As filename
 50590  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
