@@ -3,12 +3,14 @@
 ' License: GPL
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 3.1.0.0
+' Version: 3.2.0.0
 ' Date: December, 24. 2007
 ' Author: Frank Heindörfer
 ' Comments: Save the pdfcreator options as ini-file.
 
 Option Explicit
+
+Const sleepTime = 1000
 
 Dim fso, PDFCreator, AppTitle, Scriptbasename, PDFCreatorOptions, ProgramIsRunning
 
