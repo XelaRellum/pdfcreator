@@ -121,7 +121,7 @@ PDFFontsSubSetFontsPercent|txtPDFSubSetPerc.Text|Long|100|0|<
 ' <Printing Formats PDF General>
 PDFGeneralASCII85|chkPDFASCII85.Value|Boolean|0||
 PDFGeneralAutorotate|cmbPDFRotate.Listindex|Long|2|0|2
-PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|2|0|2
+PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|2|0|3
 PDFGeneralOverprint|cmbPDFOverprint.Listindex|Long|0|0|1
 PDFGeneralResolution|txtPDFRes.Text|Long|600|0|<
 

@@ -1523,7 +1523,7 @@ On Error GoTo ErrPtnr_OnError
 61000   End If
 61010   tStr = hOpt.Retrieve("PDFGeneralCompatibility")
 61020   If IsNumeric(tStr) Then
-61030     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+61030     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
 61040       .PDFGeneralCompatibility = CLng(tStr)
 61050      Else
 61060       If UseStandard Then
@@ -3735,7 +3735,7 @@ On Error GoTo ErrPtnr_OnError
 59070   End If
 59080   tStr = reg.GetRegistryValue("PDFGeneralCompatibility")
 59090   If IsNumeric(tStr) Then
-59100     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+59100     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
 59110       .PDFGeneralCompatibility = CLng(tStr)
 59120      Else
 59130       If UseStandard Then
