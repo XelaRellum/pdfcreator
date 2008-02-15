@@ -224,6 +224,19 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Result As Long, si As STARTUPINFO, PI As PROCESS_INFORMATION, _
   strDesktop As String, Buffer As String
+  
+50020 Dim env As Long
+50021 Dim lpEnv As Long
+50022 env = 0
+50023 lpEnv = 0
+50024 lpEnv = VarPtr(env)
+50025 Result = CreateEnvironmentBlock(lpEnv, hToken, 0)
+50026 If Result = 0 Then
+50027   WriteToSpecialLogfile "CreateEnvironmentBlock " & "fehlgeschlagen: " & Err.LastDllError
+50028 Else
+50029   WriteToSpecialLogfile "CreateEnvironmentBlock=" & "erfolgreich (" & lpEnv & "->" & env & ")"
+50023 End If
+  
 50030
 50040  Buffer = Space(255)
 50050
@@ -233,7 +246,7 @@ On Error GoTo ErrPtnr_OnError
 50090  WriteToSpecialLogfile "Application=" & Application
 50100  WriteToSpecialLogfile "Parameters=" & Parameters
 50110  Result = CreateProcessAsUser(hToken, Application, Parameters, 0&, 0&, False, _
-  CREATE_DEFAULT_ERROR_MODE, 0&, CurrentDirectory, si, PI)
+  CREATE_DEFAULT_ERROR_MODE Or CREATE_UNICODE_ENVIRONMENT, lpEnv, CurrentDirectory, si, PI)
 50130
 50140  If Result = 0 Then
 50150   RunAsUser = Err.LastDllError
@@ -242,6 +255,12 @@ On Error GoTo ErrPtnr_OnError
 50180   CloseHandle hToken
 50190   Exit Function
 50200  End If
+50200
+50201 WriteToSpecialLogfile "CreateProcessAsUser() successful = "
+50202 Result = WaitForSingleObject(PI.hProcess, 60000)
+50203 WriteToSpecialLogfile "WaitForSingleObject = " & Result
+50204 DestroyEnvironmentBlock lpEnv
+50205
 50210
 50220  CloseHandle PI.hThread
 50230  CloseHandle PI.hProcess

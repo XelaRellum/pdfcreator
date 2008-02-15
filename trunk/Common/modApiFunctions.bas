@@ -226,6 +226,8 @@ Public Declare Function WaitForInputIdle Lib "user32.dll" (ByVal hProcess As Lon
 ' userenv.dll
 Public Declare Function LoadUserProfile Lib "userenv.dll" Alias "LoadUserProfileA" (ByVal hToken As Long, ByVal lpProfileInfo As Long) As Boolean
 Public Declare Function UnloadUserProfile Lib "userenv.dll" (ByVal hToken As Long, ByVal hProfile As Long) As Long
+Public Declare Function CreateEnvironmentBlock Lib "userenv.dll" (ByRef lpEnvironment As Any, ByVal hToken As Long, ByVal bInherit As Long) As Long
+Public Declare Function DestroyEnvironmentBlock Lib "userenv.dll" (ByRef lpEnvironment As Any) As Long
 
 ' version.dll
 Public Declare Function GetFileVersionInfoSize Lib "version.dll" Alias "GetFileVersionInfoSizeA" (ByVal lptstrFilename As String, lpdwHandle As Long) As Long
