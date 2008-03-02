@@ -133,7 +133,7 @@
 #include "PostscriptPrinterSettings.inc"
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "0.9.5"
+#define UpdateIsPossibleMinVersion "0.9.6"
 
 #IFDEF IncludeToolbar
  #include "ToolbarForm.isd"
@@ -552,20 +552,19 @@ Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhos
 
 [Registry]
 ;PrinterMonitor
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Arguments; ValueData: -PPDFCREATORPRINTER; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Command; ValueData: {code:GetShortname|{syswow64}\{#SpoolerExename}}; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Delay; ValueData: 300; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Description; ValueData: PDFCreator Redirected Port; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileDebug; ValueData: 0; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileUse; ValueData: 0; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Output; ValueData: 0; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Printer; ValueData: {code:GetPrintername}; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Printerror; ValueData: 0; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Flags: uninsdeletevalue; OnlyBelowVersion: 0,6.0
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 1; Flags: uninsdeletevalue; MinVersion: 0,6.0
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: ShowWindow; ValueData: 0; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Arguments; ValueData: -PPDFCREATORPRINTER; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Command; ValueData: {code:GetShortname|{syswow64}\{#SpoolerExename}}; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Delay; ValueData: 300; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Description; ValueData: PDFCreator Redirected Port; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileDebug; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileUse; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Output; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Printer; ValueData: {code:GetPrintername}; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Printerror; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: ShowWindow; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
 
 ;PrinterDriver settings
 ;Root: HKLM; SubKey: System\CurrentControlSet\Control\Print\Printers\PDFCreator; ValueType: binary; ValueName: Default DevMode; ValueData: {#PrinterDriverSettings1}; Flags: uninsdeletevalue; MinVersion: 4.0.950,0; OnlyBelowVersion: 0,0
@@ -2309,9 +2308,6 @@ begin
        Result := False
     else
      Result:=False;
- If InstallOnThisVersion('0,6.0','0,0')=irInstall then // Only Vista and above
-  If (PageID = ServerDescriptionPage.ID) or (PageID = SCPage.ID) or (PageID = PrinterdriverPage.ID) then
-     Result := True
 end;
 
 function CheckMonitorname(MonitornameStr: String): Boolean;
@@ -3090,18 +3086,8 @@ begin
   ToolbarForm_CreatePage(wpSelectDir);
 #ENDIF
 
- If InstallOnThisVersion('0,6.0','0,0')=irInstall then begin // Only Vista and above
-   VistaNotePage := CreateOutputMsgPage(wpLicense,ExpandConstant('{cm:VistaInstallation}'),
-    ExpandConstant('{cm:VistaInstallationDescription}'),ExpandConstant('{cm:VistaInstallationMessage}'));
-   CreateLabel(0,45,400,200,ExpandConstant('{cm:VistaInstallationNote1}'),clWindowText,VistaNotePage);
-   VistaNotePage.MsgLabel.Font.Style := [fsBold];
-   VistaNotePage.MsgLabel.Height := 24;
-   SCPage:=CreateCustomPage(VistaNotePage.ID, ExpandConstant('{cm:InstallationType}'),
-    ExpandConstant('{cm:InstallationTypeDescription}'));
-  end else begin
-   SCPage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
-    ExpandConstant('{cm:InstallationTypeDescription}'));
- end;
+ SCPage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
+  ExpandConstant('{cm:InstallationTypeDescription}'));
 
  CreateLabel(0,10,450,15,ExpandConstant('{cm:InstallationTypeDescription2}'),clWindowText,SCPage);
  StandardmodusRB:=CreateRadioButton(16,45,200,15,ExpandConstant('{cm:StandardInstallation}'),True,SCPage);
@@ -3110,16 +3096,10 @@ begin
  CreateLabel(35,150,350,350,ExpandConstant('{cm:ServerInstallationDescription}'),clWindowText,SCPage);
  ServerDescriptionPage:=CreateOutputMsgPage(SCPage.ID,ExpandConstant('{cm:ServerMode}'),
   ExpandConstant('{cm:ServerModeDescription}'),ExpandConstant('{cm:ServerModeMessage}'));
- If InstallOnThisVersion('0,6.0','0,0')=irInstall then begin // Only Vista and above
-   StandardmodusRB.Enabled := false;
-   StandardmodusLabel.Enabled := false;
-   ServermodusRB.Checked := true;
-   Servermodus := true
-  end else
-   If Servermodus = true then begin
-    StandardmodusRB.Checked := false;
-    ServermodusRB.Checked := true
-   end;
+ If Servermodus = true then begin
+  StandardmodusRB.Checked := false;
+  ServermodusRB.Checked := true
+ end;
 
  PrinternamePage:=CreateInputQuerypage(ServerDescriptionPage.ID,
   ExpandConstant('{cm:Printername}'), ExpandConstant('{cm:PrinternameDescription}'),
@@ -3391,3 +3371,4 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
+

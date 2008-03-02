@@ -268,8 +268,7 @@ Public Class Form1
         System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator)
         System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr)
         pErr = Nothing
-        GC.Collect()
-        GC.WaitForPendingFinalizers()
+        _PDFCreator = Nothing
         GC.Collect()
         GC.WaitForPendingFinalizers()
     End Sub
