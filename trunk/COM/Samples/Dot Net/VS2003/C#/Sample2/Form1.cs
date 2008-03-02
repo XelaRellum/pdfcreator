@@ -213,11 +213,10 @@ namespace Sample2
 			_PDFCreator.cClose();
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator);
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr);
+            _PDFCreator = null;
 			pErr = null;
 			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
+            GC.WaitForPendingFinalizers();
 		}
 	}
 }

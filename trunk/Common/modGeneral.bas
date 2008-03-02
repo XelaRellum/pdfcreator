@@ -732,26 +732,30 @@ On Error GoTo ErrPtnr_OnError
 50030  With reg
 50040   .hkey = hProfile
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
-50060   tStr = CompletePath(.GetRegistryValue("Local Settings"))
-50070  End With
-50080  Set reg = Nothing
-50090  If LenB(tStr) = 0 Then
-50100    If IsWin9xMe = True Then
-50110      tStr = CompletePath(GetTempPathApi)
-50120     Else
-50130      If IsWinNT4 = True Then
-50140       tStr = CompletePath(GetTempPathApi)
-50150       If LenB(Environ$("Redmon_User")) > 0 Then
-50160         tStr = tStr & Environ$("Redmon_User")
-50170        Else
-50180         tStr = tStr & GetUsername
-50190       End If
-50200      End If
-50210    End If
-50220   Else
-50230    tStr = CompletePath(tStr) & "Temp\"
-50240  End If
-50250  GetTempPathReg = tStr
+50060   If IsWinVista Then
+50070    tStr = CompletePath(.GetRegistryValue("Local AppData"))
+50080   Else
+50090    tStr = CompletePath(.GetRegistryValue("Local Settings"))
+50100   End If
+50110  End With
+50120  Set reg = Nothing
+50130  If LenB(tStr) = 0 Then
+50140    If IsWin9xMe = True Then
+50150      tStr = CompletePath(GetTempPathApi)
+50160     Else
+50170      If IsWinNT4 = True Then
+50180       tStr = CompletePath(GetTempPathApi)
+50190       If LenB(Environ$("Redmon_User")) > 0 Then
+50200         tStr = tStr & Environ$("Redmon_User")
+50210        Else
+50220         tStr = tStr & GetUsername
+50230       End If
+50240      End If
+50250    End If
+50260   Else
+50270    tStr = CompletePath(tStr) & "Temp\"
+50280  End If
+50290  GetTempPathReg = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

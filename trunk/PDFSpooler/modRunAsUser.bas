@@ -172,26 +172,36 @@ On Error GoTo ErrPtnr_OnError
 50040   .hkey = hProfile
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
 50060   AppData = CompletePath(.GetRegistryValue("AppData"))
-50070   tStr = CompletePath(.GetRegistryValue("Local Settings"))
-50080  End With
-50090  Set reg = Nothing
-50100  If LenB(tStr) = 0 Then
-50110    If IsWin9xMe = True Then
-50120      tStr = CompletePath(GetTempPathApi)
-50130     Else
-50140      If IsWinNT4 = True Then
-50150       tStr = CompletePath(GetTempPathApi)
-50160       If LenB(Environ$("Redmon_User")) > 0 Then
-50170         tStr = tStr & Environ$("Redmon_User")
-50180        Else
-50190         tStr = tStr & GetUsername
-50200       End If
-50210      End If
-50220    End If
-50230   Else
-50240    tStr = CompletePath(tStr) & "Temp\"
-50250  End If
-50260  LocalTemp = tStr
+50070   WriteToSpecialLogfile "GetUserLocalDirs ->  AppData:" & AppData
+50080   If IsWinVista Then
+50090    Dim LocalAppData As String
+50100    LocalAppData = CompletePath(.GetRegistryValue("Local AppData"))
+50110    LocalTemp = CompletePath(CompletePath(LocalAppData) & "Temp")
+50120    WriteToSpecialLogfile "Vista: GetUserLocalDirs ->  LocalTemp:" & LocalTemp
+50130    Exit Sub
+50140   End If
+50150   tStr = CompletePath(.GetRegistryValue("Local Settings"))
+50160   WriteToSpecialLogfile "GetUserLocalDirs ->  Local Settings:" & tStr
+50170  End With
+50180
+50190  Set reg = Nothing
+50200  If LenB(tStr) = 0 Then
+50210    If IsWin9xMe = True Then
+50220      tStr = CompletePath(GetTempPathApi)
+50230     Else
+50240      If IsWinNT4 = True Then
+50250       tStr = CompletePath(GetTempPathApi)
+50260       If LenB(Environ$("Redmon_User")) > 0 Then
+50270         tStr = tStr & Environ$("Redmon_User")
+50280        Else
+50290         tStr = tStr & GetUsername
+50300       End If
+50310      End If
+50320    End If
+50330   Else
+50340    tStr = CompletePath(tStr) & "Temp\"
+50350  End If
+50360  LocalTemp = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -224,47 +234,47 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Result As Long, si As STARTUPINFO, PI As PROCESS_INFORMATION, _
   strDesktop As String, Buffer As String
-  
-50020 Dim env As Long
-50021 Dim lpEnv As Long
-50022 env = 0
-50023 lpEnv = 0
-50024 lpEnv = VarPtr(env)
-50025 Result = CreateEnvironmentBlock(lpEnv, hToken, 0)
-50026 If Result = 0 Then
-50027   WriteToSpecialLogfile "CreateEnvironmentBlock " & "fehlgeschlagen: " & Err.LastDllError
-50028 Else
-50029   WriteToSpecialLogfile "CreateEnvironmentBlock=" & "erfolgreich (" & lpEnv & "->" & env & ")"
-50023 End If
-  
 50030
-50040  Buffer = Space(255)
-50050
-50060  strDesktop = "WinSta0\Default"
-50070  si.lpDesktop = strDesktop
-50080  si.cb = Len(si)
-50090  WriteToSpecialLogfile "Application=" & Application
-50100  WriteToSpecialLogfile "Parameters=" & Parameters
-50110  Result = CreateProcessAsUser(hToken, Application, Parameters, 0&, 0&, False, _
+50040 Dim env As Long
+50050 Dim lpEnv As Long
+50060 env = 0
+50070 lpEnv = 0
+50080 lpEnv = VarPtr(env)
+50090 Result = CreateEnvironmentBlock(lpEnv, hToken, 0)
+50100 If Result = 0 Then
+50110   WriteToSpecialLogfile "CreateEnvironmentBlock " & "fehlgeschlagen: " & Err.LastDllError
+50120 Else
+50130   WriteToSpecialLogfile "CreateEnvironmentBlock=" & "erfolgreich (" & lpEnv & "->" & env & ")"
+50140 End If
+50150
+50160
+50170  Buffer = Space(255)
+50180
+50190  strDesktop = "WinSta0\Default"
+50200  si.lpDesktop = strDesktop
+50210  si.cb = Len(si)
+50220  WriteToSpecialLogfile "Application=" & Application
+50230  WriteToSpecialLogfile "Parameters=" & Parameters
+50240  Result = CreateProcessAsUser(hToken, Application, Parameters, 0&, 0&, False, _
   CREATE_DEFAULT_ERROR_MODE Or CREATE_UNICODE_ENVIRONMENT, lpEnv, CurrentDirectory, si, PI)
-50130
-50140  If Result = 0 Then
-50150   RunAsUser = Err.LastDllError
-50160   FormatMessage FORMAT_MESSAGE_FROM_SYSTEM, ByVal 0&, Err.LastDllError, LANG_NEUTRAL, Buffer, 200, ByVal 0&
-50170   WriteToSpecialLogfile "CreateProcessAsUser() failed with error " & Err.LastDllError & " = " & Buffer
-50180   CloseHandle hToken
-50190   Exit Function
-50200  End If
-50200
-50201 WriteToSpecialLogfile "CreateProcessAsUser() successful = "
-50202 Result = WaitForSingleObject(PI.hProcess, 60000)
-50203 WriteToSpecialLogfile "WaitForSingleObject = " & Result
-50204 DestroyEnvironmentBlock lpEnv
-50205
-50210
-50220  CloseHandle PI.hThread
-50230  CloseHandle PI.hProcess
-50240  RunAsUser = 0
+50260
+50270  If Result = 0 Then
+50280   RunAsUser = Err.LastDllError
+50290   FormatMessage FORMAT_MESSAGE_FROM_SYSTEM, ByVal 0&, Err.LastDllError, LANG_NEUTRAL, Buffer, 200, ByVal 0&
+50300   WriteToSpecialLogfile "CreateProcessAsUser() failed with error " & Err.LastDllError & " = " & Buffer
+50310   CloseHandle hToken
+50320   Exit Function
+50330  End If
+50340
+50350 WriteToSpecialLogfile "CreateProcessAsUser() successful = "
+50360 Result = WaitForSingleObject(PI.hProcess, 60000)
+50370 WriteToSpecialLogfile "WaitForSingleObject = " & Result
+50380 DestroyEnvironmentBlock lpEnv
+50390
+50400
+50410  CloseHandle PI.hThread
+50420  CloseHandle PI.hProcess
+50430  RunAsUser = 0
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

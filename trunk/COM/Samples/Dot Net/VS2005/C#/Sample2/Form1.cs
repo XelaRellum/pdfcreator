@@ -214,9 +214,8 @@ namespace Sample2
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator);
 			System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr);
 			pErr = null;
+            _PDFCreator = null;
 			GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 	}

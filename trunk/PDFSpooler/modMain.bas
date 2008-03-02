@@ -47,14 +47,6 @@ Public Sub Main()
  If IsWin9xMe = False Then
    WriteToSpecialLogfile "Start GetUserSessionToken"
    res = GetUserSessionToken(UserName, SessionID, hToken, enableSpecialLogging)
-'   WriteToSpecialLogfile "Try to ImpersonateSelf"
-'   res = ImpersonateLoggedOnUser(hToken)
-'   WriteToSpecialLogfile "res ImpersonateSelf = " & res
-'   If res <> 0 Then res = 0
-'   Dim hNewToken As Long
-'   res = DuplicateTokenEx(hToken, MAXIMUM_ALLOWED, 0, 2, 1, hNewToken)
-'   WriteToSpecialLogfile "res DuplicateTokenEx = " & res
-'   If res <> 0 Then res = 0
    If res = 0 Then
      res = LoadProfile(UserName, hToken, hProfile)
      If res = 0 Then
