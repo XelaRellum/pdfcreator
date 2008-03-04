@@ -39,9 +39,8 @@ Public Enum eCaption3D
 End Enum
 
 
-Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
-Private Declare Sub ReleaseCapture Lib "user32" ()
-Private Declare Sub CopyMemory Lib "kernel32" Alias "RtlMoveMemory" (Destination As Any, Source As Any, ByVal Length As Long)
+'Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
+'Private Declare Sub ReleaseCapture Lib "user32" ()
 Private Declare Function GetSysColor Lib "user32" (ByVal nIndex As Long) As Long
 
 Private m_Caption As String
@@ -85,10 +84,12 @@ Private Function LongToRGB(nLongVal As Long) As dmRgb
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim nByte(2) As Byte
-50020  CopyMemory nByte(0), nLongVal, Len(nLongVal)
-50030  LongToRGB.Red = nByte(0): LongToRGB.Green = nByte(1): LongToRGB.Blue = nByte(2)
-50040  Erase nByte
+50010  Dim b1 As Byte, b2 As Byte, b3 As Byte, b4 As Byte
+50020 ' b1 = (nLongVal And &HFF000000) \ &H1000000 And &HFF
+50030  b2 = (nLongVal And &HFF0000) \ &H10000
+50040  b3 = (nLongVal And &HFF00&) \ &H100
+50050  b4 = nLongVal And &HFF&
+50060  LongToRGB.Red = b4: LongToRGB.Green = b3: LongToRGB.Blue = b2
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -394,14 +395,14 @@ Private Sub UserControl_MouseMove(Button As Integer, Shift As Integer, x As Sing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  RaiseEvent MouseMove(Button, Shift, x, Y)
-50020  If Button <> vbLeftButton Then
-50030   Exit Sub
-50040  End If
-50050  If Not (Y > (n_BarHeight - 1)) And m_Relocatable = True Then
-50060   Call ReleaseCapture
-50070   Call SendMessage(UserControl.hwnd, &HA1, 2, 0&)
-50080  End If
+50010 ' RaiseEvent MouseMove(Button, Shift, x, Y)
+50020 ' If Button <> vbLeftButton Then
+50030 '  Exit Sub
+50040 ' End If
+50050 ' If Not (Y > (n_BarHeight - 1)) And m_Relocatable = True Then
+50060 '  Call ReleaseCapture
+50070 '  Call SendMessage(UserControl.hwnd, &HA1, 2, 0&)
+50080 ' End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
