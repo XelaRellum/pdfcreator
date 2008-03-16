@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.2.2 (with ISPP) and ISTool 5.2.0.1
+; Setup created with Inno Setup QuickStart Pack 5.2.3 (with ISPP) and ISTool 5.2.1
 ; Installation from Frank Heindörfer
 
 ;#define Test
@@ -179,6 +179,8 @@ UsePreviousAppDir=true
 VersionInfoVersion={#AppVersion}
 VersionInfoCompany=Frank Heindörfer, Philip Chinery
 VersionInfoDescription=PDFCreator is the easy way of creating PDFs.
+VersionInfoProductName={#AppName}
+VersionInfoProductVersion={#AppVersion}
 VersionInfoTextVersion={#AppVersion}
 
 WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
@@ -481,7 +483,7 @@ Source: ..\COM\Samples\Python\Testpage2PDF.py; DestDir: {app}\COM\Python; Compon
 ; Toolbar
 #IFDEF IncludeToolbar
 Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
-Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: toolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+Source: ..\Toolbar\PDFCreator_Toolbar_Setup_031508.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: toolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 #ENDIF
 
@@ -3324,7 +3326,7 @@ end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
- tStr,engStr :String; i:LongInt; saveoptions, silent, verysilent:boolean;
+ tStr :String; i:LongInt; saveoptions, silent, verysilent:boolean;
 begin
   case CurUninstallStep of
     usUninstall:
@@ -3332,11 +3334,6 @@ begin
        tStr:=ExpandConstant('{app}')+'\Unload.tmp';
        if fileexists(tStr)=false then
         SaveStringToFile(tStr, '', True);
-       tStr:='';engStr:='Delete all program settings?';
-       if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}\CustomMessages', 'UninstallOptions', tStr)=false then
-        tStr:=engStr;
-       if length(tStr)=0 then
-        tStr:=engStr;
        saveoptions:=false; silent:=false; verysilent:=false;
        for i:=1 to paramcount do begin
         if lowercase(ParamStr(i))='/saveoptions' then
@@ -3361,7 +3358,7 @@ begin
          SaveStringToFile(UninstallLogFile, '  Veryilent=False' + #13#10, True);
        if saveoptions=false then
         if (silent=false) and (verysilent=false) then
-         if MsgBox(tStr, mbConfirmation, MB_YESNO) = IDYES then
+         if MsgBox(ExpandConstant('{cm:UninstallOptions}'), mbConfirmation, MB_YESNO) = IDYES then
           RemoveProgramSettings;
        RemoveExplorerIntegretation;
        UninstallCompletePrinter(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, UninstallLogFile)
@@ -3371,4 +3368,3 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
-
