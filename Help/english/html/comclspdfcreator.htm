@@ -82,7 +82,8 @@
       Public Sub cClearCache()<br />
       Public Sub cClearLogfile()<br />
       Public Sub cCombineAll()<br />
-      Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String)<br />
+      Public Sub cConvertFile(ByVal InputFilename As String, ByVal OutputFilename As String, Optional ByVal SubFormat As String = "") <span style="color:green">' Allowed files for 'InputFilename': Postscript files, JPEG and BMP files; Allowed values for 'SubFormat': "PDF/A-1b" for "PDF/A-1b"-files; "PDF/X" for "PDF/X"-files</span><br />
+      Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String) <span style="color:green">' This function is deprecated! Use "cConvertFile()" instead.</span><br />
       Public Sub cDeletePrintjob(ByVal JobNumber As Long)<br />
       Public Sub cErrorClear()<br />
       Public Sub cMovePrintjobBottom(ByVal JobNumber As Long)<br />
