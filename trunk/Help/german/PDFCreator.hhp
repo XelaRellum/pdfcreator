@@ -14,7 +14,6 @@ Title=PDFCreator Hilfe
 [WINDOWS]
 Main="PDFCreator Hilfe","toc.hhc","index.hhk","html\welcome.htm","html\welcome.htm",,,,,0x23520,,0x3006,[239,185,788,634],,,,,,,0
 
-
 [FILES]
 html\acknowledgements.htm
 html\actions.htm
@@ -23,6 +22,11 @@ html\autosave.htm
 html\bmpsettings.htm
 html\changelang.htm
 html\combine.htm
+html\comclspdfcreator.htm
+html\comclspdfcreatorerror.htm
+html\comclspdfcreatorinfospoolfile.htm
+html\comclspdfcreatoroptions.htm
+html\cominterface.htm
 html\commandline.htm
 html\createlang.htm
 html\createpdf.htm
@@ -42,6 +46,8 @@ html\installlang.htm
 html\introduction.htm
 html\jpegsettings.htm
 html\online.htm
+html\psdsettings.htm
+html\pclsettings.htm
 html\pcxsettings.htm
 html\pdfcolors.htm
 html\pdfcompression.htm
@@ -49,23 +55,20 @@ html\pdffonts.htm
 html\pdfgeneral.htm
 html\pdfsecurity.htm
 html\pngsettings.htm
+html\pdfsigning.htm
 html\print.htm
 html\pssettings.htm
+html\rawsettings.htm
 html\savesettings.htm
 html\settings.htm
 html\support.htm
 html\tiffsettings.htm
 html\transtool.htm
+html\txtsettings.htm
 html\update.htm
 html\welcome.htm
 html\whatis.htm
 html\whatislang.htm
 html\whatsnew.htm
-html\cominterface.htm
-html\comclspdfcreator.htm
-html\comclspdfcreatorerror.htm
-html\comclspdfcreatorinfospoolfile.htm
-html\comclspdfcreatoroptions.htm
 
 [INFOTYPES]
-

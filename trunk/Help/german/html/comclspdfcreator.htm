@@ -62,7 +62,7 @@
 	<tr>
 	 <td nowrap>
       Public Function cClose() As Boolean<br />
-      Public Function cCloseRunningSession() As Boolean '<span style="color:green">Diese Funktion ist veraltet und sollte in zuk&uuml;nftigen Anwendungen nicht mehr verwendet werden! Stattdessen sollte ausschlie&szlig;lich die Function "cClose()" verwendet werden.</span><br />
+      Public Function cCloseRunningSession() As Boolean '<span style="color:green">Diese Funktion ist veraltet und sollte in zuk&uuml;nftigen Anwendungen nicht mehr verwendet werden! Stattdessen sollte ausschlie&szlig;lich die Funktion "cClose()" verwendet werden.</span><br />
       Public Function cGetLogfile() As String<br />
       Public Function cGetPDFCreatorPrinters() As Collection<br />
       Public Function cGhostscriptRun(Arguments() As Variant) As Boolean<br />
@@ -82,7 +82,8 @@
       Public Sub cClearCache()<br />
       Public Sub cClearLogfile()<br />
       Public Sub cCombineAll()<br />
-      Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String)<br />
+      Public Sub cConvertFile(ByVal InputFilename As String, ByVal OutputFilename As String, Optional ByVal SubFormat As String = "") <span style="color:green">' Erlaubte Dateitypen für 'InputFilename': Postscript-Dateien, JPEG und BMP-Dateien; Erlaubte Werte für 'SubFormat': "PDF/A-1b" für "PDF/A-1b"-Dateien; "PDF/X" für "PDF/X"-Dateien</span><br />
+      Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String) <span style="color:green">' Diese Funktion ist veraltet und sollte in zuk&uuml;nftigen Anwendungen nicht mehr verwendet werden! Stattdessen sollte ausschlie&szlig;lich die Funktion "cConvertFile()" verwendet werden.</span><br />
       Public Sub cDeletePrintjob(ByVal JobNumber As Long)<br />
       Public Sub cErrorClear()<br />
       Public Sub cMovePrintjobBottom(ByVal JobNumber As Long)<br />

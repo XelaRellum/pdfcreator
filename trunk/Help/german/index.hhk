@@ -337,6 +337,26 @@
 		<param name="Local" value="html\tiffsettings.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="TEXT">
+		<param name="Name" value="TEXT-Einstellungen">
+		<param name="Local" value="html\txtsettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="RAW">
+		<param name="Name" value="RAW-Einstellungen">
+		<param name="Local" value="html\rawsettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="PSD">
+		<param name="Name" value="PSD-Einstellungen">
+		<param name="Local" value="html\psdsettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="PCL">
+		<param name="Name" value="PCL-Einstellungen">
+		<param name="Local" value="html\pclsettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="TransTool">
 		<param name="Name" value="Was ist eine Sprachdatei?">
 		<param name="Local" value="html\whatislang.htm">
@@ -347,6 +367,11 @@
 		<param name="Name" value="&Uuml;ber">
 		<param name="Name" value="Was ist PDFCreator?">
 		<param name="Local" value="html\whatis.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Unterschrift">
+		<param name="Name" value="PDF-Einstellungen: Unterschreiben">
+		<param name="Local" value="html\pdfsigning.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Verschl&uuml;sselung">
@@ -372,6 +397,11 @@
 		<param name="Name" value="Windows Explorer">
 		<param name="Name" value="Erstellen einer PDF-Datei">
 		<param name="Local" value="html\createpdf.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Zertifikat">
+		<param name="Name" value="PDF-Einstellungen: Unterschreiben">
+		<param name="Local" value="html\pdfsigning.htm">
 		</OBJECT>
 </UL>
 </BODY></HTML>

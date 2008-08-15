@@ -48,13 +48,15 @@
         with the /IF parameter.<br />
         <em>Example:</em> pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot; /DeleteIF</p>
       <p><strong>/IF&lt;input-filename&gt; /OF&lt;output-filename&gt;<br />
-        </strong>Convert a postscript file to a PDF or bitmap. The /OF parameter
+        </strong>Convert a postscript file or a bitmap file (JPEG, BM) to a PDF or bitmap. The /OF parameter
         must be used in conjunction with the /IF parameter. To set the output
         file format, include the file extension in the output file name. <strong>There
-        is NO space between the parameters and the file names.</strong><br />
+        is NO space between the parameters and the file names.</strong> The parameter /OutputSubFormat defines the subformat. Currently &quot;PDF/A-1b&quot; and "&quot;PDF/X&quot; can be used for the PDF format.<br />
         <em>Examples:</em><br />
-        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;<br />
-        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.tif&quot;</p>
+        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.pdf&quot;  /OutputSubFormat&quot;PDF/A-1b&quot;<br />
+        pdfcreator.exe /IF&quot;C:\description.ps&quot; /OF&quot;C:\description.tif&quot;<br />
+        pdfcreator.exe /IF&quot;C:\image1.jpg&quot; /OF&quot;C:\image1.pdf&quot;<br />
+        pdfcreator.exe /IF&quot;C:\image1.bmp&quot; /OF&quot;C:\image1.png&quot;</p>
       <p><strong>/NoAbortIfRunning</strong><br />
         Opens a new instance of PDFCreator without checking if the program is
         already running. It is useful to combine this parameter with the /NoProcessing
