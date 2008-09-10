@@ -1,8 +1,8 @@
 *PPD-Adobe: "4.3"
-*% Postscript-Printer-Description 
-*% for PDFCreator v0.8.1 and Ghostscript 8.50
+*% Postscript-Printer-Description
+*% for PDFCreator 0.9.6
 *% Version 1.0
-*% DateCode: 20050216
+*% DateCode: 20081001
 
 *% == Driver informationen ====================================================
 
@@ -11,18 +11,14 @@
 *LanguageEncoding: ISOLatin1
 *LanguageVersion: German
 *PCFileName: "PDFCreat.PPD"
-*Manufacturer: "sector7g"
+*Manufacturer: "pdfforge.org"
 
-*Product: "(AFPL Ghostscript)"
-*PSVersion: "(3010) 850"
-*Product: "(GPL Ghostscript)"
-*PSVersion: "(3010) 815"
-*Product: "(GNU Ghostscript)"
-*PSVersion: "(3010) 707"
+*Product: "(PDFCreator)"
+*PSVersion: "(3010) 096"
 
-*ModelName: "PDFCreator v0.8.1"
+*ModelName: "PDFCreator 0.9.6"
 *ShortNickName: "PDFCreator"
-*NickName: "PDFCreator v0.8.1"
+*NickName: "PDFCreator 0.9.6"
 
 *% == Basic capabilities ======================================================
 
