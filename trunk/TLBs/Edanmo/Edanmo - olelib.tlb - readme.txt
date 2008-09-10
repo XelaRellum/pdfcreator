@@ -5,6 +5,6 @@ Links:
 http://www.mvps.org/emorcillo/en/code/vb6/sendmail.shtml
 http://www.mvps.org/emorcillo/download/vb6/tl_ole.zip
 
-Copy the olilib.tlb to C:\Program Files\Common files\Edanmo\ and register it with regsvr32.exe.
+Copy the olilib.tlb to C:\Program Files\Common files\Edanmo\ and register it with regtlib.exe.
 
 The TLB is not necessary for the setup only for the development.
