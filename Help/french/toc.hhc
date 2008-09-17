@@ -7,253 +7,273 @@
 <UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Introduction">
-		<param name="Local" value="html/welcome.htm">
+		<param name="Local" value="html\welcome.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Bienvenue &agrave; PDFCreator!">
-			<param name="Local" value="html/welcome.htm">
-			<param name="URL" value="html/welcome.htm">
+			<param name="Local" value="html\welcome.htm">
+			<param name="URL" value="html\welcome.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Introduction">
-			<param name="Local" value="html/introduction.htm">
+			<param name="Local" value="html\introduction.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Qu'est-ce que  PDFCreator?">
-			<param name="Local" value="html/whatis.htm">
+			<param name="Name" value="Qu'est-ce que PDFCreator?">
+			<param name="Local" value="html\whatis.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Fonctionnalit&eacute;s">
-			<param name="Local" value="html/features.htm">
+			<param name="Local" value="html\features.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Nouveaut&eacute;s">
-			<param name="Local" value="html/whatsnew.htm">
+			<param name="Local" value="html\whatsnew.htm">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Utiliser PDFCreator">
-		<param name="Local" value="html/installationtypes.htm">
+		<param name="Local" value="html\installationtypes.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Types d'installation">
-			<param name="Local" value="html/installationtypes.htm">
+			<param name="Local" value="html\installationtypes.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Cr&eacute;er un document PDF">
-			<param name="Local" value="html/createpdf.htm">
+			<param name="Local" value="html\createpdf.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Envoyer un document PDF par email">
-			<param name="Local" value="html/emailpdf.htm">
+			<param name="Local" value="html\emailpdf.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Fusionner des documents">
-			<param name="Local" value="html/combine.htm">
+			<param name="Local" value="html\combine.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Param&egrave;tres de ligne de commande">
-			<param name="Local" value="html/commandline.htm">
+			<param name="Local" value="html\commandline.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Changer de langue">
-			<param name="Local" value="html/changelang.htm">
+			<param name="Local" value="html\changelang.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Mise &agrave; jour de PDFCreator">
-			<param name="Local" value="html/update.htm">
+			<param name="Local" value="html\update.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Questions fr&eacute;quemment pos&eacute;es">
-			<param name="Local" value="html/faq.htm">
+			<param name="Local" value="html\faq.htm">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Le menu options">
-		<param name="Local" value="html/settings.htm">
+		<param name="Local" value="html\settings.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Options de PDFCreator">
-			<param name="Local" value="html/settings.htm">
+			<param name="Local" value="html\settings.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Param&egrave;tres du programme">
-			<param name="Local" value="html/generalsettings.htm">
+			<param name="Local" value="html\generalsettings.htm">
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Param&egrave;tres g&eacute;n&eacute;raux">
-				<param name="Local" value="html/generalsettings.htm">
+				<param name="Local" value="html\generalsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Param&egrave;tres Ghostscipt">
-				<param name="Local" value="html/ghostscriptsettings.htm">
+				<param name="Local" value="html\ghostscriptsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Propri&eacute;t&eacute;s du document">
-				<param name="Local" value="html/docproperties.htm">
+				<param name="Local" value="html\docproperties.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Param&egrave;tres d'enregistrement">
-				<param name="Local" value="html/savesettings.htm">
-				<param name="URL" value="html/savesettings.htm">
+				<param name="Local" value="html\savesettings.htm">
+				<param name="URL" value="html\savesettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Enregistrement automatique">
-				<param name="Local" value="html/autosave.htm">
+				<param name="Local" value="html\autosave.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="R&eacute;pertoires">
-				<param name="Local" value="html/directories.htm">
+				<param name="Local" value="html\directories.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Actions">
-				<param name="Local" value="html/actions.htm">
+				<param name="Local" value="html\actions.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Impression">
-				<param name="Local" value="html/print.htm">
+				<param name="Local" value="html\print.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Polices">
-				<param name="Local" value="html/fontsettings.htm">
+				<param name="Local" value="html\fontsettings.htm">
 				</OBJECT>
 		</UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Formats">
-			<param name="Local" value="html/pdfgeneral.htm">
+			<param name="Local" value="html\pdfgeneral.htm">
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="PDF">
-				<param name="Local" value="html/pdfgeneral.htm">
+				<param name="Local" value="html\pdfgeneral.htm">
 				</OBJECT>
 			<UL>
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="G&eacute;n&eacute;ral">
-					<param name="Local" value="html/pdfgeneral.htm">
+					<param name="Local" value="html\pdfgeneral.htm">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Compression">
-					<param name="Local" value="html/pdfcompression.htm">
+					<param name="Local" value="html\pdfcompression.htm">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Polices">
-					<param name="Local" value="html/pdffonts.htm">
+					<param name="Local" value="html\pdffonts.htm">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Couleurs">
-					<param name="Local" value="html/pdfcolors.htm">
+					<param name="Local" value="html\pdfcolors.htm">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="S&eacute;curit&eacute;">
-					<param name="Local" value="html/pdfsecurity.htm">
+					<param name="Local" value="html\pdfsecurity.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Signature de fichiers PDF">
+					<param name="Local" value="html\pdfsignatures.htm">
 					</OBJECT>
 			</UL>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="PNG">
-				<param name="Local" value="html/pngsettings.htm">
+				<param name="Local" value="html\pngsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="JPEG">
-				<param name="Local" value="html/jpegsettings.htm">
+				<param name="Local" value="html\jpegsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="BMP">
-				<param name="Local" value="html/bmpsettings.htm">
+				<param name="Local" value="html\bmpsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="PCX">
-				<param name="Local" value="html/pcxsettings.htm">
+				<param name="Local" value="html\pcxsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="TIFF">
-				<param name="Local" value="html/tiffsettings.htm">
+				<param name="Local" value="html\tiffsettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="PS">
-				<param name="Local" value="html/pssettings.htm">
+				<param name="Local" value="html\pssettings.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="EPS">
-				<param name="Local" value="html/epssettings.htm">
+				<param name="Local" value="html\epssettings.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="TEXT">
+				<param name="Local" value="html\txtsettings.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="PSD">
+				<param name="Local" value="html\psdsettings.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="PCL">
+				<param name="Local" value="html\pclsettings.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="RAW">
+				<param name="Local" value="html\rawsettings.htm">
 				</OBJECT>
 		</UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Options cach&eacute;es">
-			<param name="Local" value="html/hiddensettings.htm">
+			<param name="Local" value="html\hiddensettings.htm">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Interface COM">
-		<param name="Local" value="html/cominterface.htm">
+		<param name="Local" value="html\cominterface.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Introduction">
-			<param name="Local" value="html/cominterface.htm">
+			<param name="Local" value="html\cominterface.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="clsPDFCreator">
-			<param name="Local" value="html/comclspdfcreator.htm">
+			<param name="Local" value="html\comclspdfcreator.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="clsPDFCreatorError">
-			<param name="Local" value="html/comclspdfcreatorerror.htm">
+			<param name="Local" value="html\comclspdfcreatorerror.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="clsPDFCreatorInfoSpoolFile">
-			<param name="Local" value="html/comclspdfcreatorinfospoolfile.htm">
+			<param name="Local" value="html\comclspdfcreatorinfospoolfile.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="clsPDFCreatorOptions">
-			<param name="Local" value="html/comclspdfcreatoroptions.htm">
+			<param name="Local" value="html\comclspdfcreatoroptions.htm">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Outil de traduction">
-		<param name="Local" value="html/transtool.htm">
+		<param name="Local" value="html\transtool.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Introduction">
-			<param name="Local" value="html/transtool.htm">
+			<param name="Local" value="html\transtool.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Qu'est-ce qu'un fichier de traduction ?">
-			<param name="Local" value="html/whatislang.htm">
+			<param name="Local" value="html\whatislang.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Cr&eacute;er un fichier de traduction">
-			<param name="Local" value="html/createlang.htm">
+			<param name="Local" value="html\createlang.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Installer un fichier de traduction">
-			<param name="Local" value="html/installlang.htm">
+			<param name="Local" value="html\installlang.htm">
 			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="PDFCreator sur le Web">
-		<param name="Local" value="html/online.htm">
+		<param name="Local" value="html\online.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="GNU General Public License">
-		<param name="Local" value="html/gpl.htm">
+		<param name="Local" value="html\gpl.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Aladdin Free Public License">
-		<param name="Local" value="html/afpl.htm">
+		<param name="Local" value="html\afpl.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Aider PDFCreator">
-		<param name="Local" value="html/support.htm">
+		<param name="Local" value="html\support.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Remerciements">
-		<param name="Local" value="html/acknowledgements.htm">
+		<param name="Local" value="html\acknowledgements.htm">
 		</OBJECT>
 </UL>
 </BODY></HTML>

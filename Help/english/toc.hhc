@@ -152,6 +152,10 @@
 					<param name="Name" value="Security">
 					<param name="Local" value="html\pdfsecurity.htm">
 					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Signing">
+					<param name="Local" value="html\pdfsignatures.htm">
+					</OBJECT>
 			</UL>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="PNG">

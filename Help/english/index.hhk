@@ -373,5 +373,10 @@
 		<param name="Name" value="Create a PDF">
 		<param name="Local" value="html\createpdf.htm">
 		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Certificate">
+		<param name="Name" value="PDF Settings: Signing">
+		<param name="Local" value="html\pdfsignatures.htm">
+		</OBJECT>
 </UL>
 </BODY></HTML>

@@ -371,7 +371,7 @@
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Unterschrift">
 		<param name="Name" value="PDF-Einstellungen: Unterschreiben">
-		<param name="Local" value="html\pdfsigning.htm">
+		<param name="Local" value="html\pdfsignatures.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Verschl&uuml;sselung">
@@ -401,7 +401,7 @@
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Zertifikat">
 		<param name="Name" value="PDF-Einstellungen: Unterschreiben">
-		<param name="Local" value="html\pdfsigning.htm">
+		<param name="Local" value="html\pdfsignatures.htm">
 		</OBJECT>
 </UL>
 </BODY></HTML>
