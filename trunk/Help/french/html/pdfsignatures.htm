@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>Options PDF</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="helpstyle.css" rel="stylesheet" type="text/css"></head>
+<body>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td class="title">Aide PDFCreator</td>
+</tr>
+<tr>
+<td background="../images/grad.gif" height="20">&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td class="main">
+<p class="header">Param&egrave;tres PDF : Signature</p>
+<p>Signer les fichiers PDF permet au destinataire de
+v&eacute;rifier que le document a bien &eacute;t&eacute; r&eacute;dig&eacute; par l'auteur indiqu&eacute; et
+qu'il n'a&nbsp;pas &eacute;t&eacute; modifi&eacute; apr&egrave;s la signature. Ce syst&egrave;me est
+bas&eacute; sur un m&eacute;canisme de cl&eacute; publique/cl&eacute; priv&eacute;e. La cl&eacute; priv&eacute;e est
+utilis&eacute;e pour chiffrer une empreinte (hash)&nbsp;du document. Cette
+empteinte crypt&eacute;e peut &ecirc;tre d&eacute;crypt&eacute;e &agrave; l'aide de la cl&eacute; publique, pour
+ensuite &ecirc;tre compar&eacute;e avec une empreinte du document &agrave; v&eacute;rifier. Les
+deux empreintes correspondent&nbsp;uniquement lorsque les deux cl&eacute;s
+publique et priv&eacute;e vont de paire, et lorsque le document n'a pas &eacute;t&eacute;
+modifi&eacute;. </p>
+<p>Pour signer num&eacute;riquement un fochier PDF, plusieurs
+&eacute;l&eacute;ments sont n&eacute;cessaires&nbsp;:</p>
+<ol>
+<li>Un certificat num&eacute;rique au format&nbsp;PFX\P12
+permettant de signer des fichiers.</li>
+<li>.Net 1.1 doit &ecirc;tre install&eacute;. Ceci entra&icirc;ne que la
+signature de documents PDF n'est pas possible sous&nbsp;<i>Windows
+95</i> et <i>Windows NT 4 Workstation</i>,
+puisque&nbsp;.Net 1.1 n'est pas support&eacute; pour ces syst&egrave;mes.</li>
+<li>Le fichier&nbsp;pdfforge.dll doit &ecirc;tre pr&eacute;sent
+dans le r&eacute;pertoire d'installation de&nbsp;PDFCreator dans <i>PlugIns\pdfforge</i>.
+Si .Net 1.1 est install&eacute;, cette DLL sera automatiquement install&eacute;e en
+m&ecirc;me temps que&nbsp;PDFCreator.</li>
+</ol>
+<p><strong>Fichier Pfx/P12&nbsp;:</strong>
+Le fichier contenant la signature. Il contient la cl&eacute; priv&eacute;e utilis&eacute;e
+pour crypter l'empreinte du PDF &agrave; signer. </p>
+<p><strong>Raison signature&nbsp;:</strong>
+La raison de la signature. C'est un texte court qui indique pourqui le
+fichier est sign&eacute; num&eacute;riquement. </p>
+<p><strong>Contact signature :</strong> Le nom
+de la personne qui a sign&eacute; le fichier.</p>
+<p><strong>Localisation signature&nbsp;:</strong>
+Endroit&nbsp;(Pays, ville, etc.), o&ugrave; le fichier a &eacute;t&eacute; sign&eacute;. </p>
+<p><strong>Position signature :</strong> Permet
+&agrave; Acrobat Reader d'afficher un ic&ocirc;ne qui indique&nbsp;la validit&eacute;
+de la signature. Les coordonn&eacute;es de cet ic&ocirc;ne peuvent &ecirc;tre r&eacute;gl&eacute;es
+gr&acirc;ce aux valeurs X/Y gauche et X/Y droite. </p>
+<p><strong>Signature multiple autoris&eacute;e :</strong>
+Permet la signature ult&eacute;rieure du fichier par d'autres personnes. </p>
+<p>Vous pouvez obtenir des certificats gratuits &agrave; l'adresse
+<a href="http://www.cacert.org" target="_blank">http://www.cacert.org</a>.
+Notez que ce n'est pas un service o&ugrave; un simple enregistremetn
+suffit.&nbsp;CACert est bas&eacute; sur un r&eacute;seau de confiance, au sein
+duquel vous &ecirc;tes &eacute;valu&eacute; par d'autres personnes, et dans lequel vous
+pouvez &eacute;valuer d'autres personnes. Cela n&eacute;cessite un peu de travail
+pour r&eacute;colter suffisamment de points afin acc&eacute;der &agrave; un statut "de
+confiance", mais c'est r&eacute;ellement gratuit et nous vous encourageons &agrave;
+essayer. </p>
+</td>
+</tr>
+</tbody>
+</table>
+</body></html>
