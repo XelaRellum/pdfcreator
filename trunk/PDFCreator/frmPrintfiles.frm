@@ -135,18 +135,18 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Files As Collection
+50010  Dim files As Collection
 50020  Me.Icon = LoadResPicture(2120, vbResIcon)
 50030  CancelPrintfiles = False
-50040  Caption = App.Title & " " & GetProgramReleaseStr
+50040  Caption = App.title & " " & GetProgramReleaseStr
 50050  RemoveX Me
-50060  Set Files = GetFiles(PrintFilename, "")
-50070  If Files.Count > 1 Then
+50060  Set files = GetFiles(PrintFilename, "")
+50070  If files.Count > 1 Then
 50080   Visible = True
 50090  End If
 50100  With xpPgb
 50110   .Min = 1
-50120   .Max = Files.Count
+50120   .Max = files.Count
 50130   .Color = vbGreen
 50140   .Font.Bold = True
 50150   .ShowText = True

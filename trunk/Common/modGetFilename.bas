@@ -8,8 +8,8 @@ Public Function GetFilename(Defaultfilename As String, InitPath As String, _
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
-50020  Dim sFilter() As String, tStr As String, Files As Collection, _
-  Filename As String, Ext As String
+50020  Dim sFilter() As String, tStr As String, files As Collection, _
+  filename As String, Ext As String
 50040
 50050  If LenB(InitPath) = 0 Then
 50060   InitPath = GetMyFiles
@@ -23,10 +23,10 @@ On Error GoTo ErrPtnr_OnError
 50140     tStr = sFilter(FilterIndex * 2 + 1)
 50150    End If
 50160   End If
-50170   FilterIndex = SaveFileDialog(Filename, Defaultfilename, _
+50170   FilterIndex = SaveFileDialog(filename, Defaultfilename, _
    Filter, tStr, InitPath, LanguageStrings.SaveOpenSaveTitle, _
     OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + _
-    OFN_OVERWRITEPROMPT, OwnerForm.hWnd, FilterIndex)
+    OFN_OVERWRITEPROMPT, OwnerForm.hwnd, FilterIndex)
 50210   If FilterIndex < 0 Then
 50220     SaveOpenCancel = True: Cancelled = True
 50230    Else
@@ -40,25 +40,25 @@ On Error GoTo ErrPtnr_OnError
 50310     If Len(tStr) > 0 Then
 50320      If InStr(tStr, ".") > 0 Then
 50330       If InStr(InStrRev(tStr, "."), "*") <= 0 Then
-50340        SplitPath Filename, , , , , Ext
+50340        SplitPath filename, , , , , Ext
 50350        If UCase$(Mid(tStr, InStrRev(tStr, ".") + 1)) <> UCase$(Ext) Then
-50360         Filename = Filename & "." & LCase$(Mid(tStr, InStrRev(tStr, ".") + 1))
+50360         filename = filename & "." & LCase$(Mid(tStr, InStrRev(tStr, ".") + 1))
 50370        End If
 50380       End If
 50390      End If
 50400     End If
 50410     Set GetFilename = New Collection
-50420     GetFilename.Add Filename
+50420     GetFilename.Add filename
 50430     SaveOpenCancel = False: Cancelled = False
 50440   End If
 50450  End If
 50460  If SaveOpenType = OpenFile Then
-50470   FilterIndex = OpenFileDialog(Files, Defaultfilename, _
+50470   FilterIndex = OpenFileDialog(files, Defaultfilename, _
    Filter, tStr, InitPath, _
    LanguageStrings.SaveOpenOpenTitle, _
     OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, _
-    OwnerForm.hWnd)
-50520   Set GetFilename = Files
+    OwnerForm.hwnd)
+50520   Set GetFilename = files
 50530   If FilterIndex < 0 Then
 50540     SaveOpenCancel = True: Cancelled = True
 50550    Else

@@ -515,7 +515,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function SetRegistryValue(ByVal ValueName As String, Value As Variant, DType As DataType) As Boolean
+Public Function SetRegistryValue(ByVal ValueName As String, value As Variant, DType As DataType) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -533,41 +533,50 @@ On Error GoTo ErrPtnr_OnError
 50120
 50131     Select Case DType
               Case REG_DWORD
-50150             lngValue = Value
+50150             lngValue = value
 50160             RetVal = RegSetValueEx(handle, ValueName, 0, REG_DWORD, lngValue, 4)
 50170             tStr = String(64, Chr$(0))
 50180             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
 50190         Case REG_SZ
-50200             strValue = Value
-50210             RetVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, _
-                Len(strValue))
-50230             tStr = String(64, Chr$(0))
-50240             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
-50250         Case REG_BINARY
-50260             binValue = Value
-50270             Length = UBound(binValue) - LBound(binValue) + 1
-50280             RetVal = RegSetValueEx(handle, ValueName, 0, REG_BINARY, _
+50200             strValue = value
+50210             If Len(strValue) = 0 Then
+50220               RetVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, 0)
+50230              Else
+50240               RetVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, Len(strValue) + 1)
+50250             End If
+50260             tStr = String(64, Chr$(0))
+50270             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
+50280         Case REG_BINARY
+50290             binValue = value
+50300             Length = UBound(binValue) - LBound(binValue) + 1
+50310             RetVal = RegSetValueEx(handle, ValueName, 0, REG_BINARY, _
                                    binValue(LBound(binValue)), Length)
-50300             tStr = String(64, Chr$(0))
-50310             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
-50320         Case REG_EXPAND_SZ
-50330             strValue = Value
-50340             RetVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, _
-                Len(strValue))
-50360             tStr = String(64, Chr$(0))
-50370             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
-50380         Case REG_MULTI_SZ
-50390             strValue = Value
-50400             RetVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, _
-                Len(strValue))
+50330             tStr = String(64, Chr$(0))
+50340             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
+50350         Case REG_EXPAND_SZ
+50360             strValue = value
+50370             If Len(strValue) = 0 Then
+50380               RetVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, 0)
+50390              Else
+50400               RetVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, Len(strValue) + 1)
+50410             End If
 50420             tStr = String(64, Chr$(0))
 50430             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
-50440         Case Else
-50450     End Select
-50460
-50470      RegCloseKey (handle)
-50480     SetRegistryValue = (RetVal = 0)
-50490
+50440         Case REG_MULTI_SZ
+50450             strValue = value
+50460             If Len(strValue) = 0 Then
+50470               RetVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, 0)
+50480              Else
+50490               RetVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, Len(strValue) + 1)
+50500             End If
+50510             tStr = String(64, Chr$(0))
+50520             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
+50530         Case Else
+50540     End Select
+50550
+50560      RegCloseKey (handle)
+50570     SetRegistryValue = (RetVal = 0)
+50580
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -676,7 +685,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function WriteRemoteRegistryValue(ByVal sRemoteComputer As String, ByVal hkey As hkey, ByVal ValueName As String, Value As Variant, DType As DataType, Optional KeyPath As String) As Boolean
+Public Function WriteRemoteRegistryValue(ByVal sRemoteComputer As String, ByVal hkey As hkey, ByVal ValueName As String, value As Variant, DType As DataType, Optional KeyPath As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -701,31 +710,31 @@ On Error GoTo ErrPtnr_OnError
 50190
 50201     Select Case DType
               Case REG_DWORD
-50220             lngValue = Value
+50220             lngValue = value
 50230             RetVal = RegSetValueEx(handle, ValueName, 0, REG_DWORD, lngValue, 4)
 50240             tStr = String(64, Chr$(0))
 50250             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
 50260         Case REG_SZ
-50270             strValue = Value
+50270             strValue = value
 50280             RetVal = RegSetValueEx(handle, ValueName, 0, REG_SZ, ByVal strValue, _
                 Len(strValue))
 50300             tStr = String(64, Chr$(0))
 50310             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
 50320         Case REG_BINARY
-50330             binValue = Value
+50330             binValue = value
 50340             Length = UBound(binValue) - LBound(binValue) + 1
 50350             RetVal = RegSetValueEx(handle, ValueName, 0, REG_BINARY, _
                                    binValue(LBound(binValue)), Length)
 50370             tStr = String(64, Chr$(0))
 50380             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
 50390         Case REG_EXPAND_SZ
-50400             strValue = Value
+50400             strValue = value
 50410             RetVal = RegSetValueEx(handle, ValueName, 0, REG_EXPAND_SZ, ByVal strValue, _
                 Len(strValue))
 50430             tStr = String(64, Chr$(0))
 50440             mvarErrorMsg = Left$(tStr, FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, RetVal, 0&, tStr, Len(tStr), ByVal 0))
 50450         Case REG_MULTI_SZ
-50460             strValue = Value
+50460             strValue = value
 50470             RetVal = RegSetValueEx(handle, ValueName, 0, REG_MULTI_SZ, ByVal strValue, _
                 Len(strValue))
 50490             tStr = String(64, Chr$(0))

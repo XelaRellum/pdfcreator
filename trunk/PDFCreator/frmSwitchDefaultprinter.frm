@@ -68,7 +68,7 @@ On Error GoTo ErrPtnr_OnError
 50011  Select Case Index
         Case 0:
 50030    ChangeDefaultprinter = True
-50040    Options.NoConfirmMessageSwitchingDefaultprinter = chkAskAgain.Value
+50040    Options.NoConfirmMessageSwitchingDefaultprinter = chkAskAgain.value
 50050    SaveOptions Options
 50060   Case 1:
 50070  End Select
@@ -116,7 +116,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Caption = App.EXEName
 50030  ChangeDefaultprinter = False
 50040  ChangeLanguage
-50050  chkAskAgain.Value = Options.NoConfirmMessageSwitchingDefaultprinter
+50050  chkAskAgain.value = Options.NoConfirmMessageSwitchingDefaultprinter
 50060  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

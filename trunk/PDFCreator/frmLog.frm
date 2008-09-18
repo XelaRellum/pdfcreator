@@ -105,8 +105,8 @@ Private Sub cmdClose_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If ShowOnlyLogfile Then
-50020   If chkLogging.Value <> Options.Logging Then
-50030    Options.Logging = chkLogging.Value
+50020   If chkLogging.value <> Options.Logging Then
+50030    Options.Logging = chkLogging.value
 50040    SaveOptions Options
 50050   End If
 50060  End If
@@ -179,9 +179,9 @@ On Error GoTo ErrPtnr_OnError
 50050  End With
 50060  ChangeLanguage
 50070  If Options.Logging = 1 Then
-50080    chkLogging.Value = 1
+50080    chkLogging.value = 1
 50090   Else
-50100    chkLogging.Value = 0
+50100    chkLogging.value = 0
 50110  End If
 50120  chkLogging.Visible = ShowOnlyLogfile
 50130  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))

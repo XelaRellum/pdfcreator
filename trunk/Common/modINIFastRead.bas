@@ -1,7 +1,7 @@
 Attribute VB_Name = "modINIFastRead"
 Option Explicit
 
-Public Sub ReadINISection(ByVal Filename As String, ByRef Section As String, ByRef hHash As clsHash)
+Public Sub ReadINISection(ByVal filename As String, ByRef Section As String, ByRef hHash As clsHash)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -9,7 +9,7 @@ On Error GoTo ErrPtnr_OnError
   strTmp As String
 50030
 50040  Section = UCase$(Section)
-50050  strINI = ReadToLines(Filename)
+50050  strINI = ReadToLines(filename)
 50060
 50070  For i = 0 To UBound(strINI())
 50080   strTmp = Trim$(strINI(i))
@@ -40,13 +40,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function ReadToLines(Filename As String) As String()
+Private Function ReadToLines(filename As String) As String()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim s As String, s1() As String
 50020  ReDim s1(0)
-50030  s = ReadToString(Filename)
+50030  s = ReadToString(filename)
 50040  If InStr(s, vbCrLf) Then
 50050    s1() = Split(s, vbCrLf)
 50060   Else
@@ -65,15 +65,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function ReadToString(Filename As String) As String
+Private Function ReadToString(filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Integer, fl As Long, s As String
 50020  s = ""
-50030  If FileExists(Filename) Then
+50030  If FileExists(filename) Then
 50040   fn = FreeFile
-50050   Open Filename For Binary Access Read Shared As #fn
+50050   Open filename For Binary Access Read Shared As #fn
 50060   fl = LOF(fn)
 50070   If fl > 0 Then
 50080    s = Space$(fl)

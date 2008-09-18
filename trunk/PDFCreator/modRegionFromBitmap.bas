@@ -4,7 +4,7 @@ Attribute VB_Name = "modRegionFromBitmap"
 'Copyright (C) 2001
 Option Explicit
 
-Public Function MakeFormTransparent(Frm As Form, ByVal lngTransColor As Long)
+Public Function MakeFormTransparent(frm As Form, ByVal lngTransColor As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -19,14 +19,14 @@ On Error GoTo ErrPtnr_OnError
 50090     'SetLayeredWindowAttributes unter diesem Betriebsystem unterstützt wird.
 50100     If IsFunctionExported("SetLayeredWindowAttributes", "user32") Then
 50110         'Den Fenster-Stil auf "Layered" setzen
-50120         WinStyle = GetWindowLong(Frm.hwnd, GWL_EXSTYLE)
+50120         WinStyle = GetWindowLong(frm.hwnd, GWL_EXSTYLE)
 50130         WinStyle = WinStyle Or WS_EX_LAYERED
-50140         SetWindowLong Frm.hwnd, GWL_EXSTYLE, WinStyle
-50150         SetLayeredWindowAttributes Frm.hwnd, lngTransColor, 0&, LWA_COLORKEY
+50140         SetWindowLong frm.hwnd, GWL_EXSTYLE, WinStyle
+50150         SetLayeredWindowAttributes frm.hwnd, lngTransColor, 0&, LWA_COLORKEY
 50160
 50170     Else 'Manuell die Region erstellen und übernehmen
-50180         hRegion = RegionFromBitmap(Frm, lngTransColor)
-50190         SetWindowRgn Frm.hwnd, hRegion, True
+50180         hRegion = RegionFromBitmap(frm, lngTransColor)
+50190         SetWindowRgn frm.hwnd, hRegion, True
 50200         DeleteObject hRegion
 50210     End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -57,7 +57,7 @@ On Error GoTo ErrPtnr_OnError
 50100     Dim BHeight As Long
 50110     Dim iDC As Long
 50120     Dim PicBits() As Byte
-50130     Dim Col As Long
+50130     Dim col As Long
 50140     Dim OldScaleMode As ScaleModeConstants
 50150
 50160     OldScaleMode = picSource.ScaleMode

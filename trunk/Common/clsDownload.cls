@@ -101,7 +101,7 @@ On Error GoTo ErrPtnr_OnError
 50240  ErrorDescription = ""
 50250  resStr = ""
 50260
-50270  Status = 1
+50270  status = 1
 50280
 50290  If cURL.GetURL(URL) And cURL.lScheme = InternetSchemeHttp Then
 50300     hInternetSession = InternetOpen(scUserAgent, INTERNET_OPEN_TYPE_PRECONFIG, vbNullString, vbNullString, 0)
@@ -189,19 +189,19 @@ Private Sub CloseAll(hHOR As Long, hIS As Long, hIC As Long, URL As clsURL)
  Set URL = Nothing
 
  DoEvents
- Status = 0
+ status = 0
 End Sub
 
 
-Public Property Get Status() As Byte
+Public Property Get status() As Byte
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Status = mvarStatus
+50010  status = mvarStatus
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsDownload", "Status [GET]")
+Select Case ErrPtnr.OnError("clsDownload", "status [GET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -210,7 +210,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Private Property Let Status(s As Byte)
+Private Property Let status(s As Byte)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -218,7 +218,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsDownload", "Status [LET]")
+Select Case ErrPtnr.OnError("clsDownload", "status [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property

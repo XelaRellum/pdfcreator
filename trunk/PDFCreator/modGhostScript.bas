@@ -13,6 +13,11 @@ Public Enum tGhostscriptDevice
  PSWriter = 6
  EPSWriter = 7
  TXTWriter = 8
+ PDFAWriter = 9
+ PDFXWriter = 10
+ PSDWriter = 11
+ PCLWriter = 12
+ RAWWriter = 13
 End Enum
 
 Private GSParams() As String
@@ -22,6 +27,7 @@ Public GS_ERROR
 Public UseReturnPipe
 
 'General
+Public GS_PDFDEFAULT
 Public GS_COMPATIBILITY
 Public GS_RESOLUTION
 Public GS_AUTOROTATE
@@ -74,6 +80,10 @@ Public GS_BMPColorscount
 Public GS_PCXColorscount
 Public GS_TIFFColorscount
 Public GS_JPEGQuality
+Public GS_PSDColorscount
+Public GS_PCLColorscount
+Public GS_RAWColorscount
+Public GS_XCFColorscount
 
 ' Postscript
 Public GS_PSLanguageLevel
@@ -127,100 +137,113 @@ On Error GoTo ErrPtnr_OnError
   ColorsPreserveTransfer(1) As String
 50030  Dim PNGColorscount(4) As String, JPEGColorscount(1) As String, BMPColorscount(6) As String, _
   PCXColorscount(5) As String, TIFFColorscount(7) As String, _
-  PSLanguageLevel(3) As String
-50060
-50070  Rotate(0) = "None": Rotate(1) = "All": Rotate(2) = "PageByPage"
+  PSLanguageLevel(3) As String, PSDColorsCount(1) As String, _
+  PCLColorsCount(1) As String, RAWColorsCount(2) As String, _
+  XCFColorsCount(1) As String, PDFDefaultSettings(4) As String
 50080
-50090  Resample(0) = "Bicubic": Resample(1) = "Subsample": Resample(2) = "Average"
-50100
-50110  Colormodel(0) = "RGB": Colormodel(1) = "CMYK": Colormodel(2) = "Gray"
+50090  PDFDefaultSettings(0) = "default": PDFDefaultSettings(1) = "screen": PDFDefaultSettings(2) = "ebook"
+50100  PDFDefaultSettings(3) = "printer": PDFDefaultSettings(4) = "prepress"
+50110  Rotate(0) = "None": Rotate(1) = "All": Rotate(2) = "PageByPage"
 50120
-50130  ColorsPreserveTransfer(0) = "Remove": ColorsPreserveTransfer(1) = "Preserve"
+50130  Resample(0) = "Bicubic": Resample(1) = "Subsample": Resample(2) = "Average"
 50140
-50150  PNGColorscount(0) = "png16m": PNGColorscount(1) = "png256"
-50160  PNGColorscount(2) = "png16": PNGColorscount(3) = "pngmono"
-50170  PNGColorscount(4) = "pnggray"
+50150  Colormodel(0) = "RGB": Colormodel(1) = "CMYK": Colormodel(2) = "Gray"
+50160
+50170  ColorsPreserveTransfer(0) = "Remove": ColorsPreserveTransfer(1) = "Preserve"
 50180
-50190  JPEGColorscount(0) = "jpeg": JPEGColorscount(1) = "jpeggray"
-50200
-50210  BMPColorscount(0) = "bmp32b": BMPColorscount(1) = "bmp16m"
-50220  BMPColorscount(2) = "bmp256": BMPColorscount(3) = "bmp16"
-50230  BMPColorscount(4) = "bmpsep8": BMPColorscount(5) = "bmpsep1"
-50240  BMPColorscount(6) = "bmpgray"
-50250
-50260  PCXColorscount(0) = "pcxcmyk": PCXColorscount(1) = "pcx24b"
-50270  PCXColorscount(2) = "pcx256": PCXColorscount(3) = "pcx16"
-50280  PCXColorscount(4) = "pcxmono": PCXColorscount(5) = "pcxgray"
+50190  PNGColorscount(0) = "png16m": PNGColorscount(1) = "png256"
+50200  PNGColorscount(2) = "png16": PNGColorscount(3) = "pngmono"
+50210  PNGColorscount(4) = "pnggray"
+50220
+50230  JPEGColorscount(0) = "jpeg": JPEGColorscount(1) = "jpeggray"
+50240
+50250  BMPColorscount(0) = "bmp32b": BMPColorscount(1) = "bmp16m"
+50260  BMPColorscount(2) = "bmp256": BMPColorscount(3) = "bmp16"
+50270  BMPColorscount(4) = "bmpsep8": BMPColorscount(5) = "bmpsep1"
+50280  BMPColorscount(6) = "bmpgray"
 50290
-50300  TIFFColorscount(0) = "tiff24nc": TIFFColorscount(1) = "tiff12nc"
-50310  TIFFColorscount(2) = "tiffcrle": TIFFColorscount(3) = "tiffg3"
-50320  TIFFColorscount(4) = "tiffg32d": TIFFColorscount(5) = "tiffg4"
-50330  TIFFColorscount(6) = "tifflzw": TIFFColorscount(7) = "tiffpack"
-50340
-50350  PSLanguageLevel(0) = "1": PSLanguageLevel(1) = "1.5"
-50360  PSLanguageLevel(2) = "2": PSLanguageLevel(3) = "3"
-50370
-50380 With Options
-50390  'General
-50400
-50410  GS_COMPATIBILITY = "1." & (.PDFGeneralCompatibility + 2)
-50420  GS_RESOLUTION = .PDFGeneralResolution
-50430  GS_AUTOROTATE = Rotate(.PDFGeneralAutorotate)
-50440  GS_OVERPRINT = .PDFGeneralOverprint
-50450  GS_ASCII85 = Bool2Text(.PDFGeneralASCII85)
+50300  PCXColorscount(0) = "pcxcmyk": PCXColorscount(1) = "pcx24b"
+50310  PCXColorscount(2) = "pcx256": PCXColorscount(3) = "pcx16"
+50320  PCXColorscount(4) = "pcxmono": PCXColorscount(5) = "pcxgray"
+50330
+50340  TIFFColorscount(0) = "tiff24nc": TIFFColorscount(1) = "tiff12nc"
+50350  TIFFColorscount(2) = "tiffcrle": TIFFColorscount(3) = "tiffg3"
+50360  TIFFColorscount(4) = "tiffg32d": TIFFColorscount(5) = "tiffg4"
+50370  TIFFColorscount(6) = "tifflzw": TIFFColorscount(7) = "tiffpack"
+50380
+50390  PSLanguageLevel(0) = "1": PSLanguageLevel(1) = "1.5"
+50400  PSLanguageLevel(2) = "2": PSLanguageLevel(3) = "3"
+50410
+50420  PSDColorsCount(0) = "psdcmyk": PSDColorsCount(1) = "psdrgb"
+50430  PCLColorsCount(0) = "pxlcolor": PCLColorsCount(1) = "pxlmono"
+50440  RAWColorsCount(0) = "bitcmyk": RAWColorsCount(1) = "bitrgb": RAWColorsCount(2) = "bit"
+50450  XCFColorsCount(0) = "xcfcmyk": XCFColorsCount(1) = "xcfrgb"
 50460
-50470  'Compression
-50480  GS_COMPRESSPAGES = Bool2Text(.PDFCompressionTextCompression)
-50490  GS_COMPRESSCOLOR = Bool2Text(.PDFCompressionColorCompression)
-50500  GS_COMPRESSGREY = Bool2Text(.PDFCompressionGreyCompression)
-50510  GS_COMPRESSMONO = Bool2Text(.PDFCompressionMonoCompression)
-50520
-50530  SelectColorCompression .PDFCompressionColorCompressionChoice
-50540  SelectGreyCompression .PDFCompressionGreyCompressionChoice
-50550  SelectMonoCompression .PDFCompressionMonoCompressionChoice
-50560
-50570  GS_COMPRESSCOLORVALUE = Bool2Text(.PDFCompressionColorCompression)
-50580  GS_COMPRESSGREYVALUE = Bool2Text(.PDFCompressionGreyCompression)
-50590  GS_COMPRESSMONOVALUE = Bool2Text(.PDFCompressionMonoCompression)
-50600
-50610  GS_COLORRESOLUTION = .PDFCompressionColorResolution
-50620  GS_GREYRESOLUTION = .PDFCompressionGreyResolution
-50630  GS_MONORESOLUTION = .PDFCompressionMonoResolution
-50640
-50650  GS_COLORRESAMPLE = Bool2Text(.PDFCompressionColorResample)
-50660  GS_GREYRESAMPLE = Bool2Text(.PDFCompressionGreyResample)
-50670  GS_MONORESAMPLE = Bool2Text(.PDFCompressionMonoResample)
-50680
-50690  GS_COLORRESAMPLEMETHOD = Resample(.PDFCompressionColorResampleChoice)
-50700  GS_GREYRESAMPLEMETHOD = Resample(.PDFCompressionGreyResampleChoice)
-50710  GS_MONORESAMPLEMETHOD = Resample(.PDFCompressionMonoResampleChoice)
-50720
-50730  'Fonts
-50740  GS_EMBEDALLFONTS = Bool2Text(.PDFFontsEmbedAll)
-50750  GS_SUBSETFONTS = Bool2Text(.PDFFontsSubSetFonts)
-50760  GS_SUBSETFONTPERC = .PDFFontsSubSetFontsPercent
+50470 With Options
+50480  'General
+50490  GS_PDFDEFAULT = PDFDefaultSettings(.PDFGeneralDefault)
+50500  GS_COMPATIBILITY = "1." & (.PDFGeneralCompatibility + 2)
+50510  GS_RESOLUTION = .PDFGeneralResolution
+50520  GS_AUTOROTATE = Rotate(.PDFGeneralAutorotate)
+50530  GS_OVERPRINT = .PDFGeneralOverprint
+50540  GS_ASCII85 = Bool2Text(.PDFGeneralASCII85)
+50550
+50560  'Compression
+50570  GS_COMPRESSPAGES = Bool2Text(.PDFCompressionTextCompression)
+50580  GS_COMPRESSCOLOR = Bool2Text(.PDFCompressionColorCompression)
+50590  GS_COMPRESSGREY = Bool2Text(.PDFCompressionGreyCompression)
+50600  GS_COMPRESSMONO = Bool2Text(.PDFCompressionMonoCompression)
+50610
+50620  SelectColorCompression .PDFCompressionColorCompressionChoice
+50630  SelectGreyCompression .PDFCompressionGreyCompressionChoice
+50640  SelectMonoCompression .PDFCompressionMonoCompressionChoice
+50650
+50660  GS_COMPRESSCOLORVALUE = Bool2Text(.PDFCompressionColorCompression)
+50670  GS_COMPRESSGREYVALUE = Bool2Text(.PDFCompressionGreyCompression)
+50680  GS_COMPRESSMONOVALUE = Bool2Text(.PDFCompressionMonoCompression)
+50690
+50700  GS_COLORRESOLUTION = .PDFCompressionColorResolution
+50710  GS_GREYRESOLUTION = .PDFCompressionGreyResolution
+50720  GS_MONORESOLUTION = .PDFCompressionMonoResolution
+50730
+50740  GS_COLORRESAMPLE = Bool2Text(.PDFCompressionColorResample)
+50750  GS_GREYRESAMPLE = Bool2Text(.PDFCompressionGreyResample)
+50760  GS_MONORESAMPLE = Bool2Text(.PDFCompressionMonoResample)
 50770
-50780  'Colors
-50790  GS_COLORMODEL = Colormodel(.PDFColorsColorModel)
-50800  GS_CMYKTORGB = Bool2Text(.PDFColorsCMYKToRGB)
-50810  GS_PRESERVEOVERPRINT = Bool2Text(.PDFColorsPreserveOverprint)
-50820  GS_TRANSFERFUNCTIONS = ColorsPreserveTransfer(.PDFColorsPreserveTransfer)
-50830  GS_HALFTONE = Bool2Text(.PDFColorsPreserveHalftone)
-50840
-50850  'Bitmap
-50860  GS_BitmapRESOLUTION = .BitmapResolution
-50870  GS_PNGColorscount = PNGColorscount(.PNGColorscount)
-50880  GS_JPEGColorscount = JPEGColorscount(.JPEGColorscount)
-50890  GS_BMPColorscount = BMPColorscount(.BMPColorscount)
-50900  GS_PCXColorscount = PCXColorscount(.PCXColorscount)
-50910  GS_TIFFColorscount = TIFFColorscount(.TIFFColorscount)
-50920  GS_JPEGQuality = .JPEGQuality
-50930  GS_PSLanguageLevel = PSLanguageLevel(.PSLanguageLevel)
-50940  GS_EPSLanguageLevel = PSLanguageLevel(.EPSLanguageLevel)
-50950 End With
-50960 'Other
-50970 GS_ERROR = 0
-50980 UseReturnPipe = 1
+50780  GS_COLORRESAMPLEMETHOD = Resample(.PDFCompressionColorResampleChoice)
+50790  GS_GREYRESAMPLEMETHOD = Resample(.PDFCompressionGreyResampleChoice)
+50800  GS_MONORESAMPLEMETHOD = Resample(.PDFCompressionMonoResampleChoice)
+50810
+50820  'Fonts
+50830  GS_EMBEDALLFONTS = Bool2Text(.PDFFontsEmbedAll)
+50840  GS_SUBSETFONTS = Bool2Text(.PDFFontsSubSetFonts)
+50850  GS_SUBSETFONTPERC = .PDFFontsSubSetFontsPercent
+50860
+50870  'Colors
+50880  GS_COLORMODEL = Colormodel(.PDFColorsColorModel)
+50890  GS_CMYKTORGB = Bool2Text(.PDFColorsCMYKToRGB)
+50900  GS_PRESERVEOVERPRINT = Bool2Text(.PDFColorsPreserveOverprint)
+50910  GS_TRANSFERFUNCTIONS = ColorsPreserveTransfer(.PDFColorsPreserveTransfer)
+50920  GS_HALFTONE = Bool2Text(.PDFColorsPreserveHalftone)
+50930
+50940  'Bitmap
+50950  GS_BitmapRESOLUTION = .BitmapResolution
+50960  GS_PNGColorscount = PNGColorscount(.PNGColorscount)
+50970  GS_JPEGColorscount = JPEGColorscount(.JPEGColorscount)
+50980  GS_BMPColorscount = BMPColorscount(.BMPColorscount)
+50990  GS_PCXColorscount = PCXColorscount(.PCXColorscount)
+51000  GS_TIFFColorscount = TIFFColorscount(.TIFFColorscount)
+51010  GS_JPEGQuality = .JPEGQuality
+51020  GS_PSLanguageLevel = PSLanguageLevel(.PSLanguageLevel)
+51030  GS_EPSLanguageLevel = PSLanguageLevel(.EPSLanguageLevel)
+51040  GS_PSDColorscount = PSDColorsCount(.PSDColorsCount)
+51050  GS_PCLColorscount = PCLColorsCount(.PCLColorsCount)
+51060  GS_RAWColorscount = RAWColorsCount(.RAWColorsCount)
+51070  GS_XCFColorscount = XCFColorsCount(.XCFColorsCount)
+51080 End With
+51090 'Other
+51100 GS_ERROR = 0
+51110 UseReturnPipe = 1
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -287,100 +310,101 @@ On Error GoTo ErrPtnr_OnError
 50200  End If
 50210  AddParams "-sDEVICE=pdfwrite"
 50220  If Options.DontUseDocumentSettings = 0 Then
-50230   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
-50240   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
-50250   AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
-50260   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
-50270   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
-50280   AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
-50290   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
-50300   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
-50310   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50320
-50330   If Options.UseFixPapersize <> 0 Then
-50340    If Options.UseCustomPaperSize = 0 Then
-50350      If LenB(Trim$(Options.Papersize)) > 0 Then
-50360       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50370       AddParams "-dFIXEDMEDIA"
-50380       AddParams "-dNORANGEPAGESIZE"
-50390      End If
-50400     Else
-50410      If Options.DeviceWidthPoints >= 1 Then
-50420       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50430      End If
-50440      If Options.DeviceHeightPoints >= 1 Then
-50450       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50460      End If
-50470    End If
-50480   End If
-50490
-50500  End If
-50510  tEnc = False
-50520  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
-50530   If SetEncryptionParams(encPDF, "", "") = True Then
-50540     tEnc = True
-50550     If Len(encPDF.OwnerPass) > 0 Then
-50560       AddParams "-sOwnerPassword=" & encPDF.OwnerPass
-50570      Else
-50580       If Len(encPDF.UserPass) > 0 Then
-50590        AddParams "-sOwnerPassword=" & encPDF.UserPass
-50600       End If
-50610     End If
-50620     If Len(encPDF.UserPass) > 0 Then
-50630      AddParams "-sUserPassword=" & encPDF.UserPass
-50640     End If
-50650     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50660     If GS_COMPATIBILITY = "1.4" Then
-50670       AddParams "-dEncryptionR=3"
-50680      Else
-50690       AddParams "-dEncryptionR=2"
-50700     End If
-50710     If encPDF.EncryptionLevel = encLow Then
-50720       AddParams "-dKeyLength=40"
-50730      Else
-50740       AddParams "-dKeyLength=128"
-50750     End If
-50760    Else
-50770     If Options.UseAutosave = 0 Then
-50780      MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50790     End If
-50800   End If
-50810  End If
-50820  AddParams "-sOutputFile=" & GSOutputFile
-50830
-50840  If Options.DontUseDocumentSettings = 0 Then
-50850   SetColorParams
-50860   SetGreyParams
-50870   SetMonoParams
-50880
-50890   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50900   AddParams "-dUCRandBGInfo=/Preserve"
-50910   AddParams "-dUseFlateCompression=true"
-50920   AddParams "-dParseDSCCommentsForDocInfo=true"
-50930   AddParams "-dParseDSCComments=true"
-50940   AddParams "-dOPM=" & GS_OVERPRINT
-50950   AddParams "-dOffOptimizations=0"
-50960   AddParams "-dLockDistillerParams=false"
-50970   AddParams "-dGrayImageDepth=-1"
-50980   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50990   AddParams "-dDefaultRenderingIntent=/Default"
-51000   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-51010   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-51020   AddParams "-dDetectBlends=true"
-51030
-51040   AddAdditionalGhostscriptParameters
-51050
-51060   AddParamCommands
-51070  End If
-51080
-51090  AddParams "-f"
-51100  AddParams GSInputFile
-51110  ShowParams
-51120  If tEnc = True Then
-51130    CallGhostscript "PDF with encryption"
-51140   Else
-51150    CallGhostscript "PDF without encryption"
-51160  End If
+50230   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
+50240   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+50250   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+50260   AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
+50270   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+50280   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+50290   AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
+50300   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+50310   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
+50320   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50330
+50340   If Options.UseFixPapersize <> 0 Then
+50350    If Options.UseCustomPaperSize = 0 Then
+50360      If LenB(Trim$(Options.Papersize)) > 0 Then
+50370       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50380       AddParams "-dFIXEDMEDIA"
+50390       AddParams "-dNORANGEPAGESIZE"
+50400      End If
+50410     Else
+50420      If Options.DeviceWidthPoints >= 1 Then
+50430       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50440      End If
+50450      If Options.DeviceHeightPoints >= 1 Then
+50460       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50470      End If
+50480    End If
+50490   End If
+50500
+50510  End If
+50520  tEnc = False
+50530  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
+50540   If SetEncryptionParams(encPDF, "", "") = True Then
+50550     tEnc = True
+50560     If Len(encPDF.OwnerPass) > 0 Then
+50570       AddParams "-sOwnerPassword=" & encPDF.OwnerPass
+50580      Else
+50590       If Len(encPDF.UserPass) > 0 Then
+50600        AddParams "-sOwnerPassword=" & encPDF.UserPass
+50610       End If
+50620     End If
+50630     If Len(encPDF.UserPass) > 0 Then
+50640      AddParams "-sUserPassword=" & encPDF.UserPass
+50650     End If
+50660     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
+50670     If GS_COMPATIBILITY = "1.4" Then
+50680       AddParams "-dEncryptionR=3"
+50690      Else
+50700       AddParams "-dEncryptionR=2"
+50710     End If
+50720     If encPDF.EncryptionLevel = encLow Then
+50730       AddParams "-dKeyLength=40"
+50740      Else
+50750       AddParams "-dKeyLength=128"
+50760     End If
+50770    Else
+50780     If Options.UseAutosave = 0 Then
+50790      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50800     End If
+50810   End If
+50820  End If
+50830  AddParams "-sOutputFile=" & GSOutputFile
+50840
+50850  If Options.DontUseDocumentSettings = 0 Then
+50860   SetColorParams
+50870   SetGreyParams
+50880   SetMonoParams
+50890
+50900   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50910   AddParams "-dUCRandBGInfo=/Preserve"
+50920   AddParams "-dUseFlateCompression=true"
+50930   AddParams "-dParseDSCCommentsForDocInfo=true"
+50940   AddParams "-dParseDSCComments=true"
+50950   AddParams "-dOPM=" & GS_OVERPRINT
+50960   AddParams "-dOffOptimizations=0"
+50970   AddParams "-dLockDistillerParams=false"
+50980   AddParams "-dGrayImageDepth=-1"
+50990   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+51000   AddParams "-dDefaultRenderingIntent=/Default"
+51010   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+51020   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+51030   AddParams "-dDetectBlends=true"
+51040
+51050   AddAdditionalGhostscriptParameters
+51060
+51070   AddParamCommands
+51080  End If
+51090
+51100  AddParams "-f"
+51110  AddParams GSInputFile
+51120  ShowParams
+51130  If tEnc = True Then
+51140    CallGhostscript "PDF with encryption"
+51150   Else
+51160    CallGhostscript "PDF without encryption"
+51170  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -927,6 +951,503 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Private Function CreatePDFA(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim FName As String, tStr As String, encPDF As EncryptData, tEnc As Boolean
+50020
+50030  InitParams
+50040  Set ParamCommands = New Collection
+50050
+50060  tStr = Options.DirectoryGhostscriptLibraries
+50070  If LenB(LTrim(Options.DirectoryGhostscriptFonts)) > 0 Then
+50080   If DirExists(Options.DirectoryGhostscriptFonts) Then
+50090    tStr = tStr & ";" & Options.DirectoryGhostscriptFonts
+50100   End If
+50110  End If
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   If DirExists(Options.DirectoryGhostscriptResource) Then
+50140    tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50150   End If
+50160  End If
+50170  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50180   If DirExists(Options.AdditionalGhostscriptSearchpath) Then
+50190    tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50200   End If
+50210  End If
+50220  AddParams "-I" & tStr
+50230  AddParams "-dPDFA"
+50240  AddParams "-q"
+50250  AddParams "-dNOPAUSE"
+50260  AddParams "-dSAFER"
+50270  AddParams "-dBATCH"
+50280  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50290   AddParams "-sFONTPATH=" & GetFontsDirectory
+50300  End If
+50310  AddParams "-sDEVICE=pdfwrite"
+50320  If Options.DontUseDocumentSettings = 0 Then
+50330   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
+50340   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+50350   AddParams "-dNOOUTERSAVE"
+50360   AddParams "-dUseCIEColor"
+50370   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+50380   AddParams "-sProcessColorModel=Device" & GS_COLORMODEL
+50390   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+50400   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+50410   AddParams "-dEmbedAllFonts=true"
+50420   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+50430   AddParams "-dMaxSubsetPct=100"
+50440   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50450
+50460   If Options.UseFixPapersize <> 0 Then
+50470    If Options.UseCustomPaperSize = 0 Then
+50480      If LenB(Trim$(Options.Papersize)) > 0 Then
+50490       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50500       AddParams "-dFIXEDMEDIA"
+50510       AddParams "-dNORANGEPAGESIZE"
+50520      End If
+50530     Else
+50540      If Options.DeviceWidthPoints >= 1 Then
+50550       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50560      End If
+50570      If Options.DeviceHeightPoints >= 1 Then
+50580       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50590      End If
+50600    End If
+50610   End If
+50620
+50630  End If
+50640  tEnc = False
+50650  AddParams "-sOutputFile=" & GSOutputFile
+50660
+50670  If Options.DontUseDocumentSettings = 0 Then
+50680   SetColorParams
+50690   SetGreyParams
+50700   SetMonoParams
+50710
+50720   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50730   AddParams "-dUCRandBGInfo=/Preserve"
+50740   AddParams "-dUseFlateCompression=true"
+50750   AddParams "-dParseDSCCommentsForDocInfo=true"
+50760   AddParams "-dParseDSCComments=true"
+50770   AddParams "-dOPM=1" '& GS_OVERPRINT
+50780   AddParams "-dOffOptimizations=0"
+50790   AddParams "-dLockDistillerParams=false"
+50800   AddParams "-dGrayImageDepth=-1"
+50810   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50820   AddParams "-dDefaultRenderingIntent=/Default"
+50830   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50840   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50850   AddParams "-dDetectBlends=true"
+50860
+50870   AddAdditionalGhostscriptParameters
+50880
+50890   AddParams "-f"
+50900   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfa_def.ps"
+50910
+50920   AddParamCommands
+50930  End If
+50940
+50950  AddParams "-f"
+50960  AddParams GSInputFile
+50970  ShowParams
+50980  CallGhostscript "PDF/A (without encryption)"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePDFA")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreatePDFX(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim FName As String, tStr As String, encPDF As EncryptData, tEnc As Boolean
+50020
+50030  InitParams
+50040  Set ParamCommands = New Collection
+50050
+50060  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50070  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50080   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50090  End If
+50100  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50110   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50120  End If
+50130  AddParams "-I" & tStr
+50140  AddParams "-q"
+50150  AddParams "-dNOPAUSE"
+50160  AddParams "-dSAFER"
+50170  AddParams "-dBATCH"
+50180  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50190   AddParams "-sFONTPATH=" & GetFontsDirectory
+50200  End If
+50210  AddParams "-sDEVICE=pdfwrite"
+50220  If Options.DontUseDocumentSettings = 0 Then
+50230   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
+50240   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+50250   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+50260   AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
+50270   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+50280   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+50290   AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
+50300   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+50310   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
+50320   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50330
+50340   If Options.UseFixPapersize <> 0 Then
+50350    If Options.UseCustomPaperSize = 0 Then
+50360      If LenB(Trim$(Options.Papersize)) > 0 Then
+50370       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50380       AddParams "-dFIXEDMEDIA"
+50390       AddParams "-dNORANGEPAGESIZE"
+50400      End If
+50410     Else
+50420      If Options.DeviceWidthPoints >= 1 Then
+50430       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50440      End If
+50450      If Options.DeviceHeightPoints >= 1 Then
+50460       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50470      End If
+50480    End If
+50490   End If
+50500
+50510  End If
+50520  tEnc = False
+50530  AddParams "-sOutputFile=" & GSOutputFile
+50540
+50550  If Options.DontUseDocumentSettings = 0 Then
+50560   SetColorParams
+50570   SetGreyParams
+50580   SetMonoParams
+50590
+50600   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50610   AddParams "-dUCRandBGInfo=/Preserve"
+50620   AddParams "-dUseFlateCompression=true"
+50630   AddParams "-dParseDSCCommentsForDocInfo=true"
+50640   AddParams "-dParseDSCComments=true"
+50650   AddParams "-dOPM=" & GS_OVERPRINT
+50660   AddParams "-dOffOptimizations=0"
+50670   AddParams "-dLockDistillerParams=false"
+50680   AddParams "-dGrayImageDepth=-1"
+50690   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50700   AddParams "-dDefaultRenderingIntent=/Default"
+50710   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50720   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50730   AddParams "-dDetectBlends=true"
+50740
+50750   AddAdditionalGhostscriptParameters
+50760
+50770   AddParams "-dPDFX"
+50780   AddParams "-f"
+50790   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfx_def.ps"
+50800
+50810   AddParamCommands
+50820  End If
+50830
+50840  AddParams "-f"
+50850  AddParams GSInputFile
+50860  ShowParams
+50870  CallGhostscript "PDF/X (without encryption)"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePDFX")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreatePSD(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFONTPATH=" & GetFontsDirectory
+50250  End If
+50260
+50270  AddParams "-sDEVICE=" & GS_PSDColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If Options.UseFixPapersize <> 0 Then
+50300    If Options.UseCustomPaperSize = 0 Then
+50310      If LenB(Trim$(Options.Papersize)) > 0 Then
+50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50330       AddParams "-dFIXEDMEDIA"
+50340       AddParams "-dNORANGEPAGESIZE"
+50350      End If
+50360     Else
+50370      If Options.DeviceWidthPoints >= 1 Then
+50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50390      End If
+50400      If Options.DeviceHeightPoints >= 1 Then
+50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50420      End If
+50430    End If
+50440   End If
+50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddAdditionalGhostscriptParameters
+50500
+50510  AddParams "-f"
+50520  AddParams GSInputFile
+50530  ShowParams
+50540  CallGhostscript "PSD"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePSD")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreatePCL(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFONTPATH=" & GetFontsDirectory
+50250  End If
+50260
+50270  AddParams "-sDEVICE=" & GS_PCLColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If Options.UseFixPapersize <> 0 Then
+50300    If Options.UseCustomPaperSize = 0 Then
+50310      If LenB(Trim$(Options.Papersize)) > 0 Then
+50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50330       AddParams "-dFIXEDMEDIA"
+50340       AddParams "-dNORANGEPAGESIZE"
+50350      End If
+50360     Else
+50370      If Options.DeviceWidthPoints >= 1 Then
+50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50390      End If
+50400      If Options.DeviceHeightPoints >= 1 Then
+50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50420      End If
+50430    End If
+50440   End If
+50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddAdditionalGhostscriptParameters
+50500
+50510  AddParams "-f"
+50520  AddParams GSInputFile
+50530  ShowParams
+50540  CallGhostscript "PCL"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreatePCL")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreateRAW(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFONTPATH=" & GetFontsDirectory
+50250  End If
+50260
+50270  AddParams "-sDEVICE=" & GS_RAWColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If Options.UseFixPapersize <> 0 Then
+50300    If Options.UseCustomPaperSize = 0 Then
+50310      If LenB(Trim$(Options.Papersize)) > 0 Then
+50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50330       AddParams "-dFIXEDMEDIA"
+50340       AddParams "-dNORANGEPAGESIZE"
+50350      End If
+50360     Else
+50370      If Options.DeviceWidthPoints >= 1 Then
+50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50390      End If
+50400      If Options.DeviceHeightPoints >= 1 Then
+50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50420      End If
+50430    End If
+50440   End If
+50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddAdditionalGhostscriptParameters
+50500
+50510  AddParams "-f"
+50520  AddParams GSInputFile
+50530  ShowParams
+50540  CallGhostscript "RAW"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateRAW")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function CreateXCF(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
+50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
+50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
+50140  End If
+50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50170  End If
+50180  AddParams "-I" & tStr
+50190  AddParams "-q"
+50200  AddParams "-dNOPAUSE"
+50210  AddParams "-dSAFER"
+50220  AddParams "-dBATCH"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFONTPATH=" & GetFontsDirectory
+50250  End If
+50260
+50270  AddParams "-sDEVICE=" & GS_XCFColorscount
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If Options.UseFixPapersize <> 0 Then
+50300    If Options.UseCustomPaperSize = 0 Then
+50310      If LenB(Trim$(Options.Papersize)) > 0 Then
+50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50330       AddParams "-dFIXEDMEDIA"
+50340       AddParams "-dNORANGEPAGESIZE"
+50350      End If
+50360     Else
+50370      If Options.DeviceWidthPoints >= 1 Then
+50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50390      End If
+50400      If Options.DeviceHeightPoints >= 1 Then
+50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50420      End If
+50430    End If
+50440   End If
+50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddAdditionalGhostscriptParameters
+50500
+50510  AddParams "-f"
+50520  AddParams GSInputFile
+50530  ShowParams
+50540  CallGhostscript "XCF"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateXCF")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function CallGScript(GSInputFile As String, GSOutputFile As String, _
  Options As tOptions, Ghostscriptdevice As tGhostscriptDevice)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -986,28 +1507,70 @@ On Error GoTo ErrPtnr_OnError
 50520       End If
 50530      End If
 50540     End If
-50550    End With
-50560   Case 1: 'PNG
-50570    CreatePNG GSInputFile, GSOutputFile, Options
-50580   Case 2: 'JPEG
-50590    CreateJPEG GSInputFile, GSOutputFile, Options
-50600   Case 3: 'BMP
-50610    CreateBMP GSInputFile, GSOutputFile, Options
-50620   Case 4: 'PCX
-50630    CreatePCX GSInputFile, GSOutputFile, Options
-50640   Case 5: 'TIFF
-50650    CreateTIFF GSInputFile, GSOutputFile, Options
-50660   Case 6: 'PS
-50670    CreatePS GSInputFile, GSOutputFile, Options
-50680   Case 7: 'EPS
-50690    CreateEPS GSInputFile, GSOutputFile, Options
-50700   Case 8: 'TXT
-50710    CreateTXT GSInputFile, Options
-50720    CreateTextFile GSOutputFile, GS_OutStr
-50730  End Select
-50740
-50750  Options.Counter = Options.Counter + 1
-50760  SaveOption Options, "Counter"
+50550     If PDFSigningIsPossible Then
+50560      If .PDFSigningSignPDF = 1 Then
+50570       SignPDF GSOutputFile
+50580      End If
+50590     End If
+50600    End With
+50610   Case 1: 'PNG
+50620    CreatePNG GSInputFile, GSOutputFile, Options
+50630   Case 2: 'JPEG
+50640    CreateJPEG GSInputFile, GSOutputFile, Options
+50650   Case 3: 'BMP
+50660    CreateBMP GSInputFile, GSOutputFile, Options
+50670   Case 4: 'PCX
+50680    CreatePCX GSInputFile, GSOutputFile, Options
+50690   Case 5: 'TIFF
+50700    CreateTIFF GSInputFile, GSOutputFile, Options
+50710   Case 6: 'PS
+50720    CreatePS GSInputFile, GSOutputFile, Options
+50730   Case 7: 'EPS
+50740    CreateEPS GSInputFile, GSOutputFile, Options
+50750   Case 8: 'TXT
+50760    CreateTXT GSInputFile, Options
+50770    CreateTextFile GSOutputFile, GS_OutStr
+50780   Case 9: 'PDFA
+50790    CreatePDFA GSInputFile, GSOutputFile, Options
+50800    With Options
+50810     If PDFUpdateMetadataIsPossible Then
+50820      If .PDFUpdateMetadata > 0 Then
+50830       Set m = CreateObject("pdfForge.pdf.pdf")
+50840       Tempfile = GetTempFile(GetTempPath, "~MP")
+50850       KillFile Tempfile
+50860       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
+50870       If FileExists(Tempfile) Then
+50880        If KillFile(GSOutputFile) Then
+50890         Name Tempfile As GSOutputFile
+50900        End If
+50910       End If
+50920      End If
+50930     End If
+50940     If PDFSigningIsPossible Then
+50950      If .PDFSigningSignPDF = 1 Then
+50960       SignPDF GSOutputFile
+50970      End If
+50980     End If
+50990    End With
+51000   Case 10: 'PDFX
+51010    CreatePDFX GSInputFile, GSOutputFile, Options
+51020    With Options
+51030     If PDFSigningIsPossible Then
+51040      If .PDFSigningSignPDF = 1 Then
+51050       SignPDF GSOutputFile
+51060      End If
+51070     End If
+51080    End With
+51090   Case 11: 'PSD
+51100    CreatePSD GSInputFile, GSOutputFile, Options
+51110   Case 12: 'PCL
+51120    CreatePCL GSInputFile, GSOutputFile, Options
+51130   Case 13: 'RAW
+51140    CreateRAW GSInputFile, GSOutputFile, Options
+51150  End Select
+51160
+51170  Options.Counter = Options.Counter + 1
+51180  SaveOption Options, "Counter"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1019,6 +1582,60 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Private Sub SignPDF(filename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim m As Object, PFXPassword As String, signatureVisible As Boolean, multiSignatures As Boolean, Tempfile As String, tStr As String
+50020   Dim res As Long, files As Collection, certFilename As String
+50030  With Options
+50040   If LenB(.PDFSigningPFXFile) = 0 Then
+50050     res = OpenFileDialog(files, "", "PFX\P12 files (*.pfx,*.p12)|*.pfx;*.p12|PFX files (*.pfx)|*pfx|P12 files (*.p12|*.p12", "*.pfx;*.p12", "C:\", "Choose a certificate", OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
+50060     If res > 0 Then
+50070      certFilename = files(1)
+50080     End If
+50090    Else
+50100     certFilename = .PDFSigningPFXFile
+50110   End If
+50120   If LenB(.PDFSigningPFXFilePassword) > 0 Then
+50130     PFXPassword = .PDFSigningPFXFilePassword
+50140    Else
+50150     'Ask for the password
+50160     PFXPassword = InputBox("Certifacte password")
+50170   End If
+50180   Tempfile = GetTempFile(GetTempPath, "~MP")
+50190   KillFile Tempfile
+50200   Set m = CreateObject("pdfForge.pdf.pdf")
+50210   If .PDFSigningSignatureVisible = 0 Then
+50220     signatureVisible = False
+50230    Else
+50240     signatureVisible = True
+50250   End If
+50260   If .PDFSigningMultiSignature = 0 Then
+50270     multiSignatures = False
+50280    Else
+50290     multiSignatures = True
+50300   End If
+50310   Call m.signPDFFile(filename, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
+   signatureVisible, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
+50330  End With
+50340  If FileExists(Tempfile) Then
+50350   If KillFile(filename) Then
+50360    Name Tempfile As filename
+50370   End If
+50380  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "SignPDF")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
 
 Public Function OptimizePDF(PDFInputFilename As String, PDFOutputFilename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1695,24 +2312,24 @@ On Error GoTo ErrPtnr_OnError
 50220    GS_LIB = .GetRegistryValue("GS_LIB")
 50230    If Len(GS_DLL) > 0 Then
 50240     If FileExists(GS_DLL) = True Then
-50250      If Len(GS_LIB) > 0 Then
-50260       If InStr(GS_LIB, ";") > 0 Then
-50270        tf = Split(GS_LIB, ";")
-50280        tB = False
-50290        For j = 0 To UBound(tf)
-50300         If DirExists(tf(j)) = False Then
-50310          tB = True
-50320         End If
-50330        Next j
-50340        If tB = False Then
-50350         GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
-50360        End If
-50370       End If
-50380      End If
+50250      GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
+50260     End If
+50270    End If
+50280   Next i
+50290   tStr = "GNU Ghostscript"
+50300   .KeyRoot = "SOFTWARE\" & tStr
+50310   Set tColl = .EnumRegistryKeys(HKEY_LOCAL_MACHINE, .KeyRoot)
+50320   For i = 1 To tColl.Count
+50330    .Subkey = tColl.Item(i)
+50340    GS_DLL = .GetRegistryValue("GS_DLL")
+50350    GS_LIB = .GetRegistryValue("GS_LIB")
+50360    If Len(GS_DLL) > 0 Then
+50370     If FileExists(GS_DLL) = True Then
+50380      GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
 50390     End If
 50400    End If
 50410   Next i
-50420   tStr = "GNU Ghostscript"
+50420   tStr = "GPL Ghostscript"
 50430   .KeyRoot = "SOFTWARE\" & tStr
 50440   Set tColl = .EnumRegistryKeys(HKEY_LOCAL_MACHINE, .KeyRoot)
 50450   For i = 1 To tColl.Count
@@ -1721,51 +2338,12 @@ On Error GoTo ErrPtnr_OnError
 50480    GS_LIB = .GetRegistryValue("GS_LIB")
 50490    If Len(GS_DLL) > 0 Then
 50500     If FileExists(GS_DLL) = True Then
-50510      If Len(GS_LIB) > 0 Then
-50520       If InStr(GS_LIB, ";") > 0 Then
-50530        tf = Split(GS_LIB, ";")
-50540        tB = False
-50550        For j = 0 To UBound(tf)
-50560         If DirExists(tf(j)) = False Then
-50570          tB = True
-50580         End If
-50590        Next j
-50600        If tB = False Then
-50610         GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
-50620        End If
-50630       End If
-50640      End If
-50650     End If
-50660    End If
-50670   Next i
-50680   tStr = "GPL Ghostscript"
-50690   .KeyRoot = "SOFTWARE\" & tStr
-50700   Set tColl = .EnumRegistryKeys(HKEY_LOCAL_MACHINE, .KeyRoot)
-50710   For i = 1 To tColl.Count
-50720    .Subkey = tColl.Item(i)
-50730    GS_DLL = .GetRegistryValue("GS_DLL")
-50740    GS_LIB = .GetRegistryValue("GS_LIB")
-50750    If Len(GS_DLL) > 0 Then
-50760     If FileExists(GS_DLL) = True Then
-50770      If Len(GS_LIB) > 0 Then
-50780       If InStr(GS_LIB, ";") > 0 Then
-50790        tf = Split(GS_LIB, ";")
-50800        tB = False
-50810        For j = 0 To UBound(tf)
-50820         If DirExists(tf(j)) = False Then
-50830          tB = True
-50840         End If
-50850        Next j
-50860        If tB = False Then
-50870         GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
-50880        End If
-50890       End If
-50900      End If
-50910     End If
-50920    End If
-50930   Next i
-50940  End With
-50950  Set reg = Nothing
+50510      GetAllGhostscriptversions.Add tStr & " " & tColl.Item(i)
+50520     End If
+50530    End If
+50540   Next i
+50550  End With
+50560  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1782,7 +2360,7 @@ Public Sub CheckForStamping(filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim StampPage As String, tStr As String, R As String, G As String, B As String, _
+50010  Dim StampPage As String, tStr As String, R As String, G As String, b As String, _
   Stampfile As String, Path As String, ff As Long, files As Collection, _
   StampString As String, StampFontsize As Double, _
   StampOutlineFontthickness As Double
@@ -1816,8 +2394,8 @@ On Error GoTo ErrPtnr_OnError
 50320     If IsNumeric(tStr) = True Then
 50330       R = Replace$(Format(CDbl((CLng(tStr) And CLng("&HFF0000")) / 65536) / 255#, "0.00"), ",", ".", , 1)
 50340       G = Replace$(Format(CDbl((CLng(tStr) And CLng("&H00FF00")) / 256) / 255#, "0.00"), ",", ".", , 1)
-50350       B = Replace$(Format(CDbl(CLng(tStr) And CLng("&H0000FF")) / 255#, "0.00"), ",", ".", , 1)
-50360       StampPage = Replace(StampPage, "[FONTCOLOR]", R & " " & G & " " & B, , , vbTextCompare)
+50350       b = Replace$(Format(CDbl(CLng(tStr) And CLng("&H0000FF")) / 255#, "0.00"), ",", ".", , 1)
+50360       StampPage = Replace(StampPage, "[FONTCOLOR]", R & " " & G & " " & b, , , vbTextCompare)
 50370      Else
 50380       StampPage = Replace(StampPage, "[FONTCOLOR]", "1 0 0", , , vbTextCompare)
 50390     End If
@@ -1992,11 +2570,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub ConvertPostscriptFile(InputFilename As String, OutputFilename As String)
+Public Sub ConvertFile(InputFilename As String, OutputFilename As String, Optional SubFormat As String = "")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Ext As String, Tempfile As String
+50010  Dim Ext As String, Tempfile As String, ivgf As Boolean, inFile As String
 50020  IFIsPS = False
 50030  If LenB(InputFilename) = 0 Then
 50040   Exit Sub
@@ -2008,58 +2586,85 @@ On Error GoTo ErrPtnr_OnError
 50100   End If
 50110   Exit Sub
 50120  End If
-50130
+50130  ivgf = IsValidGraphicFile(InputFilename)
 50140  If LenB(OutputFilename) > 0 Then
-50150    If IsPostscriptFile(InputFilename) = True Then
+50150    If IsPostscriptFile(InputFilename) = True Or ivgf Then
 50160     If GsDllLoaded = 0 Then
 50170      Exit Sub
 50180     End If
-50190     SplitPath OutputFilename, , , , , Ext
-50200     GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
-50210     If GsDllLoaded = 0 Then
-50220      MsgBox LanguageStrings.MessagesMsg08
-50230     End If
-50241     Select Case UCase$(Ext)
+50190     GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+50200     If GsDllLoaded = 0 Then
+50210      MsgBox LanguageStrings.MessagesMsg08
+50220     End If
+50230     inFile = InputFilename
+50240     If ivgf Then
+50250      Tempfile = GetTempFile(GetTempPath, "~p")
+50260      Kill Tempfile
+50270      If Image2PS(InputFilename, Tempfile) Then
+50280        inFile = Tempfile
+50290       Else
+50300        IfLoggingWriteLogfile "ConvertFile: There is a problem converting '" & InputFilename & "'!"
+50310        Exit Sub
+50320      End If
+50330     End If
+50340     SplitPath OutputFilename, , , , , Ext
+50351     Select Case UCase$(Ext)
            Case "PDF"
-50260       CallGScript InputFilename, OutputFilename, Options, PDFWriter
-50270      Case "PNG"
-50280       CallGScript InputFilename, OutputFilename, Options, PNGWriter
-50290      Case "JPG"
-50300       CallGScript InputFilename, OutputFilename, Options, JPEGWriter
-50310      Case "BMP"
-50320       CallGScript InputFilename, OutputFilename, Options, BMPWriter
-50330      Case "PCX"
-50340       CallGScript InputFilename, OutputFilename, Options, PCXWriter
-50350      Case "TIF"
-50360       CallGScript InputFilename, OutputFilename, Options, TIFFWriter
-50370      Case "PS"
-50380       CallGScript InputFilename, OutputFilename, Options, PSWriter
-50390      Case "EPS"
-50400       CallGScript InputFilename, OutputFilename, Options, EPSWriter
-50410      Case "TXT"
-50420       CallGScript InputFilename, OutputFilename, Options, TXTWriter
-50430     End Select
-50440    End If
-50450 '   If GsDllLoaded <> 0 Then
-50460 '    UnloadDLLComplete GsDllLoaded
-50470 '   End If
-50480    ConvertedOutputFilename = OutputFilename
-50490    ReadyConverting = True
-50500    Exit Sub
-50510   Else
-50520    If FileExists(InputFilename) = True Then
-50530     If IsPostscriptFile(InputFilename) = True Then
-50540       IFIsPS = True
-50550      Else
-50560       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
-50570     End If
-50580    End If
-50590  End If
-50600  DoEvents
+50371       Select Case UCase(SubFormat)
+             Case "PDF/A-1B"
+50390         CallGScript inFile, OutputFilename, Options, PDFAWriter
+50400        Case "PDF/X"
+50410         CallGScript inFile, OutputFilename, Options, PDFXWriter
+50420        Case Else
+50430         CallGScript inFile, OutputFilename, Options, PDFWriter
+50440       End Select
+50450      Case "PNG"
+50460       CallGScript inFile, OutputFilename, Options, PNGWriter
+50470      Case "JPG"
+50480       CallGScript inFile, OutputFilename, Options, JPEGWriter
+50490      Case "BMP"
+50500       CallGScript inFile, OutputFilename, Options, BMPWriter
+50510      Case "PCX"
+50520       CallGScript inFile, OutputFilename, Options, PCXWriter
+50530      Case "TIF"
+50540       CallGScript inFile, OutputFilename, Options, TIFFWriter
+50550      Case "PS"
+50560       CallGScript inFile, OutputFilename, Options, PSWriter
+50570      Case "EPS"
+50580       CallGScript inFile, OutputFilename, Options, EPSWriter
+50590      Case "TXT"
+50600       CallGScript inFile, OutputFilename, Options, TXTWriter
+50610      Case "PCL"
+50620       CallGScript inFile, OutputFilename, Options, PCLWriter
+50630      Case "PSD"
+50640       CallGScript inFile, OutputFilename, Options, PSDWriter
+50650      Case "RAW"
+50660       CallGScript inFile, OutputFilename, Options, RAWWriter
+50670     End Select
+50680     If ivgf Then
+50690      KillFile Tempfile
+50700     End If
+50710    End If
+50720 '   If GsDllLoaded <> 0 Then
+50730 '    UnloadDLLComplete GsDllLoaded
+50740 '   End If
+50750    ConvertedOutputFilename = OutputFilename
+50760    ReadyConverting = True
+50770    Exit Sub
+50780   Else
+50790    If FileExists(InputFilename) = True Then
+50800     If IsPostscriptFile(InputFilename) = True Then
+50810       IFIsPS = True
+50820      Else
+50830       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
+50840     End If
+50850    End If
+50860  End If
+50870  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "ConvertPostscriptFile")
+Select Case ErrPtnr.OnError("modGhostscript", "ConvertFile")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2067,4 +2672,3 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-

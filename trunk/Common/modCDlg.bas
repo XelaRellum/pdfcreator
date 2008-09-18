@@ -77,7 +77,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function SaveFileDialog(Filename As String, Optional InitFilename As String = "", _
+Public Function SaveFileDialog(filename As String, Optional InitFilename As String = "", _
  Optional Filter As String, Optional DefaultFileExtension As String = "*.*", _
  Optional InitDir As String = "", Optional DialogTitle As String = "", _
  Optional Flags As OpenSaveFlags, Optional hwnd As Long = 0, Optional FilterIndex As Long = 1) As Long
@@ -125,7 +125,7 @@ On Error GoTo ErrPtnr_OnError
 50390     DoEvents
 50400    Loop
 50410    If Len(buff) > 3 Then
-50420     Filename = buff
+50420     filename = buff
 50430    End If
 50440    SaveFileDialog = ofn.nFilterIndex
 50450   Else
