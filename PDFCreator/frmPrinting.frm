@@ -237,7 +237,7 @@ Private Sub chkStartStandardProgram_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkStartStandardProgram.Value = 1 Then
+50010  If chkStartStandardProgram.value = 1 Then
 50020    Options.StartStandardProgram = 1
 50030   Else
 50040    Options.StartStandardProgram = 0
@@ -435,7 +435,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Me.Icon = LoadResPicture(2120, vbResIcon)
 50030  Me.KeyPreview = True
 50040  Caption = App.EXEName
-50050  Caption = App.Title & " " & GetProgramReleaseStr
+50050  Caption = App.title & " " & GetProgramReleaseStr
 50060  Printing = True
 50070
 50080  With anmProcess
@@ -452,9 +452,9 @@ On Error GoTo ErrPtnr_OnError
 50190  ChangeLanguage
 50200
 50210  If Options.StartStandardProgram = 1 Then
-50220    chkStartStandardProgram.Value = 1
+50220    chkStartStandardProgram.value = 1
 50230   Else
-50240    chkStartStandardProgram.Value = 0
+50240    chkStartStandardProgram.value = 0
 50250  End If
 50260  PSHeader = GetPSHeader(PDFSpoolfile)
 50270  With PSHeader
@@ -712,7 +712,7 @@ On Error GoTo ErrPtnr_OnError
      Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50250    End If
 50260   End If
-50270   If chkStartStandardProgram.Value = 1 Then
+50270   If chkStartStandardProgram.value = 1 Then
 50280    If Options.OnePagePerFile = 1 Then
 50290      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
 50300     Else
@@ -738,9 +738,9 @@ End Function
 Private Function Create_eDoc() As String
  On Error GoTo ErrorHandler
  Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
-  tErrNumber As Long, Filename As String, FilterIndex As Long, _
-  Cancel As Boolean, PDFDocInfo As tPDFDocInfo, Files As Collection, _
-  tStrf() As String, i As Long, Ext As String, Ext2 As String, Extf(7) As String
+  tErrNumber As Long, filename As String, FilterIndex As Long, _
+  Cancel As Boolean, PDFDocInfo As tPDFDocInfo, files As Collection, _
+  tStrf() As String, i As Long, Ext As String, Ext2 As String, Extf(11) As String
 
  Extf(0) = "*.pdf"
  Extf(1) = "*.png"
@@ -750,19 +750,29 @@ Private Function Create_eDoc() As String
  Extf(5) = "*.tif"
  Extf(6) = "*.ps"
  Extf(7) = "*.eps"
+ Extf(8) = "*.txt"
+ Extf(9) = "*.psd"
+ Extf(10) = "*.pcl"
+ Extf(11) = "*.raw"
  With LanguageStrings
   Filter = .ListPDFFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
+   .PrintingPDFAFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
+   .PrintingPDFXFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPNGFiles & " (" & Extf(1) & ")|" & Extf(1) & "|" & _
    .PrintingJPEGFiles & " (" & Extf(2) & ")|" & Extf(2) & "|" & _
    .PrintingBMPFiles & " (" & Extf(3) & ")|" & Extf(3) & "|" & _
    .PrintingPCXFiles & " (" & Extf(4) & "|" & Extf(4) & "|" & _
    .PrintingTIFFFiles & " (" & Extf(5) & ")|" & Extf(5) & "|" & _
    .PrintingPSFiles & " (" & Extf(6) & ")|" & Extf(6) & "|" & _
-   .PrintingEPSFiles & " (" & Extf(7) & ")|" & Extf(7)
+   .PrintingEPSFiles & " (" & Extf(7) & ")|" & Extf(7) & "|" & _
+   .PrintingTXTFiles & " (" & Extf(8) & ")|" & Extf(8) & "|" & _
+   .PrintingPSDFiles & " (" & Extf(9) & ")|" & Extf(9) & "|" & _
+   .PrintingPCLFiles & " (" & Extf(10) & ")|" & Extf(10) & "|" & _
+   .PrintingRAWFiles & " (" & Extf(11) & ")|" & Extf(11)
  End With
- If IsInIDE Then
-  Filter = Filter & "|(*.txt)|*.txt"
- End If
+' If IsInIDE Then
+'  Filter = Filter & "|(*.txt)|*.txt"
+' End If
  FilterIndex = 1
  If InStr(1, Filter, "|", vbTextCompare) > 0 Then
   tStrf = Split(Filter, "|")
@@ -782,17 +792,17 @@ Private Function Create_eDoc() As String
    Else
     SaveFilename = ReplaceForbiddenChars(txtTitle.Text)
   End If
-  Set Files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
+  Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
   If SaveOpenCancel = True Then
    Exit Function
   End If
-  If Files.Count <> 1 Then
+  If files.Count <> 1 Then
    Exit Function
   End If
   SaveFilterIndex = FilterIndex
-  SaveFilename = Files.Item(1)
-  If FileExists(Files.Item(1)) = True Then
-   If FileInUse(Files.Item(1)) = True Then
+  SaveFilename = files.Item(1)
+  If FileExists(files.Item(1)) = True Then
+   If FileInUse(files.Item(1)) = True Then
     MsgBox LanguageStrings.MessagesMsg34
     Exit Function
    End If
@@ -805,7 +815,7 @@ Private Function Create_eDoc() As String
  Screen.MousePointer = vbHourglass
  DoEvents
 
- Options.StartStandardProgram = chkStartStandardProgram.Value
+ Options.StartStandardProgram = chkStartStandardProgram.value
  OutputFile = Trim$(SaveFilename)
  SplitPath OutputFile, , Path
  Options.LastSaveDirectory = Path
@@ -822,7 +832,7 @@ Private Function Create_eDoc() As String
  PSHeader.CreationDate.Comment = txtCreationDate.Text
  PSHeader.Creator.Comment = App.EXEName & _
   " Version " & App.Major & "." & App.Minor & "." & App.Revision
- PSHeader.Title.Comment = txtTitle.Text
+ PSHeader.title.Comment = txtTitle.Text
 
  With PDFDocInfo
   .Author = txtCreateFor.Text
@@ -831,7 +841,7 @@ Private Function Create_eDoc() As String
   .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , True)
   .ModifyDate = txtModifyDate.Text
   .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , True)
-  .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , True)
+  .title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , True)
  End With
 
  AppendPDFDocInfo PDFSpoolfile, PDFDocInfo
@@ -847,21 +857,31 @@ Private Function Create_eDoc() As String
   Case 1:
    CallGScript PDFSpoolfile, OutputFile, Options, PDFWriter
   Case 2:
-   CallGScript PDFSpoolfile, OutputFile, Options, PNGWriter
+   CallGScript PDFSpoolfile, OutputFile, Options, PDFAWriter
   Case 3:
-   CallGScript PDFSpoolfile, OutputFile, Options, JPEGWriter
+   CallGScript PDFSpoolfile, OutputFile, Options, PDFXWriter
   Case 4:
-   CallGScript PDFSpoolfile, OutputFile, Options, BMPWriter
+   CallGScript PDFSpoolfile, OutputFile, Options, PNGWriter
   Case 5:
-   CallGScript PDFSpoolfile, OutputFile, Options, PCXWriter
+   CallGScript PDFSpoolfile, OutputFile, Options, JPEGWriter
   Case 6:
-   CallGScript PDFSpoolfile, OutputFile, Options, TIFFWriter
+   CallGScript PDFSpoolfile, OutputFile, Options, BMPWriter
   Case 7:
-   CallGScript PDFSpoolfile, OutputFile, Options, PSWriter
+   CallGScript PDFSpoolfile, OutputFile, Options, PCXWriter
   Case 8:
-   CallGScript PDFSpoolfile, OutputFile, Options, EPSWriter
+   CallGScript PDFSpoolfile, OutputFile, Options, TIFFWriter
   Case 9:
+   CallGScript PDFSpoolfile, OutputFile, Options, PSWriter
+  Case 10:
+   CallGScript PDFSpoolfile, OutputFile, Options, EPSWriter
+  Case 11:
    CallGScript PDFSpoolfile, OutputFile, Options, TXTWriter
+  Case 12:
+   CallGScript PDFSpoolfile, OutputFile, Options, PSDWriter
+  Case 13:
+   CallGScript PDFSpoolfile, OutputFile, Options, PCLWriter
+  Case 14:
+   CallGScript PDFSpoolfile, OutputFile, Options, RAWWriter
  End Select
  Create_eDoc = OutputFile
  CheckForPrintingAfterSaving PDFSpoolfile, Options

@@ -37,7 +37,7 @@ Public Type PRINTER_INFO_2
  DefaultPriority As Long
  StartTime As Long
  UntilTime As Long
- Status As Long
+ status As Long
  cJobs As Long
  AveragePPM As Long
 End Type
@@ -347,7 +347,7 @@ End Enum
 
 Public Type POINTAPI
  x As Long
- Y As Long
+ y As Long
 End Type
 
 Public Type OPENFILENAME
@@ -508,7 +508,7 @@ Public Type APPBARDATA
 End Type
 
 Public Type SID_IDENTIFIER_AUTHORITY
- Value(0 To 5) As Byte
+ value(0 To 5) As Byte
 End Type
 
 Public Type NMLOGFONT
@@ -602,7 +602,7 @@ Public Enum Systemfont
  Caption = 0
  SMCaption = 1
  Menu = 2
- Status = 3
+ status = 3
  message = 4
  Icon = 5
 End Enum
@@ -815,4 +815,14 @@ Public Enum EEncodingSignature
  ESignatureUTF32BE = &HFFFE0000
  ESignatureUTF32LE = &HFEFF&
 End Enum
+
+Public Type BITMAP
+ bmType As Long
+ bmWidth As Long
+ bmHeight As Long
+ bmWidthBytes As Long
+ bmPlanes As Integer
+ bmBitsPixel As Integer
+ bmBits As Long
+End Type
 

@@ -1,18 +1,18 @@
 Attribute VB_Name = "modFileversion"
 Option Explicit
 
-Public Function GetFileVersion(Filename As String) As Collection
+Public Function GetFileVersion(filename As String) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim l As Long, buff() As Byte, Pointer As Long, BuffL As Long, _
   Version As VS_FIXEDFILEINFO, flagsStr As String, osStr As String, _
   Typ As String, STyp As String
-50040  l = GetFileVersionInfoSize(Filename, 0&)
+50040  l = GetFileVersionInfoSize(filename, 0&)
 50050  Set GetFileVersion = New Collection
 50060  If l > 0 Then
 50070   ReDim buff(l)
-50080   Call GetFileVersionInfo(Filename, 0&, l, buff(0))
+50080   Call GetFileVersionInfo(filename, 0&, l, buff(0))
 50090   Call VerQueryValue(buff(0), "\", Pointer, BuffL)
 50100   Call MoveMemory2(Version, Pointer, Len(Version))
 50110   With Version

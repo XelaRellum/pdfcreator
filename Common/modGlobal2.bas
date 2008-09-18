@@ -175,8 +175,8 @@ Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As B
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim DateTime As String, Author As String, ClientComputer As String, UserName As String, _
-  Computername As String, MyFiles As String, MyDesktop As String, Filename As String, _
-  Title As String, tStr As String, isf As InfoSpoolFile, FilePath As String
+  Computername As String, MyFiles As String, MyDesktop As String, filename As String, _
+  title As String, tStr As String, isf As InfoSpoolFile, FilePath As String
 50040
 50050  If Len(TokenFilename) = 0 Then
 50060   Exit Function
@@ -204,262 +204,138 @@ On Error GoTo ErrPtnr_OnError
 50280    ClientComputer = GetComputerName
 50290  End If
 50300
-50310  Filename = TokenFilename
-50320  Filename = Replace(Filename, "<DateTime>", DateTime, , , vbTextCompare)
-50330  Filename = Replace(Filename, "<Computername>", Computername, , , vbTextCompare)
+50310  filename = TokenFilename
+50320  filename = Replace(filename, "<DateTime>", DateTime, , , vbTextCompare)
+50330  filename = Replace(filename, "<Computername>", Computername, , , vbTextCompare)
 50340
-50350  Filename = Replace(Filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
-50360  Filename = Replace(Filename, "<Username>", UserName, , , vbTextCompare)
-50370  Filename = Replace(Filename, "<Title>", Title, , , vbTextCompare)
+50350  filename = Replace(filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
+50360  filename = Replace(filename, "<Username>", UserName, , , vbTextCompare)
+50370  filename = Replace(filename, "<Title>", title, , , vbTextCompare)
 50380
-50390  Filename = Replace(Filename, "<Author>", Author, , , vbTextCompare)
+50390  filename = Replace(filename, "<Author>", Author, , , vbTextCompare)
 50400
-50410  Filename = Replace(Filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
-50420  Filename = Replace(Filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
+50410  filename = Replace(filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
+50420  filename = Replace(filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
 50430
 50440  If Options.Counter = 922337203685477@ Then
 50450   Options.Counter = 0
 50460  End If
 50470  Options.Counter = Round(Options.Counter)
 50480
-50490  Filename = Replace(Filename, "<Counter>", Format$(Options.Counter + 1, String(15, "0")), , , vbTextCompare)
+50490  filename = Replace(filename, "<Counter>", Format$(Options.Counter + 1, String(15, "0")), , , vbTextCompare)
 50500
 50510  If LenB(Temppath) > 0 Then
-50520    Filename = Replace(Filename, "<Temp>", CompletePath(Temppath), , , vbTextCompare)
+50520    filename = Replace(filename, "<Temp>", CompletePath(Temppath), , , vbTextCompare)
 50530   Else
-50540    Filename = Replace(Filename, "<Temp>", CompletePath(GetTempPathReg(hkey1)), , , vbTextCompare)
+50540    filename = Replace(filename, "<Temp>", CompletePath(GetTempPathReg(hkey1)), , , vbTextCompare)
 50550  End If
 50560
 50570  tStr = "DOCNAME"
 50580  If Preview Then
-50590    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50590    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50600   Else
 50610    If LenB(isf.REDMON_DOCNAME) = 0 Then
-50620      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Environ$("REDMON_DOCNAME"), , , vbTextCompare)
+50620      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_DOCNAME"), , , vbTextCompare)
 50630     Else
-50640      Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_DOCNAME, , , vbTextCompare)
+50640      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_DOCNAME, , , vbTextCompare)
 50650    End If
 50660  End If
 50670  tStr = "DOCNAME_FILE"
 50680  If Preview Then
-50690    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50690    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50700   Else
 50710    If LenB(isf.REDMON_DOCNAME) = 0 Then
 50720      SplitPath Environ$("REDMON_DOCNAME"), , , , FilePath
 50730     Else
 50740      SplitPath isf.REDMON_DOCNAME, , , , FilePath
 50750    End If
-50760    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
+50760    filename = Replace(filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
 50770  End If
 50780  tStr = "DOCNAME_PATH"
 50790  If Preview Then
-50800    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50800    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50810   Else
 50820    If LenB(isf.REDMON_DOCNAME) = 0 Then
 50830      SplitPath Environ$("REDMON_DOCNAME"), , FilePath
 50840     Else
 50850      SplitPath isf.REDMON_DOCNAME, , FilePath
 50860    End If
-50870    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
+50870    filename = Replace(filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
 50880  End If
 50890  tStr = "JOB"
 50900  If Preview Then
-50910    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50910    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50920   Else
 50930    If LenB(isf.REDMON_JOB) = 0 Then
-50940      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Environ$("REDMON_JOB"), , , vbTextCompare)
+50940      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_JOB"), , , vbTextCompare)
 50950     Else
-50960      Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_JOB, , , vbTextCompare)
+50960      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_JOB, , , vbTextCompare)
 50970    End If
 50980  End If
 50990  tStr = "MACHINE"
 51000  If Preview Then
-51010    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51010    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51020   Else
 51030    If LenB(isf.REDMON_MACHINE) = 0 Then
-51040      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Replace$(Environ$("REDMON_MACHINE"), "\\", ""), , , vbTextCompare)
+51040      filename = Replace(filename, "<REDMON_" & tStr & ">", Replace$(Environ$("REDMON_MACHINE"), "\\", ""), , , vbTextCompare)
 51050     Else
-51060      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Replace$(isf.REDMON_MACHINE, "\\", ""), , , vbTextCompare)
+51060      filename = Replace(filename, "<REDMON_" & tStr & ">", Replace$(isf.REDMON_MACHINE, "\\", ""), , , vbTextCompare)
 51070    End If
 51080  End If
 51090  tStr = "PORT"
 51100  If Preview Then
-51110    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51110    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51120   Else
 51130    If LenB(isf.REDMON_PORT) = 0 Then
-51140      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Environ$("REDMON_PORT"), , , vbTextCompare)
+51140      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_PORT"), , , vbTextCompare)
 51150     Else
-51160      Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PORT, , , vbTextCompare)
+51160      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_PORT, , , vbTextCompare)
 51170    End If
 51180  End If
 51190  tStr = "PRINTER"
 51200  If Preview Then
-51210    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51210    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51220   Else
 51230    If LenB(isf.REDMON_PRINTER) = 0 Then
-51240      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Environ$("REDMON_PRINTER"), , , vbTextCompare)
+51240      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_PRINTER"), , , vbTextCompare)
 51250     Else
-51260      Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PRINTER, , , vbTextCompare)
+51260      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_PRINTER, , , vbTextCompare)
 51270    End If
 51280  End If
 51290  tStr = "SESSIONID"
 51300  If Preview Then
-51310    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51310    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51320   Else
 51330    If LenB(isf.REDMON_SESSIONID) = 0 Then
-51340      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Environ$("REDMON_SESSIONID"), , , vbTextCompare)
+51340      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_SESSIONID"), , , vbTextCompare)
 51350     Else
-51360      Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_SESSIONID, , , vbTextCompare)
+51360      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_SESSIONID, , , vbTextCompare)
 51370    End If
 51380  End If
 51390  tStr = "USER"
 51400  If Preview Then
-51410    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51410    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51420   Else
 51430    If LenB(isf.REDMON_USER) = 0 Then
-51440      Filename = Replace(Filename, "<REDMON_" & tStr & ">", Environ$("REDMON_USER"), , , vbTextCompare)
+51440      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_USER"), , , vbTextCompare)
 51450     Else
-51460      Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_USER, , , vbTextCompare)
+51460      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_USER, , , vbTextCompare)
 51470    End If
 51480  End If
 51490
 51500  If Options.RemoveSpaces = 1 Then
-51510   Filename = Trim$(Filename)
+51510   filename = Trim$(filename)
 51520  End If
-51530  If Len(Filename) >= 4 Then
-51540   If InStr(2, Filename, "\\") > 0 Then
-51550    Filename = Mid$(Filename, 1, 1) & Replace$(Mid(Filename, 2), "\\", "\")
+51530  If Len(filename) >= 4 Then
+51540   If InStr(2, filename, "\\") > 0 Then
+51550    filename = Mid$(filename, 1, 1) & Replace$(Mid(filename, 2), "\\", "\")
 51560   End If
 51570  End If
-51580  GetSubstFilename2 = Filename
+51580  GetSubstFilename2 = filename
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGlobal2", "GetSubstFilename2")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Public Sub PrintTestpage(Optional f As Form)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim TestPSPage As String, fn As Long, Filename As String, tStr As String, _
-  c As Collection
-50030  If Not f Is Nothing Then
-50040   f.Timer1.Enabled = False
-50050  End If
-50060  TestPSPage = GetTestpageFromRessource
-50070  TestPSPage = Replace(TestPSPage, "[INFOTITLE]", LanguageStrings.OptionsTestpage, , 1, vbTextCompare)
-50080  TestPSPage = Replace(TestPSPage, "[INFORELEASE]", App.Title & " " & GetProgramReleaseStr, , 1, vbTextCompare)
-50090  TestPSPage = Replace(TestPSPage, "[INFODATE]", Now, , 1, vbTextCompare)
-50100  TestPSPage = Replace(TestPSPage, "[INFOAUTHORS]", "Philip Chinery, Frank Heind\224rfer", , 1, vbTextCompare)
-50110  TestPSPage = Replace(TestPSPage, "[INFOHOMEPAGE]", Homepage, , 1, vbTextCompare)
-50120  tStr = GetPDFCreatorApplicationPath & "PDFCreator.exe"
-50130  If FileExists(tStr) = True Then
-50140    Set c = GetFileVersion(tStr)
-50150    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50160   Else
-50170    tStr = ""
-50180  End If
-50190  TestPSPage = Replace(TestPSPage, "[INFOPDFCREATOR]", tStr, , 1, vbTextCompare)
-50200
-50210  tStr = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
-50220  If FileExists(tStr) = True Then
-50230    Set c = GetFileVersion(tStr)
-50240    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50250   Else
-50260    tStr = ""
-50270  End If
-50280  TestPSPage = Replace(TestPSPage, "[INFOPDFSPOOLER]", tStr, , 1, vbTextCompare)
-50290
-50300  tStr = GetPDFCreatorApplicationPath & "Languages\Transtool.exe"
-50310  If FileExists(tStr) = True Then
-50320    Set c = GetFileVersion(tStr)
-50330    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50340   Else
-50350    tStr = ""
-50360  End If
-50370  TestPSPage = Replace(TestPSPage, "[INFOTRANSTOOL]", tStr, , 1, vbTextCompare)
-50380
-50390  TestPSPage = Replace(TestPSPage, "[INFOCOMPUTER]", GetComputerName, , 1, vbTextCompare)
-50400  tStr = GetWinVersionStr
-50410  TestPSPage = Replace(TestPSPage, "[INFOWINDOWS]", _
-  Mid(tStr, 1, IIf(InStr(1, tStr, "[") > 0, InStr(1, tStr, "[") - 1, Len(tStr))), 1, vbTextCompare)
-50430
-50440  fn = FreeFile
-50450  tStr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
-50460  If DirExists(tStr) = False Then
-50470   MakePath tStr
-50480  End If
-50490  Filename = GetTempFile(tStr, "~PS")
-50500  Open Filename For Output As fn
-50510  Print #fn, TestPSPage
-50520  Close #fn
-50530  If Not f Is Nothing Then
-50540   f.CheckPrintJobs
-50550   f.Timer1.Enabled = True
-50560  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGlobal2", "PrintTestpage")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Public Function IsPrintable(Filename As String) As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Ext As String, reg As clsRegistry, tStr As String
-50020  IsPrintable = False
-50030  SplitPath Filename, , , , , Ext
-50040  Set reg = New clsRegistry
-50050  reg.hkey = HKEY_CLASSES_ROOT
-50060  reg.KeyRoot = "." & Ext
-50070  If reg.KeyExists Then
-50080   tStr = reg.GetRegistryValue("")
-50090   If LenB(tStr) > 0 Then
-50100    reg.KeyRoot = tStr
-50110    reg.Subkey = "shell\print\command"
-50120    tStr = reg.GetRegistryValue("")
-50130    If LenB(tStr) > 0 Then
-50140     IsPrintable = True
-50150    End If
-50160   End If
-50170  End If
-50180  Set reg = Nothing
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGlobal2", "IsPrintable")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Public Function GetTestpageFromRessource() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetTestpageFromRessource = _
-  Replace(StrConv(LoadResData(101, "TESTPAGE"), vbUnicode), vbCrLf, vbLf, , , vbBinaryCompare)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGlobal2", "GetTestpageFromRessource")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

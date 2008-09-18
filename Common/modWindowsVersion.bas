@@ -3,7 +3,7 @@ Attribute VB_Name = "modWindowsVersion"
 ' Copyright ©1996-2004 VBnet, Randy Birch. All Rights Reserved Worldwide.
 '        Terms of use http://vbnet.mvps.org/terms/pages/terms.htm
 '-----------------------------------------------------------------------------------------
-' modified by Frank Heindörfer 2004
+' modified by Frank Heindörfer 2004-2008
 
 Public Function IsBackOfficeServer() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -579,29 +579,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function IsWinVista() As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  'returns True if running Windows Vista
-50020  Dim osv As OSVERSIONINFO
-50030  osv.OSVSize = Len(osv)
-50040  If GetVersionEx(osv) = 1 Then
-50050   IsWinVista = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
-            (osv.dwVerMajor = 6 And osv.dwVerMinor = 0)
-50070  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVista")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 Public Function IsWinXPPlus() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -693,6 +670,265 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function IsWinXPEmbedded() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFOEX
+50020  If IsWinXP() Then
+50030   osv.OSVSize = Len(osv)
+50040   If GetVersionEx(osv) = 1 Then
+50050    IsWinXPEmbedded = (osv.wSuiteMask And VER_SUITE_EMBEDDEDNT)
+50060   End If
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinXPEmbedded")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function IsWinVista() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   IsWinVista = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And (osv.dwVerMajor = 6)
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVista")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function IsWinVistaPlus() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   IsWinVistaPlus = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And (osv.dwVerMajor >= 6)
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaPlus")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinVistaSP1() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   IsWinVistaSP1 = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And (osv.dwVerMajor = 6) And _
+   InStr(osv.szCSDVersion, "Service Pack 1") > 0
+50060  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaSP1")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinVistaBusiness() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWinVista() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWinVistaBusiness = (dwProduct = PRODUCT_BUSINESS) Or (dwProduct = PRODUCT_BUSINESS_N)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaBusiness")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinVistaUltimate() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWinVista() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWinVistaUltimate = (dwProduct = PRODUCT_ULTIMATE) Or (dwProduct = PRODUCT_ULTIMATE_N)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaUltimate")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinVistaHomeServer() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWinVista() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWinVistaHomeServer = (dwProduct = PRODUCT_HOME_SERVER)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaHomeServer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinVistaHomeBasic() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWinVista() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWinVistaHomeBasic = (dwProduct = PRODUCT_HOME_BASIC) Or (dwProduct = PRODUCT_HOME_BASIC_N)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaHomeBasic")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinVistaHomePremium() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWinVista() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWinVistaHomePremium = (dwProduct = PRODUCT_HOME_PREMIUM) Or (dwProduct = PRODUCT_HOME_PREMIUM_N)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaHomePremium")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinVistaEnterprise() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWinVista() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWinVistaEnterprise = (dwProduct = PRODUCT_ENTERPRISE) Or (dwProduct = PRODUCT_ENTERPRISE_N)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinVistaEnterprise")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWinLonghornServer() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFOEX
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   IsWinLonghornServer = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
+   (osv.dwVerMajor = 6 And osv.dwVerMinor = 0) And (osv.wProductType <> VER_NT_WORKSTATION)
+50060  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWinLonghornServer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function GetWinVersionStr() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -769,12 +1005,55 @@ On Error GoTo ErrPtnr_OnError
 50700   tStr = tStr & " WinXPSP2"
 50710  End If
 50720
-50730  tStr = Trim$(tStr)
-50740  If Len(tStr) > 0 Then
-50750   tStr = " [" & tStr & "]"
-50760  End If
-50770  Call GetWinVersion(win)
-50780  GetWinVersionStr = win.VersionName & " " & win.VersionNo & " Build " & _
+50730  If IsWinXPPlus Then
+50740   tStr = tStr & " IsWinXPPlus"
+50750  End If
+50760  If IsWinXPHomeEdition Then
+50770   tStr = tStr & " IsWinXPHomeEdition"
+50780  End If
+50790  If IsWinXPProEdition Then
+50800   tStr = tStr & " IsWinXPProEdition"
+50810  End If
+50820  If IsWinXPEmbedded Then
+50830   tStr = tStr & " IsWinXPEmbedded"
+50840  End If
+50850  If IsWinVista Then
+50860   tStr = tStr & " IsWinVista"
+50870  End If
+50880  If IsWinVistaPlus Then
+50890   tStr = tStr & " IsWinVistaPlus"
+50900  End If
+50910  If IsWinVistaSP1 Then
+50920   tStr = tStr & " IsWinVistaSP1"
+50930  End If
+50940  If IsWinVistaBusiness Then
+50950   tStr = tStr & " IsWinVistaBusiness"
+50960  End If
+50970  If IsWinVistaUltimate Then
+50980   tStr = tStr & " IsWinVistaUltimate"
+50990  End If
+51000  If IsWinVistaHomeServer Then
+51010   tStr = tStr & " IsWinVistaHomeServer"
+51020  End If
+51030  If IsWinVistaHomeBasic Then
+51040   tStr = tStr & " IsWinVistaHomeBasic"
+51050  End If
+51060  If IsWinVistaHomePremium Then
+51070   tStr = tStr & " IsWinVistaHomePremium"
+51080  End If
+51090  If IsWinVistaEnterprise Then
+51100   tStr = tStr & " IsWinVistaEnterprise"
+51110  End If
+51120  If IsWinLonghornServer Then
+51130   tStr = tStr & " IsWinLonghornServer"
+51140  End If
+51150
+51160  tStr = Trim$(tStr)
+51170  If Len(tStr) > 0 Then
+51180   tStr = " [" & tStr & "]"
+51190  End If
+51200  Call GetWinVersion(win)
+51210  GetWinVersionStr = win.VersionName & " " & win.VersionNo & " Build " & _
   win.BuildNo & " (" & win.ServicePack & ")" & tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -850,4 +1129,3 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-

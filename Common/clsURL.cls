@@ -207,16 +207,16 @@ Public Function GetURL(ByVal URL As String) As Boolean
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010 Dim COMPONENTS As URL_COMPONENTS
-50020 Dim Buffer As String
+50020 Dim buffer As String
 50030 Dim BufLen As Long
 50040 Const BufSize = 1024
 50050
 50060 GetURL = False
 50070
-50080 Buffer = Space$(BufSize)
-50090 BufLen = Len(Buffer)
-50100 If InternetCanonicalizeUrl(URL, Buffer, BufLen, ICU_BROWSER_MODE) Then
-50110     URL = Left(Buffer, BufLen)
+50080 buffer = Space$(BufSize)
+50090 BufLen = Len(buffer)
+50100 If InternetCanonicalizeUrl(URL, buffer, BufLen, ICU_BROWSER_MODE) Then
+50110     URL = Left(buffer, BufLen)
 50120     With COMPONENTS
 50130         .StructSize = Len(COMPONENTS)
 50140         .Scheme = Space$(INTERNET_MAX_SCHEME_LENGTH)

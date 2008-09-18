@@ -14,7 +14,7 @@ Public Type tPSHeader
  StartComment As tPSComment
  BoundingBox As tPSComment
  Orientation As tPSComment
- Title As tPSComment
+ title As tPSComment
  Creator As tPSComment
  CreationDate As tPSComment
  CreateFor As tPSComment
@@ -36,7 +36,7 @@ Public Type tPDFDocInfo
  Keywords As String
  ModifyDate As String '  (D:20040222125120)
  Subject As String
- Title As String
+ title As String
 End Type
 
 Public Enum eCodePage
@@ -45,16 +45,16 @@ Public Enum eCodePage
  CP_UTF16 = 65002
 End Enum
 
-Public Function GetPSTitle(Filename As String) As String
+Public Function GetPSTitle(filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tStr As String, psH As tPSHeader, isf As InfoSpoolFile
-50020  isf = ReadInfoSpoolfile(Filename)
+50020  isf = ReadInfoSpoolfile(filename)
 50030  tStr = isf.REDMON_DOCNAME
 50040  If LenB(tStr) = 0 Then
-50050   psH = GetPSHeader(Filename)
-50060   tStr = psH.Title.Comment
+50050   psH = GetPSHeader(filename)
+50060   tStr = psH.title.Comment
 50070  End If
 50080  GetPSTitle = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -69,24 +69,24 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetPSHeader(Filename As String) As tPSHeader
+Public Function GetPSHeader(filename As String) As tPSHeader
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, bufStr As String, PSHeader As tPSHeader, Buffer As Long
-50020  If FileExists(Filename) And FileInUse(Filename) = False Then
+50010  Dim fn As Long, bufStr As String, PSHeader As tPSHeader, buffer As Long
+50020  If FileExists(filename) And FileInUse(filename) = False Then
 50030   DoEvents
 50040   fn = FreeFile
-50050   If FileLen(Filename) = 0 Then
+50050   If FileLen(filename) = 0 Then
 50060    Exit Function
 50070   End If
-50080   Buffer = 5000
-50090   If FileLen(Filename) < Buffer Then
-50100    Buffer = FileLen(Filename)
+50080   buffer = 5000
+50090   If FileLen(filename) < buffer Then
+50100    buffer = FileLen(filename)
 50110   End If
 50120
-50130   Open Filename For Binary Access Read As fn
-50140   bufStr = Space$(Buffer)
+50130   Open filename For Binary Access Read As fn
+50140   bufStr = Space$(buffer)
 50150   Get #fn, 1, bufStr
 50160   Close #fn
 50170
@@ -96,7 +96,7 @@ On Error GoTo ErrPtnr_OnError
 50210    .CreationDate = GetPSComment(bufStr, "%%CreationDate:")
 50220    .Creator = GetPSComment(bufStr, "%%Creator:")
 50230    .Pages = GetPSComment(bufStr, "%%Pages:")
-50240    .Title = GetPSComment(bufStr, "%%Title:")
+50240    .title = GetPSComment(bufStr, "%%Title:")
 50250    .EndComment = GetPSComment(bufStr, "%%EndComments")
 50260   End With
 50270   GetPSHeader = PSHeader
@@ -159,7 +159,7 @@ Public Function GetAutosaveFilename(PostscriptFile As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Filename As String, Pathname As String
+50010  Dim filename As String, Pathname As String
 50020
 50030  If Options.UseAutosaveDirectory = 1 Then
 50040    Pathname = GetSubstFilename2(Options.AutosaveDirectory, False, , PostscriptFile)
@@ -167,33 +167,53 @@ On Error GoTo ErrPtnr_OnError
 50060    Pathname = GetSubstFilename2(Options.LastSaveDirectory, False)
 50070  End If
 50080
-50090  Filename = GetSubstFilename(PostscriptFile, Options.AutosaveFilename)
+50090  filename = GetSubstFilename(PostscriptFile, Options.AutosaveFilename)
 50100
-50110  If Len(Filename) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
-50120   Filename = RemoveAllKnownFileExtensions(Filename)
+50110  If Len(filename) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
+50120   filename = RemoveAllKnownFileExtensions(filename)
 50130  End If
 50140
-50151  Select Case Options.AutosaveFormat
-        Case 0: 'PDF
-50170    Filename = Filename & ".pdf"
-50180   Case 1: 'PNG
-50190    Filename = Filename & ".png"
-50200   Case 2: 'JPEG
-50210    Filename = Filename & ".jpg"
-50220   Case 3: 'BMP
-50230    Filename = Filename & ".bmp"
-50240   Case 4: 'PCX
-50250    Filename = Filename & ".pcx"
-50260   Case 5: 'TIFF
-50270    Filename = Filename & ".tif"
-50280   Case 6: 'PS
-50290    Filename = Filename & ".ps"
-50300   Case 7: 'EPS
-50310    Filename = Filename & ".eps"
-50320   Case 8: 'TXT
-50330    Filename = Filename & ".txt"
-50340  End Select
-50350  GetAutosaveFilename = CompletePath(GetSubstFilename2(Pathname, False)) & ReplaceForbiddenChars(Filename)
+50150 '  Case 0: 'PDF
+50160 '  Case 1: 'PNG
+50170 '  Case 2: 'JPEG
+50180 '  Case 3: 'BMP
+50190 '  Case 4: 'PCX
+50200 '  Case 5: 'TIFF
+50210 '  Case 6: 'PS
+50220 '  Case 7: 'EPS
+50230 '  Case 8: 'TXT
+50240 '  Case 9: 'PDFA
+50250 '  Case 10: 'PDFX
+50260 '  Case 11: 'PSD
+50270 '  Case 12: 'PCL
+50280 '  Case 13: 'RAW
+50291  Select Case Options.AutosaveFormat
+        Case 0, 9, 10: 'PDF
+50310    filename = filename & ".pdf"
+50320   Case 1: 'PNG
+50330    filename = filename & ".png"
+50340   Case 2: 'JPEG
+50350    filename = filename & ".jpg"
+50360   Case 3: 'BMP
+50370    filename = filename & ".bmp"
+50380   Case 4: 'PCX
+50390    filename = filename & ".pcx"
+50400   Case 5: 'TIFF
+50410    filename = filename & ".tif"
+50420   Case 6: 'PS
+50430    filename = filename & ".ps"
+50440   Case 7: 'EPS
+50450    filename = filename & ".eps"
+50460   Case 8: 'TXT
+50470    filename = filename & ".txt"
+50480   Case 11: 'PSD
+50490    filename = filename & ".psd"
+50500   Case 12: 'PCL
+50510    filename = filename & ".pcl"
+50520   Case 13: 'RAW
+50530    filename = filename & ".raw"
+50540  End Select
+50550  GetAutosaveFilename = CompletePath(GetSubstFilename2(Pathname, False)) & ReplaceForbiddenChars(filename)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -213,8 +233,8 @@ Public Function GetSubstFilename(PostscriptFile As String, TokenFilename As Stri
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim PSHeader As tPSHeader, Author As String, ClientComputer As String, _
-  Title As String, UserName As String, Computername As String, i As Long, _
-  DateTime As String, Filename As String, tStr As String, tList() As String, _
+  title As String, UserName As String, Computername As String, i As Long, _
+  DateTime As String, filename As String, tStr As String, tList() As String, _
   Subst() As String, UserProfilPath As String, MyFiles As String, _
   MyDesktop As String, Path As String, isf As InfoSpoolFile, FilePath As String
 50060
@@ -249,14 +269,14 @@ On Error GoTo ErrPtnr_OnError
 50350      ClientComputer = tStr
 50360    End If
 50370   Else
-50380    PSHeader.Title.Comment = "'Preview Title'"
+50380    PSHeader.title.Comment = "'Preview Title'"
 50390    Author = "'Preview Author'"
 50400    ClientComputer = "'Preview ClientComputer'"
 50410  End If
 50420
 50430  If Options.FilenameSubstitutionsOnlyInTitle = 1 Then
 50440   tList = Split(Options.FilenameSubstitutions, "\")
-50450   Title = PSHeader.Title.Comment
+50450   title = PSHeader.title.Comment
 50460   If UBound(tList) >= 0 Then
 50470    For i = 0 To UBound(tList)
 50480     Subst = Split(tList(i), "|")
@@ -265,7 +285,7 @@ On Error GoTo ErrPtnr_OnError
 50510      Else
 50520       tStr = Subst(1)
 50530     End If
-50540     Title = Replace(Title, Subst(0), tStr, , , vbTextCompare)
+50540     title = Replace(title, Subst(0), tStr, , , vbTextCompare)
 50550    Next i
 50560   End If
 50570  End If
@@ -276,83 +296,83 @@ On Error GoTo ErrPtnr_OnError
 50620  MyFiles = GetMyFiles
 50630  MyDesktop = GetDesktop
 50640
-50650  Filename = TokenFilename
-50660  Filename = Replace(Filename, "<DateTime>", DateTime, , , vbTextCompare)
-50670  Filename = Replace(Filename, "<Computername>", Computername, , , vbTextCompare)
+50650  filename = TokenFilename
+50660  filename = Replace(filename, "<DateTime>", DateTime, , , vbTextCompare)
+50670  filename = Replace(filename, "<Computername>", Computername, , , vbTextCompare)
 50680
-50690  Filename = Replace(Filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
-50700  Filename = Replace(Filename, "<Username>", UserName, , , vbTextCompare)
-50710  Filename = Replace(Filename, "<Title>", Title, , , vbTextCompare)
+50690  filename = Replace(filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
+50700  filename = Replace(filename, "<Username>", UserName, , , vbTextCompare)
+50710  filename = Replace(filename, "<Title>", title, , , vbTextCompare)
 50720  If WithoutAuthor = False Then
-50730   Filename = Replace(Filename, "<Author>", Author, , , vbTextCompare)
+50730   filename = Replace(filename, "<Author>", Author, , , vbTextCompare)
 50740  End If
 50750
-50760  Filename = Replace(Filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
-50770  Filename = Replace(Filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
+50760  filename = Replace(filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
+50770  filename = Replace(filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
 50780
 50790  If Options.Counter = 922337203685477@ Then
 50800   Options.Counter = 0
 50810  End If
 50820  Options.Counter = Round(Options.Counter)
-50830  Filename = Replace(Filename, "<Counter>", Format$(Options.Counter + 1, String(15, "0")), , , vbTextCompare)
+50830  filename = Replace(filename, "<Counter>", Format$(Options.Counter + 1, String(15, "0")), , , vbTextCompare)
 50840
 50850  tStr = "DOCNAME"
 50860  If Preview = True Then
-50870    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50870    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50880   Else
-50890    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_DOCNAME, , , vbTextCompare)
+50890    filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_DOCNAME, , , vbTextCompare)
 50900  End If
 50910
 50920  tStr = "DOCNAME_FILE"
 50930  If Preview Then
-50940    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+50940    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50950   Else
 50960    SplitPath isf.REDMON_DOCNAME, , , , FilePath
-50970    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
+50970    filename = Replace(filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
 50980  End If
 50990  tStr = "DOCNAME_PATH"
 51000  If Preview Then
-51010    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51010    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51020   Else
 51030    SplitPath isf.REDMON_DOCNAME, , FilePath
-51040    Filename = Replace(Filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
+51040    filename = Replace(filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
 51050  End If
 51060
 51070  tStr = "JOB"
 51080  If Preview = True Then
-51090    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51090    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51100   Else
-51110    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_JOB, , , vbTextCompare)
+51110    filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_JOB, , , vbTextCompare)
 51120  End If
 51130  tStr = "MACHINE"
 51140  If Preview = True Then
-51150    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51150    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51160   Else
-51170    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_MACHINE, , , vbTextCompare)
+51170    filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_MACHINE, , , vbTextCompare)
 51180  End If
 51190  tStr = "PORT"
 51200  If Preview = True Then
-51210    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51210    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51220   Else
-51230    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PORT, , , vbTextCompare)
+51230    filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_PORT, , , vbTextCompare)
 51240  End If
 51250  tStr = "PRINTER"
 51260  If Preview = True Then
-51270    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51270    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51280   Else
-51290    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_PRINTER, , , vbTextCompare)
+51290    filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_PRINTER, , , vbTextCompare)
 51300  End If
 51310  tStr = "SESSIONID"
 51320  If Preview = True Then
-51330    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51330    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51340   Else
-51350    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_SESSIONID, , , vbTextCompare)
+51350    filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_SESSIONID, , , vbTextCompare)
 51360  End If
 51370  tStr = "USER"
 51380  If Preview = True Then
-51390    Filename = Replace(Filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
+51390    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51400   Else
-51410    Filename = Replace(Filename, "<REDMON_" & tStr & ">", isf.REDMON_USER, , , vbTextCompare)
+51410    filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_USER, , , vbTextCompare)
 51420  End If
 51430
 51440  If Options.FilenameSubstitutionsOnlyInTitle = 0 Then
@@ -365,17 +385,17 @@ On Error GoTo ErrPtnr_OnError
 51510      Else
 51520       tStr = Subst(1)
 51530     End If
-51540     Filename = Replace(Filename, Subst(0), tStr, , , vbTextCompare)
+51540     filename = Replace(filename, Subst(0), tStr, , , vbTextCompare)
 51550    Next i
 51560   End If
 51570  End If
 51580  If Not NoReplaceForbiddenChars Then
-51590   Filename = ReplaceForbiddenChars(Filename)
+51590   filename = ReplaceForbiddenChars(filename)
 51600  End If
 51610  If Options.RemoveSpaces = 1 Then
-51620   Filename = Trim$(Filename)
+51620   filename = Trim$(filename)
 51630  End If
-51640  GetSubstFilename = Filename
+51640  GetSubstFilename = filename
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -388,7 +408,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function IsPostscriptFile(ByVal Filename As String) As Boolean
+Public Function IsPostscriptFile(ByVal filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -398,7 +418,7 @@ On Error GoTo ErrPtnr_OnError
 50040   Exit Function
 50050  End If
 50060  IsPostscriptFile = False
-50070  lHeader = GetPSHeader(Filename)
+50070  lHeader = GetPSHeader(filename)
 50080  If InStr(1, lHeader.StartComment.Comment, "PS", vbTextCompare) > 0 Then
 50090   IsPostscriptFile = True
 50100  End If
@@ -420,7 +440,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, _
   tStr As String, ttStr As String, CodePage As Long
-50030  CodePage = eCodePage.CP_NoEncoding
+50030  CodePage = eCodePage.CP_UTF16
 50040  With PDFDocInfo
 50050   PDFDocInfoStr = PDFDocInfoStr & Chr$(13)
 50060   If LenB(Trim$(.Author)) > 0 Then
@@ -475,8 +495,8 @@ On Error GoTo ErrPtnr_OnError
 50550     tStr = "()"
 50560   End If
 50570   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Subject " & tStr
-50580   If LenB(Trim$(.Title)) > 0 Then
-50590     tStr = EncodeChars(CodePage, .Title)
+50580   If LenB(Trim$(.title)) > 0 Then
+50590     tStr = EncodeChars(CodePage, .title)
 50600    Else
 50610     tStr = "()"
 50620   End If
@@ -705,7 +725,7 @@ Public Function EncodeChars(ByVal CodePage As eCodePage, ByVal Str1 As String) A
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long, tStr As String, Size As Long, Buffer() As Byte, c As Long, tL As Long
+50010  Dim i As Long, tStr As String, Size As Long, buffer() As Byte, c As Long, tL As Long
 50020
 50030  If LenB(Str1) = 0 Then
 50040   Exit Function

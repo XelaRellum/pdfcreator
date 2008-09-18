@@ -34,33 +34,33 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Function Send(ByVal Filename As String, Optional Subject As String = "", Optional SendMailMethod As Long = 0, Optional EmailAddress As String) As Long
+Public Function Send(ByVal filename As String, Optional Subject As String = "", Optional SendMailMethod As Long = 0, Optional EmailAddress As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case SendMailMethod
         Case 1
-50030    Send = VBMapiEmail(Filename, Subject)
+50030    Send = VBMapiEmail(filename, Subject)
 50040   Case 2
-50050    Send = SendToMailRecipientViaSendmailDll(Filename)
+50050    Send = SendToMailRecipientViaSendmailDll(filename)
 50060   Case Else
 50071    Select Case UCase$(iStandardEmailClient)
           Case "MICROSOFT OUTLOOK"
-50090      Send = MSOutlookEmail(Filename, Subject, EmailAddress)
+50090      Send = MSOutlookEmail(filename, Subject, EmailAddress)
 50100     Case "PEGASUS MAIL"
-50110      Send = PegasusEmail(Filename, Subject)
+50110      Send = PegasusEmail(filename, Subject)
 50120     Case "THE BAT!"
-50130      Send = TheBatEmail(Filename, Subject)
+50130      Send = TheBatEmail(filename, Subject)
 50140     Case "FOXMAIL"
-50150      Send = FoxEmail(Filename, Subject)
+50150      Send = FoxEmail(filename, Subject)
 50160     Case "SYLPHEED"
-50170      Send = SylpheedClaws(Filename, Subject)
+50170      Send = SylpheedClaws(filename, Subject)
 50180     Case "OUTLOOK EXPRESS", "MOZILLA THUNDERBIRD", "MOZILLA"
-50190      Send = VBMapiEmail(Filename, Subject, EmailAddress)
+50190      Send = VBMapiEmail(filename, Subject, EmailAddress)
 50200     Case "LOTUS NOTES"
-50210      Send = SendNotesMail(Filename, Subject, EmailAddress)
+50210      Send = SendNotesMail(filename, Subject, EmailAddress)
 50220     Case Else
-50230      Send = SendToMailRecipientViaSendmailDll(Filename)
+50230      Send = SendToMailRecipientViaSendmailDll(filename)
 50240    End Select
 50250  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -96,12 +96,18 @@ Private Function GetStandardEmailClient() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry
+50010  Dim reg As clsRegistry, tStr As String
 50020  Set reg = New clsRegistry
-50030  reg.hkey = HKEY_LOCAL_MACHINE
+50030  reg.hkey = HKEY_CURRENT_USER
 50040  reg.KeyRoot = "SOFTWARE\Clients\Mail"
-50050  GetStandardEmailClient = reg.GetRegistryValue("")
-50060  Set reg = Nothing
+50050  tStr = reg.GetRegistryValue("")
+50060  If LenB(Trim$(tStr)) = 0 Then
+50070    reg.hkey = HKEY_LOCAL_MACHINE
+50080    GetStandardEmailClient = reg.GetRegistryValue("")
+50090   Else
+50100    GetStandardEmailClient = tStr
+50110  End If
+50120  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -114,7 +120,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function MSOutlookEmail(Filename As String, Optional Subject As String = "", Optional EmailAddress As String) As Long
+Private Function MSOutlookEmail(filename As String, Optional Subject As String = "", Optional EmailAddress As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -127,8 +133,8 @@ On Error GoTo ErrPtnr_OnError
 50070  End If
 50080  Set oItem = olApp.CreateItem(0)
 50090  With oItem
-50100   .To = EmailAddress: .CC = "": .BCC = "": .Subject = Subject
-50110   .Attachments.Add Filename
+50100   .To = EmailAddress: .cc = "": .BCC = "": .Subject = Subject
+50110   .Attachments.Add filename
 50120   .Display
 50130  End With
 50140  Set oItem = Nothing: Set olApp = Nothing
@@ -144,7 +150,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function VBMapiEmail(Filename As String, Optional Subject As String = "", Optional EmailAddress As String) As Long
+Private Function VBMapiEmail(filename As String, Optional Subject As String = "", Optional EmailAddress As String) As Long
  On Error GoTo ErrorHandler
  Dim MAPISess As MAPISession, MAPIMess As MAPIMessages
 
@@ -165,10 +171,10 @@ Private Function VBMapiEmail(Filename As String, Optional Subject As String = ""
   If LenB(EmailAddress) > 0 Then
    .RecipAddress = EmailAddress
   End If
-  If Len(Trim$(Filename)) > 0 Then
+  If Len(Trim$(filename)) > 0 Then
    .AttachmentIndex = 0
-   .AttachmentPathName = Filename
-   .AttachmentName = Filename
+   .AttachmentPathName = filename
+   .AttachmentName = filename
   End If
   .MsgSubject = Subject
   .Send True
@@ -183,7 +189,7 @@ ErrorHandler:
  Err.Clear
 End Function
 
-Private Function PegasusEmail(Filename As String, Optional Subject As String = "") As Long
+Private Function PegasusEmail(filename As String, Optional Subject As String = "") As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -196,7 +202,7 @@ On Error GoTo ErrPtnr_OnError
 50070  PegasusBaseDir = cReg.GetRegistryValue("")
 50080  WsendToPath = CompletePath(PegasusBaseDir) & "wsendto.exe"
 50090  If Dir(WsendToPath) <> vbNullString Then
-50100    Shell """" & WsendToPath & """ """ & Filename & """"
+50100    Shell """" & WsendToPath & """ """ & filename & """"
 50110   Else
 50120    MsgBox LanguageStrings.MessagesMsg20
 50130    PegasusEmail = -1
@@ -213,7 +219,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function TheBatEmail(Filename As String, Optional Subject As String = "") As Long
+Private Function TheBatEmail(filename As String, Optional Subject As String = "") As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -225,7 +231,7 @@ On Error GoTo ErrPtnr_OnError
 50060  cReg.KeyRoot = "Software\Rit\The Bat!"
 50070  ExePath = cReg.GetRegistryValue("EXE path")
 50080  If Dir(ExePath) <> vbNullString Then
-50090    Shell """" & ExePath & """ """ & Filename & """"
+50090    Shell """" & ExePath & """ """ & filename & """"
 50100   Else
 50110    MsgBox LanguageStrings.MessagesMsg20
 50120    TheBatEmail = -1
@@ -242,7 +248,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function FoxEmail(Filename As String, Optional Subject As String = "") As Long
+Private Function FoxEmail(filename As String, Optional Subject As String = "") As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -254,7 +260,7 @@ On Error GoTo ErrPtnr_OnError
 50060  cReg.KeyRoot = "Software\Aerofox\Foxmail"
 50070  ExePath = cReg.GetRegistryValue("Executable")
 50080  If Dir(ExePath) <> vbNullString Then
-50090    Shell """" & ExePath & """ /min """ & Filename & """"
+50090    Shell """" & ExePath & """ /min """ & filename & """"
 50100   Else
 50110    MsgBox LanguageStrings.MessagesMsg20
 50120    FoxEmail = -1
@@ -271,7 +277,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function SylpheedClaws(Filename As String, Optional Subject As String = "") As Long
+Private Function SylpheedClaws(filename As String, Optional Subject As String = "") As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -284,7 +290,7 @@ On Error GoTo ErrPtnr_OnError
 50070  ExePath = cReg.GetRegistryValue("Inno Setup: App Path")
 50080  ExePath = CompletePath(ExePath) & "bin\sylpheed.exe"
 50090  If Dir(ExePath) <> vbNullString Then
-50100    Shell """" & ExePath & """ --attach """ & Filename & """"
+50100    Shell """" & ExePath & """ --attach """ & filename & """"
 50110   Else
 50120    MsgBox LanguageStrings.MessagesMsg20
 50130    SylpheedClaws = -1
@@ -301,7 +307,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function SendToMailRecipientViaSendmailDll(ByVal Filename As String) As Long
+Private Function SendToMailRecipientViaSendmailDll(ByVal filename As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -315,7 +321,7 @@ On Error GoTo ErrPtnr_OnError
   tIID_IDropTarget, oSendMail)
 50090
 50100  If lRes = S_OK Then
-50110    Set oDO = GetFileDataObject(Filename)
+50110    Set oDO = GetFileDataObject(filename)
 50120    oSendMail.DragEnter oDO, vbKeyLButton, 0, 0, DROPEFFECT_COPY
 50130    oSendMail.Drop oDO, vbKeyLButton, 0, 0, DROPEFFECT_COPY
 50140    SendToMailRecipientViaSendmailDll = 0
@@ -334,7 +340,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function GetFileDataObject(ByVal Filename As String) As IDataObject
+Private Function GetFileDataObject(ByVal filename As String) As IDataObject
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -345,8 +351,8 @@ On Error GoTo ErrPtnr_OnError
 50050  CLSIDFromString "{0000010e-0000-0000-C000-000000000046}", tIID_IDataObject
 50060  CLSIDFromString IIDSTR_IShellFolder, tIID_IShellFolder
 50070
-50080  sFolder = Left$(Filename, InStrRev(Filename, "\") - 1)
-50090  Filename = Mid$(Filename, Len(sFolder) + 2)
+50080  sFolder = Left$(filename, InStrRev(filename, "\") - 1)
+50090  filename = Mid$(filename, Len(sFolder) + 2)
 50100  If Right$(sFolder, 1) = ":" Then
 50110   sFolder = sFolder + "\"
 50120  End If
@@ -355,7 +361,7 @@ On Error GoTo ErrPtnr_OnError
 50150  oDesktop.BindToObject lPidl, 0, tIID_IShellFolder, lPtr
 50160  MoveMemory oParent, lPtr, 4&
 50170  CoTaskMemFree lPidl
-50180  oParent.ParseDisplayName 0, 0, StrPtr(Filename), 0, lPidl, 0
+50180  oParent.ParseDisplayName 0, 0, StrPtr(filename), 0, lPidl, 0
 50190  lPtr = oParent.GetUIObjectOf(0, 1, lPidl, tIID_IDataObject, 0)
 50200  MoveMemory oUnk, lPtr, 4&
 50210  CoTaskMemFree lPidl

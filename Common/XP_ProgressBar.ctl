@@ -800,18 +800,18 @@ On Error GoTo ErrPtnr_OnError
 50250            'It saves some memory
 50260
 50270       If ((tR.Right * (m_Value / 100)) <= AT.Right) Or Not isAlpha Then
-'50280             DrawText m_hDC, ThisText, Len(ThisText), AT, DT_SINGLELINE
-50280             DrawText m_hDC, ThisText, -1, AT, DT_SINGLELINE
-50290       End If
-50300
-50310       SelectObject m_hDC, hFntOld  'Delete the Used Font
-50320
-50330       '//--Use the Alpha Text Look if Progress is AlPhA Style
-50340       If isAlpha Then DrawAlphaText ThisText
-50350
-50360  End If
-50370
+50280 '50280             DrawText m_hDC, ThisText, Len(ThisText), AT, DT_SINGLELINE
+50290             DrawText m_hDC, ThisText, -1, AT, DT_SINGLELINE
+50300       End If
+50310
+50320       SelectObject m_hDC, hFntOld  'Delete the Used Font
+50330
+50340       '//--Use the Alpha Text Look if Progress is AlPhA Style
+50350       If isAlpha Then DrawAlphaText ThisText
+50360
+50370  End If
 50380
+50390
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -833,11 +833,11 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
 50020       '//--Calculates the Bounding Rects Of the Text using DT_CALCRECT
-'50030       DrawText m_hDC, ThisText, Len(ThisText), AT, DT_CALCRECT
-50030       DrawText m_hDC, ThisText, -1, AT, DT_CALCRECT
-50040       AT.Left = (tR.Right / 2) - ((AT.Right - AT.Left) / 2)
-50050       AT.Top = (tR.Bottom / 2) - ((AT.Bottom - AT.Top) / 2)
-50060
+50030 '50030       DrawText m_hDC, ThisText, Len(ThisText), AT, DT_CALCRECT
+50040       DrawText m_hDC, ThisText, -1, AT, DT_CALCRECT
+50050       AT.Left = (tR.Right / 2) - ((AT.Right - AT.Left) / 2)
+50060       AT.Top = (tR.Bottom / 2) - ((AT.Bottom - AT.Top) / 2)
+50070
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -986,23 +986,23 @@ Private Function ShiftColorXP(ByVal MyColor As Long, ByVal Base As Long) As Long
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010
-50020     Dim R As Long, G As Long, B As Long, Delta As Long
+50020     Dim R As Long, G As Long, b As Long, Delta As Long
 50030
 50040     R = (MyColor And &HFF)
 50050     G = ((MyColor \ &H100) Mod &H100)
-50060     B = ((MyColor \ &H10000) Mod &H100)
+50060     b = ((MyColor \ &H10000) Mod &H100)
 50070
 50080     Delta = &HFF - Base
 50090
-50100     B = Base + B * Delta \ &HFF
+50100     b = Base + b * Delta \ &HFF
 50110     G = Base + G * Delta \ &HFF
 50120     R = Base + R * Delta \ &HFF
 50130
 50140     If R > 255 Then R = 255
 50150     If G > 255 Then G = 255
-50160     If B > 255 Then B = 255
+50160     If b > 255 Then b = 255
 50170
-50180     ShiftColorXP = R + 256& * G + 65536 * B
+50180     ShiftColorXP = R + 256& * G + 65536 * b
 50190
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -1755,15 +1755,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get Value() As Long
+Public Property Get value() As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010    Value = ((m_Value / 100) * m_Max) / IIf(m_Min > 0, m_Min, 1)
+50010    value = ((m_Value / 100) * m_Max) / IIf(m_Min > 0, m_Min, 1)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("XP_ProgressBar", "Value [GET]")
+Select Case ErrPtnr.OnError("XP_ProgressBar", "value [GET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -1772,7 +1772,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Let Value(ByVal cValue As Long)
+Public Property Let value(ByVal cValue As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1782,7 +1782,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("XP_ProgressBar", "Value [LET]")
+Select Case ErrPtnr.OnError("XP_ProgressBar", "value [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -1838,7 +1838,7 @@ On Error GoTo ErrPtnr_OnError
 50070 Orientation = PropBag.ReadProperty("Orientation", ccOrientationHorizontal)
 50080 Scrolling = PropBag.ReadProperty("Scrolling", ccScrollingStandard)
 50090 ShowText = PropBag.ReadProperty("ShowText", False)
-50100 Value = PropBag.ReadProperty("Value", 0)
+50100 value = PropBag.ReadProperty("Value", 0)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

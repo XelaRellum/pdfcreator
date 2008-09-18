@@ -78,15 +78,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub ComboSetListWidth(oCombo As Object, Optional ByVal nFixWidth As Variant, Optional ByVal nScaleMode As Variant)
+Public Sub ComboSetListWidth(oCombo As ComboBox, Optional ByVal nFixWidth As Variant, Optional ByVal nScaleMode As Variant)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With oCombo
-50020   If IsMissing(nScaleMode) Or IsMissing(nFixWidth) Then
+50020   If isMissing(nScaleMode) Or isMissing(nFixWidth) Then
 50030    nScaleMode = .Parent.ScaleMode
 50040   End If
-50050   If IsMissing(nFixWidth) Then
+50050   If isMissing(nFixWidth) Then
 50060    Dim i As Long, nWidth As Long
 50070    nFixWidth = 0
 50080    For i = 0 To .ListCount - 1
@@ -213,16 +213,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function IsFilePrintable(Filename As String) As Boolean
+Public Function IsFilePrintable(filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String, reg As clsRegistry
 50020  IsFilePrintable = False
-50030  If Len(Filename) = 0 Then
+50030  If Len(filename) = 0 Then
 50040   Exit Function
 50050  End If
-50060  SplitPath Filename, , , , , Ext
+50060  SplitPath filename, , , , , Ext
 50070  If Len(Ext) = 0 Then
 50080   Exit Function
 50090  End If
@@ -336,12 +336,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetFileAttributesStr(Filename As String) As String
+Public Function GetFileAttributesStr(filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim hFind As Long, WFD As WIN32_FIND_DATA, attr As Long, AA As String
-50020  hFind = FindFirstFileA(Filename, WFD)
+50020  hFind = FindFirstFileA(filename, WFD)
 50030  attr = WFD.dwFileAttributes
 50040  If attr And FILE_ATTRIBUTE_ARCHIVE Then AA = AA & "A"
 50050  If attr And FILE_ATTRIBUTE_COMPRESSED Then AA = AA & "C"
@@ -732,7 +732,7 @@ On Error GoTo ErrPtnr_OnError
 50030  With reg
 50040   .hkey = hProfile
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
-50060   If IsWinVista Then
+50060   If IsWinVistaPlus Then
 50070    tStr = CompletePath(.GetRegistryValue("Local AppData"))
 50080   Else
 50090    tStr = CompletePath(.GetRegistryValue("Local Settings"))
@@ -908,13 +908,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function KillFile(Filename As String) As Boolean
+Public Function KillFile(filename As String) As Boolean
  On Error Resume Next
  KillFile = False
- If FileExists(Filename) = True Then
-  If FileInUse(Filename) = False Then
-   Kill Filename
-   If FileExists(Filename) = False Then
+ If FileExists(filename) = True Then
+  If FileInUse(filename) = False Then
+   Kill filename
+   If FileExists(filename) = False Then
     KillFile = True
    End If
   End If
@@ -1079,18 +1079,18 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub RemoveX(Frm As Form)
+Public Sub RemoveX(frm As Form)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim hMenu As Long, nPosition As Long
 50020
-50030  hMenu = GetSystemMenu(Frm.hwnd, 0)
+50030  hMenu = GetSystemMenu(frm.hwnd, 0)
 50040  If hMenu <> 0 Then
 50050   nPosition = GetMenuItemCount(hMenu)
 50060   Call RemoveMenu(hMenu, nPosition - 1, MF_REMOVE Or MF_BYPOSITION)
 50070   Call RemoveMenu(hMenu, nPosition - 2, MF_REMOVE Or MF_BYPOSITION)
-50080   Call DrawMenuBar(Frm.hwnd)
+50080   Call DrawMenuBar(frm.hwnd)
 50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1165,7 +1165,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional Filename As String, Optional File As String, Optional Extension As String)
+Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional filename As String, Optional File As String, Optional Extension As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1174,41 +1174,41 @@ On Error GoTo ErrPtnr_OnError
 50030  If nPos > 0 Then
 50040    If Left$(FullPath, 2) = "\\" Then
 50050     If nPos = 2 Then
-50060      Drive = FullPath: Path = vbNullString: Filename = vbNullString: File = vbNullString
+50060      Drive = FullPath: Path = vbNullString: filename = vbNullString: File = vbNullString
 50070      Extension = vbNullString
 50080      Exit Sub
 50090     End If
 50100    End If
 50110    Path = Left$(FullPath, nPos - 1)
-50120    Filename = Mid$(FullPath, nPos + 1)
-50130    nPos = InStrRev(Filename, ".")
+50120    filename = Mid$(FullPath, nPos + 1)
+50130    nPos = InStrRev(filename, ".")
 50140    If nPos > 0 Then
-50150      File = Left$(Filename, nPos - 1)
-50160      Extension = Mid$(Filename, nPos + 1)
+50150      File = Left$(filename, nPos - 1)
+50160      Extension = Mid$(filename, nPos + 1)
 50170     Else
-50180      File = Filename
+50180      File = filename
 50190      Extension = vbNullString
 50200    End If
 50210   Else
 50220    nPos = InStrRev(FullPath, ":")
 50230    If nPos > 0 Then
-50240      Path = Mid(FullPath, 1, nPos - 1): Filename = Mid(FullPath, nPos + 1)
-50250      nPos = InStrRev(Filename, ".")
+50240      Path = Mid(FullPath, 1, nPos - 1): filename = Mid(FullPath, nPos + 1)
+50250      nPos = InStrRev(filename, ".")
 50260      If nPos > 0 Then
-50270        File = Left$(Filename, nPos - 1)
-50280        Extension = Mid$(Filename, nPos + 1)
+50270        File = Left$(filename, nPos - 1)
+50280        Extension = Mid$(filename, nPos + 1)
 50290       Else
-50300        File = Filename
+50300        File = filename
 50310        Extension = vbNullString
 50320      End If
 50330     Else
-50340      Path = vbNullString: Filename = FullPath
-50350      nPos = InStrRev(Filename, ".")
+50340      Path = vbNullString: filename = FullPath
+50350      nPos = InStrRev(filename, ".")
 50360      If nPos > 0 Then
-50370        File = Left$(Filename, nPos - 1)
-50380        Extension = Mid$(Filename, nPos + 1)
+50370        File = Left$(filename, nPos - 1)
+50380        Extension = Mid$(filename, nPos + 1)
 50390       Else
-50400        File = Filename
+50400        File = filename
 50410        Extension = vbNullString
 50420      End If
 50430    End If
@@ -1469,7 +1469,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub SetOptimalComboboxHeigth(cmb As ComboBox, ParentForm As Form)
+Public Sub SetOptimalComboboxHeigth(cmb As ComboBox, ParentForm As Object)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1487,6 +1487,7 @@ On Error GoTo ErrPtnr_OnError
   SendMessage(cmb.hwnd, CB_GETITEMHEIGHT, 0, ByVal 0) * (cmb.ListCount + 2), _
   True)
 50140  ParentForm.ScaleMode = OldScaleMode
+50150  cmb.Width = cWidth
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1631,20 +1632,20 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function RemoveAllKnownFileExtensions(Filename As String) As String
+Public Function RemoveAllKnownFileExtensions(filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tColl As Collection, Ext As String, File As String, OldFilename As String, reg As clsRegistry
-50020  RemoveAllKnownFileExtensions = Filename
-50030  SplitPath Filename, , , , File, Ext
+50020  RemoveAllKnownFileExtensions = filename
+50030  SplitPath filename, , , , File, Ext
 50040  If LenB(Ext) > 0 Then
 50050   Set reg = New clsRegistry
 50060   reg.hkey = HKEY_CLASSES_ROOT
 50070   reg.KeyRoot = "." & Ext
 50080   Do Until reg.KeyExists = False
-50090    SplitPath Filename, , , , File, Ext
-50100    Filename = File
+50090    SplitPath filename, , , , File, Ext
+50100    filename = File
 50110    reg.KeyRoot = "." & Ext
 50120    DoEvents
 50130   Loop
@@ -2105,16 +2106,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CreateTextFile(Filename As String, Str1 As String, Optional OpenmodeAppend As Boolean = False)
+Public Sub CreateTextFile(filename As String, Str1 As String, Optional OpenmodeAppend As Boolean = False)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long
 50020  fn = FreeFile
 50030  If OpenmodeAppend Then
-50040    Open Filename For Append As #fn
+50040    Open filename For Append As #fn
 50050   Else
-50060    Open Filename For Output As #fn
+50060    Open filename For Output As #fn
 50070  End If
 50080  Print #fn, Str1
 50090  Close #fn
@@ -2165,16 +2166,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function IsFileEditable(Filename As String) As Boolean
+Public Function IsFileEditable(filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String, reg As clsRegistry
 50020  IsFileEditable = False
-50030  If Len(Filename) = 0 Then
+50030  If Len(filename) = 0 Then
 50040   Exit Function
 50050  End If
-50060  SplitPath Filename, , , , , Ext
+50060  SplitPath filename, , , , , Ext
 50070  If Len(Ext) = 0 Then
 50080   Exit Function
 50090  End If
@@ -2350,3 +2351,38 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function PDFSigningIsPossible() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\pdfforge.dll") And _
+  FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") And DotNet1_1Installed Then
+50030   PDFSigningIsPossible = True
+50040  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "PDFSigningIsPossible")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Function ReadCompleteFile(ByRef filename As String) As String
+ Dim fn As Long
+
+ On Error Resume Next
+ If FileLen(filename) = 0 Then Exit Function
+ On Error GoTo 0
+
+ fn = FreeFile
+ Open filename For Binary As fn
+ ReadCompleteFile = Space$(LOF(fn))
+ Get #fn, , ReadCompleteFile
+ Close fn
+End Function
+

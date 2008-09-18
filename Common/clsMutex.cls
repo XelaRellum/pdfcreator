@@ -17,14 +17,14 @@ Option Explicit
 
 Private hMutex As Long
 
-Public Function CheckMutex(ByVal Mutexname As String) As Boolean
+Public Function CheckMutex(ByVal MutexName As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If IDERunning = True Then
 50020    CheckMutex = App.PrevInstance
 50030   Else
-50040    hMutex = CreateMutexA(ByVal 0&, 1, Mutexname)
+50040    hMutex = CreateMutexA(ByVal 0&, 1, MutexName)
 50050    If (Err.LastDllError = ERROR_ALREADY_EXISTS) Or (Err.LastDllError = ERROR_ACCESS_DENIED) Then
 50060      CheckMutex = True
 50070     Else
@@ -46,12 +46,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function CreateMutex(ByVal Mutexname As String) As Long
+Public Function CreateMutex(ByVal MutexName As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  CreateMutex = 0
-50020  hMutex = CreateMutexA(ByVal 0&, 1, Mutexname)
+50020  hMutex = CreateMutexA(ByVal 0&, 1, MutexName)
 50030  If (Err.LastDllError = ERROR_ALREADY_EXISTS) Then
 50040    CreateMutex = 0
 50050   Else

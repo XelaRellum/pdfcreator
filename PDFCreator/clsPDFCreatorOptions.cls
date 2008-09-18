@@ -51,6 +51,7 @@ Public OptionsDesign As Long
 Public OptionsEnabled As Long
 Public OptionsVisible As Long
 Public Papersize As String
+Public PCLColorsCount As Long
 Public PCXColorscount As Long
 Public PDFAllowAssembly As Long
 Public PDFAllowDegradedPrinting As Long
@@ -98,6 +99,7 @@ Public PDFFontsSubSetFontsPercent As Long
 Public PDFGeneralASCII85 As Long
 Public PDFGeneralAutorotate As Long
 Public PDFGeneralCompatibility As Long
+Public PDFGeneralDefault As Long
 Public PDFGeneralOverprint As Long
 Public PDFGeneralResolution As Long
 Public PDFHighEncryption As Long
@@ -105,6 +107,18 @@ Public PDFLowEncryption As Long
 Public PDFOptimize As Long
 Public PDFOwnerPass As Long
 Public PDFOwnerPasswordString As String
+Public PDFSigningMultiSignature As Long
+Public PDFSigningPFXFile As String
+Public PDFSigningPFXFilePassword As String
+Public PDFSigningSignatureContact As String
+Public PDFSigningSignatureLeftX As Double
+Public PDFSigningSignatureLeftY As Double
+Public PDFSigningSignatureLocation As String
+Public PDFSigningSignatureReason As String
+Public PDFSigningSignatureRightX As Double
+Public PDFSigningSignatureRightY As Double
+Public PDFSigningSignatureVisible As Long
+Public PDFSigningSignPDF As Long
 Public PDFUpdateMetadata As Long
 Public PDFUserPass As Long
 Public PDFUserPasswordString As String
@@ -122,7 +136,9 @@ Public ProcessPriority As Long
 Public ProgramFont As String
 Public ProgramFontCharset As Long
 Public ProgramFontSize As Long
+Public PSDColorsCount As Long
 Public PSLanguageLevel As Long
+Public RAWColorsCount As Long
 Public RemoveAllKnownFileExtensions As Long
 Public RemoveSpaces As Long
 Public RunProgramAfterSaving As Long
@@ -162,3 +178,4 @@ Public UseCreationDateNow As Long
 Public UseCustomPaperSize As String
 Public UseFixPapersize As Long
 Public UseStandardAuthor As Long
+Public XCFColorsCount As Long

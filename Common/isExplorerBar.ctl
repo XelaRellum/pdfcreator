@@ -849,12 +849,12 @@ On Error GoTo ErrPtnr_OnError
 50210             If m_ScrollBar.Visible Then
 50220                 If wParam = &H780000 Then
 50230                 'wparam contains the direction the wheel was moved.
-50240                     tmpval = m_ScrollBar.Value - 32
-50250                     m_ScrollBar.Value = IIf((tmpval < m_ScrollBar.Min), _
+50240                     tmpval = m_ScrollBar.value - 32
+50250                     m_ScrollBar.value = IIf((tmpval < m_ScrollBar.Min), _
                                         m_ScrollBar.Min, tmpval)
 50270                 ElseIf wParam = &HFF880000 Then
-50280                     tmpval = m_ScrollBar.Value + 32
-50290                     m_ScrollBar.Value = IIf((tmpval > m_ScrollBar.Max), _
+50280                     tmpval = m_ScrollBar.value + 32
+50290                     m_ScrollBar.value = IIf((tmpval > m_ScrollBar.Max), _
                                         m_ScrollBar.Max, tmpval)
 50310                 End If
 50320             End If
@@ -1253,7 +1253,7 @@ Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
     m_GroupHoverColor = RGB(127, 127, 127)
     UserControl.Extender.Align = 3
     m_ttIcon = TTIconInfo
-    m_ttTitle = App.Title
+    m_ttTitle = App.title
     With PropBag
         UserControl.Fontname = .ReadProperty("FontName", UserControl.Ambient.Font.Name)
         UserControl.Font.Charset = .ReadProperty("FontCharset")
@@ -1343,7 +1343,7 @@ Private Sub m_ScrollBar_Change()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010     m_iTopOffset = m_ScrollBar.Value
+50010     m_iTopOffset = m_ScrollBar.value
 50020     UserControl_Paint
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2463,10 +2463,10 @@ On Error GoTo ErrPtnr_OnError
 50010     'draw text in the selected position
 50020     m_LastTextHeight = CalcHeightRectText(rtRect.Left, rtRect.Right, sText)
 50030     rtRect.Bottom = rtRect.Top + m_LastTextHeight
-'50040     DrawText UserControl.hdc, sText, Len(sText), rtRect, DT_LEFT Or DT_WORDBREAK
-50040     DrawText UserControl.hdc, sText, -1, rtRect, DT_LEFT Or DT_WORDBREAK
-50050     'Redraw Window
-50060     RedrawWindow UserControl.hwnd, rtRect, ByVal 0&, RDW_INVALIDATE
+50040 '50040     DrawText UserControl.hdc, sText, Len(sText), rtRect, DT_LEFT Or DT_WORDBREAK
+50050     DrawText UserControl.hdc, sText, -1, rtRect, DT_LEFT Or DT_WORDBREAK
+50060     'Redraw Window
+50070     RedrawWindow UserControl.hwnd, rtRect, ByVal 0&, RDW_INVALIDATE
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2488,8 +2488,8 @@ On Error GoTo ErrPtnr_OnError
 50010     'Calculate vertical height of text Tittle + Text(wrapped)
 50020     Dim rectText As Rect
 50030     SetRect rectText, lLeft, 0, lright, UserControl.ScaleHeight
-'50040     CalcHeightRectText = DrawText(UserControl.hdc, sText, Len(sText), rectText, DT_CALCRECT Or DT_LEFT Or DT_WORDBREAK)
-50040     CalcHeightRectText = DrawText(UserControl.hdc, sText, -1, rectText, DT_CALCRECT Or DT_LEFT Or DT_WORDBREAK)
+50040 '50040     CalcHeightRectText = DrawText(UserControl.hdc, sText, Len(sText), rectText, DT_CALCRECT Or DT_LEFT Or DT_WORDBREAK)
+50050     CalcHeightRectText = DrawText(UserControl.hdc, sText, -1, rectText, DT_CALCRECT Or DT_LEFT Or DT_WORDBREAK)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2601,25 +2601,25 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010     Dim vert(1) As TRIVERTEX
 50020     Dim gRect As GRADIENT_RECT
-50030     Dim R As Byte, G As Byte, B As Byte
+50030     Dim R As Byte, G As Byte, b As Byte
 50040
-50050     Long2RGB FromColor, R, G, B
+50050     Long2RGB FromColor, R, G, b
 50060     With vert(0)
 50070         .x = Left
 50080         .Y = Top
 50090         .Red = Val("&h" & Hex(R) & "00")
 50100         .Green = Val("&h" & Hex(G) & "00")
-50110         .Blue = Val("&h" & Hex(B) & "00")
+50110         .Blue = Val("&h" & Hex(b) & "00")
 50120         .Alpha = 0&
 50130     End With
 50140
-50150     Long2RGB ToColor, R, G, B
+50150     Long2RGB ToColor, R, G, b
 50160     With vert(1)
 50170         .x = Left + Width
 50180         .Y = Top + Height
 50190         .Red = Val("&h" & Hex(R) & "00")
 50200         .Green = Val("&h" & Hex(G) & "00")
-50210         .Blue = Val("&h" & Hex(B) & "00")
+50210         .Blue = Val("&h" & Hex(b) & "00")
 50220         .Alpha = 0&
 50230     End With
 50240

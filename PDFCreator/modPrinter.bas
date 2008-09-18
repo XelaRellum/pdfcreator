@@ -3,7 +3,7 @@ Option Explicit
 
 Public Monitorname As String, Portname As String, DriverName As String, Printername As String
 
-Private Enum eInstall
+Public Enum eInstall
  Install = 0
  UnInstall = 1
 End Enum
@@ -299,33 +299,33 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub WindowsPrinter(InstallTyp As eInstall)
+Public Sub WindowsPrinter(InstallTyp As eInstall)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim res As Long, PI As PRINTER_INFO_2, pHandle As Long, _
   pd As PRINTER_DEFAULTS, tStr As String, ini As clsINI
 50031  Select Case InstallTyp
-        Case 0: ' Install
+        Case eInstall.Install:
 50050    tStr = "Install"
 50060    If IsPrinterInstalled(Printername) = False Then
 50070      With PI
-50080       .pPrinterName = Printername & vbNullString
-50090       .pDriverName = DriverName & vbNullString
-50100       .pPortName = Portname & vbNullString
-50110       .pServerName = vbNullString
-50120       .pComment = Printername & vbNullString
-50130       .pPrintProcessor = "WinPrint" & vbNullString
+50080       .pPrinterName = StrConv(Printername & vbNullString, vbFromUnicode)
+50090       .pDriverName = StrConv(DriverName & vbNullString, vbFromUnicode)
+50100       .pPortName = StrConv(Portname & vbNullString, vbFromUnicode)
+50110       .pServerName = StrConv(vbNullString, vbFromUnicode)
+50120       .pComment = StrConv(Printername & vbNullString, vbFromUnicode)
+50130       .pPrintProcessor = StrConv("WinPrint" & vbNullString, vbFromUnicode)
 50140       .Priority = 1
 50150       .DefaultPriority = 1
-50160       .pDatatype = "RAW" & vbNullString
+50160       .pDatatype = StrConv("RAW" & vbNullString, vbFromUnicode)
 50170       .AveragePPM = 0
 50180       .cJobs = 0
 50190       .pDevMode = 0
-50200       .pLocation = vbNullString
+50200       .pLocation = StrConv(vbNullString, vbFromUnicode)
 50210       .pParameters = 0
 50220       .pSecurityDescriptor = 0
-50230       .pShareName = Printername & vbNullString
+50230       .pShareName = StrConv(Printername & vbNullString, vbFromUnicode)
 50240       .StartTime = 0
 50250       .Status = 0
 50260       .UntilTime = 0
@@ -349,7 +349,7 @@ On Error GoTo ErrPtnr_OnError
 50440      WriteLogfile "Printer [" & tStr & "]: Printer is already installed."
 50450      Exit Sub
 50460    End If
-50470   Case 1: ' UnInstall
+50470   Case eInstall.UnInstall:
 50480    tStr = "UnInstall"
 50490    If IsPrinterInstalled(Printername) = True Then
 50500      With pd
@@ -463,7 +463,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function IsPrinterInstalled(Printername As String) As Boolean
+Public Function IsPrinterInstalled(Printername As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -571,5 +571,3 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
-

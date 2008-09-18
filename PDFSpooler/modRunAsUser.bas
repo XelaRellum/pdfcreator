@@ -173,7 +173,7 @@ On Error GoTo ErrPtnr_OnError
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders"
 50060   AppData = CompletePath(.GetRegistryValue("AppData"))
 50070   WriteToSpecialLogfile "GetUserLocalDirs ->  AppData:" & AppData
-50080   If IsWinVista Then
+50080   If IsWinVistaPlus Then
 50090    Dim LocalAppData As String
 50100    LocalAppData = CompletePath(.GetRegistryValue("Local AppData"))
 50110    LocalTemp = CompletePath(CompletePath(LocalAppData) & "Temp")

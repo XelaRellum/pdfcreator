@@ -81,7 +81,7 @@ Private Type LOGFONT
   lfFaceName(LF_FACESIZE) As Byte
 End Type
 
-Public Function GetSystemFont(Frm As Form, Font As Systemfont) As Collection
+Public Function GetSystemFont(frm As Form, Font As Systemfont) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -99,7 +99,7 @@ On Error GoTo ErrPtnr_OnError
 50120    FName = Left$(FName, InStr(1, FName, Chr$(0)) - 1)
 50130    FSize = ITLF.lfHeight
 50140    If FSize < 1 Then
-50150     FSize = Abs((72 / GetDeviceCaps(Frm.hdc, LOGPIXELSY)) * FSize)
+50150     FSize = Abs((72 / GetDeviceCaps(frm.hdc, LOGPIXELSY)) * FSize)
 50160    End If
 50170    sFont(0) = FName: sFont(1) = FSize: sFont(2) = ITLF.lfCharSet
 50180    GetSystemFont.Add sFont
@@ -121,7 +121,7 @@ On Error GoTo ErrPtnr_OnError
 50340   FName = Left$(FName, InStr(1, FName, Chr$(0)) - 1)
 50350   FSize = tNMLF.lfHeight
 50360   If FSize < 1 Then
-50370    FSize = Abs((72 / GetDeviceCaps(Frm.hdc, LOGPIXELSY)) * FSize)
+50370    FSize = Abs((72 / GetDeviceCaps(frm.hdc, LOGPIXELSY)) * FSize)
 50380   End If
 50390   sFont(0) = FName: sFont(1) = FSize: sFont(2) = tNMLF.lfCharSet
 50400   GetSystemFont.Add sFont

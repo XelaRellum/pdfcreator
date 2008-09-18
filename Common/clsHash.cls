@@ -32,7 +32,7 @@ Option Compare Text
 
 Private aKey() As String, aVal() As Variant, Upper As Long, Last As Long
 
-Public Sub Add(key As String, Value As Variant)
+Public Sub Add(key As String, value As Variant)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -51,11 +51,11 @@ On Error GoTo ErrPtnr_OnError
 50130
 50140  If found Then
 50150    aKey(i) = key
-50160    aVal(i) = Value
+50160    aVal(i) = value
 50170    Last = i
 50180   Else
 50190    aKey(Upper) = key
-50200    aVal(Upper) = Value
+50200    aVal(Upper) = value
 50210    Last = Upper
 50220    Upper = Upper + 1
 50230  End If

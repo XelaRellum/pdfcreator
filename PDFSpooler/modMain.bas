@@ -1,7 +1,6 @@
 Attribute VB_Name = "modMain"
 Option Explicit
 
-
 Public PDFCreatorPath As String
 
 'Const MAXIMUM_ALLOWED As Long = &H2000000

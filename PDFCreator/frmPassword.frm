@@ -283,7 +283,7 @@ On Error GoTo ErrPtnr_OnError
 50230   End If
 50240  End If
 50250
-50260  If chkSavePasswords.Value = 1 Then
+50260  If chkSavePasswords.value = 1 Then
 50270    SavePasswordsForThisSession = True
 50280   Else
 50290    SavePasswordsForThisSession = False

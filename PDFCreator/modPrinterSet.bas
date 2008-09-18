@@ -31,20 +31,20 @@ Private Sub DefaultPrinterSet9x(Printername As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim hPrn As Long, BytesNeeded As Long, Buffer() As Byte, BytesUsed As Long, _
+50010  Dim hPrn As Long, BytesNeeded As Long, buffer() As Byte, BytesUsed As Long, _
   Attributes As Long, pd As PRINTER_DEFAULTS
 50030
 50040  Call OpenPrinter(Printername, hPrn, pd)
 50050  If hPrn <> 0 Then
 50060   Call GetPrinter(hPrn, 2, ByVal 0&, 0, BytesNeeded)
 50070   If Err.LastDllError = ERROR_INSUFFICIENT_BUFFER Then
-50080    ReDim Buffer(0 To BytesNeeded - 1) As Byte
-50090    If GetPrinter(hPrn, 2, Buffer(0), BytesNeeded, BytesUsed) Then
+50080    ReDim buffer(0 To BytesNeeded - 1) As Byte
+50090    If GetPrinter(hPrn, 2, buffer(0), BytesNeeded, BytesUsed) Then
 50100     Const AttribOffset As Long = 13 * 4&
-50110     Call MoveMemory(Attributes, Buffer(AttribOffset), 4&)
+50110     Call MoveMemory(Attributes, buffer(AttribOffset), 4&)
 50120     Attributes = Attributes Or PRINTER_ATTRIBUTE_DEFAULT
-50130     Call MoveMemory(Buffer(AttribOffset), Attributes, 4&)
-50140     If SetPrinter(hPrn, 2, Buffer(0), 0) Then
+50130     Call MoveMemory(buffer(AttribOffset), Attributes, 4&)
+50140     If SetPrinter(hPrn, 2, buffer(0), 0) Then
 50150      Call SettingChangeAlert(500)
 50160     End If
 50170    End If
