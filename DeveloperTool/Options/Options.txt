@@ -6,7 +6,7 @@ AdditionalGhostscriptSearchpath|txtAdditionalGhostscriptSearchpath.Text|String||
 AddWindowsFontpath|chkAddWindowsFontpath.Value|Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|<MyFiles>||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
-AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|7
+AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|13
 AutosaveStartStandardProgram|chkAutosaveStartStandardProgram.Value|Boolean|0||
 
 ' <Printing Formats Bitmap Colors>
@@ -63,6 +63,7 @@ OptionsVisible||Boolean|1||
 Papersize||String|a4||
 
 ' <Printing Formats Bitmap Colors>
+PCLColorsCount|cmbPCLColors.Listindex|Long|0|0|1
 PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
 
 ' <Printing Formats PDF Security>
@@ -122,6 +123,7 @@ PDFFontsSubSetFontsPercent|txtPDFSubSetPerc.Text|Long|100|0|<
 PDFGeneralASCII85|chkPDFASCII85.Value|Boolean|0||
 PDFGeneralAutorotate|cmbPDFRotate.Listindex|Long|2|0|2
 PDFGeneralCompatibility|cmbPDFCompat.Listindex|Long|2|0|3
+PDFGeneralDefault|cmbPDFDefaultSettings.Listindex|Long|0|0|4
 PDFGeneralOverprint|cmbPDFOverprint.Listindex|Long|0|0|1
 PDFGeneralResolution|txtPDFRes.Text|Long|600|0|<
 
@@ -135,6 +137,20 @@ PDFOptimize|chkPDFOptimize.value|Boolean|0||
 ' <Printing Formats PDF Security>
 PDFOwnerPass|chkOwnerPass.Value|Boolean|0||
 PDFOwnerPasswordString||String|||
+
+' <Printing Formats PDF Signing>
+PDFSigningMultiSignature|chkMultiSignature.Value|Boolean|0||
+PDFSigningPFXFile|txtPFXFile.Text|String|||
+PDFSigningPFXFilePassword||String|||
+PDFSigningSignatureContact|txtSignatureContact.Text|String|||
+PDFSigningSignatureLeftX|txtLeftX.Text|Double|100|0|<
+PDFSigningSignatureLeftY|txtLeftY.Text|Double|100|0|<
+PDFSigningSignatureLocation|txtSignatureLocation.Text|String|||
+PDFSigningSignatureReason|txtSignatureReason.Text|String|||
+PDFSigningSignatureRightX|txtRightX.Text|Double|200|0|<
+PDFSigningSignatureRightY|txtRightY.Text|Double|200|0|<
+PDFSigningSignatureVisible|chkSignatureVisible.Value|Boolean|0||
+PDFSigningSignPDF|chkSignPDF.Value|Boolean|0||
 
 ' <Printing Formats PDF General>
 PDFUpdateMetadata||Long|1|0|2
@@ -161,8 +177,14 @@ ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
 ProgramFontSize|cmbProgramFontSize.text|Long|8|6|72
 
+' <Printing Formats Bitmap Colors>
+PSDColorsCount|cmbPSDColors.Listindex|Long|0|0|1
+
 ' <Printing Formats PS LanguageLevel>
 PSLanguageLevel|cmbPSLanguageLevel.Listindex|Long|2|0|3
+
+' <Printing Formats Bitmap Colors>
+RAWColorsCount|cmbRAWColors.Listindex|Long|0|0|2
 
 ' <Program>
 RemoveAllKnownFileExtensions||Boolean|1||
@@ -214,3 +236,6 @@ UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||
 UseCustomPaperSize|chkUseCustomPapersize.Value|String|0||
 UseFixPapersize|chkUseFixPaperSize.Value|Boolean|0||
 UseStandardAuthor|chkUseStandardAuthor.Value|Boolean|0||
+
+' <Printing Formats Bitmap Colors>
+XCFColorsCount|cmbXCFColors.Listindex|Long|0|0|1
