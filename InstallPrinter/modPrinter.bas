@@ -24,7 +24,7 @@ Public Type PRINTER_INFO_2a
  DefaultPriority As Long
  StartTime As Long
  UntilTime As Long
- Status As Long
+ status As Long
  cJobs As Long
  AveragePPM As Long
 End Type
@@ -36,7 +36,7 @@ Public Sub InstallWindowsPrinter(Monitorname As String, Portname As String, Driv
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim RedmonCommand As String
+50010  Dim RedmonCommand As String, reg As clsRegistry, value As String, orgValue As String
 50020  WriteToLog "Start: Installation printer """ & Printername & """", LogFile, True
 50030  RedmonCommand = CompletePath(AppDir) & "PDFSpooler.exe"
 50040  If IsWin9xMe Then
@@ -66,6 +66,33 @@ On Error GoTo ErrPtnr_OnError
 50280   InstallPrinter Printername, Drivername, Portname, LogFile
 50290  End If
 50300  GetPrinters
+50310  If IsWinVista Then
+50320   Set reg = New clsRegistry
+50330   With reg
+50340    .hkey = HKEY_LOCAL_MACHINE
+50350    .KeyRoot = "SYSTEM\CurrentControlSet\Services"
+50360    .Subkey = "Spooler"
+50370    orgValue = .GetRegistryValue("RequiredPrivileges")
+50380    value = orgValue
+50390    If InStr(1, Replace(value, vbNullChar, " "), "SeBackupPrivilege", vbTextCompare) = 0 Then
+50400     If Asc(Mid(value, Len(value), 1)) <> 0 Then
+50410      value = value & vbNullChar
+50420     End If
+50430     value = value & "SeBackupPrivilege" & vbNullChar
+50440    End If
+50450    If InStr(1, Replace(value, vbNullChar, " "), "SeRestorePrivilege", vbTextCompare) = 0 Then
+50460     If Asc(Mid(value, Len(value), 1)) <> 0 Then
+50470      value = value & vbNullChar
+50480     End If
+50490     value = value & "SeRestorePrivilege" & vbNullChar
+50500    End If
+50510    If orgValue <> value Then
+50520     Call .SetRegistryValue("RequiredPrivileges", value, REG_MULTI_SZ)
+50530     Debug.Print StopService("Spooler")
+50540     Debug.Print StartService("Spooler")
+50550    End If
+50560   End With
+50570  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -271,7 +298,7 @@ On Error GoTo ErrPtnr_OnError
 50420    .pHelpFile = "PSCRIPT.HLP"
 50430    .pDataFile = "PDFCREAT.PPD"
 50440   End If
-50450   If IsWinXPPlus = True Then 'WinXP and above
+50450   If IsWinXPPlus = True Or IsWinVista = True Then 'WinXP and above
 50460    .cVersion = 3
 50470    .pDependentFiles = "PSCRIPT.NTF" & vbNullString & vbNullString
 50480    .pConfigFile = "PS5UI.DLL"
@@ -326,7 +353,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function InstallPrinter(Printername As String, Drivername As String, Portname As String, LogFile As String) As Boolean
+Public Function InstallPrinter(Printername As String, Drivername As String, Portname As String, LogFile As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -357,16 +384,23 @@ On Error GoTo ErrPtnr_OnError
 50250     .Attributes = &H0
 50260   End If
 50270  End With
-50280  If AddPrinter(vbNullString, 2, pi) = 0 Then
-50290    WriteToLog "InstallPrinter [" & Printername & "]: " & RaiseAPIError, LogFile
-50300    InstallPrinter = False
-50310   Else
-50320    WriteToLog "InstallPrinter: success", LogFile
-50330    InstallPrinter = True
-50340  End If
-50350  If IsWin9xMe = True Then
-50360   Call SendMessage(65535, 26, 0, PrintSystem)
-50370  End If
+50280  LogFile = Trim$(LogFile)
+50290  If AddPrinter(vbNullString, 2, pi) = 0 Then
+50300    If LenB(LogFile) > 0 Then
+50310     WriteToLog "InstallPrinter [" & Printername & "]: " & RaiseAPIError, LogFile
+50320    End If
+50330    IfLoggingWriteLogfile "InstallPrinter [" & Printername & "]: " & RaiseAPIError
+50340    InstallPrinter = False
+50350   Else
+50360    If LenB(LogFile) > 0 Then
+50370     WriteToLog "InstallPrinter: success", LogFile
+50380    End If
+50390    IfLoggingWriteLogfile "InstallPrinter: success"
+50400    InstallPrinter = True
+50410  End If
+50420  If IsWin9xMe = True Then
+50430   Call SendMessage(65535, 26, 0, PrintSystem)
+50440  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -379,7 +413,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function UnInstallPrinter(Printername As String, LogFile As String) As Boolean
+Public Function UnInstallPrinter(Printername As String, LogFile As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -389,23 +423,36 @@ On Error GoTo ErrPtnr_OnError
 50040   .pDevMode = 0
 50050   .DesiredAccess = PRINTER_ALL_ACCESS
 50060  End With
-50070  If OpenPrinter(Printername, pHandle, pd) <> 0 Then
-50080    If DeletePrinter(pHandle) <> 0 Then
-50090      If ClosePrinter(pHandle) <> 0 Then
-50100        WriteToLog "UnInstallPrinter: success", LogFile
-50110        UnInstallPrinter = True
-50120       Else
-50130        WriteToLog "UnInstallPrinter: " & RaiseAPIError, LogFile
-50140        UnInstallPrinter = False
-50150      End If
-50160     Else
-50170      WriteToLog "UnInstallPrinter: " & RaiseAPIError, LogFile
-50180      UnInstallPrinter = False
-50190    End If
-50200   Else
-50210    WriteToLog "UnInstallPrinter: " & RaiseAPIError, LogFile
-50220    UnInstallPrinter = False
-50230  End If
+50070  LogFile = Trim$(LogFile)
+50080  If OpenPrinter(Printername, pHandle, pd) <> 0 Then
+50090    If DeletePrinter(pHandle) <> 0 Then
+50100      If ClosePrinter(pHandle) <> 0 Then
+50110        If LenB(LogFile) > 0 Then
+50120         WriteToLog "UnInstallPrinter: success", LogFile
+50130        End If
+50140        IfLoggingWriteLogfile "UnInstallPrinter: success"
+50150        UnInstallPrinter = True
+50160       Else
+50170        If LenB(LogFile) > 0 Then
+50180         WriteToLog "UnInstallPrinter: " & RaiseAPIError, LogFile
+50190        End If
+50200        IfLoggingWriteLogfile "UnInstallPrinter: " & RaiseAPIError
+50210        UnInstallPrinter = False
+50220      End If
+50230     Else
+50240      If LenB(LogFile) > 0 Then
+50250       WriteToLog "UnInstallPrinter: " & RaiseAPIError, LogFile
+50260      End If
+50270      IfLoggingWriteLogfile "UnInstallPrinter: " & RaiseAPIError
+50280      UnInstallPrinter = False
+50290    End If
+50300   Else
+50310    If LenB(LogFile) > 0 Then
+50320     WriteToLog "UnInstallPrinter: " & RaiseAPIError, LogFile
+50330    End If
+50340    IfLoggingWriteLogfile "UnInstallPrinter: " & RaiseAPIError
+50350    UnInstallPrinter = False
+50360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -707,15 +754,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function PrinterIsInstalled(Printername As String) As Boolean
+Public Function PrinterIsInstalled(Printername As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim printers As Collection, i As Long, pf() As String
-50020  Set printers = GetPrinters
+50010  Dim Printers As Collection, i As Long, pf() As String
+50020  Set Printers = GetPrinters
 50030  PrinterIsInstalled = False
-50040  For i = 1 To printers.Count
-50050   pf = Split(printers(i), Chr$(0))
+50040  For i = 1 To Printers.Count
+50050   pf = Split(Printers(i), Chr$(0))
 50060   If UCase$(Printername) = UCase$(pf(0)) Then
 50070    PrinterIsInstalled = True
 50080    Exit For
@@ -796,18 +843,48 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Function GetPDFCreatorPrintername() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Printers As Collection, reg As clsRegistry, SubKeys As Collection, _
+  i As Long, j As Long
+50030  GetPDFCreatorPrintername = ""
+50040  Set Printers = GetAvailablePrinters2
+50050  Set reg = New clsRegistry
+50060  Set SubKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
+50070  For i = 1 To Printers.Count
+50080   For j = 1 To SubKeys.Count
+50090    If SubKeys(j) = Printers(i)(1) Then
+50100     GetPDFCreatorPrintername = Printers(i)(0)
+50110     Exit Function
+50120    End If
+50130   Next j
+50140  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPrinter", "GetPDFCreatorPrintername")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Private Function GetPDFCreatorPrinters() As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim printers As Collection, ports As Collection, reg As clsRegistry, _
+50010  Dim Printers As Collection, ports As Collection, reg As clsRegistry, _
   i As Long, j As Long, pf() As String
 50030  Set GetPDFCreatorPrinters = New Collection
-50040  Set printers = GetPrinters
+50040  Set Printers = GetPrinters
 50050  Set reg = New clsRegistry
 50060  Set ports = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
-50070  For i = 1 To printers.Count
-50080   pf = Split(printers(i), Chr$(0))
+50070  For i = 1 To Printers.Count
+50080   pf = Split(Printers(i), Chr$(0))
 50090   For j = 1 To ports.Count
 50100    If UCase$(ports(j)) = UCase$(pf(1)) Then
 50110     GetPDFCreatorPrinters.Add pf(0)
