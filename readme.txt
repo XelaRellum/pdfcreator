@@ -1,6 +1,6 @@
-Title: PDFCreator Version 0.9.5
+Title: PDFCreator Version 0.9.6
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: December 24,  2007
+Releasedate: September 19,  2008
 
 Look at the readme.txt-Files in 'Setup', 'Printer', 'Printer\Redmon'.
 
