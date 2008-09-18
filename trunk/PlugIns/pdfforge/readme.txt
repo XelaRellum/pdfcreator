@@ -1,10 +1,11 @@
 Name:     pdfforge.dll
+Version:  1.1.0.0
 Author:   Frank Heindörfer
-Email:    software@heindoerfer.com
+Email:    frank@pdfforge.org
 Homepage: http://www.pdfforge.org
 License:  FairPlay License Version 1.0 (FairPlay License.txt)
-Remark:   Using itextsharp 4.0.7.0.
-Date:     24-Dec-2007
+Remark:   Using itextsharp 4.1.2.0 (compiled from source)
+Date:     01-Sep-2008
 
 
 Classes, methods of the pdfforge.dll.
