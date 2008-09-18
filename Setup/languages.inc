@@ -10,7 +10,7 @@ Name: french;             MessagesFile: compiler:Languages\French.isl
 ;Name: galician;           MessagesFile: Innosetup languages files\Galician-2-5.1.11.isl
 Name: german;             MessagesFile: compiler:Languages\German.isl; LicenseFile: .\License\Program license - german.rtf
 Name: hungarian;          MessagesFile: compiler:Languages\Hungarian.isl
-Name: indonesian;         MessagesFile: Innosetup languages files\Indonesian-5.1.0.isl
+Name: indonesian;         MessagesFile: Innosetup languages files\Indonesian-5.1.11.isl
 Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 ;Name: japanese;           MessagesFile: Innosetup languages files\Japanese-5-5.1.11.isl
 ;Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.11.isl
