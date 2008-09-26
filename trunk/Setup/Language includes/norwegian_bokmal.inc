@@ -78,5 +78,5 @@ norwegian_bokmal.VistaInstallation=Installasjon i Vista
 norwegian_bokmal.VistaInstallationDescription=Ekstra info om installasjon av PDFCreator i Windows Vista.
 norwegian_bokmal.VistaInstallationMessage=Ekstra info om installasjon av PDFCreator i Windows Vista (alle versjoner).
 norwegian_bokmal.VistaInstallationNote1=Denne versjonen av PDFCreator er ikke helt kompatibel med Windows Vista.%n%nFor å kunne bruke PDFCreator, må du åpne/starte programmet FØRST.%nI et flerbrukermiljø vil PDFCreator BARE virke en gang pr innlogging for hver bruker.%n%nDu kan finne mer informasjon om bruk av PDFCreator i et nettverk i hjelpefilen;%n (Using the PDFCreator\Installation Types)
-norwegian_bokmal.WinexplorerEntry=Lag et &valg i tekstmenyen til Windows Utforsker
+norwegian_bokmal.WinexplorerEntry=Lag et &valg i høyreklikkmenyen i Windows Utforsker
 norwegian_bokmal.WinexplorerEntryCreate=Lag PDF- og Bitmap-filer med %1
