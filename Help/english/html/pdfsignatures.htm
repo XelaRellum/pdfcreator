@@ -19,7 +19,13 @@
   <tr> 
     <td class="main"><p class="header">Signing PDFs</p>
       <p>Signing PDF files enables the receipient to verfiy, that the document is from the proper person and has not been modified after signing. This is done with a private/public key mechanism. The private key is used to encrypt a fingerprint of the document (the hash). This can be decrypted with the public key and then be compared with a hash created from the present document. These only match, when private and public key match and the document has not been modified. </p>
-      <p><strong>Pfx/P12 file:</strong> The file with the signature. It stores the private key which is used to encrypt the hash value. </p>
+      <p>To digitally sign a PDF, there are several requirements, that need to be met:</p>
+	  <ol>
+	  <li>A digital Certificate in a PFX\P12 file that is enable to create digital signatures.</li>
+	  <li>.Net 1.1 must be installed. That means, that digital signatures in PDFCreator have no support for <i>Windows 95</i> and <i>Windows NT 4 Workstation</i>, as .Net 1.1 is not available for these operating systems.</li>
+	  <li>The file pdfforge.dll has to be located in the application directory of PDFCreator under <i>PlugIns\pdfforge</i>. If .Net 1.1 is installed, this DLL will be automatically installed with PDFCreator.</li>
+ 	  </ol>
+	  <p><strong>Pfx/P12 file:</strong> The file with the signature. It stores the private key which is used to encrypt the hash value. </p>
       <p><strong>Signature reason:</strong> The reason for the cerfitifacte. This is a piece of text, describing, why the document is signed. </p>
       <p><strong>Signature contact:</strong> The name of the contact person, that signed the file.</p>
       <p><strong>Signature location:</strong> Place (Country, City etc.), where the file has been signed. </p>
