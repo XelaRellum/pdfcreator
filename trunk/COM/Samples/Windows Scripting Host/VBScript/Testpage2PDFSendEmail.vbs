@@ -3,8 +3,8 @@
 ' License: GPL
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: September, 1. 2005
+' Version: 1.1.0.0
+' Date: October, 9. 2008
 ' Author: Frank Heindörfer
 ' Comments: Save the test page as pdf-file and send as email using
 '           the com interface of PDFCreator.
@@ -42,6 +42,7 @@ With PDFCreatorOptions
  .AutosaveDirectory = fso.GetParentFolderName(Wscript.ScriptFullname)
  .AutosaveFilename = "Testpage - PDFCreator"
  .AutosaveFormat = 0                                       ' 0 = PDF
+ .StandardSubject = "Here is the pdf file"
 End With
 Set PDFCreator.cOptions = PDFCreatorOptions
 
