@@ -19,7 +19,6 @@ Public Event eError()
 ' --- Class subroutines - begin ---
 Private Sub Class_Initialize()
 End Sub
-
 ' --- Class subroutines - end ---
 
 ' --- Public properties - begin ---
@@ -31,6 +30,9 @@ End Property
 
 Public Sub cErrorClear()
 End Sub
+
+Public Property Get cGhostscriptVersion() As String
+End Property
 
 Public Property Get cOutputFilename() As String
 End Property
@@ -56,7 +58,7 @@ End Property
 Public Property Get cVisible() As Boolean
 End Property
 
-Public Property Let cVisible(ByVal Value As Boolean)
+Public Property Let cVisible(ByVal value As Boolean)
 End Property
 
 Public Property Get cInstalledAsServer() As Boolean
@@ -65,7 +67,7 @@ End Property
 Public Property Get cPrinterStop() As Boolean
 End Property
 
-Public Property Let cPrinterStop(ByVal Value As Boolean)
+Public Property Let cPrinterStop(ByVal value As Boolean)
 End Property
 
 Public Property Get cOptionsNames() As Collection
@@ -74,7 +76,7 @@ End Property
 Public Property Get cOption(ByVal PropertyName As String) As Variant
 End Property
 
-Public Property Let cOption(ByVal PropertyName As String, ByVal Value As Variant)
+Public Property Let cOption(ByVal PropertyName As String, ByVal value As Variant)
 End Property
 
 Public Property Get cOptions() As clsPDFCreatorOptions
@@ -87,6 +89,9 @@ Public Property Get cStandardOption(ByVal PropertyName As String) As Variant
 End Property
 
 Public Property Get cStandardOptions() As clsPDFCreatorOptions
+End Property
+
+Public Property Get cPostscriptInfo(ByVal PostscriptFilename As String, ByVal PropertyName As String) As String
 End Property
 
 Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile
@@ -107,20 +112,33 @@ End Property
 Public Property Let cDefaultPrinter(ByVal Printername As String)
 End Property
 
+Public Property Get cStopURLPrinting() As Boolean
+End Property
+
+Public Property Let cStopURLPrinting(ByVal value As Boolean)
+End Property
+
+
 Public Property Get cWindowState() As Long
 End Property
 
-Public Property Let cWindowState(ByVal ProgramWindowState As Long)
+Public Property Let cWindowState(ByVal value As Long) ' Value must be '0 = normal' or '1 = minimized' or '2 = maximized'
 End Property
 
 Public Property Get cIsConverted() As Boolean
 End Property
 
-Public Property Let cIsConverted(ByVal Value As Boolean)
+Public Property Let cIsConverted(ByVal value As Boolean)
+End Property
+
+Public Property Get cInstanceCounter() As Long
 End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---
+Public Sub cAddPrintjob(ByVal Filename As String) ' Supported file types: Postscript, JPEG, BMP
+End Sub
+
 Public Sub cDeletePrintjob(ByVal JobNumber As Long)
 End Sub
 
@@ -139,9 +157,9 @@ End Sub
 Public Function cClose() As Boolean
 End Function
 
-Public Function cCloseRunningSession() As Boolean
+Public Function cCloseRunningSession() As Boolean ' This function is deprecated. Use "cClose()"!
 End Function
-
+ 
 Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean
 End Function
 
@@ -151,16 +169,19 @@ End Sub
 Public Sub cClearLogfile()
 End Sub
 
-Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String)
+Public Sub cConvertPostscriptfile(ByVal InputFilename As String, ByVal OutputFilename As String) ' This function is deprecated! Use "cConvertFile()" instead.
+End Sub
+
+Public Sub cConvertFile(ByVal InputFilename As String, ByVal OutputFilename As String, Optional ByVal SubFormat As String = "") ' Allowed values for 'SubFormat': "PDF/A-1b" for "PDF/A-1b"files; "PDF/X" for "PDF/X"-files
 End Sub
 
 Public Sub cTestEvent(ByVal EventName As String)
 End Sub
 
-Public Sub cShowLogfileDialog(ByVal Value As Boolean)
+Public Sub cShowLogfileDialog(ByVal value As Boolean)
 End Sub
 
-Public Sub cShowOptionsDialog(ByVal Value As Boolean)
+Public Sub cShowOptionsDialog(ByVal value As Boolean)
 End Sub
 
 Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)
@@ -184,6 +205,9 @@ End Sub
 Public Sub cPrintFile(ByVal Filename As String)
 End Sub
 
+Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)
+End Sub
+
 Public Sub cPrintPDFCreatorTestpage()
 End Sub
 
@@ -201,5 +225,36 @@ End Function
 
 Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
 End Sub
+
+Public Function GetPDFCreatorPrinters() As Collection
+End Function
 ' --- Public functions/Subroutines - end ---
 
+Public Function cGhostscriptRun(Arguments() As Variant) As Boolean
+End Function
+
+' --- Private functions/Subroutines - end ---
+Private Sub eActionTimer_Timer()
+End Sub
+
+Private Function CheckForRunningProgramErrors() As Boolean
+End Function
+
+Private Function cGetPrintjobInfoFromPrintjobInfos(PropertyName As String, sInfo As InfoSpoolFile, FunctionName As String) As Variant
+End Function
+
+Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions) As Variant
+End Function
+
+Private Function cGetInfoSpoolfile(sInfos As InfoSpoolFile) As clsPDFCreatorInfoSpoolFile
+End Function
+
+Private Function cGetOptions(sOptions As tOptions) As clsPDFCreatorOptions
+End Function
+
+Private Sub cLetOption(PropertyName As String, value As Variant)
+End Sub
+
+Private Function cLetOptions(sOptions As Variant) As tOptions
+End Function
+' --- Private functions/Subroutines - end ---

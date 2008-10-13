@@ -217,7 +217,7 @@ On Error GoTo ErrPtnr_OnError
 50010  With Options
 50020   cmbJPEGColors.ListIndex = .JPEGColorscount
 50030   txtJPEGQuality.Text = .JPEGQuality
-50040   txtBitmapResolution.Text = .BitmapResolution
+50040   txtBitmapResolution.Text = .JPEGResolution
 50050  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -240,7 +240,7 @@ On Error GoTo ErrPtnr_OnError
 50030    .JPEGColorscount = cmbJPEGColors.ListIndex
 50040   End If
 50050   If LenB(txtBitmapResolution.Text) > 0 Then
-50060    .BitmapResolution = txtBitmapResolution.Text
+50060    .JPEGResolution = txtBitmapResolution.Text
 50070   End If
 50080   If LenB(txtJPEGQuality.Text) > 0 Then
 50090    .JPEGQuality = txtJPEGQuality.Text

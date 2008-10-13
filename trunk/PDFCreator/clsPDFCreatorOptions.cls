@@ -3,9 +3,9 @@ BEGIN
   MultiUse = -1  'True
   Persistable = 0  'NotPersistable
   DataBindingBehavior = 0  'vbNone
-  DataSourceBehavior = 0   'vbNone
-  MTSTransactionMode = 0   'NotAnMTSObject
-End
+  DataSourceBehavior  = 0  'vbNone
+  MTSTransactionMode  = 0  'NotAnMTSObject
+END
 Attribute VB_Name = "clsPDFCreatorOptions"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
@@ -22,8 +22,8 @@ Public AutosaveDirectory As String
 Public AutosaveFilename As String
 Public AutosaveFormat As Long
 Public AutosaveStartStandardProgram As Long
-Public BitmapResolution As Long
 Public BMPColorscount As Long
+Public BMPResolution As Long
 Public ClientComputerResolveIPAddress As Long
 Public Counter As Currency
 Public DeviceHeightPoints As Double
@@ -39,6 +39,7 @@ Public FilenameSubstitutions As String
 Public FilenameSubstitutionsOnlyInTitle As Long
 Public JPEGColorscount As Long
 Public JPEGQuality As Long
+Public JPEGResolution As Long
 Public Language As String
 Public LastSaveDirectory As String
 Public Logging As Long
@@ -52,7 +53,9 @@ Public OptionsEnabled As Long
 Public OptionsVisible As Long
 Public Papersize As String
 Public PCLColorsCount As Long
+Public PCLResolution As Long
 Public PCXColorscount As Long
+Public PCXResolution As Long
 Public PDFAllowAssembly As Long
 Public PDFAllowDegradedPrinting As Long
 Public PDFAllowFillIn As Long
@@ -124,6 +127,7 @@ Public PDFUserPass As Long
 Public PDFUserPasswordString As String
 Public PDFUseSecurity As Long
 Public PNGColorscount As Long
+Public PNGResolution As Long
 Public PrintAfterSaving As Long
 Public PrintAfterSavingDuplex As Long
 Public PrintAfterSavingNoCancel As Long
@@ -137,8 +141,10 @@ Public ProgramFont As String
 Public ProgramFontCharset As Long
 Public ProgramFontSize As Long
 Public PSDColorsCount As Long
+Public PSDResolution As Long
 Public PSLanguageLevel As Long
 Public RAWColorsCount As Long
+Public RAWResolution As Long
 Public RemoveAllKnownFileExtensions As Long
 Public RemoveSpaces As Long
 Public RunProgramAfterSaving As Long
@@ -171,6 +177,7 @@ Public StandardSubject As String
 Public StandardTitle As String
 Public StartStandardProgram As Long
 Public TIFFColorscount As Long
+Public TIFFResolution As Long
 Public Toolbars As Long
 Public UseAutosave As Long
 Public UseAutosaveDirectory As Long
@@ -178,4 +185,4 @@ Public UseCreationDateNow As Long
 Public UseCustomPaperSize As String
 Public UseFixPapersize As Long
 Public UseStandardAuthor As Long
-Public XCFColorsCount As Long
+
