@@ -4,8 +4,8 @@ Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
-   ClientLeft      =   225
-   ClientTop       =   825
+   ClientLeft      =   165
+   ClientTop       =   855
    ClientWidth     =   12930
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -625,34 +625,34 @@ Private Sub cmdIncFile_Click(Index As Integer)
   Case 0 ' Load
    With cdlg
     .CancelError = True
-    .fileName = ""
+    .filename = ""
     .Filter = "Languages files (*.ini)|*.ini"
     .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
     .InitDir = App.Path & "\..\PDFCreator\Languages"
     .ShowOpen
-    txtIncFile.Text = GetKeysAndValuesFromInifile("Setup", .fileName)
+    txtIncFile.Text = GetKeysAndValuesFromInifile("Setup", .filename)
     If Len(txtIncFile.Text) > 0 Then
      cmdIncFile(1).Enabled = True
     End If
    End With
   Case 1 ' Save
    With cdlg
-    .fileName = LastIncFile & ".inc"
+    .filename = LastIncFile & ".inc"
     .Filter = "Setup inc files (*.inc)|*.inc"
     .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
     .InitDir = App.Path & "\..\Setup\Language includes"
     .ShowSave
-    SaveFile .fileName, txtIncFile.Text
+    SaveFile .filename, txtIncFile.Text
    End With
   Case 2 ' Convert direct
    With cdlg
     .CancelError = True
-    .fileName = ""
+    .filename = ""
     .Filter = "Languages files (*.ini)|*.ini"
     .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
     .InitDir = App.Path & "\..\PDFCreator\Languages"
     .ShowOpen
-    txtIncFile.Text = GetKeysAndValuesFromInifile("Setup", .fileName)
+    txtIncFile.Text = GetKeysAndValuesFromInifile("Setup", .filename)
     If Len(txtIncFile.Text) > 0 Then
      cmdIncFile(1).Enabled = True
     End If
@@ -789,24 +789,24 @@ Private Sub cmdOptions_Click(Index As Integer)
    End If
   Case 3: 'Save
    With cdlg
-    .fileName = "Options.txt"
+    .filename = "Options.txt"
     .Filter = "(*.txt)|*.txt"
     .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
     .InitDir = App.Path & "\Options"
     .ShowSave
-    SaveOptions .fileName
+    SaveOptions .filename
     ChangeOptions = False
    End With
   Case 4: 'Load
    lsvOptions.Enabled = False
    With cdlg
     .CancelError = True
-    .fileName = "Options.txt"
+    .filename = "Options.txt"
     .Filter = "(*.txt)|*.txt"
     .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
     .InitDir = App.Path & "\Options"
     .ShowOpen
-    LoadOptions .fileName
+    LoadOptions .filename
    End With
    lsvOptions.Enabled = True
   Case 5: 'Create
@@ -851,22 +851,22 @@ Private Sub cmdStamppage_Click(Index As Integer)
   Case 0 ' Load
    With cdlg
     .CancelError = True
-    .fileName = "Stamppage.ps"
+    .filename = "Stamppage.ps"
     .Filter = "Postscript Files (*.ps)|*.ps|(*.txt)|*.txt"
     .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
     .InitDir = App.Path & "\Stamppage"
     .ShowOpen
-    LoadFileInTextbox .fileName, txtStamppage
+    LoadFileInTextbox .filename, txtStamppage
     cmdStamppage(1).Enabled = True
    End With
   Case 1 ' Save
    With cdlg
-    .fileName = "Stamppage.ps"
+    .filename = "Stamppage.ps"
     .Filter = "Postscript Files (*.ps)|*.ps|(*.txt)|*.txt"
     .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
     .InitDir = App.Path & "\Stamppage"
     .ShowSave
-    SaveFile .fileName, txtStamppage.Text
+    SaveFile .filename, txtStamppage.Text
    End With
   Case 2 ' Show
    fn = FreeFile
@@ -899,12 +899,12 @@ Private Sub cmdTestpage_Click(Index As Integer)
   Case 0 ' Load
    With cdlg
     .CancelError = True
-    .fileName = "PDFCreator.ps"
+    .filename = "PDFCreator.ps"
     .Filter = "Postscript Files (*.ps)|*.ps|(*.txt)|*.txt"
     .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
     .InitDir = App.Path & "\Testpage"
     .ShowOpen
-    LoadFileInTextbox .fileName, txtTestpage
+    LoadFileInTextbox .filename, txtTestpage
     cmdTestpage(1).Enabled = True
     If Len(txtTestpage.Text) > 0 Then
      cmdTestpage(4).Enabled = True
@@ -913,12 +913,12 @@ Private Sub cmdTestpage_Click(Index As Integer)
    End With
   Case 1 ' Save
    With cdlg
-    .fileName = "PDFCreator.ps"
+    .filename = "PDFCreator.ps"
     .Filter = "Postscript Files (*.ps)|*.ps|(*.txt)|*.txt"
     .Flags = cdlOFNPathMustExist & cdlOFNOverwritePrompt Or cdlOFNLongNames
     .InitDir = App.Path & "\Testpage"
     .ShowSave
-    SaveFile .fileName, txtTestpage.Text
+    SaveFile .filename, txtTestpage.Text
    End With
   Case 2 ' Show
    fn = FreeFile
@@ -937,12 +937,12 @@ Private Sub cmdTestpage_Click(Index As Integer)
   Case 4 ' Create modTestpage.bas
    With cdlg
     .CancelError = True
-    .fileName = "modTestpage.bas"
+    .filename = "modTestpage.bas"
     .Filter = "Postscript Files (*.bas)|*.bas"
     .Flags = cdlOFNFileMustExist Or cdlOFNHideReadOnly Or cdlOFNLongNames Or cdlOFNPathMustExist
     .InitDir = App.Path & "\Testpage"
     .ShowSave
-    CreateModTestpage .fileName, txtTestpage.Text
+    CreateModTestpage .filename, txtTestpage.Text
    End With
 '  Case 5 ' Save compressed
 '   With cdlg
@@ -1007,13 +1007,13 @@ End Function
 
 Private Sub CreateModLanguages()
  Dim fn As Long, ini As New clsINI, Secs As Collection, keys As Collection, _
-  i As Long, j As Long, tStr As String, fileName As String
+  i As Long, j As Long, tStr As String, filename As String
 
  fn = FreeFile
 
- fileName = App.Path & "\..\Common\modLanguages.bas"
+ filename = App.Path & "\..\Common\modLanguages.bas"
 
- Open fileName For Output As #fn
+ Open filename For Output As #fn
  Print #fn, "Attribute VB_Name = ""modLanguage"""
  Print #fn, headerComment1
  Print #fn, headerComment2
@@ -1022,7 +1022,7 @@ Private Sub CreateModLanguages()
  Print #fn, ""
  Print #fn, "Public Type tLanguageStrings"
 
- ini.fileName = App.Path & "\..\PDFCreator\Languages\english.ini"
+ ini.filename = App.Path & "\..\PDFCreator\Languages\english.ini"
  Set Secs = ini.GetAllSectionsFromInifile(, True)
  For i = 1 To Secs.Count
   ini.Section = Secs.Item(i)
@@ -1091,13 +1091,13 @@ Private Sub CreateModLanguages()
  Print #fn, ""
  Close #fn
  With frmText
-  .fileName = fileName
+  .filename = filename
   .Show vbModal, Me
  End With
 End Sub
 
 Private Sub CreateModOptions()
- Dim fn As Long, fileName As String, i As Long, ma As Boolean, Filename2 As String
+ Dim fn As Long, filename As String, i As Long, ma As Boolean, Filename2 As String
 
  With lsvOptions
   .SortOrder = lvwAscending
@@ -1106,8 +1106,8 @@ Private Sub CreateModOptions()
  End With
 
  fn = FreeFile
- fileName = App.Path & "\..\Common\modOptions.bas"
- Open fileName For Output As #fn
+ filename = App.Path & "\..\Common\modOptions.bas"
+ Open filename For Output As #fn
  Print #fn, "Attribute VB_Name = ""modOptions"""
  Print #fn, headerComment1
  Print #fn, headerComment2
@@ -2249,7 +2249,7 @@ Private Sub CreateModOptions()
  Close #fn
  
  With frmText
-  .fileName = fileName
+  .filename = filename
   .Show vbModal, Me
  End With
 End Sub
@@ -2397,13 +2397,13 @@ Private Function GerCount() As Long
  GerCount = c
 End Function
 
-Private Sub LoadOptions(fileName As String)
+Private Sub LoadOptions(filename As String)
  Dim fn As Long, tStr As String, tStrf() As String, i As Long, _
   Item As ListItem, j As Long, c As Long, aw As Long, Comment As String, flag As Long
  c = 0: flag = 0
  fn = FreeFile
  lsvOptions.ListItems.Clear
- Open fileName For Input As #fn
+ Open filename For Input As #fn
  Do While Not EOF(fn)
   aw = vbOK
   c = c + 1
@@ -2483,10 +2483,10 @@ Private Sub LoadOptions(fileName As String)
  End With
 End Sub
 
-Private Sub LoadFileInTextbox(fileName As String, txt As TextBox)
+Private Sub LoadFileInTextbox(filename As String, txt As TextBox)
  Dim fn As Long
  fn = FreeFile
- Open fileName For Input As #fn
+ Open filename For Input As #fn
  Call SendMessage(txt.hwnd, WM_SETTEXT, 0&, ByVal CStr(Input(LOF(fn), #fn)))
  Close #fn
 End Sub
@@ -2508,7 +2508,7 @@ Private Sub lsvOptions_DblClick()
  ShowOption
 End Sub
 
-Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, x As Single, y As Single)
  With lsvOptions
   If .FullRowSelect Then
    .Refresh
@@ -2524,7 +2524,7 @@ Private Sub ReadTemplate()
  Dim ini As clsINI, Secs As Collection, keys As Collection, _
   i As Long, j As Long, k As Long, c As Long, Item As ListItem
  Set ini = New clsINI
- ini.fileName = App.Path & "\..\PDFCreator\Languages\english.ini"
+ ini.filename = App.Path & "\..\PDFCreator\Languages\english.ini"
  If ini.CheckIniFile = False Then
   MsgBox "File 'english.ini' not found!"
   Exit Sub
@@ -2562,7 +2562,7 @@ Private Sub ReadTemplate()
    Item.SubItems(2) = keys.Item(j)(1)
   Next j
  Next i
- ini.fileName = App.Path & "\..\PDFCreator\Languages\german.ini"
+ ini.filename = App.Path & "\..\PDFCreator\Languages\german.ini"
  For i = 1 To lsvLanguages.ListItems.Count
   ini.Section = lsvLanguages.ListItems(i).Text
   ini.key = lsvLanguages.ListItems(i).SubItems(1)
@@ -2736,10 +2736,10 @@ Private Sub tbstr_Click()
  tbstr.Enabled = True
 End Sub
 
-Private Sub SaveOptions(fileName As String)
+Private Sub SaveOptions(filename As String)
  Dim i As Long, j As Long, fn As Long, tStr As String, tStrC As String
  fn = FreeFile
- Open fileName For Output As #fn
+ Open filename For Output As #fn
  tStrC = lsvOptions.ListItems(1).Text
  Print #fn, "'Optionname|OptionControlvalue|Type|Standard|LeftLimit|RightLimit"
  Print #fn, ""
@@ -2758,19 +2758,19 @@ Private Sub SaveOptions(fileName As String)
  Close fn
 End Sub
 
-Private Sub SaveFile(fileName As String, txtStr As String)
+Private Sub SaveFile(filename As String, txtStr As String)
  Dim fn As Long
  fn = FreeFile
- Open fileName For Output As #fn
+ Open filename For Output As #fn
  Print #fn, txtStr
  Close #fn
 End Sub
 
-Private Sub SaveCompressedFile(fileName As String, b() As Byte)
+Private Sub SaveCompressedFile(filename As String, B() As Byte)
  Dim fn As Long
  fn = FreeFile
- Open fileName For Binary As #fn
- Put #fn, , b
+ Open filename For Binary As #fn
+ Put #fn, , B
  Close #fn
 End Sub
 
@@ -2781,7 +2781,7 @@ Private Sub SaveTemplate()
  If DirExists(App.Path & "\..\PDFCreator\Languages\") = False Then
   MkDir App.Path & "\..\PDFCreator\Languages\"
  End If
- ini.fileName = App.Path & "\..\PDFCreator\Languages\english.ini"
+ ini.filename = App.Path & "\..\PDFCreator\Languages\english.ini"
  ini.CreateIniFile
  With lsvLanguages
   For i = 1 To .ListItems.Count
@@ -2790,7 +2790,7 @@ Private Sub SaveTemplate()
   Next i
  End With
 
- ini.fileName = App.Path & "\..\PDFCreator\Languages\german.ini"
+ ini.filename = App.Path & "\..\PDFCreator\Languages\german.ini"
  ini.CreateIniFile
  With lsvLanguages
   For i = 1 To .ListItems.Count
@@ -3011,6 +3011,14 @@ Private Sub CreateSpecialStrings()
   .Add "PDFCompressionGreyCompressionJPEGLowFactor"
   .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
   .Add "PDFUpdateMetadata"
+  .Add "PNGResolution"
+  .Add "JPEGBitmapResolution"
+  .Add "BMPBitmapResolution"
+  .Add "PCXResolution"
+  .Add "TIFFResolution"
+  .Add "PSDResolution"
+  .Add "PCLResolution"
+  .Add "RAWResolution"
  End With
 End Sub
 
@@ -3025,11 +3033,11 @@ Private Function IsSpecialString(specialString As String) As Boolean
  Next i
 End Function
 
-Private Function GetKeysAndValuesFromInifile(Section As String, fileName As String) As String
+Private Function GetKeysAndValuesFromInifile(Section As String, filename As String) As String
  Dim ini As New clsINI, keys As Collection, _
   i As Long, tStr As String, File As String
- ini.fileName = fileName
- SplitPath fileName, , , , File
+ ini.filename = filename
+ SplitPath filename, , , , File
  Set keys = ini.GetAllKeysFromSection(Section)
  For i = 1 To keys.Count
   If Len(tStr) = 0 Then
@@ -3072,12 +3080,12 @@ Private Function GetSortedText(txt As String) As String
  End If
 End Function
 
-Private Sub CreateModTestpage(fileName As String, Str1 As String)
+Private Sub CreateModTestpage(filename As String, Str1 As String)
  Dim fn As Long, tStrf() As String, i As Long
  tStrf = Split(Str1, vbCrLf)
  fn = FreeFile
  
- Open fileName For Output As #fn
+ Open filename For Output As #fn
  
  Print #fn, "Attribute VB_Name = ""modTestpage"""
  Print #fn, headerComment1

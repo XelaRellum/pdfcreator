@@ -73,7 +73,6 @@ Public GS_TRANSFERFUNCTIONS
 Public GS_HALFTONE
 
 'Bitmap
-Public GS_BitmapRESOLUTION
 Public GS_PNGColorscount
 Public GS_JPEGColorscount
 Public GS_BMPColorscount
@@ -83,7 +82,6 @@ Public GS_JPEGQuality
 Public GS_PSDColorscount
 Public GS_PCLColorscount
 Public GS_RAWColorscount
-Public GS_XCFColorscount
 
 ' Postscript
 Public GS_PSLanguageLevel
@@ -139,7 +137,7 @@ On Error GoTo ErrPtnr_OnError
   PCXColorscount(5) As String, TIFFColorscount(7) As String, _
   PSLanguageLevel(3) As String, PSDColorsCount(1) As String, _
   PCLColorsCount(1) As String, RAWColorsCount(2) As String, _
-  XCFColorsCount(1) As String, PDFDefaultSettings(4) As String
+  PDFDefaultSettings(4) As String
 50080
 50090  PDFDefaultSettings(0) = "default": PDFDefaultSettings(1) = "screen": PDFDefaultSettings(2) = "ebook"
 50100  PDFDefaultSettings(3) = "printer": PDFDefaultSettings(4) = "prepress"
@@ -177,73 +175,70 @@ On Error GoTo ErrPtnr_OnError
 50420  PSDColorsCount(0) = "psdcmyk": PSDColorsCount(1) = "psdrgb"
 50430  PCLColorsCount(0) = "pxlcolor": PCLColorsCount(1) = "pxlmono"
 50440  RAWColorsCount(0) = "bitcmyk": RAWColorsCount(1) = "bitrgb": RAWColorsCount(2) = "bit"
-50450  XCFColorsCount(0) = "xcfcmyk": XCFColorsCount(1) = "xcfrgb"
-50460
-50470 With Options
-50480  'General
-50490  GS_PDFDEFAULT = PDFDefaultSettings(.PDFGeneralDefault)
-50500  GS_COMPATIBILITY = "1." & (.PDFGeneralCompatibility + 2)
-50510  GS_RESOLUTION = .PDFGeneralResolution
-50520  GS_AUTOROTATE = Rotate(.PDFGeneralAutorotate)
-50530  GS_OVERPRINT = .PDFGeneralOverprint
-50540  GS_ASCII85 = Bool2Text(.PDFGeneralASCII85)
-50550
-50560  'Compression
-50570  GS_COMPRESSPAGES = Bool2Text(.PDFCompressionTextCompression)
-50580  GS_COMPRESSCOLOR = Bool2Text(.PDFCompressionColorCompression)
-50590  GS_COMPRESSGREY = Bool2Text(.PDFCompressionGreyCompression)
-50600  GS_COMPRESSMONO = Bool2Text(.PDFCompressionMonoCompression)
-50610
-50620  SelectColorCompression .PDFCompressionColorCompressionChoice
-50630  SelectGreyCompression .PDFCompressionGreyCompressionChoice
-50640  SelectMonoCompression .PDFCompressionMonoCompressionChoice
-50650
-50660  GS_COMPRESSCOLORVALUE = Bool2Text(.PDFCompressionColorCompression)
-50670  GS_COMPRESSGREYVALUE = Bool2Text(.PDFCompressionGreyCompression)
-50680  GS_COMPRESSMONOVALUE = Bool2Text(.PDFCompressionMonoCompression)
-50690
-50700  GS_COLORRESOLUTION = .PDFCompressionColorResolution
-50710  GS_GREYRESOLUTION = .PDFCompressionGreyResolution
-50720  GS_MONORESOLUTION = .PDFCompressionMonoResolution
-50730
-50740  GS_COLORRESAMPLE = Bool2Text(.PDFCompressionColorResample)
-50750  GS_GREYRESAMPLE = Bool2Text(.PDFCompressionGreyResample)
-50760  GS_MONORESAMPLE = Bool2Text(.PDFCompressionMonoResample)
-50770
-50780  GS_COLORRESAMPLEMETHOD = Resample(.PDFCompressionColorResampleChoice)
-50790  GS_GREYRESAMPLEMETHOD = Resample(.PDFCompressionGreyResampleChoice)
-50800  GS_MONORESAMPLEMETHOD = Resample(.PDFCompressionMonoResampleChoice)
-50810
-50820  'Fonts
-50830  GS_EMBEDALLFONTS = Bool2Text(.PDFFontsEmbedAll)
-50840  GS_SUBSETFONTS = Bool2Text(.PDFFontsSubSetFonts)
-50850  GS_SUBSETFONTPERC = .PDFFontsSubSetFontsPercent
-50860
-50870  'Colors
-50880  GS_COLORMODEL = Colormodel(.PDFColorsColorModel)
-50890  GS_CMYKTORGB = Bool2Text(.PDFColorsCMYKToRGB)
-50900  GS_PRESERVEOVERPRINT = Bool2Text(.PDFColorsPreserveOverprint)
-50910  GS_TRANSFERFUNCTIONS = ColorsPreserveTransfer(.PDFColorsPreserveTransfer)
-50920  GS_HALFTONE = Bool2Text(.PDFColorsPreserveHalftone)
-50930
-50940  'Bitmap
-50950  GS_BitmapRESOLUTION = .BitmapResolution
-50960  GS_PNGColorscount = PNGColorscount(.PNGColorscount)
-50970  GS_JPEGColorscount = JPEGColorscount(.JPEGColorscount)
-50980  GS_BMPColorscount = BMPColorscount(.BMPColorscount)
-50990  GS_PCXColorscount = PCXColorscount(.PCXColorscount)
-51000  GS_TIFFColorscount = TIFFColorscount(.TIFFColorscount)
-51010  GS_JPEGQuality = .JPEGQuality
-51020  GS_PSLanguageLevel = PSLanguageLevel(.PSLanguageLevel)
-51030  GS_EPSLanguageLevel = PSLanguageLevel(.EPSLanguageLevel)
-51040  GS_PSDColorscount = PSDColorsCount(.PSDColorsCount)
-51050  GS_PCLColorscount = PCLColorsCount(.PCLColorsCount)
-51060  GS_RAWColorscount = RAWColorsCount(.RAWColorsCount)
-51070  GS_XCFColorscount = XCFColorsCount(.XCFColorsCount)
-51080 End With
-51090 'Other
-51100 GS_ERROR = 0
-51110 UseReturnPipe = 1
+50450
+50460 With Options
+50470  'General
+50480  GS_PDFDEFAULT = PDFDefaultSettings(.PDFGeneralDefault)
+50490  GS_COMPATIBILITY = "1." & (.PDFGeneralCompatibility + 2)
+50500  GS_RESOLUTION = .PDFGeneralResolution
+50510  GS_AUTOROTATE = Rotate(.PDFGeneralAutorotate)
+50520  GS_OVERPRINT = .PDFGeneralOverprint
+50530  GS_ASCII85 = Bool2Text(.PDFGeneralASCII85)
+50540
+50550  'Compression
+50560  GS_COMPRESSPAGES = Bool2Text(.PDFCompressionTextCompression)
+50570  GS_COMPRESSCOLOR = Bool2Text(.PDFCompressionColorCompression)
+50580  GS_COMPRESSGREY = Bool2Text(.PDFCompressionGreyCompression)
+50590  GS_COMPRESSMONO = Bool2Text(.PDFCompressionMonoCompression)
+50600
+50610  SelectColorCompression .PDFCompressionColorCompressionChoice
+50620  SelectGreyCompression .PDFCompressionGreyCompressionChoice
+50630  SelectMonoCompression .PDFCompressionMonoCompressionChoice
+50640
+50650  GS_COMPRESSCOLORVALUE = Bool2Text(.PDFCompressionColorCompression)
+50660  GS_COMPRESSGREYVALUE = Bool2Text(.PDFCompressionGreyCompression)
+50670  GS_COMPRESSMONOVALUE = Bool2Text(.PDFCompressionMonoCompression)
+50680
+50690  GS_COLORRESOLUTION = .PDFCompressionColorResolution
+50700  GS_GREYRESOLUTION = .PDFCompressionGreyResolution
+50710  GS_MONORESOLUTION = .PDFCompressionMonoResolution
+50720
+50730  GS_COLORRESAMPLE = Bool2Text(.PDFCompressionColorResample)
+50740  GS_GREYRESAMPLE = Bool2Text(.PDFCompressionGreyResample)
+50750  GS_MONORESAMPLE = Bool2Text(.PDFCompressionMonoResample)
+50760
+50770  GS_COLORRESAMPLEMETHOD = Resample(.PDFCompressionColorResampleChoice)
+50780  GS_GREYRESAMPLEMETHOD = Resample(.PDFCompressionGreyResampleChoice)
+50790  GS_MONORESAMPLEMETHOD = Resample(.PDFCompressionMonoResampleChoice)
+50800
+50810  'Fonts
+50820  GS_EMBEDALLFONTS = Bool2Text(.PDFFontsEmbedAll)
+50830  GS_SUBSETFONTS = Bool2Text(.PDFFontsSubSetFonts)
+50840  GS_SUBSETFONTPERC = .PDFFontsSubSetFontsPercent
+50850
+50860  'Colors
+50870  GS_COLORMODEL = Colormodel(.PDFColorsColorModel)
+50880  GS_CMYKTORGB = Bool2Text(.PDFColorsCMYKToRGB)
+50890  GS_PRESERVEOVERPRINT = Bool2Text(.PDFColorsPreserveOverprint)
+50900  GS_TRANSFERFUNCTIONS = ColorsPreserveTransfer(.PDFColorsPreserveTransfer)
+50910  GS_HALFTONE = Bool2Text(.PDFColorsPreserveHalftone)
+50920
+50930  'Bitmap
+50940  GS_PNGColorscount = PNGColorscount(.PNGColorscount)
+50950  GS_JPEGColorscount = JPEGColorscount(.JPEGColorscount)
+50960  GS_BMPColorscount = BMPColorscount(.BMPColorscount)
+50970  GS_PCXColorscount = PCXColorscount(.PCXColorscount)
+50980  GS_TIFFColorscount = TIFFColorscount(.TIFFColorscount)
+50990  GS_JPEGQuality = .JPEGQuality
+51000  GS_PSLanguageLevel = PSLanguageLevel(.PSLanguageLevel)
+51010  GS_EPSLanguageLevel = PSLanguageLevel(.EPSLanguageLevel)
+51020  GS_PSDColorscount = PSDColorsCount(.PSDColorsCount)
+51030  GS_PCLColorscount = PCLColorsCount(.PCLColorsCount)
+51040  GS_RAWColorscount = RAWColorsCount(.RAWColorsCount)
+51050 End With
+51060 'Other
+51070 GS_ERROR = 0
+51080 UseReturnPipe = 1
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -466,7 +461,7 @@ On Error GoTo ErrPtnr_OnError
 50430      End If
 50440    End If
 50450   End If
-50460   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460   AddParams "-r" & Options.PNGResolution & "x" & Options.PNGResolution
 50470   AddParams "-sOutputFile=" & GSOutputFile
 50480  End If
 50490
@@ -537,7 +532,7 @@ On Error GoTo ErrPtnr_OnError
 50430      End If
 50440    End If
 50450   End If
-50460   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50460   AddParams "-r" & Options.JPEGResolution & "x" & Options.JPEGResolution
 50470   AddParams "-sOutputFile=" & GSOutputFile
 50480  End If
 50490
@@ -590,33 +585,34 @@ On Error GoTo ErrPtnr_OnError
 50250  End If
 50260
 50270  AddParams "-sDEVICE=" & GS_BMPColorscount
-50280  If Options.DontUseDocumentSettings = 0 Then
-50290   If Options.UseFixPapersize <> 0 Then
-50300    If Options.UseCustomPaperSize = 0 Then
-50310      If LenB(Trim$(Options.Papersize)) > 0 Then
-50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50330       AddParams "-dFIXEDMEDIA"
-50340       AddParams "-dNORANGEPAGESIZE"
-50350      End If
-50360     Else
-50370      If Options.DeviceWidthPoints >= 1 Then
-50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50390      End If
-50400      If Options.DeviceHeightPoints >= 1 Then
-50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50420      End If
-50430    End If
-50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddAdditionalGhostscriptParameters
-50500
-50510  AddParams "-f"
-50520  AddParams GSInputFile
-50530  ShowParams
-50540  CallGhostscript "BMP"
+50280
+50290  If Options.DontUseDocumentSettings = 0 Then
+50300   If Options.UseFixPapersize <> 0 Then
+50310    If Options.UseCustomPaperSize = 0 Then
+50320      If LenB(Trim$(Options.Papersize)) > 0 Then
+50330       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50340       AddParams "-dFIXEDMEDIA"
+50350       AddParams "-dNORANGEPAGESIZE"
+50360      End If
+50370     Else
+50380      If Options.DeviceWidthPoints >= 1 Then
+50390       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50400      End If
+50410      If Options.DeviceHeightPoints >= 1 Then
+50420       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50430      End If
+50440    End If
+50450   End If
+50460   AddParams "-r" & Options.BMPResolution & "x" & Options.BMPResolution
+50470  End If
+50480  AddParams "-sOutputFile=" & GSOutputFile
+50490
+50500  AddAdditionalGhostscriptParameters
+50510
+50520  AddParams "-f"
+50530  AddParams GSInputFile
+50540  ShowParams
+50550  CallGhostscript "BMP"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -677,7 +673,7 @@ On Error GoTo ErrPtnr_OnError
 50420      End If
 50430    End If
 50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50450   AddParams "-r" & Options.PCXResolution & "x" & Options.PCXResolution
 50460  End If
 50470  AddParams "-sOutputFile=" & GSOutputFile
 50480
@@ -747,7 +743,7 @@ On Error GoTo ErrPtnr_OnError
 50420      End If
 50430    End If
 50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50450   AddParams "-r" & Options.TIFFResolution & "x" & Options.TIFFResolution
 50460  End If
 50470  AddParams "-sOutputFile=" & GSOutputFile
 50480
@@ -1216,7 +1212,7 @@ On Error GoTo ErrPtnr_OnError
 50420      End If
 50430    End If
 50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50450   AddParams "-r" & Options.PSDResolution & "x" & Options.PSDResolution
 50460  End If
 50470  AddParams "-sOutputFile=" & GSOutputFile
 50480
@@ -1286,7 +1282,7 @@ On Error GoTo ErrPtnr_OnError
 50420      End If
 50430    End If
 50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50450   AddParams "-r" & Options.PCLResolution & "x" & Options.PCLResolution
 50460  End If
 50470  AddParams "-sOutputFile=" & GSOutputFile
 50480
@@ -1356,7 +1352,7 @@ On Error GoTo ErrPtnr_OnError
 50420      End If
 50430    End If
 50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
+50450   AddParams "-r" & Options.RAWResolution & "x" & Options.RAWResolution
 50460  End If
 50470  AddParams "-sOutputFile=" & GSOutputFile
 50480
@@ -1370,76 +1366,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGhostscript", "CreateRAW")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Private Function CreateXCF(GSInputFile As String, GSOutputFile As String, Options As tOptions)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Path As String, FName As String, Ext As String, tStr As String
-50020
-50030  GSInit Options
-50040  InitParams
-50050  Set ParamCommands = New Collection
-50060
-50070  If Options.OnePagePerFile = 1 Then
-50080   SplitPath GSOutputFile, , Path, , FName, Ext
-50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
-50100  End If
-50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
-50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
-50140  End If
-50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
-50170  End If
-50180  AddParams "-I" & tStr
-50190  AddParams "-q"
-50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
-50220  AddParams "-dBATCH"
-50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50240   AddParams "-sFONTPATH=" & GetFontsDirectory
-50250  End If
-50260
-50270  AddParams "-sDEVICE=" & GS_XCFColorscount
-50280  If Options.DontUseDocumentSettings = 0 Then
-50290   If Options.UseFixPapersize <> 0 Then
-50300    If Options.UseCustomPaperSize = 0 Then
-50310      If LenB(Trim$(Options.Papersize)) > 0 Then
-50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50330       AddParams "-dFIXEDMEDIA"
-50340       AddParams "-dNORANGEPAGESIZE"
-50350      End If
-50360     Else
-50370      If Options.DeviceWidthPoints >= 1 Then
-50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50390      End If
-50400      If Options.DeviceHeightPoints >= 1 Then
-50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50420      End If
-50430    End If
-50440   End If
-50450   AddParams "-r" & GS_BitmapRESOLUTION & "x" & GS_BitmapRESOLUTION
-50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddAdditionalGhostscriptParameters
-50500
-50510  AddParams "-f"
-50520  AddParams GSInputFile
-50530  ShowParams
-50540  CallGhostscript "XCF"
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateXCF")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1583,7 +1509,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub SignPDF(filename As String)
+Private Sub SignPDF(Filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1617,12 +1543,12 @@ On Error GoTo ErrPtnr_OnError
 50280    Else
 50290     multiSignatures = True
 50300   End If
-50310   Call m.signPDFFile(filename, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
+50310   Call m.signPDFFile(Filename, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
    signatureVisible, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
 50330  End With
 50340  If FileExists(Tempfile) Then
-50350   If KillFile(filename) Then
-50360    Name Tempfile As filename
+50350   If KillFile(Filename) Then
+50360    Name Tempfile As Filename
 50370   End If
 50380  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2356,7 +2282,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CheckForStamping(filename As String)
+Public Sub CheckForStamping(Filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -2413,11 +2339,11 @@ On Error GoTo ErrPtnr_OnError
 50510   Close #ff
 50520   Set files = New Collection
 50530   files.Add Stampfile
-50540   files.Add filename
+50540   files.Add Filename
 50550   Stampfile = GetTempFile(Path, "~ST")
 50560   KillFile Stampfile
 50570   CombineFiles Stampfile, files
-50580   Name Stampfile As filename
+50580   Name Stampfile As Filename
 50590  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

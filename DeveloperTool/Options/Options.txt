@@ -10,8 +10,8 @@ AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|13
 AutosaveStartStandardProgram|chkAutosaveStartStandardProgram.Value|Boolean|0||
 
 ' <Printing Formats Bitmap Colors>
-BitmapResolution|txtBitmapResolution.Text|Long|150|1|<
 BMPColorscount|cmbBMPColors.Listindex|Long|1|0|6
+BMPResolution||Long|150|1|<
 
 ' <Program>
 ClientComputerResolveIPAddress||Boolean|0||
@@ -41,6 +41,7 @@ FilenameSubstitutionsOnlyInTitle|chkFilenameSubst.Value|Boolean|1||
 ' <Printing Formats Bitmap Colors>
 JPEGColorscount|cmbJPEGColors.Listindex|Long|0|0|1
 JPEGQuality|txtJPEGQuality.Text|Long|75|0|100
+JPEGResolution||Long|150|1|<
 
 ' <Program>
 Language|Language|String|english||
@@ -64,7 +65,9 @@ Papersize||String|a4||
 
 ' <Printing Formats Bitmap Colors>
 PCLColorsCount|cmbPCLColors.Listindex|Long|0|0|1
+PCLResolution||Long|150|1|<
 PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
+PCXResolution||Long|150|1|<
 
 ' <Printing Formats PDF Security>
 PDFAllowAssembly|chkAllowAssembly.Value|Boolean|0||
@@ -162,6 +165,7 @@ PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
 
 ' <Printing Formats Bitmap Colors>
 PNGColorscount|cmbPNGColors.Listindex|Long|0|0|4
+PNGResolution||Long|150|1|<
 
 ' <Program>
 PrintAfterSaving|chkPrintAfterSaving.Value|Boolean|0||
@@ -179,12 +183,14 @@ ProgramFontSize|cmbProgramFontSize.text|Long|8|6|72
 
 ' <Printing Formats Bitmap Colors>
 PSDColorsCount|cmbPSDColors.Listindex|Long|0|0|1
+PSDResolution||Long|150|1|<
 
 ' <Printing Formats PS LanguageLevel>
 PSLanguageLevel|cmbPSLanguageLevel.Listindex|Long|2|0|3
 
 ' <Printing Formats Bitmap Colors>
 RAWColorsCount|cmbRAWColors.Listindex|Long|0|0|2
+RAWResolution||Long|150|1|<
 
 ' <Program>
 RemoveAllKnownFileExtensions||Boolean|1||
@@ -225,6 +231,7 @@ StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
 
 ' <Printing Formats Bitmap Colors>
 TIFFColorscount|cmbTIFFColors.Listindex|Long|0|0|7
+TIFFResolution||Long|150|1|<
 
 ' <Program>
 Toolbars||Long|1|0|<
@@ -236,6 +243,3 @@ UseCreationDateNow|chkUseCreationDateNow.Value|Boolean|0||
 UseCustomPaperSize|chkUseCustomPapersize.Value|String|0||
 UseFixPapersize|chkUseFixPaperSize.Value|Boolean|0||
 UseStandardAuthor|chkUseStandardAuthor.Value|Boolean|0||
-
-' <Printing Formats Bitmap Colors>
-XCFColorsCount|cmbXCFColors.Listindex|Long|0|0|1

@@ -188,7 +188,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With Options
 50020   cmbPNGColors.ListIndex = .PNGColorscount
-50030   txtBitmapResolution.Text = .BitmapResolution
+50030   txtBitmapResolution.Text = .PNGResolution
 50040  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -211,7 +211,7 @@ On Error GoTo ErrPtnr_OnError
 50030    .PNGColorscount = cmbPNGColors.ListIndex
 50040   End If
 50050   If LenB(txtBitmapResolution.Text) > 0 Then
-50060    .BitmapResolution = txtBitmapResolution.Text
+50060    .PNGResolution = txtBitmapResolution.Text
 50070   End If
 50080  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

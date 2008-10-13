@@ -13,12 +13,20 @@ Begin VB.UserControl ctlOptFormatRAW
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   2566
-      caption         =   "RAW"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptFormatRAW.ctx":0312
+      _ExtentX        =   11245
+      _ExtentY        =   2566
+      Caption         =   "RAW"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtBitmapResolution 
          Alignment       =   1  'Rechts
          Appearance      =   0  '2D
@@ -178,7 +186,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With Options
 50020   cmbRAWColors.ListIndex = .RAWColorsCount
-50030   txtBitmapResolution.Text = .BitmapResolution
+50030   txtBitmapResolution.Text = .RAWResolution
 50040  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -201,7 +209,7 @@ On Error GoTo ErrPtnr_OnError
 50030    .RAWColorsCount = cmbRAWColors.ListIndex
 50040   End If
 50050   If LenB(txtBitmapResolution.Text) > 0 Then
-50060    .BitmapResolution = txtBitmapResolution.Text
+50060    .RAWResolution = txtBitmapResolution.Text
 50070   End If
 50080  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
