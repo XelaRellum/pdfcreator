@@ -1276,10 +1276,11 @@ Public Function cClose() As Boolean
  Loop Until ProgramIsStarted = True
  cVisible = False
  cClose = False
+ 
+ eActionTimer.Enabled = False
+ DoEvents
  Set eActionTimer = Nothing
- Do
-  DoEvents
- Loop Until In_eActionTimer = False
+ 
  For Each f In Forms
   If Not f Is Nothing Then
    If UCase$(f.Name) <> "FRMMAIN" Then
@@ -1288,6 +1289,7 @@ Public Function cClose() As Boolean
    End If
   End If
  Next f
+ 
  If Not mForm Is Nothing Then
   With mForm
    .Timer1.Enabled = False
@@ -1343,7 +1345,7 @@ On Error GoTo ErrPtnr_OnError
 50100  mProgramIsRunning = False
 50110  StartProgram Params
 50120  Set mForm = frmMain
-50130  Set eActionTimer = mForm.Timer3
+50130  Set eActionTimer = mForm.Timer3: eActionTimer.Interval = 100
 50140  eActionTimer.Enabled = True
 50150  cStart = True
 50160  cVisible = ProgramIsVisible
@@ -1555,11 +1557,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function cIsPrintable(ByVal filename As String) As Boolean
+Public Function cIsPrintable(ByVal Filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cIsPrintable = IsPrintable(filename)
+50010  cIsPrintable = IsPrintable(Filename)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1654,7 +1656,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub cPrintFile(ByVal filename As String)
+Public Sub cPrintFile(ByVal Filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1662,7 +1664,7 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Sub
 50040  End If
-50050  PrintFile filename
+50050  PrintFile Filename
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1937,19 +1939,17 @@ Private Sub eActionTimer_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  In_eActionTimer = True
-50020  If ReadyConverting Then
-50030   RaiseEvent eReady
-50040   ReadyConverting = False
-50050  End If
-50060  If GhostscriptError < 0 Then
-50070   mError.Number = 4
-50080   mError.Description = ErrDescr4
-50090   RaiseEvent eError
-50100   GhostscriptError = 0
-50110  End If
-50120  DoEvents
-50130  In_eActionTimer = False
+50010  If ReadyConverting Then
+50020   RaiseEvent eReady
+50030   ReadyConverting = False
+50040  End If
+50050  If GhostscriptError < 0 Then
+50060   mError.Number = 4
+50070   mError.Description = ErrDescr4
+50080   RaiseEvent eError
+50090   GhostscriptError = 0
+50100  End If
+50110  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
