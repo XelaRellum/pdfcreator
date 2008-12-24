@@ -13,20 +13,12 @@ Begin VB.UserControl ctlOptFonts
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   8281
-      Caption         =   "Programfont"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   8281
+      caption         =   "Programfont"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFonts.ctx":0312
       Begin VB.ComboBox cmbProgramFontsize 
          Appearance      =   0  '2D
          Height          =   315
@@ -501,7 +493,7 @@ On Error GoTo ErrPtnr_OnError
 50190   tFontSize = .Size
 50200   tFontCharset = .Charset
 50210  End With
-50220  SetFont Me, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), cmbProgramFontsize.Text
+50220  SetFontUserControl cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), CLng(cmbProgramFontsize.Text)
 50230  cmbCharset.Text = tCharset
 50240  SetFont frmMain, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), cmbProgramFontsize.Text
 50250 ' ieb.Refresh
@@ -718,3 +710,70 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Sub SetFontUserControl(ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim ctl As Control, eB As isExplorerBar, ts As TabStrip, df As dmFrame, f As StdFont
+50020
+50030  If LenB(Trim$(Fontname)) = 0 Then
+50040   Exit Sub
+50050  End If
+50060
+50070  Set f = New StdFont
+50080  f.Name = Fontname
+50090  f.Size = Fontsize
+50100  f.Charset = Charset
+50110
+50120  For Each ctl In UserControl.Controls
+50130   If TypeOf ctl Is Label Or _
+     TypeOf ctl Is Form Or _
+     TypeOf ctl Is ComboBox Or _
+     TypeOf ctl Is CheckBox Or _
+     TypeOf ctl Is CommandButton Or _
+     TypeOf ctl Is ListView Or _
+     TypeOf ctl Is StatusBar Or _
+     TypeOf ctl Is TextBox Or _
+     TypeOf ctl Is Frame Then
+50220    With ctl
+50230     .Font = Fontname
+50240     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
+50250      .Fontsize = Fontsize
+50260     End If
+50270     .Font.Charset = Charset
+50280    End With
+50290   End If
+50300
+50310   If TypeOf ctl Is isExplorerBar Then
+50320    Set eB = ctl
+50330    eB.Font.Name = Fontname
+50340    eB.Font.Size = Fontsize
+50350    eB.Font.Charset = Charset
+50360   End If
+50370   If TypeOf ctl Is TabStrip Then
+50380    Set ts = ctl
+50390    ts.Font.Name = Fontname
+50400    ts.Font.Size = Fontsize
+50410    ts.Font.Charset = Charset
+50420   End If
+50430   If TypeOf ctl Is dmFrame Then
+50440    Set df = ctl
+50450    df.Font.Name = Fontname
+50460    df.Font.Size = Fontsize
+50470    df.Font.Charset = Charset
+50480    Set df.Font = f
+50490   End If
+50500  Next ctl
+50510
+50520  Set f = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFonts", "SetFontUserControl")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
