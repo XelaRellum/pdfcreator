@@ -3,14 +3,14 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: May, 12. 2008
+' Version: 1.1.0.0
+' Date: December, 27. 2008
 ' Author: Frank Heindörfer
 ' Comments: Create a pdf testdocument with 4 pages per sheet.
 
 Option Explicit
 
-Dim pdfforge, tools, fso, ScriptBaseName, AppTitle, i, s, p, im, f1, f2, f3
+Dim pdfforge, fso, ScriptBaseName, AppTitle, i, s, p, f1, f2
 Set fso = CreateObject("Scripting.FileSystemObject")
 
 ScriptBaseName = fso.GetBaseName(Wscript.ScriptFullname)
@@ -23,7 +23,6 @@ If CDbl(Replace(WScript.Version,".",",")) < 5.1 then
 End if
 
 Set pdfforge = Wscript.CreateObject("pdfforge.pdf.pdf")
-Set tools = Wscript.CreateObject("pdfforge.tools")
 
 For i = 1 To 50
  s = s + "0123456789 ÄÖÜäöüß "
