@@ -136,70 +136,79 @@ On Error GoTo ErrPtnr_OnError
 50950
 50960  PrintFiles
 50970
-50980  If NoStart Then
-50990   InstanceCounter = InstanceCounter - 1
-51000   Exit Sub
-51010  End If
-51020
-51030  If ShowOnlyOptions Then
-51040   frmOptions.Show vbModal
-51050   InstanceCounter = InstanceCounter - 1
-51060   Exit Sub
-51070  End If
-51080
-51090  If ShowOnlyLogfile Then
-51100   frmLog.Show vbModal
-51110   InstanceCounter = InstanceCounter - 1
-51120   Exit Sub
-51130  End If
-51140
-51150  LoadGhostscriptDLL
-51160
-51170  If PDFCreatorPrinter = False Then
-51180   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
-51190     filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-51200     KillFile filename
-51210     If IsValidGraphicFile(InputFilename) Then
-51220       Call Image2PS(InputFilename, filename)
-51230      Else
-51240       FileCopy InputFilename, filename
-51250     End If
-51260     If FileExists(InputFilename) And DeleteIF Then
-51270      KillFile InputFilename
-51280     End If
-51290    Else
-51300     ConvertFile filename, OutputFilename, OutputSubFormat
-51310     If FileExists(InputFilename) And DeleteIF Then
-51320      KillFile InputFilename
-51330     End If
-51340     If FileExists(OutputFilename) And OpenOF Then
-51350      OpenDocument OutputFilename
-51360     End If
-51370   End If
-51380  End If
-51390
-51400  If ProgramIsRunning(PDFCreator_GUID) Then
-51410    ' There is a local running instance
-51420    If Not NoAbortIfRunning Then
-51430     InstanceCounter = InstanceCounter - 1
-51440     Exit Sub
-51450    End If
-51460   Else
-51470  ' Create a mutex
-51480    Set mutexLocal = New clsMutex
-51490    mutexLocal.CreateMutex PDFCreator_GUID
-51500    Set mutexGlobal = New clsMutex
-51510    ' Check for a global running instance
-51520    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-51530     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50980  If ShowOnlyOptions Then
+50990   frmOptions.Show vbModal
+51000   InstanceCounter = InstanceCounter - 1
+51010   Exit Sub
+51020  End If
+51030
+51040  If ShowOnlyLogfile Then
+51050   frmLog.Show vbModal
+51060   InstanceCounter = InstanceCounter - 1
+51070   Exit Sub
+51080  End If
+51090
+51100  LoadGhostscriptDLL
+51110
+51120  If PDFCreatorPrinter = False Then
+51130   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
+51140     filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+51150     KillFile filename
+51160     If IsValidGraphicFile(InputFilename) Then
+51170       Call Image2PS(InputFilename, filename)
+51180      Else
+51190       FileCopy InputFilename, filename
+51200     End If
+51210     If FileExists(InputFilename) And DeleteIF Then
+51220      KillFile InputFilename
+51230     End If
+51240    Else
+51250     If IsValidGraphicFile(InputFilename) Then
+51260       filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+51270       Call Image2PS(InputFilename, filename)
+51280       ConvertFile filename, OutputFilename, OutputSubFormat
+51290       If FileExists(filename) Then
+51300        KillFile filename
+51310       End If
+51320      Else
+51330       ConvertFile InputFilename, OutputFilename, OutputSubFormat
+51340     End If
+51350     If FileExists(InputFilename) And DeleteIF Then
+51360      KillFile InputFilename
+51370     End If
+51380     If FileExists(OutputFilename) And OpenOF Then
+51390      OpenDocument OutputFilename
+51400     End If
+51410   End If
+51420  End If
+51430
+51440  If NoStart Then
+51450   InstanceCounter = InstanceCounter - 1
+51460   Exit Sub
+51470  End If
+51480
+51490  If ProgramIsRunning(PDFCreator_GUID) Then
+51500    ' There is a local running instance
+51510    If Not NoAbortIfRunning Then
+51520     InstanceCounter = InstanceCounter - 1
+51530     Exit Sub
 51540    End If
-51550  End If
-51560
-51570  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-51580   InitCommonControls
-51590  End If
-51600
-51610  Load frmMain
+51550   Else
+51560  ' Create a mutex
+51570    Set mutexLocal = New clsMutex
+51580    mutexLocal.CreateMutex PDFCreator_GUID
+51590    Set mutexGlobal = New clsMutex
+51600    ' Check for a global running instance
+51610    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+51620     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+51630    End If
+51640  End If
+51650
+51660  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+51670   InitCommonControls
+51680  End If
+51690
+51700  Load frmMain
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
