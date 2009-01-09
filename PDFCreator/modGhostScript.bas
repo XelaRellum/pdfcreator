@@ -1528,7 +1528,7 @@ On Error GoTo ErrPtnr_OnError
 50130     PFXPassword = .PDFSigningPFXFilePassword
 50140    Else
 50150     'Ask for the password
-50160     PFXPassword = InputBox("Certifacte password")
+50160     PFXPassword = InputBox("Certificate password")
 50170   End If
 50180   Tempfile = GetTempFile(GetTempPath, "~MP")
 50190   KillFile Tempfile
@@ -2282,7 +2282,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CheckForStamping(Filename As String)
+Public Sub CheckForStamping(filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -2339,11 +2339,11 @@ On Error GoTo ErrPtnr_OnError
 50510   Close #ff
 50520   Set files = New Collection
 50530   files.Add Stampfile
-50540   files.Add Filename
+50540   files.Add filename
 50550   Stampfile = GetTempFile(Path, "~ST")
 50560   KillFile Stampfile
 50570   CombineFiles Stampfile, files
-50580   Name Stampfile As Filename
+50580   Name Stampfile As filename
 50590  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
