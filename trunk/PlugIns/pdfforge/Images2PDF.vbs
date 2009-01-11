@@ -3,10 +3,10 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: January 30, 2008
+' Version: 1.1.0.0
+' Date: January 11, 2009
 ' Author: Frank Heindörfer
-' Comments: Merge several pdf files.
+' Comments: Create a pdf files from a set of pictures.
 
 Option Explicit
 
@@ -37,7 +37,9 @@ For i = 0 To objArgs.Count - 1
 Next
 
 Set pdfforge = Wscript.CreateObject("pdfforge.pdf.pdf")
-resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\Images.pdf"
-pdfforge.Images2PDF_2 (files), (resFile), true
+resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\Images0.pdf"
+pdfforge.Images2PDF_2 (files), (resFile), 0
+resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\Images1.pdf"
+pdfforge.Images2PDF_2 (files), (resFile), 1
 
 Set pdfforge = Nothing
