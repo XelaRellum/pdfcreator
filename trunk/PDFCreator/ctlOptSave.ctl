@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MsComCtl.ocx"
 Begin VB.UserControl ctlOptSave 
    ClientHeight    =   5715
    ClientLeft      =   0
@@ -14,20 +14,12 @@ Begin VB.UserControl ctlOptSave
       TabIndex        =   0
       Top             =   240
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   4710
-      Caption         =   "Save"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   4710
+      caption         =   "Save"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptSave.ctx":0312
       Begin VB.TextBox txtSavePreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -41,9 +33,9 @@ Begin VB.UserControl ctlOptSave
       Begin VB.ComboBox cmbSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptSave.ctx":0312
+         ItemData        =   "ctlOptSave.ctx":033E
          Left            =   3720
-         List            =   "ctlOptSave.ctx":0314
+         List            =   "ctlOptSave.ctx":0340
          Style           =   2  'Dropdown-Liste
          TabIndex        =   4
          Top             =   600
@@ -72,13 +64,13 @@ Begin VB.UserControl ctlOptSave
       Begin VB.ComboBox cmbStandardSaveFormat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptSave.ctx":0316
+         ItemData        =   "ctlOptSave.ctx":0342
          Left            =   120
-         List            =   "ctlOptSave.ctx":0318
+         List            =   "ctlOptSave.ctx":0344
          Style           =   2  'Dropdown-Liste
          TabIndex        =   8
          Top             =   2100
-         Width           =   1050
+         Width           =   1935
       End
       Begin VB.Label lblSaveFilenameTokens 
          AutoSize        =   -1  'True
@@ -114,20 +106,12 @@ Begin VB.UserControl ctlOptSave
       TabIndex        =   9
       Top             =   3000
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   4471
-      Caption         =   "Filename substitutions"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   4471
+      caption         =   "Filename substitutions"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptSave.ctx":0346
       Begin VB.CommandButton cmdFilenameSubst 
          Caption         =   "&Delete"
          Height          =   375
@@ -150,7 +134,7 @@ Begin VB.UserControl ctlOptSave
          Height          =   435
          Index           =   1
          Left            =   120
-         Picture         =   "ctlOptSave.ctx":031A
+         Picture         =   "ctlOptSave.ctx":0372
          Style           =   1  'Grafisch
          TabIndex        =   14
          Top             =   1440
@@ -189,7 +173,7 @@ Begin VB.UserControl ctlOptSave
          Height          =   435
          Index           =   0
          Left            =   120
-         Picture         =   "ctlOptSave.ctx":06A4
+         Picture         =   "ctlOptSave.ctx":06FC
          Style           =   1  'Grafisch
          TabIndex        =   13
          Top             =   915
@@ -254,51 +238,57 @@ On Error GoTo ErrPtnr_OnError
 50080
 50090  With cmbStandardSaveFormat
 50100   .AddItem "PDF"
-50110   .AddItem "PNG"
-50120   .AddItem "JPEG"
-50130   .AddItem "BMP"
-50140   .AddItem "PCX"
-50150   .AddItem "TIFF"
-50160   .AddItem "PS"
-50170   .AddItem "EPS"
-50180  End With
-50190  With cmbSaveFilenameTokens
-50200   .AddItem "<Author>"
-50210   .AddItem "<Computername>"
-50220   .AddItem "<DateTime>"
-50230   .AddItem "<Title>"
-50240   .AddItem "<Username>"
-50250   .AddItem "<Counter>"
-50260   .AddItem "<REDMON_DOCNAME>"
-50270   .AddItem "<REDMON_DOCNAME_FILE>"
-50280   .AddItem "<REDMON_DOCNAME_PATH>"
-50290   .AddItem "<REDMON_JOB>"
-50300   .AddItem "<REDMON_MACHINE>"
-50310   .AddItem "<REDMON_PORT>"
-50320   .AddItem "<REDMON_PRINTER>"
-50330   .AddItem "<REDMON_SESSIONID>"
-50340   .AddItem "<REDMON_USER>"
-50350   .ListIndex = 0
-50360  End With
-50370
-50380  With lsvFilenameSubst
-50390   .Appearance = ccFlat
-50400   .ColumnHeaders.Clear
-50410   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
-50420   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
-50430   .HideColumnHeaders = True
-50440   .GridLines = True
-50450   .FullRowSelect = True
-50460   .HideSelection = False
-50470  End With
-50480
-50490  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-50500  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-50510  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-50520
-50530  CheckCmdFilenameSubst
+50110   .AddItem "PDF/A-1b"
+50120   .AddItem "PDF/X"
+50130   .AddItem "PNG"
+50140   .AddItem "JPEG"
+50150   .AddItem "BMP"
+50160   .AddItem "PCX"
+50170   .AddItem "TIFF"
+50180   .AddItem "PS"
+50190   .AddItem "EPS"
+50200   .AddItem "TXT"
+50210   .AddItem "PSD"
+50220   .AddItem "PCL"
+50230   .AddItem "RAW"
+50240  End With
+50250  With cmbSaveFilenameTokens
+50260   .AddItem "<Author>"
+50270   .AddItem "<Computername>"
+50280   .AddItem "<DateTime>"
+50290   .AddItem "<Title>"
+50300   .AddItem "<Username>"
+50310   .AddItem "<Counter>"
+50320   .AddItem "<REDMON_DOCNAME>"
+50330   .AddItem "<REDMON_DOCNAME_FILE>"
+50340   .AddItem "<REDMON_DOCNAME_PATH>"
+50350   .AddItem "<REDMON_JOB>"
+50360   .AddItem "<REDMON_MACHINE>"
+50370   .AddItem "<REDMON_PORT>"
+50380   .AddItem "<REDMON_PRINTER>"
+50390   .AddItem "<REDMON_SESSIONID>"
+50400   .AddItem "<REDMON_USER>"
+50410   .ListIndex = 0
+50420  End With
+50430
+50440  With lsvFilenameSubst
+50450   .Appearance = ccFlat
+50460   .ColumnHeaders.Clear
+50470   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
+50480   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
+50490   .HideColumnHeaders = True
+50500   .GridLines = True
+50510   .FullRowSelect = True
+50520   .HideSelection = False
+50530  End With
 50540
-50550  SetFrames Options.OptionsDesign
+50550  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+50560  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+50570  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+50580
+50590  CheckCmdFilenameSubst
+50600
+50610  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
