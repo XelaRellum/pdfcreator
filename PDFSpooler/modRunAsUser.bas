@@ -13,30 +13,62 @@ Option Explicit
 ' Last modification:
 '   09/07/2004 Gergely Matefi
 '   11/20/2004 Frank Heindörfer
+'   01/13/2009 Frank Heindörfer
 Public Function GetUserSessionToken(UserName As String, SessionID As Long, hToken As Long, Optional Logging As Boolean = False) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ProcessID As Long, rc As Long, hProcess As Long
-50020
-50030  ProcessID = FindProcess(UserName, SessionID)
-50040  If Logging = True Then
-50050   WriteToSpecialLogfile "ProcessID (UserName:" & UserName & _
-   ", SessionID:" & SessionID & ") = " & ProcessID
-50070  End If
-50080
-50090  If ProcessID > 0 Then
-50100    hProcess = OpenProcess(PROCESS_QUERY_INFORMATION Or PROCESS_VM_READ, False, ProcessID)
-50110    If IsWinNT4 = True Then
-50120      rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS_NT4, hToken)
-50130     Else
-50140      rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS, hToken)
-50150    End If
-50160    CloseHandle (hProcess)
-50170    GetUserSessionToken = 0
-50180   Else
-50190    GetUserSessionToken = 1
-50200  End If
+50010  Dim ProcessIDs As Collection, rc As Long, hProcess As Long, i As Long, process As clsProcess, AllActiveServices As Collection, _
+  service As clsService
+50030
+50040  GetUserSessionToken = 1
+50050  Set ProcessIDs = FindProcess(UserName, SessionID)
+50060  If Logging = True Then
+50070   WriteToSpecialLogfile "Count of ProcessIDs (UserName:" & UserName & ", SessionID:" & SessionID & ") = " & ProcessIDs.Count
+50080  End If
+50090
+50100  Set AllActiveServices = EnumLocalServices(SERVICE_ACTIVE)
+50110  If Logging = True Then
+50120   WriteToSpecialLogfile "Count of local services: " & AllActiveServices.Count
+50130   For i = 1 To AllActiveServices.Count
+50140    Set service = AllActiveServices(i)
+50150    WriteToSpecialLogfile "Services: " & service.ServiceName & _
+    " [ControlsAccepted: " & service.ControlsAccepted & ", ServiceType: " & service.ServiceType & _
+    ", CurrentState: " & service.CurrentState & ", ImagePath: " & service.ImagePath & "]"
+50180   Next i
+50190  End If
+50200
+50210  For i = 1 To ProcessIDs.Count
+50220   Set process = ProcessIDs(i)
+50230   If process.ID > 0 Then
+50240    If IsService(process.Modulname, AllActiveServices) = False Then
+50250      If Logging = True Then
+50260       WriteToSpecialLogfile "Process (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & ") seems not to be a service."
+50270      End If
+50280      hProcess = OpenProcess(PROCESS_QUERY_INFORMATION Or PROCESS_VM_READ, False, process.ID)
+50290      If Logging = True Then
+50300       WriteToSpecialLogfile "hProcess (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & "): " & hProcess
+50310      End If
+50320      If IsWinNT4 = True Then
+50330        rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS_NT4, hToken)
+50340       Else
+50350        rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS, hToken)
+50360      End If
+50370      If Logging = True Then
+50380       WriteToSpecialLogfile "rc (OpenProcessToken):" & rc
+50390      End If
+50400      CloseHandle (hProcess)
+50410      If rc <> 0 Then
+50420       GetUserSessionToken = 0
+50430       Exit For
+50440      End If
+50450     Else
+50460      If Logging = True Then
+50470       WriteToSpecialLogfile "Possible service found: ProcessID = " & process.ID & ", Modulename = " & process.Modulname
+50480      End If
+50490    End If
+50500   End If
+50510  Next i
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
