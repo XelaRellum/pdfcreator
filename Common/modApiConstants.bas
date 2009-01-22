@@ -399,7 +399,7 @@ Public Const SEE_MASK_INVOKEIDLIST           As Long = &HC
 Public Const SEE_MASK_NOCLOSEPROCESS         As Long = &H40
 
 Public Const CP_ACP                          As Long = 0
-Public Const NERR_Success                    As Long = 0
+Public Const NERR_SUCCESS                    As Long = 0
 Public Const NERR_BASE                       As Long = 2100
 Public Const NERR_InvalidComputer = (NERR_BASE + 251)
 Public Const NERR_UseNotFound = (NERR_BASE + 150)
@@ -571,4 +571,39 @@ Public Const PRODUCT_ENTERPRISE_SERVER_V              As Long = &H26  'Server En
 Public Const PRODUCT_DATACENTER_SERVER_CORE_V         As Long = &H27  'Server Datacenter Edition without Hyper-V (core installation)
 Public Const PRODUCT_STANDARD_SERVER_CORE_V           As Long = &H28  'Server Standard Edition without Hyper-V (core installation)
 Public Const PRODUCT_ENTERPRISE_SERVER_CORE_V         As Long = &H29  'Server Enterprise Edition without Hyper-V (core installation)
+
+Public Const SIZEOF_SERVICE_STATUS                    As Long = 36
+Public Const SC_MANAGER_ENUMERATE_SERVICE             As Long = &H4
+'Public Const SERVICE_ACTIVE = &H1
+'Public Const SERVICE_INACTIVE = &H2
+'Public Const SERVICE_STATE_ALL = SERVICE_ACTIVE Or SERVICE_INACTIVE
+Public Const SERVICE_KERNEL_DRIVER As Long = &H1
+Public Const SERVICE_FILE_SYSTEM_DRIVER As Long = &H2
+Public Const SERVICE_ADAPTER As Long = &H4
+Public Const SERVICE_RECOGNIZER_DRIVER As Long = &H8
+Public Const SERVICE_WIN32_OWN_PROCESS As Long = &H10
+Public Const SERVICE_WIN32_SHARE_PROCESS As Long = &H20
+Public Const SERVICE_INTERACTIVE_PROCESS As Long = &H100
+Public Const SERVICE_WIN32 As Long = SERVICE_WIN32_OWN_PROCESS Or SERVICE_WIN32_SHARE_PROCESS
+Public Const SERVICE_DRIVER As Long = SERVICE_KERNEL_DRIVER Or SERVICE_FILE_SYSTEM_DRIVER Or SERVICE_RECOGNIZER_DRIVER
+Public Const SERVICE_TYPE_ALL As Long = SERVICE_WIN32 Or SERVICE_ADAPTER Or SERVICE_DRIVER Or SERVICE_INTERACTIVE_PROCESS
+                                     
+'Service State
+'corresponds to SERVICE_STATUS.dwCurrentState
+Public Const SERVICE_STOPPED As Long = &H1
+Public Const SERVICE_START_PENDING As Long = &H2
+Public Const SERVICE_STOP_PENDING As Long = &H3
+Public Const SERVICE_RUNNING As Long = &H4
+Public Const SERVICE_CONTINUE_PENDING As Long = &H5
+Public Const SERVICE_PAUSE_PENDING As Long = &H6
+Public Const SERVICE_PAUSED As Long = &H7
+
+'Controls Accepted  (Bit Mask)
+'corresponds to SERVICE_STATUS.dwControlsAccepted
+Public Const SERVICE_ACCEPT_STOP As Long = &H1
+Public Const SERVICE_ACCEPT_PAUSE_CONTINUE As Long = &H2
+Public Const SERVICE_ACCEPT_SHUTDOWN   As Long = &H4
+
+'Windows type used to call the Net API
+Public Const MAX_PREFERRED_LENGTH As Long = -1
 

@@ -227,7 +227,7 @@ On Error GoTo ErrPtnr_OnError
 50410   .DisableEmail = "0"
 50420   .DontUseDocumentSettings = "0"
 50430   .EPSLanguageLevel = "2"
-50440   .FilenameSubstitutions = "Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt"
+50440   .FilenameSubstitutions = "Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt"
 50450   .FilenameSubstitutionsOnlyInTitle = "1"
 50460   .JPEGColorscount = "0"
 50470   .JPEGQuality = "75"
@@ -720,8 +720,8 @@ On Error GoTo ErrPtnr_OnError
 52510     End If
 52520   End If
 52530   tStr = hOpt.Retrieve("FilenameSubstitutions")
-52540   If LenB(tStr) = 0 And LenB("Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt") > 0 And UseStandard Then
-52550     .FilenameSubstitutions = "Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt"
+52540   If LenB(tStr) = 0 And LenB("Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt") > 0 And UseStandard Then
+52550     .FilenameSubstitutions = "Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt"
 52560    Else
 52570     If LenB(tStr) > 0 Then
 52580      .FilenameSubstitutions = tStr
@@ -4844,8 +4844,8 @@ On Error GoTo ErrPtnr_OnError
 66320     End If
 66330   End If
 66340   tStr = reg.GetRegistryValue("FilenameSubstitutions")
-66350   If LenB(tStr) = 0 And LenB("Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt") > 0 And UseStandard Then
-66360     .FilenameSubstitutions = "Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt"
+66350   If LenB(tStr) = 0 And LenB("Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt") > 0 And UseStandard Then
+66360     .FilenameSubstitutions = "Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt"
 66370    Else
 66380     If LenB(tStr) > 0 Then
 66390      .FilenameSubstitutions = tStr

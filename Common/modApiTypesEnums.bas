@@ -826,3 +826,24 @@ Public Type BITMAP
  bmBits As Long
 End Type
 
+Public Type SERVICE_STATUS
+ dwServiceType As Long
+ dwCurrentState As Long
+ dwControlsAccepted As Long
+ dwWin32ExitCode As Long
+ dwServiceSpecificExitCode As Long
+ dwCheckPoint As Long
+ dwWaitHint As Long
+End Type
+
+Public Type ENUM_SERVICE_STATUS
+ lpServiceName As Long
+ lpDisplayName As Long
+ ServiceStatus As SERVICE_STATUS
+End Type
+
+Public Enum eServiceState
+ SERVICE_ACTIVE = &H1
+ SERVICE_INACTIVE = &H2
+ SERVICE_STATE_ALL = SERVICE_ACTIVE Or SERVICE_INACTIVE
+End Enum
