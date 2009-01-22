@@ -83,10 +83,10 @@ Public Sub ComboSetListWidth(oCombo As ComboBox, Optional ByVal nFixWidth As Var
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With oCombo
-50020   If isMissing(nScaleMode) Or isMissing(nFixWidth) Then
+50020   If IsMissing(nScaleMode) Or IsMissing(nFixWidth) Then
 50030    nScaleMode = .Parent.ScaleMode
 50040   End If
-50050   If isMissing(nFixWidth) Then
+50050   If IsMissing(nFixWidth) Then
 50060    Dim i As Long, nWidth As Long
 50070    nFixWidth = 0
 50080    For i = 0 To .ListCount - 1
