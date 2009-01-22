@@ -7,30 +7,24 @@ Public Type tProcess
  UserName As String
 End Type
 
-Public Function FindProcess(UserName As String, Optional SessionID As Long = 0) As Long
+Public Function FindProcess(UserName As String, Optional SessionID As Long = 0) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim res As Long, ProcessID As Long
+50010  Dim res As Long, ProcessIDs As Collection
 50020  If IsTerminalServer = True Then
-50030    If FindTSProcess(UserName, SessionID, ProcessID) = True Then
-50040      WriteToSpecialLogfile "Terminal token is asked for (" & UserName & ", " & SessionID & "):" & ProcessID
-50050     Else
-50060      WriteToSpecialLogfile "Cannot detect a terminal token. Looking for console token."
-50070      If FindNormalProcess(UserName, ProcessID) = True Then
-50080        WriteToSpecialLogfile "Console token is asked for (" & UserName & "):" & ProcessID
-50090       Else
-50100        WriteToSpecialLogfile "Cannot console token!"
-50110      End If
-50120    End If
-50130   Else
-50140    If FindNormalProcess(UserName, ProcessID) = True Then
-50150      WriteToSpecialLogfile "Console token is asked for (" & UserName & "):" & ProcessID
-50160     Else
-50170      WriteToSpecialLogfile "Cannot console token!"
-50180    End If
-50190  End If
-50200  FindProcess = ProcessID
+50030    Set ProcessIDs = FindTSProcess(UserName, SessionID)
+50040    WriteToSpecialLogfile "Terminal token is asked for (" & UserName & ", " & SessionID & "): Found " & ProcessIDs.Count & " processes"
+50050    If ProcessIDs.Count = 0 Then
+50060     WriteToSpecialLogfile "Cannot detect a terminal token. Looking for console token."
+50070     Set ProcessIDs = FindNormalProcess(UserName)
+50080     WriteToSpecialLogfile "Console token is asked for (" & UserName & "): Found " & ProcessIDs.Count & " processes"
+50090    End If
+50100   Else
+50110    Set ProcessIDs = FindNormalProcess(UserName)
+50120    WriteToSpecialLogfile "Console token is asked for (" & UserName & "): Found " & ProcessIDs.Count & " processes"
+50130  End If
+50140  Set FindProcess = ProcessIDs
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -53,32 +47,33 @@ End Function
 '   If found, then the pid, otherwise 0
 ' Last modification:
 '   09/07/2004 Gergely Matefi
-Private Function FindTSProcess(UserName As String, SessionID As Long, ProcessID As Long) As Boolean
+'   01/14/2009 Frank Heindörfer
+Private Function FindTSProcess(UserName As String, SessionID As Long) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim RetVal As Long, Count As Long, i As Integer, lpBuffer As Long, _
-  p As Long, udtProcessInfo As WTS_PROCESS_INFO, isMissing As Boolean
-50030  ProcessID = 0: FindTSProcess = False
+  p As Long, udtProcessInfo As WTS_PROCESS_INFO, ProcessIDs As Collection, process As clsProcess
+50030  Set ProcessIDs = New Collection
 50040  WriteToSpecialLogfile "Process enumeration..."
 50050  RetVal = WTSEnumerateProcesses(WTS_CURRENT_SERVER_HANDLE, 0&, 1, lpBuffer, Count)
 50060  If RetVal <> 0 Then ' WTSEnumerateProcesses was successful
 50070    p = lpBuffer
 50080    i = 1
-50090    isMissing = True
-50100    While i <= Count And isMissing = True
-50110     MoveMemory udtProcessInfo, ByVal p, LenB(udtProcessInfo)
-50120     WriteToSpecialLogfile "Process: SessionID=" & udtProcessInfo.SessionID & " ProcessID=" & udtProcessInfo.ProcessID
-50130     If udtProcessInfo.SessionID = SessionID And udtProcessInfo.ProcessID > 0 Then
-50140      ' Retrieve the name of the account and the name of the first
-50150      ' domain on which this SID is found.  Passes in the Owner's SID
-50160      ' obtained previously.  Call LookupAccountSid twice, the first time
-50170      ' to obtain the required size of the owner and domain names.
-50180      If UCase$(GetUsernameFromUserSID(udtProcessInfo.pUserSid)) = UCase$(UserName) Then
-50190       ProcessID = udtProcessInfo.ProcessID
-50200       isMissing = False
-50210       FindTSProcess = True
-50220       WriteToSpecialLogfile "Process found: ProcessID=" & ProcessID & " Username=" & UserName
+50090    While i <= Count
+50100     MoveMemory udtProcessInfo, ByVal p, LenB(udtProcessInfo)
+50110     WriteToSpecialLogfile "Process: SessionID=" & udtProcessInfo.SessionID & " ProcessID=" & udtProcessInfo.ProcessID
+50120     If udtProcessInfo.SessionID = SessionID And udtProcessInfo.ProcessID > 0 Then
+50130      ' Retrieve the name of the account and the name of the first
+50140      ' domain on which this SID is found.  Passes in the Owner's SID
+50150      ' obtained previously.  Call LookupAccountSid twice, the first time
+50160      ' to obtain the required size of the owner and domain names.
+50170      If UCase$(GetUsernameFromUserSID(udtProcessInfo.pUserSid)) = UCase$(UserName) Then
+50180       Set process = New clsProcess
+50190       process.ID = udtProcessInfo.ProcessID
+50200       process.Modulname = GetStrFromPtrA(udtProcessInfo.pProcessName)
+50210       ProcessIDs.Add process
+50220       WriteToSpecialLogfile "Process found: ProcessID=" & udtProcessInfo.ProcessID & " Username=" & UserName
 50230      End If
 50240     End If
 50250     i = i + 1
@@ -89,6 +84,7 @@ On Error GoTo ErrPtnr_OnError
 50300    ' Error occurred calling WTSEnumerateProcesses
 50310    WriteToSpecialLogfile "Error occurred calling WTSEnumerateProcesses.  " & RaiseAPIError
 50320  End If
+50330  Set FindTSProcess = ProcessIDs
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -101,15 +97,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function FindNormalProcess(UserName As String, ProcessID) As Boolean
+Private Function FindNormalProcess(UserName As String) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim nResult As Long, lCb As Long, lCbNeeded As Long, lCbNeeded2 As Long, _
-  lProcID() As Long, lModules(1 To 200) As Long, hProcess As Long, _
-  sModuleName As String, n As Long, c As Long
-50040  c = 0
-50050  FindNormalProcess = False
+50010  Dim ProcessIDs As Collection, nResult As Long, lCb As Long, lCbNeeded As Long, lCbNeeded2 As Long, _
+  lProcID() As Long, lModules(1 To 200) As Long, hProcess As Long, sModuleName As String, n As Long, c As Long, _
+  process As clsProcess
+50040  Set ProcessIDs = New Collection
+50050  c = 0
 50060  If IsWinNT4 = True Then
 50070    lCb = 8: lCbNeeded = 96
 50080    Do While lCb <= lCbNeeded
@@ -126,30 +122,30 @@ On Error GoTo ErrPtnr_OnError
 50190       nResult = GetModuleFileNameEx(hProcess, lModules(1), sModuleName, Len(sModuleName))
 50200       sModuleName = LCase$(Left$(sModuleName, nResult))
 50210       If UCase$(GetProcessUserName(lProcID(n))) = UCase$(UserName) Then
-50220        ProcessID = lProcID(n)
-50230        FindNormalProcess = True
-50240        FindNormalProcess = lProcID(n)
-50250        CloseHandle hProcess
-50260        Exit For
-50270       End If
-50280      End If
-50290     End If
-50300     CloseHandle hProcess
-50310    Next n
-50320   Else
-50330    Dim lSnapshot As Long, uProcess As PROCESSENTRY32, Exefile As String
-50340    lSnapshot = CreateToolhelpSnapshot(TH32CS_SNAPPROCESS, 0&)
-50350    If lSnapshot <> 0 Then
-50360      uProcess.dwSize = Len(uProcess)
-50370      nResult = ProcessFirst(lSnapshot, uProcess)
-50380      Do Until nResult = 0
-50390       Exefile = uProcess.szexeFile
-50400       Exefile = Left$(Exefile, InStr(Exefile, Chr$(0)) - 1)
-50410       If Right$(LCase(Exefile), 4) = ".exe" Then
-50420        If UCase$(GetProcessUserName(uProcess.th32ProcessID)) = UCase$(UserName) Then
-50430         ProcessID = uProcess.th32ProcessID
-50440         FindNormalProcess = True
-50450         Exit Do
+50220        Set process = New clsProcess
+50230        process.ID = lProcID(n)
+50240        process.Modulname = sModuleName
+50250        ProcessIDs.Add process
+50260       End If
+50270      End If
+50280     End If
+50290     CloseHandle hProcess
+50300    Next n
+50310   Else
+50320    Dim lSnapshot As Long, uProcess As PROCESSENTRY32, Exefile As String
+50330    lSnapshot = CreateToolhelpSnapshot(TH32CS_SNAPPROCESS, 0&)
+50340    If lSnapshot <> 0 Then
+50350      uProcess.dwSize = Len(uProcess)
+50360      nResult = ProcessFirst(lSnapshot, uProcess)
+50370      Do Until nResult = 0
+50380       Exefile = uProcess.szexeFile
+50390       Exefile = Left$(Exefile, InStr(Exefile, Chr$(0)) - 1)
+50400       If Right$(LCase(Exefile), 4) = ".exe" Then
+50410        If UCase$(GetProcessUserName(uProcess.th32ProcessID)) = UCase$(UserName) Then
+50420         Set process = New clsProcess
+50430         process.ID = uProcess.th32ProcessID
+50440         process.Modulname = Exefile
+50450         ProcessIDs.Add process
 50460        End If
 50470       End If
 50480       nResult = ProcessNext(lSnapshot, uProcess)
@@ -157,6 +153,7 @@ On Error GoTo ErrPtnr_OnError
 50500     CloseHandle lSnapshot
 50510    End If
 50520  End If
+50530  Set FindNormalProcess = ProcessIDs
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -188,7 +185,7 @@ On Error GoTo ErrPtnr_OnError
 50130     tiLen = cbBuff
 50140     res = GetTokenInformation(hToken, TokenUser, TU, tiLen, cbBuff)
 50150     If res = 1 And tiLen > 0 Then
-50160      SIA.Value(5) = SECURITY_NT_AUTHORITY
+50160      SIA.value(5) = SECURITY_NT_AUTHORITY
 50170      res = AllocateAndInitializeSid(SIA, 2, _
       SECURITY_BUILTIN_DOMAIN_RID, _
       DOMAIN_ALIAS_RID_USERS, 0, 0, 0, 0, 0, 0, lSid)
@@ -245,7 +242,7 @@ On Error GoTo ErrPtnr_OnError
 50130     tiLen = cbBuff
 50140     res = GetTokenInformation(hToken, TokenUser, TU, tiLen, cbBuff)
 50150     If res = 1 And tiLen > 0 Then
-50160      SIA.Value(5) = SECURITY_NT_AUTHORITY
+50160      SIA.value(5) = SECURITY_NT_AUTHORITY
 50170      res = AllocateAndInitializeSid(SIA, 2, _
       SECURITY_BUILTIN_DOMAIN_RID, _
       DOMAIN_ALIAS_RID_USERS, 0, 0, 0, 0, 0, 0, lSid)
@@ -332,7 +329,7 @@ On Error GoTo ErrPtnr_OnError
 50110     tiLen = cbBuff
 50120     res = GetTokenInformation(hToken, TokenUser, TU, tiLen, cbBuff)
 50130     If res = 1 And tiLen > 0 Then
-50140      SIA.Value(5) = SECURITY_NT_AUTHORITY
+50140      SIA.value(5) = SECURITY_NT_AUTHORITY
 50150      res = AllocateAndInitializeSid(SIA, 2, _
       SECURITY_BUILTIN_DOMAIN_RID, _
       DOMAIN_ALIAS_RID_USERS, 0, 0, 0, 0, 0, 0, lSid)
