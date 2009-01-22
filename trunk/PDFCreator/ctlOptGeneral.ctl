@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptGeneral 
    ClientHeight    =   5850
    ClientLeft      =   0
@@ -8,6 +8,30 @@ Begin VB.UserControl ctlOptGeneral
    ScaleHeight     =   5850
    ScaleWidth      =   13110
    ToolboxBitmap   =   "ctlOptGeneral.ctx":0000
+   Begin PDFCreator.dmFrame dmFraBrowserAddOn 
+      Height          =   1185
+      Left            =   6720
+      TabIndex        =   21
+      Top             =   3240
+      Width           =   6195
+      _extentx        =   10927
+      _extenty        =   2090
+      caption         =   "Browser Add On"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptGeneral.ctx":0312
+      textshaddowcolor=   12582912
+      Begin VB.CommandButton cmdInstallBrowserAddOn 
+         Caption         =   "&Install Browser Add On"
+         Enabled         =   0   'False
+         Height          =   495
+         Left            =   120
+         TabIndex        =   22
+         Top             =   480
+         Width           =   2580
+      End
+   End
    Begin PDFCreator.dmFrame dmFraShellIntegration 
       Height          =   1065
       Left            =   120
@@ -21,7 +45,7 @@ Begin VB.UserControl ctlOptGeneral
       caption3d       =   2
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":0312
+      font            =   "ctlOptGeneral.ctx":033E
       textshaddowcolor=   12582912
       enabled         =   0   'False
       Begin VB.CommandButton cmdShellintegration 
@@ -56,7 +80,7 @@ Begin VB.UserControl ctlOptGeneral
       caption3d       =   2
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":033E
+      font            =   "ctlOptGeneral.ctx":036A
       textshaddowcolor=   12582912
       Begin VB.CommandButton cmdAsso 
          Caption         =   "&Associate PDFCreator with Postscript files"
@@ -78,9 +102,9 @@ Begin VB.UserControl ctlOptGeneral
       End
       Begin VB.ComboBox cmbOptionsDesign 
          Height          =   315
-         ItemData        =   "ctlOptGeneral.ctx":036A
+         ItemData        =   "ctlOptGeneral.ctx":0396
          Left            =   120
-         List            =   "ctlOptGeneral.ctx":036C
+         List            =   "ctlOptGeneral.ctx":0398
          Style           =   2  'Dropdown-Liste
          TabIndex        =   16
          Top             =   1620
@@ -124,7 +148,7 @@ Begin VB.UserControl ctlOptGeneral
       caption3d       =   2
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":036E
+      font            =   "ctlOptGeneral.ctx":039A
       textshaddowcolor=   12582912
       Begin VB.CheckBox chkNoConfirmMessageSwitchingDefaultprinter 
          Appearance      =   0  '2D
@@ -269,77 +293,80 @@ Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control
-50020  Dim i As Long
-50030
-50040  tbstrProgGeneral.Left = 0
-50050  tbstrProgGeneral.Top = 0
-50060  tbstrProgGeneral.Height = dmFraProgGeneral1.Height + 500
-50070  UserControl.Height = tbstrProgGeneral.Height + 100
-50080
-50090  With tbstrProgGeneral
-50100   .Top = 50
-50110   .Left = 0
-50120  End With
-50130
-50140  With tbstrProgGeneral.Tabs
-50150   .Clear
-50160   For i = 1 To 2
-50170    .Add
-50180   Next i
-50190  End With
-50200  tbstrProgGeneral.Visible = True
-50210
-50220  With cmbSendMailMethod
-50230   .Clear
-50240   For i = 1 To 2
-50250    .AddItem ""
-50260   Next i
-50270  End With
-50280
-50290  With cmbOptionsDesign
-50300   .Clear
-50310   For i = 1 To 2
-50320    .AddItem ""
-50330   Next i
-50340  End With
-50350
-50360  If IsWin9xMe = False Then
-50370   If IsAdmin = False Then
-50380    cmdShellintegration(0).Enabled = False
-50390    cmdShellintegration(1).Enabled = False
-50400   End If
-50410  End If
-50420  If IsPsAssociate = False Then
-50430    cmdAsso.Enabled = True
-50440   Else
-50450    cmdAsso.Enabled = False
-50460  End If
-50470  With sldProcessPriority
-50480   .TextPosition = sldBelowRight
-50490   .TickFrequency = 1
-50500   .TickStyle = sldTopLeft
-50511   Select Case .value
+50010  Dim ctl As Control, i As Long
+50020
+50030  tbstrProgGeneral.Left = 0
+50040  tbstrProgGeneral.Top = 0
+50050  tbstrProgGeneral.Height = dmFraProgGeneral1.Height + dmFraBrowserAddOn.Height + 500
+50060  UserControl.Height = tbstrProgGeneral.Height + 100
+50070
+50080  With tbstrProgGeneral
+50090   .Top = 50
+50100   .Left = 0
+50110  End With
+50120
+50130  With tbstrProgGeneral.Tabs
+50140   .Clear
+50150   For i = 1 To 2
+50160    .Add
+50170   Next i
+50180  End With
+50190  tbstrProgGeneral.Visible = True
+50200
+50210  With cmbSendMailMethod
+50220   .Clear
+50230   For i = 1 To 2
+50240    .AddItem ""
+50250   Next i
+50260  End With
+50270
+50280  With cmbOptionsDesign
+50290   .Clear
+50300   For i = 1 To 2
+50310    .AddItem ""
+50320   Next i
+50330  End With
+50340
+50350  If IsWin9xMe = False Then
+50360   If IsAdmin = False Then
+50370    cmdShellintegration(0).Enabled = False
+50380    cmdShellintegration(1).Enabled = False
+50390   End If
+50400  End If
+50410  If IsPsAssociate = False Then
+50420    cmdAsso.Enabled = True
+50430   Else
+50440    cmdAsso.Enabled = False
+50450  End If
+50460  With sldProcessPriority
+50470   .TextPosition = sldBelowRight
+50480   .TickFrequency = 1
+50490   .TickStyle = sldTopLeft
+50501   Select Case .value
          Case 0: 'Idle
-50530     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
-50540    Case 1: 'Normal
-50550     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
-50560    Case 2: 'High
-50570     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
-50580    Case 3: 'Realtime
-50590     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
-50600   End Select
-50610  End With
-50620
-50630  If IsWin9xMe = False Then
-50640    lblProcessPriority.Enabled = True
-50650    sldProcessPriority.Enabled = True
-50660   Else
-50670    lblProcessPriority.Enabled = False
-50680    sldProcessPriority.Enabled = False
-50690  End If
-50700
-50710  SetFrames Options.OptionsDesign
+50520     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
+50530    Case 1: 'Normal
+50540     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
+50550    Case 2: 'High
+50560     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
+50570    Case 3: 'Realtime
+50580     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
+50590   End Select
+50600  End With
+50610
+50620  If IsWin9xMe = False Then
+50630    lblProcessPriority.Enabled = True
+50640    sldProcessPriority.Enabled = True
+50650   Else
+50660    lblProcessPriority.Enabled = False
+50670    sldProcessPriority.Enabled = False
+50680  End If
+50690
+50700  If FileExists(CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe") Then
+50710   cmdInstallBrowserAddOn.Enabled = True
+50720  End If
+50730
+50740  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -383,14 +410,18 @@ On Error GoTo ErrPtnr_OnError
 50030   .Top = tbstrProgGeneral.ClientTop + 50
 50040   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
 50050  End With
-50060  With dmFraProgGeneral2
-50070   .Top = tbstrProgGeneral.ClientTop + 50
-50080   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
+50060  With dmFraBrowserAddOn
+50070   .Top = dmFraProgGeneral1.Top + dmFraProgGeneral1.Height + 50
+50080   .Left = dmFraProgGeneral1.Left
 50090  End With
-50100  With dmFraShellIntegration
-50110   .Top = dmFraProgGeneral2.Top + dmFraProgGeneral2.Height + 50
+50100  With dmFraProgGeneral2
+50110   .Top = tbstrProgGeneral.ClientTop + 50
 50120   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
 50130  End With
+50140  With dmFraShellIntegration
+50150   .Top = dmFraProgGeneral2.Top + dmFraProgGeneral2.Height + 50
+50160   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
+50170  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -510,14 +541,18 @@ On Error GoTo ErrPtnr_OnError
 50060    dmFraShellIntegration.Visible = False
 50070    dmFraProgGeneral1.Enabled = True
 50080    dmFraProgGeneral1.Visible = True
-50090   Case 2
-50100    dmFraProgGeneral1.Enabled = False
-50110    dmFraProgGeneral1.Visible = False
-50120    dmFraProgGeneral2.Enabled = True
-50130    dmFraProgGeneral2.Visible = True
-50140    dmFraShellIntegration.Enabled = True
-50150    dmFraShellIntegration.Visible = True
-50160  End Select
+50090    dmFraBrowserAddOn.Enabled = True
+50100    dmFraBrowserAddOn.Visible = True
+50110   Case 2
+50120    dmFraProgGeneral1.Enabled = False
+50130    dmFraProgGeneral1.Visible = False
+50140    dmFraBrowserAddOn.Enabled = False
+50150    dmFraBrowserAddOn.Visible = False
+50160    dmFraProgGeneral2.Enabled = True
+50170    dmFraProgGeneral2.Visible = True
+50180    dmFraShellIntegration.Enabled = True
+50190    dmFraShellIntegration.Visible = True
+50200  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -586,6 +621,23 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptGeneral", "cmdShellintegration_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmdInstallBrowserAddOn_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Shell """" & CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe"""
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGeneral", "cmdInstallBrowserAddOn_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
