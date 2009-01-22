@@ -35,7 +35,7 @@ DontUseDocumentSettings||Boolean|0||
 EPSLanguageLevel|cmbEPSLanguageLevel.Listindex|Long|2|0|3
 
 ' <Program>
-FilenameSubstitutions||String|Microsoft Word - \.doc\Microsoft Excel - \.xls\Microsoft PowerPoint - \.ppt||
+FilenameSubstitutions||String|Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt||
 FilenameSubstitutionsOnlyInTitle|chkFilenameSubst.Value|Boolean|1||
 
 ' <Printing Formats Bitmap Colors>
