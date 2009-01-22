@@ -770,21 +770,8 @@ Private Function Create_eDoc() As String
    .PrintingPCLFiles & " (" & Extf(10) & ")|" & Extf(10) & "|" & _
    .PrintingRAWFiles & " (" & Extf(11) & ")|" & Extf(11)
  End With
-' If IsInIDE Then
-'  Filter = Filter & "|(*.txt)|*.txt"
-' End If
- FilterIndex = 1
- If InStr(1, Filter, "|", vbTextCompare) > 0 Then
-  tStrf = Split(Filter, "|")
-  Ext2 = UCase$(Mid$(Extf(Options.StandardSaveformat), 3))
-  For i = 1 To UBound(tStrf) Step 2
-   SplitPath tStrf(i), , , , , Ext
-   If Ext2 = UCase$(Ext) Then
-    FilterIndex = (i + 1) \ 2
-    Exit For
-   End If
-  Next i
- End If
+ 
+ FilterIndex = Options.StandardSaveformat + 1
  With LanguageStrings
   PSHeader = GetPSHeader(PDFSpoolfile)
   If Len(txtTitle.Text) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
