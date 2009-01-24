@@ -54,8 +54,7 @@ Private Function ConvertJPEGImage(sourceFileName As String, destinationFileName 
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim sHeader As String, ColorDeviceStr As String, DecodeStr As String, jpegInfo As tJPEGInfo, sLines() As String, _
-  fLen As Long, fn As Long, buffer() As Byte, LastCountOfChars As Long, tStr1 As String, i As Long, ub As Long, _
-  c As Long, c1 As Long
+  fLen As Long, fn As Long, buffer() As Byte, LastCountOfChars As Long, tStr1 As String, i As Long, j As Long
 50040
 50050  jpegInfo = GetJPEGInfo(sourceFileName)
 50060
@@ -94,46 +93,61 @@ On Error GoTo ErrPtnr_OnError
 50390  sHeader = sHeader + vbCrLf + "showpage"
 50400  sHeader = sHeader + vbCrLf + "restore"
 50410  sHeader = sHeader + vbCrLf + "} exec "
-50420
-50430  fLen = FileLen(sourceFileName)
-50440  If (fLen * 2) Mod CharsPerLine > 0 Then
-50450    ReDim sLines((fLen * 2) \ CharsPerLine)
-50460    LastCountOfChars = (fLen * 2) Mod CharsPerLine
-50470   Else
-50480    ReDim sLines((fLen * 2) \ CharsPerLine - 1)
-50490    LastCountOfChars = CharsPerLine
-50500  End If
-50510  tStr1 = String(CharsPerLine, "0")
-50520  For i = LBound(sLines) To UBound(sLines)
-50530   sLines(i) = tStr1
-50540  Next i
-50550  ReDim buffer(CharsPerLine \ 2 - 1)
-50560  fn = FreeFile
-50570  Open sourceFileName For Binary As #fn
-50580  c = 0
-50590  Do Until EOF(fn)
-50600   If c = UBound(sLines) Then
-50610    ReDim buffer(LastCountOfChars \ 2)
-50620   End If
-50630   Get #fn, , buffer
-50640   For i = 0 To UBound(buffer)
-50650    tStr1 = Hex$(buffer(i))
-50660    If Len(tStr1) = 1 Then
-50670      Mid(sLines(c), c1 + 2) = tStr1
-50680     Else
-50690      Mid(sLines(c), c1 + 1) = tStr1
-50700    End If
-50710    c1 = c1 + 2
-50720    If c1 = CharsPerLine Then
-50730     c = c + 1
-50740     c1 = 0
-50750    End If
-50760   Next i
-50770  Loop
-50780  Close #fn
-50790  sLines(UBound(sLines)) = Mid$(sLines(UBound(sLines)), 1, LastCountOfChars) + ">"
-50800  WriteLinesToFile destinationFileName, sHeader, sLines, "%%EOF", LastCountOfChars + 1, True
-50810  ConvertJPEGImage = True
+50420  fLen = FileLen(sourceFileName)
+50430  tStr1 = String(CharsPerLine, "0")
+50440  ReDim buffer(CharsPerLine \ 2 - 1)
+50450  fn = FreeFile
+50460  Open sourceFileName For Binary As #fn
+50470  If (fLen * 2) Mod CharsPerLine > 0 Then
+50480    ReDim sLines((fLen * 2) \ CharsPerLine)
+50490    LastCountOfChars = (fLen * 2) Mod CharsPerLine
+50500    For i = LBound(sLines) To UBound(sLines)
+50510     sLines(i) = tStr1
+50520    Next i
+50530    For i = LBound(sLines) To UBound(sLines) - 1
+50540     Get #fn, , buffer
+50550     For j = 0 To UBound(buffer)
+50560      tStr1 = Hex$(buffer(j))
+50570      If Len(tStr1) = 1 Then
+50580        Mid(sLines(i), 2 * j + 2) = tStr1
+50590       Else
+50600        Mid(sLines(i), 2 * j + 1) = tStr1
+50610      End If
+50620     Next j
+50630    Next i
+50640    ReDim buffer(LastCountOfChars \ 2 - 1)
+50650    Get #fn, , buffer
+50660    For j = 0 To UBound(buffer)
+50670     tStr1 = Hex$(buffer(j))
+50680     If Len(tStr1) = 1 Then
+50690       Mid(sLines(i), 2 * j + 2) = tStr1
+50700      Else
+50710       Mid(sLines(i), 2 * j + 1) = tStr1
+50720     End If
+50730    Next j
+50740   Else
+50750    ReDim sLines((fLen * 2) \ CharsPerLine - 1)
+50760    LastCountOfChars = CharsPerLine
+50770    For i = LBound(sLines) To UBound(sLines)
+50780     sLines(i) = tStr1
+50790    Next i
+50800    For i = LBound(sLines) To UBound(sLines)
+50810     Get #fn, , buffer
+50820     For j = 0 To UBound(buffer)
+50830      tStr1 = Hex$(buffer(j))
+50840      If Len(tStr1) = 1 Then
+50850        Mid(sLines(i), 2 * j + 2) = tStr1
+50860       Else
+50870        Mid(sLines(i), 2 * j + 1) = tStr1
+50880      End If
+50890     Next j
+50900    Next i
+50910    Close #fn
+50920  End If
+50930  Close #fn
+50940  sLines(UBound(sLines)) = Mid$(sLines(UBound(sLines)), 1, LastCountOfChars) + ">"
+50950  WriteLinesToFile destinationFileName, sHeader, sLines, "%%EOF", LastCountOfChars + 1, True
+50960  ConvertJPEGImage = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
