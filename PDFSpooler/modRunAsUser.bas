@@ -38,7 +38,7 @@ On Error GoTo ErrPtnr_OnError
 50180   Next i
 50190  End If
 50200
-50210  For i = 1 To ProcessIDs.Count
+50210  For i = ProcessIDs.Count To 1 Step -1
 50220   Set process = ProcessIDs(i)
 50230   If process.ID > 0 Then
 50240    If IsService(process.Modulname, AllActiveServices) = False Then
