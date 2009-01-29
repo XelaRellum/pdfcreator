@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.OCX"
 Begin VB.UserControl ctlOptGeneral 
    ClientHeight    =   5850
    ClientLeft      =   0
@@ -362,11 +362,15 @@ On Error GoTo ErrPtnr_OnError
 50670    sldProcessPriority.Enabled = False
 50680  End If
 50690
-50700  If FileExists(CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe") Then
-50710   cmdInstallBrowserAddOn.Enabled = True
-50720  End If
-50730
-50740  SetFrames Options.OptionsDesign
+50700  If FileExists(CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe") And (Not BrowserAddOnIsInstalled) Then
+50710    dmFraBrowserAddOn.Enabled = True
+50720    cmdInstallBrowserAddOn.Enabled = True
+50730   Else
+50740    dmFraBrowserAddOn.Enabled = False
+50750    cmdInstallBrowserAddOn.Enabled = False
+50760  End If
+50770
+50780  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

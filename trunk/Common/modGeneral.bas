@@ -306,11 +306,11 @@ Public Function GetDrives() As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim l As Long, Buffer As String, res As Long, drives As String, drv() As String, _
+50010  Dim l As Long, buffer As String, res As Long, drives As String, drv() As String, _
   i As Long
-50030  l = 64: Buffer = Space(l)
-50040  res = GetLogicalDriveStrings(l, Buffer)
-50050  drives = Left$(Buffer, res)
+50030  l = 64: buffer = Space(l)
+50040  res = GetLogicalDriveStrings(l, buffer)
+50050  drives = Left$(buffer, res)
 50060  Set GetDrives = New Collection
 50070  If Len(drives) > 0 Then
 50080   If InStr(drives, Chr$(0)) > 0 Then
@@ -2386,3 +2386,28 @@ Function ReadCompleteFile(ByRef filename As String) As String
  Close fn
 End Function
 
+Function BrowserAddOnIsInstalled() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry
+50020  Set reg = New clsRegistry
+50030  reg.hkey = HKEY_LOCAL_MACHINE
+50040  reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
+50050  If reg.KeyExists = True Then
+50060    BrowserAddOnIsInstalled = True
+50070   Else
+50080    BrowserAddOnIsInstalled = False
+50090  End If
+50100  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "BrowserAddOnIsInstalled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
