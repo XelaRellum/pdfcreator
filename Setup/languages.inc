@@ -20,10 +20,10 @@ Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 ;Name: portuguese_br;      MessagesFile: compiler:Languages\BrazilianPortuguese.isl
 ;Name: romanian;           MessagesFile: Innosetup languages files\Romanian-6-5.1.11.isl
 ;Name: russian;            MessagesFile: compiler:Languages\Russian.isl
-;Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
-;Name: slovenian;          MessagesFile: compiler:Languages\Slovenian.isl
+Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
+Name: slovenian;          MessagesFile: compiler:Languages\Slovenian.isl
 ;Name: spanish;            MessagesFile: compiler:Languages\Spanish.isl
 ;Name: swedish;            MessagesFile: Innosetup languages files\Swedish-10-5.1.12.isl
-;Name: turkish;            MessagesFile: Innosetup languages files\Turkish-3-5.1.11.isl
+Name: turkish;            MessagesFile: Innosetup languages files\Turkish-3-5.1.11.isl
 ;Name: ukrainian;          MessagesFile: Innosetup languages files\Ukrainian-5-5.1.0.isl
 ;Name: valencian;          MessagesFile: Innosetup languages files\Valencian-1-5.1.11.isl
