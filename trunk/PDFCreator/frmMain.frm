@@ -1134,7 +1134,7 @@ On Error GoTo ErrPtnr_OnError
 50220        End If
 50230        aw = MsgBox(Replace$(LanguageStrings.MessagesMsg32, "%1", updStr), vbYesNo + vbQuestion)
 50240        If aw = vbYes Then
-50250         OpenDocument "http://www.sourceforge.net/project/showfiles.php?group_id=57796"
+50250         OpenDocument "http://www.pdfforge.org/products/pdfcreator/download"
 50260        End If
 50270       Else
 50280        MsgBox LanguageStrings.MessagesMsg33, vbOKOnly + vbInformation
