@@ -228,11 +228,11 @@ On Error GoTo ErrPtnr_OnError
 50140   .KeyRoot = "Postscript\Shell\Open"
 50150   .CreateKey "Command"
 50160   .KeyRoot = "Postscript\Shell\Open\Command"
-50170   .SetRegistryValue "", """" & GetPDFCreatorApplicationPath & App.ExeName & ".exe"" -IF""%1""", REG_SZ
+50170   .SetRegistryValue "", """" & GetPDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""", REG_SZ
 50180   .KeyRoot = "Postscript"
 50190   .CreateKey "DefaultIcon"
 50200   .KeyRoot = "PostScript\DefaultIcon"
-50210   .SetRegistryValue "", GetPDFCreatorApplicationPath & App.ExeName & ".exe,0", REG_SZ
+50210   .SetRegistryValue "", GetPDFCreatorApplicationPath & App.EXEName & ".exe,0", REG_SZ
 50220  End With
 50230  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -261,9 +261,9 @@ On Error GoTo ErrPtnr_OnError
 50080    reg.KeyRoot = "Postscript"
 50090    If reg.KeyExists = True Then
 50100     reg.KeyRoot = "Postscript\DefaultIcon"
-50110     If UCase$(reg.GetRegistryValue("")) = UCase$(GetPDFCreatorApplicationPath & App.ExeName & ".exe,0") Then
+50110     If UCase$(reg.GetRegistryValue("")) = UCase$(GetPDFCreatorApplicationPath & App.EXEName & ".exe,0") Then
 50120      reg.KeyRoot = "Postscript\Shell\Open\Command"
-50130      If UCase$(reg.GetRegistryValue("")) = UCase$("""" & GetPDFCreatorApplicationPath & App.ExeName & ".exe"" -IF""%1""") Then
+50130      If UCase$(reg.GetRegistryValue("")) = UCase$("""" & GetPDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""") Then
 50140       IsPsAssociate = True
 50150      End If
 50160     End If
@@ -332,7 +332,7 @@ On Error GoTo ErrPtnr_OnError
 50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 50060   Release = .GetRegistryValue("ApplicationVersion")
 50070   If LenB(Trim$(Release)) = 0 Then
-50080     Release = App.Major & "." & App.Minor & "." & App.Revision
+50080     Release = App.Major & "." & App.Minor & "." & App.Revision & ".0"
 50090    Else
 50100     If WithBeta = True Then
 50110      If Len(Trim$(.GetRegistryValue("BetaVersion"))) > 0 Then
@@ -409,10 +409,10 @@ On Error GoTo ErrPtnr_OnError
 50160  End If
 50170  ProgRelease = Split(progReleaseStr, ".")
 50180  updRelease = Split(UpdateVersionsStr, ".")
-50190  If UBound(ProgRelease) <> 2 Then
+50190  If UBound(ProgRelease) <> 3 Then
 50200   Exit Function
 50210  End If
-50220  If UBound(updRelease) <> 2 Then
+50220  If UBound(updRelease) <> 3 Then
 50230   Exit Function
 50240  End If
 50250  For i = 0 To 2
