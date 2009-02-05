@@ -298,7 +298,7 @@ On Error GoTo ErrPtnr_OnError
 50130  AddParams "-I" & tStr
 50140  AddParams "-q"
 50150  AddParams "-dNOPAUSE"
-50160  AddParams "-dSAFER"
+50160  'AddParams "-dSAFER"
 50170  AddParams "-dBATCH"
 50180  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50190   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -436,7 +436,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -507,7 +507,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -578,7 +578,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -649,7 +649,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -719,7 +719,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -789,7 +789,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -859,7 +859,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -925,7 +925,7 @@ On Error GoTo ErrPtnr_OnError
 50140  AddParams "-I" & tStr
 50150  AddParams "-q"
 50160  AddParams "-dNOPAUSE"
-50170  AddParams "-dSAFER"
+50170  'AddParams "-dSAFER"
 50180  AddParams "-dBATCH"
 50190  AddParams "-dNODISPLAY"
 50200  AddParams "-dDELAYBIND"
@@ -976,7 +976,7 @@ On Error GoTo ErrPtnr_OnError
 50230  AddParams "-dPDFA"
 50240  AddParams "-q"
 50250  AddParams "-dNOPAUSE"
-50260  AddParams "-dSAFER"
+50260  'AddParams "-dSAFER"
 50270  AddParams "-dBATCH"
 50280  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50290   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -1080,7 +1080,7 @@ On Error GoTo ErrPtnr_OnError
 50130  AddParams "-I" & tStr
 50140  AddParams "-q"
 50150  AddParams "-dNOPAUSE"
-50160  AddParams "-dSAFER"
+50160  'AddParams "-dSAFER"
 50170  AddParams "-dBATCH"
 50180  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50190   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -1509,7 +1509,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub SignPDF(Filename As String)
+Private Sub SignPDF(filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1543,12 +1543,12 @@ On Error GoTo ErrPtnr_OnError
 50280    Else
 50290     multiSignatures = True
 50300   End If
-50310   Call m.signPDFFile(Filename, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
+50310   Call m.signPDFFile(filename, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
    signatureVisible, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
 50330  End With
 50340  If FileExists(Tempfile) Then
-50350   If KillFile(Filename) Then
-50360    Name Tempfile As Filename
+50350   If KillFile(filename) Then
+50360    Name Tempfile As filename
 50370   End If
 50380  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
