@@ -28,7 +28,7 @@
 #endif
 
 #Ifdef IncludeGhostscript
- #define GhostscriptVersion "8.63"
+ #define GhostscriptVersion "8.64"
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 
@@ -134,7 +134,7 @@
 #include "PostscriptPrinterSettings.inc"
 
 ;#define UpdateIsPossible
-#define UpdateIsPossibleMinVersion "0.9.6"
+;#define UpdateIsPossibleMinVersion "0.9.8"
 
 #IFDEF IncludeBrowserAddOn
  #include "BrowserAddOnForm.isd"
