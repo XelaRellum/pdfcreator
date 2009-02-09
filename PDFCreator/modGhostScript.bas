@@ -1188,7 +1188,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -1258,7 +1258,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -1328,7 +1328,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
@@ -1579,7 +1579,7 @@ On Error GoTo ErrPtnr_OnError
 50100  AddParams "-I" & tStr
 50110  AddParams "-q"
 50120  AddParams "-dNODISPLAY"
-50130  AddParams "-dSAFER"
+50130  'AddParams "-dSAFER"
 50140  AddParams "-dDELAYSAFER"
 50150  AddParams "--"
 50160  AddParams "pdfopt.ps"
@@ -2453,7 +2453,7 @@ On Error GoTo ErrPtnr_OnError
 50180  AddParams "-I" & tStr
 50190  AddParams "-q"
 50200  AddParams "-dNOPAUSE"
-50210  AddParams "-dSAFER"
+50210  'AddParams "-dSAFER"
 50220  AddParams "-dBATCH"
 50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
 50240   AddParams "-sFONTPATH=" & GetFontsDirectory
