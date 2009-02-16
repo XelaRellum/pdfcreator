@@ -15,8 +15,7 @@ Const maxTime = 30    ' in seconds
 Const sleepTime = 250 ' in milliseconds
 Const PrinterName = "PDFCreator" ' PDFCreator printer
 
-Dim objArgs, ifname, fso, PDFCreator, DefaultPrinter, ReadyState, _
- i, AppTitle, Scriptname, ScriptBasename, ext
+Dim objArgs, ifname, fso, PDFCreator, i, AppTitle, Scriptname, ScriptBasename, ext
  
 Set fso = CreateObject("Scripting.FileSystemObject")
 
@@ -39,10 +38,6 @@ End If
 
 Set PDFCreator = Wscript.CreateObject("PDFCreator.clsPDFCreator", "PDFCreator_")
 PDFCreator.cStart "/NoProcessingAtStartup"
-With PDFCreator
- DefaultPrinter = .cDefaultprinter
- .cDefaultprinter = PrinterName
-End With
 
 For i = 0 to objArgs.Count - 1
  ifname = objArgs(i)
@@ -68,17 +63,13 @@ For i = 0 to objArgs.Count - 1
  end if
 Next
 
-With PDFCreator
- .cDefaultprinter = DefaultPrinter
- WScript.Sleep 200
- .cClose
-End With
+PDFCreator.cClose
 
 MsgBox "Ready", vbInformation + vbSystemModal, AppTitle
 
 '--- Internal sub routines ---
 Private Sub ConvertWord(sourceFilename)
- Dim objWord, tempFile, outputFolder, outputFile
+ Dim objWord, tempFile, outputFolder, outputFile, DefaultPrinter
 
  outputFolder = fso.GetParentFolderName(sourceFilename)
  If Mid(outputFolder, Len(outputFolder), 1) <> "\" then outputFolder = outputFolder & "\"
@@ -87,12 +78,15 @@ Private Sub ConvertWord(sourceFilename)
  Set objWord = CreateObject("Word.Application")
  objWord.Visible = False
  objWord.Documents.Open sourceFilename
- tempFile = GetTempFileName 
+ tempFile = GetTempFileName
+ DefaultPrinter = objWord.ActivePrinter
+ objWord.ActivePrinter = PrinterName
  objWord.PrintOut False, , , tempFile, , , , , , , True
 
  PDFCreator.cConvertFile tempFile, outputFile
 
  objWord.ActiveDocument.Close false
+ objWord.ActivePrinter = DefaultPrinter
  objWord.Quit
  Set objWord = Nothing
 End Sub
@@ -129,6 +123,7 @@ Private Sub ConvertPowerpoint(sourceFilename)
  objPowerpoint.Presentations.Open sourceFilename
  tempFile = GetTempFileName
  
+ objPowerpoint.ActivePresentation.PrintOptions.ActivePrinter  = PrinterName
  objPowerpoint.ActivePresentation.PrintOptions.PrintInBackground = False
  objPowerpoint.ActivePresentation.PrintOut , , tempFile
 
