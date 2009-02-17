@@ -11,8 +11,6 @@
 
 Option Explicit
 
-Const maxTime = 30    ' in seconds
-Const sleepTime = 250 ' in milliseconds
 Const PrinterName = "PDFCreator" ' PDFCreator printer
 
 Dim objArgs, ifname, fso, PDFCreator, i, AppTitle, Scriptname, ScriptBasename, ext
