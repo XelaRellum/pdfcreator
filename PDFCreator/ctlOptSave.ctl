@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MsComCtl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.UserControl ctlOptSave 
    ClientHeight    =   5715
    ClientLeft      =   0
@@ -14,12 +14,20 @@ Begin VB.UserControl ctlOptSave
       TabIndex        =   0
       Top             =   240
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   4710
-      caption         =   "Save"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptSave.ctx":0312
+      _ExtentX        =   11245
+      _ExtentY        =   4710
+      Caption         =   "Save"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtSavePreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -33,9 +41,9 @@ Begin VB.UserControl ctlOptSave
       Begin VB.ComboBox cmbSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptSave.ctx":033E
+         ItemData        =   "ctlOptSave.ctx":0312
          Left            =   3720
-         List            =   "ctlOptSave.ctx":0340
+         List            =   "ctlOptSave.ctx":0314
          Style           =   2  'Dropdown-Liste
          TabIndex        =   4
          Top             =   600
@@ -64,9 +72,9 @@ Begin VB.UserControl ctlOptSave
       Begin VB.ComboBox cmbStandardSaveFormat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptSave.ctx":0342
+         ItemData        =   "ctlOptSave.ctx":0316
          Left            =   120
-         List            =   "ctlOptSave.ctx":0344
+         List            =   "ctlOptSave.ctx":0318
          Style           =   2  'Dropdown-Liste
          TabIndex        =   8
          Top             =   2100
@@ -106,12 +114,20 @@ Begin VB.UserControl ctlOptSave
       TabIndex        =   9
       Top             =   3000
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   4471
-      caption         =   "Filename substitutions"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptSave.ctx":0346
+      _ExtentX        =   11245
+      _ExtentY        =   4471
+      Caption         =   "Filename substitutions"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CommandButton cmdFilenameSubst 
          Caption         =   "&Delete"
          Height          =   375
@@ -134,7 +150,7 @@ Begin VB.UserControl ctlOptSave
          Height          =   435
          Index           =   1
          Left            =   120
-         Picture         =   "ctlOptSave.ctx":0372
+         Picture         =   "ctlOptSave.ctx":031A
          Style           =   1  'Grafisch
          TabIndex        =   14
          Top             =   1440
@@ -173,7 +189,7 @@ Begin VB.UserControl ctlOptSave
          Height          =   435
          Index           =   0
          Left            =   120
-         Picture         =   "ctlOptSave.ctx":06FC
+         Picture         =   "ctlOptSave.ctx":06A4
          Style           =   1  'Grafisch
          TabIndex        =   13
          Top             =   915

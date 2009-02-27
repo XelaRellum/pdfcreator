@@ -1,7 +1,7 @@
 ; english must be the first entry
 Name: english;            MessagesFile: compiler:Default.isl
-;Name: catalan;            MessagesFile: compiler:Languages\Catalan.isl
-;Name: czech;              MessagesFile: compiler:Languages\Czech.isl
+Name: catalan;            MessagesFile: compiler:Languages\Catalan.isl
+Name: czech;              MessagesFile: compiler:Languages\Czech.isl
 ;Name: chinese_simplified; MessagesFile: Innosetup languages files\ChineseSimp-11-5.1.0.isl
 ;Name: dutch;              MessagesFile: compiler:Languages\Dutch.isl
 Name: estonian;           MessagesFile: Innosetup languages files\Estonian-2-5.1.0.isl
@@ -11,7 +11,7 @@ Name: galician;           MessagesFile: Innosetup languages files\Galician-2-5.1
 Name: german;             MessagesFile: compiler:Languages\German.isl; LicenseFile: .\License\Program license - german.rtf
 Name: greek;              MessagesFile: Innosetup languages files\Greek-4-5.1.11.isl
 Name: hungarian;          MessagesFile: compiler:Languages\Hungarian.isl
-;Name: indonesian;         MessagesFile: Innosetup languages files\Indonesian-5.1.11.isl
+Name: indonesian;         MessagesFile: Innosetup languages files\Indonesian-5.1.11.isl
 Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 ;Name: japanese;           MessagesFile: Innosetup languages files\Japanese-5-5.1.11.isl
 ;Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.11.isl

@@ -55,99 +55,99 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim sHeader As String, ColorDeviceStr As String, DecodeStr As String, jpegInfo As tJPEGInfo, sLines() As String, _
   fLen As Long, fn As Long, buffer() As Byte, LastCountOfChars As Long, tStr1 As String, i As Long, j As Long
-50040
-50050  jpegInfo = GetJPEGInfo(sourceFileName)
-50060
-50071  Select Case jpegInfo.BitsPerPixel
+50030
+50040  jpegInfo = GetJPEGInfo(sourceFileName)
+50050
+50061  Select Case jpegInfo.BitsPerPixel
         Case 24, 32, 16
-50090    ColorDeviceStr = "/DeviceRGB setcolorspace"
-50100    DecodeStr = "[0 1 0 1 0 1]"
-50110   Case 8, 4, 1
-50120    ColorDeviceStr = "/DeviceGray setcolorspace"
-50130    DecodeStr = "[0 1]"
-50140   Case Else
-50150    ConvertJPEGImage = False
-50160    Exit Function
-50170  End Select
-50180
-50190  sHeader = "%!PS-Adobe-1.0"
-50200  sHeader = sHeader + vbCrLf + "%%Creator: PDFCreator"
-50210  sHeader = sHeader + vbCrLf + "%%For: PDFCreator"
-50220  sHeader = sHeader + vbCrLf + "%%Title:" & sourceFileName
-50230  sHeader = sHeader + vbCrLf + "%%Documentdata: Binary"
-50240  sHeader = sHeader + vbCrLf + "%%DocumentMedia: CustomSize " & jpegInfo.Width & " " & jpegInfo.Height & " 0 () ()"
-50250  sHeader = sHeader + vbCrLf + "%%LanguageLevel: 2"
-50260  sHeader = sHeader + vbCrLf + "%%EndComments"
-50270  sHeader = sHeader + vbCrLf + vbCrLf & "/setpagedevice where { pop 1 dict dup /PageSize [" & jpegInfo.Width & " " & jpegInfo.Height & "] put setpagedevice } if"
-50280  sHeader = sHeader + vbCrLf & "save"
-50290  sHeader = sHeader + vbCrLf + "/RawData currentfile /ASCIIHexDecode filter def"
-50300  sHeader = sHeader + vbCrLf + "/Data RawData << >> /DCTDecode filter def"
-50310  sHeader = sHeader + vbCrLf + "0 0 translate"
-50320  sHeader = sHeader + vbCrLf & jpegInfo.Width & " " & jpegInfo.Height & " scale"
-50330  sHeader = sHeader + vbCrLf + ColorDeviceStr
-50340  sHeader = sHeader + vbCrLf + "{ << /ImageType 1 /Width " & jpegInfo.Width & " /Height " & jpegInfo.Height & _
+50080    ColorDeviceStr = "/DeviceRGB setcolorspace"
+50090    DecodeStr = "[0 1 0 1 0 1]"
+50100   Case 8, 4, 1
+50110    ColorDeviceStr = "/DeviceGray setcolorspace"
+50120    DecodeStr = "[0 1]"
+50130   Case Else
+50140    ConvertJPEGImage = False
+50150    Exit Function
+50160  End Select
+50170
+50180  sHeader = "%!PS-Adobe-1.0"
+50190  sHeader = sHeader + vbCrLf + "%%Creator: PDFCreator"
+50200  sHeader = sHeader + vbCrLf + "%%For: PDFCreator"
+50210  sHeader = sHeader + vbCrLf + "%%Title:" & sourceFileName
+50220  sHeader = sHeader + vbCrLf + "%%Documentdata: Binary"
+50230  sHeader = sHeader + vbCrLf + "%%DocumentMedia: CustomSize " & jpegInfo.Width & " " & jpegInfo.Height & " 0 () ()"
+50240  sHeader = sHeader + vbCrLf + "%%LanguageLevel: 2"
+50250  sHeader = sHeader + vbCrLf + "%%EndComments"
+50260  sHeader = sHeader + vbCrLf + vbCrLf & "/setpagedevice where { pop 1 dict dup /PageSize [" & jpegInfo.Width & " " & jpegInfo.Height & "] put setpagedevice } if"
+50270  sHeader = sHeader + vbCrLf & "save"
+50280  sHeader = sHeader + vbCrLf + "/RawData currentfile /ASCIIHexDecode filter def"
+50290  sHeader = sHeader + vbCrLf + "/Data RawData << >> /DCTDecode filter def"
+50300  sHeader = sHeader + vbCrLf + "0 0 translate"
+50310  sHeader = sHeader + vbCrLf & jpegInfo.Width & " " & jpegInfo.Height & " scale"
+50320  sHeader = sHeader + vbCrLf + ColorDeviceStr
+50330  sHeader = sHeader + vbCrLf + "{ << /ImageType 1 /Width " & jpegInfo.Width & " /Height " & jpegInfo.Height & _
   " /ImageMatrix [" & jpegInfo.Width & " 0 0 -" & jpegInfo.Height & " 0 " & jpegInfo.Height & "]" + _
   "/DataSource Data /BitsPerComponent 8 /Decode " + DecodeStr + ">> image"
-50370  sHeader = sHeader + vbCrLf + "Data closefile"
-50380  sHeader = sHeader + vbCrLf + "RawData flushfile"
-50390  sHeader = sHeader + vbCrLf + "showpage"
-50400  sHeader = sHeader + vbCrLf + "restore"
-50410  sHeader = sHeader + vbCrLf + "} exec "
-50420  fLen = FileLen(sourceFileName)
-50430  tStr1 = String(CharsPerLine, "0")
-50440  ReDim buffer(CharsPerLine \ 2 - 1)
-50450  fn = FreeFile
-50460  Open sourceFileName For Binary As #fn
-50470  If (fLen * 2) Mod CharsPerLine > 0 Then
-50480    ReDim sLines((fLen * 2) \ CharsPerLine)
-50490    LastCountOfChars = (fLen * 2) Mod CharsPerLine
-50500    For i = LBound(sLines) To UBound(sLines)
-50510     sLines(i) = tStr1
-50520    Next i
-50530    For i = LBound(sLines) To UBound(sLines) - 1
-50540     Get #fn, , buffer
-50550     For j = 0 To UBound(buffer)
-50560      tStr1 = Hex$(buffer(j))
-50570      If Len(tStr1) = 1 Then
-50580        Mid(sLines(i), 2 * j + 2) = tStr1
-50590       Else
-50600        Mid(sLines(i), 2 * j + 1) = tStr1
-50610      End If
-50620     Next j
-50630    Next i
-50640    ReDim buffer(LastCountOfChars \ 2 - 1)
-50650    Get #fn, , buffer
-50660    For j = 0 To UBound(buffer)
-50670     tStr1 = Hex$(buffer(j))
-50680     If Len(tStr1) = 1 Then
-50690       Mid(sLines(i), 2 * j + 2) = tStr1
-50700      Else
-50710       Mid(sLines(i), 2 * j + 1) = tStr1
-50720     End If
-50730    Next j
-50740   Else
-50750    ReDim sLines((fLen * 2) \ CharsPerLine - 1)
-50760    LastCountOfChars = CharsPerLine
-50770    For i = LBound(sLines) To UBound(sLines)
-50780     sLines(i) = tStr1
-50790    Next i
-50800    For i = LBound(sLines) To UBound(sLines)
-50810     Get #fn, , buffer
-50820     For j = 0 To UBound(buffer)
-50830      tStr1 = Hex$(buffer(j))
-50840      If Len(tStr1) = 1 Then
-50850        Mid(sLines(i), 2 * j + 2) = tStr1
-50860       Else
-50870        Mid(sLines(i), 2 * j + 1) = tStr1
-50880      End If
-50890     Next j
-50900    Next i
-50910    Close #fn
-50920  End If
-50930  Close #fn
-50940  sLines(UBound(sLines)) = Mid$(sLines(UBound(sLines)), 1, LastCountOfChars) + ">"
-50950  WriteLinesToFile destinationFileName, sHeader, sLines, "%%EOF", LastCountOfChars + 1, True
-50960  ConvertJPEGImage = True
+50360  sHeader = sHeader + vbCrLf + "Data closefile"
+50370  sHeader = sHeader + vbCrLf + "RawData flushfile"
+50380  sHeader = sHeader + vbCrLf + "showpage"
+50390  sHeader = sHeader + vbCrLf + "restore"
+50400  sHeader = sHeader + vbCrLf + "} exec "
+50410  fLen = FileLen(sourceFileName)
+50420  tStr1 = String(CharsPerLine, "0")
+50430  ReDim buffer(CharsPerLine \ 2 - 1)
+50440  fn = FreeFile
+50450  Open sourceFileName For Binary As #fn
+50460  If (fLen * 2) Mod CharsPerLine > 0 Then
+50470    ReDim sLines((fLen * 2) \ CharsPerLine)
+50480    LastCountOfChars = (fLen * 2) Mod CharsPerLine
+50490    For i = LBound(sLines) To UBound(sLines)
+50500     sLines(i) = tStr1
+50510    Next i
+50520    For i = LBound(sLines) To UBound(sLines) - 1
+50530     Get #fn, , buffer
+50540     For j = 0 To UBound(buffer)
+50550      tStr1 = Hex$(buffer(j))
+50560      If Len(tStr1) = 1 Then
+50570        Mid(sLines(i), 2 * j + 2) = tStr1
+50580       Else
+50590        Mid(sLines(i), 2 * j + 1) = tStr1
+50600      End If
+50610     Next j
+50620    Next i
+50630    ReDim buffer(LastCountOfChars \ 2 - 1)
+50640    Get #fn, , buffer
+50650    For j = 0 To UBound(buffer)
+50660     tStr1 = Hex$(buffer(j))
+50670     If Len(tStr1) = 1 Then
+50680       Mid(sLines(i), 2 * j + 2) = tStr1
+50690      Else
+50700       Mid(sLines(i), 2 * j + 1) = tStr1
+50710     End If
+50720    Next j
+50730   Else
+50740    ReDim sLines((fLen * 2) \ CharsPerLine - 1)
+50750    LastCountOfChars = CharsPerLine
+50760    For i = LBound(sLines) To UBound(sLines)
+50770     sLines(i) = tStr1
+50780    Next i
+50790    For i = LBound(sLines) To UBound(sLines)
+50800     Get #fn, , buffer
+50810     For j = 0 To UBound(buffer)
+50820      tStr1 = Hex$(buffer(j))
+50830      If Len(tStr1) = 1 Then
+50840        Mid(sLines(i), 2 * j + 2) = tStr1
+50850       Else
+50860        Mid(sLines(i), 2 * j + 1) = tStr1
+50870      End If
+50880     Next j
+50890    Next i
+50900    Close #fn
+50910  End If
+50920  Close #fn
+50930  sLines(UBound(sLines)) = Mid$(sLines(UBound(sLines)), 1, LastCountOfChars) + ">"
+50940  WriteLinesToFile destinationFileName, sHeader, sLines, "%%EOF", LastCountOfChars + 1, True
+50950  ConvertJPEGImage = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
