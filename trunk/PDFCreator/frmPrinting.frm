@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomct2.ocx"
 Begin VB.Form frmPrinting 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "PDFCreator"
@@ -501,6 +501,8 @@ On Error GoTo ErrPtnr_OnError
 50680   .SelLength = Len(.Text)
 50690  End With
 50700  ShowAcceleratorsInForm Me, True
+50710  SetTopMost Me, True, True
+50720  SetTopMost Me, False, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

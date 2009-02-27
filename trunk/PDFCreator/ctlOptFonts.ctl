@@ -13,12 +13,20 @@ Begin VB.UserControl ctlOptFonts
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   8281
-      caption         =   "Programfont"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptFonts.ctx":0312
+      _ExtentX        =   11245
+      _ExtentY        =   8281
+      Caption         =   "Programfont"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.ComboBox cmbProgramFontsize 
          Appearance      =   0  '2D
          Height          =   315

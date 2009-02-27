@@ -46,6 +46,7 @@ JPEGResolution||Long|150|1|<
 ' <Program>
 Language|Language|String|english||
 LastSaveDirectory|LastSaveDirectory|String|<MyFiles>||
+LastUpdateCheck||String|||
 Logging|Logging|Boolean|0||
 LogLines|LogLines|Long|100|100|1000
 NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
@@ -235,6 +236,7 @@ TIFFResolution||Long|150|1|<
 
 ' <Program>
 Toolbars||Long|1|0|<
+UpdateInterval||Long|2|0|3
 UseAutosave|chkUseAutosave.Value|Boolean|0||
 UseAutosaveDirectory|chkUseAutosaveDirectory.Value|Boolean|1||
 

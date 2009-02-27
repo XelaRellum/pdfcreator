@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
@@ -448,8 +448,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private WithEvents dl As clsDownload
-Attribute dl.VB_VarHelpID = -1
 Private WithEvents m_frmSysTray As frmSysTray
 Attribute m_frmSysTray.VB_VarHelpID = -1
 
@@ -1110,41 +1108,22 @@ Private Sub mnHelp_Click(Index As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim updStr As String, updStrA() As String, aw As Long
-50020  Set dl = New clsDownload
-50031  Select Case Index
+50010  Dim upd As clsUpdate
+50021  Select Case Index
         Case 0:
-50050    Call HTMLHelp_ShowTopic("html\welcome.htm")
-50060   Case 2:
-50070    OpenDocument PaypalPDFCreator
-50080   Case 4:
-50090    OpenDocument Homepage
-50100   Case 5:
-50110    OpenDocument Sourceforge
-50120   Case 6:
-50130    updStr = dl.DownloadString(UpdateURL)
-50140 '   updStr = dl.DownloadString("http://localhost:8080/update.txt")
-50150    If Len(updStr) > 0 Then
-50160      If CheckPDFCreatorVersion(updStr) > 0 Then
-50170        updStrA = Split(updStr, ".")
-50180        If updStrA(3) = 0 Then
-50190          updStr = "[" & updStrA(0) & "." & updStrA(1) & "." & updStrA(2) & "]"
-50200         Else
-50210          updStr = "[" & updStrA(0) & "." & updStrA(1) & "." & updStrA(2) & " Beta " & updStrA(3) & "]"
-50220        End If
-50230        aw = MsgBox(Replace$(LanguageStrings.MessagesMsg32, "%1", updStr), vbYesNo + vbQuestion)
-50240        If aw = vbYes Then
-50250         OpenDocument "http://www.pdfforge.org/products/pdfcreator/download"
-50260        End If
-50270       Else
-50280        MsgBox LanguageStrings.MessagesMsg33, vbOKOnly + vbInformation
-50290      End If
-50300     Else
-50310      MsgBox LanguageStrings.MessagesMsg31 & ": " & dl.ErrorDescription & " [" & dl.ErrorNumber & "]", vbOKOnly + vbExclamation
-50320    End If
-50330   Case 8:
-50340    frmInfo.Show , Me
-50350  End Select
+50040    Call HTMLHelp_ShowTopic("html\welcome.htm")
+50050   Case 2:
+50060    OpenDocument PaypalPDFCreator
+50070   Case 4:
+50080    OpenDocument Homepage
+50090   Case 5:
+50100    OpenDocument Sourceforge
+50110   Case 6:
+50120    Set upd = New clsUpdate
+50130    upd.CheckForUpdates
+50140   Case 8:
+50150    frmInfo.Show , Me
+50160  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

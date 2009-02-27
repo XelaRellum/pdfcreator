@@ -3,9 +3,9 @@ BEGIN
   MultiUse = -1  'True
   Persistable = 0  'NotPersistable
   DataBindingBehavior = 0  'vbNone
-  DataSourceBehavior  = 0  'vbNone
-  MTSTransactionMode  = 0  'NotAnMTSObject
-END
+  DataSourceBehavior = 0   'vbNone
+  MTSTransactionMode = 0   'NotAnMTSObject
+End
 Attribute VB_Name = "clsPDFCreatorOptions"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
@@ -42,6 +42,7 @@ Public JPEGQuality As Long
 Public JPEGResolution As Long
 Public Language As String
 Public LastSaveDirectory As String
+Public LastUpdateCheck As String
 Public Logging As Long
 Public LogLines As Long
 Public NoConfirmMessageSwitchingDefaultprinter As Long
@@ -179,10 +180,10 @@ Public StartStandardProgram As Long
 Public TIFFColorscount As Long
 Public TIFFResolution As Long
 Public Toolbars As Long
+Public UpdateInterval As Long
 Public UseAutosave As Long
 Public UseAutosaveDirectory As Long
 Public UseCreationDateNow As Long
 Public UseCustomPaperSize As String
 Public UseFixPapersize As Long
 Public UseStandardAuthor As Long
-
