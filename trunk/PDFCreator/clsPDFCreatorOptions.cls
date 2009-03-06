@@ -177,6 +177,7 @@ Public StandardSaveformat As Long
 Public StandardSubject As String
 Public StandardTitle As String
 Public StartStandardProgram As Long
+Public SVGResolution As Long
 Public TIFFColorscount As Long
 Public TIFFResolution As Long
 Public Toolbars As Long

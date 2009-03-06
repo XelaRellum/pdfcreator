@@ -109,6 +109,7 @@ End Type
 '------------------------------------------------
 
 Public GSRevision As tGhostscriptRevision
+Private gsStr1 As String
 
 '------------------------------------------------
 'Callback Functions Start
@@ -136,12 +137,16 @@ Public Function gsdll_stdout(ByVal intGSInstanceHandle As Long, ByVal strz As Lo
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim aByte() As Byte, ptrByte As Long
+50010  Dim aByte() As Byte, ptrByte As Long, tStr As String
 50020  ReDim aByte(intBytes)
 50030  ptrByte = VarPtr(aByte(0))
 50040  MoveMemoryLong ptrByte, strz, intBytes
-50050  GS_OutStr = GS_OutStr & Replace(StrConv(aByte, vbUnicode), vbLf, vbCrLf)
-50060  gsdll_stdout = intBytes
+50050  tStr = Replace(StrConv(aByte, vbUnicode), vbLf, vbCrLf)
+50060
+50070  If (LCase$(Mid$(tStr, 1, 4)) <> "svg_") And (tStr = gsStr1) And (LCase$(Mid$(tStr, 1, 6)) <> "type 1") Then ' filter svg waste
+50080   GS_OutStr = GS_OutStr + tStr
+50090  End If
+50100  gsdll_stdout = intBytes
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -158,7 +163,7 @@ Public Function gsdll_stderr(ByVal intGSInstanceHandle As Long, ByVal strz As Lo
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010   gsdll_stderr = gsdll_stdout(intGSInstanceHandle, strz, intBytes)
+50010  gsdll_stderr = gsdll_stdout(intGSInstanceHandle, strz, intBytes)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -269,48 +274,49 @@ On Error GoTo ErrPtnr_OnError
 50160
 50170     ' Load Ghostscript and get the instance handle
 50180     GS_OutStr = ""
-50190     intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)
-50200     If (intReturn < 0) Then
-50210      CallGS = False
-50220      IfLoggingWriteLogfile "Error: " & GS_OutStr
-50230      Exit Function
-50240     End If
-50250
-50260     ' Capture stdio
-50270     intReturn = gsapi_set_stdio(intGSInstanceHandle, AddressOf gsdll_stdin, AddressOf gsdll_stdout, AddressOf gsdll_stderr)
-50280
-50290     If (intReturn >= 0) Then
-50300         ' Convert the Unicode strings to null terminated ANSI byte arrays
-50310         ' then get pointers to the byte arrays.
-50320         intElementCount = UBound(astrGSArgs)
-50330         ReDim aAnsiArgs(intElementCount)
-50340         ReDim aPtrArgs(intElementCount)
-50350
-50360         For intCounter = 0 To intElementCount
-50370             aAnsiArgs(intCounter) = StrConv(astrGSArgs(intCounter), vbFromUnicode)
-50380             aPtrArgs(intCounter) = StrPtr(aAnsiArgs(intCounter))
-50390         Next
-50400         ptrArgs = VarPtr(aPtrArgs(0))
-50410
-50420         intReturn = gsapi_init_with_args(intGSInstanceHandle, intElementCount + 1, ptrArgs)
-50430
-50440         ' Stop the Ghostscript interpreter
-50450         gsapi_exit (intGSInstanceHandle)
-50460     End If
-50470
-50480     ' release the Ghostscript instance handle
-50490     gsapi_delete_instance (intGSInstanceHandle)
-50500 '    Debug.Print intReturn
-50510     If (intReturn >= 0) Then
-50520       CallGS = True
-50530      Else
-50540       If intReturn <> e_Quit And intReturn <> e_Info Then
-50550        GhostscriptError = intReturn
-50560        IfLoggingWriteLogfile "Error: " & Replace$(GS_OutStr, vbCrLf, "; ")
-50570       End If
-50580       CallGS = False
-50590     End If
-50600
+50190     gsStr1 = Chr$(0) + Chr$(10) + Chr$(13)
+50200     intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)
+50210     If (intReturn < 0) Then
+50220      CallGS = False
+50230      IfLoggingWriteLogfile "Error: " & GS_OutStr
+50240      Exit Function
+50250     End If
+50260
+50270     ' Capture stdio
+50280     intReturn = gsapi_set_stdio(intGSInstanceHandle, AddressOf gsdll_stdin, AddressOf gsdll_stdout, AddressOf gsdll_stderr)
+50290
+50300     If (intReturn >= 0) Then
+50310         ' Convert the Unicode strings to null terminated ANSI byte arrays
+50320         ' then get pointers to the byte arrays.
+50330         intElementCount = UBound(astrGSArgs)
+50340         ReDim aAnsiArgs(intElementCount)
+50350         ReDim aPtrArgs(intElementCount)
+50360
+50370         For intCounter = 0 To intElementCount
+50380             aAnsiArgs(intCounter) = StrConv(astrGSArgs(intCounter), vbFromUnicode)
+50390             aPtrArgs(intCounter) = StrPtr(aAnsiArgs(intCounter))
+50400         Next
+50410         ptrArgs = VarPtr(aPtrArgs(0))
+50420
+50430         intReturn = gsapi_init_with_args(intGSInstanceHandle, intElementCount + 1, ptrArgs)
+50440
+50450         ' Stop the Ghostscript interpreter
+50460         gsapi_exit (intGSInstanceHandle)
+50470     End If
+50480
+50490     ' release the Ghostscript instance handle
+50500     gsapi_delete_instance (intGSInstanceHandle)
+50510 '    Debug.Print intReturn
+50520     If (intReturn >= 0) Then
+50530       CallGS = True
+50540      Else
+50550       If intReturn <> e_Quit And intReturn <> e_Info Then
+50560        GhostscriptError = intReturn
+50570        IfLoggingWriteLogfile "Error: " & Replace$(GS_OutStr, vbCrLf, "; ")
+50580       End If
+50590       CallGS = False
+50600     End If
+50610
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

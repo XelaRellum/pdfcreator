@@ -23,6 +23,7 @@ Public Enum tGhostscriptDevice
  PSDWriter = 11
  PCLWriter = 12
  RAWWriter = 13
+ SVGWriter = 14
 End Enum
 
 Private GSParams() As String
@@ -1354,6 +1355,76 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Private Function CreateSVG(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Path As String, FName As String, Ext As String, tStr As String
+50020
+50030  GSInit Options
+50040  InitParams
+50050  Set ParamCommands = New Collection
+50060
+50070  If Options.OnePagePerFile = 1 Then
+50080   SplitPath GSOutputFile, , Path, , FName, Ext
+50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
+50100  End If
+50110
+50120  tStr = Options.DirectoryGhostscriptLibraries & GetGhostscriptResourceString
+50130
+50140  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50150   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50160  End If
+50170  AddParams "-I" & tStr
+50180  AddParams "-q"
+50190  AddParams "-dNOPAUSE"
+50200  'AddParams "-dSAFER"
+50210  AddParams "-dBATCH"
+50220  AddParams "-q"
+50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50240   AddParams "-sFONTPATH=" & GetFontsDirectory
+50250  End If
+50260
+50270  AddParams "-sDEVICE=svg"
+50280  If Options.DontUseDocumentSettings = 0 Then
+50290   If Options.UseFixPapersize <> 0 Then
+50300    If Options.UseCustomPaperSize = 0 Then
+50310      If LenB(Trim$(Options.Papersize)) > 0 Then
+50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50330       AddParams "-dFIXEDMEDIA"
+50340       AddParams "-dNORANGEPAGESIZE"
+50350      End If
+50360     Else
+50370      If Options.DeviceWidthPoints >= 1 Then
+50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50390      End If
+50400      If Options.DeviceHeightPoints >= 1 Then
+50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50420      End If
+50430    End If
+50440   End If
+50450   AddParams "-r" & Options.SVGResolution & "x" & Options.SVGResolution
+50460  End If
+50470  AddParams "-sOutputFile=" & GSOutputFile
+50480
+50490  AddAdditionalGhostscriptParameters
+50500
+50510  AddParams "-f"
+50520  AddParams GSInputFile
+50530  ShowParams
+50540  CallGhostscript "SVG"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostscript", "CreateSVG")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function CallGScript(GSInputFile As String, GSOutputFile As String, _
  Options As tOptions, Ghostscriptdevice As tGhostscriptDevice)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1473,10 +1544,12 @@ On Error GoTo ErrPtnr_OnError
 51120    CreatePCL GSInputFile, GSOutputFile, Options
 51130   Case 13: 'RAW
 51140    CreateRAW GSInputFile, GSOutputFile, Options
-51150  End Select
-51160
-51170  Options.Counter = Options.Counter + 1
-51180  SaveOption Options, "Counter"
+51150   Case 14: 'SVG
+51160    CreateSVG GSInputFile, GSOutputFile, Options
+51170  End Select
+51180
+51190  Options.Counter = Options.Counter + 1
+51200  SaveOption Options, "Counter"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
