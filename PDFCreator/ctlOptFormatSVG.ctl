@@ -1,13 +1,12 @@
 VERSION 5.00
-Begin VB.UserControl ctlOptFormatTXT 
+Begin VB.UserControl ctlOptFormatSVG 
    ClientHeight    =   1350
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   6645
    ScaleHeight     =   1350
    ScaleWidth      =   6645
-   ToolboxBitmap   =   "ctlOptFormatTXT.ctx":0000
-   Begin PDFCreator.dmFrame dmFraTXTGeneral 
+   Begin PDFCreator.dmFrame dmFraSVGGeneral 
       Height          =   1095
       Left            =   120
       TabIndex        =   0
@@ -15,22 +14,42 @@ Begin VB.UserControl ctlOptFormatTXT
       Width           =   6375
       _extentx        =   11245
       _extenty        =   1931
-      caption         =   "Text"
+      caption         =   "Svg"
       barcolorfrom    =   16744576
       barcolorto      =   4194304
-      font            =   "ctlOptFormatTXT.ctx":0312
-      Begin VB.Label lblNothingToConfigure 
-         AutoSize        =   -1  'True
-         Caption         =   "Nothing to configure."
-         Height          =   195
-         Left            =   330
+      font            =   "ctlOptFormatSVG.ctx":0000
+      Begin VB.TextBox txtBitmapResolution 
+         Alignment       =   1  'Rechts
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   1380
          TabIndex        =   1
+         Text            =   "72"
+         Top             =   480
+         Width           =   495
+      End
+      Begin VB.Label lblBitmapDPI 
+         AutoSize        =   -1  'True
+         Caption         =   "dpi"
+         Height          =   195
+         Left            =   1980
+         TabIndex        =   3
          Top             =   525
-         Width           =   1485
+         Width           =   210
+      End
+      Begin VB.Label lblBitmapResolution 
+         Alignment       =   1  'Rechts
+         AutoSize        =   -1  'True
+         Caption         =   "Resolution:"
+         Height          =   195
+         Left            =   480
+         TabIndex        =   2
+         Top             =   525
+         Width           =   795
       End
    End
 End
-Attribute VB_Name = "ctlOptFormatTXT"
+Attribute VB_Name = "ctlOptFormatSVG"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
@@ -41,16 +60,18 @@ Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control
-50020  dmFraTXTGeneral.Left = 0
-50030  dmFraTXTGeneral.Top = 0
-50040  UserControl.Height = dmFraTXTGeneral.Height
+50010  Dim ctl As Control, i As Long
+50020  dmFraSVGGeneral.Left = 0
+50030  dmFraSVGGeneral.Top = 0
+50040  UserControl.Height = dmFraSVGGeneral.Height
 50050
-50060  SetFrames Options.OptionsDesign
+50060  txtBitmapResolution.Text = 150
+50070
+50080  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatTXT", "UserControl_Initialize")
+Select Case ErrPtnr.OnError("ctlOptFormatSVG", "UserControl_Initialize")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -72,7 +93,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatTXT", "SetFrames")
+Select Case ErrPtnr.OnError("ctlOptFormatSVG", "SetFrames")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -85,11 +106,11 @@ Private Sub UserControl_Resize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  dmFraTXTGeneral.Width = UserControl.Width
+50010  dmFraSVGGeneral.Width = UserControl.Width
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatTXT", "UserControl_Resize")
+Select Case ErrPtnr.OnError("ctlOptFormatSVG", "UserControl_Resize")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -103,12 +124,13 @@ Public Sub SetLanguageStrings()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With LanguageStrings
-50020   lblNothingToConfigure.Caption = .OptionsNothingToConfigure
-50030  End With
+50020   dmFraSVGGeneral.Caption = .OptionsImageSettings
+50030   lblBitmapResolution = .OptionsBitmapResolution
+50040  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatTXT", "SetLanguageStrings")
+Select Case ErrPtnr.OnError("ctlOptFormatSVG", "SetLanguageStrings")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -122,11 +144,12 @@ Public Sub SetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With Options
-50020  End With
+50020   txtBitmapResolution.Text = .SVGResolution
+50030  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatTXT", "SetOptions")
+Select Case ErrPtnr.OnError("ctlOptFormatSVG", "SetOptions")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -140,11 +163,14 @@ Public Sub GetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With Options
-50020  End With
+50020   If LenB(txtBitmapResolution.Text) > 0 Then
+50030    .SVGResolution = txtBitmapResolution.Text
+50040   End If
+50050  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatTXT", "GetOptions")
+Select Case ErrPtnr.OnError("ctlOptFormatSVG", "GetOptions")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -152,4 +178,5 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
 

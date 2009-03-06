@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MsComCtl.ocx"
 Begin VB.UserControl ctlOptSave 
    ClientHeight    =   5715
    ClientLeft      =   0
@@ -267,44 +267,45 @@ On Error GoTo ErrPtnr_OnError
 50210   .AddItem "PSD"
 50220   .AddItem "PCL"
 50230   .AddItem "RAW"
-50240  End With
-50250  With cmbSaveFilenameTokens
-50260   .AddItem "<Author>"
-50270   .AddItem "<Computername>"
-50280   .AddItem "<DateTime>"
-50290   .AddItem "<Title>"
-50300   .AddItem "<Username>"
-50310   .AddItem "<Counter>"
-50320   .AddItem "<REDMON_DOCNAME>"
-50330   .AddItem "<REDMON_DOCNAME_FILE>"
-50340   .AddItem "<REDMON_DOCNAME_PATH>"
-50350   .AddItem "<REDMON_JOB>"
-50360   .AddItem "<REDMON_MACHINE>"
-50370   .AddItem "<REDMON_PORT>"
-50380   .AddItem "<REDMON_PRINTER>"
-50390   .AddItem "<REDMON_SESSIONID>"
-50400   .AddItem "<REDMON_USER>"
-50410   .ListIndex = 0
-50420  End With
-50430
-50440  With lsvFilenameSubst
-50450   .Appearance = ccFlat
-50460   .ColumnHeaders.Clear
-50470   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
-50480   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
-50490   .HideColumnHeaders = True
-50500   .GridLines = True
-50510   .FullRowSelect = True
-50520   .HideSelection = False
-50530  End With
-50540
-50550  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-50560  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-50570  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-50580
-50590  CheckCmdFilenameSubst
-50600
-50610  SetFrames Options.OptionsDesign
+50240   .AddItem "SVG"
+50250  End With
+50260  With cmbSaveFilenameTokens
+50270   .AddItem "<Author>"
+50280   .AddItem "<Computername>"
+50290   .AddItem "<DateTime>"
+50300   .AddItem "<Title>"
+50310   .AddItem "<Username>"
+50320   .AddItem "<Counter>"
+50330   .AddItem "<REDMON_DOCNAME>"
+50340   .AddItem "<REDMON_DOCNAME_FILE>"
+50350   .AddItem "<REDMON_DOCNAME_PATH>"
+50360   .AddItem "<REDMON_JOB>"
+50370   .AddItem "<REDMON_MACHINE>"
+50380   .AddItem "<REDMON_PORT>"
+50390   .AddItem "<REDMON_PRINTER>"
+50400   .AddItem "<REDMON_SESSIONID>"
+50410   .AddItem "<REDMON_USER>"
+50420   .ListIndex = 0
+50430  End With
+50440
+50450  With lsvFilenameSubst
+50460   .Appearance = ccFlat
+50470   .ColumnHeaders.Clear
+50480   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
+50490   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
+50500   .HideColumnHeaders = True
+50510   .GridLines = True
+50520   .FullRowSelect = True
+50530   .HideSelection = False
+50540  End With
+50550
+50560  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+50570  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+50580  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+50590
+50600  CheckCmdFilenameSubst
+50610
+50620  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

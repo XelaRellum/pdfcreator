@@ -231,6 +231,7 @@ StandardTitle||String|||
 StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
 
 ' <Printing Formats Bitmap Colors>
+SVGResolution||Long|72|1|<
 TIFFColorscount|cmbTIFFColors.Listindex|Long|0|0|7
 TIFFResolution||Long|150|1|<
 

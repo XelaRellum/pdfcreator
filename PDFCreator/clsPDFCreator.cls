@@ -602,17 +602,18 @@ On Error GoTo ErrPtnr_OnError
 51620   .Add "StandardSubject"
 51630   .Add "StandardTitle"
 51640   .Add "StartStandardProgram"
-51650   .Add "TIFFColorscount"
-51660   .Add "TIFFResolution"
-51670   .Add "Toolbars"
-51680   .Add "UpdateInterval"
-51690   .Add "UseAutosave"
-51700   .Add "UseAutosaveDirectory"
-51710   .Add "UseCreationDateNow"
-51720   .Add "UseCustomPaperSize"
-51730   .Add "UseFixPapersize"
-51740   .Add "UseStandardAuthor"
-51750  End With
+51650   .Add "SVGResolution"
+51660   .Add "TIFFColorscount"
+51670   .Add "TIFFResolution"
+51680   .Add "Toolbars"
+51690   .Add "UpdateInterval"
+51700   .Add "UseAutosave"
+51710   .Add "UseAutosaveDirectory"
+51720   .Add "UseCreationDateNow"
+51730   .Add "UseCustomPaperSize"
+51740   .Add "UseFixPapersize"
+51750   .Add "UseStandardAuthor"
+51760  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -2199,17 +2200,18 @@ On Error GoTo ErrPtnr_OnError
 51610   Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
 51620   Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
 51630   Case "STARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.StartStandardProgram
-51640   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
-51650   Case "TIFFRESOLUTION": cGetOptionFromOptions = Options.TIFFResolution
-51660   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
-51670   Case "UPDATEINTERVAL": cGetOptionFromOptions = Options.UpdateInterval
-51680   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
-51690   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
-51700   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
-51710   Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
-51720   Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
-51730   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
-51740  End Select
+51640   Case "SVGRESOLUTION": cGetOptionFromOptions = Options.SVGResolution
+51650   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
+51660   Case "TIFFRESOLUTION": cGetOptionFromOptions = Options.TIFFResolution
+51670   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
+51680   Case "UPDATEINTERVAL": cGetOptionFromOptions = Options.UpdateInterval
+51690   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
+51700   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
+51710   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
+51720   Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
+51730   Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
+51740   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
+51750  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2421,17 +2423,18 @@ On Error GoTo ErrPtnr_OnError
 51620   .StandardSubject = sOptions.StandardSubject
 51630   .StandardTitle = sOptions.StandardTitle
 51640   .StartStandardProgram = sOptions.StartStandardProgram
-51650   .TIFFColorscount = sOptions.TIFFColorscount
-51660   .TIFFResolution = sOptions.TIFFResolution
-51670   .Toolbars = sOptions.Toolbars
-51680   .UpdateInterval = sOptions.UpdateInterval
-51690   .UseAutosave = sOptions.UseAutosave
-51700   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51710   .UseCreationDateNow = sOptions.UseCreationDateNow
-51720   .UseCustomPaperSize = sOptions.UseCustomPaperSize
-51730   .UseFixPapersize = sOptions.UseFixPapersize
-51740   .UseStandardAuthor = sOptions.UseStandardAuthor
-51750  End With
+51650   .SVGResolution = sOptions.SVGResolution
+51660   .TIFFColorscount = sOptions.TIFFColorscount
+51670   .TIFFResolution = sOptions.TIFFResolution
+51680   .Toolbars = sOptions.Toolbars
+51690   .UpdateInterval = sOptions.UpdateInterval
+51700   .UseAutosave = sOptions.UseAutosave
+51710   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51720   .UseCreationDateNow = sOptions.UseCreationDateNow
+51730   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51740   .UseFixPapersize = sOptions.UseFixPapersize
+51750   .UseStandardAuthor = sOptions.UseStandardAuthor
+51760  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2611,21 +2614,22 @@ On Error GoTo ErrPtnr_OnError
 51610   Case "STANDARDSUBJECT": Options.StandardSubject = value
 51620   Case "STANDARDTITLE": Options.StandardTitle = value
 51630   Case "STARTSTANDARDPROGRAM": Options.StartStandardProgram = value
-51640   Case "TIFFCOLORSCOUNT": Options.TIFFColorscount = value
-51650   Case "TIFFRESOLUTION": Options.TIFFResolution = value
-51660   Case "TOOLBARS": Options.Toolbars = value
-51670   Case "UPDATEINTERVAL": Options.UpdateInterval = value
-51680   Case "USEAUTOSAVE": Options.UseAutosave = value
-51690   Case "USEAUTOSAVEDIRECTORY": Options.UseAutosaveDirectory = value
-51700   Case "USECREATIONDATENOW": Options.UseCreationDateNow = value
-51710   Case "USECUSTOMPAPERSIZE": Options.UseCustomPaperSize = value
-51720   Case "USEFIXPAPERSIZE": Options.UseFixPapersize = value
-51730   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = value
-51740   Case Else:
-51750    mError.Number = 3
-51760    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
-51770    RaiseEvent eError
-51780  End Select
+51640   Case "SVGRESOLUTION": Options.SVGResolution = value
+51650   Case "TIFFCOLORSCOUNT": Options.TIFFColorscount = value
+51660   Case "TIFFRESOLUTION": Options.TIFFResolution = value
+51670   Case "TOOLBARS": Options.Toolbars = value
+51680   Case "UPDATEINTERVAL": Options.UpdateInterval = value
+51690   Case "USEAUTOSAVE": Options.UseAutosave = value
+51700   Case "USEAUTOSAVEDIRECTORY": Options.UseAutosaveDirectory = value
+51710   Case "USECREATIONDATENOW": Options.UseCreationDateNow = value
+51720   Case "USECUSTOMPAPERSIZE": Options.UseCustomPaperSize = value
+51730   Case "USEFIXPAPERSIZE": Options.UseFixPapersize = value
+51740   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = value
+51750   Case Else:
+51760    mError.Number = 3
+51770    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
+51780    RaiseEvent eError
+51790  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2805,17 +2809,18 @@ On Error GoTo ErrPtnr_OnError
 51610   .StandardSubject = sOptions.StandardSubject
 51620   .StandardTitle = sOptions.StandardTitle
 51630   .StartStandardProgram = sOptions.StartStandardProgram
-51640   .TIFFColorscount = sOptions.TIFFColorscount
-51650   .TIFFResolution = sOptions.TIFFResolution
-51660   .Toolbars = sOptions.Toolbars
-51670   .UpdateInterval = sOptions.UpdateInterval
-51680   .UseAutosave = sOptions.UseAutosave
-51690   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51700   .UseCreationDateNow = sOptions.UseCreationDateNow
-51710   .UseCustomPaperSize = sOptions.UseCustomPaperSize
-51720   .UseFixPapersize = sOptions.UseFixPapersize
-51730   .UseStandardAuthor = sOptions.UseStandardAuthor
-51740  End With
+51640   .SVGResolution = sOptions.SVGResolution
+51650   .TIFFColorscount = sOptions.TIFFColorscount
+51660   .TIFFResolution = sOptions.TIFFResolution
+51670   .Toolbars = sOptions.Toolbars
+51680   .UpdateInterval = sOptions.UpdateInterval
+51690   .UseAutosave = sOptions.UseAutosave
+51700   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51710   .UseCreationDateNow = sOptions.UseCreationDateNow
+51720   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51730   .UseFixPapersize = sOptions.UseFixPapersize
+51740   .UseStandardAuthor = sOptions.UseStandardAuthor
+51750  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

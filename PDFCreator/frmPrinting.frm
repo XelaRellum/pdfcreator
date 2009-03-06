@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomct2.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmPrinting 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "PDFCreator"
@@ -742,7 +742,7 @@ Private Function Create_eDoc() As String
  Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
   tErrNumber As Long, filename As String, FilterIndex As Long, _
   Cancel As Boolean, PDFDocInfo As tPDFDocInfo, files As Collection, _
-  tStrf() As String, i As Long, Ext As String, Ext2 As String, Extf(11) As String
+  tStrf() As String, i As Long, Ext As String, Ext2 As String, Extf(12) As String
 
  Extf(0) = "*.pdf"
  Extf(1) = "*.png"
@@ -756,6 +756,7 @@ Private Function Create_eDoc() As String
  Extf(9) = "*.psd"
  Extf(10) = "*.pcl"
  Extf(11) = "*.raw"
+ Extf(12) = "*.svg"
  With LanguageStrings
   Filter = .ListPDFFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPDFAFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
@@ -770,7 +771,8 @@ Private Function Create_eDoc() As String
    .PrintingTXTFiles & " (" & Extf(8) & ")|" & Extf(8) & "|" & _
    .PrintingPSDFiles & " (" & Extf(9) & ")|" & Extf(9) & "|" & _
    .PrintingPCLFiles & " (" & Extf(10) & ")|" & Extf(10) & "|" & _
-   .PrintingRAWFiles & " (" & Extf(11) & ")|" & Extf(11)
+   .PrintingRAWFiles & " (" & Extf(11) & ")|" & Extf(11) & "|" & _
+   .PrintingSVGFiles & " (" & Extf(12) & ")|" & Extf(12)
  End With
  
  FilterIndex = Options.StandardSaveformat + 1
@@ -871,6 +873,8 @@ Private Function Create_eDoc() As String
    CallGScript PDFSpoolfile, OutputFile, Options, PCLWriter
   Case 14:
    CallGScript PDFSpoolfile, OutputFile, Options, RAWWriter
+  Case 15:
+   CallGScript PDFSpoolfile, OutputFile, Options, SVGWriter
  End Select
  Create_eDoc = OutputFile
  CheckForPrintingAfterSaving PDFSpoolfile, Options
