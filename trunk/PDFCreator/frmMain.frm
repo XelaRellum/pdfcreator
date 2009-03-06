@@ -682,40 +682,41 @@ Private Sub TerminateProgram()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim PDFSpoolerPath As String, files As Collection, i As Long, tStrf() As String
-50020  Timer1.Enabled = False
-50030  Timer2.Enabled = False
-50040
-50050  Set Printjobs = Nothing
-50060
-50070  If Not mutexLocal Is Nothing Then
-50080   mutexLocal.CloseMutex
-50090   Set mutexLocal = Nothing
-50100  End If
-50110
-50120  If Not mutexGlobal Is Nothing Then
-50130   mutexGlobal.CloseMutex
-50140   Set mutexGlobal = Nothing
-50150  End If
-50160
-50170  UnloadDLLComplete GsDllLoaded
-50180
-50190  FindFiles CompletePath(GetPDFCreatorTempfolder), files, "*.pdf", , False, True
-50200  For i = 1 To files.Count
-50210   tStrf = Split(files(i), "|")
-50220   If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
-50230    KillFile tStrf(1)
-50240   End If
-50250  Next i
-50260
-50270  IfLoggingWriteLogfile "PDFCreator Program End"
-50280  SysTrayLeave
-50290  If App.StartMode = vbSModeStandalone Then
-50300   InstanceCounter = InstanceCounter - 1
-50310  End If
-50320  PDFSpoolerPath = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
-50330  If Restart = True And FileExists(PDFSpoolerPath) = True Then
-50340   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", GetPDFCreatorApplicationPath, 1
-50350  End If
+50020  ShutDown = True
+50030  Timer1.Enabled = False
+50040  Timer2.Enabled = False
+50050
+50060  Set Printjobs = Nothing
+50070
+50080  If Not mutexLocal Is Nothing Then
+50090   mutexLocal.CloseMutex
+50100   Set mutexLocal = Nothing
+50110  End If
+50120
+50130  If Not mutexGlobal Is Nothing Then
+50140   mutexGlobal.CloseMutex
+50150   Set mutexGlobal = Nothing
+50160  End If
+50170
+50180  UnloadDLLComplete GsDllLoaded
+50190
+50200  FindFiles CompletePath(GetPDFCreatorTempfolder), files, "*.pdf", , False, True
+50210  For i = 1 To files.Count
+50220   tStrf = Split(files(i), "|")
+50230   If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
+50240    KillFile tStrf(1)
+50250   End If
+50260  Next i
+50270
+50280  IfLoggingWriteLogfile "PDFCreator Program End"
+50290  SysTrayLeave
+50300  If App.StartMode = vbSModeStandalone Then
+50310   InstanceCounter = InstanceCounter - 1
+50320  End If
+50330  PDFSpoolerPath = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
+50340  If Restart = True And FileExists(PDFSpoolerPath) = True Then
+50350   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", GetPDFCreatorApplicationPath, 1
+50360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1293,26 +1294,30 @@ On Error GoTo ErrPtnr_OnError
 50020  Timer1.Enabled = False
 50030  DoEvents
 50040  If FileExists(GetPDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
-50050   Unload Me
-50060   Exit Sub
-50070  End If
-50080  CheckPrintJobs
-50090  If Not NoProcessing Then
-50100   CheckForPrinting
-50110  End If
-50120  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("IF", True)) > 0 And ShellAndWaitingIsRunning = False Then
-50130   Unload Me
-50140   Exit Sub
-50150  End If
-50160  If lsv.ListItems.Count = 1 Then
-50170   If lsv.SelectedItem.Index <> 1 Then
-50180    lsv.ListItems(1).Selected = True
-50190   End If
-50200  End If
-50210  DoEvents
-50220  Timer1.Interval = TimerIntervall
-50230  Timer1.Enabled = True
-50240  InTimer1 = False
+50050   InTimer1 = False
+50060   Unload Me
+50070   Exit Sub
+50080  End If
+50090  CheckPrintJobs
+50100  If Not NoProcessing Then
+50110   CheckForPrinting
+50120  End If
+50130  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("IF", True)) > 0 And ShellAndWaitingIsRunning = False Then
+50140   InTimer1 = False
+50150   Unload Me
+50160   Exit Sub
+50170  End If
+50180  If lsv.ListItems.Count = 1 Then
+50190   If lsv.SelectedItem.Index <> 1 Then
+50200    lsv.ListItems(1).Selected = True
+50210   End If
+50220  End If
+50230  DoEvents
+50240  Timer1.Interval = TimerIntervall
+50250  If Not ShutDown Then
+50260   Timer1.Enabled = True
+50270   InTimer1 = False
+50280  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
