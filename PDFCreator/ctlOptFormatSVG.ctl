@@ -6,18 +6,27 @@ Begin VB.UserControl ctlOptFormatSVG
    ClientWidth     =   6645
    ScaleHeight     =   1350
    ScaleWidth      =   6645
+   ToolboxBitmap   =   "ctlOptFormatSVG.ctx":0000
    Begin PDFCreator.dmFrame dmFraSVGGeneral 
       Height          =   1095
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   1931
-      caption         =   "Svg"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptFormatSVG.ctx":0000
+      _ExtentX        =   11245
+      _ExtentY        =   1931
+      Caption         =   "Svg"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtBitmapResolution 
          Alignment       =   1  'Rechts
          Appearance      =   0  '2D
