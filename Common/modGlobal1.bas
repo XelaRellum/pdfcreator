@@ -62,6 +62,7 @@ Public DeleteIF As Boolean
 Public OpenOF As Boolean
 Public IsConverted As Boolean
 Public StopURLPrinting As Boolean
+Public ShutDown As Boolean
 
 Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

@@ -1272,6 +1272,7 @@ End Sub
 
 Public Function cClose() As Boolean
  On Error Resume Next
+ ShutDown = True
  Dim f As Form
  Do
   DoEvents
