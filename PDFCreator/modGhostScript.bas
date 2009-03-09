@@ -285,7 +285,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePDF(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePDF(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -369,41 +369,45 @@ On Error GoTo ErrPtnr_OnError
 50780     End If
 50790   End If
 50800  End If
-50810  AddParams "-sOutputFile=" & GSOutputFile
-50820
-50830  If Options.DontUseDocumentSettings = 0 Then
-50840   SetColorParams
-50850   SetGreyParams
-50860   SetMonoParams
-50870
-50880   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50890   AddParams "-dUCRandBGInfo=/Preserve"
-50900   AddParams "-dUseFlateCompression=true"
-50910   AddParams "-dParseDSCCommentsForDocInfo=true"
-50920   AddParams "-dParseDSCComments=true"
-50930   AddParams "-dOPM=" & GS_OVERPRINT
-50940   AddParams "-dOffOptimizations=0"
-50950   AddParams "-dLockDistillerParams=false"
-50960   AddParams "-dGrayImageDepth=-1"
-50970   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50980   AddParams "-dDefaultRenderingIntent=/Default"
-50990   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-51000   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-51010   AddParams "-dDetectBlends=true"
-51020
-51030   AddAdditionalGhostscriptParameters
-51040
-51050   AddParamCommands
-51060  End If
-51070
-51080  AddParams "-f"
-51090  AddParams GSInputFile
-51100  ShowParams
-51110  If tEnc = True Then
-51120    CallGhostscript "PDF with encryption"
-51130   Else
-51140    CallGhostscript "PDF without encryption"
-51150  End If
+50810
+50820  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50830   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50840  End If
+50850  AddParams "-sOutputFile=" & GSOutputFile
+50860
+50870  If Options.DontUseDocumentSettings = 0 Then
+50880   SetColorParams
+50890   SetGreyParams
+50900   SetMonoParams
+50910
+50920   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50930   AddParams "-dUCRandBGInfo=/Preserve"
+50940   AddParams "-dUseFlateCompression=true"
+50950   AddParams "-dParseDSCCommentsForDocInfo=true"
+50960   AddParams "-dParseDSCComments=true"
+50970   AddParams "-dOPM=" & GS_OVERPRINT
+50980   AddParams "-dOffOptimizations=0"
+50990   AddParams "-dLockDistillerParams=false"
+51000   AddParams "-dGrayImageDepth=-1"
+51010   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+51020   AddParams "-dDefaultRenderingIntent=/Default"
+51030   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+51040   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+51050   AddParams "-dDetectBlends=true"
+51060
+51070   AddAdditionalGhostscriptParameters
+51080
+51090   AddParamCommands
+51100  End If
+51110
+51120  AddParams "-f"
+51130  AddParams GSInputFile
+51140  ShowParams
+51150  If tEnc = True Then
+51160    CallGhostscript "PDF with encryption"
+51170   Else
+51180    CallGhostscript "PDF without encryption"
+51190  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -416,7 +420,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePNG(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePNG(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -465,15 +469,19 @@ On Error GoTo ErrPtnr_OnError
 50430    End If
 50440   End If
 50450   AddParams "-r" & Options.PNGResolution & "x" & Options.PNGResolution
-50460   AddParams "-sOutputFile=" & GSOutputFile
-50470  End If
-50480
-50490  AddAdditionalGhostscriptParameters
-50500
-50510  AddParams "-f"
-50520  AddParams GSInputFile
-50530  ShowParams
-50540  CallGhostscript "PNG"
+50460
+50470   If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490   End If
+50500   AddParams "-sOutputFile=" & GSOutputFile
+50510  End If
+50520
+50530  AddAdditionalGhostscriptParameters
+50540
+50550  AddParams "-f"
+50560  AddParams GSInputFile
+50570  ShowParams
+50580  CallGhostscript "PNG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -486,7 +494,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateJPEG(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreateJPEG(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -535,15 +543,19 @@ On Error GoTo ErrPtnr_OnError
 50430    End If
 50440   End If
 50450   AddParams "-r" & Options.JPEGResolution & "x" & Options.JPEGResolution
-50460   AddParams "-sOutputFile=" & GSOutputFile
-50470  End If
-50480
-50490  AddAdditionalGhostscriptParameters
-50500
-50510  AddParams "-f"
-50520  AddParams GSInputFile
-50530  ShowParams
-50540  CallGhostscript "JPEG"
+50460
+50470   If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490   End If
+50500   AddParams "-sOutputFile=" & GSOutputFile
+50510  End If
+50520
+50530  AddAdditionalGhostscriptParameters
+50540
+50550  AddParams "-f"
+50560  AddParams GSInputFile
+50570  ShowParams
+50580  CallGhostscript "JPEG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -556,7 +568,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateBMP(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreateBMP(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -606,14 +618,18 @@ On Error GoTo ErrPtnr_OnError
 50440   End If
 50450   AddParams "-r" & Options.BMPResolution & "x" & Options.BMPResolution
 50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddAdditionalGhostscriptParameters
-50500
-50510  AddParams "-f"
-50520  AddParams GSInputFile
-50530  ShowParams
-50540  CallGhostscript "BMP"
+50470
+50480  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50490   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50500  End If
+50510  AddParams "-sOutputFile=" & GSOutputFile
+50520
+50530  AddAdditionalGhostscriptParameters
+50540
+50550  AddParams "-f"
+50560  AddParams GSInputFile
+50570  ShowParams
+50580  CallGhostscript "BMP"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -626,7 +642,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePCX(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePCX(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -675,14 +691,18 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-r" & Options.PCXResolution & "x" & Options.PCXResolution
 50450  End If
-50460  AddParams "-sOutputFile=" & GSOutputFile
-50470
-50480  AddAdditionalGhostscriptParameters
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "PCX"
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  AddParams GSInputFile
+50560  ShowParams
+50570  CallGhostscript "PCX"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -695,7 +715,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateTIFF(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreateTIFF(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -744,14 +764,18 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-r" & Options.TIFFResolution & "x" & Options.TIFFResolution
 50450  End If
-50460  AddParams "-sOutputFile=" & GSOutputFile
-50470
-50480  AddAdditionalGhostscriptParameters
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "TIFF"
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  AddParams GSInputFile
+50560  ShowParams
+50570  CallGhostscript "TIFF"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -764,7 +788,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePS(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePS(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -813,14 +837,18 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
 50450  End If
-50460  AddParams "-sOutputFile=" & GSOutputFile
-50470
-50480  AddAdditionalGhostscriptParameters
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "PS"
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  AddParams GSInputFile
+50560  ShowParams
+50570  CallGhostscript "PS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -833,7 +861,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateEPS(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreateEPS(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -882,14 +910,18 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
 50450  End If
-50460  AddParams "-sOutputFile=" & GSOutputFile
-50470
-50480  AddAdditionalGhostscriptParameters
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "EPS"
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  AddParams GSInputFile
+50560  ShowParams
+50570  CallGhostscript "EPS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -942,7 +974,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePDFA(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePDFA(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1001,40 +1033,44 @@ On Error GoTo ErrPtnr_OnError
 50530
 50540  End If
 50550  tEnc = False
-50560  AddParams "-sOutputFile=" & GSOutputFile
-50570
-50580  If Options.DontUseDocumentSettings = 0 Then
-50590   SetColorParams
-50600   SetGreyParams
-50610   SetMonoParams
-50620
-50630   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50640   AddParams "-dUCRandBGInfo=/Preserve"
-50650   AddParams "-dUseFlateCompression=true"
-50660   AddParams "-dParseDSCCommentsForDocInfo=true"
-50670   AddParams "-dParseDSCComments=true"
-50680   AddParams "-dOPM=1" '& GS_OVERPRINT
-50690   AddParams "-dOffOptimizations=0"
-50700   AddParams "-dLockDistillerParams=false"
-50710   AddParams "-dGrayImageDepth=-1"
-50720   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50730   AddParams "-dDefaultRenderingIntent=/Default"
-50740   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50750   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50760   AddParams "-dDetectBlends=true"
-50770
-50780   AddAdditionalGhostscriptParameters
-50790
-50800   AddParams "-f"
-50810   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfa_def.ps"
-50820
-50830   AddParamCommands
-50840  End If
-50850
-50860  AddParams "-f"
-50870  AddParams GSInputFile
-50880  ShowParams
-50890  CallGhostscript "PDF/A (without encryption)"
+50560
+50570  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50580   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50590  End If
+50600  AddParams "-sOutputFile=" & GSOutputFile
+50610
+50620  If Options.DontUseDocumentSettings = 0 Then
+50630   SetColorParams
+50640   SetGreyParams
+50650   SetMonoParams
+50660
+50670   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50680   AddParams "-dUCRandBGInfo=/Preserve"
+50690   AddParams "-dUseFlateCompression=true"
+50700   AddParams "-dParseDSCCommentsForDocInfo=true"
+50710   AddParams "-dParseDSCComments=true"
+50720   AddParams "-dOPM=1" '& GS_OVERPRINT
+50730   AddParams "-dOffOptimizations=0"
+50740   AddParams "-dLockDistillerParams=false"
+50750   AddParams "-dGrayImageDepth=-1"
+50760   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50770   AddParams "-dDefaultRenderingIntent=/Default"
+50780   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50790   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50800   AddParams "-dDetectBlends=true"
+50810
+50820   AddAdditionalGhostscriptParameters
+50830
+50840   AddParams "-f"
+50850   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfa_def.ps"
+50860
+50870   AddParamCommands
+50880  End If
+50890
+50900  AddParams "-f"
+50910  AddParams GSInputFile
+50920  ShowParams
+50930  CallGhostscript "PDF/A (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1047,7 +1083,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePDFX(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePDFX(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1101,41 +1137,45 @@ On Error GoTo ErrPtnr_OnError
 50480
 50490  End If
 50500  tEnc = False
-50510  AddParams "-sOutputFile=" & GSOutputFile
-50520
-50530  If Options.DontUseDocumentSettings = 0 Then
-50540   SetColorParams
-50550   SetGreyParams
-50560   SetMonoParams
-50570
-50580   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50590   AddParams "-dUCRandBGInfo=/Preserve"
-50600   AddParams "-dUseFlateCompression=true"
-50610   AddParams "-dParseDSCCommentsForDocInfo=true"
-50620   AddParams "-dParseDSCComments=true"
-50630   AddParams "-dOPM=" & GS_OVERPRINT
-50640   AddParams "-dOffOptimizations=0"
-50650   AddParams "-dLockDistillerParams=false"
-50660   AddParams "-dGrayImageDepth=-1"
-50670   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50680   AddParams "-dDefaultRenderingIntent=/Default"
-50690   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50700   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50710   AddParams "-dDetectBlends=true"
-50720
-50730   AddAdditionalGhostscriptParameters
-50740
-50750   AddParams "-dPDFX"
-50760   AddParams "-f"
-50770   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfx_def.ps"
+50510
+50520  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50530   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50540  End If
+50550  AddParams "-sOutputFile=" & GSOutputFile
+50560
+50570  If Options.DontUseDocumentSettings = 0 Then
+50580   SetColorParams
+50590   SetGreyParams
+50600   SetMonoParams
+50610
+50620   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50630   AddParams "-dUCRandBGInfo=/Preserve"
+50640   AddParams "-dUseFlateCompression=true"
+50650   AddParams "-dParseDSCCommentsForDocInfo=true"
+50660   AddParams "-dParseDSCComments=true"
+50670   AddParams "-dOPM=" & GS_OVERPRINT
+50680   AddParams "-dOffOptimizations=0"
+50690   AddParams "-dLockDistillerParams=false"
+50700   AddParams "-dGrayImageDepth=-1"
+50710   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50720   AddParams "-dDefaultRenderingIntent=/Default"
+50730   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50740   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50750   AddParams "-dDetectBlends=true"
+50760
+50770   AddAdditionalGhostscriptParameters
 50780
-50790   AddParamCommands
-50800  End If
-50810
-50820  AddParams "-f"
-50830  AddParams GSInputFile
-50840  ShowParams
-50850  CallGhostscript "PDF/X (without encryption)"
+50790   AddParams "-dPDFX"
+50800   AddParams "-f"
+50810   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfx_def.ps"
+50820
+50830   AddParamCommands
+50840  End If
+50850
+50860  AddParams "-f"
+50870  AddParams GSInputFile
+50880  ShowParams
+50890  CallGhostscript "PDF/X (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1148,7 +1188,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePSD(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePSD(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1197,14 +1237,18 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-r" & Options.PSDResolution & "x" & Options.PSDResolution
 50450  End If
-50460  AddParams "-sOutputFile=" & GSOutputFile
-50470
-50480  AddAdditionalGhostscriptParameters
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "PSD"
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  AddParams GSInputFile
+50560  ShowParams
+50570  CallGhostscript "PSD"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1217,7 +1261,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePCL(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreatePCL(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1266,14 +1310,18 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-r" & Options.PCLResolution & "x" & Options.PCLResolution
 50450  End If
-50460  AddParams "-sOutputFile=" & GSOutputFile
-50470
-50480  AddAdditionalGhostscriptParameters
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "PCL"
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  AddParams GSInputFile
+50560  ShowParams
+50570  CallGhostscript "PCL"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1286,7 +1334,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateRAW(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreateRAW(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1335,14 +1383,18 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-r" & Options.RAWResolution & "x" & Options.RAWResolution
 50450  End If
-50460  AddParams "-sOutputFile=" & GSOutputFile
-50470
-50480  AddAdditionalGhostscriptParameters
-50490
-50500  AddParams "-f"
-50510  AddParams GSInputFile
-50520  ShowParams
-50530  CallGhostscript "RAW"
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  AddParams GSInputFile
+50560  ShowParams
+50570  CallGhostscript "RAW"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1355,7 +1407,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateSVG(GSInputFile As String, GSOutputFile As String, Options As tOptions)
+Private Function CreateSVG(GSInputFile As String, ByVal GSOutputFile As String, Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1405,14 +1457,18 @@ On Error GoTo ErrPtnr_OnError
 50440   End If
 50450   AddParams "-r" & Options.SVGResolution & "x" & Options.SVGResolution
 50460  End If
-50470  AddParams "-sOutputFile=" & GSOutputFile
-50480
-50490  AddAdditionalGhostscriptParameters
-50500
-50510  AddParams "-f"
-50520  AddParams GSInputFile
-50530  ShowParams
-50540  CallGhostscript "SVG"
+50470
+50480  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50490   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50500  End If
+50510  AddParams "-sOutputFile=" & GSOutputFile
+50520
+50530  AddAdditionalGhostscriptParameters
+50540
+50550  AddParams "-f"
+50560  AddParams GSInputFile
+50570  ShowParams
+50580  CallGhostscript "SVG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1432,124 +1488,125 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim enc As Boolean, encPDF As EncryptData, retEnc As Boolean, _
   Tempfile As String, tL As Long, m As Object
-50030  GSInit Options
-50041  Select Case Ghostscriptdevice
+50030
+50040  GSInit Options
+50051  Select Case Ghostscriptdevice
         Case 0: 'PDF
-50060    With Options
-50070     If .PDFOptimize = 1 And .PDFUseSecurity = 0 Then
-50080       Tempfile = GetTempFile(GetTempPath, "~CP")
-50090       KillFile Tempfile
-50100       CreatePDF GSInputFile, Tempfile, Options
-50110       OptimizePDF Tempfile, GSOutputFile
-50120       KillFile Tempfile
-50130      Else
-50140       If .PDFUseSecurity <> 0 And SecurityIsPossible = True Then
-50150         If .PDFEncryptor = 1 Then
-50160           enc = SetEncryptionParams(encPDF, GSInputFile, GSOutputFile)
-50170           If enc = True Then
-50180            Tempfile = GetTempFile(GetTempPath, "~CP")
-50190            KillFile Tempfile
-50200            CreatePDF GSInputFile, Tempfile, Options
-50210            encPDF.InputFile = Tempfile
-50220            retEnc = EncryptPDF(encPDF)
-50230            KillFile encPDF.InputFile
-50240            If retEnc = False Then
-50250             IfLoggingWriteLogfile "Error with encryption - using unencrypted file"
-50260             Name GSInputFile As GSOutputFile
-50270            End If
-50280           End If
-50290          Else
-50300           tL = .PDFOptimize
-50310           .PDFOptimize = 0
-50320           CreatePDF GSInputFile, GSOutputFile, Options
-50330           .PDFOptimize = tL
-50340         End If
-50350        Else
-50360         CreatePDF GSInputFile, GSOutputFile, Options
-50370       End If
-50380     End If
-50390     If PDFUpdateMetadataIsPossible Then
-50400      If .PDFUpdateMetadata > 0 Then
-50410       If .PDFUpdateMetadata = 2 Or _
+50070    With Options
+50080     If .PDFOptimize = 1 And .PDFUseSecurity = 0 Then
+50090       Tempfile = GetTempFile(GetTempPath, "~CP")
+50100       KillFile Tempfile
+50110       CreatePDF GSInputFile, Tempfile, Options
+50120       OptimizePDF Tempfile, GSOutputFile
+50130       KillFile Tempfile
+50140      Else
+50150       If .PDFUseSecurity <> 0 And SecurityIsPossible = True Then
+50160         If .PDFEncryptor = 1 Then
+50170           enc = SetEncryptionParams(encPDF, GSInputFile, GSOutputFile)
+50180           If enc = True Then
+50190            Tempfile = GetTempFile(GetTempPath, "~CP")
+50200            KillFile Tempfile
+50210            CreatePDF GSInputFile, Tempfile, Options
+50220            encPDF.InputFile = Tempfile
+50230            retEnc = EncryptPDF(encPDF)
+50240            KillFile encPDF.InputFile
+50250            If retEnc = False Then
+50260             IfLoggingWriteLogfile "Error with encryption - using unencrypted file"
+50270             Name GSInputFile As GSOutputFile
+50280            End If
+50290           End If
+50300          Else
+50310           tL = .PDFOptimize
+50320           .PDFOptimize = 0
+50330           CreatePDF GSInputFile, GSOutputFile, Options
+50340           .PDFOptimize = tL
+50350         End If
+50360        Else
+50370         CreatePDF GSInputFile, GSOutputFile, Options
+50380       End If
+50390     End If
+50400     If PDFUpdateMetadataIsPossible Then
+50410      If .PDFUpdateMetadata > 0 Then
+50420       If .PDFUpdateMetadata = 2 Or _
        (.PDFUpdateMetadata = 1 And (InStr(1, .AdditionalGhostscriptParameters, "dpdfa", vbTextCompare) > 0)) Then
-50430        Set m = CreateObject("pdfForge.pdf.pdf")
-50440        Tempfile = GetTempFile(GetTempPath, "~MP")
-50450        KillFile Tempfile
-50460        Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
-50470        If FileExists(Tempfile) Then
-50480         If KillFile(GSOutputFile) Then
-50490          Name Tempfile As GSOutputFile
-50500         End If
-50510        End If
-50520       End If
-50530      End If
-50540     End If
-50550     If PDFSigningIsPossible Then
-50560      If .PDFSigningSignPDF = 1 Then
-50570       SignPDF GSOutputFile
-50580      End If
-50590     End If
-50600    End With
-50610   Case 1: 'PNG
-50620    CreatePNG GSInputFile, GSOutputFile, Options
-50630   Case 2: 'JPEG
-50640    CreateJPEG GSInputFile, GSOutputFile, Options
-50650   Case 3: 'BMP
-50660    CreateBMP GSInputFile, GSOutputFile, Options
-50670   Case 4: 'PCX
-50680    CreatePCX GSInputFile, GSOutputFile, Options
-50690   Case 5: 'TIFF
-50700    CreateTIFF GSInputFile, GSOutputFile, Options
-50710   Case 6: 'PS
-50720    CreatePS GSInputFile, GSOutputFile, Options
-50730   Case 7: 'EPS
-50740    CreateEPS GSInputFile, GSOutputFile, Options
-50750   Case 8: 'TXT
-50760    CreateTXT GSInputFile, Options
-50770    CreateTextFile GSOutputFile, GS_OutStr
-50780   Case 9: 'PDFA
-50790    CreatePDFA GSInputFile, GSOutputFile, Options
-50800    With Options
-50810     If PDFUpdateMetadataIsPossible Then
-50820      If .PDFUpdateMetadata > 0 Then
-50830       Set m = CreateObject("pdfForge.pdf.pdf")
-50840       Tempfile = GetTempFile(GetTempPath, "~MP")
-50850       KillFile Tempfile
-50860       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
-50870       If FileExists(Tempfile) Then
-50880        If KillFile(GSOutputFile) Then
-50890         Name Tempfile As GSOutputFile
-50900        End If
-50910       End If
-50920      End If
-50930     End If
-50940     If PDFSigningIsPossible Then
-50950      If .PDFSigningSignPDF = 1 Then
-50960       SignPDF GSOutputFile
-50970      End If
-50980     End If
-50990    End With
-51000   Case 10: 'PDFX
-51010    CreatePDFX GSInputFile, GSOutputFile, Options
-51020    With Options
-51030     If PDFSigningIsPossible Then
-51040      If .PDFSigningSignPDF = 1 Then
-51050       SignPDF GSOutputFile
-51060      End If
-51070     End If
-51080    End With
-51090   Case 11: 'PSD
-51100    CreatePSD GSInputFile, GSOutputFile, Options
-51110   Case 12: 'PCL
-51120    CreatePCL GSInputFile, GSOutputFile, Options
-51130   Case 13: 'RAW
-51140    CreateRAW GSInputFile, GSOutputFile, Options
-51150   Case 14: 'SVG
-51160    CreateSVG GSInputFile, GSOutputFile, Options
-51170  End Select
-51180
-51190  Options.Counter = Options.Counter + 1
-51200  SaveOption Options, "Counter"
+50440        Set m = CreateObject("pdfForge.pdf.pdf")
+50450        Tempfile = GetTempFile(GetTempPath, "~MP")
+50460        KillFile Tempfile
+50470        Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
+50480        If FileExists(Tempfile) Then
+50490         If KillFile(GSOutputFile) Then
+50500          Name Tempfile As GSOutputFile
+50510         End If
+50520        End If
+50530       End If
+50540      End If
+50550     End If
+50560     If PDFSigningIsPossible Then
+50570      If .PDFSigningSignPDF = 1 Then
+50580       SignPDF GSOutputFile
+50590      End If
+50600     End If
+50610    End With
+50620   Case 1: 'PNG
+50630    CreatePNG GSInputFile, GSOutputFile, Options
+50640   Case 2: 'JPEG
+50650    CreateJPEG GSInputFile, GSOutputFile, Options
+50660   Case 3: 'BMP
+50670    CreateBMP GSInputFile, GSOutputFile, Options
+50680   Case 4: 'PCX
+50690    CreatePCX GSInputFile, GSOutputFile, Options
+50700   Case 5: 'TIFF
+50710    CreateTIFF GSInputFile, GSOutputFile, Options
+50720   Case 6: 'PS
+50730    CreatePS GSInputFile, GSOutputFile, Options
+50740   Case 7: 'EPS
+50750    CreateEPS GSInputFile, GSOutputFile, Options
+50760   Case 8: 'TXT
+50770    CreateTXT GSInputFile, Options
+50780    CreateTextFile GSOutputFile, GS_OutStr
+50790   Case 9: 'PDFA
+50800    CreatePDFA GSInputFile, GSOutputFile, Options
+50810    With Options
+50820     If PDFUpdateMetadataIsPossible Then
+50830      If .PDFUpdateMetadata > 0 Then
+50840       Set m = CreateObject("pdfForge.pdf.pdf")
+50850       Tempfile = GetTempFile(GetTempPath, "~MP")
+50860       KillFile Tempfile
+50870       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
+50880       If FileExists(Tempfile) Then
+50890        If KillFile(GSOutputFile) Then
+50900         Name Tempfile As GSOutputFile
+50910        End If
+50920       End If
+50930      End If
+50940     End If
+50950     If PDFSigningIsPossible Then
+50960      If .PDFSigningSignPDF = 1 Then
+50970       SignPDF GSOutputFile
+50980      End If
+50990     End If
+51000    End With
+51010   Case 10: 'PDFX
+51020    CreatePDFX GSInputFile, GSOutputFile, Options
+51030    With Options
+51040     If PDFSigningIsPossible Then
+51050      If .PDFSigningSignPDF = 1 Then
+51060       SignPDF GSOutputFile
+51070      End If
+51080     End If
+51090    End With
+51100   Case 11: 'PSD
+51110    CreatePSD GSInputFile, GSOutputFile, Options
+51120   Case 12: 'PCL
+51130    CreatePCL GSInputFile, GSOutputFile, Options
+51140   Case 13: 'RAW
+51150    CreateRAW GSInputFile, GSOutputFile, Options
+51160   Case 14: 'SVG
+51170    CreateSVG GSInputFile, GSOutputFile, Options
+51180  End Select
+51190
+51200  Options.Counter = Options.Counter + 1
+51210  SaveOption Options, "Counter"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

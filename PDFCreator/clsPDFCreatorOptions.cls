@@ -18,6 +18,7 @@ Option Explicit
 Public AdditionalGhostscriptParameters As String
 Public AdditionalGhostscriptSearchpath As String
 Public AddWindowsFontpath As Long
+Public AllowSpecialGSCharsInFilenames As Long
 Public AutosaveDirectory As String
 Public AutosaveFilename As String
 Public AutosaveFormat As Long
