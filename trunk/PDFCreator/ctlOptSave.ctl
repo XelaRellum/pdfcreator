@@ -1,21 +1,21 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MsComCtl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptSave 
-   ClientHeight    =   5715
+   ClientHeight    =   5865
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   6765
-   ScaleHeight     =   5715
-   ScaleWidth      =   6765
+   ClientWidth     =   6570
+   ScaleHeight     =   5865
+   ScaleWidth      =   6570
    ToolboxBitmap   =   "ctlOptSave.ctx":0000
    Begin PDFCreator.dmFrame dmFraProgSave 
-      Height          =   2670
+      Height          =   3015
       Left            =   120
       TabIndex        =   0
-      Top             =   240
+      Top             =   120
       Width           =   6375
       _ExtentX        =   11245
-      _ExtentY        =   4710
+      _ExtentY        =   5318
       Caption         =   "Save"
       BarColorFrom    =   16744576
       BarColorTo      =   4194304
@@ -28,6 +28,17 @@ Begin VB.UserControl ctlOptSave
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      Begin VB.CheckBox chkAllowSpecialGSCharsInFilenames 
+         Appearance      =   0  '2D
+         Caption         =   "Allow special Ghostscript chars in filenames"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   20
+         Top             =   2640
+         Value           =   1  'Aktiviert
+         Width           =   6015
+      End
       Begin VB.TextBox txtSavePreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -112,7 +123,7 @@ Begin VB.UserControl ctlOptSave
       Height          =   2535
       Left            =   120
       TabIndex        =   9
-      Top             =   3000
+      Top             =   3240
       Width           =   6375
       _ExtentX        =   11245
       _ExtentY        =   4471
@@ -354,8 +365,9 @@ On Error GoTo ErrPtnr_OnError
 50080   cmdFilenameSubst(1).Caption = .OptionsSaveFilenameChange
 50090   cmdFilenameSubst(2).Caption = .OptionsSaveFilenameDelete
 50100   chkSpaces.Caption = .OptionsRemoveSpaces
-50110   lblStandardSaveformat.Caption = .OptionsStandardSaveFormat
-50120  End With
+50110   chkAllowSpecialGSCharsInFilenames.Caption = .OptionsAllowSpecialGSCharsInFilenames
+50120   lblStandardSaveformat.Caption = .OptionsStandardSaveFormat
+50130  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -397,7 +409,8 @@ On Error GoTo ErrPtnr_OnError
 50230   chkSpaces.value = .RemoveSpaces
 50240   txtSaveFilename.Text = .SaveFilename
 50250   cmbStandardSaveFormat.ListIndex = .StandardSaveformat
-50260  End With
+50260   chkAllowSpecialGSCharsInFilenames.value = .AllowSpecialGSCharsInFilenames
+50270  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -431,7 +444,8 @@ On Error GoTo ErrPtnr_OnError
 50150   If LenB(CStr(cmbStandardSaveFormat.ListIndex)) > 0 Then
 50160    .StandardSaveformat = cmbStandardSaveFormat.ListIndex
 50170   End If
-50180  End With
+50180   .AllowSpecialGSCharsInFilenames = chkAllowSpecialGSCharsInFilenames.value
+50190  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

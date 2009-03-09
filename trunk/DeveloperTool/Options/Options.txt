@@ -4,6 +4,7 @@
 AdditionalGhostscriptParameters|cmbAdditionalGhostscriptParameters.Text|String|||
 AdditionalGhostscriptSearchpath|txtAdditionalGhostscriptSearchpath.Text|String|||
 AddWindowsFontpath|chkAddWindowsFontpath.Value|Boolean|1||
+AllowSpecialGSCharsInFilenames|chkAllowSpecialGSCharsInFilenames.Value|Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|<MyFiles>||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
 AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|13
