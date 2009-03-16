@@ -16,7 +16,7 @@ Option Explicit
 Private WithEvents dl As clsDownload
 Attribute dl.VB_VarHelpID = -1
 
-Public Sub CheckForUpdates()
+Public Sub CheckForUpdates(Optional ShowMessageNoNewUpdates As Boolean = False)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -37,11 +37,13 @@ On Error GoTo ErrPtnr_OnError
 50150       OpenDocument "http://www.pdfforge.org/products/pdfcreator/download"
 50160      End If
 50170     Else
-50180      MsgBox LanguageStrings.MessagesMsg33, vbOKOnly + vbInformation
-50190    End If
-50200   Else
-50210    MsgBox LanguageStrings.MessagesMsg31 & ": " & dl.ErrorDescription & " [" & dl.ErrorNumber & "]", vbOKOnly + vbExclamation
-50220  End If
+50180      If ShowMessageNoNewUpdates Then
+50190       MsgBox LanguageStrings.MessagesMsg33, vbOKOnly + vbInformation
+50200      End If
+50210    End If
+50220   Else
+50230    MsgBox LanguageStrings.MessagesMsg31 & ": " & dl.ErrorDescription & " [" & dl.ErrorNumber & "]", vbOKOnly + vbExclamation
+50240  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
