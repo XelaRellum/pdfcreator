@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
@@ -1121,7 +1121,7 @@ On Error GoTo ErrPtnr_OnError
 50100    OpenDocument Sourceforge
 50110   Case 6:
 50120    Set upd = New clsUpdate
-50130    upd.CheckForUpdates
+50130    upd.CheckForUpdates True
 50140   Case 8:
 50150    frmInfo.Show , Me
 50160  End Select
