@@ -1,11 +1,11 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "Comdlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
-   ClientLeft      =   165
-   ClientTop       =   855
+   ClientLeft      =   225
+   ClientTop       =   825
    ClientWidth     =   12930
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -1133,30 +1133,30 @@ Private Sub CreateModOptions()
  Print #fn, " With myOptions"
  For i = 1 To lsvOptions.ListItems.Count
   Select Case UCase$(lsvOptions.ListItems(i).SubItems(1))
-   Case UCase$("DirectoryGhostscriptBinaries")
-    Print #fn, "  Set reg = New clsRegistry"
-    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
-    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
-    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryBinaries""))"
-    Print #fn, "  Set reg = Nothing"
-   Case UCase$("DirectoryGhostscriptLibraries")
-    Print #fn, "  Set reg = New clsRegistry"
-    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
-    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
-    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryLibraries""))"
-    Print #fn, "  Set reg = Nothing"
-   Case UCase$("DirectoryGhostscriptFonts")
-    Print #fn, "  Set reg = New clsRegistry"
-    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
-    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
-    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryFonts""))"
-    Print #fn, "  Set reg = Nothing"
-   Case UCase$("DirectoryGhostscriptResource")
-    Print #fn, "  Set reg = New clsRegistry"
-    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
-    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
-    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryResource""))"
-    Print #fn, "  Set reg = Nothing"
+'   Case UCase$("DirectoryGhostscriptBinaries")
+'    Print #fn, "  Set reg = New clsRegistry"
+'    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
+'    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
+'    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryBinaries""))"
+'    Print #fn, "  Set reg = Nothing"
+'   Case UCase$("DirectoryGhostscriptLibraries")
+'    Print #fn, "  Set reg = New clsRegistry"
+'    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
+'    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
+'    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryLibraries""))"
+'    Print #fn, "  Set reg = Nothing"
+'   Case UCase$("DirectoryGhostscriptFonts")
+'    Print #fn, "  Set reg = New clsRegistry"
+'    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
+'    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
+'    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryFonts""))"
+'    Print #fn, "  Set reg = Nothing"
+'   Case UCase$("DirectoryGhostscriptResource")
+'    Print #fn, "  Set reg = New clsRegistry"
+'    Print #fn, "  reg.hkey = HKEY_LOCAL_MACHINE"
+'    Print #fn, "  reg.KeyRoot = ""SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"" & Uninstall_GUID"
+'    Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(reg.GetRegistryValue(""GhostscriptDirectoryResource""))"
+'    Print #fn, "  Set reg = Nothing"
    Case UCase$("DirectoryJava")
     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(GetSpecialFolder(ssfSYSTEM))"
    Case UCase$("Printertemppath")
@@ -2766,11 +2766,11 @@ Private Sub SaveFile(filename As String, txtStr As String)
  Close #fn
 End Sub
 
-Private Sub SaveCompressedFile(filename As String, B() As Byte)
+Private Sub SaveCompressedFile(filename As String, b() As Byte)
  Dim fn As Long
  fn = FreeFile
  Open filename For Binary As #fn
- Put #fn, , B
+ Put #fn, , b
  Close #fn
 End Sub
 
