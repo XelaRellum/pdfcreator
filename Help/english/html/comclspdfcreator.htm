@@ -40,7 +40,7 @@
       Public Property Get cPrinterStop() As Boolean<br />
       Public Property Let cPrinterStop(ByVal Value As Boolean)<br />
       Public Property Get cPrintjobFilename(ByVal JobNumber As Long) As String<br />
-      Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String<br />
+	  Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String <span style="color:green">' Valid vales for PropertyName are: COMPUTER, CREATED, REDMON_DOCNAME, REDMON_FILENAME, REDMON_JOB, REDMON_MACHINE, REDMON_PORT, REDMON_PRINTER, REDMON_SESSIONID, REDMON_USER, SPOOLERACCOUNT, SPOOLFILENAME</span><br />
       Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile<br />
       Public Property Get cProgramIsRunning() As Boolean<br />
       Public Property Get cProgramRelease(Optional ByVal WithBeta As Boolean = True) As String<br />
