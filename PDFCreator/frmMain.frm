@@ -1959,11 +1959,19 @@ Private Sub Timer2_Timer()
    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
  End If
  If Clipboard.GetFormat(vbCFBitmap) = True Then
-   mnDocument(3).Enabled = True
-   tlb(0).Buttons(7).Enabled = True
+   If mnDocument(3).Enabled = False Then
+    mnDocument(3).Enabled = True
+   End If
+   If tlb(0).Buttons(7).Enabled = False Then
+    tlb(0).Buttons(7).Enabled = True
+   End If
   Else
-   mnDocument(3).Enabled = False
-   tlb(0).Buttons(7).Enabled = False
+   If mnDocument(3).Enabled = True Then
+    mnDocument(3).Enabled = False
+   End If
+   If tlb(0).Buttons(7).Enabled = True Then
+    tlb(0).Buttons(7).Enabled = False
+   End If
  End If
  InTimer2 = False
 End Sub
@@ -2029,32 +2037,30 @@ On Error GoTo ErrPtnr_OnError
 50010  If (Options.Toolbars And 2) <> 2 Then
 50020   txtEmailAddress.Enabled = False
 50030   txtEmailAddress.Visible = False
-50040   mnDocument(15).Enabled = False
-50050   mnDocument(16).Enabled = False
-50060   mnDocument(17).Enabled = False
-50070   mnDocument(14).Visible = False
-50080   mnDocument(15).Visible = False
-50090   mnDocument(16).Visible = False
-50100   mnDocument(17).Visible = False
-50110  End If
-50120  If (Options.Toolbars And 1) = 1 Then
-50130    tlb(0).Visible = True
-50140    mnViewToolbars(0).Checked = True
-50150   Else
-50160    tlb(0).Visible = False
-50170    mnViewToolbars(0).Checked = False
-50180  End If
-50190  If (Options.Toolbars And 2) = 2 Then
-50200    tlb(1).Visible = True
-50210    txtEmailAddress.Visible = True
-50220    mnViewToolbars(1).Checked = True
-50230    mnDocument(16).Visible = True
-50240    mnDocument(17).Visible = True
-50250   Else
-50260    tlb(1).Visible = False
-50270    txtEmailAddress.Visible = False
-50280    mnViewToolbars(1).Checked = False
-50290  End If
+50040   mnDocument(16).Enabled = False
+50050   mnDocument(17).Enabled = False
+50060   mnDocument(15).Visible = False
+50070   mnDocument(16).Visible = False
+50080   mnDocument(17).Visible = False
+50090  End If
+50100  If (Options.Toolbars And 1) = 1 Then
+50110    tlb(0).Visible = True
+50120    mnViewToolbars(0).Checked = True
+50130   Else
+50140    tlb(0).Visible = False
+50150    mnViewToolbars(0).Checked = False
+50160  End If
+50170  If (Options.Toolbars And 2) = 2 Then
+50180    tlb(1).Visible = True
+50190    txtEmailAddress.Visible = True
+50200    mnViewToolbars(1).Checked = True
+50210    mnDocument(16).Visible = True
+50220    mnDocument(17).Visible = True
+50230   Else
+50240    tlb(1).Visible = False
+50250    txtEmailAddress.Visible = False
+50260    mnViewToolbars(1).Checked = False
+50270  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
