@@ -1588,7 +1588,7 @@ On Error GoTo ErrPtnr_OnError
 50030   Exit Sub
 50040  End If
 50050  If Not mForm Is Nothing Then
-50060   mForm.CombineAll
+50060   mForm.DocumentCombineAll
 50070  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
