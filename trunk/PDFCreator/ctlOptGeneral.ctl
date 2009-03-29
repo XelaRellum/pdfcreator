@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MsComCtl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptGeneral 
    ClientHeight    =   5850
    ClientLeft      =   0
@@ -15,14 +15,22 @@ Begin VB.UserControl ctlOptGeneral
       Top             =   4560
       Visible         =   0   'False
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   1879
-      caption         =   "Check Update"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":0312
-      textshaddowcolor=   12582912
+      _ExtentX        =   10927
+      _ExtentY        =   1879
+      Caption         =   "Check Update"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
       Begin VB.CommandButton cmdCheckNow 
          Caption         =   "Check now"
          Height          =   315
@@ -33,9 +41,9 @@ Begin VB.UserControl ctlOptGeneral
       End
       Begin VB.ComboBox cmbUpdateInterval 
          Height          =   315
-         ItemData        =   "ctlOptGeneral.ctx":033E
+         ItemData        =   "ctlOptGeneral.ctx":0312
          Left            =   120
-         List            =   "ctlOptGeneral.ctx":0340
+         List            =   "ctlOptGeneral.ctx":0314
          Style           =   2  'Dropdown-Liste
          TabIndex        =   24
          Top             =   600
@@ -57,14 +65,22 @@ Begin VB.UserControl ctlOptGeneral
       TabIndex        =   21
       Top             =   3240
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   2090
-      caption         =   "Browser Add On"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":0342
-      textshaddowcolor=   12582912
+      _ExtentX        =   10927
+      _ExtentY        =   2090
+      Caption         =   "Browser Add On"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
       Begin VB.CommandButton cmdInstallBrowserAddOn 
          Caption         =   "&Install Browser Add On"
          Enabled         =   0   'False
@@ -82,15 +98,23 @@ Begin VB.UserControl ctlOptGeneral
       Top             =   4560
       Visible         =   0   'False
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   1879
-      caption         =   "Shell integration"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":036E
-      textshaddowcolor=   12582912
-      enabled         =   0
+      _ExtentX        =   10927
+      _ExtentY        =   1879
+      Caption         =   "Shell integration"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
+      Enabled         =   0   'False
       Begin VB.CommandButton cmdShellintegration 
          Caption         =   "Integrate PDFCreator into shell"
          Height          =   495
@@ -117,14 +141,22 @@ Begin VB.UserControl ctlOptGeneral
       Top             =   360
       Visible         =   0   'False
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   4842
-      caption         =   "General 2"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":039A
-      textshaddowcolor=   12582912
+      _ExtentX        =   10927
+      _ExtentY        =   4842
+      Caption         =   "General 2"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
       Begin VB.CommandButton cmdAsso 
          Caption         =   "&Associate PDFCreator with Postscript files"
          Height          =   495
@@ -145,9 +177,9 @@ Begin VB.UserControl ctlOptGeneral
       End
       Begin VB.ComboBox cmbOptionsDesign 
          Height          =   315
-         ItemData        =   "ctlOptGeneral.ctx":03C6
+         ItemData        =   "ctlOptGeneral.ctx":0316
          Left            =   120
-         List            =   "ctlOptGeneral.ctx":03C8
+         List            =   "ctlOptGeneral.ctx":0318
          Style           =   2  'Dropdown-Liste
          TabIndex        =   16
          Top             =   1620
@@ -161,12 +193,12 @@ Begin VB.UserControl ctlOptGeneral
          TabStop         =   0   'False
          Top             =   1200
          Width           =   5925
-         _extentx        =   10451
-         _extenty        =   53
-         linetype        =   1
-         3dhighlight     =   -2147483628
-         3dshadow        =   -2147483632
-         drawstyle       =   0
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
       End
       Begin VB.Label lblOptionsDesign 
          AutoSize        =   -1  'True
@@ -185,14 +217,22 @@ Begin VB.UserControl ctlOptGeneral
       Top             =   360
       Visible         =   0   'False
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   7250
-      caption         =   "General 1"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptGeneral.ctx":03CA
-      textshaddowcolor=   12582912
+      _ExtentX        =   10927
+      _ExtentY        =   7250
+      Caption         =   "General 1"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
       Begin VB.CheckBox chkNoConfirmMessageSwitchingDefaultprinter 
          Appearance      =   0  '2D
          Caption         =   "No confirm message switching PDFCreator temporarly as default printer."
@@ -237,12 +277,12 @@ Begin VB.UserControl ctlOptGeneral
          TabStop         =   0   'False
          Top             =   1200
          Width           =   5925
-         _extentx        =   10451
-         _extenty        =   53
-         linetype        =   1
-         3dhighlight     =   -2147483628
-         3dshadow        =   -2147483632
-         drawstyle       =   0
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
       End
       Begin MSComctlLib.Slider sldProcessPriority 
          Height          =   495
@@ -266,12 +306,12 @@ Begin VB.UserControl ctlOptGeneral
          TabStop         =   0   'False
          Top             =   2160
          Width           =   5925
-         _extentx        =   10451
-         _extenty        =   53
-         linetype        =   1
-         3dhighlight     =   -2147483628
-         3dshadow        =   -2147483632
-         drawstyle       =   0
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
       End
       Begin PDFCreator.Line3D Line3D1 
          Height          =   30
@@ -281,12 +321,12 @@ Begin VB.UserControl ctlOptGeneral
          TabStop         =   0   'False
          Top             =   3240
          Width           =   5925
-         _extentx        =   10451
-         _extenty        =   53
-         linetype        =   1
-         3dhighlight     =   -2147483628
-         3dshadow        =   -2147483632
-         drawstyle       =   0
+         _ExtentX        =   10451
+         _ExtentY        =   53
+         LineType        =   1
+         3DHighlight     =   -2147483628
+         3DShadow        =   -2147483632
+         DrawStyle       =   0
       End
       Begin VB.Label lblSendMailMethod 
          AutoSize        =   -1  'True
@@ -338,7 +378,8 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim upd As clsUpdate
 50020  Set upd = New clsUpdate
-50030  upd.CheckForUpdates
+50030  upd.CheckForUpdates True
+50040  SetLastUpdateCeck Now
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

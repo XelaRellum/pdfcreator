@@ -64,7 +64,7 @@ Begin VB.Form frmMain
       MaskColor       =   12632256
       _Version        =   393216
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
-         NumListImages   =   17
+         NumListImages   =   18
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
             Picture         =   "frmMain.frx":7358
             Key             =   ""
@@ -131,6 +131,10 @@ Begin VB.Form frmMain
          EndProperty
          BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
             Picture         =   "frmMain.frx":B6B8
+            Key             =   ""
+         EndProperty
+         BeginProperty ListImage18 {2C247F27-8591-11D1-B16A-00C0F0283628} 
+            Picture         =   "frmMain.frx":BA52
             Key             =   ""
          EndProperty
       EndProperty
@@ -244,7 +248,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   1890
-      Picture         =   "frmMain.frx":BA52
+      Picture         =   "frmMain.frx":BBAC
       Top             =   2940
       Visible         =   0   'False
       Width           =   930
@@ -307,6 +311,7 @@ Begin VB.Form frmMain
       Begin VB.Menu mnDocument 
          Caption         =   "Add from clipboard"
          Index           =   3
+         Shortcut        =   ^V
       End
       Begin VB.Menu mnDocument 
          Caption         =   "Delete"
@@ -347,22 +352,22 @@ Begin VB.Form frmMain
          Shortcut        =   ^C
       End
       Begin VB.Menu mnDocument 
-         Caption         =   "-"
+         Caption         =   "Combine all"
          Index           =   12
+         Shortcut        =   ^A
+      End
+      Begin VB.Menu mnDocument 
+         Caption         =   "-"
+         Index           =   13
       End
       Begin VB.Menu mnDocument 
          Caption         =   "Save"
-         Index           =   13
+         Index           =   14
          Shortcut        =   ^S
       End
       Begin VB.Menu mnDocument 
          Caption         =   "-"
-         Index           =   14
-      End
-      Begin VB.Menu mnDocument 
-         Caption         =   "Combine all"
          Index           =   15
-         Shortcut        =   ^A
       End
       Begin VB.Menu mnDocument 
          Caption         =   "Combine all and send"
@@ -802,10 +807,10 @@ On Error GoTo ErrPtnr_OnError
 50310   mnDocument(9).Caption = .DialogDocumentBottom
 50320
 50330   mnDocument(11).Caption = .DialogDocumentCombine
-50340
-50350   mnDocument(13).Caption = .DialogDocumentSave
-50360
-50370   mnDocument(15).Caption = .DialogDocumentCombineAll
+50340   mnDocument(12).Caption = .DialogDocumentCombineAll
+50350
+50360   mnDocument(14).Caption = .DialogDocumentSave
+50370
 50380   mnDocument(16).Caption = .DialogDocumentCombineAllSend
 50390   mnDocument(17).Caption = .DialogDocumentSend
 50400
@@ -1064,10 +1069,10 @@ On Error GoTo ErrPtnr_OnError
 50250    DocumentBottom
 50260   Case 11: ' Combine
 50270    DocumentCombine
-50280   Case 13: ' Save
-50290    DocumentSave
-50300   Case 15
-50310    CombineAll
+50280   Case 12: ' CombineAll
+50290    DocumentCombineAll
+50300   Case 14: ' Save
+50310    DocumentSave
 50320   Case 16
 50330    CombineAllAndSend
 50340   Case 17
@@ -1122,9 +1127,10 @@ On Error GoTo ErrPtnr_OnError
 50110   Case 6:
 50120    Set upd = New clsUpdate
 50130    upd.CheckForUpdates True
-50140   Case 8:
-50150    frmInfo.Show , Me
-50160  End Select
+50140    SetLastUpdateCeck Now
+50150   Case 8:
+50160    frmInfo.Show , Me
+50170  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1348,33 +1354,35 @@ On Error GoTo ErrPtnr_OnError
 50120     Case 6
 50130      DocumentAdd
 50140     Case 7
-50150      DocumentDelete
+50150      DocumentAddFromClipboard
 50160     Case 8
-50170      DocumentTop
+50170      DocumentDelete
 50180     Case 9
-50190      DocumentUp
+50190      DocumentTop
 50200     Case 10
-50210      DocumentDown
+50210      DocumentUp
 50220     Case 11
-50230      DocumentBottom
+50230      DocumentDown
 50240     Case 12
-50250      DocumentCombine
+50250      DocumentBottom
 50260     Case 13
-50270      DocumentSave
-50280     Case 15
-50290      Call HTMLHelp_ShowTopic("html\welcome.htm")
-50300    End Select
-50310   Case 1
-50321    Select Case Button.Index
+50270      DocumentCombine
+50280     Case 14
+50290      DocumentCombineAll
+50300     Case 15
+50310      DocumentSave
+50320     Case 17
+50330      Call HTMLHelp_ShowTopic("html\welcome.htm")
+50340    End Select
+50350   Case 1
+50361    Select Case Button.Index
           Case 1
-50340      CombineAll
-50350     Case 3
-50360      CombineAllAndSend
-50370     Case 4
-50380      SendEmail
-50390    End Select
-50400  End Select
-50410  SetDocMenuAndToolbar
+50380      CombineAllAndSend
+50390     Case 2
+50400      SendEmail
+50410    End Select
+50420  End Select
+50430  SetDocMenuAndToolbar
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1602,113 +1610,112 @@ On Error GoTo ErrPtnr_OnError
 50120  End If
 50130  If Clipboard.GetFormat(vbCFBitmap) = True Then
 50140    mnDocument(3).Enabled = True
-50150   Else
-50160    mnDocument(3).Enabled = False
-50170  End If
-50181  Select Case True
+50150    tlb(0).Buttons(7).Enabled = True
+50160   Else
+50170    mnDocument(3).Enabled = False
+50180    tlb(0).Buttons(7).Enabled = False
+50190  End If
+50201  Select Case True
         Case lsv.ListItems.Count = 0, LvwGetCountSelectedItems(lsv, False) = 0
-50200    With mnDocument
-50210     .Item(0).Enabled = False
-50220     .Item(4).Enabled = False
-50230     .Item(6).Enabled = False
-50240     .Item(7).Enabled = False
-50250     .Item(8).Enabled = False
-50260     .Item(9).Enabled = False
-50270     .Item(11).Enabled = False
-50280     .Item(13).Enabled = False
-50290     If (Options.Toolbars And 2) = 2 Then
-50300      .Item(15).Enabled = False
-50310      .Item(16).Enabled = False
-50320      .Item(17).Enabled = False
-50330     End If
-50340    End With
-50350    With tlb(0)
-50360     .Buttons(5).Enabled = False
-50370     For c = 7 To 13
-50380      .Buttons(c).Enabled = False
-50390     Next c
-50400    End With
-50410    With tlb(1)
-50420     If (Options.Toolbars And 2) = 2 Then
-50430      .Buttons(1).Enabled = False
-50440      .Buttons(3).Enabled = False
-50450      .Buttons(4).Enabled = False
-50460     End If
-50470    End With
-50480    Exit Sub
-50490   Case lsv.ListItems.Count = 1
-50500    With mnDocument
-50510     .Item(6).Enabled = False
-50520     .Item(7).Enabled = False
-50530     .Item(8).Enabled = False
-50540     .Item(9).Enabled = False
-50550     .Item(11).Enabled = False
-50560     If (Options.Toolbars And 2) = 2 Then
-50570      .Item(15).Enabled = False
-50580      .Item(16).Enabled = False
-50590      If LenB(txtEmailAddress.Text) = 0 Or Options.DisableEmail <> 0 Then
-50600       .Item(17).Enabled = False
-50610      End If
-50620     End If
-50630    End With
-50640    With tlb(0)
-50650     For c = 8 To 12
-50660      .Buttons(c).Enabled = False
-50670     Next c
-50680    End With
-50690    With tlb(1)
-50700     If (Options.Toolbars And 2) = 2 Then
-50710      .Buttons(1).Enabled = False
-50720      .Buttons(3).Enabled = False
-50730      If LenB(txtEmailAddress.Text) = 0 Then
-50740       .Buttons(4).Enabled = False
-50750      End If
-50760     End If
-50770    End With
-50780   Case lsv.ListItems.Count > 1
-50790    With mnDocument
-50800     If AllSelectedListitemsAtTop Then
-50810      .Item(6).Enabled = False
-50820      .Item(7).Enabled = False
-50830     End If
-50840     If AllSelectedListitemsAtBottom Then
-50850      .Item(8).Enabled = False
-50860      .Item(9).Enabled = False
-50870     End If
-50880     If LvwGetCountSelectedItems(lsv, False) = 1 Then
-50890      .Item(11).Enabled = False
-50900     End If
-50910     If LvwGetCountSelectedItems(lsv, False) > 1 Then
-50920      .Item(13).Enabled = False
-50930     End If
-50940     If ((Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0) Or Options.DisableEmail <> 0 Then
-50950      .Item(16).Enabled = False
-50960      .Item(17).Enabled = False
-50970     End If
-50980    End With
-50990    With tlb(0)
-51000     If AllSelectedListitemsAtTop Then
-51010      .Buttons(8).Enabled = False
-51020      .Buttons(9).Enabled = False
-51030     End If
-51040     If AllSelectedListitemsAtBottom Then
-51050      .Buttons(10).Enabled = False
-51060      .Buttons(11).Enabled = False
-51070     End If
-51080     If LvwGetCountSelectedItems(lsv, False) = 1 Then
-51090      .Buttons(12).Enabled = False
-51100     End If
-51110     If LvwGetCountSelectedItems(lsv, False) > 1 Then
-51120      .Buttons(13).Enabled = False
-51130     End If
-51140    End With
-51150    With tlb(1)
-51160     If (Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0 Then
-51170      .Buttons(3).Enabled = False
-51180      .Buttons(4).Enabled = False
-51190     End If
-51200    End With
-51210  End Select
+50220    With mnDocument
+50230     .Item(0).Enabled = False
+50240     .Item(4).Enabled = False
+50250     .Item(6).Enabled = False
+50260     .Item(7).Enabled = False
+50270     .Item(8).Enabled = False
+50280     .Item(9).Enabled = False
+50290     .Item(11).Enabled = False
+50300     .Item(12).Enabled = False
+50310     .Item(14).Enabled = False
+50320     If (Options.Toolbars And 2) = 2 Then
+50330      .Item(16).Enabled = False
+50340      .Item(17).Enabled = False
+50350     End If
+50360    End With
+50370    With tlb(0)
+50380     .Buttons(5).Enabled = False ' print
+50390     For c = 8 To 15
+50400      .Buttons(c).Enabled = False
+50410     Next c
+50420    End With
+50430    With tlb(1)
+50440     If (Options.Toolbars And 2) = 2 Then
+50450      .Buttons(1).Enabled = False
+50460      .Buttons(2).Enabled = False
+50470     End If
+50480    End With
+50490    Exit Sub
+50500   Case lsv.ListItems.Count = 1
+50510    With mnDocument
+50520     .Item(6).Enabled = False
+50530     .Item(7).Enabled = False
+50540     .Item(8).Enabled = False
+50550     .Item(9).Enabled = False
+50560     .Item(11).Enabled = False
+50570     .Item(12).Enabled = False
+50580     If (Options.Toolbars And 2) = 2 Then
+50590      .Item(16).Enabled = False
+50600      If LenB(txtEmailAddress.Text) = 0 Or Options.DisableEmail <> 0 Then
+50610       .Item(17).Enabled = False
+50620      End If
+50630     End If
+50640    End With
+50650    With tlb(0)
+50660     For c = 8 To 14
+50670      .Buttons(c).Enabled = False
+50680     Next c
+50690    End With
+50700    With tlb(1)
+50710     If (Options.Toolbars And 2) = 2 Then
+50720      If LenB(txtEmailAddress.Text) = 0 Then
+50730       .Buttons(2).Enabled = False
+50740      End If
+50750     End If
+50760    End With
+50770   Case lsv.ListItems.Count > 1
+50780    With mnDocument
+50790     If AllSelectedListitemsAtTop Then
+50800      .Item(6).Enabled = False
+50810      .Item(7).Enabled = False
+50820     End If
+50830     If AllSelectedListitemsAtBottom Then
+50840      .Item(8).Enabled = False
+50850      .Item(9).Enabled = False
+50860     End If
+50870     If LvwGetCountSelectedItems(lsv, False) = 1 Then
+50880      .Item(11).Enabled = False
+50890     End If
+50900     If LvwGetCountSelectedItems(lsv, False) > 1 Then
+50910      .Item(14).Enabled = False
+50920     End If
+50930     If ((Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0) Or Options.DisableEmail <> 0 Then
+50940      .Item(16).Enabled = False
+50950      .Item(17).Enabled = False
+50960     End If
+50970    End With
+50980    With tlb(0)
+50990     If AllSelectedListitemsAtTop Then
+51000      .Buttons(9).Enabled = False
+51010      .Buttons(10).Enabled = False
+51020     End If
+51030     If AllSelectedListitemsAtBottom Then
+51040      .Buttons(11).Enabled = False
+51050      .Buttons(12).Enabled = False
+51060     End If
+51070     If LvwGetCountSelectedItems(lsv, False) = 1 Then
+51080      .Buttons(13).Enabled = False
+51090     End If
+51100     If LvwGetCountSelectedItems(lsv, False) > 1 Then
+51110      .Buttons(15).Enabled = False
+51120     End If
+51130    End With
+51140    With tlb(1)
+51150     If (Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0 Then
+51160      .Buttons(1).Enabled = False
+51170      .Buttons(2).Enabled = False
+51180     End If
+51190    End With
+51200  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1951,6 +1958,13 @@ Private Sub Timer2_Timer()
  ' Create a global mutex
    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
  End If
+ If Clipboard.GetFormat(vbCFBitmap) = True Then
+   mnDocument(3).Enabled = True
+   tlb(0).Buttons(7).Enabled = True
+  Else
+   mnDocument(3).Enabled = False
+   tlb(0).Buttons(7).Enabled = False
+ End If
  InTimer2 = False
 End Sub
 
@@ -1968,21 +1982,21 @@ On Error GoTo ErrPtnr_OnError
 50080   .Buttons.Add , , , tbrSeparator
 50090   .Buttons.Add , , , , 5
 50100   .Buttons.Add , , , , 6
-50110   .Buttons.Add , , , , 7
-50120   .Buttons.Add , , , , 8
-50130   .Buttons.Add , , , , 9
-50140   .Buttons.Add , , , , 10
-50150   .Buttons.Add , , , , 11
-50160   .Buttons.Add , , , , 12
-50170   .Buttons.Add , , , , 13
-50180   .Buttons.Add , , , tbrSeparator
-50190   .Buttons.Add , , , , 14
-50200  End With
-50210  With tlb(1)
-50220   Set .ImageList = imlTlb
-50230   .Buttons.Clear
-50240   .Buttons.Add , , , , 15
-50250   .Buttons.Add , , , tbrSeparator
+50110   .Buttons.Add , , , , 18
+50120   .Buttons.Add , , , , 7
+50130   .Buttons.Add , , , , 8
+50140   .Buttons.Add , , , , 9
+50150   .Buttons.Add , , , , 10
+50160   .Buttons.Add , , , , 11
+50170   .Buttons.Add , , , , 12
+50180   .Buttons.Add , , , , 15
+50190   .Buttons.Add , , , , 13
+50200   .Buttons.Add , , , tbrSeparator
+50210   .Buttons.Add , , , , 14
+50220  End With
+50230  With tlb(1)
+50240   Set .ImageList = imlTlb
+50250   .Buttons.Clear
 50260   .Buttons.Add , , , , 16
 50270   .Buttons.Add , , , , 17
 50280   .Buttons.Add , , , tbrSeparator
@@ -2405,20 +2419,21 @@ On Error GoTo ErrPtnr_OnError
 50040   .Buttons(3).ToolTipText = LanguageStrings.DialogPrinterLogfile
 50050   .Buttons(5).ToolTipText = LanguageStrings.DialogDocumentPrint
 50060   .Buttons(6).ToolTipText = LanguageStrings.DialogDocumentAdd
-50070   .Buttons(7).ToolTipText = LanguageStrings.DialogDocumentDelete
-50080   .Buttons(8).ToolTipText = LanguageStrings.DialogDocumentTop
-50090   .Buttons(9).ToolTipText = LanguageStrings.DialogDocumentUp
-50100   .Buttons(10).ToolTipText = LanguageStrings.DialogDocumentDown
-50110   .Buttons(11).ToolTipText = LanguageStrings.DialogDocumentBottom
-50120   .Buttons(12).ToolTipText = LanguageStrings.DialogDocumentCombine
-50130   .Buttons(13).ToolTipText = LanguageStrings.DialogDocumentSave
-50140   .Buttons(15).ToolTipText = "?"
-50150  End With
-50160  With tlb(1)
-50170   .Buttons(1).ToolTipText = LanguageStrings.DialogDocumentCombineAll
-50180   .Buttons(3).ToolTipText = LanguageStrings.DialogDocumentCombineAllSend
-50190   .Buttons(4).ToolTipText = LanguageStrings.DialogDocumentSend
-50200  End With
+50070   .Buttons(7).ToolTipText = LanguageStrings.DialogDocumentAddFromClipboard
+50080   .Buttons(8).ToolTipText = LanguageStrings.DialogDocumentDelete
+50090   .Buttons(9).ToolTipText = LanguageStrings.DialogDocumentTop
+50100   .Buttons(10).ToolTipText = LanguageStrings.DialogDocumentUp
+50110   .Buttons(11).ToolTipText = LanguageStrings.DialogDocumentDown
+50120   .Buttons(12).ToolTipText = LanguageStrings.DialogDocumentBottom
+50130   .Buttons(13).ToolTipText = LanguageStrings.DialogDocumentCombine
+50140   .Buttons(14).ToolTipText = LanguageStrings.DialogDocumentCombineAll
+50150   .Buttons(15).ToolTipText = LanguageStrings.DialogDocumentSave
+50160   .Buttons(17).ToolTipText = "?"
+50170  End With
+50180  With tlb(1)
+50190   .Buttons(1).ToolTipText = LanguageStrings.DialogDocumentCombineAllSend
+50200   .Buttons(2).ToolTipText = LanguageStrings.DialogDocumentSend
+50210  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2456,7 +2471,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function CombineAll() As String
+Public Function DocumentCombineAll() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -2465,7 +2480,7 @@ On Error GoTo ErrPtnr_OnError
 50030   Exit Function
 50040  End If
 50050  If lsv.ListItems.Count = 1 Then
-50060   CombineAll = lsv.ListItems(1).SubItems(4)
+50060   DocumentCombineAll = lsv.ListItems(1).SubItems(4)
 50070   Exit Function
 50080  End If
 50090  Screen.MousePointer = vbHourglass
@@ -2485,14 +2500,14 @@ On Error GoTo ErrPtnr_OnError
 50230  KillFile tFilename2
 50240  Name tFilename As tFilename2
 50250  Set cFiles = Nothing
-50260  CombineAll = tFilename2
+50260  DocumentCombineAll = tFilename2
 50270  Timer1.Enabled = True
 50280  LockWindowUpdate 0&
 50290  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "CombineAll")
+Select Case ErrPtnr.OnError("frmMain", "DocumentCombineAll")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2557,7 +2572,7 @@ On Error GoTo ErrPtnr_OnError
 50030   ShowAnimationWindow = True
 50040   frmAnimation.Show
 50050  End If
-50060  SendEmailImmediately CombineAll
+50060  SendEmailImmediately DocumentCombineAll
 50070  If Options.ShowAnimation = 1 Then
 50080   ShowAnimationWindow = False
 50090  End If

@@ -329,7 +329,8 @@ On Error GoTo ErrPtnr_OnError
 50020  Set reg = New clsRegistry
 50030  With reg
 50040   .hkey = HKEY_LOCAL_MACHINE
-50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+'50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+50050   .KeyRoot = "SOFTWARE\PDFCreator\Program\"
 50060   Release = .GetRegistryValue("ApplicationVersion")
 50070   If LenB(Trim$(Release)) = 0 Then
 50080     Release = App.Major & "." & App.Minor & "." & App.Revision & ".0"
