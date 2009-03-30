@@ -298,15 +298,11 @@ On Error GoTo ErrPtnr_OnError
 50320   Exit Function
 50330  End If
 50340
-50350 WriteToSpecialLogfile "CreateProcessAsUser() successful = "
-50360 Result = WaitForSingleObject(PI.hProcess, 60000)
-50370 WriteToSpecialLogfile "WaitForSingleObject = " & Result
-50380 DestroyEnvironmentBlock lpEnv
-50390
-50400
-50410  CloseHandle PI.hThread
-50420  CloseHandle PI.hProcess
-50430  RunAsUser = 0
+50350  WriteToSpecialLogfile "CreateProcessAsUser() = successful"
+50360
+50370  CloseHandle PI.hThread
+50380  CloseHandle PI.hProcess
+50390  RunAsUser = 0
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
