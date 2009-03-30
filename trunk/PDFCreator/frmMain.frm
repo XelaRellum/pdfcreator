@@ -4,8 +4,8 @@ Begin VB.Form frmMain
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
    ClientHeight    =   3765
-   ClientLeft      =   165
-   ClientTop       =   855
+   ClientLeft      =   225
+   ClientTop       =   825
    ClientWidth     =   9510
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
