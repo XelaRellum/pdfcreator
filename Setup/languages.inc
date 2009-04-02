@@ -26,4 +26,4 @@ Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
 ;Name: swedish;            MessagesFile: Innosetup languages files\Swedish-10-5.1.12.isl
 ;Name: turkish;            MessagesFile: Innosetup languages files\Turkish-3-5.1.11.isl
 ;Name: ukrainian;          MessagesFile: Innosetup languages files\Ukrainian-5-5.1.0.isl
-;Name: valencian;          MessagesFile: Innosetup languages files\Valencian-1-5.1.11.isl
+Name: valencian;          MessagesFile: Innosetup languages files\Valencian-1-5.1.11.isl
