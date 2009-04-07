@@ -1,5 +1,5 @@
 Name:     pdfforge.dll
-Version:  1.1.0.0
+Version:  1.4.0.0
 Author:   Frank Heindörfer
 Email:    frank@pdfforge.org
 Homepage: http://www.pdfforge.org
@@ -22,13 +22,16 @@ pdfforge.pdf
  pdfforge.pdf.PDF
  {
   int AddTextToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, ref PDFText textObject);
+  int Brochure(string sourceFilename, string destinationFilename);
   int CopyPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage);
-  int CreatePDFTestDocument(string destinationFilename, int countOfPages, string additonalText);
+  int CreatePDFTestDocument(string destinationFilename, int countOfPages, string additionalText);
   void EncryptPDFFile(string sourceFilename, string destinationFilename, ref PDFEncryptor enc);
   int FileLength(string filename);
   string GetMetadata(string sourceFilename, string key);
-  int Images2PDF(ref string[] sourceFilenames, string destinationFilename, bool fitImage);
+  int Images2PDF(ref string[] sourceFilenames, string destinationFilename, int scaleMode);
+  int Images2PDF(ref object[] sourceFilenames, string destinationFilename, int scaleMode);
   void MergePDFFiles(ref string[] sourceFilenames, string destinationFilename);
+  void MergePDFFiles(ref object[] sourceFilenames, string destinationFilename);
   int NumberOfPages(string filename);
   int NUp(string sourceFilename, string destinationFilename, int pagesPerPage);
   string PDFVersion(string filename);
@@ -37,9 +40,16 @@ pdfforge.pdf
   int SetBackgroundColor(string sourceFilename, string destinationFilename, int fromPage, int toPage, byte Red, byte Green, byte Blue);
   void SetMetadata(string sourceFilename, string destinationFilename, string author, string creator, string keywords, string subject, string title);
   bool SetMetadataKey(string sourceFilename, string destinationFilename, string key, string value);
-  void SignPDFFile(string sourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword, string signatureReason,
-	string signatureContact, string signatureLocation, bool signatureVisible, int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX,
-	int signaturePositionUpperRightY, bool multiSignatures, ref PDFEncryptor enc);
+  void SignPDFFile(string sourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword,
+                   string signatureReason, string signatureContact, string signatureLocation,
+                   bool signatureVisible,
+                   int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX, int signaturePositionUpperRightY,
+                   bool multiSignatures, ref PDFEncryptor enc);
+  void SignPDFFile(string sourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword,
+                   string signatureReason, string signatureContact, string signatureLocation,
+                   bool signatureVisible,
+                   int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX, int signaturePositionUpperRightY,
+                   bool multiSignatures);
   int SplitPDFFile(string sourceFilename, string destinationFilename);
   int StampPDFFileWithImage(string sourceFilename, string destinationFilename, string imageFilename, int fromPage, int toPage, bool overUnder, float fillOpacity, int blendMode);
   int StampPDFFileWithPDFFile(string sourceFilename, string destinationFilename, string pdfFilename, int fromPage, int toPage, bool overUnder, float fillOpacity, int blendMode);
@@ -76,4 +86,3 @@ pdfforge.pdf
 
 pdfforge.Tools
  bool CreateTestImage(string destinationFilename, int Red, int Green, int Blue);
-
