@@ -1,6 +1,6 @@
-Title: PDFCreator Version 0.9.7
+Title: PDFCreator Version 0.9.8
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: February 3,  2008
+Releasedate: April 8,  2008
 
 Look at the readme.txt-Files in 'Setup', 'Printer', 'Printer\Redmon'.
 
@@ -15,8 +15,8 @@ Systemfiles:
 	Run Win9x_CopySystemfiles.bat or WinNt_CopySystemfiles.bat from 'Additional files\Systemfiles' to copy the Systemfiles for the setup.
 
 Ghostscript Files:
-	Download GPL Ghostscript 8.63
-	Install Ghostscript in the standard directory c:\gs\gpl\gs8.63
+	Download GPL Ghostscript 8.64
+	Install Ghostscript in the standard directory c:\gs\gpl\gs8.64
 
 Redmon Files:
 	Download the Redmon-Files from http://www.cs.wisc.edu/~ghost/redmon/ (ftp://mirror.cs.wisc.edu/pub/mirrors/ghost/ghostgum/redmon17.zip)
