@@ -5,7 +5,7 @@ Email:    frank@pdfforge.org
 Homepage: http://www.pdfforge.org
 License:  FairPlay License Version 1.0 (FairPlay License.txt)
 Remark:   Using itextsharp 4.1.2.0 (compiled from source)
-Date:     01-Sep-2008
+Date:     April 8, 2009
 
 
 Classes, methods of the pdfforge.dll.
