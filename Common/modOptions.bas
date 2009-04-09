@@ -538,7 +538,7 @@ On Error GoTo ErrPtnr_OnError
 50770   End If
 50780   tStr = hOpt.Retrieve("AutosaveFormat")
 50790   If IsNumeric(tStr) Then
-50800     If CLng(tStr) >= 0 And CLng(tStr) <= 13 Then
+50800     If CLng(tStr) >= 0 And CLng(tStr) <= 14 Then
 50810       .AutosaveFormat = CLng(tStr)
 50820      Else
 50830       If UseStandard Then
@@ -4853,7 +4853,7 @@ On Error GoTo ErrPtnr_OnError
 65910   End If
 65920   tStr = reg.GetRegistryValue("AutosaveFormat")
 65930   If IsNumeric(tStr) Then
-65940     If CLng(tStr) >= 0 And CLng(tStr) <= 13 Then
+65940     If CLng(tStr) >= 0 And CLng(tStr) <= 14 Then
 65950       .AutosaveFormat = CLng(tStr)
 65960      Else
 65970       If UseStandard Then
