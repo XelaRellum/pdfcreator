@@ -212,8 +212,10 @@ On Error GoTo ErrPtnr_OnError
 50510    filename = filename & ".pcl"
 50520   Case 13: 'RAW
 50530    filename = filename & ".raw"
-50540  End Select
-50550  GetAutosaveFilename = CompletePath(GetSubstFilename2(Pathname, False)) & ReplaceForbiddenChars(filename)
+50540   Case 14: 'SVG
+50550    filename = filename & ".svg"
+50560  End Select
+50570  GetAutosaveFilename = CompletePath(GetSubstFilename2(Pathname, False)) & ReplaceForbiddenChars(filename)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

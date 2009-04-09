@@ -7,7 +7,7 @@ AddWindowsFontpath|chkAddWindowsFontpath.Value|Boolean|1||
 AllowSpecialGSCharsInFilenames|chkAllowSpecialGSCharsInFilenames.Value|Boolean|1||
 AutosaveDirectory|txtAutosaveDirectory.Text|String|<MyFiles>||
 AutosaveFilename|txtAutosaveFilename.Text|String|<DateTime>||
-AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|13
+AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|14
 AutosaveStartStandardProgram|chkAutosaveStartStandardProgram.Value|Boolean|0||
 
 ' <Printing Formats Bitmap Colors>

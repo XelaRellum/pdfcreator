@@ -13,22 +13,14 @@ Begin VB.UserControl ctlOptAutosave
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   8969
-      Caption         =   "Autosave"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
+      _extentx        =   11245
+      _extenty        =   8969
+      caption         =   "Autosave"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptAutosave.ctx":0312
+      textshaddowcolor=   12582912
       Begin VB.TextBox txtAutoSaveDirectoryPreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -90,9 +82,9 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptAutosave.ctx":0312
+         ItemData        =   "ctlOptAutosave.ctx":033E
          Left            =   3690
-         List            =   "ctlOptAutosave.ctx":0314
+         List            =   "ctlOptAutosave.ctx":0340
          Style           =   2  'Dropdown-Liste
          TabIndex        =   7
          Top             =   1785
@@ -194,30 +186,31 @@ On Error GoTo ErrPtnr_OnError
 50180   .AddItem "PSD"
 50190   .AddItem "PCL"
 50200   .AddItem "RAW"
-50210   .ListIndex = 0
-50220  End With
-50230  With cmbAutoSaveFilenameTokens
-50240   .Clear
-50250   .AddItem "<Author>"
-50260   .AddItem "<Computername>"
-50270   .AddItem "<ClientComputer>"
-50280   .AddItem "<DateTime>"
-50290   .AddItem "<Title>"
-50300   .AddItem "<Username>"
-50310   .AddItem "<Counter>"
-50320   .AddItem "<REDMON_DOCNAME>"
-50330   .AddItem "<REDMON_DOCNAME_FILE>"
-50340   .AddItem "<REDMON_DOCNAME_PATH>"
-50350   .AddItem "<REDMON_JOB>"
-50360   .AddItem "<REDMON_MACHINE>"
-50370   .AddItem "<REDMON_PORT>"
-50380   .AddItem "<REDMON_PRINTER>"
-50390   .AddItem "<REDMON_SESSIONID>"
-50400   .AddItem "<REDMON_USER>"
-50410   .ListIndex = 0
-50420  End With
-50430
-50440  SetFrames Options.OptionsDesign
+50210   .AddItem "SVG"
+50220   .ListIndex = 0
+50230  End With
+50240  With cmbAutoSaveFilenameTokens
+50250   .Clear
+50260   .AddItem "<Author>"
+50270   .AddItem "<Computername>"
+50280   .AddItem "<ClientComputer>"
+50290   .AddItem "<DateTime>"
+50300   .AddItem "<Title>"
+50310   .AddItem "<Username>"
+50320   .AddItem "<Counter>"
+50330   .AddItem "<REDMON_DOCNAME>"
+50340   .AddItem "<REDMON_DOCNAME_FILE>"
+50350   .AddItem "<REDMON_DOCNAME_PATH>"
+50360   .AddItem "<REDMON_JOB>"
+50370   .AddItem "<REDMON_MACHINE>"
+50380   .AddItem "<REDMON_PORT>"
+50390   .AddItem "<REDMON_PRINTER>"
+50400   .AddItem "<REDMON_SESSIONID>"
+50410   .AddItem "<REDMON_USER>"
+50420   .ListIndex = 0
+50430  End With
+50440
+50450  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -299,45 +292,56 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 '  Case 0: 'PDF
-50020 '  Case 1: 'PNG
-50030 '  Case 2: 'JPEG
-50040 '  Case 3: 'BMP
-50050 '  Case 4: 'PCX
-50060 '  Case 5: 'TIFF
-50070 '  Case 6: 'PS
-50080 '  Case 7: 'EPS
-50090 '  Case 8: 'TXT
-50100 '  Case 9: 'PDFA
-50110 '  Case 10: 'PDFX
-50120 '  Case 11: 'PSD
-50130 '  Case 12: 'PCL
-50140 '  Case 13: 'RAW
-50150
-50160  With Options
-50170   chkUseAutosave.value = .UseAutosave
-50180
-50191   Select Case .AutosaveFormat
-         Case 0, 11 To 13:
-50210     cmbAutosaveFormat.ListIndex = .AutosaveFormat
-50220    Case 1, 2:
-50230     cmbAutosaveFormat.ListIndex = .AutosaveFormat + 2
-50240    Case 3 To 10:
-50250     cmbAutosaveFormat.ListIndex = .AutosaveFormat - 8
-50260   End Select
-50270
-50280   txtAutosaveFilename.Text = .AutosaveFilename
-50290
-50300   txtAutosaveDirectory.Text = .AutosaveDirectory
-50310   chkAutosaveStartStandardProgram.value = .AutosaveStartStandardProgram
-50320   chkUseAutosaveDirectory.value = .UseAutosaveDirectory
-50330   chkAutosaveSendEmail.value = .SendEmailAfterAutoSaving
-50340  End With
-50350  If chkUseAutosave.value = 1 Then
-50360    ViewAutosave True
-50370   Else
-50380    ViewAutosave False
-50390  End If
+50010  With Options
+50020   chkUseAutosave.value = .UseAutosave
+50030
+50041   Select Case .AutosaveFormat
+         Case 0:
+50060     cmbAutosaveFormat.ListIndex = 0  ' PDF
+50070    Case 1:
+50080     cmbAutosaveFormat.ListIndex = 3  ' PNG
+50090    Case 2:
+50100     cmbAutosaveFormat.ListIndex = 4  ' JPEG
+50110    Case 3:
+50120     cmbAutosaveFormat.ListIndex = 5  ' BMP
+50130    Case 4:
+50140     cmbAutosaveFormat.ListIndex = 6  ' PCX
+50150    Case 5:
+50160     cmbAutosaveFormat.ListIndex = 7  ' TIFF
+50170    Case 6:
+50180     cmbAutosaveFormat.ListIndex = 8  ' PS
+50190    Case 7:
+50200     cmbAutosaveFormat.ListIndex = 9  ' EPS
+50210    Case 8:
+50220     cmbAutosaveFormat.ListIndex = 10 ' TXT
+50230    Case 9:
+50240     cmbAutosaveFormat.ListIndex = 1  ' PDF/A
+50250    Case 10:
+50260     cmbAutosaveFormat.ListIndex = 2 ' PDF/X
+50270    Case 11:
+50280     cmbAutosaveFormat.ListIndex = 11 ' PSD
+50290    Case 12:
+50300     cmbAutosaveFormat.ListIndex = 12 ' PCL
+50310    Case 13:
+50320     cmbAutosaveFormat.ListIndex = 13 ' RAW
+50330    Case 14:
+50340     cmbAutosaveFormat.ListIndex = 14 ' SVG
+50350    Case Else:
+50360     cmbAutosaveFormat.ListIndex = 0  ' PDF
+50370   End Select
+50380
+50390   txtAutosaveFilename.Text = .AutosaveFilename
+50400
+50410   txtAutosaveDirectory.Text = .AutosaveDirectory
+50420   chkAutosaveStartStandardProgram.value = .AutosaveStartStandardProgram
+50430   chkUseAutosaveDirectory.value = .UseAutosaveDirectory
+50440   chkAutosaveSendEmail.value = .SendEmailAfterAutoSaving
+50450  End With
+50460  If chkUseAutosave.value = 1 Then
+50470    ViewAutosave True
+50480   Else
+50490    ViewAutosave False
+50500  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -354,40 +358,64 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 '  Case 0: 'PDF
-50020 '  Case 1: 'PNG
-50030 '  Case 2: 'JPEG
-50040 '  Case 3: 'BMP
-50050 '  Case 4: 'PCX
-50060 '  Case 5: 'TIFF
-50070 '  Case 6: 'PS
-50080 '  Case 7: 'EPS
-50090 '  Case 8: 'TXT
-50100 '  Case 9: 'PDFA
-50110 '  Case 10: 'PDFX
-50120 '  Case 11: 'PSD
-50130 '  Case 12: 'PCL
-50140 '  Case 13: 'RAW
-50150
-50160  With Options
-50170   .UseAutosave = Abs(chkUseAutosave.value)
-50180   If LenB(CStr(cmbAutosaveFormat.ListIndex)) > 0 Then
-50191    Select Case cmbAutosaveFormat.ListIndex
-          Case 0, 11 To 13:
-50210      .AutosaveFormat = cmbAutosaveFormat.ListIndex
-50220     Case 1, 2:
-50230      .AutosaveFormat = cmbAutosaveFormat.ListIndex + 8
-50240     Case 3 To 10:
-50250      .AutosaveFormat = cmbAutosaveFormat.ListIndex - 2
-50260    End Select
-50270 '   .AutosaveFormat = cmbAutosaveFormat.ListIndex
-50280   End If
-50290   .AutosaveFilename = txtAutosaveFilename.Text
-50300   .UseAutosaveDirectory = Abs(chkUseAutosaveDirectory.value)
-50310   .AutosaveDirectory = txtAutosaveDirectory.Text
-50320   .AutosaveStartStandardProgram = Abs(chkAutosaveStartStandardProgram.value)
-50330   .SendEmailAfterAutoSaving = Abs(chkAutosaveSendEmail.value)
-50340  End With
+50010 '  Case 0: 'PDF   '  .AddItem "PDF"
+50020 '  Case 1: 'PNG   '  .AddItem "PDF/A-1b"
+50030 '  Case 2: 'JPEG  '  .AddItem "PDF/X"
+50040 '  Case 3: 'BMP   '  .AddItem "PNG"
+50050 '  Case 4: 'PCX   '  .AddItem "JPEG"
+50060 '  Case 5: 'TIFF  '  .AddItem "BMP"
+50070 '  Case 6: 'PS    '  .AddItem "PCX"
+50080 '  Case 7: 'EPS   '  .AddItem "TIFF"
+50090 '  Case 8: 'TXT   '  .AddItem "PS"
+50100 '  Case 9: 'PDFA  '  .AddItem "EPS"
+50110 '  Case 10: 'PDFX '  .AddItem "TXT"
+50120 '  Case 11: 'PSD  '  .AddItem "PSD"
+50130 '  Case 12: 'PCL  '  .AddItem "PCL"
+50140 '  Case 13: 'RAW  '  .AddItem "RAW"
+50150 '  Case 14: 'SVG  '  .AddItem "SVG"
+50160
+50170  With Options
+50180   .UseAutosave = Abs(chkUseAutosave.value)
+50190   If LenB(CStr(cmbAutosaveFormat.ListIndex)) > 0 Then
+50201    Select Case cmbAutosaveFormat.ListIndex
+          Case 0:
+50220      .AutosaveFormat = 0  ' PDF
+50230     Case 1:
+50240      .AutosaveFormat = 9  ' PDF/A
+50250     Case 2:
+50260      .AutosaveFormat = 10 ' PDF/X
+50270     Case 3:
+50280      .AutosaveFormat = 1  ' PNG
+50290     Case 4:
+50300      .AutosaveFormat = 2  ' JPEG
+50310     Case 5:
+50320      .AutosaveFormat = 3  ' BMP
+50330     Case 6:
+50340      .AutosaveFormat = 4  ' PCX
+50350     Case 7:
+50360      .AutosaveFormat = 5  ' TIFF
+50370     Case 8:
+50380      .AutosaveFormat = 6  ' PS
+50390     Case 9:
+50400      .AutosaveFormat = 7  ' EPS
+50410     Case 10:
+50420      .AutosaveFormat = 8  ' TXT
+50430     Case 11:
+50440      .AutosaveFormat = 11 ' PSD
+50450     Case 12:
+50460      .AutosaveFormat = 12 ' PCL
+50470     Case 13:
+50480      .AutosaveFormat = 13 ' RAW
+50490     Case 14:
+50500      .AutosaveFormat = 14 ' SVG
+50510    End Select
+50520   End If
+50530   .AutosaveFilename = txtAutosaveFilename.Text
+50540   .UseAutosaveDirectory = Abs(chkUseAutosaveDirectory.value)
+50550   .AutosaveDirectory = txtAutosaveDirectory.Text
+50560   .AutosaveStartStandardProgram = Abs(chkAutosaveStartStandardProgram.value)
+50570   .SendEmailAfterAutoSaving = Abs(chkAutosaveSendEmail.value)
+50580  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
