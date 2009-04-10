@@ -93,8 +93,8 @@ begin
   Top := ScaleY(yoffs1 + 108);
   Width := ScaleX(418);
   Height := ScaleY(17);
-  Checked := False;
-  State := cbUnChecked;
+  Checked := True;
+  State := cbChecked;
  end;
  lblBrowserAddOnInfo := TLabel.Create(Page);
  with lblBrowserAddOnInfo do
