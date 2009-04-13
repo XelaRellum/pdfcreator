@@ -1899,54 +1899,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function IsCompatibleLanguageVersion(Version As String) As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Byte, delim As String, fVers() As String, fCVers() As String, _
-  ProgVersion As String, fPVers() As String
-50030  IsCompatibleLanguageVersion = False
-50040  delim = "."
-50050  ProgVersion = GetProgramRelease
-50060  If Len(CompatibleLanguageVersion) = 0 Or Len(Version) = 0 Or Len(ProgVersion) = 0 Then
-50070   Exit Function
-50080  End If
-50090  If InStr(1, CompatibleLanguageVersion, delim) = 0 Or _
-    InStr(1, Version, delim) = 0 Or _
-    InStr(1, ProgVersion, delim) = 0 Then
-50120   Exit Function
-50130  End If
-50140  fVers = Split(Version, delim)
-50150  fCVers = Split(CompatibleLanguageVersion, delim)
-50160  fPVers = Split(ProgVersion, delim)
-50170  If UBound(fVers) < 2 Or UBound(fCVers) < 2 Or UBound(fPVers) < 2 Then
-50180   Exit Function
-50190  End If
-50200  For i = 0 To 2
-50210   If IsNumeric(fVers(i)) = False Or IsNumeric(fCVers(i)) = False Or _
-   IsNumeric(fPVers(i)) = False Then
-50230    Exit Function
-50240   End If
-50250  Next i
-50260  If CLng(fVers(0)) >= CLng(fCVers(0)) And CLng(fVers(0)) <= CLng(fPVers(0)) Then
-50270   If CLng(fVers(1)) >= CLng(fCVers(1)) And CLng(fVers(1)) <= CLng(fPVers(1)) Then
-50280    If CLng(fVers(2)) >= CLng(fCVers(2)) And CLng(fVers(2)) <= CLng(fPVers(2)) Then
-50290     IsCompatibleLanguageVersion = True
-50300    End If
-50310   End If
-50320  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "IsCompatibleLanguageVersion")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 Private Sub Timer2_Timer()
  On Error Resume Next
  InTimer2 = True
@@ -1965,14 +1917,6 @@ Private Sub Timer2_Timer()
    mnDocument(3).Enabled = False
    tlb(0).Buttons(7).Enabled = False
  End If
-
-
-
-
-
-
-
-
  InTimer2 = False
 End Sub
 
