@@ -345,6 +345,11 @@
 		<param name="Local" value="html\installationtypes.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="SVG">
+		<param name="Name" value="SVG Settings">
+		<param name="Local" value="html\svgsettings.htm">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="TIFF">
 		<param name="Name" value="TIFF Settings">
 		<param name="Local" value="html\tiffsettings.htm">
