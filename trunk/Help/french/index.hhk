@@ -106,6 +106,7 @@
 </li>
 <li> <object type="text/sitemap"> <param name="Name" value="Transtool"> <param name="Name" value="What is a Language File"> <param name="Local" value="html\whatislang.htm"> <param name="Name" value="Create a Language File"> <param name="Local" value="html\createlang.htm"> </object> </li>
 <li> <object type="text/sitemap"> <param name="Name" value="Site Web"> <param name="Name" value="PDFCreator Online"> <param name="Local" value="html\online.htm"> </object> </li>
+<li> <object type="text/sitemap"> <param name="Name" value="SVG"> <param name="Name" value="PNG Settings"> <param name="Local" value="html\svgsettings.htm"> </object> </li>
 <li> <object type="text/sitemap"> <param name="Name" value="Explorateur Windows"> <param name="Name" value="Create a PDF"> <param name="Local" value="html\createpdf.htm"> </object></li>
 </ul>
 </body></html>
