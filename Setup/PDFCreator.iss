@@ -343,7 +343,7 @@ Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components:
 ;Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\finnish.ini; DestDir: {app}\languages; Components: languages\finnish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\finnish.ini; DestDir: {app}\languages; Components: languages\finnish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
@@ -353,7 +353,7 @@ Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Compone
 Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\japanese.ini; DestDir: {app}\languages; Components: languages\japanese; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
@@ -800,8 +800,8 @@ Name: languages\english; Description: English; Types: full compact custom; Flags
 ;Name: languages\estonian; Description: Estonian; Types: full; Check: Not IsLanguage('estonian'); Flags: dontinheritcheck
 ;Name: languages\estonian; Description: Estonian; Types: full custom; Check: IsLanguage('estonian'); Flags: dontinheritcheck
 
-;Name: languages\finnish; Description: Finnish; Types: full; Check: Not IsLanguage('finnish'); Flags: dontinheritcheck
-;Name: languages\finnish; Description: Finnish; Types: full custom; Check: IsLanguage('finnish'); Flags: dontinheritcheck
+Name: languages\finnish; Description: Finnish; Types: full; Check: Not IsLanguage('finnish'); Flags: dontinheritcheck
+Name: languages\finnish; Description: Finnish; Types: full custom; Check: IsLanguage('finnish'); Flags: dontinheritcheck
 
 Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
 Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
@@ -830,8 +830,8 @@ Name: languages\japanese; Description: Japanese; Types: full custom; Check: IsLa
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
 ;Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
 
-;Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full; Check: Not IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
-;Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full custom; Check: IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
+Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full; Check: Not IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
+Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full custom; Check: IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
 
 Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
 Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
