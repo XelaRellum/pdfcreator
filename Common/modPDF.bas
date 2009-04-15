@@ -436,6 +436,36 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function IsPDFFile(ByVal filename As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim fn As Long, bufStr As String
+50020  IsPDFFile = False
+50030  If FileExists(filename) Then
+50040   If FileLen(filename) > 3 Then
+50050    fn = FreeFile
+50060    Open filename For Binary Access Read As fn
+50070    bufStr = Space$(4)
+50080    Get #fn, 1, bufStr
+50090    Close #fn
+50100    If UCase$(bufStr) = "%PDF" Then
+50110     IsPDFFile = True
+50120    End If
+50130   End If
+50140  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDF", "IsPDFFile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function GetMetadataString(PDFDocInfo As tPDFDocInfo) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
