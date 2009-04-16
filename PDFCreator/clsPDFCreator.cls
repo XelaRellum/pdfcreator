@@ -786,7 +786,7 @@ On Error GoTo ErrPtnr_OnError
 50430    Case ("TargetDevice") = PropertyName
 50440     cPostscriptInfo = .TargetDevice.Comment
 50450    Case ("Title") = PropertyName
-50460     cPostscriptInfo = .title.Comment
+50460     cPostscriptInfo = .Title.Comment
 50470    Case Else
 50480     mError.Number = 3
 50490     mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cPostscriptInfo")
@@ -1950,7 +1950,7 @@ On Error GoTo ErrPtnr_OnError
 50040  End If
 50050  If GhostscriptError < 0 Then
 50060   mError.Number = 4
-50070   mError.Description = ErrDescr4
+50070   mError.Description = Replace$(ErrDescr4, "%1", CStr(GhostscriptError))
 50080   RaiseEvent eError
 50090   GhostscriptError = 0
 50100  End If
@@ -2077,7 +2077,7 @@ On Error GoTo ErrPtnr_OnError
 50370   Case "OPTIONSDESIGN": cGetOptionFromOptions = Options.OptionsDesign
 50380   Case "OPTIONSENABLED": cGetOptionFromOptions = Options.OptionsEnabled
 50390   Case "OPTIONSVISIBLE": cGetOptionFromOptions = Options.OptionsVisible
-50400   Case "PAPERSIZE": cGetOptionFromOptions = Options.Papersize
+50400   Case "PAPERSIZE": cGetOptionFromOptions = Options.PaperSize
 50410   Case "PCLCOLORSCOUNT": cGetOptionFromOptions = Options.PCLColorsCount
 50420   Case "PCLRESOLUTION": cGetOptionFromOptions = Options.PCLResolution
 50430   Case "PCXCOLORSCOUNT": cGetOptionFromOptions = Options.PCXColorscount
@@ -2301,7 +2301,7 @@ On Error GoTo ErrPtnr_OnError
 50380   .OptionsDesign = sOptions.OptionsDesign
 50390   .OptionsEnabled = sOptions.OptionsEnabled
 50400   .OptionsVisible = sOptions.OptionsVisible
-50410   .Papersize = sOptions.Papersize
+50410   .PaperSize = sOptions.PaperSize
 50420   .PCLColorsCount = sOptions.PCLColorsCount
 50430   .PCLResolution = sOptions.PCLResolution
 50440   .PCXColorscount = sOptions.PCXColorscount
@@ -2493,7 +2493,7 @@ On Error GoTo ErrPtnr_OnError
 50370   Case "OPTIONSDESIGN": Options.OptionsDesign = value
 50380   Case "OPTIONSENABLED": Options.OptionsEnabled = value
 50390   Case "OPTIONSVISIBLE": Options.OptionsVisible = value
-50400   Case "PAPERSIZE": Options.Papersize = value
+50400   Case "PAPERSIZE": Options.PaperSize = value
 50410   Case "PCLCOLORSCOUNT": Options.PCLColorsCount = value
 50420   Case "PCLRESOLUTION": Options.PCLResolution = value
 50430   Case "PCXCOLORSCOUNT": Options.PCXColorscount = value
@@ -2689,7 +2689,7 @@ On Error GoTo ErrPtnr_OnError
 50370   .OptionsDesign = sOptions.OptionsDesign
 50380   .OptionsEnabled = sOptions.OptionsEnabled
 50390   .OptionsVisible = sOptions.OptionsVisible
-50400   .Papersize = sOptions.Papersize
+50400   .PaperSize = sOptions.PaperSize
 50410   .PCLColorsCount = sOptions.PCLColorsCount
 50420   .PCLResolution = sOptions.PCLResolution
 50430   .PCXColorscount = sOptions.PCXColorscount
