@@ -813,7 +813,7 @@ On Error GoTo ErrPtnr_OnError
 50540   Case eCodePage.CP_UTF16
 50550    For i = 1 To Len(Str1)
 50560     c = AscW(Mid$(Str1, i, 1))
-50570     tStr = tStr & String(4 - Len(Hex(c)), "0") & Hex(c)
+50570     tStr = tStr & Right("0000" & Hex(c), 4)
 50580    Next i
 50590    EncodeChars = "<FEFF" & tStr & ">"
 50600  End Select
