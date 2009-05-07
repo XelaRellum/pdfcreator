@@ -136,6 +136,9 @@
 ;#define UpdateIsPossible
 ;#define UpdateIsPossibleMinVersion "0.9.8"
 
+#define ChannelID 971163
+;#define ChannelID 788008
+
 #define BrowserAddOnID        "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
 #IFDEF IncludeBrowserAddOn
  #include "BrowserAddOnForm.isd"
@@ -345,7 +348,7 @@ Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Component
 ;Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\finnish.ini; DestDir: {app}\languages; Components: languages\finnish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
@@ -356,11 +359,11 @@ Source: ..\PDFCreator\Languages\japanese.ini; DestDir: {app}\languages; Componen
 Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\ukrainian; Flags: ignoreversion
@@ -723,8 +726,8 @@ Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Paramete
 #ENDIF
 
 #IFDEF IncludeBrowserAddOn
-Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID=971163 D_WSD=1"" /UM""http://download.mybrowserbar.com/vkits/dlv1/971163/pdfforgeToolbar.msi"""; Components: browseraddon; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: Not DontUseYahooSearch
-Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID=971163 D_WSD=0"" /UM""http://download.mybrowserbar.com/vkits/dlv1/971163/pdfforgeToolbar.msi"""; Components: browseraddon; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: DontUseYahooSearch
+Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=1"" /UM""http://download.mybrowserbar.com/vkits/dlv1/971163/pdfforgeToolbar.msi"""; Components: browseraddon; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: Not DontUseYahooSearch
+Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=0"" /UM""http://download.mybrowserbar.com/vkits/dlv1/971163/pdfforgeToolbar.msi"""; Components: browseraddon; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: DontUseYahooSearch
 #ENDIF
 
 [UninstallRun]
@@ -806,8 +809,8 @@ Name: languages\finnish; Description: Finnish; Types: full custom; Check: IsLang
 Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
 Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
 
-;Name: languages\galician; Description: Galician; Types: full; Check: Not IsLanguage('galician'); Flags: dontinheritcheck
-;Name: languages\galician; Description: Galician; Types: full custom; Check: IsLanguage('galician'); Flags: dontinheritcheck
+Name: languages\galician; Description: Galician; Types: full; Check: Not IsLanguage('galician'); Flags: dontinheritcheck
+Name: languages\galician; Description: Galician; Types: full custom; Check: IsLanguage('galician'); Flags: dontinheritcheck
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
 Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german'); Flags: dontinheritcheck
@@ -839,8 +842,8 @@ Name: languages\polish; Description: Polish; Types: full custom; Check: IsLangua
 Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full; Check: Not IsLanguage('portuguese_br'); Flags: dontinheritcheck
 Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full custom; Check: IsLanguage('portuguese_br'); Flags: dontinheritcheck
 
-;Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
-;Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
+Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
+Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
 
 Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
 Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
@@ -851,8 +854,8 @@ Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLangua
 Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
 Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
 
-;Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
-;Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
+Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
+Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
 
 ;Name: languages\swedish; Description: Swedish; Types: full; Check: Not IsLanguage('swedish'); Flags: dontinheritcheck
 ;Name: languages\swedish; Description: Swedish; Types: full custom; Check: IsLanguage('swedish'); Flags: dontinheritcheck
