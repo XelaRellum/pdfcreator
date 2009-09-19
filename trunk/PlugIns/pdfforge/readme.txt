@@ -1,11 +1,11 @@
 Name:     pdfforge.dll
-Version:  1.4.0.0
-Author:   Frank Heindörfer
+Version:  1.5.0.0
+Author:   Frank Heindörfer, Hannes Smurawsky
 Email:    frank@pdfforge.org
 Homepage: http://www.pdfforge.org
 License:  FairPlay License Version 1.0 (FairPlay License.txt)
-Remark:   Using itextsharp 4.1.2.0 (compiled from source)
-Date:     April 8, 2009
+Remark:   Using itextsharp 4.1.6.0 (compiled from source)
+Date:     September 8, 2009
 
 
 Classes, methods of the pdfforge.dll.
@@ -21,6 +21,8 @@ pdfforge.DLLInfo
 pdfforge.pdf
  pdfforge.pdf.PDF
  {
+  int AddCropMarksToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, float borderTop, float borderBottom, float borderLeft, float borderRight, ref PDFLine lineObject);
+  int AddLineToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, ref PDFLine lineObject);
   int AddTextToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, ref PDFText textObject);
   int Brochure(string sourceFilename, string destinationFilename);
   int CopyPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage);
@@ -54,6 +56,20 @@ pdfforge.pdf
   int StampPDFFileWithImage(string sourceFilename, string destinationFilename, string imageFilename, int fromPage, int toPage, bool overUnder, float fillOpacity, int blendMode);
   int StampPDFFileWithPDFFile(string sourceFilename, string destinationFilename, string pdfFilename, int fromPage, int toPage, bool overUnder, float fillOpacity, int blendMode);
   void UpdateXMPMetadata(string sourceFilename, string destinationFilename);
+ }
+ pdfforge.pdf.PDFLine
+ {
+  float LineThickness { get; set;}
+  float FromX { get; set;}
+  float FromY { get; set;}
+  float ToX { get; set;}
+  float ToY { get; set;}
+  float UnitsOn { get; set;}
+  float UnitsOff { get; set;}
+  float Phase { get; set;}
+  byte LineColorRed { get; set;}
+  byte LineColorGreen { get; set;}
+  byte LineColorBlue { get; set;}
  }
  pdfforge.pdf.PDFText
  {
