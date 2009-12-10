@@ -7,7 +7,7 @@
 #ifdef Test
  #define FastCompilation
  #define IncludeGhostscript
-; #define BrowserAddOn
+; #define IncludeBrowserAddOn
 #else
 ; #define FastCompilation
  #define CompileHelp

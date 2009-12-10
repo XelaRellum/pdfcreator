@@ -1,16 +1,16 @@
 ; Transtool stand alone installation
-; Setup created with Inno Setup QuickStart Pack 5.2.2 (with ISPP) and ISTool 5.2.1
+; Setup created with Inno Setup QuickStart Pack 5.3.6 (with ISPP) and ISTool 5.3.0.1
 ; Installation from Frank Heindörfer
 
 ;#define Test
 
 #ifdef Test
  #define FastCompilation
- #define IncludeToolbar
+ #define IncludeBrowserAddOn
 #else
 ; #define FastCompilation
  #define CompileHelp
- #define IncludeToolbar
+ #define IncludeBrowserAddOn
  #define Localization
 #endif
 
@@ -79,8 +79,11 @@
 ;#define UpdateIsPossible
 #define UpdateIsPossibleMinVersion "2.9.0"
 
-#IFDEF IncludeToolbar
- #include "ToolbarForm.isd"
+#define ChannelID 971163
+
+#define BrowserAddOnID        "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
+#IFDEF IncludeBrowserAddOn
+ #include "BrowserAddOnForm.isd"
 #ENDIF
 
 [Setup]
@@ -152,10 +155,10 @@ Source: ShFolder\ShFolder.Exe; DestDir: {app}; Components: program; Flags: ignor
 
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 
-; Toolbar
-#IFDEF IncludeToolbar
-Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
-Source: ..\Toolbar\PDFCreator_Toolbar_Setup.exe; DestDir: {tmp}; DestName: PDFCreator_Toolbar_Setup.exe; Components: ietoolbar; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0
+; BrowserAddOn
+#IFDEF IncludeBrowserAddOn
+Source: ..\Pictures\BrowserAddOn\BrowserAddOn.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
+Source: ..\BrowserAddOn\pdfforgeToolbar-stub-1.exe; DestDir: {tmp}; DestName: pdfforgeToolbar-stub-1.exe; Components: browseraddon; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 #ENDIF
 
@@ -212,8 +215,9 @@ Filename: {app}\ShFolder.Exe; WorkingDir: {app}; Parameters: /Q:A; Flags: runmin
 Filename: {app}\TransTool.exe; WorkingDir: {app}; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent
 #ENDIF
 
-#IFDEF IncludeToolbar
-Filename: {tmp}\PDFCreator_Toolbar_Setup.exe; Components: ietoolbar
+#IFDEF IncludeBrowserAddOn
+Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=1"" /UM""http://download.mybrowserbar.com/vkits/dlv1/{#ChannelID}/pdfforgeToolbar.msi"""; Components: browseraddon; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: Not DontUseYahooSearch
+Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=0"" /UM""http://download.mybrowserbar.com/vkits/dlv1/{#ChannelID}/pdfforgeToolbar.msi"""; Components: browseraddon; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: DontUseYahooSearch
 #ENDIF
 
 [UninstallDelete]
@@ -242,9 +246,9 @@ Name: compact; Description: {cm:CompactInstallation}
 [Components]
 Name: program; Description: {cm:Programfiles}; Types: full compact custom; Flags: fixed
 
-#IFDEF IncludeToolbar
-Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 909077; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,6.0; Check: IExplorerVersionLower55
-Name: ietoolbar; Description: {cm:Toolbarfiles}; ExtraDiskSpaceRequired: 909077; Types: ; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,6.0; Check: Not IExplorerVersionLower55; Flags: fixed
+#IFDEF IncludeBrowserAddOn
+Name: browseraddon; Description: {cm:BrowserAddOnfiles}; ExtraDiskSpaceRequired: 900000; Types: full custom; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: (IExplorerVersionLower6 or FirefoxInstalled) And (Not BrowserAddOnIsInstalled)
+Name: browseraddon; Description: {cm:BrowserAddOnfiles}; ExtraDiskSpaceRequired: 900000; MinVersion: 4.1.1998,5.0.2195; OnlyBelowVersion: 0,0; Check: (Not (IExplorerVersionLower6 or FirefoxInstalled)) And (Not BrowserAddOnIsInstalled); Flags: fixed
 #ENDIF
 
 [Tasks]
@@ -272,7 +276,7 @@ var msg : TAStr;
     cmdlSaveInfFile, cmdlLoadInfFile: String;
     cmdlSilent, cmdlVerysilent, cmdlForceInstall: Boolean;
 
-    desktopicon, desktopicon_common, desktopicon_user, quicklaunchicon: Boolean;
+    desktopicon, desktopicon_common, desktopicon_user, quicklaunchicon, cmdlDontUseYahooSearch: Boolean;
 
 
 function IsX64: Boolean;
@@ -343,6 +347,14 @@ begin
    result:=false;
 end;
 
+function BrowserAddOnIsInstalled(): Boolean;
+begin
+ if RegKeyExists(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#BrowserAddOnID}')=true then
+   Result:=true
+  else
+   Result:=false;
+end;
+
 function GetIExplorerVersion(): String;
 var
  sVersion:  String;
@@ -396,6 +408,29 @@ begin
      Result:=false
     else
      Result:=true;
+end;
+
+function IExplorerVersionLower6(): Boolean;
+var vers: TAInt;
+begin
+ DecodeVersion(GetIExplorerVersion,vers);
+ if vers[0]<6 then
+   Result:=false
+  else
+   Result:=true;
+end;
+
+function FirefoxInstalled(): Boolean;
+begin
+ if RegKeyExists(HKLM,'SOFTWARE\Mozilla\Mozilla Firefox') then
+   Result:=true
+  else
+   Result:=false;
+end;
+
+function DontUseYahooSearch:Boolean;
+begin
+ Result:=Not chkUseYahooAsDefault.Checked;
 end;
 
 function ProgramIsInstalled(): Boolean;
@@ -539,6 +574,8 @@ begin
    cmdlSilent:=true;
   if uppercase(paramstr(i))='/FORCEINSTALL' then
    cmdlForceInstall:=true;
+  if uppercase(paramstr(i))='/DONTUSEYAHOOSEARCH' then
+   cmdlDontUseYahooSearch:=true;
 
   cmdParam:='/LoadInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -658,9 +695,14 @@ end;
 
 procedure InitializeWizard();
 begin
-#IFDEF IncludeToolbar
- If InstallOnThisVersion('4.1.1998,5.0.2195','0,6.0')=irInstall then // Not Win95, Not WinNT4, Not Vista
-  ToolbarForm_CreatePage(wpSelectDir);
+#IFDEF IncludeBrowserAddOn
+ If InstallOnThisVersion('0,5.0.2195','0, 0')=irInstall then begin // Not Win9xMe, Not WinNT4
+  If BrowserAddOnIsInstalled = false then begin
+   BrowserAddOnForm_CreatePage(wpSelectDir);
+   if (cmdlDontUseYahooSearch) then
+    chkUseYahooAsDefault.Checked := false;
+  end
+ end;
 #ENDIF
 end;
 
