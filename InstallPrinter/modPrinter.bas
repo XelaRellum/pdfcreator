@@ -71,7 +71,7 @@ On Error GoTo ErrPtnr_OnError
 50330   With reg
 50340    .hkey = HKEY_LOCAL_MACHINE
 50350    .KeyRoot = "SYSTEM\CurrentControlSet\Services"
-50360    .Subkey = "Spooler"
+50360    .SubKey = "Spooler"
 50370    orgValue = .GetRegistryValue("RequiredPrivileges")
 50380    value = orgValue
 50390    If InStr(1, Replace(value, vbNullChar, " "), "SeBackupPrivilege", vbTextCompare) = 0 Then
@@ -105,19 +105,22 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub UnInstallWindowsPrinter(Monitorname As String, Portname As String, Drivername As String, Printername As String, LogFile As String)
+Public Sub UnInstallWindowsPrinter(Monitorname As String, Portname As String, Drivername As String, Printername As String, LogFile As String, Optional OnlyPrinter As Boolean = False)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  WriteToLog "Start: Uninstallation printer ""PDFCreator""", LogFile, True
 50020  UnInstallPrinter Printername, LogFile
 50030  GetPrinters
-50040  UnInstallDriver Drivername, "", LogFile
-50050  GetDrivers
-50060  UnInstallPort Portname, LogFile
-50070  GetPorts
-50080  UnInstallMonitor Monitorname, LogFile
-50090  GetMonitors
+50040  If OnlyPrinter Then
+50050   Exit Sub
+50060  End If
+50070  UnInstallDriver Drivername, "", LogFile
+50080  GetDrivers
+50090  UnInstallPort Portname, LogFile
+50100  GetPorts
+50110  UnInstallMonitor Monitorname, LogFile
+50120  GetMonitors
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -195,7 +198,7 @@ On Error GoTo ErrPtnr_OnError
 50040  With reg
 50050   .hkey = HKEY_LOCAL_MACHINE
 50060   .KeyRoot = "System\CurrentControlSet\Control\Print\Monitors"
-50070   .Subkey = Monitorname & "\Ports\" & Portname
+50070   .SubKey = Monitorname & "\Ports\" & Portname
 50080   If .KeyExists = False Then
 50090    .CreateKey
 50100   End If
@@ -583,58 +586,27 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub ShowColl(coll As Collection)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Const cDel = 30
-50020  Dim i As Long
-50030  If coll Is Nothing Then
-50040   Debug.Print "Collection nicht initialisiert!"
-50050   Debug.Print String(cDel, "-")
-50060   Exit Sub
-50070  End If
-50080  If coll.Count = 0 Then
-50090   Debug.Print "Collection leer!"
-50100   Debug.Print String(cDel, "-")
-50110   Exit Sub
-50120  End If
-50130  For i = 1 To coll.Count
-50140   Debug.Print String(Len(CStr(coll.Count)) - Len(CStr(i)), " ") & _
-   CStr(i) & ": " & Replace$(coll(i), Chr$(0), "   ")
-50160  Next i
-50170  Debug.Print String(cDel, "-")
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPrinter", "ShowColl")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Public Sub WriteToLog(Str1 As String, LogFile As String, Optional CreateNewFile As Boolean = False)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long
-50020  fn = FreeFile
-50030  If FileExists(LogFile) = False Or CreateNewFile = True Then
-50040    Open LogFile For Output As fn
-50050    Print #fn, "Windowsversion: " & GetWinVersionStr & vbCrLf & _
-    "PDFCreator-Revision: " & GetProgramReleaseStr & vbCrLf
-50070   Else
-50080    Open LogFile For Append As fn
-50090    If FileLen(LogFile) = 0 Then
-50100     Print #fn, "Windowsversion: " & GetWinVersionStr & vbCrLf & _
+50020  If LenB(LogFile) > 0 Then
+50030   fn = FreeFile
+50040   If FileExists(LogFile) = False Or CreateNewFile = True Then
+50050     Open LogFile For Output As fn
+50060     Print #fn, "Windowsversion: " & GetWinVersionStr & vbCrLf & _
      "PDFCreator-Revision: " & GetProgramReleaseStr & vbCrLf
-50120    End If
-50130  End If
-50140  Print #fn, Str1
-50150  Close fn
+50080    Else
+50090     Open LogFile For Append As fn
+50100     If FileLen(LogFile) = 0 Then
+50110      Print #fn, "Windowsversion: " & GetWinVersionStr & vbCrLf & _
+      "PDFCreator-Revision: " & GetProgramReleaseStr & vbCrLf
+50130     End If
+50140   End If
+50150   Print #fn, Str1
+50160   Close fn
+50170  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -646,38 +618,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-
-Private Function Coll2Str(coll As Collection)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim i As Long
-50020  If coll Is Nothing Then
-50030   Coll2Str = "Collection not initialized!"
-50040   Exit Function
-50050  End If
-50060  If coll.Count = 0 Then
-50070   Coll2Str = "Collection empty!"
-50080   Exit Function
-50090  End If
-50100  i = 1
-50110  Coll2Str = String(Len(CStr(coll.Count)) - Len(CStr(i)), " ") & _
-   CStr(i) & ": " & coll(i)
-50130  For i = 2 To coll.Count
-50140   Coll2Str = Coll2Str & vbCrLf & String(Len(CStr(coll.Count)) - Len(CStr(i)), " ") & _
-   CStr(i) & ": " & coll(i)
-50160  Next i
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPrinter", "Coll2Str")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
 
 Private Function PortIsInstalled(Portname As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -847,20 +787,18 @@ Public Function GetPDFCreatorPrintername() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Printers As Collection, reg As clsRegistry, SubKeys As Collection, _
-  i As Long, j As Long
-50030  GetPDFCreatorPrintername = ""
-50040  Set Printers = GetAvailablePrinters2
-50050  Set reg = New clsRegistry
-50060  Set SubKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
-50070  For i = 1 To Printers.Count
-50080   For j = 1 To SubKeys.Count
-50090    If SubKeys(j) = Printers(i)(1) Then
-50100     GetPDFCreatorPrintername = Printers(i)(0)
-50110     Exit Function
-50120    End If
-50130   Next j
-50140  Next i
+50010  Dim PDFCreatorPrinters As Collection, InstalledPDFCreatorPrinter As String, i As Long
+50020  InstalledPDFCreatorPrinter = LCase$(GetInstalledPDFCreatorPrinter)
+50030  Set PDFCreatorPrinters = GetPDFCreatorPrinters
+50040  For i = 1 To PDFCreatorPrinters.Count
+50050   If LCase$(PDFCreatorPrinters(i)) = InstalledPDFCreatorPrinter Then
+50060    GetPDFCreatorPrintername = PDFCreatorPrinters(i)
+50070    Exit Function
+50080   End If
+50090  Next i
+50100  If PDFCreatorPrinters.Count > 0 Then
+50110   GetPDFCreatorPrintername = PDFCreatorPrinters(1)
+50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -873,24 +811,47 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function GetPDFCreatorPrinters() As Collection
+Public Function GetInstalledPDFCreatorPrinter() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Printers As Collection, ports As Collection, reg As clsRegistry, _
-  i As Long, j As Long, pf() As String
+50010  Dim reg As clsRegistry
+50020  Set reg = New clsRegistry
+50030  reg.hkey = HKEY_LOCAL_MACHINE
+50040  reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+50050  GetInstalledPDFCreatorPrinter = reg.GetRegistryValue("Printername")
+50060  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPrinter", "GetInstalledPDFCreatorPrinter")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetPDFCreatorPrinters() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Printers1 As Collection, PDFCreatorPrinters As Collection, _
+  reg As clsRegistry, SubKeys As Collection, i As Long, j As Long
 50030  Set GetPDFCreatorPrinters = New Collection
-50040  Set Printers = GetPrinters
-50050  Set reg = New clsRegistry
-50060  Set ports = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
-50070  For i = 1 To Printers.Count
-50080   pf = Split(Printers(i), Chr$(0))
-50090   For j = 1 To ports.Count
-50100    If UCase$(ports(j)) = UCase$(pf(1)) Then
-50110     GetPDFCreatorPrinters.Add pf(0)
+50040  Set Printers1 = GetAvailablePrinters2
+50050  Set PDFCreatorPrinters = New Collection
+50060  Set reg = New clsRegistry
+50070  Set SubKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
+50080  For i = 1 To Printers.Count
+50090   For j = 1 To SubKeys.Count
+50100    If SubKeys(j) = Printers1(i)(1) Then
+50110     AddSortedStr PDFCreatorPrinters, CStr(Printers1(i)(0))
 50120    End If
 50130   Next j
 50140  Next i
+50150  Set GetPDFCreatorPrinters = PDFCreatorPrinters
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -902,4 +863,3 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
