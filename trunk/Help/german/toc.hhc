@@ -69,6 +69,10 @@
 			<param name="Name" value="H&auml;ufig gestellte Fragen">
 			<param name="Local" value="html\faq.htm">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Mehrere Drucker benutzen">
+			<param name="Local" value="html\multipleprinters.htm">
+			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Einstellungen">
@@ -78,6 +82,10 @@
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="PDFCreator Einstellungen">
 			<param name="Local" value="html\settings.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Profile verwenden">
+			<param name="Local" value="html\profiles.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Programmeinstellungen">
