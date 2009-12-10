@@ -1,6 +1,6 @@
 Name:     pdfforge.dll
 Version:  1.5.0.0
-Author:   Frank Heindörfer, Hannes Smurawsky
+Authors:  Frank Heindörfer, Hannes Smurawsky
 Email:    frank@pdfforge.org
 Homepage: http://www.pdfforge.org
 License:  FairPlay License Version 1.0 (FairPlay License.txt)
