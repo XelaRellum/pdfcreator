@@ -1,20 +1,20 @@
 VERSION 5.00
 Begin VB.UserControl ctlOptGhostscript 
-   ClientHeight    =   3480
+   ClientHeight    =   3345
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   6825
-   ScaleHeight     =   3480
-   ScaleWidth      =   6825
+   ClientWidth     =   6660
+   ScaleHeight     =   3345
+   ScaleWidth      =   6660
    ToolboxBitmap   =   "ctlOptGhostscript.ctx":0000
    Begin PDFCreator.dmFrame dmFraProgGhostscript 
-      Height          =   3150
+      Height          =   3135
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Width           =   6420
       _ExtentX        =   11324
-      _ExtentY        =   5556
+      _ExtentY        =   5530
       Caption         =   "Ghostscript"
       BarColorFrom    =   16744576
       BarColorTo      =   4194304
@@ -39,6 +39,7 @@ Begin VB.UserControl ctlOptGhostscript
       End
       Begin VB.CommandButton cmdGetgsresourceDirectory 
          Caption         =   "..."
+         Enabled         =   0   'False
          Height          =   255
          Left            =   5625
          TabIndex        =   19
@@ -49,6 +50,7 @@ Begin VB.UserControl ctlOptGhostscript
       Begin VB.TextBox txtGSresource 
          Appearance      =   0  '2D
          BackColor       =   &H00C0FFFF&
+         Enabled         =   0   'False
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
@@ -59,6 +61,7 @@ Begin VB.UserControl ctlOptGhostscript
       End
       Begin VB.CommandButton cmdGetgsfontsDirectory 
          Caption         =   "..."
+         Enabled         =   0   'False
          Height          =   255
          Left            =   5625
          TabIndex        =   16
@@ -68,6 +71,7 @@ Begin VB.UserControl ctlOptGhostscript
       End
       Begin VB.CommandButton cmdGetgslibDirectory 
          Caption         =   "..."
+         Enabled         =   0   'False
          Height          =   255
          Left            =   5625
          TabIndex        =   13
@@ -78,6 +82,7 @@ Begin VB.UserControl ctlOptGhostscript
       Begin VB.TextBox txtGSfonts 
          Appearance      =   0  '2D
          BackColor       =   &H00C0FFFF&
+         Enabled         =   0   'False
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
@@ -89,6 +94,7 @@ Begin VB.UserControl ctlOptGhostscript
       Begin VB.TextBox txtGSlib 
          Appearance      =   0  '2D
          BackColor       =   &H00C0FFFF&
+         Enabled         =   0   'False
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
@@ -100,6 +106,7 @@ Begin VB.UserControl ctlOptGhostscript
       Begin VB.TextBox txtGSbin 
          Appearance      =   0  '2D
          BackColor       =   &H00C0FFFF&
+         Enabled         =   0   'False
          Height          =   285
          Left            =   105
          Locked          =   -1  'True
@@ -110,6 +117,7 @@ Begin VB.UserControl ctlOptGhostscript
       End
       Begin VB.CommandButton cmdGetgsbinDirectory 
          Caption         =   "..."
+         Enabled         =   0   'False
          Height          =   255
          Left            =   5625
          TabIndex        =   9
@@ -143,9 +151,20 @@ Begin VB.UserControl ctlOptGhostscript
          Top             =   1400
          Width           =   6105
       End
+      Begin VB.Label lblEnableNotice 
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   120
+         TabIndex        =   20
+         Top             =   6000
+         Visible         =   0   'False
+         Width           =   5895
+      End
       Begin VB.Label lblGhostscriptResource 
          AutoSize        =   -1  'True
          Caption         =   "Ghostscript Resource"
+         Enabled         =   0   'False
          Height          =   195
          Left            =   105
          TabIndex        =   17
@@ -156,6 +175,7 @@ Begin VB.UserControl ctlOptGhostscript
       Begin VB.Label lblGSfonts 
          AutoSize        =   -1  'True
          Caption         =   "Ghostscript Fonts"
+         Enabled         =   0   'False
          Height          =   195
          Left            =   105
          TabIndex        =   14
@@ -166,6 +186,7 @@ Begin VB.UserControl ctlOptGhostscript
       Begin VB.Label lblGSlib 
          AutoSize        =   -1  'True
          Caption         =   "Ghostscript Libraries"
+         Enabled         =   0   'False
          Height          =   195
          Left            =   105
          TabIndex        =   11
@@ -176,6 +197,7 @@ Begin VB.UserControl ctlOptGhostscript
       Begin VB.Label lblGSbin 
          AutoSize        =   -1  'True
          Caption         =   "Ghostscript Binaries"
+         Enabled         =   0   'False
          Height          =   195
          Left            =   105
          TabIndex        =   8
@@ -219,6 +241,59 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private mEnabled As Boolean
+
+Public Property Let ControlEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  mEnabled = value
+50020
+50030  lblGhostscriptversion.Enabled = mEnabled
+50040  lblGhostscriptversion.Visible = mEnabled
+50050  cmbGhostscript.Enabled = mEnabled
+50060  cmbGhostscript.Visible = mEnabled
+50070  lblAdditionalGhostscriptParameters.Enabled = mEnabled
+50080  lblAdditionalGhostscriptParameters.Visible = mEnabled
+50090  cmbAdditionalGhostscriptParameters.Enabled = mEnabled
+50100  cmbAdditionalGhostscriptParameters.Visible = mEnabled
+50110  lblAdditionalGhostscriptSearchpath.Enabled = mEnabled
+50120  lblAdditionalGhostscriptSearchpath.Visible = mEnabled
+50130  txtAdditionalGhostscriptSearchpath.Enabled = mEnabled
+50140  txtAdditionalGhostscriptSearchpath.Visible = mEnabled
+50150  chkAddWindowsFontpath.Enabled = mEnabled
+50160  chkAddWindowsFontpath.Visible = mEnabled
+50170  lblEnableNotice.Enabled = Not mEnabled
+50180  lblEnableNotice.Visible = Not mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGhostscript", "ControlEnabled [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get ControlEnabled() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlEnabled = mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGhostscript", "ControlEnabled [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -228,7 +303,10 @@ On Error GoTo ErrPtnr_OnError
 50030  dmFraProgGhostscript.Top = 0
 50040  UserControl.Height = dmFraProgGhostscript.Height
 50050
-50060  SetFrames Options.OptionsDesign
+50060  lblEnableNotice.Top = lblGhostscriptversion.Top
+50070  lblEnableNotice.Left = lblGhostscriptversion.Left
+50080
+50090  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -293,10 +371,11 @@ On Error GoTo ErrPtnr_OnError
 50070   lblGSbin.Caption = .OptionsDirectoriesGSBin
 50080   lblGSlib.Caption = .OptionsDirectoriesGSLibraries
 50090   lblGSfonts.Caption = .OptionsDirectoriesGSFonts
-50100  End With
-50110
-50120  SetOptimalComboboxHeigth cmbGhostscript, Me
-50130  SetOptimalComboboxHeigth cmbAdditionalGhostscriptParameters, Me
+50100   lblEnableNotice.Caption = .OptionsEnableNotice
+50110  End With
+50120
+50130  SetOptimalComboboxHeigth cmbGhostscript, Me
+50140  SetOptimalComboboxHeigth cmbAdditionalGhostscriptParameters, Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -315,13 +394,13 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long, tStr As String, tStr2 As String, tsf() As String, reg As clsRegistry, gsvers As Collection
 50020
-50030  chkAddWindowsFontpath.value = Options.AddWindowsFontpath
+50030  chkAddWindowsFontpath.value = Options1.AddWindowsFontpath
 50040
 50050  cmbAdditionalGhostscriptParameters.Clear
 50060  cmbAdditionalGhostscriptParameters.AddItem "=-dTextAlphaBits=4|-dGraphicsAlphaBits=4|-dDOINTERPOLATE"
 50070
-50080  cmbAdditionalGhostscriptParameters.Text = Options.AdditionalGhostscriptParameters
-50090  txtAdditionalGhostscriptSearchpath.Text = Options.AdditionalGhostscriptSearchpath
+50080  cmbAdditionalGhostscriptParameters.Text = Options1.AdditionalGhostscriptParameters
+50090  txtAdditionalGhostscriptSearchpath.Text = Options1.AdditionalGhostscriptSearchpath
 50100
 50110  With txtGSbin
 50120   .ToolTipText = .Text
@@ -332,7 +411,7 @@ On Error GoTo ErrPtnr_OnError
 50170  With txtGSfonts
 50180   .ToolTipText = .Text
 50190  End With
-50200  tStr2 = CompletePath(UCase$(Trim$(Options.DirectoryGhostscriptBinaries)))
+50200  tStr2 = CompletePath(UCase$(Trim$(Options1.DirectoryGhostscriptBinaries)))
  cmbGhostscript.Clear: Set reg = New clsRegistry
 50220  reg.hkey = HKEY_LOCAL_MACHINE
 50230
@@ -358,7 +437,7 @@ On Error GoTo ErrPtnr_OnError
 50430        reg.KeyRoot = "SOFTWARE\AFPL Ghostscript"
 50440        If InStr(cmbGhostscript.List(i), " ") > 0 Then
 50450         tsf = Split(cmbGhostscript.List(i), " ")
-50460         reg.Subkey = tsf(UBound(tsf))
+50460         reg.SubKey = tsf(UBound(tsf))
 50470         tStr = reg.GetRegistryValue("GS_DLL")
 50480         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
 50490          cmbGhostscript.ListIndex = i
@@ -370,7 +449,7 @@ On Error GoTo ErrPtnr_OnError
 50550        reg.KeyRoot = "SOFTWARE\GNU Ghostscript"
 50560        If InStr(cmbGhostscript.List(i), " ") > 0 Then
 50570         tsf = Split(cmbGhostscript.List(i), " ")
-50580         reg.Subkey = tsf(UBound(tsf))
+50580         reg.SubKey = tsf(UBound(tsf))
 50590         tStr = reg.GetRegistryValue("GS_DLL")
 50600         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
 50610          cmbGhostscript.ListIndex = i
@@ -382,7 +461,7 @@ On Error GoTo ErrPtnr_OnError
 50670        reg.KeyRoot = "SOFTWARE\GPL Ghostscript"
 50680        If InStr(cmbGhostscript.List(i), " ") > 0 Then
 50690         tsf = Split(cmbGhostscript.List(i), " ")
-50700         reg.Subkey = tsf(UBound(tsf))
+50700         reg.SubKey = tsf(UBound(tsf))
 50710         tStr = reg.GetRegistryValue("GS_DLL")
 50720         If tStr2 & "GSDLL32.DLL" = UCase$(tStr) Then
 50730          cmbGhostscript.ListIndex = i
@@ -416,7 +495,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .AdditionalGhostscriptParameters = cmbAdditionalGhostscriptParameters.Text
 50030   .AdditionalGhostscriptSearchpath = txtAdditionalGhostscriptSearchpath.Text
 50040   .AddWindowsFontpath = chkAddWindowsFontpath.value

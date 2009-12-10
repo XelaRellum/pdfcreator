@@ -226,7 +226,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   chkPrintAfterSaving.value = .PrintAfterSaving
 50030   chkPrintAfterSavingDuplex.value = .PrintAfterSavingDuplex
 50040   chkPrintAfterSavingNoCancel.value = .PrintAfterSavingNoCancel
@@ -250,7 +250,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .PrintAfterSaving = Abs(chkPrintAfterSaving.value)
 50030   .PrintAfterSavingDuplex = Abs(chkPrintAfterSavingDuplex.value)
 50040   .PrintAfterSavingNoCancel = Abs(chkPrintAfterSavingNoCancel.value)

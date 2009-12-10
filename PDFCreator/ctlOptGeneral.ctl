@@ -607,7 +607,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   chkNoConfirmMessageSwitchingDefaultprinter = .NoConfirmMessageSwitchingDefaultprinter
 50030   chkNoProcessingAtStartup = .NoProcessingAtStartup
 50040   cmbOptionsDesign.ListIndex = .OptionsDesign
@@ -632,7 +632,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .NoConfirmMessageSwitchingDefaultprinter = Abs(chkNoConfirmMessageSwitchingDefaultprinter.value)
 50030   .NoProcessingAtStartup = Abs(chkNoProcessingAtStartup.value)
 50040   If LenB(CStr(cmbOptionsDesign.ListIndex)) > 0 Then

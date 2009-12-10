@@ -123,31 +123,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function RGBToGray(RGBValue As dmRgb) As dmRgb
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim gray As Long
-50020  With RGBValue
-50030   gray = 0.299 * .Red + 0.587 * .Green + 0.114 * .Blue
-50040  End With
-50050  With RGBToGray
-50060   .Red = gray
-50070   .Green = gray
-50080   .Blue = gray
-50090  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("dmFrame", "RGBToGray")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 Sub DrawdmFrame()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -881,10 +856,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim ctl As Control
 50020  UserControl.Enabled = New_Enabled
 50030  PropertyChanged "Enabled"
-50040  For Each ctl In Controls
-50050   ctl.Enabled = New_Enabled
-50060  Next ctl
-50070  DrawdmFrame
+50040  DrawdmFrame
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:

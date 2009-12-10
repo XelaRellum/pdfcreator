@@ -3,7 +3,7 @@ Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmPrinting 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "PDFCreator"
-   ClientHeight    =   5685
+   ClientHeight    =   6555
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   7815
@@ -11,17 +11,33 @@ Begin VB.Form frmPrinting
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5685
+   ScaleHeight     =   6555
    ScaleWidth      =   7815
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin VB.Frame fraProfile 
+      Caption         =   "Profil"
+      Height          =   735
+      Left            =   120
+      TabIndex        =   23
+      Top             =   4440
+      Width           =   7575
+      Begin VB.ComboBox cmbProfile 
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   24
+         Top             =   240
+         Width           =   7335
+      End
+   End
    Begin VB.CommandButton cmdCancel 
       Cancel          =   -1  'True
       Caption         =   "&Cancel"
       Height          =   495
       Left            =   105
       TabIndex        =   15
-      Top             =   5160
+      Top             =   5880
       Width           =   1350
    End
    Begin VB.CommandButton cmdCollect 
@@ -29,7 +45,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   1680
       TabIndex        =   16
-      Top             =   5160
+      Top             =   5880
       Width           =   1350
    End
    Begin VB.CommandButton cmdNow 
@@ -103,7 +119,7 @@ Begin VB.Form frmPrinting
       Height          =   615
       Left            =   105
       TabIndex        =   14
-      Top             =   4440
+      Top             =   5160
       Width           =   7620
    End
    Begin VB.TextBox txtTitle 
@@ -137,7 +153,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   3255
       TabIndex        =   17
-      Top             =   5160
+      Top             =   5880
       Width           =   1350
    End
    Begin VB.CommandButton cmdEMail 
@@ -145,7 +161,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   4830
       TabIndex        =   18
-      Top             =   5160
+      Top             =   5880
       Width           =   1350
    End
    Begin VB.CommandButton cmdSave 
@@ -154,7 +170,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   6375
       TabIndex        =   19
-      Top             =   5160
+      Top             =   5880
       Width           =   1350
    End
    Begin VB.Label lblKeywords 
@@ -232,6 +248,8 @@ Option Explicit
 Private SaveFilename As String, SaveFilterIndex As Long
 
 Private PSHeader As tPSHeader
+Private OldProfile As Long
+Public PrinterProfile As String
 
 Private Sub chkStartStandardProgram_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -242,11 +260,40 @@ On Error GoTo ErrPtnr_OnError
 50030   Else
 50040    Options.StartStandardProgram = 0
 50050  End If
-50060  SaveOptions Options
+50060  If cmbProfile.ListIndex = 0 Then
+50070    SaveOptions Options
+50080   Else
+50090    SaveOptions Options, cmbProfile.List(cmbProfile.ListIndex)
+50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "chkStartStandardProgram_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbProfile_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If cmbProfile.ListIndex <> OldProfile Then
+50020   OldProfile = cmbProfile.ListIndex
+50030   If cmbProfile.ListIndex = 0 Then
+50040     Options = ReadOptions
+50050    Else
+50060     Options = ReadOptions(, , cmbProfile.List(cmbProfile.ListIndex))
+50070   End If
+50080   InitForm
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "cmbProfile_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -349,8 +396,13 @@ Private Sub cmdOptions_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If FormISLoaded("frmOptions") = False Then
-50020   frmOptions.Show vbModal, Me
-50030  End If
+50020   If cmbProfile.ListIndex = 0 Then
+50030     CurrentPrinterProfile = ""
+50040    Else
+50050     CurrentPrinterProfile = cmbProfile.List(cmbProfile.ListIndex)
+50060   End If
+50070   frmOptions.Show vbModal, Me
+50080  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -431,82 +483,116 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tDate As Date, tStr As String
-50020  Me.Icon = LoadResPicture(2120, vbResIcon)
-50030  Me.KeyPreview = True
-50040  Caption = App.EXEName
-50050  Caption = App.title & " " & GetProgramReleaseStr
-50060  Printing = True
-50070
-50080  With anmProcess
-50090   .Top = 0
-50100   .Left = 0
-50110   .Width = 260 * Screen.TwipsPerPixelX
-50120   .Height = 66 * Screen.TwipsPerPixelY
-50130  End With
-50140
-50150  If frmMain.Visible = False Then
-50160   FormInTaskbar Me, True, True
-50170  End If
-50180
-50190  ChangeLanguage
-50200
-50210  If Options.StartStandardProgram = 1 Then
-50220    chkStartStandardProgram.value = 1
-50230   Else
-50240    chkStartStandardProgram.value = 0
-50250  End If
-50260  PSHeader = GetPSHeader(PDFSpoolfile)
-50270  With PSHeader
-50280   If Len(Trim$(Options.StandardTitle)) > 0 Then
-50290     txtTitle.Text = GetSubstFilename(PDFSpoolfile, _
-     RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
-50310    Else
-50320     txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename, , , True)
-50330   End If
-50340   If Options.UseStandardAuthor = 1 Then
-50350     txtCreateFor.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
-50360    Else
-50370     txtCreateFor.Text = GetDocUsername(PDFSpoolfile, False)
-50380   End If
-50390   If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50400    txtKeywords.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
-50410   End If
-50420   If Len(Trim$(Options.StandardSubject)) > 0 Then
-50430    txtSubject.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
-50440   End If
-50450
-50460   tDate = Now
-50470   If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50480     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
-50490    Else
-50500     tStr = CStr(tDate)
-50510   End If
-50520   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
-50530
-50540   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
-50550  End With
-50560  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
-50570   cmdOptions.Enabled = False
-50580  End If
-50590  If Options.OptionsVisible = 0 Then
-50600   cmdOptions.Visible = False
-50610  End If
-50620  If Options.DisableEmail = 1 Then
-50630   cmdEMail.Enabled = False
-50640  End If
-50650  Height = cmdCollect.Top + cmdCollect.Height + (Height - ScaleHeight) + 100
-50660  With txtTitle
-50670   .SelStart = 0
-50680   .SelLength = Len(.Text)
-50690  End With
-50700  ShowAcceleratorsInForm Me, True
-50710  SetTopMost Me, True, True
-50720  SetTopMost Me, False, True
+50010  Dim Profiles As Collection, profile As Variant, i As Long, ppi As Long
+50020
+50030  Me.Icon = LoadResPicture(2120, vbResIcon)
+50040  Me.KeyPreview = True
+50050  Caption = App.EXEName
+50060  Caption = App.title & " " & GetProgramReleaseStr
+50070  Printing = True
+50080
+50090  With anmProcess
+50100   .Top = 0
+50110   .Left = 0
+50120   .Width = 260 * Screen.TwipsPerPixelX
+50130   .Height = 66 * Screen.TwipsPerPixelY
+50140  End With
+50150
+50160  If frmMain.Visible = False Then
+50170   FormInTaskbar Me, True, True
+50180  End If
+50190
+50200  ChangeLanguage
+50210
+50220  cmbProfile.Clear
+50230  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
+50240  Set Profiles = GetProfiles
+50250  For Each profile In Profiles
+50260   cmbProfile.AddItem profile
+50270  Next profile
+50280  For i = 0 To cmbProfile.ListCount - 1
+50290   If StrComp(cmbProfile.List(i), PrinterProfile, vbTextCompare) = 0 Then
+50300    ppi = i
+50310    Exit For
+50320   End If
+50330  Next i
+50340  cmbProfile.ListIndex = ppi
+50350
+50360  InitForm
+50370
+50380  ShowAcceleratorsInForm Me, True
+50390  SetTopMost Me, True, True
+50400  SetTopMost Me, False, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub InitForm()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tDate As Date, tStr As String
+50020  If Options.StartStandardProgram = 1 Then
+50030    chkStartStandardProgram.value = 1
+50040   Else
+50050    chkStartStandardProgram.value = 0
+50060  End If
+50070  PSHeader = GetPSHeader(PDFSpoolfile)
+50080  With PSHeader
+50090   If Len(Trim$(Options.StandardTitle)) > 0 Then
+50100     txtTitle.Text = GetSubstFilename(PDFSpoolfile, _
+     RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50120    Else
+50130     txtTitle.Text = GetSubstFilename(PDFSpoolfile, Options.SaveFilename, , , True)
+50140   End If
+50150   If Options.UseStandardAuthor = 1 Then
+50160     txtCreateFor.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50170    Else
+50180     txtCreateFor.Text = GetDocUsername(PDFSpoolfile, False)
+50190   End If
+50200   If Len(Trim$(Options.StandardKeywords)) > 0 Then
+50210    txtKeywords.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50220   End If
+50230   If Len(Trim$(Options.StandardSubject)) > 0 Then
+50240    txtSubject.Text = GetSubstFilename(PDFSpoolfile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50250   End If
+50260
+50270   tDate = Now
+50280   If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50290     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50300    Else
+50310     tStr = CStr(tDate)
+50320   End If
+50330   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
+50340
+50350   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
+50360  End With
+50370  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
+50380   cmdOptions.Enabled = False
+50390  End If
+50400  If Options.OptionsVisible = 0 Then
+50410   cmdOptions.Visible = False
+50420  End If
+50430  If Options.DisableEmail = 1 Then
+50440   cmdEMail.Enabled = False
+50450  End If
+50460  Height = cmdCollect.Top + cmdCollect.Height + (Height - ScaleHeight) + 100
+50470  With txtTitle
+50480   .SelStart = 0
+50490   .SelLength = Len(.Text)
+50500  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "InitForm")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -740,9 +826,8 @@ End Function
 Private Function Create_eDoc() As String
  On Error GoTo ErrorHandler
  Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
-  tErrNumber As Long, filename As String, FilterIndex As Long, _
-  Cancel As Boolean, PDFDocInfo As tPDFDocInfo, files As Collection, _
-  tStrf() As String, i As Long, Ext As String, Ext2 As String, Extf(12) As String
+  tErrNumber As Long, FilterIndex As Long, Cancel As Boolean, _
+  PDFDocInfo As tPDFDocInfo, files As Collection, Extf(12) As String
 
  Extf(0) = "*.pdf"
  Extf(1) = "*.png"
@@ -800,9 +885,6 @@ Private Function Create_eDoc() As String
   End If
  End With
 
- 'Stop Timer: Important! If Animation will be stopped and the timer runs,
- 'this form will unload immediately (sendmessage in modResAvi)!
- frmMain.Timer1.Enabled = False
  Screen.MousePointer = vbHourglass
  DoEvents
 
@@ -887,7 +969,6 @@ Private Function Create_eDoc() As String
  
  ReadyConverting = True
  frmMain.SetSystrayIcon 2
- frmMain.Timer1.Enabled = True
  Exit Function
 ErrorHandler:
  Screen.MousePointer = vbNormal
@@ -901,7 +982,6 @@ ErrorHandler:
   IfLoggingWriteLogfile "Error: " & tStr
   IfLoggingShowLogfile frmLog, frmMain
  End If
- frmMain.Timer1.Enabled = True
  Unload Me
 End Function
 

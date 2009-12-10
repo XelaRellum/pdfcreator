@@ -297,7 +297,7 @@ On Error GoTo ErrPtnr_OnError
 50080   tStr = reg.GetRegistryValue("")
 50090   If LenB(tStr) > 0 Then
 50100    reg.KeyRoot = tStr
-50110    reg.Subkey = "shell\print\command"
+50110    reg.SubKey = "shell\print\command"
 50120    tStr = reg.GetRegistryValue("")
 50130    If LenB(tStr) > 0 Then
 50140     IsPrintable = True

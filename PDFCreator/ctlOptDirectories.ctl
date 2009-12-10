@@ -1,20 +1,20 @@
 VERSION 5.00
 Begin VB.UserControl ctlOptDirectories 
-   ClientHeight    =   1815
+   ClientHeight    =   1740
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   6765
-   ScaleHeight     =   1815
+   ScaleHeight     =   1740
    ScaleWidth      =   6765
    ToolboxBitmap   =   "ctlOptDirectories.ctx":0000
    Begin PDFCreator.dmFrame dmFraProgDirectories 
-      Height          =   1410
+      Height          =   1530
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Width           =   6495
       _ExtentX        =   11456
-      _ExtentY        =   2487
+      _ExtentY        =   2699
       Caption         =   "Directories"
       Caption3D       =   2
       BarColorFrom    =   16744576
@@ -35,15 +35,15 @@ Begin VB.UserControl ctlOptDirectories
          Picture         =   "ctlOptDirectories.ctx":0312
          Style           =   1  'Grafisch
          TabIndex        =   4
-         Top             =   600
+         Top             =   720
          Width           =   375
       End
       Begin VB.TextBox txtTemppath 
          Appearance      =   0  '2D
          Height          =   285
-         Left            =   120
+         Left            =   105
          TabIndex        =   2
-         Top             =   600
+         Top             =   720
          Width           =   4965
       End
       Begin VB.CommandButton cmdGetTemppath 
@@ -51,26 +51,36 @@ Begin VB.UserControl ctlOptDirectories
          Height          =   300
          Left            =   5154
          TabIndex        =   3
-         Top             =   600
+         Top             =   720
          Width           =   375
       End
       Begin VB.TextBox txtTemppathPreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
          Height          =   285
-         Left            =   120
+         Left            =   105
          Locked          =   -1  'True
          TabIndex        =   5
-         Top             =   945
+         Top             =   1080
          Width           =   5910
+      End
+      Begin VB.Label lblEnableNotice 
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   120
+         TabIndex        =   6
+         Top             =   1560
+         Visible         =   0   'False
+         Width           =   5895
       End
       Begin VB.Label lblPrintTempPath 
          AutoSize        =   -1  'True
          Caption         =   "Temppath"
          Height          =   195
-         Left            =   120
+         Left            =   105
          TabIndex        =   1
-         Top             =   360
+         Top             =   420
          Width           =   720
       End
    End
@@ -82,6 +92,55 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private mEnabled As Boolean
+
+Public Property Let ControlEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  mEnabled = value
+50020
+50030  lblPrintTempPath.Enabled = mEnabled
+50040  lblPrintTempPath.Visible = mEnabled
+50050  txtTemppath.Enabled = mEnabled
+50060  txtTemppath.Visible = mEnabled
+50070  cmdGetTemppath.Enabled = mEnabled
+50080  cmdGetTemppath.Visible = mEnabled
+50090  cmdUsertempPath.Enabled = mEnabled
+50100  cmdUsertempPath.Visible = mEnabled
+50110  txtTemppathPreview.Enabled = mEnabled
+50120  txtTemppathPreview.Visible = mEnabled
+50130  lblEnableNotice.Enabled = Not mEnabled
+50140  lblEnableNotice.Visible = Not mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptDirectories", "ControlEnabled [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get ControlEnabled() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlEnabled = mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptDirectories", "ControlEnabled [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -91,7 +150,10 @@ On Error GoTo ErrPtnr_OnError
 50030  dmFraProgDirectories.Top = 0
 50040  UserControl.Height = dmFraProgDirectories.Height
 50050
-50060  SetFrames Options.OptionsDesign
+50060  lblEnableNotice.Top = lblPrintTempPath.Top
+50070  lblEnableNotice.Left = lblPrintTempPath.Left
+50080
+50090  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -150,7 +212,8 @@ On Error GoTo ErrPtnr_OnError
 50010  With LanguageStrings
 50020   dmFraProgDirectories.Caption = .OptionsProgramDirectoriesSymbol
 50030   lblPrintTempPath.Caption = .OptionsDirectoriesTempPath
-50040  End With
+50040   lblEnableNotice.Caption = .OptionsEnableNotice
+50050  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -167,10 +230,10 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  txtTemppath.Text = Options.PrinterTemppath
-50020  With txtTemppath
-50030   .ToolTipText = ResolveEnvironment(GetSubstFilename2(.Text))
-50040  End With
+50010  With Options1
+50020   txtTemppath.Text = .PrinterTemppath
+50030  End With
+50040  txtTemppath.ToolTipText = ResolveEnvironment(GetSubstFilename2(txtTemppath.Text))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -187,7 +250,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .PrinterTemppath = txtTemppath.Text
 50030  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

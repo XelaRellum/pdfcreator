@@ -329,23 +329,23 @@ On Error GoTo ErrPtnr_OnError
 50020  Set reg = New clsRegistry
 50030  With reg
 50040   .hkey = HKEY_LOCAL_MACHINE
-'50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-50050   .KeyRoot = "SOFTWARE\PDFCreator\Program\"
-50060   Release = .GetRegistryValue("ApplicationVersion")
-50070   If LenB(Trim$(Release)) = 0 Then
-50080     Release = App.Major & "." & App.Minor & "." & App.Revision & ".0"
-50090    Else
-50100     If WithBeta = True Then
-50110      If Len(Trim$(.GetRegistryValue("BetaVersion"))) > 0 Then
-50120        Release = Release & "." & .GetRegistryValue("BetaVersion")
-50130       Else
-50140        Release = Release & ".0"
-50150      End If
-50160     End If
-50170   End If
-50180  End With
-50190  Set reg = Nothing
-50200  GetProgramRelease = Release
+50050 '50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
+50060   .KeyRoot = "SOFTWARE\PDFCreator\Program\"
+50070   Release = .GetRegistryValue("ApplicationVersion")
+50080   If LenB(Trim$(Release)) = 0 Then
+50090     Release = App.Major & "." & App.Minor & "." & App.Revision & ".0"
+50100    Else
+50110     If WithBeta = True Then
+50120      If Len(Trim$(.GetRegistryValue("BetaVersion"))) > 0 Then
+50130        Release = Release & "." & .GetRegistryValue("BetaVersion")
+50140       Else
+50150        Release = Release & ".0"
+50160      End If
+50170     End If
+50180   End If
+50190  End With
+50200  Set reg = Nothing
+50210  GetProgramRelease = Release
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -511,16 +511,16 @@ On Error GoTo ErrPtnr_OnError
 50050  For i = 1 To keys.Count
 50060   If Mid(keys(i), 1, 1) = "." Then
 50070    reg.KeyRoot = keys(i)
-50080    reg.Subkey = ""
+50080    reg.SubKey = ""
 50090    sKey = reg.GetRegistryValue("")
 50100    If LenB(sKey) > 0 Then
 50110     reg.KeyRoot = sKey
 50120     If reg.KeyExists = True Then
-50130      reg.Subkey = "shell\print\command"
+50130      reg.SubKey = "shell\print\command"
 50140      If reg.KeyExists = True Then
 50150       If LenB(Trim$(reg.GetRegistryValue(""))) > 0 Then
 50160        reg.KeyRoot = sKey & "\shell\" & Uninstall_GUID
-50170        reg.Subkey = ""
+50170        reg.SubKey = ""
 50180        If reg.KeyExists = False Then
 50190         Path = CompletePath(GetPDFCreatorApplicationPath)
 50200         If Len(Path) > 1 Then
@@ -561,13 +561,13 @@ On Error GoTo ErrPtnr_OnError
 50040  Set keys = reg.EnumRegistryKeys(HKEY_CLASSES_ROOT, "")
 50050  For i = 1 To keys.Count
 50060   reg.KeyRoot = keys(i) & "\shell"
-50070   reg.Subkey = Uninstall_GUID & "\command"
+50070   reg.SubKey = Uninstall_GUID & "\command"
 50080   If reg.KeyExists Then
-50090    reg.DeleteKey reg.Subkey
+50090    reg.DeleteKey reg.SubKey
 50100   End If
-50110   reg.Subkey = Uninstall_GUID
+50110   reg.SubKey = Uninstall_GUID
 50120   If reg.KeyExists Then
-50130    reg.DeleteKey reg.Subkey
+50130    reg.DeleteKey reg.SubKey
 50140   End If
 50150  Next i
 50160  Set keys = Nothing

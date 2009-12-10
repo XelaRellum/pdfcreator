@@ -13,12 +13,20 @@ Begin VB.UserControl ctlOptFormatTXT
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   1931
-      caption         =   "Text"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptFormatTXT.ctx":0312
+      _ExtentX        =   11245
+      _ExtentY        =   1931
+      Caption         =   "Text"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.Label lblNothingToConfigure 
          AutoSize        =   -1  'True
          Caption         =   "Nothing to configure."
@@ -121,7 +129,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -139,7 +147,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

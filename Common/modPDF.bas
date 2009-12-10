@@ -736,23 +736,6 @@ Public Function FormatPrintDocumentDate(tDate As String) As String
  FormatPrintDocumentDate = CStr(DateSerial(Y, m, d)) + Mid(tDate, InStr(tDate, " "))
 End Function
 
-Private Property Get MCh(ByRef Str1 As String, ByVal i As Long) As Long
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  MoveMemoryLong MCh, StrPtr(Str1) + ((i - 1) * 2), 2
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Property
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDF", "MCh [GET]")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Property
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Property
-
 Public Function EncodeChars(ByVal CodePage As eCodePage, ByVal Str1 As String) As String ' UTF-16, UTF-8 conversion
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError

@@ -1,11 +1,11 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptLanguages 
-   ClientHeight    =   6165
+   ClientHeight    =   6090
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   6690
-   ScaleHeight     =   6165
+   ScaleHeight     =   6090
    ScaleWidth      =   6690
    ToolboxBitmap   =   "ctlOptLanguages.ctx":0000
    Begin PDFCreator.dmFrame dmFraProgLanguage 
@@ -28,11 +28,20 @@ Begin VB.UserControl ctlOptLanguages
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      Begin VB.CommandButton cmdLanguageRemove 
+         Height          =   315
+         Left            =   4080
+         Picture         =   "ctlOptLanguages.ctx":0312
+         Style           =   1  'Grafisch
+         TabIndex        =   8
+         Top             =   600
+         Width           =   315
+      End
       Begin VB.CommandButton cmdLanguageRefresh 
          Caption         =   "Refresh List"
          Height          =   375
          Left            =   4080
-         TabIndex        =   6
+         TabIndex        =   5
          Top             =   1545
          Width           =   1575
       End
@@ -40,7 +49,7 @@ Begin VB.UserControl ctlOptLanguages
          Caption         =   "Install"
          Height          =   375
          Left            =   4080
-         TabIndex        =   7
+         TabIndex        =   6
          Top             =   2025
          Width           =   1575
       End
@@ -52,19 +61,10 @@ Begin VB.UserControl ctlOptLanguages
          Top             =   630
          Width           =   3795
       End
-      Begin VB.CommandButton cmdLanguageRemove 
-         Height          =   315
-         Left            =   3990
-         Picture         =   "ctlOptLanguages.ctx":0312
-         Style           =   1  'Grafisch
-         TabIndex        =   3
-         Top             =   630
-         Width           =   315
-      End
       Begin MSComctlLib.ListView lsvTranslations 
          Height          =   4230
          Left            =   120
-         TabIndex        =   5
+         TabIndex        =   4
          Top             =   1545
          Width           =   3855
          _ExtentX        =   6800
@@ -78,6 +78,16 @@ Begin VB.UserControl ctlOptLanguages
          BorderStyle     =   1
          Appearance      =   0
          NumItems        =   0
+      End
+      Begin VB.Label lblEnableNotice 
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   120
+         TabIndex        =   7
+         Top             =   960
+         Visible         =   0   'False
+         Width           =   6135
       End
       Begin VB.Label lblCurrentLanguage 
          AutoSize        =   -1  'True
@@ -93,7 +103,7 @@ Begin VB.UserControl ctlOptLanguages
          Caption         =   "Load more languages from the internet"
          Height          =   195
          Left            =   105
-         TabIndex        =   4
+         TabIndex        =   3
          Top             =   1260
          Width           =   2715
       End
@@ -111,25 +121,82 @@ Attribute dl.VB_VarHelpID = -1
 
 Public ParentForm As Form
 
-Private LangFiles As Collection, Languages As Collection, FirstStart As Boolean, LangListIndex As Long
+Private LangFiles As Collection, Languages As Collection, FirstStart As Boolean, OldLangListIndex As Long
+
+Private mEnabled As Boolean
+
+Public Property Let ControlEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  mEnabled = value
+50020
+50030  lblCurrentLanguage.Enabled = mEnabled
+50040  lblCurrentLanguage.Visible = mEnabled
+50050  cmbCurrentLanguage.Enabled = mEnabled
+50060  cmbCurrentLanguage.Visible = mEnabled
+50070  cmdLanguageRemove.Enabled = mEnabled
+50080  cmdLanguageRemove.Visible = mEnabled
+50090  lblLanguagesFromInternet.Enabled = mEnabled
+50100  lblLanguagesFromInternet.Visible = mEnabled
+50110  lsvTranslations.Enabled = mEnabled
+50120  lsvTranslations.Visible = mEnabled
+50130  cmdLanguageRefresh.Enabled = mEnabled
+50140  cmdLanguageRefresh.Visible = mEnabled
+50150  cmdLanguageInstall.Enabled = mEnabled
+50160  cmdLanguageInstall.Visible = mEnabled
+50170  lblEnableNotice.Enabled = Not mEnabled
+50180  lblEnableNotice.Visible = Not mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptLanguages", "ControlEnabled [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get ControlEnabled() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlEnabled = mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptLanguages", "ControlEnabled [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
 
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ctl As Control
-50020  dmFraProgLanguage.Left = 0
-50030  dmFraProgLanguage.Top = 0
-50040  UserControl.Height = dmFraProgLanguage.Height
-50050
-50060  lsvTranslations.ColumnHeaders.Add , , ""
-50070  lsvTranslations.ColumnHeaders.Add , , ""
-50080  lsvTranslations.ColumnHeaders(1).Width = 2000
-50090  lsvTranslations.ColumnHeaders(2).Width = 1500
-50100
-50110  ReadAllLanguages LanguagePath, True
-50120
-50130  SetFrames Options.OptionsDesign
+50020  mEnabled = True
+50030  dmFraProgLanguage.Left = 0
+50040  dmFraProgLanguage.Top = 0
+50050  UserControl.Height = dmFraProgLanguage.Height
+50060
+50070  lblEnableNotice.Top = lblCurrentLanguage.Top
+50080  lblEnableNotice.Left = lblCurrentLanguage.Left
+50090
+50100  lsvTranslations.ColumnHeaders.Add , , ""
+50110  lsvTranslations.ColumnHeaders.Add , , ""
+50120  lsvTranslations.ColumnHeaders(1).Width = 2000
+50130  lsvTranslations.ColumnHeaders(2).Width = 1500
+50140
+50150  ReadAllLanguages LanguagePath, True
+50160
+50170  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -210,13 +277,14 @@ On Error GoTo ErrPtnr_OnError
 50060   lsvTranslations.ColumnHeaders(1).Text = .OptionsLanguagesTranslation
 50070   lsvTranslations.ColumnHeaders(2).Text = .OptionsLanguagesVersion
 50080   lblCurrentLanguage.Caption = .OptionsLanguagesCurrentLanguage
-50090  End With
-50100
-50110  If FirstStart = False Then
-50120   FirstStart = True
-50130   ReadAllLanguages LanguagePath, True
-50140  End If
-50150  SetOptimalComboboxHeigth cmbCurrentLanguage, Me
+50090   lblEnableNotice.Caption = .OptionsEnableNotice
+50100  End With
+50110
+50120  If FirstStart = False Then
+50130   FirstStart = True
+50140   ReadAllLanguages LanguagePath, True
+50150   SetOptimalComboboxHeigth cmbCurrentLanguage, Me
+50160  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -233,9 +301,21 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cmbCurrentLanguage.ListIndex = LangListIndex
-50020 ' With Options
-50030 ' End With
+50010  Dim filename As String, i As Long
+50020  If mEnabled Then
+50030   For i = 1 To LangFiles.Count
+50040    SplitPath LangFiles(i), , , , filename
+50050    If UCase$(CurrentLanguage) = UCase$(filename) Then
+50060     If cmbCurrentLanguage.ListIndex <> i - 1 Then
+50070      cmbCurrentLanguage.ListIndex = i - 1
+50080     End If
+50090     Exit For
+50100    End If
+50110   Next i
+50120  End If
+50130
+50140  With Options1
+50150  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -252,8 +332,13 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 ' With Options
-50020 ' End With
+50010  With Options1
+50020   If cmbCurrentLanguage.ListIndex < 0 Then
+50030     .Language = Options.Language
+50040    Else
+50050     .Language = LangFiles(cmbCurrentLanguage.ListIndex + 1)
+50060   End If
+50070  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -322,18 +407,19 @@ Private Sub cmbCurrentLanguage_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim f As Form
-50020  If InStr(1, LangFiles(cmbCurrentLanguage.ListIndex + 1), LanguagePath, vbTextCompare) = 1 Then
-50030    cmdLanguageRemove.Enabled = False
-50040   Else
-50050    cmdLanguageRemove.Enabled = True
-50060  End If
-50070  SetLanguage Languages(cmbCurrentLanguage.ListIndex + 1)
-50080  LoadLanguage LangFiles(cmbCurrentLanguage.ListIndex + 1)
-50090  For Each f In Forms
-50100   f.ChangeLanguage
-50110  Next
-50120 ' Hier
-50130 ' ParentForm.lblOptions.Caption = LanguageStrings.OptionsProgramLanguagesDescription
+50020  If OldLangListIndex <> cmbCurrentLanguage.ListIndex Then
+50030   OldLangListIndex = cmbCurrentLanguage.ListIndex
+50040   If InStr(1, LangFiles(cmbCurrentLanguage.ListIndex + 1), LanguagePath, vbTextCompare) = 1 Then
+50050     cmdLanguageRemove.Enabled = False
+50060    Else
+50070     cmdLanguageRemove.Enabled = True
+50080   End If
+50090   CurrentLanguage = Languages(cmbCurrentLanguage.ListIndex + 1)
+50100   LoadLanguage LangFiles(cmbCurrentLanguage.ListIndex + 1)
+50110   For Each f In Forms
+50120    f.ChangeLanguage
+50130   Next
+50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -462,7 +548,7 @@ On Error GoTo ErrPtnr_OnError
 50350   If Len(Languagename) = 0 Then
 50360    Languagename = "No name available."
 50370   End If
-50380   If IsCompatibleLanguageVersion(Version) = True Then
+50380   If IsCompatibleLanguageVersion(Version) Then
 50390     If i = 1 Then
 50400       cmbCurrentLanguage.List(0) = Languagename
 50410      Else
@@ -475,15 +561,14 @@ On Error GoTo ErrPtnr_OnError
 50480       cmbCurrentLanguage.AddItem Languagename & " [" & Version & "]"
 50490     End If
 50500   End If
-50510 '  cmbCurrentLanguage.ItemData(cmbCurrentLanguage.ListCount - 1) = LangFiles.Item(i)
-50520   SplitPath LangFiles.Item(i), , , , filename
-50530   If UCase$(Options.Language) = UCase$(filename) Then
-50540          LangListIndex = i - 1
-50550 '50540    cmbCurrentLanguage.ListIndex = i - 1
-50560   End If
-50570   DoEvents
-50580  Next i
-50590  Set ini = Nothing
+50510
+50520 '  SplitPath LangFiles.Item(i), , , , filename
+50530 '  If UCase$(Options.Language) = UCase$(filename) Then
+50540 '   LangListIndex = i - 1
+50550 '  End If
+50560   DoEvents
+50570  Next i
+50580  Set ini = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

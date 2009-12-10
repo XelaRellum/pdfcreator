@@ -183,7 +183,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   cmbPCLColors.ListIndex = .PCLColorsCount
 50030   txtBitmapResolution.Text = .PCLResolution
 50040  End With
@@ -203,7 +203,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   If LenB(CStr(cmbPCLColors.ListIndex)) > 0 Then
 50030    .PCLColorsCount = cmbPCLColors.ListIndex
 50040   End If

@@ -84,7 +84,7 @@ Attribute VB_Exposed = False
 ' Page:         http://mx.geocities.com/fred_cpp/isexplorerbar.htm
 '
 ' Current
-' Version:      1.91
+' Version:      1.92
 '
 ' Description:  The Explorer on Windows XP has a beautiful
 '               and nice looking bar in the left side of the
@@ -249,7 +249,7 @@ Option Explicit
 '
 '   Control Version:
 '
-Private Const strCurrentVersion = "1.91"
+Private Const strCurrentVersion = "1.92"
 '**************************************
 
 
@@ -1251,7 +1251,7 @@ Private Sub UserControl_ReadProperties(PropBag As PropertyBag)
     m_NotOnUse = 0
     m_ItemTextHoverColor = RGB(127, 127, 127)
     m_GroupHoverColor = RGB(127, 127, 127)
-    UserControl.Extender.Align = 3
+    UserControl.Extender.Align = 0
     m_ttIcon = TTIconInfo
     m_ttTitle = App.title
     With PropBag
@@ -4540,6 +4540,40 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Property Let Enabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UserControl.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("isExplorerBar", "Enabled [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get Enabled() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Enabled = UserControl.Enabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("isExplorerBar", "Enabled [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
 
 
 '' Please If you found a Bug, report It. I'll fix It as soon as posible

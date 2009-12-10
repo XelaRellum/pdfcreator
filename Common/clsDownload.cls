@@ -156,7 +156,7 @@ On Error GoTo ErrPtnr_OnError
 50790                     End If
 50800                  Else
 50810                     ErrorNumber = 1
-50820                     ErrorDescription = LanguageStrings.MessagesMsg29
+50820                     ErrorDescription = LanguageStrings.MessagesMsg40
 50830                     RaiseEvent Update
 50840                 End If
 50850             End If

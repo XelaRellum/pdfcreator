@@ -347,7 +347,7 @@ End Enum
 
 Public Type POINTAPI
  x As Long
- y As Long
+ Y As Long
 End Type
 
 Public Type OPENFILENAME
@@ -847,3 +847,4 @@ Public Enum eServiceState
  SERVICE_INACTIVE = &H2
  SERVICE_STATE_ALL = SERVICE_ACTIVE Or SERVICE_INACTIVE
 End Enum
+
