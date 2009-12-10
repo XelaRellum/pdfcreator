@@ -77,7 +77,7 @@ On Error GoTo ErrPtnr_OnError
 50630  End If
 50640
 50650  WriteToSpecialLogfile "InstalledAsServer=" & InstalledAsServer
-50660  WriteToSpecialLogfile "UseINI=" & UseINI
+50660
 50670  WriteToSpecialLogfile "PDFCreatorINIFile=" & PDFCreatorINIFile
 50680
 50690  If IsWin9xMe Then
