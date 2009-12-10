@@ -152,7 +152,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   txtBitmapResolution.Text = .SVGResolution
 50030  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -171,7 +171,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   If LenB(txtBitmapResolution.Text) > 0 Then
 50030    .SVGResolution = txtBitmapResolution.Text
 50040   End If

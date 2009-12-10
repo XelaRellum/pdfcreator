@@ -34,6 +34,7 @@ Private Declare Function RegCreateKeyEx Lib "advapi32.dll" Alias "RegCreateKeyEx
 Private Declare Function RegDeleteKey Lib "advapi32.dll" Alias "RegDeleteKeyA" (ByVal hkey As Long, ByVal lpSubKey As String) As Long
 Private Declare Function RegDeleteValue Lib "advapi32.dll" Alias "RegDeleteValueA" (ByVal hkey As Long, ByVal lpValueName As String) As Long
 Private Declare Function RegEnumKeyEx Lib "advapi32.dll" Alias "RegEnumKeyExA" (ByVal hkey As Long, ByVal dwIndex As Long, ByVal lpName As String, lpcbName As Long, ByVal lpReserved As Long, ByVal lpClass As String, lpcbClass As Long, lpftLastWriteTime As FILETIME) As Long
+Private Declare Function RegEnumKey Lib "advapi32.dll" Alias "RegEnumKeyA" (ByVal hkey As Long, ByVal dwIndex As Long, ByVal lpName As String, ByVal lpcbName As Long) As Long
 Private Declare Function RegEnumValue Lib "advapi32.dll" Alias "RegEnumValueA" (ByVal hkey As Long, ByVal dwIndex As Long, ByVal lpValueName As String, lpcbValueName As Long, ByVal lpReserved As Long, lpType As Long, lpData As Byte, lpcbData As Long) As Long
 Private Declare Function RegConnectRegistry Lib "advapi32.dll" Alias "RegConnectRegistryA" (ByVal lpMachineName As String, ByVal hkey As Long, phkResult As Long) As Long
 Private Declare Function ExpandEnvironmentStrings Lib "kernel32" Alias "ExpandEnvironmentStringsA" (ByVal lpSrc As String, ByVal lpDst As String, ByVal nSize As Long) As Long
@@ -59,6 +60,8 @@ Const KEY_ALL_ACCESS = ((STANDARD_RIGHTS_ALL Or KEY_QUERY_VALUE Or KEY_SET_VALUE
 Const ERROR_MORE_DATA = 234
 Const ERROR_NO_MORE_ITEMS = &H103
 Const ERROR_KEY_NOT_FOUND = &H2
+Const REG_CREATED_NEW_KEY = &H1
+
 
 Dim mvarhKeySet As Long
 Dim mvarKeyRoot As String
@@ -154,15 +157,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get Subkey() As String
+Public Property Get SubKey() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Subkey = mvarSubKey
+50010  SubKey = mvarSubKey
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsRegistry", "Subkey [GET]")
+Select Case ErrPtnr.OnError("clsRegistry", "SubKey [GET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -171,7 +174,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Let Subkey(ByVal vData As String)
+Public Property Let SubKey(ByVal vData As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -179,7 +182,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsRegistry", "Subkey [LET]")
+Select Case ErrPtnr.OnError("clsRegistry", "SubKey [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -239,6 +242,67 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Sub DeleteSubkeys(ByVal Keyname As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Const Length As Long = 256
+50020  Dim hkey As Long, SubKeys As Collection, subKeyName As String, i As Long, tStr As String, handle As Long
+50030
+50040  If RegOpenKeyEx(mvarhKeySet, GetCompleteKey(mvarKeyRoot & "\" & Keyname), 0&, KEY_ALL_ACCESS, handle) <> ERROR_SUCCESS Then
+50050   Exit Sub
+50060  End If
+50070
+50080  tStr = Space$(Length)
+50090  Set SubKeys = New Collection
+50100  i = 0
+50110
+50120  Do
+50130   subKeyName = tStr
+50140   If RegEnumKey(handle, i, subKeyName, Length) <> ERROR_SUCCESS Then
+50150    Exit Do
+50160   End If
+50170   i = i + 1
+50180   subKeyName = Left$(subKeyName, InStr(subKeyName, Chr$(0)) - 1)
+50190   SubKeys.Add subKeyName
+50200  Loop
+50210
+50220  For i = 1 To SubKeys.Count
+50230   DeleteKeyWithSubkeys Keyname & "\" & SubKeys(i)
+50240   RegDeleteKey mvarhKeySet, GetCompleteKey(mvarKeyRoot & "\" & Keyname) & "\" & SubKeys(i)
+50250  Next i
+50260
+50270  RegCloseKey hkey
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsRegistry", "DeleteSubkeys")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub DeleteKeyWithSubkeys(ByVal Keyname As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  DeleteSubkeys Keyname
+50020  DeleteKey Keyname
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsRegistry", "DeleteKeyWithSubkeys")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Public Function DeleteKey(Keyname As String) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -288,12 +352,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function EnumRegistryKeys(ByVal hkey As hkey, ByVal Keyname As String) As _
-                Collection
+Public Function EnumRegistryKeys(ByVal hkey As hkey, ByVal Keyname As String) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim handle As Long, Length As Long, Index As Long, subkeyName As String, _
+50010  Dim handle As Long, Length As Long, Index As Long, subKeyName As String, _
   fFiletime As FILETIME
 50030  Set EnumRegistryKeys = New Collection
 50040
@@ -304,15 +367,14 @@ On Error GoTo ErrPtnr_OnError
 50090
 50100  Do
 50110   Length = 260
-50120   subkeyName = Space$(Length)
-50130   If RegEnumKeyEx(hkey, Index, subkeyName, Length, 0, "", vbNull, fFiletime) = ERROR_NO_MORE_ITEMS Then Exit Do
-50140   subkeyName = Left$(subkeyName, InStr(subkeyName, vbNullChar) - 1)
-50150   'ErrPtnr.CallStackParam "subKeyname", subkeyName '
-50160   EnumRegistryKeys.Add subkeyName, subkeyName
-50170   Index = Index + 1
-50180  Loop
-50190
-50200  If handle Then RegCloseKey handle
+50120   subKeyName = Space$(Length)
+50130   If RegEnumKeyEx(hkey, Index, subKeyName, Length, 0, "", vbNull, fFiletime) = ERROR_NO_MORE_ITEMS Then Exit Do
+50140   subKeyName = Left$(subKeyName, InStr(subKeyName, vbNullChar) - 1)
+50150   EnumRegistryKeys.Add subKeyName, subKeyName
+50160   Index = Index + 1
+50170  Loop
+50180
+50190  If handle Then RegCloseKey handle
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -756,7 +818,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function TrimNull(Item As String) As String
+Private Function TrimNull(Item As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---

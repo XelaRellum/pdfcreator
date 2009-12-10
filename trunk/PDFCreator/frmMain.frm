@@ -139,12 +139,6 @@ Begin VB.Form frmMain
          EndProperty
       EndProperty
    End
-   Begin VB.Timer Timer2 
-      Enabled         =   0   'False
-      Interval        =   100
-      Left            =   630
-      Top             =   2940
-   End
    Begin VB.Timer Timer1 
       Enabled         =   0   'False
       Interval        =   1000
@@ -256,40 +250,48 @@ Begin VB.Form frmMain
    Begin VB.Menu mnPrinterMain 
       Caption         =   "Printer"
       Begin VB.Menu mnPrinter 
-         Caption         =   "Printer stop "
+         Caption         =   "Printers"
          Index           =   0
-         Shortcut        =   {F2}
       End
       Begin VB.Menu mnPrinter 
          Caption         =   "-"
          Index           =   1
       End
       Begin VB.Menu mnPrinter 
-         Caption         =   "Options"
+         Caption         =   "Printer stop "
          Index           =   2
-         Shortcut        =   ^O
+         Shortcut        =   {F2}
       End
       Begin VB.Menu mnPrinter 
          Caption         =   "-"
          Index           =   3
       End
       Begin VB.Menu mnPrinter 
-         Caption         =   "Logging"
+         Caption         =   "Options"
          Index           =   4
+         Shortcut        =   ^O
+      End
+      Begin VB.Menu mnPrinter 
+         Caption         =   "-"
+         Index           =   5
+      End
+      Begin VB.Menu mnPrinter 
+         Caption         =   "Logging"
+         Index           =   6
          Shortcut        =   {F3}
       End
       Begin VB.Menu mnPrinter 
          Caption         =   "Logfile"
-         Index           =   5
+         Index           =   7
          Shortcut        =   ^L
       End
       Begin VB.Menu mnPrinter 
          Caption         =   "-"
-         Index           =   6
+         Index           =   8
       End
       Begin VB.Menu mnPrinter 
          Caption         =   "Close"
-         Index           =   7
+         Index           =   9
       End
    End
    Begin VB.Menu mnDocumentMain 
@@ -456,12 +458,13 @@ Option Explicit
 Private WithEvents m_frmSysTray As frmSysTray
 Attribute m_frmSysTray.VB_VarHelpID = -1
 
-Private Const TimerIntervall = 500
+Private Const TimerIntervall = 500 ' 500
 
 Private Printjobs As Collection
 
 Public InTimer1 As Boolean
-Public InTimer2 As Boolean
+Public InAutoSave As Boolean
+Public OldPrinter As String
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -487,6 +490,7 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+IsFrmMainLoaded = True
 50010  Me.KeyPreview = True
 50020
 50030  If App.StartMode = vbSModeAutomation Then
@@ -505,16 +509,16 @@ On Error GoTo ErrPtnr_OnError
 50160   SetMenuPrinterStop
 50170  End If
 50180  If PrinterStop = True Then
-50190   mnPrinter(0).Checked = True
+50190   mnPrinter(2).Checked = True
 50200  End If
 50210  If Options.OptionsEnabled = 0 Then
-50220   mnPrinter(2).Enabled = False
+50220   mnPrinter(4).Enabled = False
 50230   tlb(0).Buttons(2).Enabled = False
 50240  End If
 50250  If Options.OptionsVisible = 0 Then
 50260   tlb(0).Buttons(2).Visible = False
-50270   mnPrinter(2).Visible = False
-50280   mnPrinter(3).Visible = False
+50270   mnPrinter(4).Visible = False
+50280   mnPrinter(5).Visible = False
 50290  End If
 50300
 50310  CheckPrintJobs
@@ -541,13 +545,12 @@ On Error GoTo ErrPtnr_OnError
 50520   End If
 50530  End If
 50540
-50550  ' Only for the first time set interval to 10 ms
-50560  Timer1.Interval = 10
+50550  InTimer1 = False
+50560  Timer1.Interval = TimerIntervall '500
 50570  Timer1.Enabled = True
-50580  Timer2.Interval = 100
-50590  Timer2.Enabled = True
-50600
-50610  ProgramIsStarted = True
+50580
+50590  InAutoSave = False
+50600  ProgramIsStarted = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -610,6 +613,9 @@ Private Sub Form_Unload(Cancel As Integer)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  TerminateProgram
+50020  ShutDown = False
+IsFrmMainLoaded = False
+
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -655,9 +661,9 @@ On Error GoTo ErrPtnr_OnError
 50270
 50280  ChangeLanguage
 50290  If Options.Logging = 1 Then
-50300    mnPrinter(4).Checked = True
+50300    mnPrinter(6).Checked = True
 50310   Else
-50320    mnPrinter(4).Checked = False
+50320    mnPrinter(6).Checked = False
 50330  End If
 50340
 50350  InitToolbar
@@ -687,41 +693,35 @@ Private Sub TerminateProgram()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim PDFSpoolerPath As String, files As Collection, i As Long, tStrf() As String
-50020  ShutDown = True
-50030  Timer1.Enabled = False
-50040  Timer2.Enabled = False
-50050
-50060  Set Printjobs = Nothing
-50070
-50080  If Not mutexLocal Is Nothing Then
-50090   mutexLocal.CloseMutex
-50100   Set mutexLocal = Nothing
-50110  End If
+50020
+50030  ShutDown = True
+50040
+50050  Timer1.Enabled = False
+50060
+50070  Set Printjobs = Nothing
+50080
+50090  UnloadDLLComplete GsDllLoaded
+50100
+50110  IfLoggingWriteLogfile "PDFCreator Program End"
 50120
-50130  If Not mutexGlobal Is Nothing Then
-50140   mutexGlobal.CloseMutex
-50150   Set mutexGlobal = Nothing
-50160  End If
-50170
-50180  UnloadDLLComplete GsDllLoaded
-50190
-50200  FindFiles CompletePath(GetPDFCreatorTempfolder), files, "*.pdf", , False, True
-50210  For i = 1 To files.Count
-50220   tStrf = Split(files(i), "|")
-50230   If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
-50240    KillFile tStrf(1)
-50250   End If
-50260  Next i
+50130  SysTrayLeave
+50140
+50150  If App.StartMode = vbSModeStandalone Then
+50160   InstanceCounter = InstanceCounter - 1
+50170  End If
+50180
+50190  PDFSpoolerPath = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
+50200  If Restart = True And FileExists(PDFSpoolerPath) = True Then
+50210   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", GetPDFCreatorApplicationPath, 1
+50220  End If
+50230
+50240  If Not mutexLocal Is Nothing Then
+50250   mutexLocal.CloseMutex
+50260  End If
 50270
-50280  IfLoggingWriteLogfile "PDFCreator Program End"
-50290  SysTrayLeave
-50300  If App.StartMode = vbSModeStandalone Then
-50310   InstanceCounter = InstanceCounter - 1
-50320  End If
-50330  PDFSpoolerPath = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
-50340  If Restart = True And FileExists(PDFSpoolerPath) = True Then
-50350   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", GetPDFCreatorApplicationPath, 1
-50360  End If
+50280  If Not mutexGlobal Is Nothing Then
+50290   mutexGlobal.CloseMutex
+50300  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -733,42 +733,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-
-Private Function GetAllLanguagesFiles(LanguagePath As String) As Collection
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tColl1 As Collection, tColl2 As Collection, i As Long, tStrf() As String, ini As clsINI, _
-  Languagename As String
-50030  Set GetAllLanguagesFiles = New Collection
-50040  Set tColl1 = GetFiles(LanguagePath, "*.ini", SortedByName)
-50050  Set tColl2 = New Collection
-50060  For i = 1 To tColl1.Count
-50070   tStrf = Split(tColl1(i), "|")
-50080   Set ini = New clsINI
-50090   ini.filename = tStrf(1)
-50100   ini.Section = "Common"
-50110   Languagename = ini.GetKeyFromSection("Languagename")
-50120   If Len(Languagename) = 0 Then
-50130    Languagename = "No name available."
-50140   End If
-50150   AddSortedStr tColl2, Languagename & "|" & tStrf(1)
-50160  Next i
-50170  For i = 1 To tColl2.Count
-50180   tStrf() = Split(tColl2(i), "|")
-50190   GetAllLanguagesFiles.Add tStrf(1)
-50200  Next i
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "GetAllLanguagesFiles")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
 
 Private Sub SetLanguageMenu()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -789,52 +753,55 @@ On Error GoTo ErrPtnr_OnError
 50130   Caption = App.title & " - " & .CommonTitle
 50140
 50150   mnPrinterMain.Caption = .DialogPrinter
-50160   mnPrinter(0).Caption = .DialogPrinterPrinterStop
-50170   mnPrinter(2).Caption = .DialogPrinterOptions
-50180   mnPrinter(4).Caption = .DialogPrinterLogging
-50190   mnPrinter(5).Caption = .DialogPrinterLogfile
-50200   mnPrinter(7).Caption = .DialogPrinterClose
-50210
-50220   mnDocumentMain.Caption = .DialogDocument
-50230   mnDocument(0).Caption = .DialogDocumentPrint
-50240   mnDocument(2).Caption = .DialogDocumentAdd
-50250   mnDocument(3).Caption = .DialogDocumentAddFromClipboard
-50260   mnDocument(4).Caption = .DialogDocumentDelete
-50270
-50280   mnDocument(6).Caption = .DialogDocumentTop
-50290   mnDocument(7).Caption = .DialogDocumentUp
-50300   mnDocument(8).Caption = .DialogDocumentDown
-50310   mnDocument(9).Caption = .DialogDocumentBottom
-50320
-50330   mnDocument(11).Caption = .DialogDocumentCombine
-50340   mnDocument(12).Caption = .DialogDocumentCombineAll
+50160   Dim m As String
+50170   m = mnPrinter(0).Caption
+50180   mnPrinter(0).Caption = .DialogPrinterPrinters
+50190   mnPrinter(2).Caption = .DialogPrinterPrinterStop
+50200   mnPrinter(4).Caption = .DialogPrinterOptions
+50210   mnPrinter(6).Caption = .DialogPrinterLogging
+50220   mnPrinter(7).Caption = .DialogPrinterLogfile
+50230   mnPrinter(9).Caption = .DialogPrinterClose
+50240
+50250   mnDocumentMain.Caption = .DialogDocument
+50260   mnDocument(0).Caption = .DialogDocumentPrint
+50270   mnDocument(2).Caption = .DialogDocumentAdd
+50280   mnDocument(3).Caption = .DialogDocumentAddFromClipboard
+50290   mnDocument(4).Caption = .DialogDocumentDelete
+50300
+50310   mnDocument(6).Caption = .DialogDocumentTop
+50320   mnDocument(7).Caption = .DialogDocumentUp
+50330   mnDocument(8).Caption = .DialogDocumentDown
+50340   mnDocument(9).Caption = .DialogDocumentBottom
 50350
-50360   mnDocument(14).Caption = .DialogDocumentSave
-50370
-50380   mnDocument(16).Caption = .DialogDocumentCombineAllSend
-50390   mnDocument(17).Caption = .DialogDocumentSend
+50360   mnDocument(11).Caption = .DialogDocumentCombine
+50370   mnDocument(12).Caption = .DialogDocumentCombineAll
+50380
+50390   mnDocument(14).Caption = .DialogDocumentSave
 50400
-50410   mnViewMain.Caption = .DialogView
-50420   mnView(0).Caption = .DialogViewToolbars
-50430   mnView(2).Caption = .DialogViewStatusbar
-50440   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
-50450   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
-50460
-50470   mnHelpMain.Caption = .DialogInfo
-50480   mnHelp(2).Caption = .DialogInfoPaypal
-50490   mnHelp(4).Caption = .DialogInfoHomepage
-50500   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
-50510   mnHelp(6).Caption = .DialogInfoCheckUpdates
-50520   mnHelp(8).Caption = .DialogInfoInfo
-50530
-50540   lsv.ColumnHeaders("Date").Text = .ListDate
-50550   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
-50560   lsv.ColumnHeaders("Filename").Text = .ListFilename
-50570   lsv.ColumnHeaders("Size").Text = .ListSize
-50580   lsv.ColumnHeaders("Status").Text = .ListStatus
-50590
-50600   txtEmailAddress.ToolTipText = .DialogEmailAddress
-50610  End With
+50410   mnDocument(16).Caption = .DialogDocumentCombineAllSend
+50420   mnDocument(17).Caption = .DialogDocumentSend
+50430
+50440   mnViewMain.Caption = .DialogView
+50450   mnView(0).Caption = .DialogViewToolbars
+50460   mnView(2).Caption = .DialogViewStatusbar
+50470   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
+50480   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
+50490
+50500   mnHelpMain.Caption = .DialogInfo
+50510   mnHelp(2).Caption = .DialogInfoPaypal
+50520   mnHelp(4).Caption = .DialogInfoHomepage
+50530   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
+50540   mnHelp(6).Caption = .DialogInfoCheckUpdates
+50550   mnHelp(8).Caption = .DialogInfoInfo
+50560
+50570   lsv.ColumnHeaders("Date").Text = .ListDate
+50580   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
+50590   lsv.ColumnHeaders("Filename").Text = .ListFilename
+50600   lsv.ColumnHeaders("Size").Text = .ListSize
+50610   lsv.ColumnHeaders("Status").Text = .ListStatus
+50620
+50630   txtEmailAddress.ToolTipText = .DialogEmailAddress
+50640  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1047,40 +1014,38 @@ On Error GoTo ErrPtnr_OnError
   DefaultPrintername As String, OnlyPsFiles As Boolean, Ext As String, _
   Cancel As Boolean, tFilename2 As String
 50050
-50060  Timer1.Enabled = False
-50070  Screen.MousePointer = vbHourglass
-50080  DoEvents
-50091  Select Case Index
+50060  Screen.MousePointer = vbHourglass
+50070  DoEvents
+50081  Select Case Index
         Case 0:
-50110    DocumentPrint
-50120   Case 2: ' Add
-50130    DocumentAdd
-50140   Case 3: ' Add from clipboard
-50150    DocumentAddFromClipboard
-50160   Case 4: ' Delete
-50170    DocumentDelete
-50180   Case 6: ' Top
-50190    DocumentTop
-50200   Case 7: ' Up
-50210    DocumentUp
-50220   Case 8: ' Down
-50230    DocumentDown
-50240   Case 9: ' Bottom
-50250    DocumentBottom
-50260   Case 11: ' Combine
-50270    DocumentCombine
-50280   Case 12: ' CombineAll
-50290    DocumentCombineAll
-50300   Case 14: ' Save
-50310    DocumentSave
-50320   Case 16
-50330    CombineAllAndSend
-50340   Case 17
-50350    SendEmail
-50360  End Select
-50370  SetDocMenuAndToolbar
-50380  Screen.MousePointer = vbNormal
-50390  Timer1.Enabled = True
+50100    DocumentPrint
+50110   Case 2: ' Add
+50120    DocumentAdd
+50130   Case 3: ' Add from clipboard
+50140    DocumentAddFromClipboard
+50150   Case 4: ' Delete
+50160    DocumentDelete
+50170   Case 6: ' Top
+50180    DocumentTop
+50190   Case 7: ' Up
+50200    DocumentUp
+50210   Case 8: ' Down
+50220    DocumentDown
+50230   Case 9: ' Bottom
+50240    DocumentBottom
+50250   Case 11: ' Combine
+50260    DocumentCombine
+50270   Case 12: ' CombineAll
+50280    DocumentCombineAll
+50290   Case 14: ' Save
+50300    DocumentSave
+50310   Case 16
+50320    CombineAllAndSend
+50330   Case 17
+50340    SendEmail
+50350  End Select
+50360  SetDocMenuAndToolbar
+50370  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1149,29 +1114,31 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case Index
         Case 0:
-50030    SetMenuPrinterStop
+50030    ShowPrinters
 50040   Case 2:
-50050    frmOptions.Show , Me
+50050    SetMenuPrinterStop
 50060   Case 4:
-50070    If mnPrinter(Index).Checked = False Then
-50080      SetLogging True
-50090      mnPrinter(Index).Checked = True
-50100     Else
-50110      SetLogging False
-50120      mnPrinter(Index).Checked = False
-50130    End If
-50140    If Not m_frmSysTray Is Nothing Then
-50150     If mnPrinter(Index).Checked = True Then
-50160       m_frmSysTray.mnuSysTray(6).Checked = True
-50170      Else
-50180       m_frmSysTray.mnuSysTray(6).Checked = False
-50190     End If
-50200    End If
-50210   Case 5:
-50220    frmLog.Show , Me
+50070    frmOptions.Show , Me
+50080   Case 6:
+50090    If mnPrinter(Index).Checked = False Then
+50100      SetLogging True
+50110      mnPrinter(Index).Checked = True
+50120     Else
+50130      SetLogging False
+50140      mnPrinter(Index).Checked = False
+50150    End If
+50160    If Not m_frmSysTray Is Nothing Then
+50170     If mnPrinter(Index).Checked = True Then
+50180       m_frmSysTray.mnuSysTray(6).Checked = True
+50190      Else
+50200       m_frmSysTray.mnuSysTray(6).Checked = False
+50210     End If
+50220    End If
 50230   Case 7:
-50240    Unload Me
-50250  End Select
+50240    frmLog.Show , Me
+50250   Case 9:
+50260    Unload Me
+50270  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1292,38 +1259,131 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub CreateMutexIfNecessary()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If mutexLocal.MutexHandle = 0 Then
+50020  ' Create a lokal mutex
+50030    mutexLocal.CreateMutex PDFCreator_GUID
+50040  End If
+50050  If mutexGlobal.MutexHandle = 0 Then
+50060  ' Create a global mutex
+50070    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "CreateMutexIfNecessary")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub CheckClipboardForBitmap()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Clipboard.GetFormat(vbCFBitmap) = True Then
+50020    mnDocument(3).Enabled = True
+50030    tlb(0).Buttons(7).Enabled = True
+50040   Else
+50050    mnDocument(3).Enabled = False
+50060    tlb(0).Buttons(7).Enabled = False
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "CheckClipboardForBitmap")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  PrinterStop = True
+50020  PrintSelectedJobs = False
+50030  If Timer3.Enabled = True Then
+50040   Timer3.Enabled = False
+50050   If In_eActionTimer = True Then
+50060    If ShutDown = False Then
+50070     ShutDown = True
+50080    End If
+50090    Cancel = True
+50100   End If
+50110  End If
+50120  If Timer1.Enabled = True Then
+50130   Timer1.Enabled = False
+50140   If InTimer1 Then
+50150    If ShutDown = False Then
+50160     ShutDown = True
+50170    End If
+50180    Cancel = True
+50190   End If
+50200  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "Form_QueryUnload")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub Timer1_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  InTimer1 = True
-50020  Timer1.Enabled = False
-50030  DoEvents
-50040  If FileExists(GetPDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
-50050   InTimer1 = False
-50060   Unload Me
-50070   Exit Sub
-50080  End If
-50090  CheckPrintJobs
-50100  If Not NoProcessing Then
-50110   CheckForPrinting
-50120  End If
-50130  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("IF", True)) > 0 And ShellAndWaitingIsRunning = False Then
-50140   InTimer1 = False
-50150   Unload Me
-50160   Exit Sub
-50170  End If
-50180  If lsv.ListItems.Count = 1 Then
-50190   If lsv.SelectedItem.Index <> 1 Then
-50200    lsv.ListItems(1).Selected = True
-50210   End If
-50220  End If
-50230  DoEvents
-50240  Timer1.Interval = TimerIntervall
-50250  If Not ShutDown Then
-50260   Timer1.Enabled = True
-50270   InTimer1 = False
-50280  End If
+50010  If InTimer1 Then
+50020   Exit Sub
+50030  End If
+50040
+50050  InTimer1 = True
+50060
+50070  CreateMutexIfNecessary
+50080  CheckClipboardForBitmap
+50090
+50100  DoEvents
+50110  If FileExists(GetPDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
+50120   InTimer1 = False
+50130   Unload Me
+50140   Exit Sub
+50150  End If
+50160  CheckPrintJobs
+50170  If Not NoProcessing Then
+50180   CheckForPrinting
+50190  End If
+50200  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("IF", True)) > 0 And ShellAndWaitingIsRunning = False Then
+50210   InTimer1 = False
+50220   Unload Me
+50230   Exit Sub
+50240  End If
+50250
+50260  If lsv.ListItems.Count = 1 Then
+50270   If lsv.SelectedItem.Index <> 1 Then
+50280    lsv.ListItems(1).Selected = True
+50290   End If
+50300  End If
+50310  DoEvents
+50320
+50330  InTimer1 = False
+50340  If ShutDown And In_eActionTimer = False Then
+50350   Timer3.Enabled = False
+50360   Timer1.Enabled = False
+50370   Unload Me
+50380  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1420,47 +1480,61 @@ Private Sub CheckForPrinting()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If lsv.ListItems.Count > 0 Then
-50020   If mnPrinter(0).Checked = True Then
-50030     If PrintSelectedJobs = True Then
-50040       If lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting Then
-50050         PDFSpoolfile = lsv.ListItems(1).SubItems(4)
-50060         DoEvents
-50070         frmPrinting.Show vbModal, Me
-50080        Else
-50090         PrintSelectedJobs = False
-50100       End If
-50110      Else
-50120       If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListWaiting Then
-50130        lsv.ListItems(1).SubItems(1) = LanguageStrings.ListWaiting
-50140       End If
-50150     End If
-50160    Else
-50170     If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListPrinting Then
-50180      lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting
-50190     End If
-50200     PDFSpoolfile = lsv.ListItems(1).SubItems(4)
-50210     If PrinterStop = False Then
-50220      If IsFormLoaded(frmPrinting) = False Then
-50230       If InstalledAsServer Then ' This is necessary because there is no other way to tell the running server that the options are changed!
-50240        Options = ReadOptions
-50250       End If
-50260       If Options.UseAutosave = 1 Then
-50270         Autosave
-50280        Else
-50290         frmPrinting.Show , Me
-50300       End If
-50310      End If
-50320     End If
-50330     If PrinterStop = False And NoProcessing = False Then
-50340       mnPrinter(0).Checked = False
-50350       tlb(0).Buttons(1).Image = 1
-50360      Else
-50370       mnPrinter(0).Checked = True
-50380       tlb(0).Buttons(1).Image = 2
-50390     End If
-50400   End If
-50410  End If
+50010  Dim isf As InfoSpoolFile
+50020
+50030  If lsv.ListItems.Count > 0 Then
+50040   If mnPrinter(2).Checked = True Then
+50050     If PrintSelectedJobs = True Then
+50060       If lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting Then
+50070         PDFSpoolfile = lsv.ListItems(1).SubItems(4)
+50080         isf = ReadInfoSpoolfile(PDFSpoolfile)
+50090         DoEvents
+50100         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
+50110          OldPrinter = isf.REDMON_PRINTER
+50120          Options = ReadOptions(True, , GetPrinterDefaultProfile(isf.REDMON_PRINTER))
+50130         End If
+50140         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
+50150         frmPrinting.Show vbModal, Me
+50160        Else
+50170         PrintSelectedJobs = False
+50180       End If
+50190      Else
+50200       If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListWaiting Then
+50210        lsv.ListItems(1).SubItems(1) = LanguageStrings.ListWaiting
+50220       End If
+50230     End If
+50240    Else
+50250     If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListPrinting Then
+50260      lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting
+50270     End If
+50280     PDFSpoolfile = lsv.ListItems(1).SubItems(4)
+50290     If PrinterStop = False Then
+50300      If IsFormLoaded(frmPrinting) = False Then
+50310       If InstalledAsServer Then ' This is necessary because there is no other way to tell the running server that the options are changed!
+50320        Options = ReadOptions
+50330       End If
+50340       If Options.UseAutosave = 1 Then
+50350         Autosave
+50360        Else
+50370         isf = ReadInfoSpoolfile(PDFSpoolfile)
+50380         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
+50390          OldPrinter = isf.REDMON_PRINTER
+50400          Options = ReadOptions(True, , GetPrinterDefaultProfile(isf.REDMON_PRINTER))
+50410         End If
+50420         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
+50430         frmPrinting.Show , Me
+50440       End If
+50450      End If
+50460     End If
+50470     If PrinterStop = False And NoProcessing = False Then
+50480       mnPrinter(2).Checked = False
+50490       tlb(0).Buttons(1).Image = 1
+50500      Else
+50510       mnPrinter(2).Checked = True
+50520       tlb(0).Buttons(1).Image = 2
+50530     End If
+50540   End If
+50550  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1477,11 +1551,11 @@ Public Sub CheckPrintJobs()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Temppath As String, LItem As ListItem, files As Collection, tColl As Collection, _
+50010  Dim Temppath As String, lItem As ListItem, files As Collection, tColl As Collection, _
   tFile() As String, i As Long, j As Long, kB As Long, MB As Long, GB As Long, _
   ind As Long, tStr As String, tB As Boolean
 50040  kB = 1024: MB = kB * 1024: GB = MB * 1024
-50050  Set files = New Collection: Timer1.Enabled = False
+50050  Set files = New Collection
 50060  Temppath = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
 50070  FindFiles Temppath, files, "~PS*.tmp", , False, True
 50080
@@ -1514,72 +1588,71 @@ On Error GoTo ErrPtnr_OnError
 50350   lsv.ListItems.Remove tColl(j) - (j - 1)
 50360  Next j
 50370
-50380
-50390  Set tColl = New Collection
-50400  For j = 1 To files.Count
-50410   tFile = Split(files.Item(j), "|")
-50420   ind = 0
-50430   For i = 1 To lsv.ListItems.Count
-50440    If UCase$(tFile(1)) = UCase$(lsv.ListItems(i).SubItems(4)) Then
-50450     ind = i
-50460     Exit For
-50470    End If
-50480   Next i
-50490   If ind > 0 And ind < lsv.ListItems.Count + 1 Then
-50500    tColl.Add j
-50510   End If
-50520  Next j
-50530  For j = 1 To tColl.Count
-50540   files.Remove tColl(j) - (j - 1)
-50550  Next j
-50560
-50570  For j = 1 To files.Count
-50580   tFile = Split(files.Item(j), "|")
-50590   ind = 0
-50600   For i = 1 To lsv.ListItems.Count
-50610    If UCase$(tFile(1)) = UCase$(lsv.ListItems(i).SubItems(4)) Then
-50620     ind = i
-50630     Exit For
-50640    End If
-50650   Next i
-50660   If ind = 0 Then
-50670    tB = True
-50680    If FormISLoaded("frmOptions") = False And Me.Visible = True Then
-50690     Me.Show
-50700    End If
-50710    Set LItem = lsv.ListItems.Add(, , GetPSTitle(tFile(1)))
-50720
-50730    LItem.SubItems(1) = LanguageStrings.ListWaiting
-50740    LItem.SubItems(2) = tFile(3)
-50750
-50760    If CLng(tFile(2)) > GB Then
-50770      LItem.SubItems(3) = Format$(CDbl(tFile(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
-50780     Else
-50790      If CLng(tFile(2)) > MB Then
-50800        LItem.SubItems(3) = Format$(CDbl(tFile(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
-50810       Else
-50820        If CLng(tFile(2)) > kB Then
-50830          LItem.SubItems(3) = Format$(CDbl(tFile(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
-50840         Else
-50850          LItem.SubItems(3) = Format$(tFile(2), "0 " & LanguageStrings.ListBytes)
-50860        End If
-50870     End If
-50880    End If
-50890    LItem.SubItems(4) = tFile(1)
-50900    DoEvents
-50910   End If
-50920  Next j
-50930  If lsv.ListItems.Count = 1 Then
-50940    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
-50950   Else
-50960    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
-50970  End If
-50980  If tStr <> stb.Panels("Status").Text Then
-50990   stb.Panels("Status").Text = tStr
-51000  End If
-51010  If tB = True Then
-51020   SetDocMenuAndToolbar
-51030  End If
+50380  Set tColl = New Collection
+50390  For j = 1 To files.Count
+50400   tFile = Split(files.Item(j), "|")
+50410   ind = 0
+50420   For i = 1 To lsv.ListItems.Count
+50430    If UCase$(tFile(1)) = UCase$(lsv.ListItems(i).SubItems(4)) Then
+50440     ind = i
+50450     Exit For
+50460    End If
+50470   Next i
+50480   If ind > 0 And ind < lsv.ListItems.Count + 1 Then
+50490    tColl.Add j
+50500   End If
+50510  Next j
+50520  For j = 1 To tColl.Count
+50530   files.Remove tColl(j) - (j - 1)
+50540  Next j
+50550
+50560  For j = 1 To files.Count
+50570   tFile = Split(files.Item(j), "|")
+50580   ind = 0
+50590   For i = 1 To lsv.ListItems.Count
+50600    If UCase$(tFile(1)) = UCase$(lsv.ListItems(i).SubItems(4)) Then
+50610     ind = i
+50620     Exit For
+50630    End If
+50640   Next i
+50650   If ind = 0 Then
+50660    tB = True
+50670    If FormISLoaded("frmOptions") = False And Me.Visible = True Then
+50680     Me.Show
+50690    End If
+50700    Set lItem = lsv.ListItems.Add(, , GetPSTitle(tFile(1)))
+50710
+50720    lItem.SubItems(1) = LanguageStrings.ListWaiting
+50730    lItem.SubItems(2) = tFile(3)
+50740
+50750    If CLng(tFile(2)) > GB Then
+50760      lItem.SubItems(3) = Format$(CDbl(tFile(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
+50770     Else
+50780      If CLng(tFile(2)) > MB Then
+50790        lItem.SubItems(3) = Format$(CDbl(tFile(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
+50800       Else
+50810        If CLng(tFile(2)) > kB Then
+50820          lItem.SubItems(3) = Format$(CDbl(tFile(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
+50830         Else
+50840          lItem.SubItems(3) = Format$(tFile(2), "0 " & LanguageStrings.ListBytes)
+50850        End If
+50860     End If
+50870    End If
+50880    lItem.SubItems(4) = tFile(1)
+50890    DoEvents
+50900   End If
+50910  Next j
+50920  If lsv.ListItems.Count = 1 Then
+50930    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
+50940   Else
+50950    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
+50960  End If
+50970  If tStr <> stb.Panels("Status").Text Then
+50980   stb.Panels("Status").Text = tStr
+50990  End If
+51000  If tB = True Then
+51010   SetDocMenuAndToolbar
+51020  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1736,109 +1809,111 @@ On Error GoTo ErrPtnr_OnError
   OutputFilename As String, PDFDocInfo As tPDFDocInfo, tStr As String, _
   PSHeader As tPSHeader, tDate As Date, mail As clsPDFCreatorMail
 50040
-50050  IsConverted = False
-50060  Set tColl = New Collection
-50070
-50080  If Len(filename) > 0 Then
-50090    If FileExists(filename) = True Then
-50100     SplitPath filename, , Pathname
-50110     tColl.Add Pathname & "|" & filename & "|" & FileLen(filename) & "|" & FileDateTime(filename)
-50120    End If
-50130   Else
-50140    FindFiles CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, tColl, "~PS*.tmp", , True, True
-50150 '   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~P*.tmp")
-50160  End If
-50170
-50180  tStr = "Autosavemodus: " & tColl.Count & "files"
-50190  IfLoggingWriteLogfile tStr
-50200  WriteToSpecialLogfile tStr
-50210  Do While tColl.Count > 0
-50220   For i = 1 To tColl.Count
-50230    tFile = Split(tColl.Item(i), "|")
-50240    If FileExists(tFile(1)) And Not FileInUse(tFile(1)) Then
-50250     OutputFilename = GetAutosaveFilename(tFile(1))
-50260     SplitPath OutputFilename, , Pathname
-50270     If IsValidPath(Pathname) = True Then
-50280       If DirExists(Pathname) = False Then
-50290        MakePath (Pathname)
-50300       End If
-50310       tStr = "Autosavemodus: Create File '" & OutputFilename & "'"
-50320       IfLoggingWriteLogfile tStr
-50330       WriteToSpecialLogfile tStr
-50340       PSHeader = GetPSHeader(tFile(1))
-50350       tDate = Now
-50360       With PDFDocInfo
-50370        If Options.UseStandardAuthor = 1 Then
-50380          .Author = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
-50390         Else
-50400          .Author = GetDocUsername(tFile(1), False)
-50410        End If
-50420        If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50430          tStr = PSHeader.CreationDate.Comment
-50440         Else
-50450          tStr = CStr(tDate)
-50460        End If
-50470        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50480        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50490        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
-50500        'tStr = CStr(tDate)
-50510        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50520        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
-50530        If Len(Options.StandardTitle) > 0 Then
-50540          .title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
-50550         Else
-50560          .title = GetSubstFilename(tFile(1), Options.SaveFilename, , , True)
-50570        End If
-50580       End With
-50590       AppendPDFDocInfo tFile(1), PDFDocInfo
-50600       CheckForStamping tFile(1)
-50610       If Options.RunProgramBeforeSaving = 1 Then
-50620        RunProgramBeforeSaving Me.hwnd, tFile(1), _
+50050  InAutoSave = True
+50060  IsConverted = False
+50070  Set tColl = New Collection
+50080
+50090  If Len(filename) > 0 Then
+50100    If FileExists(filename) = True Then
+50110     SplitPath filename, , Pathname
+50120     tColl.Add Pathname & "|" & filename & "|" & FileLen(filename) & "|" & FileDateTime(filename)
+50130    End If
+50140   Else
+50150    FindFiles CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, tColl, "~PS*.tmp", , True, True
+50160 '   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~P*.tmp")
+50170  End If
+50180
+50190  tStr = "Autosavemodus: " & tColl.Count & "files"
+50200  IfLoggingWriteLogfile tStr
+50210  WriteToSpecialLogfile tStr
+50220  Do While tColl.Count > 0
+50230   For i = 1 To tColl.Count
+50240    tFile = Split(tColl.Item(i), "|")
+50250    If FileExists(tFile(1)) And Not FileInUse(tFile(1)) Then
+50260     OutputFilename = GetAutosaveFilename(tFile(1))
+50270     SplitPath OutputFilename, , Pathname
+50280     If IsValidPath(Pathname) = True Then
+50290       If DirExists(Pathname) = False Then
+50300        MakePath (Pathname)
+50310       End If
+50320       tStr = "Autosavemodus: Create File '" & OutputFilename & "'"
+50330       IfLoggingWriteLogfile tStr
+50340       WriteToSpecialLogfile tStr
+50350       PSHeader = GetPSHeader(tFile(1))
+50360       tDate = Now
+50370       With PDFDocInfo
+50380        If Options.UseStandardAuthor = 1 Then
+50390          .Author = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
+50400         Else
+50410          .Author = GetDocUsername(tFile(1), False)
+50420        End If
+50430        If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50440          tStr = PSHeader.CreationDate.Comment
+50450         Else
+50460          tStr = CStr(tDate)
+50470        End If
+50480        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50490        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+50500        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50510        'tStr = CStr(tDate)
+50520        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50530        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50540        If Len(Options.StandardTitle) > 0 Then
+50550          .title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50560         Else
+50570          .title = GetSubstFilename(tFile(1), Options.SaveFilename, , , True)
+50580        End If
+50590       End With
+50600       AppendPDFDocInfo tFile(1), PDFDocInfo
+50610       CheckForStamping tFile(1)
+50620       If Options.RunProgramBeforeSaving = 1 Then
+50630        RunProgramBeforeSaving Me.hwnd, tFile(1), _
         Options.RunProgramBeforeSavingProgramParameters, _
         Options.RunProgramBeforeSavingWindowstyle
-50650       End If
-50660       CallGScript tFile(1), OutputFilename, Options, Options.AutosaveFormat
-50670       If FileExists(OutputFilename) = True Then
-50680         IsConverted = True
-50690         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
-50700         IfLoggingWriteLogfile tStr
-50710         WriteToSpecialLogfile tStr
-50720         If Options.RunProgramAfterSaving = 1 Then
-50730          RunProgramAfterSaving Me.hwnd, OutputFilename, _
+50660       End If
+50670       CallGScript tFile(1), OutputFilename, Options, Options.AutosaveFormat
+50680       If FileExists(OutputFilename) = True Then
+50690         IsConverted = True
+50700         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
+50710         IfLoggingWriteLogfile tStr
+50720         WriteToSpecialLogfile tStr
+50730         If Options.RunProgramAfterSaving = 1 Then
+50740          RunProgramAfterSaving Me.hwnd, OutputFilename, _
          Options.RunProgramAfterSavingProgramParameters, _
          Options.RunProgramAfterSavingWindowstyle, tFile(1)
-50760         End If
-50770         If Options.SendEmailAfterAutoSaving = 1 Then
-50780          Set mail = New clsPDFCreatorMail
-50790          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
-50800           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
-50810          End If
-50820          Set mail = Nothing
-50830         End If
-50840         If Options.AutosaveStartStandardProgram = 1 Then
-50850          If Options.OnePagePerFile = 1 Then
-50860            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
-50870           Else
-50880            OpenDocument OutputFilename
-50890          End If
-50900         End If
-50910        Else
-50920         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-50930         IfLoggingWriteLogfile tStr
-50940         WriteToSpecialLogfile tStr
-50950       End If
-50960      Else
-50970       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
-50980     End If
-50990     CheckForPrintingAfterSaving tFile(1), Options
-51000     KillFile tFile(1)
-51010     KillInfoSpoolfile tFile(1)
-51020     ConvertedOutputFilename = OutputFilename
-51030     ReadyConverting = True
-51040    End If
-51050   Next i
-51060   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
-51070  Loop
+50770         End If
+50780         If Options.SendEmailAfterAutoSaving = 1 Then
+50790          Set mail = New clsPDFCreatorMail
+50800          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
+50810           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+50820          End If
+50830          Set mail = Nothing
+50840         End If
+50850         If Options.AutosaveStartStandardProgram = 1 Then
+50860          If Options.OnePagePerFile = 1 Then
+50870            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
+50880           Else
+50890            OpenDocument OutputFilename
+50900          End If
+50910         End If
+50920        Else
+50930         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+50940         IfLoggingWriteLogfile tStr
+50950         WriteToSpecialLogfile tStr
+50960       End If
+50970      Else
+50980       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
+50990     End If
+51000     CheckForPrintingAfterSaving tFile(1), Options
+51010     KillFile tFile(1)
+51020     KillInfoSpoolfile tFile(1)
+51030     ConvertedOutputFilename = OutputFilename
+51040     ReadyConverting = True
+51050    End If
+51060   Next i
+51070   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
+51080  Loop
+51090  InAutoSave = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1899,27 +1974,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub Timer2_Timer()
- On Error Resume Next
- InTimer2 = True
- If mutexLocal.CheckMutex(PDFCreator_GUID) = False Then
- ' Create a lokal mutex
-   mutexLocal.CreateMutex PDFCreator_GUID
- End If
- If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
- ' Create a global mutex
-   mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
- End If
- If Clipboard.GetFormat(vbCFBitmap) = True Then
-   mnDocument(3).Enabled = True
-   tlb(0).Buttons(7).Enabled = True
-  Else
-   mnDocument(3).Enabled = False
-   tlb(0).Buttons(7).Enabled = False
- End If
- InTimer2 = False
-End Sub
-
 Private Sub InitToolbar()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1975,50 +2029,37 @@ End Select
 End Sub
 
 Private Sub DrawToolbars()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If (Options.Toolbars And 2) <> 2 Then
-50020    txtEmailAddress.Enabled = False
-50030    txtEmailAddress.Visible = False
-50035    On Error Resume Next
-50040    mnDocument(15).Enabled = False
-50050    mnDocument(16).Enabled = False
-50060    mnDocument(17).Enabled = False
-50070    mnDocument(14).Visible = False
-50080    mnDocument(15).Visible = False
-50090    mnDocument(16).Visible = False
-50100    mnDocument(17).Visible = False
-50105    On Error GoTo ErrPtnr_OnError
-50110  End If
-50120  If (Options.Toolbars And 1) = 1 Then
-50130    tlb(0).Visible = True
-50140    mnViewToolbars(0).Checked = True
-50150   Else
-50160    tlb(0).Visible = False
-50170    mnViewToolbars(0).Checked = False
-50180  End If
-50190  If (Options.Toolbars And 2) = 2 Then
-50200    tlb(1).Visible = True
-50210    txtEmailAddress.Visible = True
-50220    mnViewToolbars(1).Checked = True
-50230    mnDocument(16).Visible = True
-50240    mnDocument(17).Visible = True
-50250   Else
-50260    tlb(1).Visible = False
-50270    txtEmailAddress.Visible = False
-50280    mnViewToolbars(1).Checked = False
-50290  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "DrawToolbars")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If (Options.Toolbars And 2) <> 2 Then
+   txtEmailAddress.Enabled = False
+   txtEmailAddress.Visible = False
+   On Error Resume Next
+   mnDocument(15).Enabled = False
+   mnDocument(16).Enabled = False
+   mnDocument(17).Enabled = False
+   mnDocument(14).Visible = False
+   mnDocument(15).Visible = False
+   mnDocument(16).Visible = False
+   mnDocument(17).Visible = False
+   On Error GoTo 0
+ End If
+ If (Options.Toolbars And 1) = 1 Then
+   tlb(0).Visible = True
+   mnViewToolbars(0).Checked = True
+  Else
+   tlb(0).Visible = False
+   mnViewToolbars(0).Checked = False
+ End If
+ If (Options.Toolbars And 2) = 2 Then
+   tlb(1).Visible = True
+   txtEmailAddress.Visible = True
+   mnViewToolbars(1).Checked = True
+   mnDocument(16).Visible = True
+   mnDocument(17).Visible = True
+  Else
+   tlb(1).Visible = False
+   txtEmailAddress.Visible = False
+   mnViewToolbars(1).Checked = False
+ End If
 End Sub
 
 Private Sub DocumentPrint()
@@ -2038,7 +2079,7 @@ On Error GoTo ErrPtnr_OnError
 50110  Next j
 50120  PrintSelectedJobs = True
 50130 ' SetPrinterStop False
-50140 ' mnPrinter(0).Checked = False
+50140 ' mnPrinter(2).Checked = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2333,17 +2374,17 @@ Public Sub SetMenuPrinterStop()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If mnPrinter(0).Checked = False Or NoProcessing = True Then
+50010  If mnPrinter(2).Checked = False Or NoProcessing = True Then
 50020    SetPrinterStop True
-50030    mnPrinter(0).Checked = True
+50030    mnPrinter(2).Checked = True
 50040    tlb(0).Buttons(1).Image = 2
 50050   Else
 50060    SetPrinterStop False
-50070    mnPrinter(0).Checked = False
+50070    mnPrinter(2).Checked = False
 50080    tlb(0).Buttons(1).Image = 1
 50090  End If
 50100  If Not m_frmSysTray Is Nothing Then
-50110   If mnPrinter(0).Checked = True Then
+50110   If mnPrinter(2).Checked = True Then
 50120     m_frmSysTray.IconHandle = imlSystray.ListImages(1).Picture.handle
 50130     m_frmSysTray.mnuSysTray(2).Checked = True
 50140    Else
@@ -2439,25 +2480,23 @@ On Error GoTo ErrPtnr_OnError
 50080  End If
 50090  Screen.MousePointer = vbHourglass
 50100  LockWindowUpdate hwnd
-50110  Timer1.Enabled = False
-50120  Set cFiles = New Collection
-50130  For i = 1 To lsv.ListItems.Count
-50140   cFiles.Add lsv.ListItems(i).SubItems(4)
-50150  Next i
-50160  tFilename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PT")
-50170  KillFile tFilename
-50180  If cFiles.Count > 1 Then
-50190   CombineFiles tFilename, cFiles, , stb
-50200   stb.Panels("Percent").Text = ""
-50210  End If
-50220  tFilename2 = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-50230  KillFile tFilename2
-50240  Name tFilename As tFilename2
-50250  Set cFiles = Nothing
-50260  DocumentCombineAll = tFilename2
-50270  Timer1.Enabled = True
-50280  LockWindowUpdate 0&
-50290  Screen.MousePointer = vbNormal
+50110  Set cFiles = New Collection
+50120  For i = 1 To lsv.ListItems.Count
+50130   cFiles.Add lsv.ListItems(i).SubItems(4)
+50140  Next i
+50150  tFilename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PT")
+50160  KillFile tFilename
+50170  If cFiles.Count > 1 Then
+50180   CombineFiles tFilename, cFiles, , stb
+50190   stb.Panels("Percent").Text = ""
+50200  End If
+50210  tFilename2 = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+50220  KillFile tFilename2
+50230  Name tFilename As tFilename2
+50240  Set cFiles = Nothing
+50250  DocumentCombineAll = tFilename2
+50260  LockWindowUpdate 0&
+50270  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2504,7 +2543,6 @@ On Error GoTo ErrPtnr_OnError
 50280    KillFile InputFilename
 50290   End If
 50300  End If
-50310  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2521,16 +2559,14 @@ Private Sub CombineAllAndSend()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Timer1.Enabled = False
-50020  If Options.ShowAnimation = 1 Then
-50030   ShowAnimationWindow = True
-50040   frmAnimation.Show
-50050  End If
-50060  SendEmailImmediately DocumentCombineAll
-50070  If Options.ShowAnimation = 1 Then
-50080   ShowAnimationWindow = False
-50090  End If
-50100  Timer1.Enabled = True
+50010  If Options.ShowAnimation = 1 Then
+50020   ShowAnimationWindow = True
+50030   frmAnimation.Show
+50040  End If
+50050  SendEmailImmediately DocumentCombineAll
+50060  If Options.ShowAnimation = 1 Then
+50070   ShowAnimationWindow = False
+50080  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2550,19 +2586,17 @@ On Error GoTo ErrPtnr_OnError
 50010  If lsv.ListItems.Count > 0 Then
 50020   If lsv.SelectedItem.Index >= 0 Then
 50030    If FileExists(lsv.SelectedItem.ListSubItems(4)) = True And FileInUse(lsv.SelectedItem.ListSubItems(4)) = False Then
-50040     Timer1.Enabled = False
-50050     If Options.ShowAnimation = 1 Then
-50060      ShowAnimationWindow = True
-50070      frmAnimation.Show
-50080     End If
-50090     SendEmailImmediately lsv.SelectedItem.ListSubItems(4)
-50100     If Options.ShowAnimation = 1 Then
-50110      ShowAnimationWindow = False
-50120      Timer1.Enabled = True
-50130     End If
-50140    End If
-50150   End If
-50160  End If
+50040     If Options.ShowAnimation = 1 Then
+50050      ShowAnimationWindow = True
+50060      frmAnimation.Show
+50070     End If
+50080     SendEmailImmediately lsv.SelectedItem.ListSubItems(4)
+50090     If Options.ShowAnimation = 1 Then
+50100      ShowAnimationWindow = False
+50110     End If
+50120    End If
+50130   End If
+50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2718,15 +2752,15 @@ On Error GoTo ErrPtnr_OnError
 50070    For i = mnPrinter.LBound To mnPrinter.UBound
 50080     .AddMenuItem mnPrinter(i).Caption
 50090    Next i
-50100    If mnPrinter(4).Checked = True Then
+50100    If mnPrinter(6).Checked = True Then
 50110     .mnuSysTray(6).Checked = True
 50120    End If
-50130    If mnPrinter(0).Checked = True Then
+50130    If mnPrinter(2).Checked = True Then
 50140     .mnuSysTray(2).Checked = True
 50150    End If
 50160    .ToolTip = Me.Caption
 50170   End With
-50180   If mnPrinter(0).Checked = True Then
+50180   If mnPrinter(2).Checked = True Then
 50190     m_frmSysTray.IconHandle = imlSystray.ListImages(1).Picture.handle
 50200    Else
 50210     m_frmSysTray.IconHandle = imlSystray.ListImages(2).Picture.handle
@@ -2835,6 +2869,23 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmMain", "ChangeLanguage")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub ShowPrinters()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  frmPrinters.Show vbModal, Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "ShowPrinters")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

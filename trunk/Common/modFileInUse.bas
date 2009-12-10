@@ -1,8 +1,8 @@
 Attribute VB_Name = "modFileInUse"
 Option Explicit
- 
+
 Public Function FileInUse(ByVal sFilename As String, Optional ByRef sErrorMsg As String = vbNullString) As Boolean
- Dim lFile As Long, lError As Long, lResult As Long, lBufLen As Long, sBuffer As String
+ Dim lFile As Long, lError As Long, lResult As Long, sBuffer As String
  On Error GoTo Err_FileInUse
  lFile = CreateFile(sFilename, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0)
  If lFile = INVALID_HANDLE_VALUE Then

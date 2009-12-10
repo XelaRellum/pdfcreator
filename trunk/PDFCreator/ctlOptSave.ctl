@@ -385,7 +385,7 @@ Public Sub SetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim lsv As ListView, i As Long, tList() As String, tStrA() As String
-50020  With Options
+50020  With Options1
 50030   lsvFilenameSubst.ListItems.Clear
 50040   tList = Split(.FilenameSubstitutions, "\")
 50050   For i = 0 To UBound(tList)
@@ -428,7 +428,7 @@ Public Sub GetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tStr As String, i As Long
-50020  With Options
+50020  With Options1
 50030   tStr = ""
 50040   For i = 1 To lsvFilenameSubst.ListItems.Count
 50050    If i < lsvFilenameSubst.ListItems.Count Then

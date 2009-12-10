@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptDocument 
    ClientHeight    =   5895
    ClientLeft      =   0
@@ -492,7 +492,7 @@ Public Sub SetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long
-50020  With Options
+50020  With Options1
 50030   chkUseStandardAuthor.value = .UseStandardAuthor
 50040   txtStandardAuthor.Text = .StandardAuthor
 50050   chkUseCreationDateNow.value = .UseCreationDateNow
@@ -505,14 +505,14 @@ On Error GoTo ErrPtnr_OnError
 50120   chkUseFixPaperSize.value = .UseFixPapersize
 50130   txtCustomPapersizeHeight.Text = .DeviceHeightPoints
 50140   txtCustomPapersizeWidth.Text = .DeviceWidthPoints
-50150  End With
-50160  With cmbDocumentPapersizes
-50170   For i = 0 To .ListCount - 1
-50180    If UCase$(.List(i)) = UCase$(Options.Papersize) Then
-50190     .ListIndex = i
-50200     Exit For
-50210    End If
-50220   Next i
+50150   For i = 0 To cmbDocumentPapersizes.ListCount - 1
+50160    If UCase$(cmbDocumentPapersizes.List(i)) = UCase$(.Papersize) Then
+50170     cmbDocumentPapersizes.ListIndex = i
+50180     Exit For
+50190    End If
+50200   Next i
+50210
+50220   lblFontNameSize.Caption = .StampFontname & ", " & .StampFontsize
 50230  End With
 50240
 50250  If chkUseStandardAuthor.value = 1 Then
@@ -523,57 +523,56 @@ On Error GoTo ErrPtnr_OnError
 50300    txtStandardAuthor.BackColor = &H8000000F
 50310  End If
 50320
-50330  lblFontNameSize.Caption = Options.StampFontname & ", " & Options.StampFontsize
-50340  If lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50 + txtOutlineFontThickness.Width > dmFraProgStamp.Width Then
-50350    txtOutlineFontThickness.Left = dmFraProgStamp.Width - txtOutlineFontThickness.Width - 10
-50360   Else
-50370    txtOutlineFontThickness.Left = lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50
-50380  End If
-50390  txtOutlineFontThickness.Top = lblOutlineFontThickness.Top + (lblOutlineFontThickness.Height - txtOutlineFontThickness.Height) / 2
-50400  If chkStampUseOutlineFont.value = 1 Then
-50410    lblOutlineFontThickness.Enabled = True
-50420    txtOutlineFontThickness.Enabled = True
-50430    txtOutlineFontThickness.BackColor = &H80000005
-50440   Else
-50450    lblOutlineFontThickness.Enabled = False
-50460    txtOutlineFontThickness.Enabled = False
-50470    txtOutlineFontThickness.BackColor = &H8000000F
-50480  End If
-50490  If chkUseFixPaperSize.value = 1 Then
-50500    cmbDocumentPapersizes.Enabled = True
-50510    chkUseCustomPapersize.Enabled = True
-50520    If chkUseCustomPapersize.value = 1 Then
-50530      lblCustomPapersizeWidth.Enabled = True
-50540      lblCustomPapersizeHeight.Enabled = True
-50550      txtCustomPapersizeWidth.Enabled = True
-50560      txtCustomPapersizeWidth.BackColor = &H80000005
-50570      txtCustomPapersizeHeight.Enabled = True
-50580      txtCustomPapersizeHeight.BackColor = &H80000005
-50590      lblCustomPapersizeInfo.Enabled = True
-50600      cmbDocumentPapersizes.Enabled = True
-50610      lblCustomPapersizeInfo.Enabled = True
-50620     Else
-50630      cmbDocumentPapersizes.Enabled = True
-50640      lblCustomPapersizeWidth.Enabled = False
-50650      lblCustomPapersizeHeight.Enabled = False
-50660      txtCustomPapersizeWidth.Enabled = False
-50670      txtCustomPapersizeWidth.BackColor = &H8000000F
-50680      txtCustomPapersizeHeight.Enabled = False
-50690      txtCustomPapersizeHeight.BackColor = &H8000000F
+50330  If lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50 + txtOutlineFontThickness.Width > dmFraProgStamp.Width Then
+50340    txtOutlineFontThickness.Left = dmFraProgStamp.Width - txtOutlineFontThickness.Width - 10
+50350   Else
+50360    txtOutlineFontThickness.Left = lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50
+50370  End If
+50380  txtOutlineFontThickness.Top = lblOutlineFontThickness.Top + (lblOutlineFontThickness.Height - txtOutlineFontThickness.Height) / 2
+50390  If chkStampUseOutlineFont.value = 1 Then
+50400    lblOutlineFontThickness.Enabled = True
+50410    txtOutlineFontThickness.Enabled = True
+50420    txtOutlineFontThickness.BackColor = &H80000005
+50430   Else
+50440    lblOutlineFontThickness.Enabled = False
+50450    txtOutlineFontThickness.Enabled = False
+50460    txtOutlineFontThickness.BackColor = &H8000000F
+50470  End If
+50480  If chkUseFixPaperSize.value = 1 Then
+50490    cmbDocumentPapersizes.Enabled = True
+50500    chkUseCustomPapersize.Enabled = True
+50510    If chkUseCustomPapersize.value = 1 Then
+50520      lblCustomPapersizeWidth.Enabled = True
+50530      lblCustomPapersizeHeight.Enabled = True
+50540      txtCustomPapersizeWidth.Enabled = True
+50550      txtCustomPapersizeWidth.BackColor = &H80000005
+50560      txtCustomPapersizeHeight.Enabled = True
+50570      txtCustomPapersizeHeight.BackColor = &H80000005
+50580      lblCustomPapersizeInfo.Enabled = True
+50590      cmbDocumentPapersizes.Enabled = True
+50600      lblCustomPapersizeInfo.Enabled = True
+50610     Else
+50620      cmbDocumentPapersizes.Enabled = True
+50630      lblCustomPapersizeWidth.Enabled = False
+50640      lblCustomPapersizeHeight.Enabled = False
+50650      txtCustomPapersizeWidth.Enabled = False
+50660      txtCustomPapersizeWidth.BackColor = &H8000000F
+50670      txtCustomPapersizeHeight.Enabled = False
+50680      txtCustomPapersizeHeight.BackColor = &H8000000F
+50690      lblCustomPapersizeInfo.Enabled = False
 50700      lblCustomPapersizeInfo.Enabled = False
-50710      lblCustomPapersizeInfo.Enabled = False
-50720    End If
-50730   Else
-50740    cmbDocumentPapersizes.Enabled = False
-50750    chkUseCustomPapersize.Enabled = False
-50760    lblCustomPapersizeWidth.Enabled = False
-50770    lblCustomPapersizeHeight.Enabled = False
-50780    txtCustomPapersizeWidth.Enabled = False
-50790    txtCustomPapersizeWidth.BackColor = &H8000000F
-50800    txtCustomPapersizeHeight.Enabled = False
-50810    txtCustomPapersizeHeight.BackColor = &H8000000F
-50820    lblCustomPapersizeInfo.Enabled = False
-50830  End If
+50710    End If
+50720   Else
+50730    cmbDocumentPapersizes.Enabled = False
+50740    chkUseCustomPapersize.Enabled = False
+50750    lblCustomPapersizeWidth.Enabled = False
+50760    lblCustomPapersizeHeight.Enabled = False
+50770    txtCustomPapersizeWidth.Enabled = False
+50780    txtCustomPapersizeWidth.BackColor = &H8000000F
+50790    txtCustomPapersizeHeight.Enabled = False
+50800    txtCustomPapersizeHeight.BackColor = &H8000000F
+50810    lblCustomPapersizeInfo.Enabled = False
+50820  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -590,7 +589,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .OnePagePerFile = Abs(chkOnePagePerFile.value)
 50030   .UseCreationDateNow = Abs(chkUseCreationDateNow.value)
 50040   .StandardAuthor = txtStandardAuthor.Text

@@ -214,7 +214,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   cmbJPEGColors.ListIndex = .JPEGColorscount
 50030   txtJPEGQuality.Text = .JPEGQuality
 50040   txtBitmapResolution.Text = .JPEGResolution
@@ -235,7 +235,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   If LenB(CStr(cmbJPEGColors.ListIndex)) > 0 Then
 50030    .JPEGColorscount = cmbJPEGColors.ListIndex
 50040   End If

@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptFormatPDF 
    ClientHeight    =   10140
    ClientLeft      =   0
@@ -1496,7 +1496,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   chkAllowAssembly.value = .PDFAllowAssembly
 50030   chkAllowDegradedPrinting.value = .PDFAllowDegradedPrinting
 50040   chkAllowFillIn.value = .PDFAllowFillIn
@@ -1577,7 +1577,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .PDFAllowAssembly = Abs(chkAllowAssembly.value)
 50030   .PDFAllowDegradedPrinting = Abs(chkAllowDegradedPrinting.value)
 50040   .PDFAllowFillIn = Abs(chkAllowFillIn.value)
@@ -2329,7 +2329,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub chkSignaturVisible_Click()
+Private Sub chkSignatureVisible_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---

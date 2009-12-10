@@ -28,11 +28,11 @@ Private Const ErrDescr7 = "The file '%1' is in use!"
 Private Const ErrDescr8 = "Function '%1': Options1 is not a 'clsPDFCreatorOptions' type!"
 Private Const ErrDescr9 = "No valid file '%1' was given!"
 Private Const ErrDescr10 = "Empty array 'Arguments'!"
+Private Const ErrDescr11 = "The profile '%1' doesn't exists!"
 
 Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
 Private WithEvents eActionTimer As Timer
 Attribute eActionTimer.VB_VarHelpID = -1
-Private In_eActionTimer As Boolean
 
 ' --- Class subroutines - begin ---
 Private Sub Class_Initialize()
@@ -75,6 +75,27 @@ End Sub
 ' --- Class subroutines - end ---
 
 ' --- Public properties - begin ---
+Public Property Get cIsClosed() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Forms.Count = 0 Then
+50020    cIsClosed = True
+50030   Else
+50040    cIsClosed = False
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsClosed [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
 Public Property Get cError() As clsPDFCreatorError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -652,11 +673,69 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  cLetOption PropertyName, value
+50050  cLetOption PropertyName, value, Options, ""
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("clsPDFCreator", "cOption [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cOptionProfile(ByVal Profilename As String, ByVal PropertyName As String) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  If LenB(Trim(Profilename)) > 0 Then
+50060   If ProfileExists(Profilename) = False Then
+50070    mError.Number = 11
+50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50090    RaiseEvent eError
+50100    Exit Property
+50110   End If
+50120  End If
+50130  cOptionProfile = cGetOptionFromOptions(PropertyName, ReadOptions(, , Profilename))
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOptionProfile [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cOptionProfile(ByVal Profilename As String, ByVal PropertyName As String, ByVal value As Variant)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  If LenB(Trim(Profilename)) > 0 Then
+50060   If ProfileExists(Profilename) = False Then
+50070    mError.Number = 11
+50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50090    RaiseEvent eError
+50100    Exit Property
+50110   End If
+50120  End If
+50130  cLetOption PropertyName, value, Options, Profilename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOptionProfile [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -695,6 +774,72 @@ On Error GoTo ErrPtnr_OnError
 Exit Property
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("clsPDFCreator", "cOptions [SET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get cOptionsProfile(ByVal Profilename As String) As clsPDFCreatorOptions
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  If LenB(Trim(Profilename)) > 0 Then
+50060   If ProfileExists(Profilename) = False Then
+50070    mError.Number = 11
+50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50090    RaiseEvent eError
+50100    Exit Property
+50110   End If
+50120  End If
+50130  If LenB(Profilename) = 0 Then
+50140    Set cOptions = cGetOptions(Options)
+50150   Else
+50160    Set cOptions = cGetOptions(ReadOptions(, , Profilename))
+50170  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOptionsProfile [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Set cOptionsProfile(ByVal Profilename As String, ByVal Options1 As clsPDFCreatorOptions)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If CheckForRunningProgramErrors Then
+50020   RaiseEvent eError
+50030   Exit Property
+50040  End If
+50050  If LenB(Trim(Profilename)) > 0 Then
+50060   If ProfileExists(Profilename) = False Then
+50070    mError.Number = 11
+50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50090    RaiseEvent eError
+50100    Exit Property
+50110   End If
+50120  End If
+50130  If LenB(Profilename) = 0 Then
+50140    Options = cLetOptions(Options1)
+50150   Else
+50160    SaveOptions cLetOptions(Options1), Profilename
+50170  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cOptionsProfile [SET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -786,7 +931,7 @@ On Error GoTo ErrPtnr_OnError
 50430    Case ("TargetDevice") = PropertyName
 50440     cPostscriptInfo = .TargetDevice.Comment
 50450    Case ("Title") = PropertyName
-50460     cPostscriptInfo = .Title.Comment
+50460     cPostscriptInfo = .title.Comment
 50470    Case Else
 50480     mError.Number = 3
 50490     mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cPostscriptInfo")
@@ -978,7 +1123,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
-
 
 Public Property Get cWindowState() As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1273,59 +1417,54 @@ End Select
 End Sub
 
 Public Function cClose() As Boolean
- On Error Resume Next
- ShutDown = True
- Dim f As Form
- Do
-  DoEvents
- Loop Until ProgramIsStarted = True
- cVisible = False
- cClose = False
- 
- eActionTimer.Enabled = False
- DoEvents
- Set eActionTimer = Nothing
- 
- For Each f In Forms
-  If Not f Is Nothing Then
-   If UCase$(f.Name) <> "FRMMAIN" Then
-    Unload f
-    cClose = True
-   End If
-  End If
- Next f
- 
- If Not mForm Is Nothing Then
-  With mForm
-   .Timer1.Enabled = False
-   .Timer2.Enabled = False
-   Do
-    DoEvents
-   Loop Until .InTimer1 = False
-   Do
-    DoEvents
-   Loop Until .InTimer2 = False
-  End With
-  Unload mForm
-  Set mForm = Nothing
-  Do
-   DoEvents
-  Loop Until Forms.Count = 0
-  ProgramIsStarted = False
-  cClose = True
- End If
- Set mError = Nothing
-End Function
-
-Public Function cCloseRunningSession() As Boolean ' This function is deprecated. Use "cClose()"!
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cCloseRunningSession = cClose
+50010  ShutDown = True
+50020  Dim f As Form, i As Long
+50030
+50040  i = 0
+50050  Do
+50060   i = i + 1
+50070   Sleep 100
+50080   DoEvents
+50090  Loop Until ProgramIsStarted = True
+50100
+50110  cVisible = False
+50120  cClose = False
+50130
+50140 'MsgBox "1"
+50150 '50140  eActionTimer.Enabled = False
+50160 '50150  i = 0
+50170 '50160  Do
+50180 '50170   i = i + 1
+50190 '50180   Sleep 10
+50200 '50190   DoEvents
+50210 '50200  Loop Until In_eActionTimer = False
+50220  Set eActionTimer = Nothing
+50230 'MsgBox "2"
+50240
+50250  For Each f In Forms
+50260   If Not f Is Nothing Then
+50270    If UCase$(f.Name) <> "FRMMAIN" Then
+50280     Unload f
+50290     cClose = True
+50300    End If
+50310   End If
+50320  Next f
+50330
+50340  If Not mForm Is Nothing Then
+50350   Unload mForm
+50360   Set mForm = Nothing
+50370  End If
+50380  ProgramIsStarted = False
+50390  cClose = True
+50400
+50410  Set mError = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cCloseRunningSession")
+Select Case ErrPtnr.OnError("clsPDFCreator", "cClose")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1347,13 +1486,19 @@ On Error GoTo ErrPtnr_OnError
 50070   cStart = False
 50080   Exit Function
 50090  End If
-50100  mProgramIsRunning = False
-50110  StartProgram Params
-50120  Set mForm = frmMain
-50130  Set eActionTimer = mForm.Timer3: eActionTimer.Interval = 100
-50140  eActionTimer.Enabled = True
-50150  cStart = True
-50160  cVisible = ProgramIsVisible
+50100
+50110  'While Forms.Count > 0
+50120  ' DoEvents
+50130  ' Sleep 100
+50140  'Wend
+50150
+50160  mProgramIsRunning = False
+50170  StartProgram Params
+50180  Set mForm = frmMain
+50190  Set eActionTimer = mForm.Timer3: eActionTimer.Interval = 10
+50200  eActionTimer.Enabled = True
+50210  cStart = True
+50220  cVisible = ProgramIsVisible
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1748,7 +1893,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function cReadOptions() As clsPDFCreatorOptions
+Public Function cReadOptions(Optional ByVal Profilename As String = "") As clsPDFCreatorOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1756,7 +1901,15 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Function
 50040  End If
-50050  Set cReadOptions = cGetOptions(ReadOptions)
+50050  If LenB(Trim(Profilename)) > 0 Then
+50060   If ProfileExists(Profilename) = False Then
+50070    mError.Number = 11
+50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50090    RaiseEvent eError
+50100    Exit Function
+50110   End If
+50120  End If
+50130  Set cReadOptions = cGetOptions(ReadOptions(, , Profilename))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1769,7 +1922,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub cSaveOptions(Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
+Public Sub cSaveOptions(Optional ByVal Options1 As Variant, Optional ByVal Profilename As String = "") ' Options1 must be a clsPDFCreatorOptions type
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1779,7 +1932,7 @@ On Error GoTo ErrPtnr_OnError
 50040  End If
 50050  If Not IsMissing(Options1) Then
 50060    If TypeOf Options1 Is clsPDFCreatorOptions Then
-50070      SaveOptions cLetOptions(Options1)
+50070      SaveOptions cLetOptions(Options1), Trim$(Profilename)
 50080     Else
 50090      mError.Number = 8
 50100      mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
@@ -1822,7 +1975,7 @@ On Error GoTo ErrPtnr_OnError
 50150   RaiseEvent eError
 50160   Exit Function
 50170  End If
-50180  Set cReadOptionsFromFile = cGetOptions(ReadOptionsINI(dummyOptions, INIFilename, True, True))
+50180  Set cReadOptionsFromFile = cGetOptions(ReadOptionsINI(dummyOptions, INIFilename, 0, True, True))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1866,36 +2019,6 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-
-Public Function GetPDFCreatorPrinters() As Collection
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Printers As Collection, reg As clsRegistry, SubKeys As Collection, _
-  i As Long, j As Long
-50030  Set GetPDFCreatorPrinters = New Collection
-50040  Set Printers = GetAvailablePrinters2
-50050  Set reg = New clsRegistry
-50060  Set SubKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
-50070  For i = 1 To Printers.Count
-50080   For j = 1 To SubKeys.Count
-50090    If SubKeys(j) = Printers(i)(1) Then
-50100     GetPDFCreatorPrinters.Add Printers(i)(0)
-50110     Exit Function
-50120     End If
-50130    Next j
-50140  Next i
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "GetPDFCreatorPrinters")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
 ' --- Public functions/Subroutines - end ---
 
 Public Function cGhostscriptRun(Arguments() As Variant) As Boolean
@@ -1944,17 +2067,27 @@ Private Sub eActionTimer_Timer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If ReadyConverting Then
-50020   RaiseEvent eReady
-50030   ReadyConverting = False
-50040  End If
-50050  If GhostscriptError < 0 Then
-50060   mError.Number = 4
-50070   mError.Description = Replace$(ErrDescr4, "%1", CStr(GhostscriptError))
-50080   RaiseEvent eError
-50090   GhostscriptError = 0
-50100  End If
-50110  DoEvents
+50010  If In_eActionTimer Then
+50020   Exit Sub
+50030  End If
+50040  In_eActionTimer = True
+50050  If ReadyConverting Then
+50060   RaiseEvent eReady
+50070   ReadyConverting = False
+50080  End If
+50090  If GhostscriptError < 0 Then
+50100   mError.Number = 4
+50110   mError.Description = Replace$(ErrDescr4, "%1", CStr(GhostscriptError))
+50120   RaiseEvent eError
+50130   GhostscriptError = 0
+50140  End If
+50150 'DoEvents
+50160  In_eActionTimer = False
+50170  If ShutDown = True Then
+50180   If Not eActionTimer Is Nothing Then
+50190    eActionTimer.Enabled = False
+50200   End If
+50210  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2077,7 +2210,7 @@ On Error GoTo ErrPtnr_OnError
 50370   Case "OPTIONSDESIGN": cGetOptionFromOptions = Options.OptionsDesign
 50380   Case "OPTIONSENABLED": cGetOptionFromOptions = Options.OptionsEnabled
 50390   Case "OPTIONSVISIBLE": cGetOptionFromOptions = Options.OptionsVisible
-50400   Case "PAPERSIZE": cGetOptionFromOptions = Options.PaperSize
+50400   Case "PAPERSIZE": cGetOptionFromOptions = Options.Papersize
 50410   Case "PCLCOLORSCOUNT": cGetOptionFromOptions = Options.PCLColorsCount
 50420   Case "PCLRESOLUTION": cGetOptionFromOptions = Options.PCLResolution
 50430   Case "PCXCOLORSCOUNT": cGetOptionFromOptions = Options.PCXColorscount
@@ -2301,7 +2434,7 @@ On Error GoTo ErrPtnr_OnError
 50380   .OptionsDesign = sOptions.OptionsDesign
 50390   .OptionsEnabled = sOptions.OptionsEnabled
 50400   .OptionsVisible = sOptions.OptionsVisible
-50410   .PaperSize = sOptions.PaperSize
+50410   .Papersize = sOptions.Papersize
 50420   .PCLColorsCount = sOptions.PCLColorsCount
 50430   .PCLResolution = sOptions.PCLResolution
 50440   .PCXColorscount = sOptions.PCXColorscount
@@ -2450,190 +2583,195 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub cLetOption(PropertyName As String, value As Variant)
+Private Sub cLetOption(PropertyName As String, value As Variant, Options1 As tOptions, Profilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case UCase$(PropertyName)
-        Case "ADDITIONALGHOSTSCRIPTPARAMETERS": Options.AdditionalGhostscriptParameters = value
-50030   Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": Options.AdditionalGhostscriptSearchpath = value
-50040   Case "ADDWINDOWSFONTPATH": Options.AddWindowsFontpath = value
-50050   Case "ALLOWSPECIALGSCHARSINFILENAMES": Options.AllowSpecialGSCharsInFilenames = value
-50060   Case "AUTOSAVEDIRECTORY": Options.AutosaveDirectory = value
-50070   Case "AUTOSAVEFILENAME": Options.AutosaveFilename = value
-50080   Case "AUTOSAVEFORMAT": Options.AutosaveFormat = value
-50090   Case "AUTOSAVESTARTSTANDARDPROGRAM": Options.AutosaveStartStandardProgram = value
-50100   Case "BMPCOLORSCOUNT": Options.BMPColorscount = value
-50110   Case "BMPRESOLUTION": Options.BMPResolution = value
-50120   Case "CLIENTCOMPUTERRESOLVEIPADDRESS": Options.ClientComputerResolveIPAddress = value
-50130   Case "COUNTER": Options.Counter = value
-50140   Case "DEVICEHEIGHTPOINTS": Options.DeviceHeightPoints = value
-50150   Case "DEVICEWIDTHPOINTS": Options.DeviceWidthPoints = value
-50160   Case "DIRECTORYGHOSTSCRIPTBINARIES": Options.DirectoryGhostscriptBinaries = value
-50170   Case "DIRECTORYGHOSTSCRIPTFONTS": Options.DirectoryGhostscriptFonts = value
-50180   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": Options.DirectoryGhostscriptLibraries = value
-50190   Case "DIRECTORYGHOSTSCRIPTRESOURCE": Options.DirectoryGhostscriptResource = value
-50200   Case "DISABLEEMAIL": Options.DisableEmail = value
-50210   Case "DONTUSEDOCUMENTSETTINGS": Options.DontUseDocumentSettings = value
-50220   Case "EPSLANGUAGELEVEL": Options.EPSLanguageLevel = value
-50230   Case "FILENAMESUBSTITUTIONS": Options.FilenameSubstitutions = value
-50240   Case "FILENAMESUBSTITUTIONSONLYINTITLE": Options.FilenameSubstitutionsOnlyInTitle = value
-50250   Case "JPEGCOLORSCOUNT": Options.JPEGColorscount = value
-50260   Case "JPEGQUALITY": Options.JPEGQuality = value
-50270   Case "JPEGRESOLUTION": Options.JPEGResolution = value
-50280   Case "LANGUAGE": Options.Language = value
-50290   Case "LASTSAVEDIRECTORY": Options.LastSaveDirectory = value
-50300   Case "LASTUPDATECHECK": Options.LastUpdateCheck = value
-50310   Case "LOGGING": Options.Logging = value
-50320   Case "LOGLINES": Options.LogLines = value
-50330   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": Options.NoConfirmMessageSwitchingDefaultprinter = value
-50340   Case "NOPROCESSINGATSTARTUP": Options.NoProcessingAtStartup = value
-50350   Case "NOPSCHECK": Options.NoPSCheck = value
-50360   Case "ONEPAGEPERFILE": Options.OnePagePerFile = value
-50370   Case "OPTIONSDESIGN": Options.OptionsDesign = value
-50380   Case "OPTIONSENABLED": Options.OptionsEnabled = value
-50390   Case "OPTIONSVISIBLE": Options.OptionsVisible = value
-50400   Case "PAPERSIZE": Options.PaperSize = value
-50410   Case "PCLCOLORSCOUNT": Options.PCLColorsCount = value
-50420   Case "PCLRESOLUTION": Options.PCLResolution = value
-50430   Case "PCXCOLORSCOUNT": Options.PCXColorscount = value
-50440   Case "PCXRESOLUTION": Options.PCXResolution = value
-50450   Case "PDFALLOWASSEMBLY": Options.PDFAllowAssembly = value
-50460   Case "PDFALLOWDEGRADEDPRINTING": Options.PDFAllowDegradedPrinting = value
-50470   Case "PDFALLOWFILLIN": Options.PDFAllowFillIn = value
-50480   Case "PDFALLOWSCREENREADERS": Options.PDFAllowScreenReaders = value
-50490   Case "PDFCOLORSCMYKTORGB": Options.PDFColorsCMYKToRGB = value
-50500   Case "PDFCOLORSCOLORMODEL": Options.PDFColorsColorModel = value
-50510   Case "PDFCOLORSPRESERVEHALFTONE": Options.PDFColorsPreserveHalftone = value
-50520   Case "PDFCOLORSPRESERVEOVERPRINT": Options.PDFColorsPreserveOverprint = value
-50530   Case "PDFCOLORSPRESERVETRANSFER": Options.PDFColorsPreserveTransfer = value
-50540   Case "PDFCOMPRESSIONCOLORCOMPRESSION": Options.PDFCompressionColorCompression = value
-50550   Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": Options.PDFCompressionColorCompressionChoice = value
-50560   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": Options.PDFCompressionColorCompressionJPEGHighFactor = value
-50570   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": Options.PDFCompressionColorCompressionJPEGLowFactor = value
-50580   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": Options.PDFCompressionColorCompressionJPEGMaximumFactor = value
-50590   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": Options.PDFCompressionColorCompressionJPEGMediumFactor = value
-50600   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": Options.PDFCompressionColorCompressionJPEGMinimumFactor = value
-50610   Case "PDFCOMPRESSIONCOLORRESAMPLE": Options.PDFCompressionColorResample = value
-50620   Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": Options.PDFCompressionColorResampleChoice = value
-50630   Case "PDFCOMPRESSIONCOLORRESOLUTION": Options.PDFCompressionColorResolution = value
-50640   Case "PDFCOMPRESSIONGREYCOMPRESSION": Options.PDFCompressionGreyCompression = value
-50650   Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": Options.PDFCompressionGreyCompressionChoice = value
-50660   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": Options.PDFCompressionGreyCompressionJPEGHighFactor = value
-50670   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": Options.PDFCompressionGreyCompressionJPEGLowFactor = value
-50680   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": Options.PDFCompressionGreyCompressionJPEGMaximumFactor = value
-50690   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": Options.PDFCompressionGreyCompressionJPEGMediumFactor = value
-50700   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": Options.PDFCompressionGreyCompressionJPEGMinimumFactor = value
-50710   Case "PDFCOMPRESSIONGREYRESAMPLE": Options.PDFCompressionGreyResample = value
-50720   Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": Options.PDFCompressionGreyResampleChoice = value
-50730   Case "PDFCOMPRESSIONGREYRESOLUTION": Options.PDFCompressionGreyResolution = value
-50740   Case "PDFCOMPRESSIONMONOCOMPRESSION": Options.PDFCompressionMonoCompression = value
-50750   Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": Options.PDFCompressionMonoCompressionChoice = value
-50760   Case "PDFCOMPRESSIONMONORESAMPLE": Options.PDFCompressionMonoResample = value
-50770   Case "PDFCOMPRESSIONMONORESAMPLECHOICE": Options.PDFCompressionMonoResampleChoice = value
-50780   Case "PDFCOMPRESSIONMONORESOLUTION": Options.PDFCompressionMonoResolution = value
-50790   Case "PDFCOMPRESSIONTEXTCOMPRESSION": Options.PDFCompressionTextCompression = value
-50800   Case "PDFDISALLOWCOPY": Options.PDFDisallowCopy = value
-50810   Case "PDFDISALLOWMODIFYANNOTATIONS": Options.PDFDisallowModifyAnnotations = value
-50820   Case "PDFDISALLOWMODIFYCONTENTS": Options.PDFDisallowModifyContents = value
-50830   Case "PDFDISALLOWPRINTING": Options.PDFDisallowPrinting = value
-50840   Case "PDFENCRYPTOR": Options.PDFEncryptor = value
-50850   Case "PDFFONTSEMBEDALL": Options.PDFFontsEmbedAll = value
-50860   Case "PDFFONTSSUBSETFONTS": Options.PDFFontsSubSetFonts = value
-50870   Case "PDFFONTSSUBSETFONTSPERCENT": Options.PDFFontsSubSetFontsPercent = value
-50880   Case "PDFGENERALASCII85": Options.PDFGeneralASCII85 = value
-50890   Case "PDFGENERALAUTOROTATE": Options.PDFGeneralAutorotate = value
-50900   Case "PDFGENERALCOMPATIBILITY": Options.PDFGeneralCompatibility = value
-50910   Case "PDFGENERALDEFAULT": Options.PDFGeneralDefault = value
-50920   Case "PDFGENERALOVERPRINT": Options.PDFGeneralOverprint = value
-50930   Case "PDFGENERALRESOLUTION": Options.PDFGeneralResolution = value
-50940   Case "PDFHIGHENCRYPTION": Options.PDFHighEncryption = value
-50950   Case "PDFLOWENCRYPTION": Options.PDFLowEncryption = value
-50960   Case "PDFOPTIMIZE": Options.PDFOptimize = value
-50970   Case "PDFOWNERPASS": Options.PDFOwnerPass = value
-50980   Case "PDFOWNERPASSWORDSTRING": Options.PDFOwnerPasswordString = value
-50990   Case "PDFSIGNINGMULTISIGNATURE": Options.PDFSigningMultiSignature = value
-51000   Case "PDFSIGNINGPFXFILE": Options.PDFSigningPFXFile = value
-51010   Case "PDFSIGNINGPFXFILEPASSWORD": Options.PDFSigningPFXFilePassword = value
-51020   Case "PDFSIGNINGSIGNATURECONTACT": Options.PDFSigningSignatureContact = value
-51030   Case "PDFSIGNINGSIGNATURELEFTX": Options.PDFSigningSignatureLeftX = value
-51040   Case "PDFSIGNINGSIGNATURELEFTY": Options.PDFSigningSignatureLeftY = value
-51050   Case "PDFSIGNINGSIGNATURELOCATION": Options.PDFSigningSignatureLocation = value
-51060   Case "PDFSIGNINGSIGNATUREREASON": Options.PDFSigningSignatureReason = value
-51070   Case "PDFSIGNINGSIGNATURERIGHTX": Options.PDFSigningSignatureRightX = value
-51080   Case "PDFSIGNINGSIGNATURERIGHTY": Options.PDFSigningSignatureRightY = value
-51090   Case "PDFSIGNINGSIGNATUREVISIBLE": Options.PDFSigningSignatureVisible = value
-51100   Case "PDFSIGNINGSIGNPDF": Options.PDFSigningSignPDF = value
-51110   Case "PDFUPDATEMETADATA": Options.PDFUpdateMetadata = value
-51120   Case "PDFUSERPASS": Options.PDFUserPass = value
-51130   Case "PDFUSERPASSWORDSTRING": Options.PDFUserPasswordString = value
-51140   Case "PDFUSESECURITY": Options.PDFUseSecurity = value
-51150   Case "PNGCOLORSCOUNT": Options.PNGColorscount = value
-51160   Case "PNGRESOLUTION": Options.PNGResolution = value
-51170   Case "PRINTAFTERSAVING": Options.PrintAfterSaving = value
-51180   Case "PRINTAFTERSAVINGDUPLEX": Options.PrintAfterSavingDuplex = value
-51190   Case "PRINTAFTERSAVINGNOCANCEL": Options.PrintAfterSavingNoCancel = value
-51200   Case "PRINTAFTERSAVINGPRINTER": Options.PrintAfterSavingPrinter = value
-51210   Case "PRINTAFTERSAVINGQUERYUSER": Options.PrintAfterSavingQueryUser = value
-51220   Case "PRINTAFTERSAVINGTUMBLE": Options.PrintAfterSavingTumble = value
-51230   Case "PRINTERSTOP": Options.PrinterStop = value
-51240   Case "PRINTERTEMPPATH": Options.PrinterTemppath = value
-51250   Case "PROCESSPRIORITY": Options.ProcessPriority = value
-51260   Case "PROGRAMFONT": Options.ProgramFont = value
-51270   Case "PROGRAMFONTCHARSET": Options.ProgramFontCharset = value
-51280   Case "PROGRAMFONTSIZE": Options.ProgramFontSize = value
-51290   Case "PSDCOLORSCOUNT": Options.PSDColorsCount = value
-51300   Case "PSDRESOLUTION": Options.PSDResolution = value
-51310   Case "PSLANGUAGELEVEL": Options.PSLanguageLevel = value
-51320   Case "RAWCOLORSCOUNT": Options.RAWColorsCount = value
-51330   Case "RAWRESOLUTION": Options.RAWResolution = value
-51340   Case "REMOVEALLKNOWNFILEEXTENSIONS": Options.RemoveAllKnownFileExtensions = value
-51350   Case "REMOVESPACES": Options.RemoveSpaces = value
-51360   Case "RUNPROGRAMAFTERSAVING": Options.RunProgramAfterSaving = value
-51370   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": Options.RunProgramAfterSavingProgramname = value
-51380   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": Options.RunProgramAfterSavingProgramParameters = value
-51390   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": Options.RunProgramAfterSavingWaitUntilReady = value
-51400   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": Options.RunProgramAfterSavingWindowstyle = value
-51410   Case "RUNPROGRAMBEFORESAVING": Options.RunProgramBeforeSaving = value
-51420   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": Options.RunProgramBeforeSavingProgramname = value
-51430   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options.RunProgramBeforeSavingProgramParameters = value
-51440   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options.RunProgramBeforeSavingWindowstyle = value
-51450   Case "SAVEFILENAME": Options.SaveFilename = value
-51460   Case "SENDEMAILAFTERAUTOSAVING": Options.SendEmailAfterAutoSaving = value
-51470   Case "SENDMAILMETHOD": Options.SendMailMethod = value
-51480   Case "SHOWANIMATION": Options.ShowAnimation = value
-51490   Case "STAMPFONTCOLOR": Options.StampFontColor = value
-51500   Case "STAMPFONTNAME": Options.StampFontname = value
-51510   Case "STAMPFONTSIZE": Options.StampFontsize = value
-51520   Case "STAMPOUTLINEFONTTHICKNESS": Options.StampOutlineFontthickness = value
-51530   Case "STAMPSTRING": Options.StampString = value
-51540   Case "STAMPUSEOUTLINEFONT": Options.StampUseOutlineFont = value
-51550   Case "STANDARDAUTHOR": Options.StandardAuthor = value
-51560   Case "STANDARDCREATIONDATE": Options.StandardCreationdate = value
-51570   Case "STANDARDDATEFORMAT": Options.StandardDateformat = value
-51580   Case "STANDARDKEYWORDS": Options.StandardKeywords = value
-51590   Case "STANDARDMAILDOMAIN": Options.StandardMailDomain = value
-51600   Case "STANDARDMODIFYDATE": Options.StandardModifydate = value
-51610   Case "STANDARDSAVEFORMAT": Options.StandardSaveformat = value
-51620   Case "STANDARDSUBJECT": Options.StandardSubject = value
-51630   Case "STANDARDTITLE": Options.StandardTitle = value
-51640   Case "STARTSTANDARDPROGRAM": Options.StartStandardProgram = value
-51650   Case "SVGRESOLUTION": Options.SVGResolution = value
-51660   Case "TIFFCOLORSCOUNT": Options.TIFFColorscount = value
-51670   Case "TIFFRESOLUTION": Options.TIFFResolution = value
-51680   Case "TOOLBARS": Options.Toolbars = value
-51690   Case "UPDATEINTERVAL": Options.UpdateInterval = value
-51700   Case "USEAUTOSAVE": Options.UseAutosave = value
-51710   Case "USEAUTOSAVEDIRECTORY": Options.UseAutosaveDirectory = value
-51720   Case "USECREATIONDATENOW": Options.UseCreationDateNow = value
-51730   Case "USECUSTOMPAPERSIZE": Options.UseCustomPaperSize = value
-51740   Case "USEFIXPAPERSIZE": Options.UseFixPapersize = value
-51750   Case "USESTANDARDAUTHOR": Options.UseStandardAuthor = value
+        Case "ADDITIONALGHOSTSCRIPTPARAMETERS": Options1.AdditionalGhostscriptParameters = value
+50030   Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": Options1.AdditionalGhostscriptSearchpath = value
+50040   Case "ADDWINDOWSFONTPATH": Options1.AddWindowsFontpath = value
+50050   Case "ALLOWSPECIALGSCHARSINFILENAMES": Options1.AllowSpecialGSCharsInFilenames = value
+50060   Case "AUTOSAVEDIRECTORY": Options1.AutosaveDirectory = value
+50070   Case "AUTOSAVEFILENAME": Options1.AutosaveFilename = value
+50080   Case "AUTOSAVEFORMAT": Options1.AutosaveFormat = value
+50090   Case "AUTOSAVESTARTSTANDARDPROGRAM": Options1.AutosaveStartStandardProgram = value
+50100   Case "BMPCOLORSCOUNT": Options1.BMPColorscount = value
+50110   Case "BMPRESOLUTION": Options1.BMPResolution = value
+50120   Case "CLIENTCOMPUTERRESOLVEIPADDRESS": Options1.ClientComputerResolveIPAddress = value
+50130   Case "COUNTER": Options1.Counter = value
+50140   Case "DEVICEHEIGHTPOINTS": Options1.DeviceHeightPoints = value
+50150   Case "DEVICEWIDTHPOINTS": Options1.DeviceWidthPoints = value
+50160   Case "DIRECTORYGHOSTSCRIPTBINARIES": Options1.DirectoryGhostscriptBinaries = value
+50170   Case "DIRECTORYGHOSTSCRIPTFONTS": Options1.DirectoryGhostscriptFonts = value
+50180   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": Options1.DirectoryGhostscriptLibraries = value
+50190   Case "DIRECTORYGHOSTSCRIPTRESOURCE": Options1.DirectoryGhostscriptResource = value
+50200   Case "DISABLEEMAIL": Options1.DisableEmail = value
+50210   Case "DONTUSEDOCUMENTSETTINGS": Options1.DontUseDocumentSettings = value
+50220   Case "EPSLANGUAGELEVEL": Options1.EPSLanguageLevel = value
+50230   Case "FILENAMESUBSTITUTIONS": Options1.FilenameSubstitutions = value
+50240   Case "FILENAMESUBSTITUTIONSONLYINTITLE": Options1.FilenameSubstitutionsOnlyInTitle = value
+50250   Case "JPEGCOLORSCOUNT": Options1.JPEGColorscount = value
+50260   Case "JPEGQUALITY": Options1.JPEGQuality = value
+50270   Case "JPEGRESOLUTION": Options1.JPEGResolution = value
+50280   Case "LANGUAGE": Options1.Language = value
+50290   Case "LASTSAVEDIRECTORY": Options1.LastSaveDirectory = value
+50300   Case "LASTUPDATECHECK": Options1.LastUpdateCheck = value
+50310   Case "LOGGING": Options1.Logging = value
+50320   Case "LOGLINES": Options1.LogLines = value
+50330   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": Options1.NoConfirmMessageSwitchingDefaultprinter = value
+50340   Case "NOPROCESSINGATSTARTUP": Options1.NoProcessingAtStartup = value
+50350   Case "NOPSCHECK": Options1.NoPSCheck = value
+50360   Case "ONEPAGEPERFILE": Options1.OnePagePerFile = value
+50370   Case "OPTIONSDESIGN": Options1.OptionsDesign = value
+50380   Case "OPTIONSENABLED": Options1.OptionsEnabled = value
+50390   Case "OPTIONSVISIBLE": Options1.OptionsVisible = value
+50400   Case "PAPERSIZE": Options1.Papersize = value
+50410   Case "PCLCOLORSCOUNT": Options1.PCLColorsCount = value
+50420   Case "PCLRESOLUTION": Options1.PCLResolution = value
+50430   Case "PCXCOLORSCOUNT": Options1.PCXColorscount = value
+50440   Case "PCXRESOLUTION": Options1.PCXResolution = value
+50450   Case "PDFALLOWASSEMBLY": Options1.PDFAllowAssembly = value
+50460   Case "PDFALLOWDEGRADEDPRINTING": Options1.PDFAllowDegradedPrinting = value
+50470   Case "PDFALLOWFILLIN": Options1.PDFAllowFillIn = value
+50480   Case "PDFALLOWSCREENREADERS": Options1.PDFAllowScreenReaders = value
+50490   Case "PDFCOLORSCMYKTORGB": Options1.PDFColorsCMYKToRGB = value
+50500   Case "PDFCOLORSCOLORMODEL": Options1.PDFColorsColorModel = value
+50510   Case "PDFCOLORSPRESERVEHALFTONE": Options1.PDFColorsPreserveHalftone = value
+50520   Case "PDFCOLORSPRESERVEOVERPRINT": Options1.PDFColorsPreserveOverprint = value
+50530   Case "PDFCOLORSPRESERVETRANSFER": Options1.PDFColorsPreserveTransfer = value
+50540   Case "PDFCOMPRESSIONCOLORCOMPRESSION": Options1.PDFCompressionColorCompression = value
+50550   Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": Options1.PDFCompressionColorCompressionChoice = value
+50560   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": Options1.PDFCompressionColorCompressionJPEGHighFactor = value
+50570   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": Options1.PDFCompressionColorCompressionJPEGLowFactor = value
+50580   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMaximumFactor = value
+50590   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMediumFactor = value
+50600   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMinimumFactor = value
+50610   Case "PDFCOMPRESSIONCOLORRESAMPLE": Options1.PDFCompressionColorResample = value
+50620   Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": Options1.PDFCompressionColorResampleChoice = value
+50630   Case "PDFCOMPRESSIONCOLORRESOLUTION": Options1.PDFCompressionColorResolution = value
+50640   Case "PDFCOMPRESSIONGREYCOMPRESSION": Options1.PDFCompressionGreyCompression = value
+50650   Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": Options1.PDFCompressionGreyCompressionChoice = value
+50660   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": Options1.PDFCompressionGreyCompressionJPEGHighFactor = value
+50670   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": Options1.PDFCompressionGreyCompressionJPEGLowFactor = value
+50680   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMaximumFactor = value
+50690   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMediumFactor = value
+50700   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMinimumFactor = value
+50710   Case "PDFCOMPRESSIONGREYRESAMPLE": Options1.PDFCompressionGreyResample = value
+50720   Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": Options1.PDFCompressionGreyResampleChoice = value
+50730   Case "PDFCOMPRESSIONGREYRESOLUTION": Options1.PDFCompressionGreyResolution = value
+50740   Case "PDFCOMPRESSIONMONOCOMPRESSION": Options1.PDFCompressionMonoCompression = value
+50750   Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": Options1.PDFCompressionMonoCompressionChoice = value
+50760   Case "PDFCOMPRESSIONMONORESAMPLE": Options1.PDFCompressionMonoResample = value
+50770   Case "PDFCOMPRESSIONMONORESAMPLECHOICE": Options1.PDFCompressionMonoResampleChoice = value
+50780   Case "PDFCOMPRESSIONMONORESOLUTION": Options1.PDFCompressionMonoResolution = value
+50790   Case "PDFCOMPRESSIONTEXTCOMPRESSION": Options1.PDFCompressionTextCompression = value
+50800   Case "PDFDISALLOWCOPY": Options1.PDFDisallowCopy = value
+50810   Case "PDFDISALLOWMODIFYANNOTATIONS": Options1.PDFDisallowModifyAnnotations = value
+50820   Case "PDFDISALLOWMODIFYCONTENTS": Options1.PDFDisallowModifyContents = value
+50830   Case "PDFDISALLOWPRINTING": Options1.PDFDisallowPrinting = value
+50840   Case "PDFENCRYPTOR": Options1.PDFEncryptor = value
+50850   Case "PDFFONTSEMBEDALL": Options1.PDFFontsEmbedAll = value
+50860   Case "PDFFONTSSUBSETFONTS": Options1.PDFFontsSubSetFonts = value
+50870   Case "PDFFONTSSUBSETFONTSPERCENT": Options1.PDFFontsSubSetFontsPercent = value
+50880   Case "PDFGENERALASCII85": Options1.PDFGeneralASCII85 = value
+50890   Case "PDFGENERALAUTOROTATE": Options1.PDFGeneralAutorotate = value
+50900   Case "PDFGENERALCOMPATIBILITY": Options1.PDFGeneralCompatibility = value
+50910   Case "PDFGENERALDEFAULT": Options1.PDFGeneralDefault = value
+50920   Case "PDFGENERALOVERPRINT": Options1.PDFGeneralOverprint = value
+50930   Case "PDFGENERALRESOLUTION": Options1.PDFGeneralResolution = value
+50940   Case "PDFHIGHENCRYPTION": Options1.PDFHighEncryption = value
+50950   Case "PDFLOWENCRYPTION": Options1.PDFLowEncryption = value
+50960   Case "PDFOPTIMIZE": Options1.PDFOptimize = value
+50970   Case "PDFOWNERPASS": Options1.PDFOwnerPass = value
+50980   Case "PDFOWNERPASSWORDSTRING": Options1.PDFOwnerPasswordString = value
+50990   Case "PDFSIGNINGMULTISIGNATURE": Options1.PDFSigningMultiSignature = value
+51000   Case "PDFSIGNINGPFXFILE": Options1.PDFSigningPFXFile = value
+51010   Case "PDFSIGNINGPFXFILEPASSWORD": Options1.PDFSigningPFXFilePassword = value
+51020   Case "PDFSIGNINGSIGNATURECONTACT": Options1.PDFSigningSignatureContact = value
+51030   Case "PDFSIGNINGSIGNATURELEFTX": Options1.PDFSigningSignatureLeftX = value
+51040   Case "PDFSIGNINGSIGNATURELEFTY": Options1.PDFSigningSignatureLeftY = value
+51050   Case "PDFSIGNINGSIGNATURELOCATION": Options1.PDFSigningSignatureLocation = value
+51060   Case "PDFSIGNINGSIGNATUREREASON": Options1.PDFSigningSignatureReason = value
+51070   Case "PDFSIGNINGSIGNATURERIGHTX": Options1.PDFSigningSignatureRightX = value
+51080   Case "PDFSIGNINGSIGNATURERIGHTY": Options1.PDFSigningSignatureRightY = value
+51090   Case "PDFSIGNINGSIGNATUREVISIBLE": Options1.PDFSigningSignatureVisible = value
+51100   Case "PDFSIGNINGSIGNPDF": Options1.PDFSigningSignPDF = value
+51110   Case "PDFUPDATEMETADATA": Options1.PDFUpdateMetadata = value
+51120   Case "PDFUSERPASS": Options1.PDFUserPass = value
+51130   Case "PDFUSERPASSWORDSTRING": Options1.PDFUserPasswordString = value
+51140   Case "PDFUSESECURITY": Options1.PDFUseSecurity = value
+51150   Case "PNGCOLORSCOUNT": Options1.PNGColorscount = value
+51160   Case "PNGRESOLUTION": Options1.PNGResolution = value
+51170   Case "PRINTAFTERSAVING": Options1.PrintAfterSaving = value
+51180   Case "PRINTAFTERSAVINGDUPLEX": Options1.PrintAfterSavingDuplex = value
+51190   Case "PRINTAFTERSAVINGNOCANCEL": Options1.PrintAfterSavingNoCancel = value
+51200   Case "PRINTAFTERSAVINGPRINTER": Options1.PrintAfterSavingPrinter = value
+51210   Case "PRINTAFTERSAVINGQUERYUSER": Options1.PrintAfterSavingQueryUser = value
+51220   Case "PRINTAFTERSAVINGTUMBLE": Options1.PrintAfterSavingTumble = value
+51230   Case "PRINTERSTOP": Options1.PrinterStop = value
+51240   Case "PRINTERTEMPPATH": Options1.PrinterTemppath = value
+51250   Case "PROCESSPRIORITY": Options1.ProcessPriority = value
+51260   Case "PROGRAMFONT": Options1.ProgramFont = value
+51270   Case "PROGRAMFONTCHARSET": Options1.ProgramFontCharset = value
+51280   Case "PROGRAMFONTSIZE": Options1.ProgramFontSize = value
+51290   Case "PSDCOLORSCOUNT": Options1.PSDColorsCount = value
+51300   Case "PSDRESOLUTION": Options1.PSDResolution = value
+51310   Case "PSLANGUAGELEVEL": Options1.PSLanguageLevel = value
+51320   Case "RAWCOLORSCOUNT": Options1.RAWColorsCount = value
+51330   Case "RAWRESOLUTION": Options1.RAWResolution = value
+51340   Case "REMOVEALLKNOWNFILEEXTENSIONS": Options1.RemoveAllKnownFileExtensions = value
+51350   Case "REMOVESPACES": Options1.RemoveSpaces = value
+51360   Case "RUNPROGRAMAFTERSAVING": Options1.RunProgramAfterSaving = value
+51370   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": Options1.RunProgramAfterSavingProgramname = value
+51380   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": Options1.RunProgramAfterSavingProgramParameters = value
+51390   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": Options1.RunProgramAfterSavingWaitUntilReady = value
+51400   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": Options1.RunProgramAfterSavingWindowstyle = value
+51410   Case "RUNPROGRAMBEFORESAVING": Options1.RunProgramBeforeSaving = value
+51420   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": Options1.RunProgramBeforeSavingProgramname = value
+51430   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options1.RunProgramBeforeSavingProgramParameters = value
+51440   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options1.RunProgramBeforeSavingWindowstyle = value
+51450   Case "SAVEFILENAME": Options1.SaveFilename = value
+51460   Case "SENDEMAILAFTERAUTOSAVING": Options1.SendEmailAfterAutoSaving = value
+51470   Case "SENDMAILMETHOD": Options1.SendMailMethod = value
+51480   Case "SHOWANIMATION": Options1.ShowAnimation = value
+51490   Case "STAMPFONTCOLOR": Options1.StampFontColor = value
+51500   Case "STAMPFONTNAME": Options1.StampFontname = value
+51510   Case "STAMPFONTSIZE": Options1.StampFontsize = value
+51520   Case "STAMPOUTLINEFONTTHICKNESS": Options1.StampOutlineFontthickness = value
+51530   Case "STAMPSTRING": Options1.StampString = value
+51540   Case "STAMPUSEOUTLINEFONT": Options1.StampUseOutlineFont = value
+51550   Case "STANDARDAUTHOR": Options1.StandardAuthor = value
+51560   Case "STANDARDCREATIONDATE": Options1.StandardCreationdate = value
+51570   Case "STANDARDDATEFORMAT": Options1.StandardDateformat = value
+51580   Case "STANDARDKEYWORDS": Options1.StandardKeywords = value
+51590   Case "STANDARDMAILDOMAIN": Options1.StandardMailDomain = value
+51600   Case "STANDARDMODIFYDATE": Options1.StandardModifydate = value
+51610   Case "STANDARDSAVEFORMAT": Options1.StandardSaveformat = value
+51620   Case "STANDARDSUBJECT": Options1.StandardSubject = value
+51630   Case "STANDARDTITLE": Options1.StandardTitle = value
+51640   Case "STARTSTANDARDPROGRAM": Options1.StartStandardProgram = value
+51650   Case "SVGRESOLUTION": Options1.SVGResolution = value
+51660   Case "TIFFCOLORSCOUNT": Options1.TIFFColorscount = value
+51670   Case "TIFFRESOLUTION": Options1.TIFFResolution = value
+51680   Case "TOOLBARS": Options1.Toolbars = value
+51690   Case "UPDATEINTERVAL": Options1.UpdateInterval = value
+51700   Case "USEAUTOSAVE": Options1.UseAutosave = value
+51710   Case "USEAUTOSAVEDIRECTORY": Options1.UseAutosaveDirectory = value
+51720   Case "USECREATIONDATENOW": Options1.UseCreationDateNow = value
+51730   Case "USECUSTOMPAPERSIZE": Options1.UseCustomPaperSize = value
+51740   Case "USEFIXPAPERSIZE": Options1.UseFixPapersize = value
+51750   Case "USESTANDARDAUTHOR": Options1.UseStandardAuthor = value
 51760   Case Else:
 51770    mError.Number = 3
 51780    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
 51790    RaiseEvent eError
 51800  End Select
+51810  If Profilename = "" Then
+51820    Options = Options1
+51830   Else
+51840    SaveOptions Options1, Profilename
+51850  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2689,7 +2827,7 @@ On Error GoTo ErrPtnr_OnError
 50370   .OptionsDesign = sOptions.OptionsDesign
 50380   .OptionsEnabled = sOptions.OptionsEnabled
 50390   .OptionsVisible = sOptions.OptionsVisible
-50400   .PaperSize = sOptions.PaperSize
+50400   .Papersize = sOptions.Papersize
 50410   .PCLColorsCount = sOptions.PCLColorsCount
 50420   .PCLResolution = sOptions.PCLResolution
 50430   .PCXColorscount = sOptions.PCXColorscount
@@ -2838,4 +2976,3 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
-

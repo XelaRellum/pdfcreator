@@ -13,14 +13,22 @@ Begin VB.UserControl ctlOptAutosave
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   8969
-      caption         =   "Autosave"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptAutosave.ctx":0312
-      textshaddowcolor=   12582912
+      _ExtentX        =   11245
+      _ExtentY        =   8969
+      Caption         =   "Autosave"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
       Begin VB.TextBox txtAutoSaveDirectoryPreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -82,9 +90,9 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptAutosave.ctx":033E
+         ItemData        =   "ctlOptAutosave.ctx":0312
          Left            =   3690
-         List            =   "ctlOptAutosave.ctx":0340
+         List            =   "ctlOptAutosave.ctx":0314
          Style           =   2  'Dropdown-Liste
          TabIndex        =   7
          Top             =   1785
@@ -292,7 +300,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   chkUseAutosave.value = .UseAutosave
 50030
 50041   Select Case .AutosaveFormat
@@ -374,7 +382,7 @@ On Error GoTo ErrPtnr_OnError
 50140 '  Case 13: 'RAW  '  .AddItem "RAW"
 50150 '  Case 14: 'SVG  '  .AddItem "SVG"
 50160
-50170  With Options
+50170  With Options1
 50180   .UseAutosave = Abs(chkUseAutosave.value)
 50190   If LenB(CStr(cmbAutosaveFormat.ListIndex)) > 0 Then
 50201    Select Case cmbAutosaveFormat.ListIndex

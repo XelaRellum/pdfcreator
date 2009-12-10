@@ -63,6 +63,8 @@ Public OpenOF As Boolean
 Public IsConverted As Boolean
 Public StopURLPrinting As Boolean
 Public ShutDown As Boolean
+Public CurrentLanguage As String
+Public CurrentPrinterProfile As String
 
 Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -90,26 +92,24 @@ Public Function GetCheckProgramInstancesStr(MutexName As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String
+50010  Dim tStr As String, m As clsMutex
 50020  tStr = ""
-50030  Set mutexLocal = New clsMutex
-50040  If mutexLocal.CheckMutex(MutexName) = True Then
+50030  Set m = New clsMutex
+50040  If m.CheckMutex(MutexName) = True Then
 50050   tStr = "Local"
 50060  End If
-50070  Set mutexGlobal = New clsMutex
-50080  If mutexGlobal.CheckMutex("Global\" & MutexName) = True Then
-50090   If LenB(tStr) > 0 Then
-50100     tStr = tStr & ", Global"
-50110    Else
-50120     tStr = "Global"
-50130   End If
-50140  End If
-50150  If LenB(tStr) = 0 Then
-50160   tStr = "No instances found."
-50170  End If
-50180  GetCheckProgramInstancesStr = tStr
-50190  Set mutexLocal = Nothing
-50200  Set mutexGlobal = Nothing
+50070  If mutexGlobal.CheckMutex("Global\" & MutexName) = True Then
+50080   If LenB(tStr) > 0 Then
+50090     tStr = tStr & ", Global"
+50100    Else
+50110     tStr = "Global"
+50120   End If
+50130  End If
+50140  If LenB(tStr) = 0 Then
+50150   tStr = "No instances found."
+50160  End If
+50170  GetCheckProgramInstancesStr = tStr
+50180  Set m = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -149,3 +149,26 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+'Public Sub Log2File(Optional value As String = "", Optional filename As String = "C:\PDFCreator_cClose.txt")
+''---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+'On Error GoTo ErrPtnr_OnError
+''---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+'50010  Dim ff As Long
+'50020  ff = FreeFile
+'50030  Open filename For Append As #ff
+'50040  Print #ff, Now2 & ": " & value
+'50050  Close #ff
+''---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+'Exit Sub
+'ErrPtnr_OnError:
+'Select Case ErrPtnr.OnError("modGlobal1", "Log2File")
+'Case 0: Resume
+'Case 1: Resume Next
+'Case 2: Exit Sub
+'Case 3: End
+'End Select
+''---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+'End Sub
+
+

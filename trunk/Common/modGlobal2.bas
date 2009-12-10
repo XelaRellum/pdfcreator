@@ -343,3 +343,47 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Sub SavePrinterProfiles(PrinterProfiles As Collection)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, i As Long, SubKey As String, value As String
+50020
+50030  Set reg = New clsRegistry
+50040
+50050  If InstalledAsServer Then
+50060    reg.hkey = HKEY_LOCAL_MACHINE
+50070   Else
+50080    reg.hkey = HKEY_CURRENT_USER
+50090  End If
+50100
+50110  reg.KeyRoot = "Software\PDFCreator"
+50120  SubKey = "Printers"
+50130  If reg.KeyExists Then
+50140   reg.DeleteKey SubKey
+50150  End If
+50160  reg.SubKey = SubKey
+50170  reg.CreateKey
+50180
+50190  For i = 1 To PrinterProfiles.Count
+50200   If LCase$(PrinterProfiles(i)(1)) = LCase$(LanguageStrings.OptionsProfileDefaultName) Then
+50210     value = ""
+50220    Else
+50230     value = PrinterProfiles(i)(1)
+50240   End If
+50250   reg.SetRegistryValue PrinterProfiles(i)(0), value, REG_SZ
+50260  Next i
+50270  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal2", "SavePrinterProfiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+

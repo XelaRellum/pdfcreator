@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptActions 
    ClientHeight    =   4950
    ClientLeft      =   0
@@ -436,7 +436,7 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   chkRunProgramBeforeSaving.value = .RunProgramBeforeSaving
 50030   cmbRunProgramBeforeSavingProgramname.Text = .RunProgramBeforeSavingProgramname
 50040   txtRunProgramBeforeSavingProgramParameters.Text = .RunProgramBeforeSavingProgramParameters
@@ -464,7 +464,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .RunProgramAfterSaving = Abs(chkRunProgramAfterSaving.value)
 50030   .RunProgramAfterSavingProgramname = cmbRunProgramAfterSavingProgramname.Text
 50040   .RunProgramAfterSavingProgramParameters = txtRunProgramAfterSavingProgramParameters.Text

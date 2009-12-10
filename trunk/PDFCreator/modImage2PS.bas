@@ -332,28 +332,3 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
-
-Private Sub WriteLineToFile(destinationFileName As String, sLine As String, Optional Create As Boolean = False)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long
-50020  fn = FreeFile
-50030  If Create Then
-50040    Open destinationFileName For Output As #fn
-50050   Else
-50060    Open destinationFileName For Append As #fn
-50070  End If
-50080  Print #fn, sLine
-50090  Close #fn
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modImage2PS", "WriteLineToFile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub

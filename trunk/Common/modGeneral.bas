@@ -42,6 +42,11 @@ Public Type tFont
  Underline As Boolean
 End Type
 
+Public Enum eProfileAction
+ AddProfileAction
+ RenameProfileAction
+End Enum
+
 Public Function ANSItoASCII(ByVal AnsiString As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -534,7 +539,7 @@ On Error GoTo ErrPtnr_OnError
 50030  With reg
 50040   .hkey = HKEY_CURRENT_USER
 50050   .KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Explorer"
-50060   .Subkey = "Shell Folders"
+50060   .SubKey = "Shell Folders"
 50070   tStr = .GetRegistryValue("Fonts")
 50080  End With
 50090  Set reg = Nothing
@@ -654,7 +659,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetTempFile(Optional ByVal Path As String, Optional Prefix As String) As String
+Public Function GetTempFile(Optional ByVal Path As String, Optional PreFix As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -665,7 +670,7 @@ On Error GoTo ErrPtnr_OnError
 50050   MakePath tPath
 50060  End If
 50070
-50080  res = GetTempFileNameA(tPath, Prefix, 0, Tempfile)
+50080  res = GetTempFileNameA(tPath, PreFix, 0, Tempfile)
 50090  If res <> 0 Then
 50100    GetTempFile = Left$(Tempfile, InStr(Tempfile, Chr$(0)) - 1)
 50110   Else
@@ -1816,8 +1821,7 @@ End Sub
 
 Public Function ReadInfoSpoolfile(SpoolFilename As String) As InfoSpoolFile
  On Error Resume Next
- Dim tVar As Variant, fn As Long, infFile As String, _
-  Path As String, File As String
+ Dim fn As Long, infFile As String, Path As String, File As String
  SplitPath SpoolFilename, , Path, , File
  infFile = CompletePath(Path) & File & ".inf"
  If FileExists(infFile) And Not FileInUse(infFile) Then
@@ -2317,7 +2321,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set reg = New clsRegistry
 50030  reg.hkey = HKEY_LOCAL_MACHINE
 50040  reg.KeyRoot = "Software"
-50050  reg.Subkey = "Microsoft\NET Framework Setup\NDP\v1.1.4322"
+50050  reg.SubKey = "Microsoft\NET Framework Setup\NDP\v1.1.4322"
 50060  DotNet1_1Installed = reg.KeyExists
 50070  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2411,3 +2415,50 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function GetPrinterProfiles() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry
+50020  Set reg = New clsRegistry
+50030  If InstalledAsServer Then
+50040    Set GetPrinterProfiles = reg.EnumRegistryValues(HKEY_LOCAL_MACHINE, "Software\PDFCreator\Printers")
+50050   Else
+50060    Set GetPrinterProfiles = reg.EnumRegistryValues(HKEY_CURRENT_USER, "Software\PDFCreator\Printers")
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetPrinterProfiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function Now2() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim st As SYSTEMTIME
+50020  GetSystemTime st
+50030  ' TimeStamp hh:nn:ss:mmm
+50040  With st
+50050   Now2 = Format(.wHour, "00") & ":" & Format(.wMinute, "00") & ":" & _
+   Format(.wSecond, "00") & ":" & Format(.wMilliseconds, "000")
+50070  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "Now2")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+

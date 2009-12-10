@@ -351,7 +351,7 @@ Public Sub SetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long
-50020  With Options
+50020  With Options1
 50030   For i = 0 To cmbFonts.ListCount - 1
 50040     If UCase$(cmbFonts.List(i)) = UCase$(.ProgramFont) Then
 50050      cmbFonts.ListIndex = i
@@ -377,7 +377,7 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .ProgramFont = cmbFonts.List(cmbFonts.ListIndex)
 50030   If LenB(cmbCharset.Text) > 0 Then
 50040    .ProgramFontCharset = cmbCharset.Text

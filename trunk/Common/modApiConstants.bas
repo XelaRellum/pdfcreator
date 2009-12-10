@@ -8,6 +8,7 @@ Public Const ERROR_NO_MORE_ITEMS             As Long = &H103
 Public Const ERROR_KEY_NOT_FOUND             As Long = &H2
 Public Const ERROR_ALREADY_EXISTS            As Long = 183&
 Public Const ERROR_ACCESS_DENIED             As Long = 5&
+Public Const ERROR_SUCCESS                   As Long = 0&
 
 Public Const GENERIC_EXECUTE                 As Long = &H20000000
 Public Const GENERIC_WRITE                   As Long = &H40000000
