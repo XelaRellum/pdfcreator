@@ -46,6 +46,7 @@ html\installationtypes.htm
 html\installlang.htm
 html\introduction.htm
 html\jpegsettings.htm
+html\multipleprinters.htm
 html\online.htm
 html\psdsettings.htm
 html\pclsettings.htm
@@ -58,6 +59,7 @@ html\pdfsecurity.htm
 html\pngsettings.htm
 html\pdfsignatures.htm
 html\print.htm
+html\profiles.htm
 html\pssettings.htm
 html\rawsettings.htm
 html\savesettings.htm
