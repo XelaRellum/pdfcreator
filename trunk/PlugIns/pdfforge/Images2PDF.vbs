@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.1.0.0
-' Date: January 11, 2009
+' Version: 1.2.0.0
+' Date: April 07, 2009
 ' Author: Frank Heindörfer
 ' Comments: Create a pdf files from a set of pictures.
 
@@ -37,9 +37,16 @@ For i = 0 To objArgs.Count - 1
 Next
 
 Set pdfforge = Wscript.CreateObject("pdfforge.pdf.pdf")
-resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\Images0.pdf"
+resFile = AddBackslash(fso.GetParentFolderName(files(0))) & fso.GetBaseName(files(0)) & ".pdf"
+
 pdfforge.Images2PDF_2 (files), (resFile), 0
-resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\Images1.pdf"
-pdfforge.Images2PDF_2 (files), (resFile), 1
 
 Set pdfforge = Nothing
+
+Function AddBackslash(Path)
+ If Right(Path, 1) <> "\" Then
+   AddBackslash = Path & "\"
+  Else
+   AddBackslash = Path
+ End If
+End Function
