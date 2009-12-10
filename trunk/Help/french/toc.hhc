@@ -69,6 +69,10 @@
 			<param name="Name" value="Questions fr&eacute;quemment pos&eacute;es">
 			<param name="Local" value="html\faq.htm">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Using multiple printers">
+			<param name="Local" value="html\multipleprinters.htm">
+			</OBJECT>
 	</UL>
 	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Le menu options">
@@ -78,6 +82,10 @@
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Options de PDFCreator">
 			<param name="Local" value="html\settings.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Using Profiles">
+			<param name="Local" value="html\profiles.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Param&egrave;tres du programme">
