@@ -19,6 +19,7 @@ Public Event eError()
 ' --- Class subroutines - begin ---
 Private Sub Class_Initialize()
 End Sub
+
 ' --- Class subroutines - end ---
 
 ' --- Public properties - begin ---
@@ -79,10 +80,22 @@ End Property
 Public Property Let cOption(ByVal PropertyName As String, ByVal value As Variant)
 End Property
 
+Public Property Get cOptionProfile(ByVal Profilename As String, ByVal PropertyName As String) As Variant
+End Property
+
+Public Property Let cOptionProfile(ByVal Profilename As String, ByVal PropertyName As String, ByVal value As Variant)
+End Property
+
 Public Property Get cOptions() As clsPDFCreatorOptions
 End Property
 
 Public Property Set cOptions(ByVal Options1 As clsPDFCreatorOptions)
+End Property
+
+Public Property Get cOptionsProfile(ByVal Profilename As String) As clsPDFCreatorOptions
+End Property
+
+Public Property Set cOptionsProfile(ByVal Profilename As String, ByVal Options1 As clsPDFCreatorOptions)
 End Property
 
 Public Property Get cStandardOption(ByVal PropertyName As String) As Variant
@@ -118,7 +131,6 @@ End Property
 Public Property Let cStopURLPrinting(ByVal value As Boolean)
 End Property
 
-
 Public Property Get cWindowState() As Long
 End Property
 
@@ -136,7 +148,7 @@ End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---
-Public Sub cAddPrintjob(ByVal Filename As String) ' Supported file types: Postscript, JPEG, BMP
+Public Sub cAddPrintjob(ByVal filename As String) ' Supported file types: Postscript, JPEG, BMP
 End Sub
 
 Public Sub cDeletePrintjob(ByVal JobNumber As Long)
@@ -155,9 +167,6 @@ Public Sub cMovePrintjobDown(ByVal JobNumber As Long)
 End Sub
 
 Public Function cClose() As Boolean
-End Function
-
-Public Function cCloseRunningSession() As Boolean ' This function is deprecated. Use "cClose()"!
 End Function
  
 Public Function cStart(Optional ByVal Params As String, Optional ByVal ForceInitialize As Boolean = False) As Boolean
@@ -187,7 +196,7 @@ End Sub
 Public Sub cSendMail(ByVal OutputFilename As String, ByVal Recipients As String)
 End Sub
 
-Public Function cIsPrintable(ByVal Filename As String) As Boolean
+Public Function cIsPrintable(ByVal filename As String) As Boolean
 End Function
 
 Public Sub cCombineAll()
@@ -202,7 +211,7 @@ End Function
 Public Sub cWriteToLogfile(ByVal LogStr As String)
 End Sub
 
-Public Sub cPrintFile(ByVal Filename As String)
+Public Sub cPrintFile(ByVal filename As String)
 End Sub
 
 Public Sub cPrintURL(ByVal URL As String, Optional ByVal TimeBetweenLoadAndPrint As Long = 0)
@@ -214,10 +223,10 @@ End Sub
 Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)
 End Sub
 
-Public Function cReadOptions() As clsPDFCreatorOptions
+Public Function cReadOptions(Optional ByVal Profilename As String = "") As clsPDFCreatorOptions
 End Function
 
-Public Sub cSaveOptions(Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
+Public Sub cSaveOptions(Optional ByVal Options1 As Variant, Optional ByVal Profilename As String = "") ' Options1 must be a clsPDFCreatorOptions type
 End Sub
 
 Public Function cReadOptionsFromFile(ByVal INIFilename As String) As clsPDFCreatorOptions
@@ -225,9 +234,6 @@ End Function
 
 Public Sub cSaveOptionsToFile(ByVal INIFilename As String, Optional ByVal Options1 As Variant) ' Options1 must be a clsPDFCreatorOptions type
 End Sub
-
-Public Function GetPDFCreatorPrinters() As Collection
-End Function
 ' --- Public functions/Subroutines - end ---
 
 Public Function cGhostscriptRun(Arguments() As Variant) As Boolean
