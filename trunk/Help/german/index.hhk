@@ -217,26 +217,6 @@
 		<param name="Local" value="html\afpl.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="&Ouml;ffentliche Eigenschaften">
-		<param name="Name" value="Öffentliche Eigenschaften der COM-Schnittstelle">
-		<param name="Local" value="html\comproperties.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="&Ouml;ffentliche Ereignisse">
-		<param name="Name" value="Öffentliche Ereignisse der COM-Schnittstelle">
-		<param name="Local" value="html\comevents.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="&Ouml;ffentliche Klassen">
-		<param name="Name" value="Öffentliche Klassen der COM-Schnittstelle">
-		<param name="Local" value="html\comclasses.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="&Ouml;ffentliche Methoden">
-		<param name="Name" value="Öffentliche Methoden der COM-Schnittstelle">
-		<param name="Local" value="html\commethods.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="PCX">
 		<param name="Name" value="PCX-Einstellung">
 		<param name="Local" value="html\pcxsettings.htm">

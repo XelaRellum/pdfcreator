@@ -288,26 +288,6 @@
 		<param name="Local" value="html\pssettings.htm">
 		</OBJECT>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Public classes">
-		<param name="Name" value="Public classes of the COM Interface">
-		<param name="Local" value="html\comclasses.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Public events">
-		<param name="Name" value="Public events of the COM Interface">
-		<param name="Local" value="html\comevents.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Public methods">
-		<param name="Name" value="Public methods of the COM Interface">
-		<param name="Local" value="html\commethods.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Public properties">
-		<param name="Name" value="Public properties of the COM Interface">
-		<param name="Local" value="html\comproperties.htm">
-		</OBJECT>
-	<LI> <OBJECT type="text/sitemap">
 		<param name="Name" value="Registry">
 		<param name="Name" value="Settings in PDFCreator">
 		<param name="Local" value="html\settings.htm">
