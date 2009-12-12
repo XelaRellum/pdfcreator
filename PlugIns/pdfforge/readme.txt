@@ -23,6 +23,7 @@ pdfforge.pdf
  {
   int AddCropMarksToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, float borderTop, float borderBottom, float borderLeft, float borderRight, ref PDFLine lineObject);
   int AddLineToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, ref PDFLine lineObject);
+  int AddPageNumberToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, int startPageNumber, int NumberOfPages, int pageNumberPosition, float borderXMillimeter, float borderYMillimeter, ref PDFText textObject);
   int AddTextToPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage, ref PDFText textObject);
   int Brochure(string sourceFilename, string destinationFilename);
   int CopyPDFFile(string sourceFilename, string destinationFilename, int fromPage, int toPage);
@@ -32,26 +33,22 @@ pdfforge.pdf
   string GetMetadata(string sourceFilename, string key);
   int Images2PDF(ref string[] sourceFilenames, string destinationFilename, int scaleMode);
   int Images2PDF(ref object[] sourceFilenames, string destinationFilename, int scaleMode);
-  void MergePDFFiles(ref string[] sourceFilenames, string destinationFilename);
-  void MergePDFFiles(ref object[] sourceFilenames, string destinationFilename);
+  void MergePDFFiles(ref string[] sourceFilenames, string destinationFilename, bool FilenamesAsBookmarks);
+  void MergePDFFiles(ref object[] sourceFilenames, string destinationFilename, bool FilenamesAsBookmarks);
   int NumberOfPages(string filename);
   int NUp(string sourceFilename, string destinationFilename, int pagesPerPage);
   string PDFVersion(string filename);
   int RemoveEmptyPagesFromPDFFile(string sourceFilename, string destinationFilename);
   int RemovePageFromPDFFile(string sourceFilename, string destinationFilename, int pageNumber);
+  int ReplacePagesFromPDFFile(string sourceFilename1, string sourceFilename2, string destinationFilename, int source1FromPage, int source1ToPage, int source2FromPage, int source2ToPage);
   int SetBackgroundColor(string sourceFilename, string destinationFilename, int fromPage, int toPage, byte Red, byte Green, byte Blue);
   void SetMetadata(string sourceFilename, string destinationFilename, string author, string creator, string keywords, string subject, string title);
   bool SetMetadataKey(string sourceFilename, string destinationFilename, string key, string value);
   void SignPDFFile(string sourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword,
-                   string signatureReason, string signatureContact, string signatureLocation,
-                   bool signatureVisible,
-                   int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX, int signaturePositionUpperRightY,
-                   bool multiSignatures, ref PDFEncryptor enc);
-  void SignPDFFile(string sourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword,
-                   string signatureReason, string signatureContact, string signatureLocation,
-                   bool signatureVisible,
-                   int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX, int signaturePositionUpperRightY,
-                   bool multiSignatures);
+      string signatureReason, string signatureContact, string signatureLocation,
+      bool signatureVisible,
+      int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX, int signaturePositionUpperRightY,
+      bool multiSignatures, ref PDFEncryptor enc);
   int SplitPDFFile(string sourceFilename, string destinationFilename);
   int StampPDFFileWithImage(string sourceFilename, string destinationFilename, string imageFilename, int fromPage, int toPage, bool overUnder, float fillOpacity, int blendMode);
   int StampPDFFileWithPDFFile(string sourceFilename, string destinationFilename, string pdfFilename, int fromPage, int toPage, bool overUnder, float fillOpacity, int blendMode);
