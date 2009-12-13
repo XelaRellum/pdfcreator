@@ -227,12 +227,10 @@ Public Class Form1
         End With
         If OpenFileDialog1.ShowDialog = DialogResult.OK Then
             fi = New FileInfo(OpenFileDialog1.FileName)
-            If fi.Name.Length > 0 Then
-                If InStr(fi.Name, ".", CompareMethod.Text) > 1 Then
-                    fname = Mid(fi.Name, 1, InStr(fi.Name, ".", CompareMethod.Text) - 1)
-                Else
-                    fname = fi.Name
-                End If
+            If InStr(fi.Name, ".", CompareMethod.Text) > 1 Then
+                fname = Mid(fi.Name, 1, InStr(fi.Name, ".", CompareMethod.Text) - 1)
+            Else
+                fname = fi.Name
             End If
             If Not _PDFCreator.cIsPrintable(fi.FullName) Then
                 MsgBox("File '" & fi.FullName & "' is not printable!", MsgBoxStyle.Exclamation, Me.Text)
@@ -245,7 +243,7 @@ Public Class Form1
                 .AutosaveDirectory = fi.DirectoryName
                 .AutosaveFormat = Filetyp
                 If Filetyp = 5 Then
-                    .BitmapResolution = 72
+                    .TIFFResolution = 72
                 End If
                 opt.AutosaveFilename = fname
             End With
@@ -279,8 +277,10 @@ Public Class Form1
 
     Private Sub Form1_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
         _PDFCreator.cClose()
-        System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator)
-        System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr)
+        While (_PDFCreator.cProgramIsRunning)
+            Application.DoEvents()
+            System.Threading.Thread.Sleep(100)
+        End While
         pErr = Nothing
         _PDFCreator = Nothing
         GC.Collect()

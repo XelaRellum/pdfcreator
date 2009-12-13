@@ -88,10 +88,11 @@
     </Reference>
     <COMReference Include="PDFCreator">
       <Guid>{1CE9DC08-9FBC-45C6-8A7C-4FE1E208A613}</Guid>
-      <VersionMajor>4</VersionMajor>
+      <VersionMajor>7</VersionMajor>
       <VersionMinor>1</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
     </COMReference>
     <COMReference Include="VBA">
       <Guid>{000204EF-0000-0000-C000-000000000046}</Guid>
