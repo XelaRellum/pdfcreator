@@ -188,8 +188,10 @@ Public Class Form1
 
     Private Sub Form1_Closing(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles MyBase.Closing
         _PDFCreator.cClose()
-        System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator)
-        System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr)
+        While (_PDFCreator.cProgramIsRunning)
+            Application.DoEvents()
+            System.Threading.Thread.Sleep(100)
+        End While
         pErr = Nothing
         _PDFCreator = Nothing
         GC.Collect()

@@ -211,8 +211,11 @@ namespace Sample2
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			_PDFCreator.cClose();
-			System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator);
-			System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr);
+            while (_PDFCreator.cProgramIsRunning)
+            {
+                Application.DoEvents();
+                System.Threading.Thread.Sleep(100);
+            }
 			pErr = null;
             _PDFCreator = null;
 			GC.Collect();

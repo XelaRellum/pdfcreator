@@ -176,7 +176,7 @@ namespace Sample1
             toolStripStatusLabel1.Text = "Status: Program is started.";
 
 			pErr = new PDFCreator.clsPDFCreatorError();
-
+            
 			_PDFCreator = new PDFCreator.clsPDFCreator();
 			_PDFCreator.eError += new PDFCreator.__clsPDFCreator_eErrorEventHandler(_PDFCreator_eError); 
 			_PDFCreator.eReady += new PDFCreator.__clsPDFCreator_eReadyEventHandler(_PDFCreator_eReady); 
@@ -272,7 +272,7 @@ namespace Sample1
 					opt.AutosaveFormat = FileTyp;
 					if (FileTyp == 5)
 					{
-						opt.BitmapResolution = 72;
+						opt.TIFFResolution = 72;
 					}
 					opt.AutosaveFilename = fname;
 					_PDFCreator.cOptions = opt;
@@ -320,8 +320,11 @@ namespace Sample1
 		private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			_PDFCreator.cClose();
-			System.Runtime.InteropServices.Marshal.ReleaseComObject(_PDFCreator);
-			System.Runtime.InteropServices.Marshal.ReleaseComObject(pErr);
+            while (_PDFCreator.cProgramIsRunning)
+            {
+                Application.DoEvents();
+                System.Threading.Thread.Sleep(100);
+            }
             _PDFCreator = null;
 			pErr = null;
 			GC.Collect();
