@@ -107,6 +107,8 @@ Private Const EM_FMTLINES = &HC8
 Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" _
  (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, lParam As Any) As Long
 
+Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+
 Private WithEvents PDFCreator1 As PDFCreator.clsPDFCreator
 Attribute PDFCreator1.VB_VarHelpID = -1
 Private pErr As clsPDFCreatorError, opt As clsPDFCreatorOptions
@@ -148,10 +150,12 @@ End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
  If noStart = False Then
-  DoEvents
   PDFCreator1.cClose
+  While PDFCreator1.cProgramIsRunning
+   DoEvents
+   Sleep 100
+  Wend
  End If
- DoEvents
  Set PDFCreator1 = Nothing
  Set pErr = Nothing
  Set opt = Nothing
