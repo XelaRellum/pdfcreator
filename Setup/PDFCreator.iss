@@ -411,22 +411,6 @@ Source: ..\COM\Samples\VB6\Sample2\Form1.frm; DestDir: {app}\COM\VB6\Sample2; Co
 Source: ..\COM\Samples\VB6\Sample2\Sample2.vbp; DestDir: {app}\COM\VB6\Sample2; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\DOTNET Scripting Host\readme.txt; DestDir: {app}\COM\DOTNET Scripting Host; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\DOTNET Scripting Host\Sample1.dsh; DestDir: {app}\COM\DOTNET Scripting Host; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample1\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Sample2.csproj; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\C#\Sample2\Form1.cs; DestDir: {app}\COM\Dot Net\VS2003\C#\Sample2; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample1\Sample1.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample1; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\AssemblyInfo.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.resx; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Form1.vb; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Dot Net\VS2003\Visual Basic\Sample2\Sample2.vbproj; DestDir: {app}\COM\Dot Net\VS2003\Visual Basic\Sample2; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Form1.resx; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\Sample1.csproj; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Dot Net\VS2005\C#\Sample1\AssemblyInfo.cs; DestDir: {app}\COM\Dot Net\VS2005\C#\Sample1; Components: COMsamples; Flags: ignoreversion
