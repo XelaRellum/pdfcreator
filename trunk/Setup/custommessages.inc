@@ -13,7 +13,7 @@
 ;#include "Language includes\greek.inc"
 #include "Language includes\hungarian.inc"
 ;#include "Language includes\indonesian.inc"
-;#include "Language includes\italian.inc"
+#include "Language includes\italian.inc"
 ;#include "Language includes\japanese.inc"
 ;#include "Language includes\korean.inc"
 ;#include "Language includes\lithuanian.inc"
