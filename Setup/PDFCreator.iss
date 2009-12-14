@@ -3201,7 +3201,7 @@ end;
 
 function BrowserAddOnIsInstalled(): Boolean;
 begin
- if RegKeyExists(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#BrowserAddOnID}')=true then
+ If FileExists(ExpandConstant('{pf}') + '\pdfforge Toolbar\pdfforgeToolbarIE.dll' )=true then
    Result:=true
   else
    Result:=false;
