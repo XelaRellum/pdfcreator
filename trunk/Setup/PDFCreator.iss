@@ -3658,7 +3658,8 @@ end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
- tStr :String; i:LongInt; saveoptions, silent, verysilent:boolean;
+ tStr :String; i:LongInt;
+ saveoptions, silent, verysilent, removeOptions:boolean;
 begin
   case CurUninstallStep of
     usUninstall:
@@ -3668,18 +3669,18 @@ begin
         SaveStringToFile(tStr, '', True);
        saveoptions:=false; silent:=false; verysilent:=false;
        for i:=1 to paramcount do begin
-        if lowercase(ParamStr(i))='/saveoptions' then
-         saveoptions:=true;
         if lowercase(ParamStr(i))='/silent' then
          silent:=true;
         if lowercase(ParamStr(i))='/verysilent' then
          verysilent:=true;
+        if lowercase(ParamStr(i))='/removeoptions' then
+         removeOptions:=true;
        end;
        SaveStringToFile(UninstallLogFile, ' Uninstall options:' + #13#10, True)
-       if saveoptions=true then
-         SaveStringToFile(UninstallLogFile, '  Saveoptions=True' + #13#10, True)
+       if removeOptions=true then
+         SaveStringToFile(UninstallLogFile, '  RemoveOptions=True' + #13#10, True)
         else
-         SaveStringToFile(UninstallLogFile, '  Saveoptions=False' + #13#10, True);
+         SaveStringToFile(UninstallLogFile, '  RemoveOptions=False' + #13#10, True);
        if silent=true then
          SaveStringToFile(UninstallLogFile, '  Silent=True' + #13#10, True)
         else
@@ -3692,6 +3693,12 @@ begin
         if (silent=false) and (verysilent=false) then
          if MsgBox(ExpandConstant('{cm:UninstallOptions}'), mbConfirmation, MB_YESNO) = IDYES then
           RemoveProgramSettings;
+       if removeOptions=true then
+         RemoveProgramSettings
+        else
+         if (silent=false) and (verysilent=false) then
+          if MsgBox(ExpandConstant('{cm:UninstallOptions}'), mbConfirmation, MB_YESNO) = IDYES then
+           RemoveProgramSettings;
        RemoveExplorerIntegretation;
        UninstallCompletePrinter(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, UninstallLogFile)
       end;
