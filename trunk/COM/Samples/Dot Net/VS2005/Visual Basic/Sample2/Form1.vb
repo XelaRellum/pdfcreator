@@ -195,6 +195,5 @@ Public Class Form1
         pErr = Nothing
         _PDFCreator = Nothing
         GC.Collect()
-        GC.WaitForPendingFinalizers()
     End Sub
 End Class

@@ -844,7 +844,7 @@ On Error GoTo ErrPtnr_OnError
 50050  Set PDFCreatorPrinters = New Collection
 50060  Set reg = New clsRegistry
 50070  Set SubKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, "SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports")
-50080  For i = 1 To Printers.Count
+50080  For i = 1 To Printers1.Count
 50090   For j = 1 To SubKeys.Count
 50100    If SubKeys(j) = Printers1(i)(1) Then
 50110     AddSortedStr PDFCreatorPrinters, CStr(Printers1(i)(0))

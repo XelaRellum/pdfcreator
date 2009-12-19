@@ -219,7 +219,6 @@ namespace Sample2
 			pErr = null;
             _PDFCreator = null;
 			GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
 	}
 }
