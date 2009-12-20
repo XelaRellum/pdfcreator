@@ -342,6 +342,7 @@ Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion c
 Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
@@ -777,6 +778,9 @@ Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLang
 
 ;Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
 ;Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
+
+Name: languages\danish; Description: Danish; Types: full; Check: Not IsLanguage('danish'); Flags: dontinheritcheck
+Name: languages\danish; Description: Danish; Types: full custom; Check: IsLanguage('danish'); Flags: dontinheritcheck
 
 ;Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
 ;Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch'); Flags: dontinheritcheck
