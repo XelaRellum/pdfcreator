@@ -93,7 +93,6 @@ UserControl=ctlOptGeneral.ctl
 UserControl=ctlOptSave.ctl
 UserControl=ctlOptPrint.ctl
 UserControl=ctlOptFormatPDF.ctl
-UserControl=ctlOptFonts.ctl
 UserControl=ctlOptFormatPS.ctl
 UserControl=ctlOptFormatEPS.ctl
 UserControl=ctlOptFormatPNG.ctl
