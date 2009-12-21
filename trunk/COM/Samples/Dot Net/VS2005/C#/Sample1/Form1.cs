@@ -327,7 +327,6 @@ namespace Sample1
             }
             _PDFCreator = null;
 			pErr = null;
-			GC.Collect();
         }
 	}
 }

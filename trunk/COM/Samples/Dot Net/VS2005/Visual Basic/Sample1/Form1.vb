@@ -283,6 +283,5 @@ Public Class Form1
         End While
         pErr = Nothing
         _PDFCreator = Nothing
-        GC.Collect()
     End Sub
 End Class
