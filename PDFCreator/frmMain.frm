@@ -490,67 +490,67 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-IsFrmMainLoaded = True
-50010  Me.KeyPreview = True
-50020
-50030  If App.StartMode = vbSModeAutomation Then
-50040   If ProgramIsVisible = False Then
-50050    frmMain.Visible = False
-50060   End If
-50070   WindowState = ProgramWindowState
-50080  End If
-50090
-50100  InitProgram
-50110
-50120  ShowPaypalMenuimage
-50130  SetGSRevision
-50140
-50150  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
-50160   SetMenuPrinterStop
-50170  End If
-50180  If PrinterStop = True Then
-50190   mnPrinter(2).Checked = True
-50200  End If
-50210  If Options.OptionsEnabled = 0 Then
-50220   mnPrinter(4).Enabled = False
-50230   tlb(0).Buttons(2).Enabled = False
-50240  End If
-50250  If Options.OptionsVisible = 0 Then
-50260   tlb(0).Buttons(2).Visible = False
-50270   mnPrinter(4).Visible = False
-50280   mnPrinter(5).Visible = False
-50290  End If
-50300
-50310  CheckPrintJobs
-50320  Call SetDocMenuAndToolbar
-50330  If (Options.Toolbars And 1) = 1 Then
-50340    tlb(0).Visible = True
-50350   Else
-50360    tlb(0).Visible = False
-50370  End If
-50380  If (Options.Toolbars And 2) = 2 Then
-50390    tlb(1).Visible = True
-50400    txtEmailAddress.Visible = True
-50410   Else
-50420    tlb(1).Visible = False
-50430    txtEmailAddress.Visible = False
-50440  End If
-50450  If PDFCreatorPrinter = False Or NoProcessing = True Or _
+50010 IsFrmMainLoaded = True
+50020  Me.KeyPreview = True
+50030
+50040  If App.StartMode = vbSModeAutomation Then
+50050   If ProgramIsVisible = False Then
+50060    frmMain.Visible = False
+50070   End If
+50080   WindowState = ProgramWindowState
+50090  End If
+50100
+50110  InitProgram
+50120
+50130  ShowPaypalMenuimage
+50140  SetGSRevision
+50150
+50160  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
+50170   SetMenuPrinterStop
+50180  End If
+50190  If PrinterStop = True Then
+50200   mnPrinter(2).Checked = True
+50210  End If
+50220  If Options.OptionsEnabled = 0 Then
+50230   mnPrinter(4).Enabled = False
+50240   tlb(0).Buttons(2).Enabled = False
+50250  End If
+50260  If Options.OptionsVisible = 0 Then
+50270   tlb(0).Buttons(2).Visible = False
+50280   mnPrinter(4).Visible = False
+50290   mnPrinter(5).Visible = False
+50300  End If
+50310
+50320  CheckPrintJobs
+50330  Call SetDocMenuAndToolbar
+50340  If (Options.Toolbars And 1) = 1 Then
+50350    tlb(0).Visible = True
+50360   Else
+50370    tlb(0).Visible = False
+50380  End If
+50390  If (Options.Toolbars And 2) = 2 Then
+50400    tlb(1).Visible = True
+50410    txtEmailAddress.Visible = True
+50420   Else
+50430    tlb(1).Visible = False
+50440    txtEmailAddress.Visible = False
+50450  End If
+50460  If PDFCreatorPrinter = False Or NoProcessing = True Or _
   Options.NoProcessingAtStartup = 1 Or (PDFCreatorPrinter = True And lsv.ListItems.Count > 1) Then
-50470   If ProgramIsVisible Then
-50480    Visible = True
-50490    SetTopMost frmMain, True, True
-50500    SetTopMost frmMain, False, True
-50510    SetActiveWindow frmMain.hwnd
-50520   End If
-50530  End If
-50540
-50550  InTimer1 = False
-50560  Timer1.Interval = TimerIntervall '500
-50570  Timer1.Enabled = True
-50580
-50590  InAutoSave = False
-50600  ProgramIsStarted = True
+50480   If ProgramIsVisible Then
+50490    Visible = True
+50500    SetTopMost frmMain, True, True
+50510    SetTopMost frmMain, False, True
+50520    SetActiveWindow frmMain.hwnd
+50530   End If
+50540  End If
+50550
+50560  InTimer1 = False
+50570  Timer1.Interval = TimerIntervall '500
+50580  Timer1.Enabled = True
+50590
+50600  InAutoSave = False
+50610  ProgramIsStarted = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -614,8 +614,8 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  TerminateProgram
 50020  ShutDown = False
-IsFrmMainLoaded = False
-
+50030 IsFrmMainLoaded = False
+50040
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1510,31 +1510,28 @@ On Error GoTo ErrPtnr_OnError
 50280     PDFSpoolfile = lsv.ListItems(1).SubItems(4)
 50290     If PrinterStop = False Then
 50300      If IsFormLoaded(frmPrinting) = False Then
-50310       If InstalledAsServer Then ' This is necessary because there is no other way to tell the running server that the options are changed!
-50320        Options = ReadOptions
-50330       End If
-50340       If Options.UseAutosave = 1 Then
-50350         Autosave
-50360        Else
-50370         isf = ReadInfoSpoolfile(PDFSpoolfile)
-50380         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
-50390          OldPrinter = isf.REDMON_PRINTER
-50400          Options = ReadOptions(True, , GetPrinterDefaultProfile(isf.REDMON_PRINTER))
-50410         End If
-50420         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
-50430         frmPrinting.Show , Me
-50440       End If
-50450      End If
-50460     End If
-50470     If PrinterStop = False And NoProcessing = False Then
-50480       mnPrinter(2).Checked = False
-50490       tlb(0).Buttons(1).Image = 1
-50500      Else
-50510       mnPrinter(2).Checked = True
-50520       tlb(0).Buttons(1).Image = 2
-50530     End If
-50540   End If
-50550  End If
+50310       isf = ReadInfoSpoolfile(PDFSpoolfile)
+50320       Options = ReadOptions(True, , GetPrinterDefaultProfile(isf.REDMON_PRINTER))
+50330       If Options.UseAutosave = 1 Then
+50340         Autosave
+50350        Else
+50360         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
+50370          OldPrinter = isf.REDMON_PRINTER
+50380         End If
+50390         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
+50400         frmPrinting.Show , Me
+50410       End If
+50420      End If
+50430     End If
+50440     If PrinterStop = False And NoProcessing = False Then
+50450       mnPrinter(2).Checked = False
+50460       tlb(0).Buttons(1).Image = 1
+50470      Else
+50480       mnPrinter(2).Checked = True
+50490       tlb(0).Buttons(1).Image = 2
+50500     End If
+50510   End If
+50520  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
