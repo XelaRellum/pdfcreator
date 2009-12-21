@@ -586,7 +586,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim FilterIndex As Long, files As Collection, dummyOptions As tOptions, tempOptions As tOptions
 50020  FilterIndex = OpenFileDialog(files, cmbProfile.List(cmbProfile.ListIndex), _
-   "PDFCreator option files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", GetMyFiles, _
+   "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", GetMyFiles, _
    App.ProductName, OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, Me.hwnd)
 50050  If FilterIndex > 0 Then
 50060   tempOptions = ReadOptionsINI(dummyOptions, files(1), 0, True, True)
@@ -642,7 +642,7 @@ Private Sub cmdProfileSave_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim FName As String, res As Long, tempOptions As tOptions
-50020  res = SaveFileDialog(FName, cmbProfile.List(cmbProfile.ListIndex), "PDFCreator option files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", _
+50020  res = SaveFileDialog(FName, cmbProfile.List(cmbProfile.ListIndex), "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", _
   GetMyFiles, App.ProductName, OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + OFN_OVERWRITEPROMPT, Me.hwnd)
 50040  If res > 0 Then
 50050   tempOptions = GetOptionsFromUserControls   ' Get the current settings settings
