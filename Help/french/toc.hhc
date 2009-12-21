@@ -70,7 +70,7 @@
 			<param name="Local" value="html\faq.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Using multiple printers">
+			<param name="Name" value="Utiliser des imprimantes multiples">
 			<param name="Local" value="html\multipleprinters.htm">
 			</OBJECT>
 	</UL>
@@ -84,7 +84,7 @@
 			<param name="Local" value="html\settings.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="Using Profiles">
+			<param name="Name" value="Utiliser des profils">
 			<param name="Local" value="html\profiles.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">
