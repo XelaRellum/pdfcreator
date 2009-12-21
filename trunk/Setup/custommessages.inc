@@ -24,7 +24,7 @@
 ;#include "Language includes\russian.inc"
 #include "Language includes\slovak.inc"
 ;#include "Language includes\slovenian.inc"
-;#include "Language includes\spanish.inc"
+#include "Language includes\spanish.inc"
 ;#include "Language includes\swedish.inc"
 ;#include "Language includes\ukrainian.inc"
 #include "Language includes\turkish.inc"
