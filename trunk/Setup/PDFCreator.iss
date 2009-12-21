@@ -511,8 +511,8 @@ Name: {group}\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
 Name: {group}\FairPlay License; Filename: {app}\FairPlay License.txt; WorkingDir: {app}
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
-Name: {group}\{cm:Donation}; Filename: {app}\{cm:Donation}.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 26
-Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 25
+Name: {group}\{cm:Donation}; Filename: {app}\{cm:Donation}.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 27
+Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 26
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_english.chm; WorkingDir: {app}; Languages: (Not german) AND (Not french)
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_german.chm; WorkingDir: {app}; Languages: german
 Name: {group}\PDFCreator {cm:Help}; Filename: {app}\PDFCreator_french.chm; WorkingDir: {app}; Languages: french
@@ -531,24 +531,9 @@ Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: URL; String: htt
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: Iconindex; String: 20; Components: program
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: IconFile; String: {app}\PDFCreator.exe; Components: program
 
-Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.paypal.com/xclick/business=paypal01%40heindoerfer.com&item_name=PDFCreator&no_note=1&tax=0&currency_code=EUR; Components: program
+Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.pdfforge.org/donations; Components: program
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; String: 21; Components: program
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: IconFile; String: {app}\PDFCreator.exe; Components: program
-
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: <MyFiles>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI  And (Not IsServerInstallation)
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: AutosaveDirectory; String: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI And IsServerInstallation
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: <MyFiles>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI And (Not IsServerInstallation)
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: LastsaveDirectory; String: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Components: program; Flags: createkeyifdoesntexist; Check: UseINI And IsServerInstallation
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: Language; String: {code:GetActiveLanguage}; Flags: createkeyifdoesntexist; Check: UseINI
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: <Temp>PDFCreator\; Flags: createkeyifdoesntexist; Check: UseINI And (Not IsServerInstallation)
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: PrinterTemppath; String: {app}\Temp\; Flags: createkeyifdoesntexist; Check: UseINI And IsServerInstallation
-
-#Ifdef GhostscriptVersion
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptBinaries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptFonts; String: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptLibraries; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
-Filename: {code:GetIniPath}\PDFCreator.ini; Section: Options; Key: DirectoryGhostscriptResource; String: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: createkeyifdoesntexist; Check: UseINI
-#ENDIF
 
 [Registry]
 ;PrinterMonitor
