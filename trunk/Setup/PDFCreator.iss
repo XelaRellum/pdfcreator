@@ -531,7 +531,7 @@ Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: URL; String: htt
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: Iconindex; String: 20; Components: program
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: IconFile; String: {app}\PDFCreator.exe; Components: program
 
-Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.pdfforge.org/donations; Components: program
+Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: URL; String: http://www.pdfforge.org/donate; Components: program
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; String: 21; Components: program
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: IconFile; String: {app}\PDFCreator.exe; Components: program
 
@@ -3678,10 +3678,6 @@ begin
          SaveStringToFile(UninstallLogFile, '  Verysilent=True' + #13#10, True)
         else
          SaveStringToFile(UninstallLogFile, '  Veryilent=False' + #13#10, True);
-       if saveoptions=false then
-        if (silent=false) and (verysilent=false) then
-         if MsgBox(ExpandConstant('{cm:UninstallOptions}'), mbConfirmation, MB_YESNO) = IDYES then
-          RemoveProgramSettings;
        if removeOptions=true then
          RemoveProgramSettings
         else
@@ -3696,3 +3692,4 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
+
