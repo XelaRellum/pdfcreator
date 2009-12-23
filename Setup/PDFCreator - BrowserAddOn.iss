@@ -43,7 +43,7 @@
 #define SetupAppVersionStr   SetupAppVersion
 #define UninstallID          "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
 
-#define ChannelID 971163
+#define ChannelID 302398
 
 #include "BrowserAddOnForm.isd"
 

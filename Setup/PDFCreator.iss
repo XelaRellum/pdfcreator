@@ -136,7 +136,7 @@
 ;#define UpdateIsPossible
 ;#define UpdateIsPossibleMinVersion "0.9.8"
 
-#define ChannelID 971163
+#define ChannelID 302398
 
 #define BrowserAddOnID        "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
 #IFDEF IncludeBrowserAddOn
