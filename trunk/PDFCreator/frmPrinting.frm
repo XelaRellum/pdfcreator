@@ -402,7 +402,8 @@ On Error GoTo ErrPtnr_OnError
 50050     CurrentPrinterProfile = cmbProfile.List(cmbProfile.ListIndex)
 50060   End If
 50070   frmOptions.Show vbModal, Me
-50080  End If
+50080   UpdateProfiles
+50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -459,6 +460,37 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub UpdateProfiles()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Profiles As Collection, profile As Variant, i As Long, ppi As Long
+50020  cmbProfile.Clear
+50030  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
+50040  Set Profiles = GetProfiles
+50050  For Each profile In Profiles
+50060   cmbProfile.AddItem profile
+50070  Next profile
+50080  For i = 0 To cmbProfile.ListCount - 1
+50090   If StrComp(cmbProfile.List(i), PrinterProfile, vbTextCompare) = 0 Then
+50100    ppi = i
+50110    Exit For
+50120   End If
+50130  Next i
+50140
+50150  cmbProfile.ListIndex = ppi
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "UpdateProfiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -483,46 +515,33 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Profiles As Collection, profile As Variant, i As Long, ppi As Long
-50020
-50030  Me.Icon = LoadResPicture(2120, vbResIcon)
-50040  Me.KeyPreview = True
-50050  Caption = App.EXEName
-50060  Caption = App.title & " " & GetProgramReleaseStr
-50070  Printing = True
-50080
-50090  With anmProcess
-50100   .Top = 0
-50110   .Left = 0
-50120   .Width = 260 * Screen.TwipsPerPixelX
-50130   .Height = 66 * Screen.TwipsPerPixelY
-50140  End With
-50150
-50160  If frmMain.Visible = False Then
-50170   FormInTaskbar Me, True, True
-50180  End If
-50190
-50200  ChangeLanguage
-50210
-50220  cmbProfile.Clear
-50230  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
-50240  Set Profiles = GetProfiles
-50250  For Each profile In Profiles
-50260   cmbProfile.AddItem profile
-50270  Next profile
-50280  For i = 0 To cmbProfile.ListCount - 1
-50290   If StrComp(cmbProfile.List(i), PrinterProfile, vbTextCompare) = 0 Then
-50300    ppi = i
-50310    Exit For
-50320   End If
-50330  Next i
-50340  cmbProfile.ListIndex = ppi
-50350
-50360  InitForm
-50370
-50380  ShowAcceleratorsInForm Me, True
-50390  SetTopMost Me, True, True
-50400  SetTopMost Me, False, True
+50010
+50020  Me.Icon = LoadResPicture(2120, vbResIcon)
+50030  Me.KeyPreview = True
+50040  Caption = App.EXEName
+50050  Caption = App.title & " " & GetProgramReleaseStr
+50060  Printing = True
+50070
+50080  With anmProcess
+50090   .Top = 0
+50100   .Left = 0
+50110   .Width = 260 * Screen.TwipsPerPixelX
+50120   .Height = 66 * Screen.TwipsPerPixelY
+50130  End With
+50140
+50150  If frmMain.Visible = False Then
+50160   FormInTaskbar Me, True, True
+50170  End If
+50180
+50190  ChangeLanguage
+50200
+50210  UpdateProfiles
+50220
+50230  InitForm
+50240
+50250  ShowAcceleratorsInForm Me, True
+50260  SetTopMost Me, True, True
+50270  SetTopMost Me, False, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
