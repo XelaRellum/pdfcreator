@@ -3198,12 +3198,42 @@ begin
  Result:=trb;
 end;
 
-function BrowserAddOnIsInstalled(): Boolean;
+function CountOfFiles(path, extension: string; recursiv: boolean): LongInt; // Sample: CountOfFiles('C:\Windows\system32' , 'dll')
+var
+  FilesFound: Integer;
+  FindRec: TFindRec;
 begin
- If FileExists(ExpandConstant('{pf}') + '\pdfforge Toolbar\pdfforgeToolbarIE.dll' )=true then
-   Result:=true
-  else
+ extension := Lowercase(extension);
+ FilesFound := 0;
+ if FindFirst(path + '\*', FindRec) then begin
+  try
+   repeat
+    if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then begin
+     if CompareText(ExtractFileExt(FindRec.Name), '.' + extension) = 0 then
+      FilesFound := FilesFound + 1
+    end else
+     if (recursiv and (FindRec.Name <> '.') and (FindRec.Name <> '..')) then
+      FilesFound := FilesFound + CountOfFiles(path + '\' + FindRec.Name, extension, recursiv)
+   until not FindNext(FindRec);
+  finally
+   FindClose(FindRec);
+  end;
+ end;
+ result := FilesFound;
+end;
+
+function BrowserAddOnIsInstalled(): Boolean;
+var path:string;
+begin
+ path := ExpandConstant('{pf}\pdfforge toolbar');
+ If DirExists(path) then begin
+  If CountOfFiles(ExpandConstant('{pf}\pdfforge toolbar'), 'dll', true) > 0 then
+    Result:=true
+   else
+    Result:=false;
+  end else
    Result:=false;
+ end;
 end;
 
 //http://www.loc.gov/standards/iso639-2/php/code_list.php
@@ -3696,3 +3726,5 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
+
+

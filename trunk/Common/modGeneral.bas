@@ -119,18 +119,18 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function CompletePath(Path As String) As String
+Public Function CompletePath(path As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If Len(Path) = 0 Then
+50010  If Len(path) = 0 Then
 50020   Exit Function
 50030  End If
-50040  Path = Trim$(Path)
-50050  If Right$(Path, 1) = "\" Then
-50060    CompletePath = LTrim$(Path)
+50040  path = Trim$(path)
+50050  If Right$(path, 1) = "\" Then
+50060    CompletePath = LTrim$(path)
 50070   Else
-50080    CompletePath = LTrim$(Path) & "\"
+50080    CompletePath = LTrim$(path) & "\"
 50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -144,9 +144,9 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function CreateDir(Path As String) As Boolean
+Public Function CreateDir(path As String) As Boolean
  On Error GoTo ErrorHandler
- MkDir Path
+ MkDir path
  CreateDir = True
 Exit Function
 ErrorHandler:
@@ -368,7 +368,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetFiles(ByVal Path As String, Optional Searchmask As String = "*.*", _
+Public Function GetFiles(ByVal path As String, Optional Searchmask As String = "*.*", _
  Optional Sorted As eSortModeFiles = notSorted) As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -376,30 +376,30 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim tColl1 As Collection, tColl2 As Collection, tFilename As String, _
   i As Long, tStrf() As String
 50030  Set GetFiles = New Collection
-50040  Path = Trim$(Path)
+50040  path = Trim$(path)
 50050  If Len(Searchmask) > 0 Then
-50060    If Not DirExists(Path) Then
+50060    If Not DirExists(path) Then
 50070     Exit Function
 50080    End If
-50090    Path = CompletePath(Path)
-50100    tFilename = Dir(Path & Searchmask)
+50090    path = CompletePath(path)
+50100    tFilename = Dir(path & Searchmask)
 50110   Else
-50120    If Not FileExists(Path) Then
+50120    If Not FileExists(path) Then
 50130     Exit Function
 50140    End If
-50150    tFilename = Dir(Path)
-50160    SplitPath Path, , Path
-50170    Path = CompletePath(Path)
+50150    tFilename = Dir(path)
+50160    SplitPath path, , path
+50170    path = CompletePath(path)
 50180  End If
 50190  Set tColl1 = New Collection
 50200  Do While tFilename <> ""
 50211   Select Case Sorted
          Case eSortModeFiles.SortedByDate
-50230     AddSortedStr tColl1, Format$(FileDateTime(Path & tFilename), "yyyymmddhhnnss") & "|" & Path & tFilename
+50230     AddSortedStr tColl1, Format$(FileDateTime(path & tFilename), "yyyymmddhhnnss") & "|" & path & tFilename
 50240    Case eSortModeFiles.SortedByName
-50250     AddSortedStr tColl1, "|" & Path & tFilename
+50250     AddSortedStr tColl1, "|" & path & tFilename
 50260    Case Else
-50270     tColl1.Add "|" & Path & tFilename
+50270     tColl1.Add "|" & path & tFilename
 50280   End Select
 50290   tFilename = Dir()
 50300   DoEvents
@@ -407,9 +407,9 @@ On Error GoTo ErrPtnr_OnError
 50320  Set tColl2 = New Collection
 50330  For i = 1 To tColl1.Count
 50340   tStrf = Split(tColl1(i), "|")
-50350   SplitPath tStrf(1), , Path, tFilename
-50360   Path = CompletePath(Path)
-50370   tColl2.Add Path & "|" & Path & tFilename & "|" & FileLen(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
+50350   SplitPath tStrf(1), , path, tFilename
+50360   path = CompletePath(path)
+50370   tColl2.Add path & "|" & path & tFilename & "|" & FileLen(path & tFilename) & "|" & FileDateTime(path & tFilename)
 50380  Next i
 50390  Set GetFiles = tColl2
 50400 ' Set tColl = Nothing
@@ -659,13 +659,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetTempFile(Optional ByVal Path As String, Optional PreFix As String) As String
+Public Function GetTempFile(Optional ByVal path As String, Optional PreFix As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim res As Long, Tempfile As String, tPath As String
 50020  Tempfile = Space$(MAX_PATH)
-50030  tPath = LTrim$(Path)
+50030  tPath = LTrim$(path)
 50040  If DirExists(tPath) = False Then
 50050   MakePath tPath
 50060  End If
@@ -976,23 +976,23 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function MakePath(Path As String) As Boolean
+Public Function MakePath(path As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim dirs() As String, tStr As String, i As Long
 50020  MakePath = False
-50030  Path = LTrim$(Path)
-50040  If Len(Path) <= 3 Then
+50030  path = LTrim$(path)
+50040  If Len(path) <= 3 Then
 50050   Exit Function
 50060  End If
-50070  Path = Replace$(Path, "/", "\", , , vbTextCompare)
-50080  If InStr(1, Path, "\", vbTextCompare) = 0 Then
+50070  path = Replace$(path, "/", "\", , , vbTextCompare)
+50080  If InStr(1, path, "\", vbTextCompare) = 0 Then
 50090   Exit Function
 50100  End If
-50110  dirs = Split(Path, "\")
-50120  If Mid$(Path, 2, 1) = ":" Then ' local drive
-50130   If UCase$(Mid$(Path, 1, 1)) < "A" Or UCase$(Mid$(Path, 1, 1)) > "Z" Then
+50110  dirs = Split(path, "\")
+50120  If Mid$(path, 2, 1) = ":" Then ' local drive
+50130   If UCase$(Mid$(path, 1, 1)) < "A" Or UCase$(Mid$(path, 1, 1)) > "Z" Then
 50140    Exit Function
 50150   End If
 50160   tStr = dirs(0)
@@ -1007,7 +1007,7 @@ On Error GoTo ErrPtnr_OnError
 50250   Next i
 50260   MakePath = True
 50270  End If
-50280  If Mid(Path, 1, 2) = "\\" Then ' network share
+50280  If Mid(path, 1, 2) = "\\" Then ' network share
 50290   If UBound(dirs) < 4 Then
 50300    Exit Function
 50310   End If
@@ -1170,7 +1170,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional filename As String, Optional File As String, Optional Extension As String)
+Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional path As String, Optional filename As String, Optional File As String, Optional Extension As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1179,12 +1179,12 @@ On Error GoTo ErrPtnr_OnError
 50030  If nPos > 0 Then
 50040    If Left$(FullPath, 2) = "\\" Then
 50050     If nPos = 2 Then
-50060      Drive = FullPath: Path = vbNullString: filename = vbNullString: File = vbNullString
+50060      Drive = FullPath: path = vbNullString: filename = vbNullString: File = vbNullString
 50070      Extension = vbNullString
 50080      Exit Sub
 50090     End If
 50100    End If
-50110    Path = Left$(FullPath, nPos - 1)
+50110    path = Left$(FullPath, nPos - 1)
 50120    filename = Mid$(FullPath, nPos + 1)
 50130    nPos = InStrRev(filename, ".")
 50140    If nPos > 0 Then
@@ -1197,7 +1197,7 @@ On Error GoTo ErrPtnr_OnError
 50210   Else
 50220    nPos = InStrRev(FullPath, ":")
 50230    If nPos > 0 Then
-50240      Path = Mid(FullPath, 1, nPos - 1): filename = Mid(FullPath, nPos + 1)
+50240      path = Mid(FullPath, 1, nPos - 1): filename = Mid(FullPath, nPos + 1)
 50250      nPos = InStrRev(filename, ".")
 50260      If nPos > 0 Then
 50270        File = Left$(filename, nPos - 1)
@@ -1207,7 +1207,7 @@ On Error GoTo ErrPtnr_OnError
 50310        Extension = vbNullString
 50320      End If
 50330     Else
-50340      Path = vbNullString: filename = FullPath
+50340      path = vbNullString: filename = FullPath
 50350      nPos = InStrRev(filename, ".")
 50360      If nPos > 0 Then
 50370        File = Left$(filename, nPos - 1)
@@ -1218,21 +1218,21 @@ On Error GoTo ErrPtnr_OnError
 50420      End If
 50430    End If
 50440  End If
-50450  If Left$(Path, 2) = "\\" Then
-50460    nPos = InStr(3, Path, "\")
+50450  If Left$(path, 2) = "\\" Then
+50460    nPos = InStr(3, path, "\")
 50470    If nPos Then
-50480      Drive = Left$(Path, nPos - 1)
+50480      Drive = Left$(path, nPos - 1)
 50490     Else
-50500      Drive = Path
+50500      Drive = path
 50510    End If
 50520   Else
-50530    If Len(Path) = 2 Then
-50540     If Right$(Path, 1) = ":" Then
-50550      Path = Path & "\"
+50530    If Len(path) = 2 Then
+50540     If Right$(path, 1) = ":" Then
+50550      path = path & "\"
 50560     End If
 50570    End If
-50580    If Mid$(Path, 2, 2) = ":\" Then
-50590     Drive = Left$(Path, 2)
+50580    If Mid$(path, 2, 2) = ":\" Then
+50590     Drive = Left$(path, 2)
 50600    End If
 50610  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1272,7 +1272,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function IsValidPath(Path As String, Optional ByVal TestUNCPaths As Boolean = True) As Boolean
+Public Function IsValidPath(path As String, Optional ByVal TestUNCPaths As Boolean = True) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1284,7 +1284,7 @@ On Error GoTo ErrPtnr_OnError
   kCharGreaterThan = 62, kCharLowerThan = 60, kCharPipe = 124, _
   kCharQuestion = 63, kCharQuote = 34, kCharSlash = 47
 50080
-50090  nPath = Path
+50090  nPath = path
 50100  PathUnquoteSpaces nPath
 50110  nPath = Left$(nPath, InStrNullChar(nPath))
 50120  If Not CBool(PathIsUNC(nPath) And Not TestUNCPaths) Then
@@ -1382,7 +1382,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function RemoveCompletePath(Path As String, Optional ShowDialog As Boolean) As Long
+Public Function RemoveCompletePath(path As String, Optional ShowDialog As Boolean) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1399,7 +1399,7 @@ On Error GoTo ErrPtnr_OnError
 50110
 50120  With SHFILEOP
 50130   .wFunc = FO_DELETE
-50140   .pFrom = Path
+50140   .pFrom = path
 50150   .pTo = vbNullString
 50160   .fFlags = FOF_ALLOWUNDO Or FOF_NOCONFIRMATION Or FOF_NOCONFIRMMKDIR Or ShowD
 50170  End With
@@ -1784,7 +1784,7 @@ Public Sub WriteInfoSpoolfile(SpoolFilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim isf As InfoSpoolFile, fn As Long, Path As String, File As String, _
+50010  Dim isf As InfoSpoolFile, fn As Long, path As String, File As String, _
   infFile As String
 50030
 50040  With isf
@@ -1802,8 +1802,8 @@ On Error GoTo ErrPtnr_OnError
 50160   .Created = Now
 50170  End With
 50180  fn = FreeFile
-50190  SplitPath SpoolFilename, , Path, , File
-50200  infFile = CompletePath(Path) & File & ".inf"
+50190  SplitPath SpoolFilename, , path, , File
+50200  infFile = CompletePath(path) & File & ".inf"
 50210  Open infFile For Binary As #fn
 50220  Put #fn, , isf
 50230  Close #fn
@@ -1821,9 +1821,9 @@ End Sub
 
 Public Function ReadInfoSpoolfile(SpoolFilename As String) As InfoSpoolFile
  On Error Resume Next
- Dim fn As Long, infFile As String, Path As String, File As String
- SplitPath SpoolFilename, , Path, , File
- infFile = CompletePath(Path) & File & ".inf"
+ Dim fn As Long, infFile As String, path As String, File As String
+ SplitPath SpoolFilename, , path, , File
+ infFile = CompletePath(path) & File & ".inf"
  If FileExists(infFile) And Not FileInUse(infFile) Then
   fn = FreeFile
   Open infFile For Binary As #fn
@@ -1853,9 +1853,9 @@ Public Sub KillInfoSpoolfile(SpoolFilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim infFile As String, Path As String, File As String
-50020  SplitPath SpoolFilename, , Path, , File
-50030  infFile = CompletePath(Path) & File & ".inf"
+50010  Dim infFile As String, path As String, File As String
+50020  SplitPath SpoolFilename, , path, , File
+50030  infFile = CompletePath(path) & File & ".inf"
 50040  KillFile infFile
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2035,17 +2035,17 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function MakeRelativePath(Path As String, Optional BasePath As String, Optional PathSeparator As String = "\") As String
+Public Function MakeRelativePath(path As String, Optional BasePath As String, Optional PathSeparator As String = "\") As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim nPath As String, nPathParts As Variant, nBasePath As String, nBaseParts As Variant, i As Integer, _
   nRelative As Boolean, nRelativePath As String, p As Integer
 50030
-50040  If Left$(Path, 2) = "\\" Then
-50050    nPath = Mid$(Path, 3)
+50040  If Left$(path, 2) = "\\" Then
+50050    nPath = Mid$(path, 3)
 50060   Else
-50070    nPath = Path
+50070    nPath = path
 50080  End If
 50090  nPathParts = Split(nPath, PathSeparator)
 50100  If Len(BasePath) Then
@@ -2394,11 +2394,18 @@ Function BrowserAddOnIsInstalled() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If FileExists(CompletePath(Environ("ProgramFiles")) & "pdfforge Toolbar\pdfforgeToolbarIE.dll") Then
-50020    BrowserAddOnIsInstalled = True
-50030   Else
-50040    BrowserAddOnIsInstalled = False
-50050  End If
+50010  Dim res As Long, files As Collection, path As String
+50020  path = CompletePath(Environ("ProgramFiles")) & "pdfforge Toolbar"
+50030  If DirExists(path) Then
+50040    res = FindFiles(path, files, "*.dll", vbNormal, True)
+50050    If files.Count > 0 Then
+50060      BrowserAddOnIsInstalled = True
+50070     Else
+50080      BrowserAddOnIsInstalled = False
+50090    End If
+50100   Else
+50110    BrowserAddOnIsInstalled = False
+50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
