@@ -1480,7 +1480,7 @@ Private Sub CheckForPrinting()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim isf As InfoSpoolFile
+50010  Dim isf As InfoSpoolFile, PrinterDefaultProfile As String, opt As tOptions, opt2 As tOptions
 50020
 50030  If lsv.ListItems.Count > 0 Then
 50040   If mnPrinter(2).Checked = True Then
@@ -1511,27 +1511,35 @@ On Error GoTo ErrPtnr_OnError
 50290     If PrinterStop = False Then
 50300      If IsFormLoaded(frmPrinting) = False Then
 50310       isf = ReadInfoSpoolfile(PDFSpoolfile)
-50320       Options = ReadOptions(True, , GetPrinterDefaultProfile(isf.REDMON_PRINTER))
-50330       If Options.UseAutosave = 1 Then
-50340         Autosave
+50320       PrinterDefaultProfile = Trim$(GetPrinterDefaultProfile(isf.REDMON_PRINTER))
+50330       If LenB(PrinterDefaultProfile) > 0 Then
+50340         opt = ReadOptions(True, , PrinterDefaultProfile)
 50350        Else
-50360         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
-50370          OldPrinter = isf.REDMON_PRINTER
-50380         End If
-50390         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
-50400         frmPrinting.Show , Me
-50410       End If
-50420      End If
-50430     End If
-50440     If PrinterStop = False And NoProcessing = False Then
-50450       mnPrinter(2).Checked = False
-50460       tlb(0).Buttons(1).Image = 1
-50470      Else
-50480       mnPrinter(2).Checked = True
-50490       tlb(0).Buttons(1).Image = 2
-50500     End If
-50510   End If
-50520  End If
+50360         opt = Options
+50370       End If
+50380       If opt.UseAutosave = 1 Then
+50390         opt2 = Options
+50400         Options = opt
+50410         Autosave
+50420         Options = opt2
+50430        Else
+50440         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
+50450          OldPrinter = isf.REDMON_PRINTER
+50460         End If
+50470         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
+50480         frmPrinting.Show , Me
+50490       End If
+50500      End If
+50510     End If
+50520     If PrinterStop = False And NoProcessing = False Then
+50530       mnPrinter(2).Checked = False
+50540       tlb(0).Buttons(1).Image = 1
+50550      Else
+50560       mnPrinter(2).Checked = True
+50570       tlb(0).Buttons(1).Image = 2
+50580     End If
+50590   End If
+50600  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
