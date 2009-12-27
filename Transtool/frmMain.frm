@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmMain 
    Caption         =   "Transtool"
    ClientHeight    =   6435
@@ -41,19 +41,11 @@ Begin VB.Form frmMain
       Top             =   735
       Visible         =   0   'False
       Width           =   540
-      _ExtentX        =   953
-      _ExtentY        =   503
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      BrushStyle      =   0
-      Color           =   65280
+      _extentx        =   953
+      _extenty        =   503
+      font            =   "frmMain.frx":628A
+      brushstyle      =   0
+      color           =   65280
    End
    Begin VB.PictureBox picAbout 
       Appearance      =   0  '2D
@@ -111,23 +103,23 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   5
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":628A
+            Picture         =   "frmMain.frx":62B6
             Key             =   "open"
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6624
+            Picture         =   "frmMain.frx":6650
             Key             =   "save"
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":69BE
+            Picture         =   "frmMain.frx":69EA
             Key             =   "search"
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6D58
+            Picture         =   "frmMain.frx":6D84
             Key             =   "empty"
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":70F2
+            Picture         =   "frmMain.frx":711E
             Key             =   "unmark"
          EndProperty
       EndProperty
@@ -159,11 +151,11 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   2
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":748C
+            Picture         =   "frmMain.frx":74B8
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":78DE
+            Picture         =   "frmMain.frx":790A
             Key             =   ""
          EndProperty
       EndProperty
@@ -254,7 +246,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   0
-      Picture         =   "frmMain.frx":7D30
+      Picture         =   "frmMain.frx":7D5C
       Top             =   840
       Width           =   930
    End
@@ -732,7 +724,7 @@ Private Sub mnFile_Click(Index As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Files As Collection, Filename As String, c As Long, aw As Long
+50010  Dim files As Collection, filename As String, c As Long, aw As Long
 50021  Select Case Index
         Case 0
 50040    OpenLanguageFile
@@ -802,7 +794,9 @@ On Error GoTo ErrPtnr_OnError
 50080   SaveFilename = TranslatedInifile
 50090  End If
 50100  RefreshStb
-50110  lsv.SetFocus
+50110  If Len(TemplateInifile) > 0 Then
+50120   lsv.SetFocus
+50130  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1244,14 +1238,14 @@ Private Sub OpenLanguageFile()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Files As Collection
-50020  If OpenFileDialog(Files, , _
-  "Languages-INI-Files (*.ini)|*.ini|All Files (*.*)|*.*", "*.ini", App.Path, _
+50010  Dim files As Collection
+50020  If OpenFileDialog(files, , _
+  "Languages-INI-Files (*.ini)|*.ini|All Files (*.*)|*.*", "*.ini", App.path, _
   "Open translated file", OFN_PATHMUSTEXIST, Me.hwnd) > 0 Then
-50050   If Files.Count > 0 Then
-50060    If Dir(Files.Item(1)) <> "" And Len(Trim$(Files.Item(1))) > 0 Then
-50070     ShowLanguageIniFile Files.Item(1)
-50080     SaveFilename = Files.Item(1)
+50050   If files.Count > 0 Then
+50060    If Dir(files.Item(1)) <> "" And Len(Trim$(files.Item(1))) > 0 Then
+50070     ShowLanguageIniFile files.Item(1)
+50080     SaveFilename = files.Item(1)
 50090     AddRecentfile SaveFilename
 50100     ShowRecentFiles
 50110    End If
@@ -1275,14 +1269,14 @@ Private Sub OpenTemplateFile()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Files As Collection
-50020  If OpenFileDialog(Files, , _
-  "Languages-INI-Files (*.ini)|*.ini|All Files (*.*)|*.*", "*.ini", App.Path, _
+50010  Dim files As Collection
+50020  If OpenFileDialog(files, , _
+  "Languages-INI-Files (*.ini)|*.ini|All Files (*.*)|*.*", "*.ini", App.path, _
   "Open template file", OFN_PATHMUSTEXIST, Me.hwnd) > 0 Then
-50050   If Files.Count > 0 Then
-50060    If Dir(Files.Item(1)) <> "" And Len(Trim$(Files.Item(1))) > 0 Then
-50070     If CheckTemplate(Files.Item(1)) = True Then
-50080      ReadTemplate Files.Item(1)
+50050   If files.Count > 0 Then
+50060    If Dir(files.Item(1)) <> "" And Len(Trim$(files.Item(1))) > 0 Then
+50070     If CheckTemplate(files.Item(1)) = True Then
+50080      ReadTemplate files.Item(1)
 50090     End If
 50100    End If
 50110   End If
@@ -1305,7 +1299,7 @@ Private Sub SaveLanguageFile(Optional SaveAs As Boolean = False)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Files As Collection, Filename As String, c As Long, aw As Long, ini As clsINI, _
+50010  Dim files As Collection, filename As String, c As Long, aw As Long, ini As clsINI, _
   i As Long, res As Long
 50030  c = GetCountEmptyValues
 50040  If c > 0 Then
@@ -1319,11 +1313,11 @@ On Error GoTo ErrPtnr_OnError
 50120   End If
 50130  End If
 50140  If Len(SaveFilename) = 0 Or SaveAs = True Then
-50150   res = SaveFileDialog(Filename, , "Languages-INI-Files (*.ini)|*.ini", "*.ini", App.Path, _
+50150   res = SaveFileDialog(filename, , "Languages-INI-Files (*.ini)|*.ini", "*.ini", App.path, _
    App.EXEName, OFN_OVERWRITEPROMPT + OFN_PATHMUSTEXIST, Me.hwnd)
 50170   If res > 0 Then
-50180    If Len(Trim$(Filename)) > 0 Then
-50190     SaveFilename = Filename
+50180    If Len(Trim$(filename)) > 0 Then
+50190     SaveFilename = filename
 50200    End If
 50210   End If
 50220  End If
@@ -1335,7 +1329,7 @@ On Error GoTo ErrPtnr_OnError
 50280   tlb.Enabled = False
 50290   Screen.MousePointer = vbHourglass
 50300   Set ini = New clsINI
-50310   ini.Filename = SaveFilename
+50310   ini.filename = SaveFilename
 50320   ini.CreateIniFile
 50330   With xpPgb
 50340    .Visible = True
@@ -1344,13 +1338,13 @@ On Error GoTo ErrPtnr_OnError
 50370     With lsv.ListItems(i)
 50380      ini.SaveKey .Text, .ListSubItems(4).Text, .ListSubItems(3).Text
 50390     End With
-50400     .Value = i
+50400     .value = i
 50410    Next i
-50420    .Value = 0
+50420    .value = 0
 50430    .Visible = False
 50440   End With
-50450   SplitPath Filename, , , Filename
-50460   lsv.ColumnHeaders(1).Text = "Translated text (" & Filename & ")"
+50450   SplitPath filename, , , filename
+50460   lsv.ColumnHeaders(1).Text = "Translated text (" & filename & ")"
 50470   ChangedListitem = False
 50480   Caption = "Transtool"
 50490   Screen.MousePointer = vbNormal
@@ -1377,13 +1371,13 @@ Private Sub ShowLanguageIniFile(LanguageIniFilename As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ini As clsINI, secs As Collection, keys As Collection, i As Long, j As Long, _
-  l As Long, c As Long, Filename As String
+  l As Long, c As Long, filename As String
 50030  Screen.MousePointer = vbHourglass
 50040  For i = 1 To lsv.ListItems.Count
 50050   lsv.ListItems(i).Text = ""
 50060  Next i
 50070  Set ini = New clsINI
-50080  ini.Filename = LanguageIniFilename
+50080  ini.filename = LanguageIniFilename
 50090  Set secs = ini.GetAllSectionsFromInifile(, True)
 50100  If secs.Count > 0 Then
 50110   c = 0
@@ -1399,7 +1393,7 @@ On Error GoTo ErrPtnr_OnError
 50210     Set keys = ini.GetAllKeysFromSection(secs.Item(i), , , True)
 50220     For j = 1 To keys.Count
 50230      c = c + 1
-50240      .Value = c
+50240      .value = c
 50250      For l = 1 To lsv.ListItems.Count
 50260       If UCase$(lsv.ListItems(l).ListSubItems(3)) = UCase$(secs.Item(i)) And _
        UCase$(lsv.ListItems(l).ListSubItems(4)) = UCase$(keys.Item(j)(0)) Then
@@ -1409,12 +1403,12 @@ On Error GoTo ErrPtnr_OnError
 50310      Next l
 50320     Next j
 50330    Next i
-50340    .Value = 0
+50340    .value = 0
 50350    .Visible = False
 50360   End With
 50370  End If
-50380  SplitPath LanguageIniFilename, , , Filename
-50390  lsv.ColumnHeaders(1).Text = "Translated text (" & Filename & ")"
+50380  SplitPath LanguageIniFilename, , , filename
+50390  lsv.ColumnHeaders(1).Text = "Translated text (" & filename & ")"
 50400  Screen.MousePointer = vbNormal
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1433,11 +1427,11 @@ Private Sub ReadTemplate(IniFile As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ini As clsINI, secs As Collection, keys As Collection, _
-  i As Long, j As Long, lsvItem As ListItem, Filename As String
+  i As Long, j As Long, lsvItem As ListItem, filename As String
 50030
 50040  lsv.ListItems.Clear
 50050  Set ini = New clsINI
-50060  ini.Filename = IniFile
+50060  ini.filename = IniFile
 50070  Set secs = ini.GetAllSectionsFromInifile(, True)
 50080  For i = 1 To secs.Count
 50090   Set keys = ini.GetAllKeysFromSection(secs(i), , , True)
@@ -1451,8 +1445,8 @@ On Error GoTo ErrPtnr_OnError
 50170   Next j
 50180  Next i
 50190  LsvLineNumber
-50200  SplitPath IniFile, , , Filename
-50210  lsv.ColumnHeaders(6).Text = "Template text (" & Filename & ")"
+50200  SplitPath IniFile, , , filename
+50210  lsv.ColumnHeaders(6).Text = "Template text (" & filename & ")"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1520,7 +1514,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim h1 As Long, h2 As Long, com As Long
 50020  h1 = GetMenu(Me.hwnd): h2 = GetSubMenu(h1, 2)
 50030  com = GetMenuItemID(h2, 0)
-50040  ModifyMenu h2, com, MF_BYCOMMAND Or MF_BITMAP, com, CLng(imgPaypal.Picture)
+50040  ModifyMenu h2, com, MF_BYCOMMAND Or MF_BITMAP, com, CLng(ImgPaypal.Picture)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1584,7 +1578,7 @@ Private Sub ShowRecentFiles()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim col As Collection, i As Long, Path As String, File As String
+50010  Dim col As Collection, i As Long, path As String, File As String
 50020  Set col = GetRecentFiles
 50030  mnFile(mnFile.Count - 2).Visible = False
 50040  For i = 1 To MaxRecentfiles
@@ -1593,9 +1587,9 @@ On Error GoTo ErrPtnr_OnError
 50070  If RecentFilesCount > 0 Then
 50080   For i = 1 To RecentFilesCount
 50090    If i <= col.Count Then
-50100     SplitPath col(i), , Path, , File
+50100     SplitPath col(i), , path, , File
 50110     mnFile(mnFileRecentFilesStart + i - 1).Caption = "&" & i & " " & _
-     ShortenPath(Me.hdc, CompletePath(Path) & File, 200)
+     ShortenPath(Me.hdc, CompletePath(path) & File, 200)
 50130     mnFile(mnFileRecentFilesStart + i - 1).Tag = col(i)
 50140     mnFile(mnFileRecentFilesStart + i - 1).Visible = True
 50150     If mnFile(mnFile.Count - 2).Visible = False Then
@@ -1620,13 +1614,13 @@ Private Sub OpenRecentFile(RecentFilenumber As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Filename As String
-50020  Filename = GetRecentFile(RecentFilenumber)
-50030  If FileExists(Filename) = True Then
-50040    ShowLanguageIniFile Filename
-50050    SaveFilename = Filename
+50010  Dim filename As String
+50020  filename = GetRecentFile(RecentFilenumber)
+50030  If FileExists(filename) = True Then
+50040    ShowLanguageIniFile filename
+50050    SaveFilename = filename
 50060    RefreshStb
-50070    AddRecentfile Filename
+50070    AddRecentfile filename
 50080   Else
 50090    MsgBox "The file doesn't exists!", vbExclamation
 50100    RemoveRecentFile RecentFilenumber
