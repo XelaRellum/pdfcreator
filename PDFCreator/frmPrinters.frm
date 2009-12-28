@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmPrinters 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Form1"
@@ -128,12 +128,13 @@ Begin VB.Form frmPrinters
          Width           =   6210
       End
       Begin VB.Label lblNewPrinterName 
+         AutoSize        =   -1  'True
          Caption         =   "New printer name"
-         Height          =   255
+         Height          =   195
          Left            =   120
          TabIndex        =   8
          Top             =   3480
-         Width           =   1335
+         Width           =   1245
       End
    End
    Begin VB.CommandButton cmdSave 
