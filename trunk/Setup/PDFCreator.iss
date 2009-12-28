@@ -340,7 +340,7 @@ Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion c
 
 ;Languages
 Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
@@ -759,8 +759,8 @@ Name: languages; Description: {cm:Languages}; Types: full custom
 Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
 Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
 
-;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
-;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
 
 Name: languages\chinese_traditional; Description: Chinese traditional; Types: full; Check: Not IsLanguage('chinese_traditional'); Flags: dontinheritcheck
 Name: languages\chinese_traditional; Description: Chinese traditional; Types: full custom; Check: IsLanguage('chinese_traditional'); Flags: dontinheritcheck
@@ -3198,7 +3198,7 @@ begin
  Result:=trb;
 end;
 
-function CountOfFiles(path, extension: string; recursiv: boolean): LongInt; // Sample: CountOfFiles('C:\Windows\system32' , 'dll')
+function CountOfFiles(path, extension: string; recursiv, NotAll: boolean): LongInt; // Sample: CountOfFiles('C:\Windows\system32' , 'dll')
 var
   FilesFound: Integer;
   FindRec: TFindRec;
@@ -3208,12 +3208,14 @@ begin
  if FindFirst(path + '\*', FindRec) then begin
   try
    repeat
+    If NotAll And (FilesFound > 0) Then
+     Break;
     if FindRec.Attributes and FILE_ATTRIBUTE_DIRECTORY = 0 then begin
      if CompareText(ExtractFileExt(FindRec.Name), '.' + extension) = 0 then
       FilesFound := FilesFound + 1
     end else
      if (recursiv and (FindRec.Name <> '.') and (FindRec.Name <> '..')) then
-      FilesFound := FilesFound + CountOfFiles(path + '\' + FindRec.Name, extension, recursiv)
+      FilesFound := FilesFound + CountOfFiles(path + '\' + FindRec.Name, extension, recursiv, NotAll)
    until not FindNext(FindRec);
   finally
    FindClose(FindRec);
@@ -3227,50 +3229,12 @@ var path:string;
 begin
  path := ExpandConstant('{pf}\pdfforge toolbar');
  If DirExists(path) then begin
-  If CountOfFiles(ExpandConstant('{pf}\pdfforge toolbar'), 'dll', true) > 0 then
+  If CountOfFiles(ExpandConstant('{pf}\pdfforge toolbar'), 'dll', true, true) > 0 then
     Result:=true
    else
     Result:=false;
   end else
    Result:=false;
- end;
-end;
-
-//http://www.loc.gov/standards/iso639-2/php/code_list.php
-function GetLanguageISOCode(): String;
-var
- l: string;
-begin
- l := LowerCase(ActiveLanguage);
-
- result := 'en';
- if l = 'catalan' then result := 'ca';
- if l = 'chinese_simplified' then result := 'zh';
- if l = 'czech' then result := 'cs';
- if l = 'danish' then result := 'da';
- if l = 'dutch' then result := 'nl';
- if l = 'estonian' then result := 'et';
- if l = 'finnish' then result := 'fi';
- if l = 'french' then result := 'fr';
- if l = 'galician' then result := 'gl';
- if l = 'german' then result := 'de';
- if l = 'greek' then result := 'el';
- if l = 'hungarian' then result := 'hu';
- if l = 'indonesian' then result := 'id';
- if l = 'italian' then result := 'it';
- if l = 'japanese' then result := 'ja';
- if l = 'lithuanian' then result := 'lt';
- if l = 'norwegian_bokmal' then result := 'no';
- if l = 'polish' then result := 'pl';
- if l = 'portuguese_br' then result := 'pt';
- if l = 'romanian' then result := 'ro';
- if l = 'russian' then result := 'ru';
- if l = 'slovak' then result := 'sk';
- if l = 'slovenian' then result := 'sl';
- if l = 'spanish' then result := 'es';
- if l = 'swedish' then result := 'sv';
- if l = 'turkish' then result := 'tr';
- if l = 'ukrainian' then result := 'uk';
 end;
 
 procedure InitializeWizard();
@@ -3726,5 +3690,3 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
-
-

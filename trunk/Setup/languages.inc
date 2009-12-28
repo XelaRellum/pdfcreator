@@ -2,7 +2,7 @@
 Name: english;            MessagesFile: compiler:Default.isl
 Name: catalan;            MessagesFile: compiler:Languages\Catalan.isl
 ;Name: czech;              MessagesFile: compiler:Languages\Czech.isl
-;Name: chinese_simplified; MessagesFile: Innosetup languages files\ChineseSimp-11-5.1.0.isl
+Name: chinese_simplified; MessagesFile: Innosetup languages files\ChineseSimp-12-5.1.11.isl
 Name: chinese_traditional; MessagesFile: Innosetup languages files\ChineseTrad-2-5.1.11.isl
 Name: danish;              MessagesFile: compiler:Languages\Danish.isl
 ;Name: dutch;              MessagesFile: compiler:Languages\Dutch.isl
