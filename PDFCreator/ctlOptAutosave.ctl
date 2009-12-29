@@ -418,12 +418,18 @@ On Error GoTo ErrPtnr_OnError
 50500      .AutosaveFormat = 14 ' SVG
 50510    End Select
 50520   End If
-50530   .AutosaveFilename = txtAutosaveFilename.Text
-50540   .UseAutosaveDirectory = Abs(chkUseAutosaveDirectory.value)
-50550   .AutosaveDirectory = txtAutosaveDirectory.Text
-50560   .AutosaveStartStandardProgram = Abs(chkAutosaveStartStandardProgram.value)
-50570   .SendEmailAfterAutoSaving = Abs(chkAutosaveSendEmail.value)
-50580  End With
+50530   .AutosaveFilename = Trim$(txtAutosaveFilename.Text)
+50540   If LenB(.AutosaveFilename) = 0 Then
+50550    .AutosaveFilename = StandardOptions.AutosaveFilename
+50560   End If
+50570   .UseAutosaveDirectory = Abs(chkUseAutosaveDirectory.value)
+50580   .AutosaveDirectory = Trim$(txtAutosaveDirectory.Text)
+50590   If LenB(.AutosaveDirectory) = 0 Then
+50600    .AutosaveDirectory = StandardOptions.AutosaveDirectory
+50610   End If
+50620   .AutosaveStartStandardProgram = Abs(chkAutosaveStartStandardProgram.value)
+50630   .SendEmailAfterAutoSaving = Abs(chkAutosaveSendEmail.value)
+50640  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
