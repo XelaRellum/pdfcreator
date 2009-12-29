@@ -4,7 +4,7 @@
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
 ' Version: 1.1.0.0
-' Date: January 30, 2008
+' Date: December 29, 2009
 ' Author: Frank Heindörfer
 ' Comments: Merge several pdf files.
 
