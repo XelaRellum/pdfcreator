@@ -3,7 +3,7 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
+' Version: 1.1.0.0
 ' Date: January 30, 2008
 ' Author: Frank Heindörfer
 ' Comments: Merge several pdf files.
@@ -37,7 +37,9 @@ For i = 0 To objArgs.Count - 1
 Next
 
 Set pdfforge = Wscript.CreateObject("pdfforge.pdf.pdf")
-resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\MergedPDFs.pdf"
-pdfforge.MergePDFFiles_2 (files), (resFile)
+resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\MergedPDFs1.pdf"
+pdfforge.MergePDFFiles_2 (files), (resFile), false
+resFile = fso.GetParentFolderName(Wscript.ScriptFullname) & "\MergedPDFs2.pdf"
+pdfforge.MergePDFFiles_2 (files), (resFile), true
 
 Set pdfforge = Nothing
