@@ -142,8 +142,8 @@ On Error GoTo ErrPtnr_OnError
 50030  ptrByte = VarPtr(aByte(0))
 50040  MoveMemoryLong ptrByte, strz, intBytes
 50050  tStr = Replace(StrConv(aByte, vbUnicode), vbLf, vbCrLf)
-50060
-50070  If (LCase$(Mid$(tStr, 1, 4)) <> "svg_") And (tStr = gsStr1) And (LCase$(Mid$(tStr, 1, 6)) <> "type 1") Then ' filter svg waste
+50060  'If (LCase$(Mid$(tStr, 1, 4)) <> "svg_") And (tStr = gsStr1) And (LCase$(Mid$(tStr, 1, 6)) <> "type 1") Then ' filter svg waste
+50070  If (LCase$(Mid$(tStr, 1, 4)) <> "svg_") And (LCase$(Mid$(tStr, 1, 6)) <> "type 1") Then ' filter svg waste
 50080   GS_OutStr = GS_OutStr + tStr
 50090  End If
 50100  gsdll_stdout = intBytes
@@ -278,7 +278,7 @@ On Error GoTo ErrPtnr_OnError
 50200     intReturn = gsapi_new_instance(intGSInstanceHandle, callerHandle)
 50210     If (intReturn < 0) Then
 50220      CallGS = False
-50230      IfLoggingWriteLogfile "Error: " & GS_OutStr
+50230      IfLoggingWriteLogfile "Error: (gsapi_new_instance result = " & intReturn & "): " & GS_OutStr
 50240      Exit Function
 50250     End If
 50260
