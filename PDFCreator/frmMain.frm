@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
@@ -1521,25 +1521,31 @@ On Error GoTo ErrPtnr_OnError
 50390         opt2 = Options
 50400         Options = opt
 50410         Autosave
-50420         Options = opt2
-50430        Else
-50440         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
-50450          OldPrinter = isf.REDMON_PRINTER
-50460         End If
-50470         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
-50480         frmPrinting.Show , Me
-50490       End If
-50500      End If
-50510     End If
-50520     If PrinterStop = False And NoProcessing = False Then
-50530       mnPrinter(2).Checked = False
-50540       tlb(0).Buttons(1).Image = 1
-50550      Else
-50560       mnPrinter(2).Checked = True
-50570       tlb(0).Buttons(1).Image = 2
-50580     End If
-50590   End If
-50600  End If
+50420         opt2.Counter = Options.Counter
+50430         Options = opt2
+50440        Else
+50450         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
+50460          OldPrinter = isf.REDMON_PRINTER
+50470         End If
+50480         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
+50490         frmPrinting.Show , Me
+50500       End If
+50510       If LenB(PrinterDefaultProfile) > 0 Then
+50520         SaveOption Options, "Counter", PrinterDefaultProfile
+50530        Else
+50540         SaveOption Options, "Counter"
+50550       End If
+50560      End If
+50570     End If
+50580     If PrinterStop = False And NoProcessing = False Then
+50590       mnPrinter(2).Checked = False
+50600       tlb(0).Buttons(1).Image = 1
+50610      Else
+50620       mnPrinter(2).Checked = True
+50630       tlb(0).Buttons(1).Image = 2
+50640     End If
+50650   End If
+50660  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1894,31 +1900,32 @@ On Error GoTo ErrPtnr_OnError
 50820          End If
 50830          Set mail = Nothing
 50840         End If
-50850         If Options.AutosaveStartStandardProgram = 1 Then
-50860          If Options.OnePagePerFile = 1 Then
-50870            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
-50880           Else
-50890            OpenDocument OutputFilename
-50900          End If
-50910         End If
-50920        Else
-50930         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-50940         IfLoggingWriteLogfile tStr
-50950         WriteToSpecialLogfile tStr
-50960       End If
-50970      Else
-50980       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
-50990     End If
-51000     CheckForPrintingAfterSaving tFile(1), Options
-51010     KillFile tFile(1)
-51020     KillInfoSpoolfile tFile(1)
-51030     ConvertedOutputFilename = OutputFilename
-51040     ReadyConverting = True
-51050    End If
-51060   Next i
-51070   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
-51080  Loop
-51090  InAutoSave = False
+50850         Options.Counter = Options.Counter + 1
+50860         If Options.AutosaveStartStandardProgram = 1 Then
+50870          If Options.OnePagePerFile = 1 Then
+50880            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
+50890           Else
+50900            OpenDocument OutputFilename
+50910          End If
+50920         End If
+50930        Else
+50940         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+50950         IfLoggingWriteLogfile tStr
+50960         WriteToSpecialLogfile tStr
+50970       End If
+50980      Else
+50990       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
+51000     End If
+51010     CheckForPrintingAfterSaving tFile(1), Options
+51020     KillFile tFile(1)
+51030     KillInfoSpoolfile tFile(1)
+51040     ConvertedOutputFilename = OutputFilename
+51050     ReadyConverting = True
+51060    End If
+51070   Next i
+51080   Set tColl = GetFiles(GetPDFCreatorTempfolder, "~PS*.tmp", SortedByDate)
+51090  Loop
+51100  InAutoSave = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2545,9 +2552,10 @@ On Error GoTo ErrPtnr_OnError
 50250     End If
 50260     Set mail = Nothing
 50270    End If
-50280    KillFile InputFilename
-50290   End If
-50300  End If
+50280    Options.Counter = Options.Counter + 1
+50290    KillFile InputFilename
+50300   End If
+50310  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

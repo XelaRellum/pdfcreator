@@ -354,9 +354,10 @@ On Error GoTo ErrPtnr_OnError
 50280
 50290  KillFile PDFSpoolfile
 50300  KillInfoSpoolfile PDFSpoolfile
-50310
-50320  Me.Visible = False
-50330  Unload Me
+50310  Options.Counter = Options.Counter + 1
+50320
+50330  Me.Visible = False
+50340  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -819,17 +820,18 @@ On Error GoTo ErrPtnr_OnError
      Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50250    End If
 50260   End If
-50270   If chkStartStandardProgram.value = 1 Then
-50280    If Options.OnePagePerFile = 1 Then
-50290      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
-50300     Else
-50310      OpenDocument PDFFile
-50320    End If
-50330   End If
-50340   IsConverted = True
-50350   KillFile PDFSpoolfile
-50360   KillInfoSpoolfile PDFSpoolfile
-50370  End If
+50270   Options.Counter = Options.Counter + 1
+50280   If chkStartStandardProgram.value = 1 Then
+50290    If Options.OnePagePerFile = 1 Then
+50300      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50310     Else
+50320      OpenDocument PDFFile
+50330    End If
+50340   End If
+50350   IsConverted = True
+50360   KillFile PDFSpoolfile
+50370   KillInfoSpoolfile PDFSpoolfile
+50380  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
