@@ -17,7 +17,7 @@ Name: hungarian;          MessagesFile: compiler:Languages\Hungarian.isl
 Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 ;Name: japanese;           MessagesFile: Innosetup languages files\Japanese-5-5.1.11.isl
 ;Name: korean;             MessagesFile: Innosetup languages files\Korean-5-5.1.11.isl
-;Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.11.isl
+Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.11.isl
 ;Name: norwegian_bokmal;   MessagesFile: compiler:Languages\Norwegian.isl
 ;Name: polish;             MessagesFile: compiler:Languages\Polish.isl
 Name: portuguese_br;      MessagesFile: compiler:Languages\BrazilianPortuguese.isl
