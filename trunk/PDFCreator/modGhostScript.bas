@@ -1604,9 +1604,6 @@ On Error GoTo ErrPtnr_OnError
 51160   Case 14: 'SVG
 51170    CreateSVG GSInputFile, GSOutputFile, Options
 51180  End Select
-51190
-51200  Options.Counter = Options.Counter + 1
-51210  SaveOption Options, "Counter"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

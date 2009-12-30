@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.Form frmOptions 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Options"
@@ -366,12 +366,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub AddProfile(Profilename As String)
+Public Sub AddProfile(ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim resS As String, i As Long
-50020  resS = Trim$(Profilename)
+50020  resS = Trim$(ProfileName)
 50030  If LenB(resS) = 0 Then
 50040   Exit Sub
 50050  End If
@@ -395,13 +395,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub RenameProfile(Profilename As String)
+Public Sub RenameProfile(ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim resS As String, i As Long, NewPrinterProfiles As Collection, tStr As String, sa(2) As String
 50020
-50030  resS = Trim$(Profilename)
+50030  resS = Trim$(ProfileName)
 50040  If LenB(resS) = 0 Then
 50050   Exit Sub
 50060  End If
@@ -436,13 +436,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function ProfileExists(Profilename) As Boolean
+Private Function ProfileExists(ProfileName) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long
 50020  For i = 0 To cmbProfile.ListCount - 1
-50030   If StrComp(cmbProfile.List(i), Profilename, vbTextCompare) = 0 Then
+50030   If StrComp(cmbProfile.List(i), ProfileName, vbTextCompare) = 0 Then
 50040    ProfileExists = True
 50050    Exit Function
 50060   End If
@@ -515,7 +515,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function ProfileAssociatedPrinter(Profilename As String)
+Private Function ProfileAssociatedPrinter(ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -523,7 +523,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set PrinterProfiles = GetPrinterProfiles
 50030
 50040  For i = 1 To PrinterProfiles.Count
-50050   If StrComp(PrinterProfiles(i)(1), Profilename, vbTextCompare) = 0 Then
+50050   If StrComp(PrinterProfiles(i)(1), ProfileName, vbTextCompare) = 0 Then
 50060    If LenB(tStr) = 0 Then
 50070      tStr = PrinterProfiles(i)(0)
 50080     Else
@@ -938,7 +938,8 @@ On Error GoTo ErrPtnr_OnError
 50250  optPrint.GetOptions
 50260  optSave.GetOptions
 50270
-50280  GetOptionsFromUserControls = Options1
+50280  Options1.Counter = Options.Counter
+50290  GetOptionsFromUserControls = Options1
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1727,7 +1728,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub SetProfile(Optional ByVal Profilename As String = "") ' Empty profilename for default profile
+Private Sub SetProfile(Optional ByVal ProfileName As String = "") ' Empty profilename for default profile
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1737,13 +1738,13 @@ On Error GoTo ErrPtnr_OnError
 50040   Else
 50050    OldProfile = cmbProfile.ListIndex
 50060  End If
-50070  Profilename = Trim$(Profilename)
-50080  If LenB(Profilename) = 0 Then
+50070  ProfileName = Trim$(ProfileName)
+50080  If LenB(ProfileName) = 0 Then
 50090   cmbProfile.ListIndex = 0
 50100   Exit Sub
 50110  End If
 50120  For i = 1 To cmbProfile.ListCount - 1
-50130   If LCase$(Profilename) = LCase$(cmbProfile.List(i)) Then
+50130   If LCase$(ProfileName) = LCase$(cmbProfile.List(i)) Then
 50140    cmbProfile.ListIndex = i
 50150    Exit Sub
 50160   End If

@@ -198,7 +198,9 @@ On Error GoTo ErrPtnr_OnError
 50230    GetSaveAutosaveFormatExtension = ".pcl"
 50240   Case 13
 50250    GetSaveAutosaveFormatExtension = ".raw"
-50260  End Select
+50260   Case 14
+50270    GetSaveAutosaveFormatExtension = ".svg"
+50280  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

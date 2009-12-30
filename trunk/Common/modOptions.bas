@@ -391,22 +391,22 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function ReadOptions(Optional NoMsg As Boolean = False, Optional hProfile As hkey = HKEY_CURRENT_USER, Optional Profilename As String = "") As tOptions
+Public Function ReadOptions(Optional NoMsg As Boolean = False, Optional hProfile As hkey = HKEY_CURRENT_USER, Optional ProfileName As String = "") As tOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim myOptions As tOptions, Str1 As String
 50020  Dim tStr As String
 50030
-50040  Profilename = Trim$(Profilename)
-50050  If LenB(Profilename) > 0 Then
-50060   tStr = "_" & Profilename
+50040  ProfileName = Trim$(ProfileName)
+50050  If LenB(ProfileName) > 0 Then
+50060   tStr = "_" & ProfileName
 50070  End If
 50080
 50090  If InstalledAsServer Then
 50100    WriteToSpecialLogfile "Reg-Read options: HKEY_LOCAL_MACHINE"
-50110    If LenB(Profilename) > 0 Then
-50120      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & Profilename, HKEY_LOCAL_MACHINE, NoMsg)
+50110    If LenB(ProfileName) > 0 Then
+50120      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg)
 50130     Else
 50140      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", HKEY_LOCAL_MACHINE, NoMsg)
 50150    End If
@@ -415,21 +415,21 @@ On Error GoTo ErrPtnr_OnError
 50180      WriteToSpecialLogfile "Reg-Read options: HKEY_USERS"
 50190      myOptions = ReadOptionsReg(myOptions, ".DEFAULT\Software\PDFCreator", HKEY_USERS, NoMsg)
 50200      WriteToSpecialLogfile "Reg-Read options: HKEY_CURRENT_USER [" & hProfile & "]"
-50210      If LenB(Profilename) > 0 Then
-50220        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & Profilename, hProfile, NoMsg, False)
+50210      If LenB(ProfileName) > 0 Then
+50220        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & ProfileName, hProfile, NoMsg, False)
 50230       Else
 50240        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", hProfile, NoMsg, False)
 50250      End If
 50260     Else
-50270      If LenB(Profilename) > 0 Then
-50280        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & Profilename, hProfile, NoMsg, False)
+50270      If LenB(ProfileName) > 0 Then
+50280        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & ProfileName, hProfile, NoMsg, False)
 50290       Else
 50300        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", hProfile, NoMsg, False)
 50310      End If
 50320    End If
 50330    WriteToSpecialLogfile "Reg-Read options: HKEY_LOCAL_MACHINE"
-50340    If LenB(Profilename) > 0 Then
-50350      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & Profilename, HKEY_LOCAL_MACHINE, NoMsg, False)
+50340    If LenB(ProfileName) > 0 Then
+50350      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg, False)
 50360     Else
 50370      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", HKEY_LOCAL_MACHINE, NoMsg, False)
 50380    End If
@@ -2789,14 +2789,14 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function ProfileExists(ByVal Profilename As String) As Boolean
+Public Function ProfileExists(ByVal ProfileName As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Profiles As Collection, i As Long
 50020  Set Profiles = GetProfiles
 50030  For i = 1 To Profiles.Count
-50040   If LCase$(Profiles(i)) = LCase$(Profilename) Then
+50040   If LCase$(Profiles(i)) = LCase$(ProfileName) Then
 50050    ProfileExists = True
 50060    Exit Function
 50070   End If
@@ -2874,14 +2874,14 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub DeleteProfile(Profilename As String)
+Public Sub DeleteProfile(ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim reg As clsRegistry
 50020  Set reg = New clsRegistry
 50030
-50040  Profilename = Trim$(Profilename)
+50040  ProfileName = Trim$(ProfileName)
 50050
 50060  reg.KeyRoot = "Software\PDFCreator\Profiles"
 50070
@@ -2890,7 +2890,7 @@ On Error GoTo ErrPtnr_OnError
 50100   Else
 50110    reg.hkey = HKEY_CURRENT_USER
 50120  End If
-50130  reg.DeleteKeyWithSubkeys Profilename
+50130  reg.DeleteKeyWithSubkeys ProfileName
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2903,7 +2903,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub SaveOptions(sOptions As tOptions, Optional Profilename As String = "")
+Public Sub SaveOptions(sOptions As tOptions, Optional ProfileName As String = "")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -2911,15 +2911,15 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  CorrectOptionsBeforeSaving
 50040
-50050  Profilename = Trim$(Profilename)
-50060  If LenB(Profilename) > 0 Then
-50070   tStr = "_" & Profilename
+50050  ProfileName = Trim$(ProfileName)
+50060  If LenB(ProfileName) > 0 Then
+50070   tStr = "_" & ProfileName
 50080  End If
 50090
 50100  If InstalledAsServer Then
-50110    SaveOptionsREG sOptions, HKEY_LOCAL_MACHINE, Profilename
+50110    SaveOptionsREG sOptions, HKEY_LOCAL_MACHINE, ProfileName
 50120   Else
-50130    SaveOptionsREG sOptions, , Profilename
+50130    SaveOptionsREG sOptions, , ProfileName
 50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2933,14 +2933,14 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub SaveOption(sOptions As tOptions, OptionName As String)
+Public Sub SaveOption(sOptions As tOptions, OptionName As String, Optional ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If InstalledAsServer Then
-50020    SaveOptionREG sOptions, OptionName, HKEY_LOCAL_MACHINE
+50020    SaveOptionREG sOptions, OptionName, HKEY_LOCAL_MACHINE, ProfileName
 50030   Else
-50040    SaveOptionREG sOptions, OptionName
+50040    SaveOptionREG sOptions, OptionName, , ProfileName
 50050  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -5626,1420 +5626,1428 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub SaveOptionREG(sOptions As tOptions, OptionName As String, Optional hkey1 As hkey = HKEY_CURRENT_USER)
+Public Sub SaveOptionREG(sOptions As tOptions, OptionName As String, Optional hkey1 As hkey = HKEY_CURRENT_USER, Optional ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim reg As clsRegistry
 50020  Set reg = New clsRegistry
 50030  reg.hkey = hkey1
-50040  reg.KeyRoot = "Software\PDFCreator"
-50050  With sOptions
-50060   reg.SubKey = "Ghostscript"
-50070   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTBINARIES" Then
-50080    If Not reg.KeyExists Then
-50090     reg.CreateKey
-50100    End If
-50110    reg.SetRegistryValue "DirectoryGhostscriptBinaries", CStr(.DirectoryGhostscriptBinaries), REG_SZ
-50120    Set reg = Nothing
-50130    Exit Sub
-50140   End If
-50150   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTFONTS" Then
+50040
+50050  ProfileName = Trim$(ProfileName)
+50060
+50070  If LenB(ProfileName) > 0 Then
+50080    reg.KeyRoot = "Software\PDFCreator\Profiles\" & ProfileName
+50090   Else
+50100    reg.KeyRoot = "Software\PDFCreator"
+50110  End If
+50120
+50130  With sOptions
+50140   reg.SubKey = "Ghostscript"
+50150   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTBINARIES" Then
 50160    If Not reg.KeyExists Then
 50170     reg.CreateKey
 50180    End If
-50190    reg.SetRegistryValue "DirectoryGhostscriptFonts", CStr(.DirectoryGhostscriptFonts), REG_SZ
+50190    reg.SetRegistryValue "DirectoryGhostscriptBinaries", CStr(.DirectoryGhostscriptBinaries), REG_SZ
 50200    Set reg = Nothing
 50210    Exit Sub
 50220   End If
-50230   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTLIBRARIES" Then
+50230   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTFONTS" Then
 50240    If Not reg.KeyExists Then
 50250     reg.CreateKey
 50260    End If
-50270    reg.SetRegistryValue "DirectoryGhostscriptLibraries", CStr(.DirectoryGhostscriptLibraries), REG_SZ
+50270    reg.SetRegistryValue "DirectoryGhostscriptFonts", CStr(.DirectoryGhostscriptFonts), REG_SZ
 50280    Set reg = Nothing
 50290    Exit Sub
 50300   End If
-50310   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTRESOURCE" Then
+50310   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTLIBRARIES" Then
 50320    If Not reg.KeyExists Then
 50330     reg.CreateKey
 50340    End If
-50350    reg.SetRegistryValue "DirectoryGhostscriptResource", CStr(.DirectoryGhostscriptResource), REG_SZ
+50350    reg.SetRegistryValue "DirectoryGhostscriptLibraries", CStr(.DirectoryGhostscriptLibraries), REG_SZ
 50360    Set reg = Nothing
 50370    Exit Sub
 50380   End If
-50390   reg.SubKey = "Printing"
-50400   If UCase$(OptionName) = "COUNTER" Then
-50410    If Not reg.KeyExists Then
-50420     reg.CreateKey
-50430    End If
-50440    reg.SetRegistryValue "Counter", CStr(.Counter), REG_SZ
-50450    Set reg = Nothing
-50460    Exit Sub
-50470   End If
-50480   If UCase$(OptionName) = "DEVICEHEIGHTPOINTS" Then
+50390   If UCase$(OptionName) = "DIRECTORYGHOSTSCRIPTRESOURCE" Then
+50400    If Not reg.KeyExists Then
+50410     reg.CreateKey
+50420    End If
+50430    reg.SetRegistryValue "DirectoryGhostscriptResource", CStr(.DirectoryGhostscriptResource), REG_SZ
+50440    Set reg = Nothing
+50450    Exit Sub
+50460   End If
+50470   reg.SubKey = "Printing"
+50480   If UCase$(OptionName) = "COUNTER" Then
 50490    If Not reg.KeyExists Then
 50500     reg.CreateKey
 50510    End If
-50520   reg.SetRegistryValue "DeviceHeightPoints", Replace$(CStr(.DeviceHeightPoints), GetDecimalChar, "."), REG_SZ
+50520    reg.SetRegistryValue "Counter", CStr(.Counter), REG_SZ
 50530    Set reg = Nothing
 50540    Exit Sub
 50550   End If
-50560   If UCase$(OptionName) = "DEVICEWIDTHPOINTS" Then
+50560   If UCase$(OptionName) = "DEVICEHEIGHTPOINTS" Then
 50570    If Not reg.KeyExists Then
 50580     reg.CreateKey
 50590    End If
-50600   reg.SetRegistryValue "DeviceWidthPoints", Replace$(CStr(.DeviceWidthPoints), GetDecimalChar, "."), REG_SZ
+50600   reg.SetRegistryValue "DeviceHeightPoints", Replace$(CStr(.DeviceHeightPoints), GetDecimalChar, "."), REG_SZ
 50610    Set reg = Nothing
 50620    Exit Sub
 50630   End If
-50640   If UCase$(OptionName) = "ONEPAGEPERFILE" Then
+50640   If UCase$(OptionName) = "DEVICEWIDTHPOINTS" Then
 50650    If Not reg.KeyExists Then
 50660     reg.CreateKey
 50670    End If
-50680    reg.SetRegistryValue "OnePagePerFile", CStr(Abs(.OnePagePerFile)), REG_SZ
+50680   reg.SetRegistryValue "DeviceWidthPoints", Replace$(CStr(.DeviceWidthPoints), GetDecimalChar, "."), REG_SZ
 50690    Set reg = Nothing
 50700    Exit Sub
 50710   End If
-50720   If UCase$(OptionName) = "PAPERSIZE" Then
+50720   If UCase$(OptionName) = "ONEPAGEPERFILE" Then
 50730    If Not reg.KeyExists Then
 50740     reg.CreateKey
 50750    End If
-50760    reg.SetRegistryValue "Papersize", CStr(.Papersize), REG_SZ
+50760    reg.SetRegistryValue "OnePagePerFile", CStr(Abs(.OnePagePerFile)), REG_SZ
 50770    Set reg = Nothing
 50780    Exit Sub
 50790   End If
-50800   If UCase$(OptionName) = "STAMPFONTCOLOR" Then
+50800   If UCase$(OptionName) = "PAPERSIZE" Then
 50810    If Not reg.KeyExists Then
 50820     reg.CreateKey
 50830    End If
-50840    reg.SetRegistryValue "StampFontColor", CStr(.StampFontColor), REG_SZ
+50840    reg.SetRegistryValue "Papersize", CStr(.Papersize), REG_SZ
 50850    Set reg = Nothing
 50860    Exit Sub
 50870   End If
-50880   If UCase$(OptionName) = "STAMPFONTNAME" Then
+50880   If UCase$(OptionName) = "STAMPFONTCOLOR" Then
 50890    If Not reg.KeyExists Then
 50900     reg.CreateKey
 50910    End If
-50920    reg.SetRegistryValue "StampFontname", CStr(.StampFontname), REG_SZ
+50920    reg.SetRegistryValue "StampFontColor", CStr(.StampFontColor), REG_SZ
 50930    Set reg = Nothing
 50940    Exit Sub
 50950   End If
-50960   If UCase$(OptionName) = "STAMPFONTSIZE" Then
+50960   If UCase$(OptionName) = "STAMPFONTNAME" Then
 50970    If Not reg.KeyExists Then
 50980     reg.CreateKey
 50990    End If
-51000    reg.SetRegistryValue "StampFontsize", CStr(.StampFontsize), REG_SZ
+51000    reg.SetRegistryValue "StampFontname", CStr(.StampFontname), REG_SZ
 51010    Set reg = Nothing
 51020    Exit Sub
 51030   End If
-51040   If UCase$(OptionName) = "STAMPOUTLINEFONTTHICKNESS" Then
+51040   If UCase$(OptionName) = "STAMPFONTSIZE" Then
 51050    If Not reg.KeyExists Then
 51060     reg.CreateKey
 51070    End If
-51080    reg.SetRegistryValue "StampOutlineFontthickness", CStr(.StampOutlineFontthickness), REG_SZ
+51080    reg.SetRegistryValue "StampFontsize", CStr(.StampFontsize), REG_SZ
 51090    Set reg = Nothing
 51100    Exit Sub
 51110   End If
-51120   If UCase$(OptionName) = "STAMPSTRING" Then
+51120   If UCase$(OptionName) = "STAMPOUTLINEFONTTHICKNESS" Then
 51130    If Not reg.KeyExists Then
 51140     reg.CreateKey
 51150    End If
-51160    reg.SetRegistryValue "StampString", CStr(.StampString), REG_SZ
+51160    reg.SetRegistryValue "StampOutlineFontthickness", CStr(.StampOutlineFontthickness), REG_SZ
 51170    Set reg = Nothing
 51180    Exit Sub
 51190   End If
-51200   If UCase$(OptionName) = "STAMPUSEOUTLINEFONT" Then
+51200   If UCase$(OptionName) = "STAMPSTRING" Then
 51210    If Not reg.KeyExists Then
 51220     reg.CreateKey
 51230    End If
-51240    reg.SetRegistryValue "StampUseOutlineFont", CStr(Abs(.StampUseOutlineFont)), REG_SZ
+51240    reg.SetRegistryValue "StampString", CStr(.StampString), REG_SZ
 51250    Set reg = Nothing
 51260    Exit Sub
 51270   End If
-51280   If UCase$(OptionName) = "STANDARDAUTHOR" Then
+51280   If UCase$(OptionName) = "STAMPUSEOUTLINEFONT" Then
 51290    If Not reg.KeyExists Then
 51300     reg.CreateKey
 51310    End If
-51320    reg.SetRegistryValue "StandardAuthor", CStr(.StandardAuthor), REG_SZ
+51320    reg.SetRegistryValue "StampUseOutlineFont", CStr(Abs(.StampUseOutlineFont)), REG_SZ
 51330    Set reg = Nothing
 51340    Exit Sub
 51350   End If
-51360   If UCase$(OptionName) = "STANDARDCREATIONDATE" Then
+51360   If UCase$(OptionName) = "STANDARDAUTHOR" Then
 51370    If Not reg.KeyExists Then
 51380     reg.CreateKey
 51390    End If
-51400    reg.SetRegistryValue "StandardCreationdate", CStr(.StandardCreationdate), REG_SZ
+51400    reg.SetRegistryValue "StandardAuthor", CStr(.StandardAuthor), REG_SZ
 51410    Set reg = Nothing
 51420    Exit Sub
 51430   End If
-51440   If UCase$(OptionName) = "STANDARDDATEFORMAT" Then
+51440   If UCase$(OptionName) = "STANDARDCREATIONDATE" Then
 51450    If Not reg.KeyExists Then
 51460     reg.CreateKey
 51470    End If
-51480    reg.SetRegistryValue "StandardDateformat", CStr(.StandardDateformat), REG_SZ
+51480    reg.SetRegistryValue "StandardCreationdate", CStr(.StandardCreationdate), REG_SZ
 51490    Set reg = Nothing
 51500    Exit Sub
 51510   End If
-51520   If UCase$(OptionName) = "STANDARDKEYWORDS" Then
+51520   If UCase$(OptionName) = "STANDARDDATEFORMAT" Then
 51530    If Not reg.KeyExists Then
 51540     reg.CreateKey
 51550    End If
-51560    reg.SetRegistryValue "StandardKeywords", CStr(.StandardKeywords), REG_SZ
+51560    reg.SetRegistryValue "StandardDateformat", CStr(.StandardDateformat), REG_SZ
 51570    Set reg = Nothing
 51580    Exit Sub
 51590   End If
-51600   If UCase$(OptionName) = "STANDARDMAILDOMAIN" Then
+51600   If UCase$(OptionName) = "STANDARDKEYWORDS" Then
 51610    If Not reg.KeyExists Then
 51620     reg.CreateKey
 51630    End If
-51640    reg.SetRegistryValue "StandardMailDomain", CStr(.StandardMailDomain), REG_SZ
+51640    reg.SetRegistryValue "StandardKeywords", CStr(.StandardKeywords), REG_SZ
 51650    Set reg = Nothing
 51660    Exit Sub
 51670   End If
-51680   If UCase$(OptionName) = "STANDARDMODIFYDATE" Then
+51680   If UCase$(OptionName) = "STANDARDMAILDOMAIN" Then
 51690    If Not reg.KeyExists Then
 51700     reg.CreateKey
 51710    End If
-51720    reg.SetRegistryValue "StandardModifydate", CStr(.StandardModifydate), REG_SZ
+51720    reg.SetRegistryValue "StandardMailDomain", CStr(.StandardMailDomain), REG_SZ
 51730    Set reg = Nothing
 51740    Exit Sub
 51750   End If
-51760   If UCase$(OptionName) = "STANDARDSAVEFORMAT" Then
+51760   If UCase$(OptionName) = "STANDARDMODIFYDATE" Then
 51770    If Not reg.KeyExists Then
 51780     reg.CreateKey
 51790    End If
-51800    reg.SetRegistryValue "StandardSaveformat", CStr(.StandardSaveformat), REG_SZ
+51800    reg.SetRegistryValue "StandardModifydate", CStr(.StandardModifydate), REG_SZ
 51810    Set reg = Nothing
 51820    Exit Sub
 51830   End If
-51840   If UCase$(OptionName) = "STANDARDSUBJECT" Then
+51840   If UCase$(OptionName) = "STANDARDSAVEFORMAT" Then
 51850    If Not reg.KeyExists Then
 51860     reg.CreateKey
 51870    End If
-51880    reg.SetRegistryValue "StandardSubject", CStr(.StandardSubject), REG_SZ
+51880    reg.SetRegistryValue "StandardSaveformat", CStr(.StandardSaveformat), REG_SZ
 51890    Set reg = Nothing
 51900    Exit Sub
 51910   End If
-51920   If UCase$(OptionName) = "STANDARDTITLE" Then
+51920   If UCase$(OptionName) = "STANDARDSUBJECT" Then
 51930    If Not reg.KeyExists Then
 51940     reg.CreateKey
 51950    End If
-51960    reg.SetRegistryValue "StandardTitle", CStr(.StandardTitle), REG_SZ
+51960    reg.SetRegistryValue "StandardSubject", CStr(.StandardSubject), REG_SZ
 51970    Set reg = Nothing
 51980    Exit Sub
 51990   End If
-52000   If UCase$(OptionName) = "USECREATIONDATENOW" Then
+52000   If UCase$(OptionName) = "STANDARDTITLE" Then
 52010    If Not reg.KeyExists Then
 52020     reg.CreateKey
 52030    End If
-52040    reg.SetRegistryValue "UseCreationDateNow", CStr(Abs(.UseCreationDateNow)), REG_SZ
+52040    reg.SetRegistryValue "StandardTitle", CStr(.StandardTitle), REG_SZ
 52050    Set reg = Nothing
 52060    Exit Sub
 52070   End If
-52080   If UCase$(OptionName) = "USECUSTOMPAPERSIZE" Then
+52080   If UCase$(OptionName) = "USECREATIONDATENOW" Then
 52090    If Not reg.KeyExists Then
 52100     reg.CreateKey
 52110    End If
-52120    reg.SetRegistryValue "UseCustomPaperSize", CStr(.UseCustomPaperSize), REG_SZ
+52120    reg.SetRegistryValue "UseCreationDateNow", CStr(Abs(.UseCreationDateNow)), REG_SZ
 52130    Set reg = Nothing
 52140    Exit Sub
 52150   End If
-52160   If UCase$(OptionName) = "USEFIXPAPERSIZE" Then
+52160   If UCase$(OptionName) = "USECUSTOMPAPERSIZE" Then
 52170    If Not reg.KeyExists Then
 52180     reg.CreateKey
 52190    End If
-52200    reg.SetRegistryValue "UseFixPapersize", CStr(Abs(.UseFixPapersize)), REG_SZ
+52200    reg.SetRegistryValue "UseCustomPaperSize", CStr(.UseCustomPaperSize), REG_SZ
 52210    Set reg = Nothing
 52220    Exit Sub
 52230   End If
-52240   If UCase$(OptionName) = "USESTANDARDAUTHOR" Then
+52240   If UCase$(OptionName) = "USEFIXPAPERSIZE" Then
 52250    If Not reg.KeyExists Then
 52260     reg.CreateKey
 52270    End If
-52280    reg.SetRegistryValue "UseStandardAuthor", CStr(Abs(.UseStandardAuthor)), REG_SZ
+52280    reg.SetRegistryValue "UseFixPapersize", CStr(Abs(.UseFixPapersize)), REG_SZ
 52290    Set reg = Nothing
 52300    Exit Sub
 52310   End If
-52320   reg.SubKey = "Printing\Formats\Bitmap\Colors"
-52330   If UCase$(OptionName) = "BMPCOLORSCOUNT" Then
-52340    If Not reg.KeyExists Then
-52350     reg.CreateKey
-52360    End If
-52370    reg.SetRegistryValue "BMPColorscount", CStr(.BMPColorscount), REG_SZ
-52380    Set reg = Nothing
-52390    Exit Sub
-52400   End If
-52410   If UCase$(OptionName) = "BMPRESOLUTION" Then
+52320   If UCase$(OptionName) = "USESTANDARDAUTHOR" Then
+52330    If Not reg.KeyExists Then
+52340     reg.CreateKey
+52350    End If
+52360    reg.SetRegistryValue "UseStandardAuthor", CStr(Abs(.UseStandardAuthor)), REG_SZ
+52370    Set reg = Nothing
+52380    Exit Sub
+52390   End If
+52400   reg.SubKey = "Printing\Formats\Bitmap\Colors"
+52410   If UCase$(OptionName) = "BMPCOLORSCOUNT" Then
 52420    If Not reg.KeyExists Then
 52430     reg.CreateKey
 52440    End If
-52450    reg.SetRegistryValue "BMPResolution", CStr(.BMPResolution), REG_SZ
+52450    reg.SetRegistryValue "BMPColorscount", CStr(.BMPColorscount), REG_SZ
 52460    Set reg = Nothing
 52470    Exit Sub
 52480   End If
-52490   If UCase$(OptionName) = "JPEGCOLORSCOUNT" Then
+52490   If UCase$(OptionName) = "BMPRESOLUTION" Then
 52500    If Not reg.KeyExists Then
 52510     reg.CreateKey
 52520    End If
-52530    reg.SetRegistryValue "JPEGColorscount", CStr(.JPEGColorscount), REG_SZ
+52530    reg.SetRegistryValue "BMPResolution", CStr(.BMPResolution), REG_SZ
 52540    Set reg = Nothing
 52550    Exit Sub
 52560   End If
-52570   If UCase$(OptionName) = "JPEGQUALITY" Then
+52570   If UCase$(OptionName) = "JPEGCOLORSCOUNT" Then
 52580    If Not reg.KeyExists Then
 52590     reg.CreateKey
 52600    End If
-52610    reg.SetRegistryValue "JPEGQuality", CStr(.JPEGQuality), REG_SZ
+52610    reg.SetRegistryValue "JPEGColorscount", CStr(.JPEGColorscount), REG_SZ
 52620    Set reg = Nothing
 52630    Exit Sub
 52640   End If
-52650   If UCase$(OptionName) = "JPEGRESOLUTION" Then
+52650   If UCase$(OptionName) = "JPEGQUALITY" Then
 52660    If Not reg.KeyExists Then
 52670     reg.CreateKey
 52680    End If
-52690    reg.SetRegistryValue "JPEGResolution", CStr(.JPEGResolution), REG_SZ
+52690    reg.SetRegistryValue "JPEGQuality", CStr(.JPEGQuality), REG_SZ
 52700    Set reg = Nothing
 52710    Exit Sub
 52720   End If
-52730   If UCase$(OptionName) = "PCLCOLORSCOUNT" Then
+52730   If UCase$(OptionName) = "JPEGRESOLUTION" Then
 52740    If Not reg.KeyExists Then
 52750     reg.CreateKey
 52760    End If
-52770    reg.SetRegistryValue "PCLColorsCount", CStr(.PCLColorsCount), REG_SZ
+52770    reg.SetRegistryValue "JPEGResolution", CStr(.JPEGResolution), REG_SZ
 52780    Set reg = Nothing
 52790    Exit Sub
 52800   End If
-52810   If UCase$(OptionName) = "PCLRESOLUTION" Then
+52810   If UCase$(OptionName) = "PCLCOLORSCOUNT" Then
 52820    If Not reg.KeyExists Then
 52830     reg.CreateKey
 52840    End If
-52850    reg.SetRegistryValue "PCLResolution", CStr(.PCLResolution), REG_SZ
+52850    reg.SetRegistryValue "PCLColorsCount", CStr(.PCLColorsCount), REG_SZ
 52860    Set reg = Nothing
 52870    Exit Sub
 52880   End If
-52890   If UCase$(OptionName) = "PCXCOLORSCOUNT" Then
+52890   If UCase$(OptionName) = "PCLRESOLUTION" Then
 52900    If Not reg.KeyExists Then
 52910     reg.CreateKey
 52920    End If
-52930    reg.SetRegistryValue "PCXColorscount", CStr(.PCXColorscount), REG_SZ
+52930    reg.SetRegistryValue "PCLResolution", CStr(.PCLResolution), REG_SZ
 52940    Set reg = Nothing
 52950    Exit Sub
 52960   End If
-52970   If UCase$(OptionName) = "PCXRESOLUTION" Then
+52970   If UCase$(OptionName) = "PCXCOLORSCOUNT" Then
 52980    If Not reg.KeyExists Then
 52990     reg.CreateKey
 53000    End If
-53010    reg.SetRegistryValue "PCXResolution", CStr(.PCXResolution), REG_SZ
+53010    reg.SetRegistryValue "PCXColorscount", CStr(.PCXColorscount), REG_SZ
 53020    Set reg = Nothing
 53030    Exit Sub
 53040   End If
-53050   If UCase$(OptionName) = "PNGCOLORSCOUNT" Then
+53050   If UCase$(OptionName) = "PCXRESOLUTION" Then
 53060    If Not reg.KeyExists Then
 53070     reg.CreateKey
 53080    End If
-53090    reg.SetRegistryValue "PNGColorscount", CStr(.PNGColorscount), REG_SZ
+53090    reg.SetRegistryValue "PCXResolution", CStr(.PCXResolution), REG_SZ
 53100    Set reg = Nothing
 53110    Exit Sub
 53120   End If
-53130   If UCase$(OptionName) = "PNGRESOLUTION" Then
+53130   If UCase$(OptionName) = "PNGCOLORSCOUNT" Then
 53140    If Not reg.KeyExists Then
 53150     reg.CreateKey
 53160    End If
-53170    reg.SetRegistryValue "PNGResolution", CStr(.PNGResolution), REG_SZ
+53170    reg.SetRegistryValue "PNGColorscount", CStr(.PNGColorscount), REG_SZ
 53180    Set reg = Nothing
 53190    Exit Sub
 53200   End If
-53210   If UCase$(OptionName) = "PSDCOLORSCOUNT" Then
+53210   If UCase$(OptionName) = "PNGRESOLUTION" Then
 53220    If Not reg.KeyExists Then
 53230     reg.CreateKey
 53240    End If
-53250    reg.SetRegistryValue "PSDColorsCount", CStr(.PSDColorsCount), REG_SZ
+53250    reg.SetRegistryValue "PNGResolution", CStr(.PNGResolution), REG_SZ
 53260    Set reg = Nothing
 53270    Exit Sub
 53280   End If
-53290   If UCase$(OptionName) = "PSDRESOLUTION" Then
+53290   If UCase$(OptionName) = "PSDCOLORSCOUNT" Then
 53300    If Not reg.KeyExists Then
 53310     reg.CreateKey
 53320    End If
-53330    reg.SetRegistryValue "PSDResolution", CStr(.PSDResolution), REG_SZ
+53330    reg.SetRegistryValue "PSDColorsCount", CStr(.PSDColorsCount), REG_SZ
 53340    Set reg = Nothing
 53350    Exit Sub
 53360   End If
-53370   If UCase$(OptionName) = "RAWCOLORSCOUNT" Then
+53370   If UCase$(OptionName) = "PSDRESOLUTION" Then
 53380    If Not reg.KeyExists Then
 53390     reg.CreateKey
 53400    End If
-53410    reg.SetRegistryValue "RAWColorsCount", CStr(.RAWColorsCount), REG_SZ
+53410    reg.SetRegistryValue "PSDResolution", CStr(.PSDResolution), REG_SZ
 53420    Set reg = Nothing
 53430    Exit Sub
 53440   End If
-53450   If UCase$(OptionName) = "RAWRESOLUTION" Then
+53450   If UCase$(OptionName) = "RAWCOLORSCOUNT" Then
 53460    If Not reg.KeyExists Then
 53470     reg.CreateKey
 53480    End If
-53490    reg.SetRegistryValue "RAWResolution", CStr(.RAWResolution), REG_SZ
+53490    reg.SetRegistryValue "RAWColorsCount", CStr(.RAWColorsCount), REG_SZ
 53500    Set reg = Nothing
 53510    Exit Sub
 53520   End If
-53530   If UCase$(OptionName) = "SVGRESOLUTION" Then
+53530   If UCase$(OptionName) = "RAWRESOLUTION" Then
 53540    If Not reg.KeyExists Then
 53550     reg.CreateKey
 53560    End If
-53570    reg.SetRegistryValue "SVGResolution", CStr(.SVGResolution), REG_SZ
+53570    reg.SetRegistryValue "RAWResolution", CStr(.RAWResolution), REG_SZ
 53580    Set reg = Nothing
 53590    Exit Sub
 53600   End If
-53610   If UCase$(OptionName) = "TIFFCOLORSCOUNT" Then
+53610   If UCase$(OptionName) = "SVGRESOLUTION" Then
 53620    If Not reg.KeyExists Then
 53630     reg.CreateKey
 53640    End If
-53650    reg.SetRegistryValue "TIFFColorscount", CStr(.TIFFColorscount), REG_SZ
+53650    reg.SetRegistryValue "SVGResolution", CStr(.SVGResolution), REG_SZ
 53660    Set reg = Nothing
 53670    Exit Sub
 53680   End If
-53690   If UCase$(OptionName) = "TIFFRESOLUTION" Then
+53690   If UCase$(OptionName) = "TIFFCOLORSCOUNT" Then
 53700    If Not reg.KeyExists Then
 53710     reg.CreateKey
 53720    End If
-53730    reg.SetRegistryValue "TIFFResolution", CStr(.TIFFResolution), REG_SZ
+53730    reg.SetRegistryValue "TIFFColorscount", CStr(.TIFFColorscount), REG_SZ
 53740    Set reg = Nothing
 53750    Exit Sub
 53760   End If
-53770   reg.SubKey = "Printing\Formats\PDF\Colors"
-53780   If UCase$(OptionName) = "PDFCOLORSCMYKTORGB" Then
-53790    If Not reg.KeyExists Then
-53800     reg.CreateKey
-53810    End If
-53820    reg.SetRegistryValue "PDFColorsCMYKToRGB", CStr(Abs(.PDFColorsCMYKToRGB)), REG_SZ
-53830    Set reg = Nothing
-53840    Exit Sub
-53850   End If
-53860   If UCase$(OptionName) = "PDFCOLORSCOLORMODEL" Then
+53770   If UCase$(OptionName) = "TIFFRESOLUTION" Then
+53780    If Not reg.KeyExists Then
+53790     reg.CreateKey
+53800    End If
+53810    reg.SetRegistryValue "TIFFResolution", CStr(.TIFFResolution), REG_SZ
+53820    Set reg = Nothing
+53830    Exit Sub
+53840   End If
+53850   reg.SubKey = "Printing\Formats\PDF\Colors"
+53860   If UCase$(OptionName) = "PDFCOLORSCMYKTORGB" Then
 53870    If Not reg.KeyExists Then
 53880     reg.CreateKey
 53890    End If
-53900    reg.SetRegistryValue "PDFColorsColorModel", CStr(.PDFColorsColorModel), REG_SZ
+53900    reg.SetRegistryValue "PDFColorsCMYKToRGB", CStr(Abs(.PDFColorsCMYKToRGB)), REG_SZ
 53910    Set reg = Nothing
 53920    Exit Sub
 53930   End If
-53940   If UCase$(OptionName) = "PDFCOLORSPRESERVEHALFTONE" Then
+53940   If UCase$(OptionName) = "PDFCOLORSCOLORMODEL" Then
 53950    If Not reg.KeyExists Then
 53960     reg.CreateKey
 53970    End If
-53980    reg.SetRegistryValue "PDFColorsPreserveHalftone", CStr(Abs(.PDFColorsPreserveHalftone)), REG_SZ
+53980    reg.SetRegistryValue "PDFColorsColorModel", CStr(.PDFColorsColorModel), REG_SZ
 53990    Set reg = Nothing
 54000    Exit Sub
 54010   End If
-54020   If UCase$(OptionName) = "PDFCOLORSPRESERVEOVERPRINT" Then
+54020   If UCase$(OptionName) = "PDFCOLORSPRESERVEHALFTONE" Then
 54030    If Not reg.KeyExists Then
 54040     reg.CreateKey
 54050    End If
-54060    reg.SetRegistryValue "PDFColorsPreserveOverprint", CStr(Abs(.PDFColorsPreserveOverprint)), REG_SZ
+54060    reg.SetRegistryValue "PDFColorsPreserveHalftone", CStr(Abs(.PDFColorsPreserveHalftone)), REG_SZ
 54070    Set reg = Nothing
 54080    Exit Sub
 54090   End If
-54100   If UCase$(OptionName) = "PDFCOLORSPRESERVETRANSFER" Then
+54100   If UCase$(OptionName) = "PDFCOLORSPRESERVEOVERPRINT" Then
 54110    If Not reg.KeyExists Then
 54120     reg.CreateKey
 54130    End If
-54140    reg.SetRegistryValue "PDFColorsPreserveTransfer", CStr(Abs(.PDFColorsPreserveTransfer)), REG_SZ
+54140    reg.SetRegistryValue "PDFColorsPreserveOverprint", CStr(Abs(.PDFColorsPreserveOverprint)), REG_SZ
 54150    Set reg = Nothing
 54160    Exit Sub
 54170   End If
-54180   reg.SubKey = "Printing\Formats\PDF\Compression"
-54190   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSION" Then
-54200    If Not reg.KeyExists Then
-54210     reg.CreateKey
-54220    End If
-54230    reg.SetRegistryValue "PDFCompressionColorCompression", CStr(Abs(.PDFCompressionColorCompression)), REG_SZ
-54240    Set reg = Nothing
-54250    Exit Sub
-54260   End If
-54270   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE" Then
+54180   If UCase$(OptionName) = "PDFCOLORSPRESERVETRANSFER" Then
+54190    If Not reg.KeyExists Then
+54200     reg.CreateKey
+54210    End If
+54220    reg.SetRegistryValue "PDFColorsPreserveTransfer", CStr(Abs(.PDFColorsPreserveTransfer)), REG_SZ
+54230    Set reg = Nothing
+54240    Exit Sub
+54250   End If
+54260   reg.SubKey = "Printing\Formats\PDF\Compression"
+54270   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSION" Then
 54280    If Not reg.KeyExists Then
 54290     reg.CreateKey
 54300    End If
-54310    reg.SetRegistryValue "PDFCompressionColorCompressionChoice", CStr(.PDFCompressionColorCompressionChoice), REG_SZ
+54310    reg.SetRegistryValue "PDFCompressionColorCompression", CStr(Abs(.PDFCompressionColorCompression)), REG_SZ
 54320    Set reg = Nothing
 54330    Exit Sub
 54340   End If
-54350   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR" Then
+54350   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE" Then
 54360    If Not reg.KeyExists Then
 54370     reg.CreateKey
 54380    End If
-54390   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGHighFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGHighFactor), GetDecimalChar, "."), REG_SZ
+54390    reg.SetRegistryValue "PDFCompressionColorCompressionChoice", CStr(.PDFCompressionColorCompressionChoice), REG_SZ
 54400    Set reg = Nothing
 54410    Exit Sub
 54420   End If
-54430   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR" Then
+54430   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR" Then
 54440    If Not reg.KeyExists Then
 54450     reg.CreateKey
 54460    End If
-54470   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGLowFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGLowFactor), GetDecimalChar, "."), REG_SZ
+54470   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGHighFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGHighFactor), GetDecimalChar, "."), REG_SZ
 54480    Set reg = Nothing
 54490    Exit Sub
 54500   End If
-54510   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR" Then
+54510   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR" Then
 54520    If Not reg.KeyExists Then
 54530     reg.CreateKey
 54540    End If
-54550   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGMaximumFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGMaximumFactor), GetDecimalChar, "."), REG_SZ
+54550   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGLowFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGLowFactor), GetDecimalChar, "."), REG_SZ
 54560    Set reg = Nothing
 54570    Exit Sub
 54580   End If
-54590   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR" Then
+54590   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR" Then
 54600    If Not reg.KeyExists Then
 54610     reg.CreateKey
 54620    End If
-54630   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGMediumFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGMediumFactor), GetDecimalChar, "."), REG_SZ
+54630   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGMaximumFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGMaximumFactor), GetDecimalChar, "."), REG_SZ
 54640    Set reg = Nothing
 54650    Exit Sub
 54660   End If
-54670   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR" Then
+54670   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR" Then
 54680    If Not reg.KeyExists Then
 54690     reg.CreateKey
 54700    End If
-54710   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGMinimumFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGMinimumFactor), GetDecimalChar, "."), REG_SZ
+54710   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGMediumFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGMediumFactor), GetDecimalChar, "."), REG_SZ
 54720    Set reg = Nothing
 54730    Exit Sub
 54740   End If
-54750   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORRESAMPLE" Then
+54750   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR" Then
 54760    If Not reg.KeyExists Then
 54770     reg.CreateKey
 54780    End If
-54790    reg.SetRegistryValue "PDFCompressionColorResample", CStr(Abs(.PDFCompressionColorResample)), REG_SZ
+54790   reg.SetRegistryValue "PDFCompressionColorCompressionJPEGMinimumFactor", Replace$(CStr(.PDFCompressionColorCompressionJPEGMinimumFactor), GetDecimalChar, "."), REG_SZ
 54800    Set reg = Nothing
 54810    Exit Sub
 54820   End If
-54830   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORRESAMPLECHOICE" Then
+54830   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORRESAMPLE" Then
 54840    If Not reg.KeyExists Then
 54850     reg.CreateKey
 54860    End If
-54870    reg.SetRegistryValue "PDFCompressionColorResampleChoice", CStr(.PDFCompressionColorResampleChoice), REG_SZ
+54870    reg.SetRegistryValue "PDFCompressionColorResample", CStr(Abs(.PDFCompressionColorResample)), REG_SZ
 54880    Set reg = Nothing
 54890    Exit Sub
 54900   End If
-54910   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORRESOLUTION" Then
+54910   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORRESAMPLECHOICE" Then
 54920    If Not reg.KeyExists Then
 54930     reg.CreateKey
 54940    End If
-54950    reg.SetRegistryValue "PDFCompressionColorResolution", CStr(.PDFCompressionColorResolution), REG_SZ
+54950    reg.SetRegistryValue "PDFCompressionColorResampleChoice", CStr(.PDFCompressionColorResampleChoice), REG_SZ
 54960    Set reg = Nothing
 54970    Exit Sub
 54980   End If
-54990   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSION" Then
+54990   If UCase$(OptionName) = "PDFCOMPRESSIONCOLORRESOLUTION" Then
 55000    If Not reg.KeyExists Then
 55010     reg.CreateKey
 55020    End If
-55030    reg.SetRegistryValue "PDFCompressionGreyCompression", CStr(Abs(.PDFCompressionGreyCompression)), REG_SZ
+55030    reg.SetRegistryValue "PDFCompressionColorResolution", CStr(.PDFCompressionColorResolution), REG_SZ
 55040    Set reg = Nothing
 55050    Exit Sub
 55060   End If
-55070   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE" Then
+55070   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSION" Then
 55080    If Not reg.KeyExists Then
 55090     reg.CreateKey
 55100    End If
-55110    reg.SetRegistryValue "PDFCompressionGreyCompressionChoice", CStr(.PDFCompressionGreyCompressionChoice), REG_SZ
+55110    reg.SetRegistryValue "PDFCompressionGreyCompression", CStr(Abs(.PDFCompressionGreyCompression)), REG_SZ
 55120    Set reg = Nothing
 55130    Exit Sub
 55140   End If
-55150   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR" Then
+55150   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE" Then
 55160    If Not reg.KeyExists Then
 55170     reg.CreateKey
 55180    End If
-55190   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGHighFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGHighFactor), GetDecimalChar, "."), REG_SZ
+55190    reg.SetRegistryValue "PDFCompressionGreyCompressionChoice", CStr(.PDFCompressionGreyCompressionChoice), REG_SZ
 55200    Set reg = Nothing
 55210    Exit Sub
 55220   End If
-55230   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR" Then
+55230   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR" Then
 55240    If Not reg.KeyExists Then
 55250     reg.CreateKey
 55260    End If
-55270   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGLowFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGLowFactor), GetDecimalChar, "."), REG_SZ
+55270   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGHighFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGHighFactor), GetDecimalChar, "."), REG_SZ
 55280    Set reg = Nothing
 55290    Exit Sub
 55300   End If
-55310   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR" Then
+55310   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR" Then
 55320    If Not reg.KeyExists Then
 55330     reg.CreateKey
 55340    End If
-55350   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGMaximumFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGMaximumFactor), GetDecimalChar, "."), REG_SZ
+55350   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGLowFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGLowFactor), GetDecimalChar, "."), REG_SZ
 55360    Set reg = Nothing
 55370    Exit Sub
 55380   End If
-55390   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR" Then
+55390   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR" Then
 55400    If Not reg.KeyExists Then
 55410     reg.CreateKey
 55420    End If
-55430   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGMediumFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGMediumFactor), GetDecimalChar, "."), REG_SZ
+55430   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGMaximumFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGMaximumFactor), GetDecimalChar, "."), REG_SZ
 55440    Set reg = Nothing
 55450    Exit Sub
 55460   End If
-55470   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR" Then
+55470   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR" Then
 55480    If Not reg.KeyExists Then
 55490     reg.CreateKey
 55500    End If
-55510   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGMinimumFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGMinimumFactor), GetDecimalChar, "."), REG_SZ
+55510   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGMediumFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGMediumFactor), GetDecimalChar, "."), REG_SZ
 55520    Set reg = Nothing
 55530    Exit Sub
 55540   End If
-55550   If UCase$(OptionName) = "PDFCOMPRESSIONGREYRESAMPLE" Then
+55550   If UCase$(OptionName) = "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR" Then
 55560    If Not reg.KeyExists Then
 55570     reg.CreateKey
 55580    End If
-55590    reg.SetRegistryValue "PDFCompressionGreyResample", CStr(Abs(.PDFCompressionGreyResample)), REG_SZ
+55590   reg.SetRegistryValue "PDFCompressionGreyCompressionJPEGMinimumFactor", Replace$(CStr(.PDFCompressionGreyCompressionJPEGMinimumFactor), GetDecimalChar, "."), REG_SZ
 55600    Set reg = Nothing
 55610    Exit Sub
 55620   End If
-55630   If UCase$(OptionName) = "PDFCOMPRESSIONGREYRESAMPLECHOICE" Then
+55630   If UCase$(OptionName) = "PDFCOMPRESSIONGREYRESAMPLE" Then
 55640    If Not reg.KeyExists Then
 55650     reg.CreateKey
 55660    End If
-55670    reg.SetRegistryValue "PDFCompressionGreyResampleChoice", CStr(.PDFCompressionGreyResampleChoice), REG_SZ
+55670    reg.SetRegistryValue "PDFCompressionGreyResample", CStr(Abs(.PDFCompressionGreyResample)), REG_SZ
 55680    Set reg = Nothing
 55690    Exit Sub
 55700   End If
-55710   If UCase$(OptionName) = "PDFCOMPRESSIONGREYRESOLUTION" Then
+55710   If UCase$(OptionName) = "PDFCOMPRESSIONGREYRESAMPLECHOICE" Then
 55720    If Not reg.KeyExists Then
 55730     reg.CreateKey
 55740    End If
-55750    reg.SetRegistryValue "PDFCompressionGreyResolution", CStr(.PDFCompressionGreyResolution), REG_SZ
+55750    reg.SetRegistryValue "PDFCompressionGreyResampleChoice", CStr(.PDFCompressionGreyResampleChoice), REG_SZ
 55760    Set reg = Nothing
 55770    Exit Sub
 55780   End If
-55790   If UCase$(OptionName) = "PDFCOMPRESSIONMONOCOMPRESSION" Then
+55790   If UCase$(OptionName) = "PDFCOMPRESSIONGREYRESOLUTION" Then
 55800    If Not reg.KeyExists Then
 55810     reg.CreateKey
 55820    End If
-55830    reg.SetRegistryValue "PDFCompressionMonoCompression", CStr(Abs(.PDFCompressionMonoCompression)), REG_SZ
+55830    reg.SetRegistryValue "PDFCompressionGreyResolution", CStr(.PDFCompressionGreyResolution), REG_SZ
 55840    Set reg = Nothing
 55850    Exit Sub
 55860   End If
-55870   If UCase$(OptionName) = "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE" Then
+55870   If UCase$(OptionName) = "PDFCOMPRESSIONMONOCOMPRESSION" Then
 55880    If Not reg.KeyExists Then
 55890     reg.CreateKey
 55900    End If
-55910    reg.SetRegistryValue "PDFCompressionMonoCompressionChoice", CStr(.PDFCompressionMonoCompressionChoice), REG_SZ
+55910    reg.SetRegistryValue "PDFCompressionMonoCompression", CStr(Abs(.PDFCompressionMonoCompression)), REG_SZ
 55920    Set reg = Nothing
 55930    Exit Sub
 55940   End If
-55950   If UCase$(OptionName) = "PDFCOMPRESSIONMONORESAMPLE" Then
+55950   If UCase$(OptionName) = "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE" Then
 55960    If Not reg.KeyExists Then
 55970     reg.CreateKey
 55980    End If
-55990    reg.SetRegistryValue "PDFCompressionMonoResample", CStr(Abs(.PDFCompressionMonoResample)), REG_SZ
+55990    reg.SetRegistryValue "PDFCompressionMonoCompressionChoice", CStr(.PDFCompressionMonoCompressionChoice), REG_SZ
 56000    Set reg = Nothing
 56010    Exit Sub
 56020   End If
-56030   If UCase$(OptionName) = "PDFCOMPRESSIONMONORESAMPLECHOICE" Then
+56030   If UCase$(OptionName) = "PDFCOMPRESSIONMONORESAMPLE" Then
 56040    If Not reg.KeyExists Then
 56050     reg.CreateKey
 56060    End If
-56070    reg.SetRegistryValue "PDFCompressionMonoResampleChoice", CStr(.PDFCompressionMonoResampleChoice), REG_SZ
+56070    reg.SetRegistryValue "PDFCompressionMonoResample", CStr(Abs(.PDFCompressionMonoResample)), REG_SZ
 56080    Set reg = Nothing
 56090    Exit Sub
 56100   End If
-56110   If UCase$(OptionName) = "PDFCOMPRESSIONMONORESOLUTION" Then
+56110   If UCase$(OptionName) = "PDFCOMPRESSIONMONORESAMPLECHOICE" Then
 56120    If Not reg.KeyExists Then
 56130     reg.CreateKey
 56140    End If
-56150    reg.SetRegistryValue "PDFCompressionMonoResolution", CStr(.PDFCompressionMonoResolution), REG_SZ
+56150    reg.SetRegistryValue "PDFCompressionMonoResampleChoice", CStr(.PDFCompressionMonoResampleChoice), REG_SZ
 56160    Set reg = Nothing
 56170    Exit Sub
 56180   End If
-56190   If UCase$(OptionName) = "PDFCOMPRESSIONTEXTCOMPRESSION" Then
+56190   If UCase$(OptionName) = "PDFCOMPRESSIONMONORESOLUTION" Then
 56200    If Not reg.KeyExists Then
 56210     reg.CreateKey
 56220    End If
-56230    reg.SetRegistryValue "PDFCompressionTextCompression", CStr(Abs(.PDFCompressionTextCompression)), REG_SZ
+56230    reg.SetRegistryValue "PDFCompressionMonoResolution", CStr(.PDFCompressionMonoResolution), REG_SZ
 56240    Set reg = Nothing
 56250    Exit Sub
 56260   End If
-56270   reg.SubKey = "Printing\Formats\PDF\Fonts"
-56280   If UCase$(OptionName) = "PDFFONTSEMBEDALL" Then
-56290    If Not reg.KeyExists Then
-56300     reg.CreateKey
-56310    End If
-56320    reg.SetRegistryValue "PDFFontsEmbedAll", CStr(Abs(.PDFFontsEmbedAll)), REG_SZ
-56330    Set reg = Nothing
-56340    Exit Sub
-56350   End If
-56360   If UCase$(OptionName) = "PDFFONTSSUBSETFONTS" Then
+56270   If UCase$(OptionName) = "PDFCOMPRESSIONTEXTCOMPRESSION" Then
+56280    If Not reg.KeyExists Then
+56290     reg.CreateKey
+56300    End If
+56310    reg.SetRegistryValue "PDFCompressionTextCompression", CStr(Abs(.PDFCompressionTextCompression)), REG_SZ
+56320    Set reg = Nothing
+56330    Exit Sub
+56340   End If
+56350   reg.SubKey = "Printing\Formats\PDF\Fonts"
+56360   If UCase$(OptionName) = "PDFFONTSEMBEDALL" Then
 56370    If Not reg.KeyExists Then
 56380     reg.CreateKey
 56390    End If
-56400    reg.SetRegistryValue "PDFFontsSubSetFonts", CStr(Abs(.PDFFontsSubSetFonts)), REG_SZ
+56400    reg.SetRegistryValue "PDFFontsEmbedAll", CStr(Abs(.PDFFontsEmbedAll)), REG_SZ
 56410    Set reg = Nothing
 56420    Exit Sub
 56430   End If
-56440   If UCase$(OptionName) = "PDFFONTSSUBSETFONTSPERCENT" Then
+56440   If UCase$(OptionName) = "PDFFONTSSUBSETFONTS" Then
 56450    If Not reg.KeyExists Then
 56460     reg.CreateKey
 56470    End If
-56480    reg.SetRegistryValue "PDFFontsSubSetFontsPercent", CStr(.PDFFontsSubSetFontsPercent), REG_SZ
+56480    reg.SetRegistryValue "PDFFontsSubSetFonts", CStr(Abs(.PDFFontsSubSetFonts)), REG_SZ
 56490    Set reg = Nothing
 56500    Exit Sub
 56510   End If
-56520   reg.SubKey = "Printing\Formats\PDF\General"
-56530   If UCase$(OptionName) = "PDFGENERALASCII85" Then
-56540    If Not reg.KeyExists Then
-56550     reg.CreateKey
-56560    End If
-56570    reg.SetRegistryValue "PDFGeneralASCII85", CStr(Abs(.PDFGeneralASCII85)), REG_SZ
-56580    Set reg = Nothing
-56590    Exit Sub
-56600   End If
-56610   If UCase$(OptionName) = "PDFGENERALAUTOROTATE" Then
+56520   If UCase$(OptionName) = "PDFFONTSSUBSETFONTSPERCENT" Then
+56530    If Not reg.KeyExists Then
+56540     reg.CreateKey
+56550    End If
+56560    reg.SetRegistryValue "PDFFontsSubSetFontsPercent", CStr(.PDFFontsSubSetFontsPercent), REG_SZ
+56570    Set reg = Nothing
+56580    Exit Sub
+56590   End If
+56600   reg.SubKey = "Printing\Formats\PDF\General"
+56610   If UCase$(OptionName) = "PDFGENERALASCII85" Then
 56620    If Not reg.KeyExists Then
 56630     reg.CreateKey
 56640    End If
-56650    reg.SetRegistryValue "PDFGeneralAutorotate", CStr(.PDFGeneralAutorotate), REG_SZ
+56650    reg.SetRegistryValue "PDFGeneralASCII85", CStr(Abs(.PDFGeneralASCII85)), REG_SZ
 56660    Set reg = Nothing
 56670    Exit Sub
 56680   End If
-56690   If UCase$(OptionName) = "PDFGENERALCOMPATIBILITY" Then
+56690   If UCase$(OptionName) = "PDFGENERALAUTOROTATE" Then
 56700    If Not reg.KeyExists Then
 56710     reg.CreateKey
 56720    End If
-56730    reg.SetRegistryValue "PDFGeneralCompatibility", CStr(.PDFGeneralCompatibility), REG_SZ
+56730    reg.SetRegistryValue "PDFGeneralAutorotate", CStr(.PDFGeneralAutorotate), REG_SZ
 56740    Set reg = Nothing
 56750    Exit Sub
 56760   End If
-56770   If UCase$(OptionName) = "PDFGENERALDEFAULT" Then
+56770   If UCase$(OptionName) = "PDFGENERALCOMPATIBILITY" Then
 56780    If Not reg.KeyExists Then
 56790     reg.CreateKey
 56800    End If
-56810    reg.SetRegistryValue "PDFGeneralDefault", CStr(.PDFGeneralDefault), REG_SZ
+56810    reg.SetRegistryValue "PDFGeneralCompatibility", CStr(.PDFGeneralCompatibility), REG_SZ
 56820    Set reg = Nothing
 56830    Exit Sub
 56840   End If
-56850   If UCase$(OptionName) = "PDFGENERALOVERPRINT" Then
+56850   If UCase$(OptionName) = "PDFGENERALDEFAULT" Then
 56860    If Not reg.KeyExists Then
 56870     reg.CreateKey
 56880    End If
-56890    reg.SetRegistryValue "PDFGeneralOverprint", CStr(.PDFGeneralOverprint), REG_SZ
+56890    reg.SetRegistryValue "PDFGeneralDefault", CStr(.PDFGeneralDefault), REG_SZ
 56900    Set reg = Nothing
 56910    Exit Sub
 56920   End If
-56930   If UCase$(OptionName) = "PDFGENERALRESOLUTION" Then
+56930   If UCase$(OptionName) = "PDFGENERALOVERPRINT" Then
 56940    If Not reg.KeyExists Then
 56950     reg.CreateKey
 56960    End If
-56970    reg.SetRegistryValue "PDFGeneralResolution", CStr(.PDFGeneralResolution), REG_SZ
+56970    reg.SetRegistryValue "PDFGeneralOverprint", CStr(.PDFGeneralOverprint), REG_SZ
 56980    Set reg = Nothing
 56990    Exit Sub
 57000   End If
-57010   If UCase$(OptionName) = "PDFOPTIMIZE" Then
+57010   If UCase$(OptionName) = "PDFGENERALRESOLUTION" Then
 57020    If Not reg.KeyExists Then
 57030     reg.CreateKey
 57040    End If
-57050    reg.SetRegistryValue "PDFOptimize", CStr(Abs(.PDFOptimize)), REG_SZ
+57050    reg.SetRegistryValue "PDFGeneralResolution", CStr(.PDFGeneralResolution), REG_SZ
 57060    Set reg = Nothing
 57070    Exit Sub
 57080   End If
-57090   If UCase$(OptionName) = "PDFUPDATEMETADATA" Then
+57090   If UCase$(OptionName) = "PDFOPTIMIZE" Then
 57100    If Not reg.KeyExists Then
 57110     reg.CreateKey
 57120    End If
-57130    reg.SetRegistryValue "PDFUpdateMetadata", CStr(.PDFUpdateMetadata), REG_SZ
+57130    reg.SetRegistryValue "PDFOptimize", CStr(Abs(.PDFOptimize)), REG_SZ
 57140    Set reg = Nothing
 57150    Exit Sub
 57160   End If
-57170   reg.SubKey = "Printing\Formats\PDF\Security"
-57180   If UCase$(OptionName) = "PDFALLOWASSEMBLY" Then
-57190    If Not reg.KeyExists Then
-57200     reg.CreateKey
-57210    End If
-57220    reg.SetRegistryValue "PDFAllowAssembly", CStr(Abs(.PDFAllowAssembly)), REG_SZ
-57230    Set reg = Nothing
-57240    Exit Sub
-57250   End If
-57260   If UCase$(OptionName) = "PDFALLOWDEGRADEDPRINTING" Then
+57170   If UCase$(OptionName) = "PDFUPDATEMETADATA" Then
+57180    If Not reg.KeyExists Then
+57190     reg.CreateKey
+57200    End If
+57210    reg.SetRegistryValue "PDFUpdateMetadata", CStr(.PDFUpdateMetadata), REG_SZ
+57220    Set reg = Nothing
+57230    Exit Sub
+57240   End If
+57250   reg.SubKey = "Printing\Formats\PDF\Security"
+57260   If UCase$(OptionName) = "PDFALLOWASSEMBLY" Then
 57270    If Not reg.KeyExists Then
 57280     reg.CreateKey
 57290    End If
-57300    reg.SetRegistryValue "PDFAllowDegradedPrinting", CStr(Abs(.PDFAllowDegradedPrinting)), REG_SZ
+57300    reg.SetRegistryValue "PDFAllowAssembly", CStr(Abs(.PDFAllowAssembly)), REG_SZ
 57310    Set reg = Nothing
 57320    Exit Sub
 57330   End If
-57340   If UCase$(OptionName) = "PDFALLOWFILLIN" Then
+57340   If UCase$(OptionName) = "PDFALLOWDEGRADEDPRINTING" Then
 57350    If Not reg.KeyExists Then
 57360     reg.CreateKey
 57370    End If
-57380    reg.SetRegistryValue "PDFAllowFillIn", CStr(Abs(.PDFAllowFillIn)), REG_SZ
+57380    reg.SetRegistryValue "PDFAllowDegradedPrinting", CStr(Abs(.PDFAllowDegradedPrinting)), REG_SZ
 57390    Set reg = Nothing
 57400    Exit Sub
 57410   End If
-57420   If UCase$(OptionName) = "PDFALLOWSCREENREADERS" Then
+57420   If UCase$(OptionName) = "PDFALLOWFILLIN" Then
 57430    If Not reg.KeyExists Then
 57440     reg.CreateKey
 57450    End If
-57460    reg.SetRegistryValue "PDFAllowScreenReaders", CStr(Abs(.PDFAllowScreenReaders)), REG_SZ
+57460    reg.SetRegistryValue "PDFAllowFillIn", CStr(Abs(.PDFAllowFillIn)), REG_SZ
 57470    Set reg = Nothing
 57480    Exit Sub
 57490   End If
-57500   If UCase$(OptionName) = "PDFDISALLOWCOPY" Then
+57500   If UCase$(OptionName) = "PDFALLOWSCREENREADERS" Then
 57510    If Not reg.KeyExists Then
 57520     reg.CreateKey
 57530    End If
-57540    reg.SetRegistryValue "PDFDisallowCopy", CStr(Abs(.PDFDisallowCopy)), REG_SZ
+57540    reg.SetRegistryValue "PDFAllowScreenReaders", CStr(Abs(.PDFAllowScreenReaders)), REG_SZ
 57550    Set reg = Nothing
 57560    Exit Sub
 57570   End If
-57580   If UCase$(OptionName) = "PDFDISALLOWMODIFYANNOTATIONS" Then
+57580   If UCase$(OptionName) = "PDFDISALLOWCOPY" Then
 57590    If Not reg.KeyExists Then
 57600     reg.CreateKey
 57610    End If
-57620    reg.SetRegistryValue "PDFDisallowModifyAnnotations", CStr(Abs(.PDFDisallowModifyAnnotations)), REG_SZ
+57620    reg.SetRegistryValue "PDFDisallowCopy", CStr(Abs(.PDFDisallowCopy)), REG_SZ
 57630    Set reg = Nothing
 57640    Exit Sub
 57650   End If
-57660   If UCase$(OptionName) = "PDFDISALLOWMODIFYCONTENTS" Then
+57660   If UCase$(OptionName) = "PDFDISALLOWMODIFYANNOTATIONS" Then
 57670    If Not reg.KeyExists Then
 57680     reg.CreateKey
 57690    End If
-57700    reg.SetRegistryValue "PDFDisallowModifyContents", CStr(Abs(.PDFDisallowModifyContents)), REG_SZ
+57700    reg.SetRegistryValue "PDFDisallowModifyAnnotations", CStr(Abs(.PDFDisallowModifyAnnotations)), REG_SZ
 57710    Set reg = Nothing
 57720    Exit Sub
 57730   End If
-57740   If UCase$(OptionName) = "PDFDISALLOWPRINTING" Then
+57740   If UCase$(OptionName) = "PDFDISALLOWMODIFYCONTENTS" Then
 57750    If Not reg.KeyExists Then
 57760     reg.CreateKey
 57770    End If
-57780    reg.SetRegistryValue "PDFDisallowPrinting", CStr(Abs(.PDFDisallowPrinting)), REG_SZ
+57780    reg.SetRegistryValue "PDFDisallowModifyContents", CStr(Abs(.PDFDisallowModifyContents)), REG_SZ
 57790    Set reg = Nothing
 57800    Exit Sub
 57810   End If
-57820   If UCase$(OptionName) = "PDFENCRYPTOR" Then
+57820   If UCase$(OptionName) = "PDFDISALLOWPRINTING" Then
 57830    If Not reg.KeyExists Then
 57840     reg.CreateKey
 57850    End If
-57860    reg.SetRegistryValue "PDFEncryptor", CStr(.PDFEncryptor), REG_SZ
+57860    reg.SetRegistryValue "PDFDisallowPrinting", CStr(Abs(.PDFDisallowPrinting)), REG_SZ
 57870    Set reg = Nothing
 57880    Exit Sub
 57890   End If
-57900   If UCase$(OptionName) = "PDFHIGHENCRYPTION" Then
+57900   If UCase$(OptionName) = "PDFENCRYPTOR" Then
 57910    If Not reg.KeyExists Then
 57920     reg.CreateKey
 57930    End If
-57940    reg.SetRegistryValue "PDFHighEncryption", CStr(Abs(.PDFHighEncryption)), REG_SZ
+57940    reg.SetRegistryValue "PDFEncryptor", CStr(.PDFEncryptor), REG_SZ
 57950    Set reg = Nothing
 57960    Exit Sub
 57970   End If
-57980   If UCase$(OptionName) = "PDFLOWENCRYPTION" Then
+57980   If UCase$(OptionName) = "PDFHIGHENCRYPTION" Then
 57990    If Not reg.KeyExists Then
 58000     reg.CreateKey
 58010    End If
-58020    reg.SetRegistryValue "PDFLowEncryption", CStr(Abs(.PDFLowEncryption)), REG_SZ
+58020    reg.SetRegistryValue "PDFHighEncryption", CStr(Abs(.PDFHighEncryption)), REG_SZ
 58030    Set reg = Nothing
 58040    Exit Sub
 58050   End If
-58060   If UCase$(OptionName) = "PDFOWNERPASS" Then
+58060   If UCase$(OptionName) = "PDFLOWENCRYPTION" Then
 58070    If Not reg.KeyExists Then
 58080     reg.CreateKey
 58090    End If
-58100    reg.SetRegistryValue "PDFOwnerPass", CStr(Abs(.PDFOwnerPass)), REG_SZ
+58100    reg.SetRegistryValue "PDFLowEncryption", CStr(Abs(.PDFLowEncryption)), REG_SZ
 58110    Set reg = Nothing
 58120    Exit Sub
 58130   End If
-58140   If UCase$(OptionName) = "PDFOWNERPASSWORDSTRING" Then
+58140   If UCase$(OptionName) = "PDFOWNERPASS" Then
 58150    If Not reg.KeyExists Then
 58160     reg.CreateKey
 58170    End If
-58180    reg.SetRegistryValue "PDFOwnerPasswordString", CStr(.PDFOwnerPasswordString), REG_SZ
+58180    reg.SetRegistryValue "PDFOwnerPass", CStr(Abs(.PDFOwnerPass)), REG_SZ
 58190    Set reg = Nothing
 58200    Exit Sub
 58210   End If
-58220   If UCase$(OptionName) = "PDFUSERPASS" Then
+58220   If UCase$(OptionName) = "PDFOWNERPASSWORDSTRING" Then
 58230    If Not reg.KeyExists Then
 58240     reg.CreateKey
 58250    End If
-58260    reg.SetRegistryValue "PDFUserPass", CStr(Abs(.PDFUserPass)), REG_SZ
+58260    reg.SetRegistryValue "PDFOwnerPasswordString", CStr(.PDFOwnerPasswordString), REG_SZ
 58270    Set reg = Nothing
 58280    Exit Sub
 58290   End If
-58300   If UCase$(OptionName) = "PDFUSERPASSWORDSTRING" Then
+58300   If UCase$(OptionName) = "PDFUSERPASS" Then
 58310    If Not reg.KeyExists Then
 58320     reg.CreateKey
 58330    End If
-58340    reg.SetRegistryValue "PDFUserPasswordString", CStr(.PDFUserPasswordString), REG_SZ
+58340    reg.SetRegistryValue "PDFUserPass", CStr(Abs(.PDFUserPass)), REG_SZ
 58350    Set reg = Nothing
 58360    Exit Sub
 58370   End If
-58380   If UCase$(OptionName) = "PDFUSESECURITY" Then
+58380   If UCase$(OptionName) = "PDFUSERPASSWORDSTRING" Then
 58390    If Not reg.KeyExists Then
 58400     reg.CreateKey
 58410    End If
-58420    reg.SetRegistryValue "PDFUseSecurity", CStr(Abs(.PDFUseSecurity)), REG_SZ
+58420    reg.SetRegistryValue "PDFUserPasswordString", CStr(.PDFUserPasswordString), REG_SZ
 58430    Set reg = Nothing
 58440    Exit Sub
 58450   End If
-58460   reg.SubKey = "Printing\Formats\PDF\Signing"
-58470   If UCase$(OptionName) = "PDFSIGNINGMULTISIGNATURE" Then
-58480    If Not reg.KeyExists Then
-58490     reg.CreateKey
-58500    End If
-58510    reg.SetRegistryValue "PDFSigningMultiSignature", CStr(Abs(.PDFSigningMultiSignature)), REG_SZ
-58520    Set reg = Nothing
-58530    Exit Sub
-58540   End If
-58550   If UCase$(OptionName) = "PDFSIGNINGPFXFILE" Then
+58460   If UCase$(OptionName) = "PDFUSESECURITY" Then
+58470    If Not reg.KeyExists Then
+58480     reg.CreateKey
+58490    End If
+58500    reg.SetRegistryValue "PDFUseSecurity", CStr(Abs(.PDFUseSecurity)), REG_SZ
+58510    Set reg = Nothing
+58520    Exit Sub
+58530   End If
+58540   reg.SubKey = "Printing\Formats\PDF\Signing"
+58550   If UCase$(OptionName) = "PDFSIGNINGMULTISIGNATURE" Then
 58560    If Not reg.KeyExists Then
 58570     reg.CreateKey
 58580    End If
-58590    reg.SetRegistryValue "PDFSigningPFXFile", CStr(.PDFSigningPFXFile), REG_SZ
+58590    reg.SetRegistryValue "PDFSigningMultiSignature", CStr(Abs(.PDFSigningMultiSignature)), REG_SZ
 58600    Set reg = Nothing
 58610    Exit Sub
 58620   End If
-58630   If UCase$(OptionName) = "PDFSIGNINGPFXFILEPASSWORD" Then
+58630   If UCase$(OptionName) = "PDFSIGNINGPFXFILE" Then
 58640    If Not reg.KeyExists Then
 58650     reg.CreateKey
 58660    End If
-58670    reg.SetRegistryValue "PDFSigningPFXFilePassword", CStr(.PDFSigningPFXFilePassword), REG_SZ
+58670    reg.SetRegistryValue "PDFSigningPFXFile", CStr(.PDFSigningPFXFile), REG_SZ
 58680    Set reg = Nothing
 58690    Exit Sub
 58700   End If
-58710   If UCase$(OptionName) = "PDFSIGNINGSIGNATURECONTACT" Then
+58710   If UCase$(OptionName) = "PDFSIGNINGPFXFILEPASSWORD" Then
 58720    If Not reg.KeyExists Then
 58730     reg.CreateKey
 58740    End If
-58750    reg.SetRegistryValue "PDFSigningSignatureContact", CStr(.PDFSigningSignatureContact), REG_SZ
+58750    reg.SetRegistryValue "PDFSigningPFXFilePassword", CStr(.PDFSigningPFXFilePassword), REG_SZ
 58760    Set reg = Nothing
 58770    Exit Sub
 58780   End If
-58790   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTX" Then
+58790   If UCase$(OptionName) = "PDFSIGNINGSIGNATURECONTACT" Then
 58800    If Not reg.KeyExists Then
 58810     reg.CreateKey
 58820    End If
-58830   reg.SetRegistryValue "PDFSigningSignatureLeftX", Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), REG_SZ
+58830    reg.SetRegistryValue "PDFSigningSignatureContact", CStr(.PDFSigningSignatureContact), REG_SZ
 58840    Set reg = Nothing
 58850    Exit Sub
 58860   End If
-58870   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTY" Then
+58870   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTX" Then
 58880    If Not reg.KeyExists Then
 58890     reg.CreateKey
 58900    End If
-58910   reg.SetRegistryValue "PDFSigningSignatureLeftY", Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), REG_SZ
+58910   reg.SetRegistryValue "PDFSigningSignatureLeftX", Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), REG_SZ
 58920    Set reg = Nothing
 58930    Exit Sub
 58940   End If
-58950   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELOCATION" Then
+58950   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTY" Then
 58960    If Not reg.KeyExists Then
 58970     reg.CreateKey
 58980    End If
-58990    reg.SetRegistryValue "PDFSigningSignatureLocation", CStr(.PDFSigningSignatureLocation), REG_SZ
+58990   reg.SetRegistryValue "PDFSigningSignatureLeftY", Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), REG_SZ
 59000    Set reg = Nothing
 59010    Exit Sub
 59020   End If
-59030   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREREASON" Then
+59030   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELOCATION" Then
 59040    If Not reg.KeyExists Then
 59050     reg.CreateKey
 59060    End If
-59070    reg.SetRegistryValue "PDFSigningSignatureReason", CStr(.PDFSigningSignatureReason), REG_SZ
+59070    reg.SetRegistryValue "PDFSigningSignatureLocation", CStr(.PDFSigningSignatureLocation), REG_SZ
 59080    Set reg = Nothing
 59090    Exit Sub
 59100   End If
-59110   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTX" Then
+59110   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREREASON" Then
 59120    If Not reg.KeyExists Then
 59130     reg.CreateKey
 59140    End If
-59150   reg.SetRegistryValue "PDFSigningSignatureRightX", Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), REG_SZ
+59150    reg.SetRegistryValue "PDFSigningSignatureReason", CStr(.PDFSigningSignatureReason), REG_SZ
 59160    Set reg = Nothing
 59170    Exit Sub
 59180   End If
-59190   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTY" Then
+59190   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTX" Then
 59200    If Not reg.KeyExists Then
 59210     reg.CreateKey
 59220    End If
-59230   reg.SetRegistryValue "PDFSigningSignatureRightY", Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), REG_SZ
+59230   reg.SetRegistryValue "PDFSigningSignatureRightX", Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), REG_SZ
 59240    Set reg = Nothing
 59250    Exit Sub
 59260   End If
-59270   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREVISIBLE" Then
+59270   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTY" Then
 59280    If Not reg.KeyExists Then
 59290     reg.CreateKey
 59300    End If
-59310    reg.SetRegistryValue "PDFSigningSignatureVisible", CStr(Abs(.PDFSigningSignatureVisible)), REG_SZ
+59310   reg.SetRegistryValue "PDFSigningSignatureRightY", Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), REG_SZ
 59320    Set reg = Nothing
 59330    Exit Sub
 59340   End If
-59350   If UCase$(OptionName) = "PDFSIGNINGSIGNPDF" Then
+59350   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREVISIBLE" Then
 59360    If Not reg.KeyExists Then
 59370     reg.CreateKey
 59380    End If
-59390    reg.SetRegistryValue "PDFSigningSignPDF", CStr(Abs(.PDFSigningSignPDF)), REG_SZ
+59390    reg.SetRegistryValue "PDFSigningSignatureVisible", CStr(Abs(.PDFSigningSignatureVisible)), REG_SZ
 59400    Set reg = Nothing
 59410    Exit Sub
 59420   End If
-59430   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
-59440   If UCase$(OptionName) = "EPSLANGUAGELEVEL" Then
-59450    If Not reg.KeyExists Then
-59460     reg.CreateKey
-59470    End If
-59480    reg.SetRegistryValue "EPSLanguageLevel", CStr(.EPSLanguageLevel), REG_SZ
-59490    Set reg = Nothing
-59500    Exit Sub
-59510   End If
-59520   If UCase$(OptionName) = "PSLANGUAGELEVEL" Then
+59430   If UCase$(OptionName) = "PDFSIGNINGSIGNPDF" Then
+59440    If Not reg.KeyExists Then
+59450     reg.CreateKey
+59460    End If
+59470    reg.SetRegistryValue "PDFSigningSignPDF", CStr(Abs(.PDFSigningSignPDF)), REG_SZ
+59480    Set reg = Nothing
+59490    Exit Sub
+59500   End If
+59510   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
+59520   If UCase$(OptionName) = "EPSLANGUAGELEVEL" Then
 59530    If Not reg.KeyExists Then
 59540     reg.CreateKey
 59550    End If
-59560    reg.SetRegistryValue "PSLanguageLevel", CStr(.PSLanguageLevel), REG_SZ
+59560    reg.SetRegistryValue "EPSLanguageLevel", CStr(.EPSLanguageLevel), REG_SZ
 59570    Set reg = Nothing
 59580    Exit Sub
 59590   End If
-59600   reg.SubKey = "Program"
-59610   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTPARAMETERS" Then
-59620    If Not reg.KeyExists Then
-59630     reg.CreateKey
-59640    End If
-59650    reg.SetRegistryValue "AdditionalGhostscriptParameters", CStr(.AdditionalGhostscriptParameters), REG_SZ
-59660    Set reg = Nothing
-59670    Exit Sub
-59680   End If
-59690   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTSEARCHPATH" Then
+59600   If UCase$(OptionName) = "PSLANGUAGELEVEL" Then
+59610    If Not reg.KeyExists Then
+59620     reg.CreateKey
+59630    End If
+59640    reg.SetRegistryValue "PSLanguageLevel", CStr(.PSLanguageLevel), REG_SZ
+59650    Set reg = Nothing
+59660    Exit Sub
+59670   End If
+59680   reg.SubKey = "Program"
+59690   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTPARAMETERS" Then
 59700    If Not reg.KeyExists Then
 59710     reg.CreateKey
 59720    End If
-59730    reg.SetRegistryValue "AdditionalGhostscriptSearchpath", CStr(.AdditionalGhostscriptSearchpath), REG_SZ
+59730    reg.SetRegistryValue "AdditionalGhostscriptParameters", CStr(.AdditionalGhostscriptParameters), REG_SZ
 59740    Set reg = Nothing
 59750    Exit Sub
 59760   End If
-59770   If UCase$(OptionName) = "ADDWINDOWSFONTPATH" Then
+59770   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTSEARCHPATH" Then
 59780    If Not reg.KeyExists Then
 59790     reg.CreateKey
 59800    End If
-59810    reg.SetRegistryValue "AddWindowsFontpath", CStr(Abs(.AddWindowsFontpath)), REG_SZ
+59810    reg.SetRegistryValue "AdditionalGhostscriptSearchpath", CStr(.AdditionalGhostscriptSearchpath), REG_SZ
 59820    Set reg = Nothing
 59830    Exit Sub
 59840   End If
-59850   If UCase$(OptionName) = "ALLOWSPECIALGSCHARSINFILENAMES" Then
+59850   If UCase$(OptionName) = "ADDWINDOWSFONTPATH" Then
 59860    If Not reg.KeyExists Then
 59870     reg.CreateKey
 59880    End If
-59890    reg.SetRegistryValue "AllowSpecialGSCharsInFilenames", CStr(Abs(.AllowSpecialGSCharsInFilenames)), REG_SZ
+59890    reg.SetRegistryValue "AddWindowsFontpath", CStr(Abs(.AddWindowsFontpath)), REG_SZ
 59900    Set reg = Nothing
 59910    Exit Sub
 59920   End If
-59930   If UCase$(OptionName) = "AUTOSAVEDIRECTORY" Then
+59930   If UCase$(OptionName) = "ALLOWSPECIALGSCHARSINFILENAMES" Then
 59940    If Not reg.KeyExists Then
 59950     reg.CreateKey
 59960    End If
-59970    reg.SetRegistryValue "AutosaveDirectory", CStr(.AutosaveDirectory), REG_SZ
+59970    reg.SetRegistryValue "AllowSpecialGSCharsInFilenames", CStr(Abs(.AllowSpecialGSCharsInFilenames)), REG_SZ
 59980    Set reg = Nothing
 59990    Exit Sub
 60000   End If
-60010   If UCase$(OptionName) = "AUTOSAVEFILENAME" Then
+60010   If UCase$(OptionName) = "AUTOSAVEDIRECTORY" Then
 60020    If Not reg.KeyExists Then
 60030     reg.CreateKey
 60040    End If
-60050    reg.SetRegistryValue "AutosaveFilename", CStr(.AutosaveFilename), REG_SZ
+60050    reg.SetRegistryValue "AutosaveDirectory", CStr(.AutosaveDirectory), REG_SZ
 60060    Set reg = Nothing
 60070    Exit Sub
 60080   End If
-60090   If UCase$(OptionName) = "AUTOSAVEFORMAT" Then
+60090   If UCase$(OptionName) = "AUTOSAVEFILENAME" Then
 60100    If Not reg.KeyExists Then
 60110     reg.CreateKey
 60120    End If
-60130    reg.SetRegistryValue "AutosaveFormat", CStr(.AutosaveFormat), REG_SZ
+60130    reg.SetRegistryValue "AutosaveFilename", CStr(.AutosaveFilename), REG_SZ
 60140    Set reg = Nothing
 60150    Exit Sub
 60160   End If
-60170   If UCase$(OptionName) = "AUTOSAVESTARTSTANDARDPROGRAM" Then
+60170   If UCase$(OptionName) = "AUTOSAVEFORMAT" Then
 60180    If Not reg.KeyExists Then
 60190     reg.CreateKey
 60200    End If
-60210    reg.SetRegistryValue "AutosaveStartStandardProgram", CStr(Abs(.AutosaveStartStandardProgram)), REG_SZ
+60210    reg.SetRegistryValue "AutosaveFormat", CStr(.AutosaveFormat), REG_SZ
 60220    Set reg = Nothing
 60230    Exit Sub
 60240   End If
-60250   If UCase$(OptionName) = "CLIENTCOMPUTERRESOLVEIPADDRESS" Then
+60250   If UCase$(OptionName) = "AUTOSAVESTARTSTANDARDPROGRAM" Then
 60260    If Not reg.KeyExists Then
 60270     reg.CreateKey
 60280    End If
-60290    reg.SetRegistryValue "ClientComputerResolveIPAddress", CStr(Abs(.ClientComputerResolveIPAddress)), REG_SZ
+60290    reg.SetRegistryValue "AutosaveStartStandardProgram", CStr(Abs(.AutosaveStartStandardProgram)), REG_SZ
 60300    Set reg = Nothing
 60310    Exit Sub
 60320   End If
-60330   If UCase$(OptionName) = "DISABLEEMAIL" Then
+60330   If UCase$(OptionName) = "CLIENTCOMPUTERRESOLVEIPADDRESS" Then
 60340    If Not reg.KeyExists Then
 60350     reg.CreateKey
 60360    End If
-60370    reg.SetRegistryValue "DisableEmail", CStr(Abs(.DisableEmail)), REG_SZ
+60370    reg.SetRegistryValue "ClientComputerResolveIPAddress", CStr(Abs(.ClientComputerResolveIPAddress)), REG_SZ
 60380    Set reg = Nothing
 60390    Exit Sub
 60400   End If
-60410   If UCase$(OptionName) = "DONTUSEDOCUMENTSETTINGS" Then
+60410   If UCase$(OptionName) = "DISABLEEMAIL" Then
 60420    If Not reg.KeyExists Then
 60430     reg.CreateKey
 60440    End If
-60450    reg.SetRegistryValue "DontUseDocumentSettings", CStr(Abs(.DontUseDocumentSettings)), REG_SZ
+60450    reg.SetRegistryValue "DisableEmail", CStr(Abs(.DisableEmail)), REG_SZ
 60460    Set reg = Nothing
 60470    Exit Sub
 60480   End If
-60490   If UCase$(OptionName) = "FILENAMESUBSTITUTIONS" Then
+60490   If UCase$(OptionName) = "DONTUSEDOCUMENTSETTINGS" Then
 60500    If Not reg.KeyExists Then
 60510     reg.CreateKey
 60520    End If
-60530    reg.SetRegistryValue "FilenameSubstitutions", CStr(.FilenameSubstitutions), REG_SZ
+60530    reg.SetRegistryValue "DontUseDocumentSettings", CStr(Abs(.DontUseDocumentSettings)), REG_SZ
 60540    Set reg = Nothing
 60550    Exit Sub
 60560   End If
-60570   If UCase$(OptionName) = "FILENAMESUBSTITUTIONSONLYINTITLE" Then
+60570   If UCase$(OptionName) = "FILENAMESUBSTITUTIONS" Then
 60580    If Not reg.KeyExists Then
 60590     reg.CreateKey
 60600    End If
-60610    reg.SetRegistryValue "FilenameSubstitutionsOnlyInTitle", CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), REG_SZ
+60610    reg.SetRegistryValue "FilenameSubstitutions", CStr(.FilenameSubstitutions), REG_SZ
 60620    Set reg = Nothing
 60630    Exit Sub
 60640   End If
-60650   If UCase$(OptionName) = "LANGUAGE" Then
+60650   If UCase$(OptionName) = "FILENAMESUBSTITUTIONSONLYINTITLE" Then
 60660    If Not reg.KeyExists Then
 60670     reg.CreateKey
 60680    End If
-60690    reg.SetRegistryValue "Language", CStr(.Language), REG_SZ
+60690    reg.SetRegistryValue "FilenameSubstitutionsOnlyInTitle", CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), REG_SZ
 60700    Set reg = Nothing
 60710    Exit Sub
 60720   End If
-60730   If UCase$(OptionName) = "LASTSAVEDIRECTORY" Then
+60730   If UCase$(OptionName) = "LANGUAGE" Then
 60740    If Not reg.KeyExists Then
 60750     reg.CreateKey
 60760    End If
-60770    reg.SetRegistryValue "LastSaveDirectory", CStr(.LastSaveDirectory), REG_SZ
+60770    reg.SetRegistryValue "Language", CStr(.Language), REG_SZ
 60780    Set reg = Nothing
 60790    Exit Sub
 60800   End If
-60810   If UCase$(OptionName) = "LASTUPDATECHECK" Then
+60810   If UCase$(OptionName) = "LASTSAVEDIRECTORY" Then
 60820    If Not reg.KeyExists Then
 60830     reg.CreateKey
 60840    End If
-60850    reg.SetRegistryValue "LastUpdateCheck", CStr(.LastUpdateCheck), REG_SZ
+60850    reg.SetRegistryValue "LastSaveDirectory", CStr(.LastSaveDirectory), REG_SZ
 60860    Set reg = Nothing
 60870    Exit Sub
 60880   End If
-60890   If UCase$(OptionName) = "LOGGING" Then
+60890   If UCase$(OptionName) = "LASTUPDATECHECK" Then
 60900    If Not reg.KeyExists Then
 60910     reg.CreateKey
 60920    End If
-60930    reg.SetRegistryValue "Logging", CStr(Abs(.Logging)), REG_SZ
+60930    reg.SetRegistryValue "LastUpdateCheck", CStr(.LastUpdateCheck), REG_SZ
 60940    Set reg = Nothing
 60950    Exit Sub
 60960   End If
-60970   If UCase$(OptionName) = "LOGLINES" Then
+60970   If UCase$(OptionName) = "LOGGING" Then
 60980    If Not reg.KeyExists Then
 60990     reg.CreateKey
 61000    End If
-61010    reg.SetRegistryValue "LogLines", CStr(.LogLines), REG_SZ
+61010    reg.SetRegistryValue "Logging", CStr(Abs(.Logging)), REG_SZ
 61020    Set reg = Nothing
 61030    Exit Sub
 61040   End If
-61050   If UCase$(OptionName) = "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER" Then
+61050   If UCase$(OptionName) = "LOGLINES" Then
 61060    If Not reg.KeyExists Then
 61070     reg.CreateKey
 61080    End If
-61090    reg.SetRegistryValue "NoConfirmMessageSwitchingDefaultprinter", CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), REG_SZ
+61090    reg.SetRegistryValue "LogLines", CStr(.LogLines), REG_SZ
 61100    Set reg = Nothing
 61110    Exit Sub
 61120   End If
-61130   If UCase$(OptionName) = "NOPROCESSINGATSTARTUP" Then
+61130   If UCase$(OptionName) = "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER" Then
 61140    If Not reg.KeyExists Then
 61150     reg.CreateKey
 61160    End If
-61170    reg.SetRegistryValue "NoProcessingAtStartup", CStr(Abs(.NoProcessingAtStartup)), REG_SZ
+61170    reg.SetRegistryValue "NoConfirmMessageSwitchingDefaultprinter", CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), REG_SZ
 61180    Set reg = Nothing
 61190    Exit Sub
 61200   End If
-61210   If UCase$(OptionName) = "NOPSCHECK" Then
+61210   If UCase$(OptionName) = "NOPROCESSINGATSTARTUP" Then
 61220    If Not reg.KeyExists Then
 61230     reg.CreateKey
 61240    End If
-61250    reg.SetRegistryValue "NoPSCheck", CStr(Abs(.NoPSCheck)), REG_SZ
+61250    reg.SetRegistryValue "NoProcessingAtStartup", CStr(Abs(.NoProcessingAtStartup)), REG_SZ
 61260    Set reg = Nothing
 61270    Exit Sub
 61280   End If
-61290   If UCase$(OptionName) = "OPTIONSDESIGN" Then
+61290   If UCase$(OptionName) = "NOPSCHECK" Then
 61300    If Not reg.KeyExists Then
 61310     reg.CreateKey
 61320    End If
-61330    reg.SetRegistryValue "OptionsDesign", CStr(.OptionsDesign), REG_SZ
+61330    reg.SetRegistryValue "NoPSCheck", CStr(Abs(.NoPSCheck)), REG_SZ
 61340    Set reg = Nothing
 61350    Exit Sub
 61360   End If
-61370   If UCase$(OptionName) = "OPTIONSENABLED" Then
+61370   If UCase$(OptionName) = "OPTIONSDESIGN" Then
 61380    If Not reg.KeyExists Then
 61390     reg.CreateKey
 61400    End If
-61410    reg.SetRegistryValue "OptionsEnabled", CStr(Abs(.OptionsEnabled)), REG_SZ
+61410    reg.SetRegistryValue "OptionsDesign", CStr(.OptionsDesign), REG_SZ
 61420    Set reg = Nothing
 61430    Exit Sub
 61440   End If
-61450   If UCase$(OptionName) = "OPTIONSVISIBLE" Then
+61450   If UCase$(OptionName) = "OPTIONSENABLED" Then
 61460    If Not reg.KeyExists Then
 61470     reg.CreateKey
 61480    End If
-61490    reg.SetRegistryValue "OptionsVisible", CStr(Abs(.OptionsVisible)), REG_SZ
+61490    reg.SetRegistryValue "OptionsEnabled", CStr(Abs(.OptionsEnabled)), REG_SZ
 61500    Set reg = Nothing
 61510    Exit Sub
 61520   End If
-61530   If UCase$(OptionName) = "PRINTAFTERSAVING" Then
+61530   If UCase$(OptionName) = "OPTIONSVISIBLE" Then
 61540    If Not reg.KeyExists Then
 61550     reg.CreateKey
 61560    End If
-61570    reg.SetRegistryValue "PrintAfterSaving", CStr(Abs(.PrintAfterSaving)), REG_SZ
+61570    reg.SetRegistryValue "OptionsVisible", CStr(Abs(.OptionsVisible)), REG_SZ
 61580    Set reg = Nothing
 61590    Exit Sub
 61600   End If
-61610   If UCase$(OptionName) = "PRINTAFTERSAVINGDUPLEX" Then
+61610   If UCase$(OptionName) = "PRINTAFTERSAVING" Then
 61620    If Not reg.KeyExists Then
 61630     reg.CreateKey
 61640    End If
-61650    reg.SetRegistryValue "PrintAfterSavingDuplex", CStr(Abs(.PrintAfterSavingDuplex)), REG_SZ
+61650    reg.SetRegistryValue "PrintAfterSaving", CStr(Abs(.PrintAfterSaving)), REG_SZ
 61660    Set reg = Nothing
 61670    Exit Sub
 61680   End If
-61690   If UCase$(OptionName) = "PRINTAFTERSAVINGNOCANCEL" Then
+61690   If UCase$(OptionName) = "PRINTAFTERSAVINGDUPLEX" Then
 61700    If Not reg.KeyExists Then
 61710     reg.CreateKey
 61720    End If
-61730    reg.SetRegistryValue "PrintAfterSavingNoCancel", CStr(Abs(.PrintAfterSavingNoCancel)), REG_SZ
+61730    reg.SetRegistryValue "PrintAfterSavingDuplex", CStr(Abs(.PrintAfterSavingDuplex)), REG_SZ
 61740    Set reg = Nothing
 61750    Exit Sub
 61760   End If
-61770   If UCase$(OptionName) = "PRINTAFTERSAVINGPRINTER" Then
+61770   If UCase$(OptionName) = "PRINTAFTERSAVINGNOCANCEL" Then
 61780    If Not reg.KeyExists Then
 61790     reg.CreateKey
 61800    End If
-61810    reg.SetRegistryValue "PrintAfterSavingPrinter", CStr(.PrintAfterSavingPrinter), REG_SZ
+61810    reg.SetRegistryValue "PrintAfterSavingNoCancel", CStr(Abs(.PrintAfterSavingNoCancel)), REG_SZ
 61820    Set reg = Nothing
 61830    Exit Sub
 61840   End If
-61850   If UCase$(OptionName) = "PRINTAFTERSAVINGQUERYUSER" Then
+61850   If UCase$(OptionName) = "PRINTAFTERSAVINGPRINTER" Then
 61860    If Not reg.KeyExists Then
 61870     reg.CreateKey
 61880    End If
-61890    reg.SetRegistryValue "PrintAfterSavingQueryUser", CStr(.PrintAfterSavingQueryUser), REG_SZ
+61890    reg.SetRegistryValue "PrintAfterSavingPrinter", CStr(.PrintAfterSavingPrinter), REG_SZ
 61900    Set reg = Nothing
 61910    Exit Sub
 61920   End If
-61930   If UCase$(OptionName) = "PRINTAFTERSAVINGTUMBLE" Then
+61930   If UCase$(OptionName) = "PRINTAFTERSAVINGQUERYUSER" Then
 61940    If Not reg.KeyExists Then
 61950     reg.CreateKey
 61960    End If
-61970    reg.SetRegistryValue "PrintAfterSavingTumble", CStr(.PrintAfterSavingTumble), REG_SZ
+61970    reg.SetRegistryValue "PrintAfterSavingQueryUser", CStr(.PrintAfterSavingQueryUser), REG_SZ
 61980    Set reg = Nothing
 61990    Exit Sub
 62000   End If
-62010   If UCase$(OptionName) = "PRINTERSTOP" Then
+62010   If UCase$(OptionName) = "PRINTAFTERSAVINGTUMBLE" Then
 62020    If Not reg.KeyExists Then
 62030     reg.CreateKey
 62040    End If
-62050    reg.SetRegistryValue "PrinterStop", CStr(Abs(.PrinterStop)), REG_SZ
+62050    reg.SetRegistryValue "PrintAfterSavingTumble", CStr(.PrintAfterSavingTumble), REG_SZ
 62060    Set reg = Nothing
 62070    Exit Sub
 62080   End If
-62090   If UCase$(OptionName) = "PRINTERTEMPPATH" Then
+62090   If UCase$(OptionName) = "PRINTERSTOP" Then
 62100    If Not reg.KeyExists Then
 62110     reg.CreateKey
 62120    End If
-62130    reg.SetRegistryValue "PrinterTemppath", CStr(.PrinterTemppath), REG_SZ
+62130    reg.SetRegistryValue "PrinterStop", CStr(Abs(.PrinterStop)), REG_SZ
 62140    Set reg = Nothing
 62150    Exit Sub
 62160   End If
-62170   If UCase$(OptionName) = "PROCESSPRIORITY" Then
+62170   If UCase$(OptionName) = "PRINTERTEMPPATH" Then
 62180    If Not reg.KeyExists Then
 62190     reg.CreateKey
 62200    End If
-62210    reg.SetRegistryValue "ProcessPriority", CStr(.ProcessPriority), REG_SZ
+62210    reg.SetRegistryValue "PrinterTemppath", CStr(.PrinterTemppath), REG_SZ
 62220    Set reg = Nothing
 62230    Exit Sub
 62240   End If
-62250   If UCase$(OptionName) = "PROGRAMFONT" Then
+62250   If UCase$(OptionName) = "PROCESSPRIORITY" Then
 62260    If Not reg.KeyExists Then
 62270     reg.CreateKey
 62280    End If
-62290    reg.SetRegistryValue "ProgramFont", CStr(.ProgramFont), REG_SZ
+62290    reg.SetRegistryValue "ProcessPriority", CStr(.ProcessPriority), REG_SZ
 62300    Set reg = Nothing
 62310    Exit Sub
 62320   End If
-62330   If UCase$(OptionName) = "PROGRAMFONTCHARSET" Then
+62330   If UCase$(OptionName) = "PROGRAMFONT" Then
 62340    If Not reg.KeyExists Then
 62350     reg.CreateKey
 62360    End If
-62370    reg.SetRegistryValue "ProgramFontCharset", CStr(.ProgramFontCharset), REG_SZ
+62370    reg.SetRegistryValue "ProgramFont", CStr(.ProgramFont), REG_SZ
 62380    Set reg = Nothing
 62390    Exit Sub
 62400   End If
-62410   If UCase$(OptionName) = "PROGRAMFONTSIZE" Then
+62410   If UCase$(OptionName) = "PROGRAMFONTCHARSET" Then
 62420    If Not reg.KeyExists Then
 62430     reg.CreateKey
 62440    End If
-62450    reg.SetRegistryValue "ProgramFontSize", CStr(.ProgramFontSize), REG_SZ
+62450    reg.SetRegistryValue "ProgramFontCharset", CStr(.ProgramFontCharset), REG_SZ
 62460    Set reg = Nothing
 62470    Exit Sub
 62480   End If
-62490   If UCase$(OptionName) = "REMOVEALLKNOWNFILEEXTENSIONS" Then
+62490   If UCase$(OptionName) = "PROGRAMFONTSIZE" Then
 62500    If Not reg.KeyExists Then
 62510     reg.CreateKey
 62520    End If
-62530    reg.SetRegistryValue "RemoveAllKnownFileExtensions", CStr(Abs(.RemoveAllKnownFileExtensions)), REG_SZ
+62530    reg.SetRegistryValue "ProgramFontSize", CStr(.ProgramFontSize), REG_SZ
 62540    Set reg = Nothing
 62550    Exit Sub
 62560   End If
-62570   If UCase$(OptionName) = "REMOVESPACES" Then
+62570   If UCase$(OptionName) = "REMOVEALLKNOWNFILEEXTENSIONS" Then
 62580    If Not reg.KeyExists Then
 62590     reg.CreateKey
 62600    End If
-62610    reg.SetRegistryValue "RemoveSpaces", CStr(Abs(.RemoveSpaces)), REG_SZ
+62610    reg.SetRegistryValue "RemoveAllKnownFileExtensions", CStr(Abs(.RemoveAllKnownFileExtensions)), REG_SZ
 62620    Set reg = Nothing
 62630    Exit Sub
 62640   End If
-62650   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVING" Then
+62650   If UCase$(OptionName) = "REMOVESPACES" Then
 62660    If Not reg.KeyExists Then
 62670     reg.CreateKey
 62680    End If
-62690    reg.SetRegistryValue "RunProgramAfterSaving", CStr(Abs(.RunProgramAfterSaving)), REG_SZ
+62690    reg.SetRegistryValue "RemoveSpaces", CStr(Abs(.RemoveSpaces)), REG_SZ
 62700    Set reg = Nothing
 62710    Exit Sub
 62720   End If
-62730   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMNAME" Then
+62730   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVING" Then
 62740    If Not reg.KeyExists Then
 62750     reg.CreateKey
 62760    End If
-62770    reg.SetRegistryValue "RunProgramAfterSavingProgramname", CStr(.RunProgramAfterSavingProgramname), REG_SZ
+62770    reg.SetRegistryValue "RunProgramAfterSaving", CStr(Abs(.RunProgramAfterSaving)), REG_SZ
 62780    Set reg = Nothing
 62790    Exit Sub
 62800   End If
-62810   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS" Then
+62810   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMNAME" Then
 62820    If Not reg.KeyExists Then
 62830     reg.CreateKey
 62840    End If
-62850    reg.SetRegistryValue "RunProgramAfterSavingProgramParameters", CStr(.RunProgramAfterSavingProgramParameters), REG_SZ
+62850    reg.SetRegistryValue "RunProgramAfterSavingProgramname", CStr(.RunProgramAfterSavingProgramname), REG_SZ
 62860    Set reg = Nothing
 62870    Exit Sub
 62880   End If
-62890   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWAITUNTILREADY" Then
+62890   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS" Then
 62900    If Not reg.KeyExists Then
 62910     reg.CreateKey
 62920    End If
-62930    reg.SetRegistryValue "RunProgramAfterSavingWaitUntilReady", CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), REG_SZ
+62930    reg.SetRegistryValue "RunProgramAfterSavingProgramParameters", CStr(.RunProgramAfterSavingProgramParameters), REG_SZ
 62940    Set reg = Nothing
 62950    Exit Sub
 62960   End If
-62970   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWINDOWSTYLE" Then
+62970   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWAITUNTILREADY" Then
 62980    If Not reg.KeyExists Then
 62990     reg.CreateKey
 63000    End If
-63010    reg.SetRegistryValue "RunProgramAfterSavingWindowstyle", CStr(.RunProgramAfterSavingWindowstyle), REG_SZ
+63010    reg.SetRegistryValue "RunProgramAfterSavingWaitUntilReady", CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), REG_SZ
 63020    Set reg = Nothing
 63030    Exit Sub
 63040   End If
-63050   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVING" Then
+63050   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWINDOWSTYLE" Then
 63060    If Not reg.KeyExists Then
 63070     reg.CreateKey
 63080    End If
-63090    reg.SetRegistryValue "RunProgramBeforeSaving", CStr(Abs(.RunProgramBeforeSaving)), REG_SZ
+63090    reg.SetRegistryValue "RunProgramAfterSavingWindowstyle", CStr(.RunProgramAfterSavingWindowstyle), REG_SZ
 63100    Set reg = Nothing
 63110    Exit Sub
 63120   End If
-63130   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMNAME" Then
+63130   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVING" Then
 63140    If Not reg.KeyExists Then
 63150     reg.CreateKey
 63160    End If
-63170    reg.SetRegistryValue "RunProgramBeforeSavingProgramname", CStr(.RunProgramBeforeSavingProgramname), REG_SZ
+63170    reg.SetRegistryValue "RunProgramBeforeSaving", CStr(Abs(.RunProgramBeforeSaving)), REG_SZ
 63180    Set reg = Nothing
 63190    Exit Sub
 63200   End If
-63210   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS" Then
+63210   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMNAME" Then
 63220    If Not reg.KeyExists Then
 63230     reg.CreateKey
 63240    End If
-63250    reg.SetRegistryValue "RunProgramBeforeSavingProgramParameters", CStr(.RunProgramBeforeSavingProgramParameters), REG_SZ
+63250    reg.SetRegistryValue "RunProgramBeforeSavingProgramname", CStr(.RunProgramBeforeSavingProgramname), REG_SZ
 63260    Set reg = Nothing
 63270    Exit Sub
 63280   End If
-63290   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGWINDOWSTYLE" Then
+63290   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS" Then
 63300    If Not reg.KeyExists Then
 63310     reg.CreateKey
 63320    End If
-63330    reg.SetRegistryValue "RunProgramBeforeSavingWindowstyle", CStr(.RunProgramBeforeSavingWindowstyle), REG_SZ
+63330    reg.SetRegistryValue "RunProgramBeforeSavingProgramParameters", CStr(.RunProgramBeforeSavingProgramParameters), REG_SZ
 63340    Set reg = Nothing
 63350    Exit Sub
 63360   End If
-63370   If UCase$(OptionName) = "SAVEFILENAME" Then
+63370   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGWINDOWSTYLE" Then
 63380    If Not reg.KeyExists Then
 63390     reg.CreateKey
 63400    End If
-63410    reg.SetRegistryValue "SaveFilename", CStr(.SaveFilename), REG_SZ
+63410    reg.SetRegistryValue "RunProgramBeforeSavingWindowstyle", CStr(.RunProgramBeforeSavingWindowstyle), REG_SZ
 63420    Set reg = Nothing
 63430    Exit Sub
 63440   End If
-63450   If UCase$(OptionName) = "SENDEMAILAFTERAUTOSAVING" Then
+63450   If UCase$(OptionName) = "SAVEFILENAME" Then
 63460    If Not reg.KeyExists Then
 63470     reg.CreateKey
 63480    End If
-63490    reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
+63490    reg.SetRegistryValue "SaveFilename", CStr(.SaveFilename), REG_SZ
 63500    Set reg = Nothing
 63510    Exit Sub
 63520   End If
-63530   If UCase$(OptionName) = "SENDMAILMETHOD" Then
+63530   If UCase$(OptionName) = "SENDEMAILAFTERAUTOSAVING" Then
 63540    If Not reg.KeyExists Then
 63550     reg.CreateKey
 63560    End If
-63570    reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
+63570    reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
 63580    Set reg = Nothing
 63590    Exit Sub
 63600   End If
-63610   If UCase$(OptionName) = "SHOWANIMATION" Then
+63610   If UCase$(OptionName) = "SENDMAILMETHOD" Then
 63620    If Not reg.KeyExists Then
 63630     reg.CreateKey
 63640    End If
-63650    reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
+63650    reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
 63660    Set reg = Nothing
 63670    Exit Sub
 63680   End If
-63690   If UCase$(OptionName) = "STARTSTANDARDPROGRAM" Then
+63690   If UCase$(OptionName) = "SHOWANIMATION" Then
 63700    If Not reg.KeyExists Then
 63710     reg.CreateKey
 63720    End If
-63730    reg.SetRegistryValue "StartStandardProgram", CStr(Abs(.StartStandardProgram)), REG_SZ
+63730    reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
 63740    Set reg = Nothing
 63750    Exit Sub
 63760   End If
-63770   If UCase$(OptionName) = "TOOLBARS" Then
+63770   If UCase$(OptionName) = "STARTSTANDARDPROGRAM" Then
 63780    If Not reg.KeyExists Then
 63790     reg.CreateKey
 63800    End If
-63810    reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
+63810    reg.SetRegistryValue "StartStandardProgram", CStr(Abs(.StartStandardProgram)), REG_SZ
 63820    Set reg = Nothing
 63830    Exit Sub
 63840   End If
-63850   If UCase$(OptionName) = "UPDATEINTERVAL" Then
+63850   If UCase$(OptionName) = "TOOLBARS" Then
 63860    If Not reg.KeyExists Then
 63870     reg.CreateKey
 63880    End If
-63890    reg.SetRegistryValue "UpdateInterval", CStr(.UpdateInterval), REG_SZ
+63890    reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
 63900    Set reg = Nothing
 63910    Exit Sub
 63920   End If
-63930   If UCase$(OptionName) = "USEAUTOSAVE" Then
+63930   If UCase$(OptionName) = "UPDATEINTERVAL" Then
 63940    If Not reg.KeyExists Then
 63950     reg.CreateKey
 63960    End If
-63970    reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
+63970    reg.SetRegistryValue "UpdateInterval", CStr(.UpdateInterval), REG_SZ
 63980    Set reg = Nothing
 63990    Exit Sub
 64000   End If
-64010   If UCase$(OptionName) = "USEAUTOSAVEDIRECTORY" Then
+64010   If UCase$(OptionName) = "USEAUTOSAVE" Then
 64020    If Not reg.KeyExists Then
 64030     reg.CreateKey
 64040    End If
-64050    reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+64050    reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
 64060    Set reg = Nothing
 64070    Exit Sub
 64080   End If
-64090  End With
-64100  Set reg = Nothing
+64090   If UCase$(OptionName) = "USEAUTOSAVEDIRECTORY" Then
+64100    If Not reg.KeyExists Then
+64110     reg.CreateKey
+64120    End If
+64130    reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+64140    Set reg = Nothing
+64150    Exit Sub
+64160   End If
+64170  End With
+64180  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -7052,7 +7060,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub SaveOptionsREG(sOptions As tOptions, Optional hkey1 As hkey = HKEY_CURRENT_USER, Optional Profilename As String)
+Public Sub SaveOptionsREG(sOptions As tOptions, Optional hkey1 As hkey = HKEY_CURRENT_USER, Optional ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -7060,12 +7068,12 @@ On Error GoTo ErrPtnr_OnError
 50020  Set reg = New clsRegistry
 50030  reg.hkey = hkey1
 50040
-50050  Profilename = Trim$(Profilename)
+50050  ProfileName = Trim$(ProfileName)
 50060
-50070  If LenB(Profilename) > 0 Then
-50080   reg.KeyRoot = "Software\PDFCreator\Profiles\" & Profilename
-50090  Else
-50100   reg.KeyRoot = "Software\PDFCreator"
+50070  If LenB(ProfileName) > 0 Then
+50080    reg.KeyRoot = "Software\PDFCreator\Profiles\" & ProfileName
+50090   Else
+50100    reg.KeyRoot = "Software\PDFCreator"
 50110  End If
 50120
 50130  If Not reg.KeyExists Then
