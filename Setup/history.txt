@@ -1,10 +1,10 @@
 PDFCreator Revision History
 ================================
-Copyright (C)2002-2009 Philip Chinery, Frank Heindörfer
+Copyright (C)2002-2010 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
-Version 0.9.9 (December 24, 2009)
+Version 0.9.9 (January 4., 2010)
 -------------------------------------------------------------------------------
 Improvements:
 - Uses GPL-Ghostscript 8.70 now.
