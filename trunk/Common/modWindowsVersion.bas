@@ -1,4 +1,5 @@
 Attribute VB_Name = "modWindowsVersion"
+Option Explicit
 '-----------------------------------------------------------------------------------------
 ' Copyright ©1996-2004 VBnet, Randy Birch. All Rights Reserved Worldwide.
 '        Terms of use http://vbnet.mvps.org/terms/pages/terms.htm
@@ -285,6 +286,29 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modWindowsVersion", "IsWin95")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWin95OSR2() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  osv.OSVSize = Len(osv)
+50030  If GetVersionEx(osv) = 1 Then
+50040   IsWin95OSR2 = (osv.PlatformID = VER_PLATFORM_WIN32_WINDOWS) And _
+                (osv.dwVerMajor = 4 And osv.dwVerMinor = 0) And _
+                (osv.dwBuildNumber = 1111)
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWin95OSR2")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -700,7 +724,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim osv As OSVERSIONINFO
 50020  osv.OSVSize = Len(osv)
 50030  If GetVersionEx(osv) = 1 Then
-50040   IsWinVista = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And (osv.dwVerMajor = 6)
+50040   IsWinVista = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And (osv.dwVerMajor = 6) And (osv.dwVerMinor = 0)
 50050  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -914,7 +938,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim osv As OSVERSIONINFOEX
 50020  osv.OSVSize = Len(osv)
 50030  If GetVersionEx(osv) = 1 Then
-50040   IsWinLonghornServer = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
+50040   IsWin2008Server = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
    (osv.dwVerMajor = 6 And osv.dwVerMinor = 0) And (osv.wProductType <> VER_NT_WORKSTATION)
 50060  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -936,7 +960,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim osv As OSVERSIONINFOEX
 50020  osv.OSVSize = Len(osv)
 50030  If GetVersionEx(osv) = 1 Then
-50040   IsWinLonghornServer = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
+50040   IsWin2008R2Server = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
    (osv.dwVerMajor = 6 And osv.dwVerMinor = 1) And (osv.wProductType <> VER_NT_WORKSTATION)
 50060  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -958,13 +982,88 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim osv As OSVERSIONINFOEX
 50020  osv.OSVSize = Len(osv)
 50030  If GetVersionEx(osv) = 1 Then
-50040   IsWinLonghornServer = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
+50040   IsWindows7 = (osv.PlatformID = VER_PLATFORM_WIN32_NT) And _
    (osv.dwVerMajor = 6 And osv.dwVerMinor = 1) And (osv.wProductType = VER_NT_WORKSTATION)
 50060  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modWindowsVersion", "IsWindows7")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWindows7Business() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWindows7() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWindows7Business = (dwProduct = PRODUCT_BUSINESS) Or (dwProduct = PRODUCT_BUSINESS_N)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWindows7Business")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWindows7Ultimate() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWindows7() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWindows7Ultimate = (dwProduct = PRODUCT_ULTIMATE) Or (dwProduct = PRODUCT_ULTIMATE_N)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWindows7Ultimate")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function IsWindows7HomeServer() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim osv As OSVERSIONINFO
+50020  Dim dwProduct As Long
+50030  If IsWindows7() Then
+50040   osv.OSVSize = Len(osv)
+50050   GetVersionEx osv
+50060   If GetProductInfo(osv.dwVerMajor, osv.dwVerMinor, 0&, 0&, dwProduct) <> 0 Then
+50070    IsWindows7HomeServer = (dwProduct = PRODUCT_HOME_SERVER)
+50080   End If
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modWindowsVersion", "IsWindows7HomeServer")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1236,31 +1335,37 @@ On Error GoTo ErrPtnr_OnError
 50200        If osv.wProductType = VER_NT_WORKSTATION Then
 50210          win.VersionName = "Windows Vista"
 50220         Else
-50230          win.VersionName = "Windows Server Longhorn"
+50230          win.VersionName = "Windows 2008 Server"
 50240        End If
-50250       Case Else:  win.VersionName = "VerMajor: 6 -> Unknown 'VerMinor':" & osv.dwVerMinor
-50260      End Select
-50270     Case Else: win.VersionName = "Unknown 'VerMajor':" & osv.dwVerMajor
-50280    End Select
-50290    Case VER_PLATFORM_WIN32_WINDOWS:
-50301     Select Case osv.dwVerMinor
+50250       Case 1:
+50260         If osv.wProductType = VER_NT_WORKSTATION Then
+50270           win.VersionName = "Windows 7"
+50280          Else
+50290           win.VersionName = "Windows 2008 R2 Server"
+50300         End If
+50310       Case Else:  win.VersionName = "VerMajor: 6 -> Unknown 'VerMinor':" & osv.dwVerMinor
+50320      End Select
+50330     Case Else: win.VersionName = "Unknown 'VerMajor':" & osv.dwVerMajor
+50340    End Select
+50350    Case VER_PLATFORM_WIN32_WINDOWS:
+50361     Select Case osv.dwVerMinor
            Case 0:    win.VersionName = "Windows 95"
-50320      Case 90:   win.VersionName = "Windows ME"
-50330      Case Else: win.VersionName = "Windows 98"
-50340     End Select
-50350   End Select
-50360   'Get the version number
-50370   win.VersionNo = osv.dwVerMajor & "." & osv.dwVerMinor
-50380   'Get the build
-50390   win.BuildNo = (osv.dwBuildNumber And &HFFFF&)
-50400   'Any additional info. In Win9x, this can be
-50410   '"any arbitrary string" provided by the
-50420   'manufacturer. In NT, this is the service pack.
-50430   pos = InStr(osv.szCSDVersion, Chr$(0))
-50440   If pos Then
-50450    win.ServicePack = Left$(osv.szCSDVersion, pos - 1)
-50460   End If
-50470  End If
+50380      Case 90:   win.VersionName = "Windows ME"
+50390      Case Else: win.VersionName = "Windows 98"
+50400     End Select
+50410   End Select
+50420   'Get the version number
+50430   win.VersionNo = osv.dwVerMajor & "." & osv.dwVerMinor
+50440   'Get the build
+50450   win.BuildNo = (osv.dwBuildNumber And &HFFFF&)
+50460   'Any additional info. In Win9x, this can be
+50470   '"any arbitrary string" provided by the
+50480   'manufacturer. In NT, this is the service pack.
+50490   pos = InStr(osv.szCSDVersion, Chr$(0))
+50500   If pos Then
+50510    win.ServicePack = Left$(osv.szCSDVersion, pos - 1)
+50520   End If
+50530  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
