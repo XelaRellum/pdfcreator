@@ -4,7 +4,7 @@ Option Explicit
 ' Copyright ©1996-2004 VBnet, Randy Birch. All Rights Reserved Worldwide.
 '        Terms of use http://vbnet.mvps.org/terms/pages/terms.htm
 '-----------------------------------------------------------------------------------------
-' modified by Frank Heindörfer 2004-2008
+' modified by Frank Heindörfer 2004-2010
 
 Public Function IsBackOfficeServer() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
