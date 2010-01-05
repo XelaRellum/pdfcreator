@@ -1,7 +1,7 @@
 ; english must be the first entry
 #include "Language includes\english.inc"
 #include "Language includes\catalan.inc"
-;#include "Language includes\czech.inc"
+#include "Language includes\czech.inc"
 #include "Language includes\chinese_simplified.inc"
 #include "Language includes\chinese_traditional.inc"
 #include "Language includes\danish.inc"
@@ -19,7 +19,7 @@
 ;#include "Language includes\korean.inc"
 #include "Language includes\lithuanian.inc"
 ;#include "Language includes\norwegian_bokmal.inc"
-;#include "Language includes\polish.inc"
+#include "Language includes\polish.inc"
 #include "Language includes\portuguese_br.inc"
 #include "Language includes\romanian.inc"
 ;#include "Language includes\russian.inc"
