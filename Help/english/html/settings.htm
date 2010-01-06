@@ -28,24 +28,6 @@
         In a "Server installation" of PDFcreator,  the settings are saved to the following
         registry location: <em><strong>HKLM\Software\PDFCreator</strong></em> <br />
         <br />
-        While the default location for settings is in the registry, it is also possible to
-        store the settings in the the old .ini files mode. In this case PDFCreator save all
-        settings to ini files. It is also possible to add an external ini file as default file.
-        For more information use the commandswitch /? on the setup program. <br />
-        <strong>Attention:</strong> There exists some problems with server based profiles and
-        if the application data path is on a network drive. Because of this case server installations
-        can't use the old ini-mode. <br />
-        <br />
-        If you choose the "Standard installation" and are saving to ini files, the settings are saved
-        to the application data path of user: <br />
-        <em>Example:</em> C:\Documents and Settings\[user profile]\Application Data\PDFCreator <br />
-        <br />
-        If your operating system is Windows 2000 and above, the setup saves some settings for the
-        default user in the following directory: <br />
-        <em>Example: </em>C:\Documents and Settings\Default User\Application Data\PDFCreator <br />
-        <br />
-        In a "Server installation" of PDFCreator, settings are saved in the followind directory:<br />
-        C:\Documents and Settings\All User\Application Data\PDFCreator <br />
         <br />
         <strong>Procedure of reading the settings</strong>      
       <p>On Windows 2000 and above, PDFCreator reads the settings from the default user first. If there
@@ -53,22 +35,19 @@
         the settings from the user. Only the user settings PDFCreator finds will overwrite the settings
         from the default user. Finally, PDFCreator looks for machine settings in <br />
         <em>HKLM\Software\PDFCreator</em> <br />
-        or <br />
-        <em>C:\Documents and Settings\All User\Application Data\PDFCreator</em>.<br />
         Only the machine settings PDFCreator finds will overwrite the settings from the user. With this
         behaivour it is possible for administrators to define settings for all users.<br />
         <br />
         <strong>Procedure of saveing the settings </strong>     
       <p>If you choose the "Standard installation" of PDFCreator, settings are saved to either of the following: <br />
         <em>HKCU\Software\PDFCreator</em> <br />
-        or <br />
-        <em>C:\Documents and Settings\[user profile]\Application Data\PDFCreator </em><br />
         <br />
         If you choose the "Server installation" of PDFCreator, settings are saved to either of the following: <br />
-        <em>HKLM\Software\PDFCreator </em><br />
-        or <br />
-        <em>C:\Documents and Settings\All User\Application Data\PDFCreator</em>      
-      <p> <strong>Hint:</strong>&nbsp; If you need to use settings other than the default, use the /REGFile= or /INIFile= parameters on the installation program. For more information on the parameters that can be used on installation program, use the /? parameter.</td>
+        <em>HKLM\Software\PDFCreator </em></p>
+      <p> <strong>Hint:</strong>&nbsp; If you need to use settings other than the default, use the /REGFile= parameter on the installation program.
+	  For more information on the parameters that can be used on installation program, use the /? parameter.<br />
+	  <em>Since version 0.9.9 the old ini mode is not supported anymore!</em></p>
+   </td>
   </tr>
 </table>
 </body>
