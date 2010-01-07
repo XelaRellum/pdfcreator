@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.3.6 (with ISPP) and ISTool 5.3.0.1
+; Setup created with Inno Setup QuickStart Pack 5.3.7 (with ISPP) and ISTool 5.3.0.1
 ; Installation from Frank Heindörfer
 
 ;#define Test
@@ -370,14 +370,8 @@ Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Component
 ;Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\ukrainian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
 
-;Ini file
-Source: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
-Source: {code:GetExternalINIFile}; DestName: PDFCreator.ini; DestDir: {code:GetIniPath}; Components: program; Flags: ignoreversion  external; Check: UseOwnINIFile AND UseINI
-Source: PDFCreator.ini; DestDir: {code:GetDefaultIniPath}; Components: program; DestName: PDFCreator.ini; Flags: ignoreversion onlyifdoesntexist uninsneveruninstall; Check: (Not UseOwnINIFile) And UseINI
-Source: {code:GetExternalINIFile}; DestName: PDFCreator.ini; DestDir: {code:GetDefaultIniPath}; Components: program; Flags: ignoreversion  external; Check: UseOwnINIFile AND UseINI
-
 ;Reg file
-Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {%tmp}; Components: program; Flags: ignoreversion  external deleteafterinstall; Check: UseOwnREGFile AND (Not UseINI)
+Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {%tmp}; Components: program; Flags: ignoreversion  external deleteafterinstall; Check: UseOwnREGFile
 
 ;Ghostscript
 #IFDEF IncludeGhostscript
@@ -627,7 +621,6 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup: SetupLanguage; Valuedata: {code:GetActiveLanguage}; Flags: uninsdeletevalue
 
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFServer; Valuedata: 1; Flags: uninsdeletevalue; Check: IsServerInstallation
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UseINI; Valuedata: 1; Flags: uninsdeletevalue; Check: UseINI
 
 ; Remove keys and/or values on uninstall
 Root: HKLM; Subkey: SOFTWARE\Classes\Applications\PDFCreator.exe; Flags: uninsdeletekey noerror dontcreatekey deletekey
@@ -690,7 +683,7 @@ Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Parameters: /RegServer; Flags
 Filename: {app}\PDFCreator.exe; WorkingDir: {app}; Description: {cm:LaunchProgram,{#Appname}}; Flags: postinstall nowait skipifsilent; Check: IsServerInstallation
 Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shellexec skipifsilent; Check: Not IsPrinterInstallationSuccessfully
 
-Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile AND (Not UseINI)
+Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile
 
 Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: """{app}\PlugIns\pdfforge\pdfforge.dll"" /codebase"; Components: program; Flags: runhidden; Check: IsDotNET11Installed
 #ENDIF
@@ -1066,9 +1059,9 @@ var progTitel, progHandle: TArrayOfString;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
 
-    cmdlPrintername, cmdlPPDFile, cmdlREGFile, cmdlINIFile,
+    cmdlPrintername, cmdlPPDFile, cmdlREGFile,
     cmdlSaveInfFile, cmdlLoadInfFile: String;
-    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlUseINI, cmdlDontUseYahooSearch: Boolean;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlDontUseYahooSearch: Boolean;
 
     desktopicon, desktopicon_common, desktopicon_user,
     quicklaunchicon, fileassoc, winexplorer: Boolean;
@@ -1189,22 +1182,9 @@ begin
  RegWriteStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'PDFCreatorRestart', '');
 end;
 
-function UseINI(): Boolean;
-begin
- Result:=cmdlUseINI;
-end;
-
 function UseOwnREGFile(): Boolean;
 begin
  if Length(cmdlREGFile)>0 then
-  Result:=True
- else
-  Result:=False;
-end;
-
-function UseOwnINIFile(): Boolean;
-begin
- if Length(cmdlINIFile)>0 then
   Result:=True
  else
   Result:=False;
@@ -1221,11 +1201,6 @@ end;
 function GetExternalREGFile(Default:string): String;
 begin
  Result:=cmdlREGFile
-end;
-
-function GetExternalINIFile(Default:string): String;
-begin
- Result:=cmdlINIFile
 end;
 
 function GetExternalPPDFile(Default:string): String;
@@ -2026,26 +2001,6 @@ begin
  result := resStr;
 end;
 
-function GetDefaultIniPath(Default:String):String;
-var
- AppData: String;
-begin
- if Not RegQueryStringValue(HKEY_USERS, '.DEFAULT\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders',
-     'AppData', AppData) then
-   AppData:=ExpandConstant('{commonappdata}');
- If Not DirExists(Appdata) Then
-  ForceDirectories(AppData);
- Result:=AppData
-end;
-
-function GetIniPath(Default:String):String;
-begin
- if Servermodus then
-   Result:=ExpandConstant('{commonappdata}')
-  else
-   Result:=ExpandConstant('{userappdata}')+'\PDFCreator';
-end;
-
 function IsServerInstallation: Boolean;
 begin
  if Servermodus then
@@ -2793,8 +2748,6 @@ begin
     '/Printername=<PrinterName> - set a different printername'#13#10 +
     '/PPDFile=<PPDFile> - use an own ppd-file'#13#10 +
     '/REGFile=<REGFile> - use an own registry-file'#13#10 +
-    '/UseINI - use an ini-file instead of registry settings'#13#10 +
-    '/INIFile=<INIFile> - use an own ini-file'#13#10 +
     '/DontUseYahooSearch - Don''t use Yahoo search if installing Browser Add On'
     ,mbInformation,MB_OK);
    exit;
@@ -2806,8 +2759,6 @@ begin
    cmdlSilent:=true;
   if uppercase(paramstr(i))='/FORCEINSTALL' then
    cmdlForceInstall:=true;
-  if uppercase(paramstr(i))='/USEINI' then
-   cmdlUseINI:=true;
   if uppercase(paramstr(i))='/DONTUSEYAHOOSEARCH' then
    cmdlDontUseYahooSearch:=true;
 
@@ -2843,14 +2794,7 @@ begin
     else
      cmdlREGFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
   end;
-  cmdParam:='/INIFile';
-  pStr:=Copy(paramstr(i),1,Length(cmdParam));
-  if uppercase(pstr)=uppercase(cmdParam) then begin
-   if Copy(paramstr(i),Length(cmdParam)+1,1)='=' then
-     cmdlINIFile:=Copy(paramstr(i),Length(cmdParam)+2,Length(paramstr(i)))
-    else
-     cmdlINIFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
-  end;
+
   cmdParam:='/PPDFile';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
   if uppercase(pstr)=uppercase(cmdParam) then begin
