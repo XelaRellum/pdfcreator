@@ -649,8 +649,8 @@ Public Sub CallStack(a$)
 '.------------------------------------------------------------------------------
 a$ = time$ + " " + a$
 With CallStackCollection
-    If .Count Then .Add a$, , 1 Else .Add a$
-    If .Count > CallStackLength% Then .Remove .Count
+    If .count Then .Add a$, , 1 Else .Add a$
+    If .count > CallStackLength% Then .Remove .count
 End With
 '--------------------------
 ' If you comment out the following line the call stack will be displayed
@@ -680,7 +680,7 @@ Loop
 a$ = vbTab + ParamName$ + ":" + vbTab + a$
 With CallStackCollection
     .Add a$, , , 1
-    If .Count > CallStackLength% Then .Remove .Count
+    If .count > CallStackLength% Then .Remove .count
 End With
 '--------------------------
 ' If you comment out the following line the call stack will be displayed
