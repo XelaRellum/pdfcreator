@@ -22,20 +22,12 @@ Begin VB.Form frmOptions
       TabIndex        =   3
       Top             =   1320
       Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   1879
-      Caption         =   ""
-      BarColorFrom    =   723949
-      BarColorTo      =   132452
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11324
+      _extenty        =   1879
+      caption         =   ""
+      barcolorfrom    =   723949
+      barcolorto      =   132452
+      font            =   "frmOptions.frx":000C
       Begin VB.PictureBox picOptions 
          Appearance      =   0  '2D
          BorderStyle     =   0  'Kein
@@ -72,10 +64,10 @@ Begin VB.Form frmOptions
       TabIndex        =   6
       Top             =   1320
       Width           =   2655
-      _ExtentX        =   4683
-      _ExtentY        =   13891
-      FontName        =   "MS Sans Serif"
-      FontCharset     =   0
+      _extentx        =   4683
+      _extenty        =   13891
+      fontname        =   "MS Sans Serif"
+      fontcharset     =   0
       Begin MSComctlLib.ImageList imlIeb 
          Left            =   0
          Top             =   0
@@ -89,107 +81,107 @@ Begin VB.Form frmOptions
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   26
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":000C
+               Picture         =   "frmOptions.frx":0038
                Key             =   ""
             EndProperty
             BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":0166
+               Picture         =   "frmOptions.frx":0192
                Key             =   ""
             EndProperty
             BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":0700
+               Picture         =   "frmOptions.frx":072C
                Key             =   ""
             EndProperty
             BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":0C9A
+               Picture         =   "frmOptions.frx":0CC6
                Key             =   ""
             EndProperty
             BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":1234
+               Picture         =   "frmOptions.frx":1260
                Key             =   ""
             EndProperty
             BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":15CE
+               Picture         =   "frmOptions.frx":15FA
                Key             =   ""
             EndProperty
             BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":1B68
+               Picture         =   "frmOptions.frx":1B94
                Key             =   ""
             EndProperty
             BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":2442
+               Picture         =   "frmOptions.frx":246E
                Key             =   ""
             EndProperty
             BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":29DC
+               Picture         =   "frmOptions.frx":2A08
                Key             =   ""
             EndProperty
             BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":2F76
+               Picture         =   "frmOptions.frx":2FA2
                Key             =   ""
             EndProperty
             BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":3510
+               Picture         =   "frmOptions.frx":353C
                Key             =   ""
             EndProperty
             BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":3AAA
+               Picture         =   "frmOptions.frx":3AD6
                Key             =   ""
             EndProperty
             BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":4044
+               Picture         =   "frmOptions.frx":4070
                Key             =   ""
             EndProperty
             BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":45DE
+               Picture         =   "frmOptions.frx":460A
                Key             =   ""
             EndProperty
             BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":4B78
+               Picture         =   "frmOptions.frx":4BA4
                Key             =   ""
             EndProperty
             BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":5112
+               Picture         =   "frmOptions.frx":513E
                Key             =   ""
             EndProperty
             BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":56AC
+               Picture         =   "frmOptions.frx":56D8
                Key             =   ""
             EndProperty
             BeginProperty ListImage18 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":5C46
+               Picture         =   "frmOptions.frx":5C72
                Key             =   ""
             EndProperty
             BeginProperty ListImage19 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":61E0
+               Picture         =   "frmOptions.frx":620C
                Key             =   ""
             EndProperty
             BeginProperty ListImage20 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":6ABA
+               Picture         =   "frmOptions.frx":6AE6
                Key             =   ""
             EndProperty
             BeginProperty ListImage21 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":7394
+               Picture         =   "frmOptions.frx":73C0
                Key             =   ""
             EndProperty
             BeginProperty ListImage22 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":792E
+               Picture         =   "frmOptions.frx":795A
                Key             =   ""
             EndProperty
             BeginProperty ListImage23 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":7EC8
+               Picture         =   "frmOptions.frx":7EF4
                Key             =   ""
             EndProperty
             BeginProperty ListImage24 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":8462
+               Picture         =   "frmOptions.frx":848E
                Key             =   ""
             EndProperty
             BeginProperty ListImage25 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":89FC
+               Picture         =   "frmOptions.frx":8A28
                Key             =   ""
             EndProperty
             BeginProperty ListImage26 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmOptions.frx":8F96
+               Picture         =   "frmOptions.frx":8FC2
                Key             =   ""
             EndProperty
          EndProperty
@@ -217,25 +209,17 @@ Begin VB.Form frmOptions
       TabIndex        =   7
       Top             =   120
       Width           =   9180
-      _ExtentX        =   16193
-      _ExtentY        =   1879
-      Caption         =   "Profil"
-      BarColorFrom    =   723949
-      BarColorTo      =   132452
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   16193
+      _extenty        =   1879
+      caption         =   "Profil"
+      barcolorfrom    =   723949
+      barcolorto      =   132452
+      font            =   "frmOptions.frx":955C
       Begin VB.CommandButton cmdProfileRename 
          Enabled         =   0   'False
          Height          =   375
          Left            =   7200
-         Picture         =   "frmOptions.frx":9530
+         Picture         =   "frmOptions.frx":9588
          Style           =   1  'Grafisch
          TabIndex        =   13
          ToolTipText     =   "Rename profile"
@@ -245,7 +229,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileLoad 
          Height          =   375
          Left            =   8640
-         Picture         =   "frmOptions.frx":9924
+         Picture         =   "frmOptions.frx":997C
          Style           =   1  'Grafisch
          TabIndex        =   12
          ToolTipText     =   "Load profile"
@@ -255,7 +239,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileSave 
          Height          =   375
          Left            =   8160
-         Picture         =   "frmOptions.frx":9D22
+         Picture         =   "frmOptions.frx":9D7A
          Style           =   1  'Grafisch
          TabIndex        =   11
          ToolTipText     =   "Save profile"
@@ -266,7 +250,7 @@ Begin VB.Form frmOptions
          Enabled         =   0   'False
          Height          =   375
          Left            =   7680
-         Picture         =   "frmOptions.frx":A0B7
+         Picture         =   "frmOptions.frx":A10F
          Style           =   1  'Grafisch
          TabIndex        =   10
          ToolTipText     =   "Delete profile"
@@ -276,7 +260,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileAdd 
          Height          =   375
          Left            =   6720
-         Picture         =   "frmOptions.frx":A4AF
+         Picture         =   "frmOptions.frx":A507
          Style           =   1  'Grafisch
          TabIndex        =   9
          ToolTipText     =   "Add profile"
@@ -331,39 +315,42 @@ Private optSaveControl As VBControlExtender, optSave As ctlOptSave
 Private OldProfile As Long, ProfileOptions() As tOptions, ProfileNames() As String, TempPrinterProfiles As Collection
 
 Private Sub cmbProfile_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If cmbProfile.ListIndex <> OldProfile Then
-50020   If OldProfile <= UBound(ProfileOptions) Then
-50030    ProfileOptions(OldProfile) = GetOptionsFromUserControls
-50040   End If
-50050   OldProfile = cmbProfile.ListIndex
-50060   If cmbProfile.ListIndex = 0 Then
-50070     optGhostscript.ControlEnabled = True
-50080     optLanguages.ControlEnabled = True
-50090     cmdProfileRename.Enabled = False
-50100     cmdProfileDelete.Enabled = False
-50110    Else
-50120     optGhostscript.ControlEnabled = False
-50130     optLanguages.ControlEnabled = False
-50140     cmdProfileRename.Enabled = True
-50150     cmdProfileDelete.Enabled = True
-50160   End If
-50170   Options1 = ProfileOptions(cmbProfile.ListIndex)
-50180   Options1.Language = CurrentLanguage
-50190   SetOptions
-50200  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
+50010 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50020 On Error GoTo ErrPtnr_OnError
+50030 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50040  Dim tStr As String
+50050  If cmbProfile.ListIndex <> OldProfile Then
+50060   If OldProfile <= UBound(ProfileOptions) Then
+50070    tStr = ProfileOptions(OldProfile).PrinterTemppath
+50080    ProfileOptions(OldProfile) = GetOptionsFromUserControls
+50090    ProfileOptions(OldProfile).PrinterTemppath = tStr
+50100   End If
+50110   OldProfile = cmbProfile.ListIndex
+50120   If cmbProfile.ListIndex = 0 Then
+50130     optGhostscript.ControlEnabled = True
+50140     optLanguages.ControlEnabled = True
+50150     cmdProfileRename.Enabled = False
+50160     cmdProfileDelete.Enabled = False
+50170    Else
+50180     optGhostscript.ControlEnabled = False
+50190     optLanguages.ControlEnabled = False
+50200     cmdProfileRename.Enabled = True
+50210     cmdProfileDelete.Enabled = True
+50220   End If
+50230   Options1 = ProfileOptions(cmbProfile.ListIndex)
+50240   Options1.Language = CurrentLanguage
+50250   SetOptions
+50260  End If
+50270 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50280 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmOptions", "cmbProfile_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50301 Select Case ErrPtnr.OnError("frmOptions", "cmbProfile_Click")
+      Case 0: Resume
+50320 Case 1: Resume Next
+50330 Case 2: Exit Sub
+50340 Case 3: End
+50350 End Select
+50360 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Public Sub AddProfile(ProfileName As String)
@@ -407,7 +394,7 @@ On Error GoTo ErrPtnr_OnError
 50060  End If
 50070
 50080  Set NewPrinterProfiles = New Collection
-50090  For i = 1 To TempPrinterProfiles.Count
+50090  For i = 1 To TempPrinterProfiles.count
 50100   sa(0) = TempPrinterProfiles(i)(0)
 50110   sa(1) = TempPrinterProfiles(i)(1)
 50120   If i - 1 = cmbProfile.ListIndex Then
@@ -522,7 +509,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim PrinterProfiles As Collection, p As Variant, i As Long, tStr As String
 50020  Set PrinterProfiles = GetPrinterProfiles
 50030
-50040  For i = 1 To PrinterProfiles.Count
+50040  For i = 1 To PrinterProfiles.count
 50050   If StrComp(PrinterProfiles(i)(1), ProfileName, vbTextCompare) = 0 Then
 50060    If LenB(tStr) = 0 Then
 50070      tStr = PrinterProfiles(i)(0)
@@ -957,7 +944,7 @@ Private Sub cmdSave_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tRestart As Boolean, newLanguage As String, Profiles As Collection, i As Long, j As Long, _
-  PrinterProfiles As Collection, sa(2) As String
+  PrinterProfiles As Collection, sa(2) As String, tStr As String
 50030
 50040  tRestart = False
 50050  If UCase$(Options.DirectoryGhostscriptBinaries) <> UCase$(ProfileOptions(0).DirectoryGhostscriptBinaries) Then
@@ -965,59 +952,61 @@ On Error GoTo ErrPtnr_OnError
 50070  End If
 50080
 50090  ' Save all Options/Profiles
-50100  ProfileOptions(cmbProfile.ListIndex) = GetOptionsFromUserControls ' Get the current settings
-50110
-50120  ' Save default options
-50130  Options = ProfileOptions(0)
-50140  Options.Language = CurrentLanguage
-50150  SaveOptions Options
-50160
-50170  ' Delete all unnecessary/renamed profiles
-50180  Set Profiles = GetProfiles
-50190  For i = 1 To Profiles.Count
-50200   For j = 1 To cmbProfile.ListCount
-50210    If Profiles(i) = cmbProfile.List(j) Then
-50220     Exit For
-50230    End If
-50240   Next j
-50250   If j > cmbProfile.ListCount Then
-50260    DeleteProfile Profiles(i)
-50270   End If
-50280  Next i
-50290
-50300  ' Add all new/renamed profiles
-50310  For i = 1 To cmbProfile.ListCount - 1
-50320   SaveOptions ProfileOptions(i), cmbProfile.List(i)
-50330  Next i
-50340  ' Ready profiles saving
-50350
-50360  Set PrinterProfiles = New Collection
-50370  For i = 1 To TempPrinterProfiles.Count
-50380   sa(0) = TempPrinterProfiles(i)(0)
-50390   sa(1) = TempPrinterProfiles(i)(2)
-50400   PrinterProfiles.Add sa
-50410  Next i
-50420
-50430  SavePrinterProfiles PrinterProfiles
+50100  tStr = ProfileOptions(cmbProfile.ListIndex).PrinterTemppath
+50110  ProfileOptions(cmbProfile.ListIndex) = GetOptionsFromUserControls ' Get the current settings
+50120  ProfileOptions(cmbProfile.ListIndex).PrinterTemppath = tStr
+50130
+50140  ' Save default options
+50150  Options = ProfileOptions(0)
+50160  Options.Language = CurrentLanguage
+50170  SaveOptions Options
+50180
+50190  ' Delete all unnecessary/renamed profiles
+50200  Set Profiles = GetProfiles
+50210  For i = 1 To Profiles.count
+50220   For j = 1 To cmbProfile.ListCount
+50230    If Profiles(i) = cmbProfile.List(j) Then
+50240     Exit For
+50250    End If
+50260   Next j
+50270   If j > cmbProfile.ListCount Then
+50280    DeleteProfile Profiles(i)
+50290   End If
+50300  Next i
+50310
+50320  ' Add all new/renamed profiles
+50330  For i = 1 To cmbProfile.ListCount - 1
+50340   SaveOptions ProfileOptions(i), cmbProfile.List(i)
+50350  Next i
+50360  ' Ready profiles saving
+50370
+50380  Set PrinterProfiles = New Collection
+50390  For i = 1 To TempPrinterProfiles.count
+50400   sa(0) = TempPrinterProfiles(i)(0)
+50410   sa(1) = TempPrinterProfiles(i)(2)
+50420   PrinterProfiles.Add sa
+50430  Next i
 50440
-50450  SetHelpfile
+50450  SavePrinterProfiles PrinterProfiles
 50460
-50470  If IsWin9xMe = False Then
-50481   Select Case Options.ProcessPriority
+50470  SetHelpfile
+50480
+50490  If IsWin9xMe = False Then
+50501   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50500     SetProcessPriority Idle
-50510    Case 1: 'Normal
-50520     SetProcessPriority Normal
-50530    Case 2: 'High
-50540     SetProcessPriority High
-50550    Case 3: 'Realtime
-50560     SetProcessPriority RealTime
-50570   End Select
-50580  End If
-50590  If tRestart = True Then
-50600   Restart = True
-50610  End If
-50620  Unload Me
+50520     SetProcessPriority Idle
+50530    Case 1: 'Normal
+50540     SetProcessPriority Normal
+50550    Case 2: 'High
+50560     SetProcessPriority High
+50570    Case 3: 'Realtime
+50580     SetProcessPriority RealTime
+50590   End Select
+50600  End If
+50610  If tRestart = True Then
+50620   Restart = True
+50630  End If
+50640  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1261,8 +1250,8 @@ On Error GoTo ErrPtnr_OnError
 52250  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
 52260
 52270  Set Profiles = GetProfiles
-52280  ReDim ProfileNames(Profiles.Count)
-52290  ReDim ProfileOptions(Profiles.Count)
+52280  ReDim ProfileNames(Profiles.count)
+52290  ReDim ProfileOptions(Profiles.count)
 52300  ProfileNames(0) = LanguageStrings.OptionsProfileDefaultName
 52310  ProfileOptions(0) = Options
 52320
@@ -1348,7 +1337,7 @@ On Error GoTo ErrPtnr_OnError
 53120   cmdSave.Left = .Left + .Width - cmdSave.Width
 53130  End With
 53140
-53150  For i = 1 To Profiles.Count
+53150  For i = 1 To Profiles.count
 53160   cmbProfile.AddItem Profiles(i)
 53170   ProfileNames(i) = Profiles(i)
 53180   ProfileOptions(i) = ReadOptions(, , Profiles(i))
@@ -1368,7 +1357,7 @@ On Error GoTo ErrPtnr_OnError
 53320  End If
 53330
 53340  Set PrinterProfiles = GetPrinterProfiles
-53350  For i = 1 To PrinterProfiles.Count
+53350  For i = 1 To PrinterProfiles.count
 53360   sa(0) = PrinterProfiles(i)(0)
 53370   sa(1) = PrinterProfiles(i)(1)
 53380   sa(2) = PrinterProfiles(i)(1)
