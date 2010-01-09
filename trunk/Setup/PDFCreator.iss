@@ -1878,9 +1878,21 @@ begin
     SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
  end;
 
- SaveStringToFile(LogFile, ' Uninstall printerdriver for WinNT/Win2000/WinXP/Win2003:' + #13#10, True)
+ SaveStringToFile(LogFile, ' Uninstall printerdriver for WinNT/Win2000/WinXP/Win2003 32bit:' + #13#10, True)
  SaveStringToFile(LogFile, '  Drivername : ' + PrinterDrivername + #13#10, True)
  Environment:='Windows NT x86';
+ If IsPrinterdriverInstalled(PrinterdriverName, Environment) then begin
+  res:=DeletePrinterDriver('',Environment, PrinterDrivername);
+  if res=0 then begin
+    resUI:=resUI+1;
+    SaveStringToFile(LogFile, '  Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
+   end else
+    SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
+ end;
+
+ SaveStringToFile(LogFile, ' Uninstall printerdriver for WinNT/Win2000/WinXP/Win2003 64bit:' + #13#10, True)
+ SaveStringToFile(LogFile, '  Drivername : ' + PrinterDrivername + #13#10, True)
+ Environment:='Windows x64';
  If IsPrinterdriverInstalled(PrinterdriverName, Environment) then begin
   res:=DeletePrinterDriver('',Environment, PrinterDrivername);
   if res=0 then begin
