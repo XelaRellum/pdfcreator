@@ -20,12 +20,20 @@ Begin VB.Form frmPrinters
       TabIndex        =   2
       Top             =   120
       Width           =   6495
-      _extentx        =   11456
-      _extenty        =   8281
-      caption         =   "Printers"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "frmPrinters.frx":628A
+      _ExtentX        =   11456
+      _ExtentY        =   8281
+      Caption         =   "Printers"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtNewPrinter 
          Appearance      =   0  '2D
          Height          =   285
@@ -47,7 +55,7 @@ Begin VB.Form frmPrinters
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   1
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPrinters.frx":62B6
+               Picture         =   "frmPrinters.frx":628A
                Key             =   ""
             EndProperty
          EndProperty
@@ -188,7 +196,7 @@ Private Sub cmbProfile_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If lsvPrinters.ListItems.count > 0 Then
+50010  If lsvPrinters.ListItems.Count > 0 Then
 50020   lsvPrinters.ListItems(lsvPrinters.SelectedItem.Index).ListSubItems(1).Text = cmbProfile.Text
 50030  End If
 50040  cmbProfile.Visible = False
@@ -219,13 +227,13 @@ On Error GoTo ErrPtnr_OnError
 50090      MsgBox LanguageStrings.MessagesMsg40
 50100      Exit Sub
 50110     Else
-50120      c = Printers.count
+50120      c = Printers.Count
 50130      Call InstallWindowsPrinter("PDFCreator", "PDFCreator:", "PDFCreator", Printername, "", App.Path)
-50140      If (Printers.count > c) Then
+50140      If (Printers.Count > c) Then
 50150       Set lItem = lsvPrinters.ListItems.Add(, "K" & Printername, Printername, , 1)
 50160       lItem.SubItems(1) = LanguageStrings.OptionsProfileDefaultName
 50170       lItem.Selected = True
-50180       If lsvPrinters.ListItems.count > 1 And cmdDelPrinter.Enabled = False Then
+50180       If lsvPrinters.ListItems.Count > 1 And cmdDelPrinter.Enabled = False Then
 50190        cmdDelPrinter.Enabled = True
 50200       End If
 50210      End If
@@ -248,10 +256,10 @@ Private Sub cmdAddPrinter_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim count As Long
-50020  count = lsvPrinters.ListItems.count
+50010  Dim Count As Long
+50020  Count = lsvPrinters.ListItems.Count
 50030  AddPrinter
-50040  If count <> lsvPrinters.ListItems.count And cmdClose.Enabled = True Then
+50040  If Count <> lsvPrinters.ListItems.Count And cmdClose.Enabled = True Then
 50050   RemoveX Me
 50060   cmdClose.Enabled = False
 50070  End If
@@ -288,23 +296,23 @@ Private Sub cmdDelPrinter_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim c As Long, count As Long
-50020  count = lsvPrinters.ListItems.count
-50030  If lsvPrinters.ListItems.count > 0 Then
-50040   c = Printers.count
+50010  Dim c As Long, Count As Long
+50020  Count = lsvPrinters.ListItems.Count
+50030  If lsvPrinters.ListItems.Count > 0 Then
+50040   c = Printers.Count
 50050   UnInstallWindowsPrinter "PDFCreator", "PDFCreator:", "PDFCreator", lsvPrinters.SelectedItem.Text, "", True
-50060   If c > Printers.count Then
+50060   If c > Printers.Count Then
 50070    cmbProfile.Visible = False
 50080    lsvPrinters.ListItems.Remove lsvPrinters.SelectedItem.Index
-50090    If lsvPrinters.ListItems.count > 0 Then
+50090    If lsvPrinters.ListItems.Count > 0 Then
 50100     lsvPrinters.ListItems(lsvPrinters.SelectedItem.Index).Selected = True
 50110    End If
-50120    If lsvPrinters.ListItems.count <= 1 Then
+50120    If lsvPrinters.ListItems.Count <= 1 Then
 50130     cmdDelPrinter.Enabled = False
 50140    End If
 50150   End If
 50160  End If
-50170  If count <> lsvPrinters.ListItems.count And cmdClose.Enabled = True Then
+50170  If Count <> lsvPrinters.ListItems.Count And cmdClose.Enabled = True Then
 50180   RemoveX Me
 50190   cmdClose.Enabled = False
 50200  End If
@@ -327,7 +335,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim PrinterProfiles  As Collection, i As Long, sa(1) As String
 50020  Set PrinterProfiles = New Collection
 50030
-50040  For i = 1 To lsvPrinters.ListItems.count
+50040  For i = 1 To lsvPrinters.ListItems.Count
 50050   If LCase$(LanguageStrings.OptionsProfileDefaultName) = LCase$(lsvPrinters.ListItems(i).SubItems(1)) Then
 50060     sa(1) = ""
 50070    Else
@@ -390,8 +398,8 @@ On Error GoTo ErrPtnr_OnError
 50090   lsvPrinters.ListItems.Add , "K" & p, p, , 1
 50100  Next p
 50110
-50120  For i = 1 To lsvPrinters.ListItems.count
-50130   For j = 1 To PrinterProfiles.count
+50120  For i = 1 To lsvPrinters.ListItems.Count
+50130   For j = 1 To PrinterProfiles.Count
 50140    If UCase$(lsvPrinters.ListItems(i).Text) = UCase$(PrinterProfiles(j)(0)) Then
 50150     If ProfileExists(PrinterProfiles(j)(1)) Then
 50160      lsvPrinters.ListItems(i).SubItems(1) = PrinterProfiles(j)(1)
@@ -401,7 +409,7 @@ On Error GoTo ErrPtnr_OnError
 50200   Next j
 50210  Next i
 50220
-50230  For i = 1 To lsvPrinters.ListItems.count
+50230  For i = 1 To lsvPrinters.ListItems.Count
 50240   If LenB(lsvPrinters.ListItems(i).SubItems(1)) = 0 Then
 50250    lsvPrinters.ListItems(i).SubItems(1) = LanguageStrings.OptionsProfileDefaultName
 50260   End If
@@ -440,7 +448,7 @@ On Error GoTo ErrPtnr_OnError
 50080   lblAdminNotice.Visible = True
 50090  End If
 50100  SetPrinterProfiles
-50110  If lsvPrinters.ListItems.count > 1 Then
+50110  If lsvPrinters.ListItems.Count > 1 Then
 50120    If lsvPrinters.SelectedItem.Index <= 0 Then
 50130     cmdDelPrinter.Enabled = False
 50140    End If
