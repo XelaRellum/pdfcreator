@@ -235,9 +235,9 @@ On Error GoTo ErrPtnr_OnError
 50590    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50600   Else
 50610    If LenB(isf.REDMON_DOCNAME) = 0 Then
-50620      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_DOCNAME"), , , vbTextCompare)
+50620      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Environ$("REDMON_DOCNAME")), , , vbTextCompare)
 50630     Else
-50640      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_DOCNAME, , , vbTextCompare)
+50640      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(isf.REDMON_DOCNAME), , , vbTextCompare)
 50650    End If
 50660  End If
 50670  tStr = "DOCNAME_FILE"
@@ -245,9 +245,9 @@ On Error GoTo ErrPtnr_OnError
 50690    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50700   Else
 50710    If LenB(isf.REDMON_DOCNAME) = 0 Then
-50720      SplitPath Environ$("REDMON_DOCNAME"), , , , FilePath
+50720      SplitPath ReplaceForbiddenChars(Environ$("REDMON_DOCNAME")), , , , FilePath
 50730     Else
-50740      SplitPath isf.REDMON_DOCNAME, , , , FilePath
+50740      SplitPath ReplaceForbiddenChars(isf.REDMON_DOCNAME), , , , FilePath
 50750    End If
 50760    filename = Replace(filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
 50770  End If
@@ -256,9 +256,9 @@ On Error GoTo ErrPtnr_OnError
 50800    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50810   Else
 50820    If LenB(isf.REDMON_DOCNAME) = 0 Then
-50830      SplitPath Environ$("REDMON_DOCNAME"), , FilePath
+50830      SplitPath ReplaceForbiddenChars(Environ$("REDMON_DOCNAME")), , FilePath
 50840     Else
-50850      SplitPath isf.REDMON_DOCNAME, , FilePath
+50850      SplitPath ReplaceForbiddenChars(isf.REDMON_DOCNAME), , FilePath
 50860    End If
 50870    filename = Replace(filename, "<REDMON_" & tStr & ">", FilePath, , , vbTextCompare)
 50880  End If
@@ -267,9 +267,9 @@ On Error GoTo ErrPtnr_OnError
 50910    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 50920   Else
 50930    If LenB(isf.REDMON_JOB) = 0 Then
-50940      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_JOB"), , , vbTextCompare)
+50940      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Environ$("REDMON_JOB")), , , vbTextCompare)
 50950     Else
-50960      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_JOB, , , vbTextCompare)
+50960      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(isf.REDMON_JOB), , , vbTextCompare)
 50970    End If
 50980  End If
 50990  tStr = "MACHINE"
@@ -277,9 +277,9 @@ On Error GoTo ErrPtnr_OnError
 51010    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51020   Else
 51030    If LenB(isf.REDMON_MACHINE) = 0 Then
-51040      filename = Replace(filename, "<REDMON_" & tStr & ">", Replace$(Environ$("REDMON_MACHINE"), "\\", ""), , , vbTextCompare)
+51040      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Replace$(Environ$("REDMON_MACHINE"), "\\", "")), , , vbTextCompare)
 51050     Else
-51060      filename = Replace(filename, "<REDMON_" & tStr & ">", Replace$(isf.REDMON_MACHINE, "\\", ""), , , vbTextCompare)
+51060      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Replace$(isf.REDMON_MACHINE, "\\", "")), , , vbTextCompare)
 51070    End If
 51080  End If
 51090  tStr = "PORT"
@@ -287,9 +287,9 @@ On Error GoTo ErrPtnr_OnError
 51110    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51120   Else
 51130    If LenB(isf.REDMON_PORT) = 0 Then
-51140      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_PORT"), , , vbTextCompare)
+51140      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Environ$("REDMON_PORT")), , , vbTextCompare)
 51150     Else
-51160      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_PORT, , , vbTextCompare)
+51160      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(isf.REDMON_PORT), , , vbTextCompare)
 51170    End If
 51180  End If
 51190  tStr = "PRINTER"
@@ -297,9 +297,9 @@ On Error GoTo ErrPtnr_OnError
 51210    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51220   Else
 51230    If LenB(isf.REDMON_PRINTER) = 0 Then
-51240      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_PRINTER"), , , vbTextCompare)
+51240      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Environ$("REDMON_PRINTER")), , , vbTextCompare)
 51250     Else
-51260      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_PRINTER, , , vbTextCompare)
+51260      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(isf.REDMON_PRINTER), , , vbTextCompare)
 51270    End If
 51280  End If
 51290  tStr = "SESSIONID"
@@ -307,9 +307,9 @@ On Error GoTo ErrPtnr_OnError
 51310    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51320   Else
 51330    If LenB(isf.REDMON_SESSIONID) = 0 Then
-51340      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_SESSIONID"), , , vbTextCompare)
+51340      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Environ$("REDMON_SESSIONID")), , , vbTextCompare)
 51350     Else
-51360      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_SESSIONID, , , vbTextCompare)
+51360      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(isf.REDMON_SESSIONID), , , vbTextCompare)
 51370    End If
 51380  End If
 51390  tStr = "USER"
@@ -317,9 +317,9 @@ On Error GoTo ErrPtnr_OnError
 51410    filename = Replace(filename, "<REDMON_" & tStr & ">", "'Preview REDMON_" & tStr & "'", , , vbTextCompare)
 51420   Else
 51430    If LenB(isf.REDMON_USER) = 0 Then
-51440      filename = Replace(filename, "<REDMON_" & tStr & ">", Environ$("REDMON_USER"), , , vbTextCompare)
+51440      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(Environ$("REDMON_USER")), , , vbTextCompare)
 51450     Else
-51460      filename = Replace(filename, "<REDMON_" & tStr & ">", isf.REDMON_USER, , , vbTextCompare)
+51460      filename = Replace(filename, "<REDMON_" & tStr & ">", ReplaceForbiddenChars(isf.REDMON_USER), , , vbTextCompare)
 51470    End If
 51480  End If
 51490
@@ -366,7 +366,7 @@ On Error GoTo ErrPtnr_OnError
 50160  reg.SubKey = SubKey
 50170  reg.CreateKey
 50180
-50190  For i = 1 To PrinterProfiles.Count
+50190  For i = 1 To PrinterProfiles.count
 50200   If LCase$(PrinterProfiles(i)(1)) = LCase$(LanguageStrings.OptionsProfileDefaultName) Then
 50210     value = ""
 50220    Else

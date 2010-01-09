@@ -1914,7 +1914,7 @@ On Error GoTo ErrPtnr_OnError
 50960         WriteToSpecialLogfile tStr
 50970       End If
 50980      Else
-50990       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted!"
+50990       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted! > " & OutputFilename
 51000     End If
 51010     CheckForPrintingAfterSaving tFile(1), Options
 51020     KillFile tFile(1)
