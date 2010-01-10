@@ -429,6 +429,7 @@ Source: ..\COM\Samples\MS Office\frmPDFCreatorExcel.frx; DestDir: {app}\COM\MS O
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frm; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\frmPDFCreatorWord.frx; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\MS Office\modPDFCreatorAccess2000.bas; DestDir: {app}\COM\MS Office; Components: COMsamples; Flags: ignoreversion
+Source: ..\COM\Samples\Windows Scripting Host\VBScript\AddLineText.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineAndAddBookmarks.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\CombineJobs.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\CompareColorCompressionModes.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
