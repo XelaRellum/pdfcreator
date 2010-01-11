@@ -1,5 +1,6 @@
 ; english must be the first entry
 Name: english;            MessagesFile: compiler:Default.isl
+Name: basque;             MessagesFile: compiler:Languages\Basque.isl
 Name: catalan;            MessagesFile: compiler:Languages\Catalan.isl
 Name: czech;              MessagesFile: compiler:Languages\Czech.isl
 Name: chinese_simplified; MessagesFile: Innosetup languages files\ChineseSimp-12-5.1.11.isl
