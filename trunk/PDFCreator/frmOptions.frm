@@ -314,78 +314,30 @@ Private optSaveControl As VBControlExtender, optSave As ctlOptSave
 
 Private OldProfile As Long, ProfileOptions() As tOptions, ProfileNames() As String, TempPrinterProfiles As Collection
 
-Private Sub AdjustOptions(ByRef Profile1 As tOptions, ByRef Profile2 As tOptions)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Profile1
-50020   .ClientComputerResolveIPAddress = Profile2.ClientComputerResolveIPAddress
-50030   .DisableEmail = Profile2.DisableEmail
-50040   .LastUpdateCheck = Profile2.LastUpdateCheck
-50050   .LastSaveDirectory = Profile2.LastSaveDirectory
-50060   .Logging = Profile2.Logging
-50070   .LogLines = Profile2.LogLines
-50080   .OptionsVisible = Profile2.OptionsVisible
-50090   .OptionsEnabled = Profile2.OptionsEnabled
-50100   .PDFCompressionColorCompression = Profile2.PDFCompressionColorCompression
-50110   .PDFCompressionGreyCompression = Profile2.PDFCompressionGreyCompression
-50120   .PDFOwnerPasswordString = Profile2.PDFOwnerPasswordString
-50130   .PDFUserPasswordString = Profile2.PDFUserPasswordString
-50140   .PrinterTemppath = Profile2.PrinterTemppath
-50150   .ProgramFont = Profile2.ProgramFont
-50160   .ProgramFontCharset = Profile2.ProgramFontCharset
-50170   .ProgramFontSize = Profile2.ProgramFontSize
-50180   .RemoveAllKnownFileExtensions = Profile2.RemoveAllKnownFileExtensions
-50190   .StandardAuthor = Profile2.StandardAuthor
-50200   .StandardCreationdate = Profile2.StandardCreationdate
-50210   .StandardDateformat = Profile2.StandardDateformat
-50220   .StandardKeywords = Profile2.StandardKeywords
-50230   .StandardMailDomain = Profile2.StandardMailDomain
-50240   .StandardModifydate = Profile2.StandardModifydate
-50250   .StandardSubject = Profile2.StandardSubject
-50260   .StandardTitle = Profile2.StandardTitle
-50270   .StartStandardProgram = Profile2.StartStandardProgram
-50280   .Toolbars = Profile2.Toolbars
-50290  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmOptions", "AdjustOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Sub cmbProfile_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tempOpt As tOptions
-50020  If cmbProfile.ListIndex <> OldProfile Then
-50030   If OldProfile <= UBound(ProfileOptions) Then
-50040    tempOpt = ProfileOptions(OldProfile)
-50050    ProfileOptions(OldProfile) = GetOptionsFromUserControls
-50060    AdjustOptions ProfileOptions(OldProfile), tempOpt
-50070   End If
-50080   OldProfile = cmbProfile.ListIndex
-50090   If cmbProfile.ListIndex = 0 Then
-50100     optGhostscript.ControlEnabled = True
-50110     optLanguages.ControlEnabled = True
-50120     cmdProfileRename.Enabled = False
-50130     cmdProfileDelete.Enabled = False
-50140    Else
-50150     optGhostscript.ControlEnabled = False
-50160     optLanguages.ControlEnabled = False
-50170     cmdProfileRename.Enabled = True
-50180     cmdProfileDelete.Enabled = True
-50190   End If
-50200   Options1 = ProfileOptions(cmbProfile.ListIndex)
-50210   Options1.Language = CurrentLanguage
-50220   SetOptions
-50230  End If
+50010  If cmbProfile.ListIndex <> OldProfile Then
+50020   If OldProfile <= UBound(ProfileOptions) Then
+50030    ProfileOptions(OldProfile) = GetOptionsFromUserControls(ProfileOptions(OldProfile))
+50040   End If
+50050   OldProfile = cmbProfile.ListIndex
+50060   If cmbProfile.ListIndex = 0 Then
+50070     optGhostscript.ControlEnabled = True
+50080     optLanguages.ControlEnabled = True
+50090     cmdProfileRename.Enabled = False
+50100     cmdProfileDelete.Enabled = False
+50110    Else
+50120     optGhostscript.ControlEnabled = False
+50130     optLanguages.ControlEnabled = False
+50140     cmdProfileRename.Enabled = True
+50150     cmdProfileDelete.Enabled = True
+50160   End If
+50170   Options1 = ProfileOptions(cmbProfile.ListIndex)
+50180   Options1.Language = CurrentLanguage
+50190   SetOptions
+50200  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -677,7 +629,7 @@ On Error GoTo ErrPtnr_OnError
 50020  res = SaveFileDialog(FName, cmbProfile.List(cmbProfile.ListIndex), "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", _
   GetMyFiles, App.ProductName, OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + OFN_OVERWRITEPROMPT, Me.hwnd)
 50040  If res > 0 Then
-50050   tempOptions = GetOptionsFromUserControls   ' Get the current settings settings
+50050   tempOptions = GetOptionsFromUserControls(ProfileOptions(cmbProfile.ListIndex))   ' Get the current settings settings
 50060   SaveOptionsINI tempOptions, FName
 50070  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -939,11 +891,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function GetOptionsFromUserControls() As tOptions
+Private Function GetOptionsFromUserControls(DefaultOptions As tOptions) As tOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Options1 = StandardOptions
+50010  Options1 = DefaultOptions
 50020  optActions.GetOptions
 50030  optAutosave.GetOptions
 50040 ' optDirectories.GetOptions
@@ -989,7 +941,7 @@ Private Sub cmdSave_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tRestart As Boolean, newLanguage As String, Profiles As Collection, i As Long, j As Long, _
-  PrinterProfiles As Collection, sa(2) As String, tStr As String, tempOpt As tOptions
+  PrinterProfiles As Collection, sa(2) As String, tStr As String
 50030
 50040  tRestart = False
 50050  If UCase$(Options.DirectoryGhostscriptBinaries) <> UCase$(ProfileOptions(0).DirectoryGhostscriptBinaries) Then
@@ -997,71 +949,59 @@ On Error GoTo ErrPtnr_OnError
 50070  End If
 50080
 50090  ' Save all Options/Profiles
-50100  If ProfileExists(cmbProfile.List(cmbProfile.ListIndex)) Then
-50110   tempOpt = ReadOptions(True, , cmbProfile.List(cmbProfile.ListIndex))
-50120  End If
-50130  ProfileOptions(cmbProfile.ListIndex) = GetOptionsFromUserControls ' Get the current settings
-50140  If ProfileExists(cmbProfile.List(cmbProfile.ListIndex)) Then
-50150   AdjustOptions ProfileOptions(cmbProfile.ListIndex), tempOpt
-50160  End If
-50170
-50180  ' Save default options
-50190  tempOpt = Options
-50200  Options = ProfileOptions(0)
-50210  Options.Language = CurrentLanguage
-50220  AdjustOptions Options, tempOpt
-50230  SaveOptions Options
-50240
-50250  ' Delete all unnecessary/renamed profiles
-50260  Set Profiles = GetProfiles
-50270  For i = 1 To Profiles.Count
-50280   For j = 1 To cmbProfile.ListCount
-50290    If Profiles(i) = cmbProfile.List(j) Then
-50300     Exit For
-50310    End If
-50320   Next j
-50330   If j > cmbProfile.ListCount Then
-50340    DeleteProfile Profiles(i)
-50350   End If
-50360  Next i
-50370
-50380  ' Add all new/renamed profiles
-50390  For i = 1 To cmbProfile.ListCount - 1
-50400   If ProfileExists(cmbProfile.List(i)) Then
-50410    tempOpt = ReadOptions(True, , cmbProfile.List(i))
-50420    AdjustOptions ProfileOptions(i), tempOpt
-50430   End If
-50440   SaveOptions ProfileOptions(i), cmbProfile.List(i)
-50450  Next i
-50460  ' Ready profiles saving
-50470
-50480  Set PrinterProfiles = New Collection
-50490  For i = 1 To TempPrinterProfiles.Count
-50500   sa(0) = TempPrinterProfiles(i)(0)
-50510   sa(1) = TempPrinterProfiles(i)(2)
-50520   PrinterProfiles.Add sa
-50530  Next i
-50540
-50550  SavePrinterProfiles PrinterProfiles
-50560
-50570  SetHelpfile
-50580
-50590  If IsWin9xMe = False Then
-50601   Select Case Options.ProcessPriority
+50100  ProfileOptions(cmbProfile.ListIndex) = GetOptionsFromUserControls(ProfileOptions(cmbProfile.ListIndex)) ' Get the current settings
+50110
+50120  ' Save default options
+50130  Options = ProfileOptions(0)
+50140  Options.Language = CurrentLanguage
+50150  SaveOptions Options
+50160
+50170  ' Delete all unnecessary/renamed profiles
+50180  Set Profiles = GetProfiles
+50190  For i = 1 To Profiles.Count
+50200   For j = 1 To cmbProfile.ListCount
+50210    If Profiles(i) = cmbProfile.List(j) Then
+50220     Exit For
+50230    End If
+50240   Next j
+50250   If j > cmbProfile.ListCount Then
+50260    DeleteProfile Profiles(i)
+50270   End If
+50280  Next i
+50290
+50300  ' Add all new/renamed profiles
+50310  For i = 1 To cmbProfile.ListCount - 1
+50320   SaveOptions ProfileOptions(i), cmbProfile.List(i)
+50330  Next i
+50340  ' Ready profiles saving
+50350
+50360  Set PrinterProfiles = New Collection
+50370  For i = 1 To TempPrinterProfiles.Count
+50380   sa(0) = TempPrinterProfiles(i)(0)
+50390   sa(1) = TempPrinterProfiles(i)(2)
+50400   PrinterProfiles.Add sa
+50410  Next i
+50420
+50430  SavePrinterProfiles PrinterProfiles
+50440
+50450  SetHelpfile
+50460
+50470  If IsWin9xMe = False Then
+50481   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50620     SetProcessPriority Idle
-50630    Case 1: 'Normal
-50640     SetProcessPriority Normal
-50650    Case 2: 'High
-50660     SetProcessPriority High
-50670    Case 3: 'Realtime
-50680     SetProcessPriority RealTime
-50690   End Select
-50700  End If
-50710  If tRestart = True Then
-50720   Restart = True
-50730  End If
-50740  Unload Me
+50500     SetProcessPriority Idle
+50510    Case 1: 'Normal
+50520     SetProcessPriority Normal
+50530    Case 2: 'High
+50540     SetProcessPriority High
+50550    Case 3: 'Realtime
+50560     SetProcessPriority RealTime
+50570   End Select
+50580  End If
+50590  If tRestart = True Then
+50600   Restart = True
+50610  End If
+50620  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
