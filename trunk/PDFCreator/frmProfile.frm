@@ -132,9 +132,10 @@ Public Sub ChangeLanguage()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With LanguageStrings
-50020   cmdOK.Caption = .OptionsProfileOk
-50030   cmdCancel.Caption = .OptionsProfileCancel
-50040  End With
+50020   Me.Caption = .OptionsProfile
+50030   cmdOk.Caption = .OptionsProfileOk
+50040   cmdCancel.Caption = .OptionsProfileCancel
+50050  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -171,20 +172,20 @@ On Error GoTo ErrPtnr_OnError
 50011  Select Case ProfileAction
         Case eProfileAction.AddProfileAction
 50030    If ProfileExists(Trim$(txtProfile.Text)) = True Then
-50040      cmdOK.Enabled = False
+50040      cmdOk.Enabled = False
 50050     Else
-50060      cmdOK.Enabled = True
+50060      cmdOk.Enabled = True
 50070    End If
 50080   Case eProfileAction.RenameProfileAction
 50090    If CurrentProfile = Trim$(txtProfile.Text) Then
-50100      cmdOK.Enabled = False
+50100      cmdOk.Enabled = False
 50110     ElseIf LCase$(CurrentProfile) = LCase(Trim$(txtProfile.Text)) Then
-50120      cmdOK.Enabled = True
+50120      cmdOk.Enabled = True
 50130     Else
 50140      If ProfileExists(Trim$(txtProfile.Text)) = True Then
-50150        cmdOK.Enabled = False
+50150        cmdOk.Enabled = False
 50160       Else
-50170        cmdOK.Enabled = True
+50170        cmdOk.Enabled = True
 50180      End If
 50190    End If
 50200  End Select
@@ -228,13 +229,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function ProfileExists(Profilename) As Boolean
+Private Function ProfileExists(ProfileName) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long
 50020  For i = 1 To Profiles.Count
-50030   If StrComp(Profiles(i), Profilename, vbTextCompare) = 0 Then
+50030   If StrComp(Profiles(i), ProfileName, vbTextCompare) = 0 Then
 50040    ProfileExists = True
 50050    Exit Function
 50060   End If
