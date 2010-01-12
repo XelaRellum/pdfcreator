@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptLanguages 
    ClientHeight    =   6090
    ClientLeft      =   0
@@ -301,21 +301,19 @@ Public Sub SetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim filename As String, i As Long
-50020  If mEnabled Then
-50030   For i = 1 To LangFiles.Count
-50040    SplitPath LangFiles(i), , , , filename
-50050    If UCase$(CurrentLanguage) = UCase$(filename) Then
-50060     If cmbCurrentLanguage.ListIndex <> i - 1 Then
-50070      cmbCurrentLanguage.ListIndex = i - 1
-50080     End If
-50090     Exit For
-50100    End If
-50110   Next i
-50120  End If
-50130
-50140  With Options1
-50150  End With
+50010  Dim filename As String, i As Long, lang As String
+50020  SplitPath CurrentLanguage, , , , lang
+50030  If mEnabled Then
+50040   For i = 1 To LangFiles.Count
+50050    SplitPath LangFiles(i), , , , filename
+50060    If UCase$(lang) = UCase$(filename) Then
+50070     If cmbCurrentLanguage.ListIndex <> i - 1 Then
+50080      cmbCurrentLanguage.ListIndex = i - 1
+50090     End If
+50100     Exit For
+50110    End If
+50120   Next i
+50130  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -332,13 +330,15 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options1
-50020   If cmbCurrentLanguage.ListIndex < 0 Then
-50030     .Language = Options.Language
-50040    Else
-50050     .Language = LangFiles(cmbCurrentLanguage.ListIndex + 1)
-50060   End If
-50070  End With
+50010  Dim lang As String
+50020  With Options1
+50030   If cmbCurrentLanguage.ListIndex < 0 Then
+50040     .Language = Options.Language
+50050    Else
+50060     SplitPath LangFiles(cmbCurrentLanguage.ListIndex + 1), , , , lang
+50070     .Language = lang
+50080   End If
+50090  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

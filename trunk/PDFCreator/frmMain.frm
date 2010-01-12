@@ -1521,6 +1521,7 @@ On Error GoTo ErrPtnr_OnError
 50390         opt2 = Options
 50400         Options = opt
 50410         Autosave
+50411         SaveOption Options, "Counter", PrinterDefaultProfile
 50420         opt2.Counter = Options.Counter
 50430         Options = opt2
 50440        Else
@@ -1530,11 +1531,6 @@ On Error GoTo ErrPtnr_OnError
 50480         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
 50490         frmPrinting.Show , Me
 50500       End If
-50510       If LenB(PrinterDefaultProfile) > 0 Then
-50520         SaveOption Options, "Counter", PrinterDefaultProfile
-50530        Else
-50540         SaveOption Options, "Counter"
-50550       End If
 50560      End If
 50570     End If
 50580     If PrinterStop = False And NoProcessing = False Then
