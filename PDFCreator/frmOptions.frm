@@ -971,37 +971,38 @@ On Error GoTo ErrPtnr_OnError
 50290
 50300  ' Add all new/renamed profiles
 50310  For i = 1 To cmbProfile.ListCount - 1
-50320   SaveOptions ProfileOptions(i), cmbProfile.List(i)
-50330  Next i
-50340  ' Ready profiles saving
-50350
-50360  Set PrinterProfiles = New Collection
-50370  For i = 1 To TempPrinterProfiles.Count
-50380   sa(0) = TempPrinterProfiles(i)(0)
-50390   sa(1) = TempPrinterProfiles(i)(2)
-50400   PrinterProfiles.Add sa
-50410  Next i
-50420
-50430  SavePrinterProfiles PrinterProfiles
-50440
-50450  SetHelpfile
-50460
-50470  If IsWin9xMe = False Then
-50481   Select Case Options.ProcessPriority
+50320   ProfileOptions(i).LastUpdateCheck = Options.LastUpdateCheck
+50330   SaveOptions ProfileOptions(i), cmbProfile.List(i)
+50340  Next i
+50350  ' Ready profiles saving
+50360
+50370  Set PrinterProfiles = New Collection
+50380  For i = 1 To TempPrinterProfiles.Count
+50390   sa(0) = TempPrinterProfiles(i)(0)
+50400   sa(1) = TempPrinterProfiles(i)(2)
+50410   PrinterProfiles.Add sa
+50420  Next i
+50430
+50440  SavePrinterProfiles PrinterProfiles
+50450
+50460  SetHelpfile
+50470
+50480  If IsWin9xMe = False Then
+50491   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50500     SetProcessPriority Idle
-50510    Case 1: 'Normal
-50520     SetProcessPriority Normal
-50530    Case 2: 'High
-50540     SetProcessPriority High
-50550    Case 3: 'Realtime
-50560     SetProcessPriority RealTime
-50570   End Select
-50580  End If
-50590  If tRestart = True Then
-50600   Restart = True
-50610  End If
-50620  Unload Me
+50510     SetProcessPriority Idle
+50520    Case 1: 'Normal
+50530     SetProcessPriority Normal
+50540    Case 2: 'High
+50550     SetProcessPriority High
+50560    Case 3: 'Realtime
+50570     SetProcessPriority RealTime
+50580   End Select
+50590  End If
+50600  If tRestart = True Then
+50610   Restart = True
+50620  End If
+50630  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

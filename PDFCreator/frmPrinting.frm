@@ -281,15 +281,19 @@ Private Sub cmbProfile_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If cmbProfile.ListIndex <> OldProfile Then
-50020   OldProfile = cmbProfile.ListIndex
-50030   If cmbProfile.ListIndex = 0 Then
-50040     Options = ReadOptions
-50050    Else
-50060     Options = ReadOptions(, , cmbProfile.List(cmbProfile.ListIndex))
-50070   End If
-50080   InitForm
-50090  End If
+50010  Dim tOpt As tOptions
+50020  If cmbProfile.ListIndex <> OldProfile Then
+50030   OldProfile = cmbProfile.ListIndex
+50040   If cmbProfile.ListIndex = 0 Then
+50050     Options = ReadOptions
+50060    Else
+50070     tOpt = Options
+50080     Options = ReadOptions(, , cmbProfile.List(cmbProfile.ListIndex))
+50090     Options.LastUpdateCheck = tOpt.LastUpdateCheck
+50100     Options.UpdateInterval = tOpt.UpdateInterval
+50110   End If
+50120   InitForm
+50130  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -536,9 +540,9 @@ On Error GoTo ErrPtnr_OnError
 50180
 50190  ChangeLanguage
 50200
-50210  UpdateProfiles
+50210  InitForm
 50220
-50230  InitForm
+50230  UpdateProfiles
 50240
 50250  ShowAcceleratorsInForm Me, True
 50260  SetTopMost Me, True, True
@@ -794,7 +798,7 @@ Private Function SaveEDoc() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim PDFFile As String
+50010  Dim PDFFile As String, tOpt As tOptions
 50020
 50030  SaveEDoc = False
 50040  IsConverted = False
@@ -820,18 +824,27 @@ On Error GoTo ErrPtnr_OnError
      Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50250    End If
 50260   End If
-50270   Options.Counter = Options.Counter + 1
-50280   If chkStartStandardProgram.value = 1 Then
-50290    If Options.OnePagePerFile = 1 Then
-50300      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
-50310     Else
-50320      OpenDocument PDFFile
-50330    End If
-50340   End If
-50350   IsConverted = True
-50360   KillFile PDFSpoolfile
-50370   KillInfoSpoolfile PDFSpoolfile
-50380  End If
+50270
+50280   If cmbProfile.ListIndex = 0 Then
+50290     Options.Counter = Options.Counter + 1
+50300     SaveOption Options, "Counter"
+50310    Else
+50320     tOpt = ReadOptions(True, , cmbProfile.List(cmbProfile.ListIndex))
+50330     tOpt.Counter = tOpt.Counter + 1
+50340     SaveOption tOpt, "Counter", cmbProfile.List(cmbProfile.ListIndex)
+50350   End If
+50360
+50370   If chkStartStandardProgram.value = 1 Then
+50380    If Options.OnePagePerFile = 1 Then
+50390      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50400     Else
+50410      OpenDocument PDFFile
+50420    End If
+50430   End If
+50440   IsConverted = True
+50450   KillFile PDFSpoolfile
+50460   KillInfoSpoolfile PDFSpoolfile
+50470  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

@@ -7381,7 +7381,7 @@ Public Sub ReadLanguageFromOptions(Optional hProfile As hkey = HKEY_CURRENT_USER
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim sLanguage As String
+50010  Dim sLanguage As String, lang As String
 50020  If InstalledAsServer Then
 50030    sLanguage = ReadLanguageFromOptionsReg(sLanguage, "Software\PDFCreator", HKEY_LOCAL_MACHINE)
 50040   Else
@@ -7393,7 +7393,8 @@ On Error GoTo ErrPtnr_OnError
 50100    End If
 50110    sLanguage = ReadLanguageFromOptionsReg(sLanguage, "Software\PDFCreator", HKEY_LOCAL_MACHINE, False)
 50120  End If
-50130  Options.Language = sLanguage
+50130  SplitPath sLanguage, , , , lang
+50140  Options.Language = lang
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
