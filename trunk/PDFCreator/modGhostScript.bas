@@ -2549,47 +2549,45 @@ On Error GoTo ErrPtnr_OnError
 50080  InitParams
 50090  Set ParamCommands = New Collection
 50100
-50110  tStr = Options.DirectoryGhostscriptLibraries & ";" & Options.DirectoryGhostscriptFonts
-50120  If LenB(LTrim(Options.DirectoryGhostscriptResource)) > 0 Then
-50130   tStr = tStr & ";" & LTrim(Options.DirectoryGhostscriptResource)
-50140  End If
-50150  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50160   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
-50170  End If
-50180  AddParams "-I" & tStr
-50190  AddParams "-q"
-50200  AddParams "-dNOPAUSE"
-50210  'AddParams "-dSAFER"
-50220  AddParams "-dBATCH"
-50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50240   AddParams "-sFONTPATH=" & GetFontsDirectory
-50250  End If
-50260
-50270  AddParams "-sDEVICE=mswinpr2"
-50280  tStr = ""
-50290  If Options.PrintAfterSavingQueryUser > 0 Then
-50300   tStr = "/QueryUser " & Options.PrintAfterSavingQueryUser
-50310  End If
-50320  If Options.PrintAfterSavingNoCancel = 1 Then
-50330   tStr = tStr & " /NoCancel"
-50340  End If
-50350  tStr = Trim$(tStr)
-50360  If LenB(tStr) > 0 Then
-50370   AddParamCommand "<< " & tStr & " >> setpagedevice"
-50380  End If
-50390  AddParams "-sOutputFile=\\spool\" & Options.PrintAfterSavingPrinter
-50400  If Options.PrintAfterSavingDuplex = 1 Then
-50410   If Options.PrintAfterSavingTumble = 1 Then
-50420     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"
-50430    Else
-50440     AddParamCommand "<< /Duplex true /Tumble false >> setpagedevice"
-50450   End If
-50460  End If
-50470  AddParamCommands
-50480  AddParams "-f"
-50490  AddParams GSInputFile
-50500  ShowParams
-50510  CallGhostscript "mswinpr2"
+50110  tStr = Options.DirectoryGhostscriptLibraries & GetGhostscriptResourceString
+50120
+50130  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50140   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50150  End If
+50160  AddParams "-I" & tStr
+50170  AddParams "-q"
+50180  AddParams "-dNOPAUSE"
+50190  'AddParams "-dSAFER"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=mswinpr2"
+50260  tStr = ""
+50270  If Options.PrintAfterSavingQueryUser > 0 Then
+50280   tStr = "/QueryUser " & Options.PrintAfterSavingQueryUser
+50290  End If
+50300  If Options.PrintAfterSavingNoCancel = 1 Then
+50310   tStr = tStr & " /NoCancel"
+50320  End If
+50330  tStr = Trim$(tStr)
+50340  If LenB(tStr) > 0 Then
+50350   AddParamCommand "<< " & tStr & " >> setpagedevice"
+50360  End If
+50370  AddParams "-sOutputFile=\\spool\" & Options.PrintAfterSavingPrinter
+50380  If Options.PrintAfterSavingDuplex = 1 Then
+50390   If Options.PrintAfterSavingTumble = 1 Then
+50400     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"
+50410    Else
+50420     AddParamCommand "<< /Duplex true /Tumble false >> setpagedevice"
+50430   End If
+50440  End If
+50450  AddParamCommands
+50460  AddParams "-f"
+50470  AddParams GSInputFile
+50480  ShowParams
+50490  CallGhostscript "mswinpr2"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
