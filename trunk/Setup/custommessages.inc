@@ -8,7 +8,7 @@
 #include "Language includes\danish.inc"
 #include "Language includes\dutch.inc"
 ;#include "Language includes\estonian.inc"
-;#include "Language includes\finnish.inc"
+#include "Language includes\finnish.inc"
 #include "Language includes\french.inc"
 ;#include "Language includes\galician.inc"
 #include "Language includes\german.inc"
