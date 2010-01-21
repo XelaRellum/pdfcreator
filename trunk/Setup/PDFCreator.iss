@@ -1081,7 +1081,7 @@ var progTitel, progHandle: TArrayOfString;
     StandardmodusRB, ServermodusRB: TRadioButton;
     StandardmodusLabel: TLabel;
     ServerDescriptionPage: TOutputMsgWizardPage;
-    PrinterInstallationSuccessfully, Servermodus, Win9xPrinterdriver, WinNtPrinterdriver, Win2k32bitPrinterdriver: Boolean;
+    PrinterInstallationSuccessfully, Servermodus, Win9xPrinterdriver, WinNtPrinterdriver, Win2k32bitPrinterdriver, Win2k64bitPrinterdriver: Boolean;
 
 function IsX64: Boolean;
 begin
@@ -1276,10 +1276,10 @@ end;
 function InstallWin2kXP2k3Printerdriver32bit(): Boolean;
 begin
  Result:=False;
- If (InstallOnThisVersion('0,5.0.2195','0,0')=irInstall) and Not IsWin64 then
+ If (InstallOnThisVersion('0,5.0.2195','0,0')=irInstall) and Not IsWin64 then //win2000
   Result:=True;
  If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and
-  IsWin64 and PrinterdriverPage.Values[2] then
+  IsWin64 and PrinterdriverPage.Values[2] then //Win XP
   Result:=True
 end;
 
@@ -1287,6 +1287,9 @@ function InstallWinXP2k3Printerdriver64bit(): Boolean;
 begin
  Result:=False;
  If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and IsWin64 then
+  Result:=True
+ If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and
+  Not IsWin64 and PrinterdriverPage.Values[2] then
   Result:=True
 end;
 
@@ -2917,6 +2920,12 @@ begin
    Win2k32bitPrinterdriver := true
   else
    Win2k32bitPrinterdriver := false;
+ if IniKeyExists('Setup','Win2k64bitPrinterdriver',cmdlLoadInfFile) then
+  tRes:=Trim(GetIniString('Setup', 'Win2k64bitPrinterdriver', '0', cmdlLoadInfFile));
+ if tRes = '1' then
+   Win2k64bitPrinterdriver := true
+  else
+   Win2k64bitPrinterdriver := false;
 
  if IniKeyExists('Setup','Printername',cmdlLoadInfFile) then
   Printername:=GetIniString('Setup', 'Printername', Printername, cmdlLoadInfFile);
@@ -2955,6 +2964,10 @@ begin
    res:=SetIniString('Setup', 'Win2k32bitPrinterdriver', '1', cmdlSaveInfFile)
   else
    res:=SetIniString('Setup', 'Win2k32bitPrinterdriver', '0', cmdlSaveInfFile);
+ if Win2k64bitPrinterdriver = true then
+   res:=SetIniString('Setup', 'Win2k64bitPrinterdriver', '1', cmdlSaveInfFile)
+  else
+   res:=SetIniString('Setup', 'Win2k64bitPrinterdriver', '0', cmdlSaveInfFile);
 
  if IsTaskSelected('desktopicon') then
   tasks:='desktopicon';
@@ -3242,10 +3255,15 @@ begin
  PrinterdriverPage.Add('Windows 95, Windows 98, Windows Me');
  if Win9xPrinterdriver then
   PrinterdriverPage.Values[0] := true;
- if InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then begin
+ if InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then begin // Win2000
   PrinterdriverPage.Add('Windows NT 4.0');
   if WinNtPrinterdriver then
    PrinterdriverPage.Values[1] := true;
+  if Not IsWin64 then begin
+   PrinterdriverPage.Add('Windows 2000/XP/2003 - 64bit');
+   if Win2k64bitPrinterdriver then
+    PrinterdriverPage.Values[2] := true;
+  end;
  end;
  if IsWin64 then begin
   PrinterdriverPage.Add('Windows 2000/XP/2003 - 32bit');
