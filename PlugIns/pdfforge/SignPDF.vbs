@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.0.0.0
-' Date: December, 24. 2007
+' Version: 1.1.0.0
+' Date: January, 21. 2010
 ' Author: Frank Heindörfer
 ' Comments: This script signs a PDF using a exported P12/PFX Zertifikat.
 Option Explicit
@@ -13,7 +13,8 @@ Const Certificate = "C:\MyCertificate.p12" '  "C:\MyCertificate.pfx"
 Const signatureReason = ""
 Const signatureContact = ""
 Const signatureLocation = ""
-Const signatureVisible = false
+Const signatureVisible = true
+Const signatureOnPage = 0 ' Show signature on last page; 0 for last page, 1 for first page, 2 for second page, ...
 Const signaturePositionLowerLeftX = 100
 Const signaturePositionLowerLeftY = 100
 Const signaturePositionUpperRightX = 200
@@ -37,7 +38,7 @@ If objArgs.Count = 0 Then
   fname = objArgs(0)
 End If
 
-If Ucase(fso.GetExtensionName(fname)) <> "PDF" Then
+If UCase(fso.GetExtensionName(fname)) <> "PDF" Then
  MsgBox "This script works only with pdf files!", vbExclamation, AppTitle
  WScript.Quit
 End If
@@ -45,7 +46,7 @@ End If
 On Error Resume Next
 Set pdfforgePDF = CreateObject("pdfforge.pdf.PDF")
 If err.number = 429 Then
- MsgBox "The pdfforge.dll coming with PDFCreator is not installed! A possible reason can be a missing Microsoft .Net 1.1!", vbExclamation, AppTitle
+ MsgBox "The pdfforge.dll coming with PDFCreator is not installed! A possible reason could be a missing Microsoft .Net 1.1!", vbExclamation, AppTitle
  WScript.Quit
 End If
 On Error Goto 0
@@ -64,7 +65,7 @@ If IsEmpty(certificatePassword) Then
  WScript.Quit
 End If
 				
-pdfforgePDF.signPDFFile fname, tfname, Certificate, certificatePassword, signatureReason, signatureContact, signatureLocation, signatureVisible, signaturePositionLowerLeftX, signaturePositionLowerLeftY, signaturePositionUpperRightX, signaturePositionUpperRightY, multiSignatures, nothing
+pdfforgePDF.signPDFFile fname, tfname, Certificate, certificatePassword, signatureReason, signatureContact, signatureLocation, signatureVisible, signatureOnPage, signaturePositionLowerLeftX, signaturePositionLowerLeftY, signaturePositionUpperRightX, signaturePositionUpperRightY, multiSignatures, nothing
 
 If fso.FileExists(fname) Then
  fso.DeleteFile(fname)

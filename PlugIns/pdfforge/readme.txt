@@ -1,11 +1,11 @@
 Name:     pdfforge.dll
-Version:  1.5.0.0
+Version:  1.6.0.0
 Authors:  Frank Heindörfer, Hannes Smurawsky
 Email:    frank@pdfforge.org
 Homepage: http://www.pdfforge.org
 License:  FairPlay License Version 1.0 (FairPlay License.txt)
-Remark:   Using itextsharp 4.1.6.0 (compiled from source)
-Date:     September 8, 2009
+Remark:   Using itextsharp 5.0.0.0 (compiled from source)
+Date:     January 21, 2010
 
 
 Classes, methods of the pdfforge.dll.
@@ -46,7 +46,7 @@ pdfforge.pdf
   bool SetMetadataKey(string sourceFilename, string destinationFilename, string key, string value);
   void SignPDFFile(string sourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword,
       string signatureReason, string signatureContact, string signatureLocation,
-      bool signatureVisible,
+      bool signatureVisible, int signatureOnPage,
       int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX, int signaturePositionUpperRightY,
       bool multiSignatures, ref PDFEncryptor enc);
   int SplitPDFFile(string sourceFilename, string destinationFilename);
