@@ -119,6 +119,7 @@ Public PDFSigningSignatureContact As String
 Public PDFSigningSignatureLeftX As Double
 Public PDFSigningSignatureLeftY As Double
 Public PDFSigningSignatureLocation As String
+Public PDFSigningSignatureOnPage As Long
 Public PDFSigningSignatureReason As String
 Public PDFSigningSignatureRightX As Double
 Public PDFSigningSignatureRightY As Double

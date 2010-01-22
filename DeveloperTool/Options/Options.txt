@@ -151,6 +151,7 @@ PDFSigningSignatureContact|txtSignatureContact.Text|String|||
 PDFSigningSignatureLeftX|txtLeftX.Text|Double|100|0|<
 PDFSigningSignatureLeftY|txtLeftY.Text|Double|100|0|<
 PDFSigningSignatureLocation|txtSignatureLocation.Text|String|||
+PDFSigningSignatureOnPage|txtSignatureOnPage.Text|Long|1|0|<
 PDFSigningSignatureReason|txtSignatureReason.Text|String|||
 PDFSigningSignatureRightX|txtRightX.Text|Double|200|0|<
 PDFSigningSignatureRightY|txtRightY.Text|Double|200|0|<

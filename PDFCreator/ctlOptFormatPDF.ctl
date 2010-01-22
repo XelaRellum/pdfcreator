@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptFormatPDF 
    ClientHeight    =   10140
    ClientLeft      =   0
@@ -14,20 +14,12 @@ Begin VB.UserControl ctlOptFormatPDF
       TabIndex        =   68
       Top             =   120
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   9763
-      Caption         =   "Signing"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   9763
+      caption         =   "Signing"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFormatPDF.ctx":0312
       Begin VB.CheckBox chkSignPDF 
          Caption         =   "Sign pdf file"
          Height          =   255
@@ -49,16 +41,16 @@ Begin VB.UserControl ctlOptFormatPDF
          Height          =   285
          Left            =   120
          TabIndex        =   78
-         Top             =   3240
+         Top             =   2760
          Width           =   5325
       End
       Begin VB.TextBox txtSignatureContact 
          Appearance      =   0  '2D
          Height          =   285
-         Left            =   120
+         Left            =   3120
          TabIndex        =   76
-         Top             =   2640
-         Width           =   5325
+         Top             =   2040
+         Width           =   2805
       End
       Begin VB.TextBox txtSignatureReason 
          Appearance      =   0  '2D
@@ -66,7 +58,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Left            =   120
          TabIndex        =   74
          Top             =   2040
-         Width           =   5325
+         Width           =   2805
       End
       Begin VB.TextBox txtPFXFilePreview 
          Appearance      =   0  '2D
@@ -95,25 +87,27 @@ Begin VB.UserControl ctlOptFormatPDF
          Width           =   5325
       End
       Begin PDFCreator.dmFrame dmFraSignaturePosition 
-         Height          =   1335
+         Height          =   1935
          Left            =   120
          TabIndex        =   79
-         Top             =   3600
+         Top             =   3120
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   2355
-         Caption         =   "Signatur position"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   3413
+         caption         =   "Signature position"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":033E
+         Begin VB.TextBox txtSignatureOnPage 
+            Alignment       =   1  'Rechts
+            Appearance      =   0  '2D
+            Height          =   285
+            Left            =   240
+            TabIndex        =   94
+            Text            =   "1"
+            Top             =   960
+            Width           =   1000
+         End
          Begin VB.CheckBox chkSignatureVisible 
             Caption         =   "Signature visible in PDF"
             Height          =   255
@@ -129,7 +123,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Left            =   4560
             TabIndex        =   87
             Text            =   "200"
-            Top             =   960
+            Top             =   1560
             Width           =   1000
          End
          Begin VB.TextBox txtRightX 
@@ -139,7 +133,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Left            =   3120
             TabIndex        =   85
             Text            =   "200"
-            Top             =   960
+            Top             =   1560
             Width           =   1000
          End
          Begin VB.TextBox txtLeftY 
@@ -149,7 +143,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Left            =   1680
             TabIndex        =   83
             Text            =   "100"
-            Top             =   960
+            Top             =   1560
             Width           =   1000
          End
          Begin VB.TextBox txtLeftX 
@@ -159,8 +153,17 @@ Begin VB.UserControl ctlOptFormatPDF
             Left            =   240
             TabIndex        =   81
             Text            =   "100"
-            Top             =   960
+            Top             =   1560
             Width           =   1000
+         End
+         Begin VB.Label lblSignatureOnPage 
+            AutoSize        =   -1  'True
+            Caption         =   "Show signature on page"
+            Height          =   195
+            Left            =   240
+            TabIndex        =   93
+            Top             =   720
+            Width           =   1725
          End
          Begin VB.Label lblRightY 
             AutoSize        =   -1  'True
@@ -168,7 +171,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Height          =   195
             Left            =   4560
             TabIndex        =   86
-            Top             =   720
+            Top             =   1320
             Width           =   525
          End
          Begin VB.Label lblRightX 
@@ -177,7 +180,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Height          =   195
             Left            =   3120
             TabIndex        =   84
-            Top             =   720
+            Top             =   1320
             Width           =   525
          End
          Begin VB.Label lblLeftY 
@@ -186,7 +189,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Height          =   195
             Left            =   1680
             TabIndex        =   82
-            Top             =   720
+            Top             =   1320
             Width           =   420
          End
          Begin VB.Label lblLeftX 
@@ -195,27 +198,27 @@ Begin VB.UserControl ctlOptFormatPDF
             Height          =   195
             Left            =   240
             TabIndex        =   80
-            Top             =   720
+            Top             =   1320
             Width           =   420
          End
       End
       Begin VB.Label lblSignatureLocation 
          AutoSize        =   -1  'True
-         Caption         =   "Signatur location"
+         Caption         =   "Signature location"
          Height          =   195
          Left            =   120
          TabIndex        =   77
-         Top             =   3000
-         Width           =   1185
+         Top             =   2520
+         Width           =   1275
       End
       Begin VB.Label lblSignatureContact 
          AutoSize        =   -1  'True
-         Caption         =   "Signatur contact"
+         Caption         =   "Signature contact"
          Height          =   195
-         Left            =   120
+         Left            =   3120
          TabIndex        =   75
-         Top             =   2400
-         Width           =   1170
+         Top             =   1800
+         Width           =   1260
       End
       Begin VB.Label lblSignatureReason 
          AutoSize        =   -1  'True
@@ -242,20 +245,12 @@ Begin VB.UserControl ctlOptFormatPDF
       TabIndex        =   44
       Top             =   8640
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2566
-      Caption         =   "Options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   2566
+      caption         =   "Options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFormatPDF.ctx":036A
       Begin VB.CheckBox chkPDFPreserveOverprint 
          Appearance      =   0  '2D
          Caption         =   "Preserve Overprint Settings"
@@ -294,20 +289,12 @@ Begin VB.UserControl ctlOptFormatPDF
       TabIndex        =   41
       Top             =   7320
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2143
-      Caption         =   "Color options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   2143
+      caption         =   "Color options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFormatPDF.ctx":0396
       Begin VB.CheckBox chkPDFCMYKtoRGB 
          Appearance      =   0  '2D
          Caption         =   "Convert CMYK Images to RGB"
@@ -321,9 +308,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFColorModel 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":0312
+         ItemData        =   "ctlOptFormatPDF.ctx":03C2
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0314
+         List            =   "ctlOptFormatPDF.ctx":03C4
          Style           =   2  'Dropdown-Liste
          TabIndex        =   42
          Tag             =   "RGB|CMYK|GRAY"
@@ -337,20 +324,12 @@ Begin VB.UserControl ctlOptFormatPDF
       TabIndex        =   48
       Top             =   4560
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   9763
-      Caption         =   "Security"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   9763
+      caption         =   "Security"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFormatPDF.ctx":03C6
       Begin VB.CheckBox chkUseSecurity 
          Appearance      =   0  '2D
          Caption         =   "Use Security"
@@ -367,20 +346,12 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   63
          Top             =   4560
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Enhanced permissions (128 Bit only)"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Enhanced permissions (128 Bit only)"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":03F2
          Begin VB.CheckBox chkAllowDegradedPrinting 
             Appearance      =   0  '2D
             Caption         =   "Allow printing in low resolution"
@@ -428,20 +399,12 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   58
          Top             =   3600
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Disallow user to"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Disallow user to"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":041E
          Begin VB.CheckBox chkAllowPrinting 
             Appearance      =   0  '2D
             Caption         =   "print the document"
@@ -489,20 +452,12 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   55
          Top             =   2640
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Passwords"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Passwords"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":044A
          Begin VB.CheckBox chkUserPass 
             Appearance      =   0  '2D
             Caption         =   "Password required to open document"
@@ -530,20 +485,12 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   52
          Top             =   1680
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Encryption level"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Encryption level"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":0476
          Begin VB.OptionButton optEncLow 
             Appearance      =   0  '2D
             Caption         =   "Low (40 Bit - Adobe Acrobat 3.0 and above)"
@@ -571,26 +518,18 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   50
          Top             =   720
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Encryptor"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1508
+         caption         =   "Encryptor"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":04A2
          Begin VB.ComboBox cmbPDFEncryptor 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":0316
+            ItemData        =   "ctlOptFormatPDF.ctx":04CE
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0318
+            List            =   "ctlOptFormatPDF.ctx":04D0
             Style           =   2  'Dropdown-Liste
             TabIndex        =   51
             Top             =   360
@@ -604,20 +543,12 @@ Begin VB.UserControl ctlOptFormatPDF
       TabIndex        =   36
       Top             =   5520
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2990
-      Caption         =   "Font options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   2990
+      caption         =   "Font options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFormatPDF.ctx":04D2
       Begin VB.TextBox txtPDFSubSetPerc 
          Appearance      =   0  '2D
          Height          =   285
@@ -662,20 +593,12 @@ Begin VB.UserControl ctlOptFormatPDF
       TabIndex        =   13
       Top             =   120
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   7646
-      Caption         =   "Compression"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   7646
+      caption         =   "Compression"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFormatPDF.ctx":04FE
       Begin VB.CheckBox chkPDFTextComp 
          Appearance      =   0  '2D
          Caption         =   "Compress Text Objects"
@@ -692,20 +615,12 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   29
          Top             =   3120
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1931
-         Caption         =   "Monochrome images"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1931
+         caption         =   "Monochrome images"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":052A
          Begin VB.TextBox txtPDFMonoRes 
             Appearance      =   0  '2D
             Height          =   285
@@ -717,9 +632,9 @@ Begin VB.UserControl ctlOptFormatPDF
          Begin VB.ComboBox cmbPDFMonoResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":031A
+            ItemData        =   "ctlOptFormatPDF.ctx":0556
             Left            =   2520
-            List            =   "ctlOptFormatPDF.ctx":031C
+            List            =   "ctlOptFormatPDF.ctx":0558
             Style           =   2  'Dropdown-Liste
             TabIndex        =   34
             Tag             =   "Bicubic|Subsample|Average"
@@ -739,9 +654,9 @@ Begin VB.UserControl ctlOptFormatPDF
          Begin VB.ComboBox cmbPDFMonoComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":031E
+            ItemData        =   "ctlOptFormatPDF.ctx":055A
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0320
+            List            =   "ctlOptFormatPDF.ctx":055C
             Style           =   2  'Dropdown-Liste
             TabIndex        =   33
             Top             =   660
@@ -773,20 +688,12 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   22
          Top             =   1920
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1931
-         Caption         =   "Greyscale images"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1931
+         caption         =   "Greyscale images"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":055E
          Begin VB.CheckBox chkPDFGreyComp 
             Appearance      =   0  '2D
             Caption         =   "Compress"
@@ -800,9 +707,9 @@ Begin VB.UserControl ctlOptFormatPDF
          Begin VB.ComboBox cmbPDFGreyComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":0322
+            ItemData        =   "ctlOptFormatPDF.ctx":058A
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0324
+            List            =   "ctlOptFormatPDF.ctx":058C
             Style           =   2  'Dropdown-Liste
             TabIndex        =   26
             Top             =   660
@@ -821,9 +728,9 @@ Begin VB.UserControl ctlOptFormatPDF
          Begin VB.ComboBox cmbPDFGreyResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":0326
+            ItemData        =   "ctlOptFormatPDF.ctx":058E
             Left            =   2520
-            List            =   "ctlOptFormatPDF.ctx":0328
+            List            =   "ctlOptFormatPDF.ctx":0590
             Style           =   2  'Dropdown-Liste
             TabIndex        =   27
             Tag             =   "Bicubic|Subsample|Average"
@@ -854,20 +761,12 @@ Begin VB.UserControl ctlOptFormatPDF
          TabIndex        =   15
          Top             =   720
          Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1931
-         Caption         =   "Color images"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
+         _extentx        =   10504
+         _extenty        =   1931
+         caption         =   "Color images"
+         barcolorfrom    =   16744576
+         barcolorto      =   4194304
+         font            =   "ctlOptFormatPDF.ctx":0592
          Begin VB.CheckBox chkPDFColorComp 
             Appearance      =   0  '2D
             Caption         =   "Compress"
@@ -881,9 +780,9 @@ Begin VB.UserControl ctlOptFormatPDF
          Begin VB.ComboBox cmbPDFColorComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":032A
+            ItemData        =   "ctlOptFormatPDF.ctx":05BE
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":032C
+            List            =   "ctlOptFormatPDF.ctx":05C0
             Style           =   2  'Dropdown-Liste
             TabIndex        =   19
             Top             =   660
@@ -902,9 +801,9 @@ Begin VB.UserControl ctlOptFormatPDF
          Begin VB.ComboBox cmbPDFColorResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":032E
+            ItemData        =   "ctlOptFormatPDF.ctx":05C2
             Left            =   2520
-            List            =   "ctlOptFormatPDF.ctx":0330
+            List            =   "ctlOptFormatPDF.ctx":05C4
             Style           =   2  'Dropdown-Liste
             TabIndex        =   20
             Tag             =   "Bicubic|Subsample|Average"
@@ -936,26 +835,18 @@ Begin VB.UserControl ctlOptFormatPDF
       TabIndex        =   1
       Top             =   480
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   8546
-      Caption         =   "General Options"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   8546
+      caption         =   "General Options"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFormatPDF.ctx":05C6
       Begin VB.ComboBox cmbPDFDefaultSettings 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":0332
+         ItemData        =   "ctlOptFormatPDF.ctx":05F2
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0334
+         List            =   "ctlOptFormatPDF.ctx":05F4
          Style           =   2  'Dropdown-Liste
          TabIndex        =   91
          Top             =   555
@@ -964,9 +855,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFRotate 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":0336
+         ItemData        =   "ctlOptFormatPDF.ctx":05F6
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0338
+         List            =   "ctlOptFormatPDF.ctx":05F8
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
          Tag             =   "None|All|PageByPage"
@@ -976,9 +867,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFCompat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":033A
+         ItemData        =   "ctlOptFormatPDF.ctx":05FA
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":033C
+         List            =   "ctlOptFormatPDF.ctx":05FC
          Style           =   2  'Dropdown-Liste
          TabIndex        =   3
          Top             =   1215
@@ -997,9 +888,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFOverprint 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":033E
+         ItemData        =   "ctlOptFormatPDF.ctx":05FE
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0340
+         List            =   "ctlOptFormatPDF.ctx":0600
          Style           =   2  'Dropdown-Liste
          TabIndex        =   10
          Top             =   3420
@@ -1474,12 +1365,13 @@ On Error GoTo ErrPtnr_OnError
 51180   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
 51190   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
 51200   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
-51210   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
-51220   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
-51230   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
-51240   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
-51250   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
-51260  End With
+51210   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
+51220   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
+51230   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
+51240   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
+51250   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
+51260   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
+51270  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1550,17 +1442,18 @@ On Error GoTo ErrPtnr_OnError
 50520   txtSignatureLocation.Text = .PDFSigningSignatureLocation
 50530
 50540   chkSignatureVisible.value = .PDFSigningSignatureVisible
-50550   txtLeftX.Text = .PDFSigningSignatureLeftX
-50560   txtLeftY.Text = .PDFSigningSignatureLeftY
-50570   txtRightX.Text = .PDFSigningSignatureRightX
-50580   txtRightY.Text = .PDFSigningSignatureRightY
-50590   chkMultiSignature.value = .PDFSigningMultiSignature
-50600  End With
-50610  If chkSignPDF.value = 1 Then
-50620    EnableControls True
-50630   Else
-50640    EnableControls False
-50650  End If
+50550   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
+50560   txtLeftX.Text = .PDFSigningSignatureLeftX
+50570   txtLeftY.Text = .PDFSigningSignatureLeftY
+50580   txtRightX.Text = .PDFSigningSignatureRightX
+50590   txtRightY.Text = .PDFSigningSignatureRightY
+50600   chkMultiSignature.value = .PDFSigningMultiSignature
+50610  End With
+50620  If chkSignPDF.value = 1 Then
+50630    EnableControls True
+50640   Else
+50650    EnableControls False
+50660  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1667,20 +1560,23 @@ On Error GoTo ErrPtnr_OnError
 50880   .PDFSigningSignatureLocation = txtSignatureLocation.Text
 50890
 50900   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
-50910   If LenB(txtLeftX.Text) > 0 Then
-50920    .PDFSigningSignatureLeftX = txtLeftX.Text
+50910   If LenB(txtSignatureOnPage.Text) > 0 Then
+50920    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
 50930   End If
-50940   If LenB(txtLeftY.Text) > 0 Then
-50950    .PDFSigningSignatureLeftY = txtLeftY.Text
+50940   If LenB(txtLeftX.Text) > 0 Then
+50950    .PDFSigningSignatureLeftX = txtLeftX.Text
 50960   End If
-50970   If LenB(txtRightX.Text) > 0 Then
-50980    .PDFSigningSignatureRightX = txtRightX.Text
+50970   If LenB(txtLeftY.Text) > 0 Then
+50980    .PDFSigningSignatureLeftY = txtLeftY.Text
 50990   End If
-51000   If LenB(txtRightY.Text) > 0 Then
-51010    .PDFSigningSignatureRightY = txtRightY.Text
+51000   If LenB(txtRightX.Text) > 0 Then
+51010    .PDFSigningSignatureRightX = txtRightX.Text
 51020   End If
-51030   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
-51040  End With
+51030   If LenB(txtRightY.Text) > 0 Then
+51040    .PDFSigningSignatureRightY = txtRightY.Text
+51050   End If
+51060   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
+51070  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2341,7 +2237,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkSignaturVisible_Click")
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkSignatureVisible_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2395,3 +2291,87 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub txtSignatureOnPage_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtSignatureOnPage_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtLeftX_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtLeftX_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtLeftY_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtLeftY_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtRightX_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtRightX_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub txtRightY_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtRightY_Change")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub

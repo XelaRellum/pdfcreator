@@ -110,6 +110,7 @@ Public Type tOptions
  PDFSigningSignatureLeftX As Double
  PDFSigningSignatureLeftY As Double
  PDFSigningSignatureLocation As String
+ PDFSigningSignatureOnPage As Long
  PDFSigningSignatureReason As String
  PDFSigningSignatureRightX As Double
  PDFSigningSignatureRightY As Double
@@ -300,6 +301,7 @@ Public Function StandardOptions() As tOptions
   .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
   .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
   .PDFSigningSignatureLocation = vbNullString
+  .PDFSigningSignatureOnPage = "1"
   .PDFSigningSignatureReason = vbNullString
   .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
   .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
@@ -1799,6 +1801,20 @@ Public Function ReadOptionsINI(myOptions As tOptions, PDFCreatorINIFile As Strin
      .PDFSigningSignatureLocation = tStr
     End If
   End If
+  tStr = hOpt.Retrieve("PDFSigningSignatureOnPage")
+  If IsNumeric(tStr) Then
+    If CLng(tStr) >= 0 Then
+      .PDFSigningSignatureOnPage = CLng(tStr)
+     Else
+      If UseStandard Then
+       .PDFSigningSignatureOnPage = 1
+      End If
+    End If
+   Else
+    If UseStandard Then
+     .PDFSigningSignatureOnPage = 1
+    End If
+  End If
   tStr = hOpt.Retrieve("PDFSigningSignatureReason")
   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
     .PDFSigningSignatureReason = ""
@@ -2926,6 +2942,7 @@ Public Sub SaveOptionINI(sOptions As tOptions, OptionName As String, PDFCreatorI
   Case "PDFSIGNINGSIGNATURELEFTX":ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), "PDFSigningSignatureLeftX"
   Case "PDFSIGNINGSIGNATURELEFTY":ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), "PDFSigningSignatureLeftY"
   Case "PDFSIGNINGSIGNATURELOCATION":ini.SaveKey CStr(.PDFSigningSignatureLocation), "PDFSigningSignatureLocation"
+  Case "PDFSIGNINGSIGNATUREONPAGE":ini.SaveKey CStr(.PDFSigningSignatureOnPage), "PDFSigningSignatureOnPage"
   Case "PDFSIGNINGSIGNATUREREASON":ini.SaveKey CStr(.PDFSigningSignatureReason), "PDFSigningSignatureReason"
   Case "PDFSIGNINGSIGNATURERIGHTX":ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), "PDFSigningSignatureRightX"
   Case "PDFSIGNINGSIGNATURERIGHTY":ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), "PDFSigningSignatureRightY"
@@ -3114,6 +3131,7 @@ Public Sub SaveOptionsINI(sOptions as tOptions, PDFCreatorINIFile As String)
   ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), "PDFSigningSignatureLeftX"
   ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), "PDFSigningSignatureLeftY"
   ini.SaveKey CStr(.PDFSigningSignatureLocation), "PDFSigningSignatureLocation"
+  ini.SaveKey CStr(.PDFSigningSignatureOnPage), "PDFSigningSignatureOnPage"
   ini.SaveKey CStr(.PDFSigningSignatureReason), "PDFSigningSignatureReason"
   ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), "PDFSigningSignatureRightX"
   ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), "PDFSigningSignatureRightY"
@@ -4620,6 +4638,20 @@ Public Function ReadOptionsReg(myOptions As tOptions, KeyRoot as String, Optiona
    Else
     If LenB(tStr) > 0 Then
      .PDFSigningSignatureLocation = tStr
+    End If
+  End If
+  tStr = reg.GetRegistryValue("PDFSigningSignatureOnPage")
+  If Isnumeric(tStr) Then
+    If CLng(tStr) >= 0 Then
+      .PDFSigningSignatureOnPage = CLng(tStr)
+     Else
+      If UseStandard Then
+       .PDFSigningSignatureOnPage = 1
+      End If
+    End If
+   Else
+    If UseStandard Then
+     .PDFSigningSignatureOnPage = 1
     End If
   End If
   tStr = reg.GetRegistryValue("PDFSigningSignatureReason")
@@ -6356,6 +6388,14 @@ Public Sub SaveOptionREG(sOptions As tOptions, OptionName As String, Optional hk
    Set reg = Nothing
    Exit Sub
   End If
+  If UCase$(OptionName) = "PDFSIGNINGSIGNATUREONPAGE" Then
+   If Not reg.KeyExists Then
+    reg.CreateKey
+   End If
+   reg.SetRegistryValue "PDFSigningSignatureOnPage",CStr(.PDFSigningSignatureOnPage), REG_SZ
+   Set reg = Nothing
+   Exit Sub
+  End If
   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREREASON" Then
    If Not reg.KeyExists Then
     reg.CreateKey
@@ -7030,6 +7070,7 @@ Public Sub SaveOptionsREG(sOptions as tOptions, Optional hkey1 as hkey = HKEY_CU
   reg.SetRegistryValue "PDFSigningSignatureLeftX", Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), REG_SZ
   reg.SetRegistryValue "PDFSigningSignatureLeftY", Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), REG_SZ
   reg.SetRegistryValue "PDFSigningSignatureLocation",CStr(.PDFSigningSignatureLocation), REG_SZ
+  reg.SetRegistryValue "PDFSigningSignatureOnPage",CStr(.PDFSigningSignatureOnPage), REG_SZ
   reg.SetRegistryValue "PDFSigningSignatureReason",CStr(.PDFSigningSignatureReason), REG_SZ
   reg.SetRegistryValue "PDFSigningSignatureRightX", Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), REG_SZ
   reg.SetRegistryValue "PDFSigningSignatureRightY", Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), REG_SZ
