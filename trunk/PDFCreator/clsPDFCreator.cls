@@ -456,196 +456,184 @@ End Select
 End Property
 
 Public Property Get cOptionsNames() As Collection
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Set cOptionsNames = New Collection
-50020  With cOptionsNames
-50030   .Add "AdditionalGhostscriptParameters"
-50040   .Add "AdditionalGhostscriptSearchpath"
-50050   .Add "AddWindowsFontpath"
-50060   .Add "AllowSpecialGSCharsInFilenames"
-50070   .Add "AutosaveDirectory"
-50080   .Add "AutosaveFilename"
-50090   .Add "AutosaveFormat"
-50100   .Add "AutosaveStartStandardProgram"
-50110   .Add "BMPColorscount"
-50120   .Add "BMPResolution"
-50130   .Add "ClientComputerResolveIPAddress"
-50140   .Add "Counter"
-50150   .Add "DeviceHeightPoints"
-50160   .Add "DeviceWidthPoints"
-50170   .Add "DirectoryGhostscriptBinaries"
-50180   .Add "DirectoryGhostscriptFonts"
-50190   .Add "DirectoryGhostscriptLibraries"
-50200   .Add "DirectoryGhostscriptResource"
-50210   .Add "DisableEmail"
-50220   .Add "DontUseDocumentSettings"
-50230   .Add "EPSLanguageLevel"
-50240   .Add "FilenameSubstitutions"
-50250   .Add "FilenameSubstitutionsOnlyInTitle"
-50260   .Add "JPEGColorscount"
-50270   .Add "JPEGQuality"
-50280   .Add "JPEGResolution"
-50290   .Add "Language"
-50300   .Add "LastSaveDirectory"
-50310   .Add "LastUpdateCheck"
-50320   .Add "Logging"
-50330   .Add "LogLines"
-50340   .Add "NoConfirmMessageSwitchingDefaultprinter"
-50350   .Add "NoProcessingAtStartup"
-50360   .Add "NoPSCheck"
-50370   .Add "OnePagePerFile"
-50380   .Add "OptionsDesign"
-50390   .Add "OptionsEnabled"
-50400   .Add "OptionsVisible"
-50410   .Add "Papersize"
-50420   .Add "PCLColorsCount"
-50430   .Add "PCLResolution"
-50440   .Add "PCXColorscount"
-50450   .Add "PCXResolution"
-50460   .Add "PDFAllowAssembly"
-50470   .Add "PDFAllowDegradedPrinting"
-50480   .Add "PDFAllowFillIn"
-50490   .Add "PDFAllowScreenReaders"
-50500   .Add "PDFColorsCMYKToRGB"
-50510   .Add "PDFColorsColorModel"
-50520   .Add "PDFColorsPreserveHalftone"
-50530   .Add "PDFColorsPreserveOverprint"
-50540   .Add "PDFColorsPreserveTransfer"
-50550   .Add "PDFCompressionColorCompression"
-50560   .Add "PDFCompressionColorCompressionChoice"
-50570   .Add "PDFCompressionColorCompressionJPEGHighFactor"
-50580   .Add "PDFCompressionColorCompressionJPEGLowFactor"
-50590   .Add "PDFCompressionColorCompressionJPEGMaximumFactor"
-50600   .Add "PDFCompressionColorCompressionJPEGMediumFactor"
-50610   .Add "PDFCompressionColorCompressionJPEGMinimumFactor"
-50620   .Add "PDFCompressionColorResample"
-50630   .Add "PDFCompressionColorResampleChoice"
-50640   .Add "PDFCompressionColorResolution"
-50650   .Add "PDFCompressionGreyCompression"
-50660   .Add "PDFCompressionGreyCompressionChoice"
-50670   .Add "PDFCompressionGreyCompressionJPEGHighFactor"
-50680   .Add "PDFCompressionGreyCompressionJPEGLowFactor"
-50690   .Add "PDFCompressionGreyCompressionJPEGMaximumFactor"
-50700   .Add "PDFCompressionGreyCompressionJPEGMediumFactor"
-50710   .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
-50720   .Add "PDFCompressionGreyResample"
-50730   .Add "PDFCompressionGreyResampleChoice"
-50740   .Add "PDFCompressionGreyResolution"
-50750   .Add "PDFCompressionMonoCompression"
-50760   .Add "PDFCompressionMonoCompressionChoice"
-50770   .Add "PDFCompressionMonoResample"
-50780   .Add "PDFCompressionMonoResampleChoice"
-50790   .Add "PDFCompressionMonoResolution"
-50800   .Add "PDFCompressionTextCompression"
-50810   .Add "PDFDisallowCopy"
-50820   .Add "PDFDisallowModifyAnnotations"
-50830   .Add "PDFDisallowModifyContents"
-50840   .Add "PDFDisallowPrinting"
-50850   .Add "PDFEncryptor"
-50860   .Add "PDFFontsEmbedAll"
-50870   .Add "PDFFontsSubSetFonts"
-50880   .Add "PDFFontsSubSetFontsPercent"
-50890   .Add "PDFGeneralASCII85"
-50900   .Add "PDFGeneralAutorotate"
-50910   .Add "PDFGeneralCompatibility"
-50920   .Add "PDFGeneralDefault"
-50930   .Add "PDFGeneralOverprint"
-50940   .Add "PDFGeneralResolution"
-50950   .Add "PDFHighEncryption"
-50960   .Add "PDFLowEncryption"
-50970   .Add "PDFOptimize"
-50980   .Add "PDFOwnerPass"
-50990   .Add "PDFOwnerPasswordString"
-51000   .Add "PDFSigningMultiSignature"
-51010   .Add "PDFSigningPFXFile"
-51020   .Add "PDFSigningPFXFilePassword"
-51030   .Add "PDFSigningSignatureContact"
-51040   .Add "PDFSigningSignatureLeftX"
-51050   .Add "PDFSigningSignatureLeftY"
-51060   .Add "PDFSigningSignatureLocation"
-51070   .Add "PDFSigningSignatureReason"
-51080   .Add "PDFSigningSignatureRightX"
-51090   .Add "PDFSigningSignatureRightY"
-51100   .Add "PDFSigningSignatureVisible"
-51110   .Add "PDFSigningSignPDF"
-51120   .Add "PDFUpdateMetadata"
-51130   .Add "PDFUserPass"
-51140   .Add "PDFUserPasswordString"
-51150   .Add "PDFUseSecurity"
-51160   .Add "PNGColorscount"
-51170   .Add "PNGResolution"
-51180   .Add "PrintAfterSaving"
-51190   .Add "PrintAfterSavingDuplex"
-51200   .Add "PrintAfterSavingNoCancel"
-51210   .Add "PrintAfterSavingPrinter"
-51220   .Add "PrintAfterSavingQueryUser"
-51230   .Add "PrintAfterSavingTumble"
-51240   .Add "PrinterStop"
-51250   .Add "PrinterTemppath"
-51260   .Add "ProcessPriority"
-51270   .Add "ProgramFont"
-51280   .Add "ProgramFontCharset"
-51290   .Add "ProgramFontSize"
-51300   .Add "PSDColorsCount"
-51310   .Add "PSDResolution"
-51320   .Add "PSLanguageLevel"
-51330   .Add "RAWColorsCount"
-51340   .Add "RAWResolution"
-51350   .Add "RemoveAllKnownFileExtensions"
-51360   .Add "RemoveSpaces"
-51370   .Add "RunProgramAfterSaving"
-51380   .Add "RunProgramAfterSavingProgramname"
-51390   .Add "RunProgramAfterSavingProgramParameters"
-51400   .Add "RunProgramAfterSavingWaitUntilReady"
-51410   .Add "RunProgramAfterSavingWindowstyle"
-51420   .Add "RunProgramBeforeSaving"
-51430   .Add "RunProgramBeforeSavingProgramname"
-51440   .Add "RunProgramBeforeSavingProgramParameters"
-51450   .Add "RunProgramBeforeSavingWindowstyle"
-51460   .Add "SaveFilename"
-51470   .Add "SendEmailAfterAutoSaving"
-51480   .Add "SendMailMethod"
-51490   .Add "ShowAnimation"
-51500   .Add "StampFontColor"
-51510   .Add "StampFontname"
-51520   .Add "StampFontsize"
-51530   .Add "StampOutlineFontthickness"
-51540   .Add "StampString"
-51550   .Add "StampUseOutlineFont"
-51560   .Add "StandardAuthor"
-51570   .Add "StandardCreationdate"
-51580   .Add "StandardDateformat"
-51590   .Add "StandardKeywords"
-51600   .Add "StandardMailDomain"
-51610   .Add "StandardModifydate"
-51620   .Add "StandardSaveformat"
-51630   .Add "StandardSubject"
-51640   .Add "StandardTitle"
-51650   .Add "StartStandardProgram"
-51660   .Add "SVGResolution"
-51670   .Add "TIFFColorscount"
-51680   .Add "TIFFResolution"
-51690   .Add "Toolbars"
-51700   .Add "UpdateInterval"
-51710   .Add "UseAutosave"
-51720   .Add "UseAutosaveDirectory"
-51730   .Add "UseCreationDateNow"
-51740   .Add "UseCustomPaperSize"
-51750   .Add "UseFixPapersize"
-51760   .Add "UseStandardAuthor"
-51770  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Property
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cOptionsNames [GET]")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Property
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Set cOptionsNames = New Collection
+ With cOptionsNames
+  .Add "AdditionalGhostscriptParameters"
+  .Add "AdditionalGhostscriptSearchpath"
+  .Add "AddWindowsFontpath"
+  .Add "AllowSpecialGSCharsInFilenames"
+  .Add "AutosaveDirectory"
+  .Add "AutosaveFilename"
+  .Add "AutosaveFormat"
+  .Add "AutosaveStartStandardProgram"
+  .Add "BMPColorscount"
+  .Add "BMPResolution"
+  .Add "ClientComputerResolveIPAddress"
+  .Add "Counter"
+  .Add "DeviceHeightPoints"
+  .Add "DeviceWidthPoints"
+  .Add "DirectoryGhostscriptBinaries"
+  .Add "DirectoryGhostscriptFonts"
+  .Add "DirectoryGhostscriptLibraries"
+  .Add "DirectoryGhostscriptResource"
+  .Add "DisableEmail"
+  .Add "DontUseDocumentSettings"
+  .Add "EPSLanguageLevel"
+  .Add "FilenameSubstitutions"
+  .Add "FilenameSubstitutionsOnlyInTitle"
+  .Add "JPEGColorscount"
+  .Add "JPEGQuality"
+  .Add "JPEGResolution"
+  .Add "Language"
+  .Add "LastSaveDirectory"
+  .Add "LastUpdateCheck"
+  .Add "Logging"
+  .Add "LogLines"
+  .Add "NoConfirmMessageSwitchingDefaultprinter"
+  .Add "NoProcessingAtStartup"
+  .Add "NoPSCheck"
+  .Add "OnePagePerFile"
+  .Add "OptionsDesign"
+  .Add "OptionsEnabled"
+  .Add "OptionsVisible"
+  .Add "Papersize"
+  .Add "PCLColorsCount"
+  .Add "PCLResolution"
+  .Add "PCXColorscount"
+  .Add "PCXResolution"
+  .Add "PDFAllowAssembly"
+  .Add "PDFAllowDegradedPrinting"
+  .Add "PDFAllowFillIn"
+  .Add "PDFAllowScreenReaders"
+  .Add "PDFColorsCMYKToRGB"
+  .Add "PDFColorsColorModel"
+  .Add "PDFColorsPreserveHalftone"
+  .Add "PDFColorsPreserveOverprint"
+  .Add "PDFColorsPreserveTransfer"
+  .Add "PDFCompressionColorCompression"
+  .Add "PDFCompressionColorCompressionChoice"
+  .Add "PDFCompressionColorCompressionJPEGHighFactor"
+  .Add "PDFCompressionColorCompressionJPEGLowFactor"
+  .Add "PDFCompressionColorCompressionJPEGMaximumFactor"
+  .Add "PDFCompressionColorCompressionJPEGMediumFactor"
+  .Add "PDFCompressionColorCompressionJPEGMinimumFactor"
+  .Add "PDFCompressionColorResample"
+  .Add "PDFCompressionColorResampleChoice"
+  .Add "PDFCompressionColorResolution"
+  .Add "PDFCompressionGreyCompression"
+  .Add "PDFCompressionGreyCompressionChoice"
+  .Add "PDFCompressionGreyCompressionJPEGHighFactor"
+  .Add "PDFCompressionGreyCompressionJPEGLowFactor"
+  .Add "PDFCompressionGreyCompressionJPEGMaximumFactor"
+  .Add "PDFCompressionGreyCompressionJPEGMediumFactor"
+  .Add "PDFCompressionGreyCompressionJPEGMinimumFactor"
+  .Add "PDFCompressionGreyResample"
+  .Add "PDFCompressionGreyResampleChoice"
+  .Add "PDFCompressionGreyResolution"
+  .Add "PDFCompressionMonoCompression"
+  .Add "PDFCompressionMonoCompressionChoice"
+  .Add "PDFCompressionMonoResample"
+  .Add "PDFCompressionMonoResampleChoice"
+  .Add "PDFCompressionMonoResolution"
+  .Add "PDFCompressionTextCompression"
+  .Add "PDFDisallowCopy"
+  .Add "PDFDisallowModifyAnnotations"
+  .Add "PDFDisallowModifyContents"
+  .Add "PDFDisallowPrinting"
+  .Add "PDFEncryptor"
+  .Add "PDFFontsEmbedAll"
+  .Add "PDFFontsSubSetFonts"
+  .Add "PDFFontsSubSetFontsPercent"
+  .Add "PDFGeneralASCII85"
+  .Add "PDFGeneralAutorotate"
+  .Add "PDFGeneralCompatibility"
+  .Add "PDFGeneralDefault"
+  .Add "PDFGeneralOverprint"
+  .Add "PDFGeneralResolution"
+  .Add "PDFHighEncryption"
+  .Add "PDFLowEncryption"
+  .Add "PDFOptimize"
+  .Add "PDFOwnerPass"
+  .Add "PDFOwnerPasswordString"
+  .Add "PDFSigningMultiSignature"
+  .Add "PDFSigningPFXFile"
+  .Add "PDFSigningPFXFilePassword"
+  .Add "PDFSigningSignatureContact"
+  .Add "PDFSigningSignatureLeftX"
+  .Add "PDFSigningSignatureLeftY"
+  .Add "PDFSigningSignatureLocation"
+  .Add "PDFSigningSignatureOnPage"
+  .Add "PDFSigningSignatureReason"
+  .Add "PDFSigningSignatureRightX"
+  .Add "PDFSigningSignatureRightY"
+  .Add "PDFSigningSignatureVisible"
+  .Add "PDFSigningSignPDF"
+  .Add "PDFUpdateMetadata"
+  .Add "PDFUserPass"
+  .Add "PDFUserPasswordString"
+  .Add "PDFUseSecurity"
+  .Add "PNGColorscount"
+  .Add "PNGResolution"
+  .Add "PrintAfterSaving"
+  .Add "PrintAfterSavingDuplex"
+  .Add "PrintAfterSavingNoCancel"
+  .Add "PrintAfterSavingPrinter"
+  .Add "PrintAfterSavingQueryUser"
+  .Add "PrintAfterSavingTumble"
+  .Add "PrinterStop"
+  .Add "PrinterTemppath"
+  .Add "ProcessPriority"
+  .Add "ProgramFont"
+  .Add "ProgramFontCharset"
+  .Add "ProgramFontSize"
+  .Add "PSDColorsCount"
+  .Add "PSDResolution"
+  .Add "PSLanguageLevel"
+  .Add "RAWColorsCount"
+  .Add "RAWResolution"
+  .Add "RemoveAllKnownFileExtensions"
+  .Add "RemoveSpaces"
+  .Add "RunProgramAfterSaving"
+  .Add "RunProgramAfterSavingProgramname"
+  .Add "RunProgramAfterSavingProgramParameters"
+  .Add "RunProgramAfterSavingWaitUntilReady"
+  .Add "RunProgramAfterSavingWindowstyle"
+  .Add "RunProgramBeforeSaving"
+  .Add "RunProgramBeforeSavingProgramname"
+  .Add "RunProgramBeforeSavingProgramParameters"
+  .Add "RunProgramBeforeSavingWindowstyle"
+  .Add "SaveFilename"
+  .Add "SendEmailAfterAutoSaving"
+  .Add "SendMailMethod"
+  .Add "ShowAnimation"
+  .Add "StampFontColor"
+  .Add "StampFontname"
+  .Add "StampFontsize"
+  .Add "StampOutlineFontthickness"
+  .Add "StampString"
+  .Add "StampUseOutlineFont"
+  .Add "StandardAuthor"
+  .Add "StandardCreationdate"
+  .Add "StandardDateformat"
+  .Add "StandardKeywords"
+  .Add "StandardMailDomain"
+  .Add "StandardModifydate"
+  .Add "StandardSaveformat"
+  .Add "StandardSubject"
+  .Add "StandardTitle"
+  .Add "StartStandardProgram"
+  .Add "SVGResolution"
+  .Add "TIFFColorscount"
+  .Add "TIFFResolution"
+  .Add "Toolbars"
+  .Add "UpdateInterval"
+  .Add "UseAutosave"
+  .Add "UseAutosaveDirectory"
+  .Add "UseCreationDateNow"
+  .Add "UseCustomPaperSize"
+  .Add "UseFixPapersize"
+  .Add "UseStandardAuthor"
+ End With
 End Property
 
 Public Property Get cOption(ByVal PropertyName As String) As Variant
@@ -2168,195 +2156,183 @@ End Select
 End Function
 
 Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions) As Variant
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case UCase$(PropertyName)
-        Case "ADDITIONALGHOSTSCRIPTPARAMETERS": cGetOptionFromOptions = Options.AdditionalGhostscriptParameters
-50030   Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": cGetOptionFromOptions = Options.AdditionalGhostscriptSearchpath
-50040   Case "ADDWINDOWSFONTPATH": cGetOptionFromOptions = Options.AddWindowsFontpath
-50050   Case "ALLOWSPECIALGSCHARSINFILENAMES": cGetOptionFromOptions = Options.AllowSpecialGSCharsInFilenames
-50060   Case "AUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.AutosaveDirectory
-50070   Case "AUTOSAVEFILENAME": cGetOptionFromOptions = Options.AutosaveFilename
-50080   Case "AUTOSAVEFORMAT": cGetOptionFromOptions = Options.AutosaveFormat
-50090   Case "AUTOSAVESTARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.AutosaveStartStandardProgram
-50100   Case "BMPCOLORSCOUNT": cGetOptionFromOptions = Options.BMPColorscount
-50110   Case "BMPRESOLUTION": cGetOptionFromOptions = Options.BMPResolution
-50120   Case "CLIENTCOMPUTERRESOLVEIPADDRESS": cGetOptionFromOptions = Options.ClientComputerResolveIPAddress
-50130   Case "COUNTER": cGetOptionFromOptions = Options.Counter
-50140   Case "DEVICEHEIGHTPOINTS": cGetOptionFromOptions = Options.DeviceHeightPoints
-50150   Case "DEVICEWIDTHPOINTS": cGetOptionFromOptions = Options.DeviceWidthPoints
-50160   Case "DIRECTORYGHOSTSCRIPTBINARIES": cGetOptionFromOptions = Options.DirectoryGhostscriptBinaries
-50170   Case "DIRECTORYGHOSTSCRIPTFONTS": cGetOptionFromOptions = Options.DirectoryGhostscriptFonts
-50180   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": cGetOptionFromOptions = Options.DirectoryGhostscriptLibraries
-50190   Case "DIRECTORYGHOSTSCRIPTRESOURCE": cGetOptionFromOptions = Options.DirectoryGhostscriptResource
-50200   Case "DISABLEEMAIL": cGetOptionFromOptions = Options.DisableEmail
-50210   Case "DONTUSEDOCUMENTSETTINGS": cGetOptionFromOptions = Options.DontUseDocumentSettings
-50220   Case "EPSLANGUAGELEVEL": cGetOptionFromOptions = Options.EPSLanguageLevel
-50230   Case "FILENAMESUBSTITUTIONS": cGetOptionFromOptions = Options.FilenameSubstitutions
-50240   Case "FILENAMESUBSTITUTIONSONLYINTITLE": cGetOptionFromOptions = Options.FilenameSubstitutionsOnlyInTitle
-50250   Case "JPEGCOLORSCOUNT": cGetOptionFromOptions = Options.JPEGColorscount
-50260   Case "JPEGQUALITY": cGetOptionFromOptions = Options.JPEGQuality
-50270   Case "JPEGRESOLUTION": cGetOptionFromOptions = Options.JPEGResolution
-50280   Case "LANGUAGE": cGetOptionFromOptions = Options.Language
-50290   Case "LASTSAVEDIRECTORY": cGetOptionFromOptions = Options.LastSaveDirectory
-50300   Case "LASTUPDATECHECK": cGetOptionFromOptions = Options.LastUpdateCheck
-50310   Case "LOGGING": cGetOptionFromOptions = Options.Logging
-50320   Case "LOGLINES": cGetOptionFromOptions = Options.LogLines
-50330   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": cGetOptionFromOptions = Options.NoConfirmMessageSwitchingDefaultprinter
-50340   Case "NOPROCESSINGATSTARTUP": cGetOptionFromOptions = Options.NoProcessingAtStartup
-50350   Case "NOPSCHECK": cGetOptionFromOptions = Options.NoPSCheck
-50360   Case "ONEPAGEPERFILE": cGetOptionFromOptions = Options.OnePagePerFile
-50370   Case "OPTIONSDESIGN": cGetOptionFromOptions = Options.OptionsDesign
-50380   Case "OPTIONSENABLED": cGetOptionFromOptions = Options.OptionsEnabled
-50390   Case "OPTIONSVISIBLE": cGetOptionFromOptions = Options.OptionsVisible
-50400   Case "PAPERSIZE": cGetOptionFromOptions = Options.Papersize
-50410   Case "PCLCOLORSCOUNT": cGetOptionFromOptions = Options.PCLColorsCount
-50420   Case "PCLRESOLUTION": cGetOptionFromOptions = Options.PCLResolution
-50430   Case "PCXCOLORSCOUNT": cGetOptionFromOptions = Options.PCXColorscount
-50440   Case "PCXRESOLUTION": cGetOptionFromOptions = Options.PCXResolution
-50450   Case "PDFALLOWASSEMBLY": cGetOptionFromOptions = Options.PDFAllowAssembly
-50460   Case "PDFALLOWDEGRADEDPRINTING": cGetOptionFromOptions = Options.PDFAllowDegradedPrinting
-50470   Case "PDFALLOWFILLIN": cGetOptionFromOptions = Options.PDFAllowFillIn
-50480   Case "PDFALLOWSCREENREADERS": cGetOptionFromOptions = Options.PDFAllowScreenReaders
-50490   Case "PDFCOLORSCMYKTORGB": cGetOptionFromOptions = Options.PDFColorsCMYKToRGB
-50500   Case "PDFCOLORSCOLORMODEL": cGetOptionFromOptions = Options.PDFColorsColorModel
-50510   Case "PDFCOLORSPRESERVEHALFTONE": cGetOptionFromOptions = Options.PDFColorsPreserveHalftone
-50520   Case "PDFCOLORSPRESERVEOVERPRINT": cGetOptionFromOptions = Options.PDFColorsPreserveOverprint
-50530   Case "PDFCOLORSPRESERVETRANSFER": cGetOptionFromOptions = Options.PDFColorsPreserveTransfer
-50540   Case "PDFCOMPRESSIONCOLORCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionColorCompression
-50550   Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionColorCompressionChoice
-50560   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGHighFactor
-50570   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGLowFactor
-50580   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMaximumFactor
-50590   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMediumFactor
-50600   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMinimumFactor
-50610   Case "PDFCOMPRESSIONCOLORRESAMPLE": cGetOptionFromOptions = Options.PDFCompressionColorResample
-50620   Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionColorResampleChoice
-50630   Case "PDFCOMPRESSIONCOLORRESOLUTION": cGetOptionFromOptions = Options.PDFCompressionColorResolution
-50640   Case "PDFCOMPRESSIONGREYCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionGreyCompression
-50650   Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionChoice
-50660   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGHighFactor
-50670   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGLowFactor
-50680   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMaximumFactor
-50690   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMediumFactor
-50700   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMinimumFactor
-50710   Case "PDFCOMPRESSIONGREYRESAMPLE": cGetOptionFromOptions = Options.PDFCompressionGreyResample
-50720   Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionGreyResampleChoice
-50730   Case "PDFCOMPRESSIONGREYRESOLUTION": cGetOptionFromOptions = Options.PDFCompressionGreyResolution
-50740   Case "PDFCOMPRESSIONMONOCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionMonoCompression
-50750   Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionMonoCompressionChoice
-50760   Case "PDFCOMPRESSIONMONORESAMPLE": cGetOptionFromOptions = Options.PDFCompressionMonoResample
-50770   Case "PDFCOMPRESSIONMONORESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionMonoResampleChoice
-50780   Case "PDFCOMPRESSIONMONORESOLUTION": cGetOptionFromOptions = Options.PDFCompressionMonoResolution
-50790   Case "PDFCOMPRESSIONTEXTCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionTextCompression
-50800   Case "PDFDISALLOWCOPY": cGetOptionFromOptions = Options.PDFDisallowCopy
-50810   Case "PDFDISALLOWMODIFYANNOTATIONS": cGetOptionFromOptions = Options.PDFDisallowModifyAnnotations
-50820   Case "PDFDISALLOWMODIFYCONTENTS": cGetOptionFromOptions = Options.PDFDisallowModifyContents
-50830   Case "PDFDISALLOWPRINTING": cGetOptionFromOptions = Options.PDFDisallowPrinting
-50840   Case "PDFENCRYPTOR": cGetOptionFromOptions = Options.PDFEncryptor
-50850   Case "PDFFONTSEMBEDALL": cGetOptionFromOptions = Options.PDFFontsEmbedAll
-50860   Case "PDFFONTSSUBSETFONTS": cGetOptionFromOptions = Options.PDFFontsSubSetFonts
-50870   Case "PDFFONTSSUBSETFONTSPERCENT": cGetOptionFromOptions = Options.PDFFontsSubSetFontsPercent
-50880   Case "PDFGENERALASCII85": cGetOptionFromOptions = Options.PDFGeneralASCII85
-50890   Case "PDFGENERALAUTOROTATE": cGetOptionFromOptions = Options.PDFGeneralAutorotate
-50900   Case "PDFGENERALCOMPATIBILITY": cGetOptionFromOptions = Options.PDFGeneralCompatibility
-50910   Case "PDFGENERALDEFAULT": cGetOptionFromOptions = Options.PDFGeneralDefault
-50920   Case "PDFGENERALOVERPRINT": cGetOptionFromOptions = Options.PDFGeneralOverprint
-50930   Case "PDFGENERALRESOLUTION": cGetOptionFromOptions = Options.PDFGeneralResolution
-50940   Case "PDFHIGHENCRYPTION": cGetOptionFromOptions = Options.PDFHighEncryption
-50950   Case "PDFLOWENCRYPTION": cGetOptionFromOptions = Options.PDFLowEncryption
-50960   Case "PDFOPTIMIZE": cGetOptionFromOptions = Options.PDFOptimize
-50970   Case "PDFOWNERPASS": cGetOptionFromOptions = Options.PDFOwnerPass
-50980   Case "PDFOWNERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFOwnerPasswordString
-50990   Case "PDFSIGNINGMULTISIGNATURE": cGetOptionFromOptions = Options.PDFSigningMultiSignature
-51000   Case "PDFSIGNINGPFXFILE": cGetOptionFromOptions = Options.PDFSigningPFXFile
-51010   Case "PDFSIGNINGPFXFILEPASSWORD": cGetOptionFromOptions = Options.PDFSigningPFXFilePassword
-51020   Case "PDFSIGNINGSIGNATURECONTACT": cGetOptionFromOptions = Options.PDFSigningSignatureContact
-51030   Case "PDFSIGNINGSIGNATURELEFTX": cGetOptionFromOptions = Options.PDFSigningSignatureLeftX
-51040   Case "PDFSIGNINGSIGNATURELEFTY": cGetOptionFromOptions = Options.PDFSigningSignatureLeftY
-51050   Case "PDFSIGNINGSIGNATURELOCATION": cGetOptionFromOptions = Options.PDFSigningSignatureLocation
-51060   Case "PDFSIGNINGSIGNATUREREASON": cGetOptionFromOptions = Options.PDFSigningSignatureReason
-51070   Case "PDFSIGNINGSIGNATURERIGHTX": cGetOptionFromOptions = Options.PDFSigningSignatureRightX
-51080   Case "PDFSIGNINGSIGNATURERIGHTY": cGetOptionFromOptions = Options.PDFSigningSignatureRightY
-51090   Case "PDFSIGNINGSIGNATUREVISIBLE": cGetOptionFromOptions = Options.PDFSigningSignatureVisible
-51100   Case "PDFSIGNINGSIGNPDF": cGetOptionFromOptions = Options.PDFSigningSignPDF
-51110   Case "PDFUPDATEMETADATA": cGetOptionFromOptions = Options.PDFUpdateMetadata
-51120   Case "PDFUSERPASS": cGetOptionFromOptions = Options.PDFUserPass
-51130   Case "PDFUSERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFUserPasswordString
-51140   Case "PDFUSESECURITY": cGetOptionFromOptions = Options.PDFUseSecurity
-51150   Case "PNGCOLORSCOUNT": cGetOptionFromOptions = Options.PNGColorscount
-51160   Case "PNGRESOLUTION": cGetOptionFromOptions = Options.PNGResolution
-51170   Case "PRINTAFTERSAVING": cGetOptionFromOptions = Options.PrintAfterSaving
-51180   Case "PRINTAFTERSAVINGDUPLEX": cGetOptionFromOptions = Options.PrintAfterSavingDuplex
-51190   Case "PRINTAFTERSAVINGNOCANCEL": cGetOptionFromOptions = Options.PrintAfterSavingNoCancel
-51200   Case "PRINTAFTERSAVINGPRINTER": cGetOptionFromOptions = Options.PrintAfterSavingPrinter
-51210   Case "PRINTAFTERSAVINGQUERYUSER": cGetOptionFromOptions = Options.PrintAfterSavingQueryUser
-51220   Case "PRINTAFTERSAVINGTUMBLE": cGetOptionFromOptions = Options.PrintAfterSavingTumble
-51230   Case "PRINTERSTOP": cGetOptionFromOptions = Options.PrinterStop
-51240   Case "PRINTERTEMPPATH": cGetOptionFromOptions = Options.PrinterTemppath
-51250   Case "PROCESSPRIORITY": cGetOptionFromOptions = Options.ProcessPriority
-51260   Case "PROGRAMFONT": cGetOptionFromOptions = Options.ProgramFont
-51270   Case "PROGRAMFONTCHARSET": cGetOptionFromOptions = Options.ProgramFontCharset
-51280   Case "PROGRAMFONTSIZE": cGetOptionFromOptions = Options.ProgramFontSize
-51290   Case "PSDCOLORSCOUNT": cGetOptionFromOptions = Options.PSDColorsCount
-51300   Case "PSDRESOLUTION": cGetOptionFromOptions = Options.PSDResolution
-51310   Case "PSLANGUAGELEVEL": cGetOptionFromOptions = Options.PSLanguageLevel
-51320   Case "RAWCOLORSCOUNT": cGetOptionFromOptions = Options.RAWColorsCount
-51330   Case "RAWRESOLUTION": cGetOptionFromOptions = Options.RAWResolution
-51340   Case "REMOVEALLKNOWNFILEEXTENSIONS": cGetOptionFromOptions = Options.RemoveAllKnownFileExtensions
-51350   Case "REMOVESPACES": cGetOptionFromOptions = Options.RemoveSpaces
-51360   Case "RUNPROGRAMAFTERSAVING": cGetOptionFromOptions = Options.RunProgramAfterSaving
-51370   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramname
-51380   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramParameters
-51390   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": cGetOptionFromOptions = Options.RunProgramAfterSavingWaitUntilReady
-51400   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramAfterSavingWindowstyle
-51410   Case "RUNPROGRAMBEFORESAVING": cGetOptionFromOptions = Options.RunProgramBeforeSaving
-51420   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramname
-51430   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramParameters
-51440   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramBeforeSavingWindowstyle
-51450   Case "SAVEFILENAME": cGetOptionFromOptions = Options.SaveFilename
-51460   Case "SENDEMAILAFTERAUTOSAVING": cGetOptionFromOptions = Options.SendEmailAfterAutoSaving
-51470   Case "SENDMAILMETHOD": cGetOptionFromOptions = Options.SendMailMethod
-51480   Case "SHOWANIMATION": cGetOptionFromOptions = Options.ShowAnimation
-51490   Case "STAMPFONTCOLOR": cGetOptionFromOptions = Options.StampFontColor
-51500   Case "STAMPFONTNAME": cGetOptionFromOptions = Options.StampFontname
-51510   Case "STAMPFONTSIZE": cGetOptionFromOptions = Options.StampFontsize
-51520   Case "STAMPOUTLINEFONTTHICKNESS": cGetOptionFromOptions = Options.StampOutlineFontthickness
-51530   Case "STAMPSTRING": cGetOptionFromOptions = Options.StampString
-51540   Case "STAMPUSEOUTLINEFONT": cGetOptionFromOptions = Options.StampUseOutlineFont
-51550   Case "STANDARDAUTHOR": cGetOptionFromOptions = Options.StandardAuthor
-51560   Case "STANDARDCREATIONDATE": cGetOptionFromOptions = Options.StandardCreationdate
-51570   Case "STANDARDDATEFORMAT": cGetOptionFromOptions = Options.StandardDateformat
-51580   Case "STANDARDKEYWORDS": cGetOptionFromOptions = Options.StandardKeywords
-51590   Case "STANDARDMAILDOMAIN": cGetOptionFromOptions = Options.StandardMailDomain
-51600   Case "STANDARDMODIFYDATE": cGetOptionFromOptions = Options.StandardModifydate
-51610   Case "STANDARDSAVEFORMAT": cGetOptionFromOptions = Options.StandardSaveformat
-51620   Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
-51630   Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
-51640   Case "STARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.StartStandardProgram
-51650   Case "SVGRESOLUTION": cGetOptionFromOptions = Options.SVGResolution
-51660   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
-51670   Case "TIFFRESOLUTION": cGetOptionFromOptions = Options.TIFFResolution
-51680   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
-51690   Case "UPDATEINTERVAL": cGetOptionFromOptions = Options.UpdateInterval
-51700   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
-51710   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
-51720   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
-51730   Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
-51740   Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
-51750   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
-51760  End Select
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cGetOptionFromOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Select Case UCase$(PropertyName)
+  Case "ADDITIONALGHOSTSCRIPTPARAMETERS": cGetOptionFromOptions = Options.AdditionalGhostscriptParameters
+  Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": cGetOptionFromOptions = Options.AdditionalGhostscriptSearchpath
+  Case "ADDWINDOWSFONTPATH": cGetOptionFromOptions = Options.AddWindowsFontpath
+  Case "ALLOWSPECIALGSCHARSINFILENAMES": cGetOptionFromOptions = Options.AllowSpecialGSCharsInFilenames
+  Case "AUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.AutosaveDirectory
+  Case "AUTOSAVEFILENAME": cGetOptionFromOptions = Options.AutosaveFilename
+  Case "AUTOSAVEFORMAT": cGetOptionFromOptions = Options.AutosaveFormat
+  Case "AUTOSAVESTARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.AutosaveStartStandardProgram
+  Case "BMPCOLORSCOUNT": cGetOptionFromOptions = Options.BMPColorscount
+  Case "BMPRESOLUTION": cGetOptionFromOptions = Options.BMPResolution
+  Case "CLIENTCOMPUTERRESOLVEIPADDRESS": cGetOptionFromOptions = Options.ClientComputerResolveIPAddress
+  Case "COUNTER": cGetOptionFromOptions = Options.Counter
+  Case "DEVICEHEIGHTPOINTS": cGetOptionFromOptions = Options.DeviceHeightPoints
+  Case "DEVICEWIDTHPOINTS": cGetOptionFromOptions = Options.DeviceWidthPoints
+  Case "DIRECTORYGHOSTSCRIPTBINARIES": cGetOptionFromOptions = Options.DirectoryGhostscriptBinaries
+  Case "DIRECTORYGHOSTSCRIPTFONTS": cGetOptionFromOptions = Options.DirectoryGhostscriptFonts
+  Case "DIRECTORYGHOSTSCRIPTLIBRARIES": cGetOptionFromOptions = Options.DirectoryGhostscriptLibraries
+  Case "DIRECTORYGHOSTSCRIPTRESOURCE": cGetOptionFromOptions = Options.DirectoryGhostscriptResource
+  Case "DISABLEEMAIL": cGetOptionFromOptions = Options.DisableEmail
+  Case "DONTUSEDOCUMENTSETTINGS": cGetOptionFromOptions = Options.DontUseDocumentSettings
+  Case "EPSLANGUAGELEVEL": cGetOptionFromOptions = Options.EPSLanguageLevel
+  Case "FILENAMESUBSTITUTIONS": cGetOptionFromOptions = Options.FilenameSubstitutions
+  Case "FILENAMESUBSTITUTIONSONLYINTITLE": cGetOptionFromOptions = Options.FilenameSubstitutionsOnlyInTitle
+  Case "JPEGCOLORSCOUNT": cGetOptionFromOptions = Options.JPEGColorscount
+  Case "JPEGQUALITY": cGetOptionFromOptions = Options.JPEGQuality
+  Case "JPEGRESOLUTION": cGetOptionFromOptions = Options.JPEGResolution
+  Case "LANGUAGE": cGetOptionFromOptions = Options.Language
+  Case "LASTSAVEDIRECTORY": cGetOptionFromOptions = Options.LastSaveDirectory
+  Case "LASTUPDATECHECK": cGetOptionFromOptions = Options.LastUpdateCheck
+  Case "LOGGING": cGetOptionFromOptions = Options.Logging
+  Case "LOGLINES": cGetOptionFromOptions = Options.LogLines
+  Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": cGetOptionFromOptions = Options.NoConfirmMessageSwitchingDefaultprinter
+  Case "NOPROCESSINGATSTARTUP": cGetOptionFromOptions = Options.NoProcessingAtStartup
+  Case "NOPSCHECK": cGetOptionFromOptions = Options.NoPSCheck
+  Case "ONEPAGEPERFILE": cGetOptionFromOptions = Options.OnePagePerFile
+  Case "OPTIONSDESIGN": cGetOptionFromOptions = Options.OptionsDesign
+  Case "OPTIONSENABLED": cGetOptionFromOptions = Options.OptionsEnabled
+  Case "OPTIONSVISIBLE": cGetOptionFromOptions = Options.OptionsVisible
+  Case "PAPERSIZE": cGetOptionFromOptions = Options.Papersize
+  Case "PCLCOLORSCOUNT": cGetOptionFromOptions = Options.PCLColorsCount
+  Case "PCLRESOLUTION": cGetOptionFromOptions = Options.PCLResolution
+  Case "PCXCOLORSCOUNT": cGetOptionFromOptions = Options.PCXColorscount
+  Case "PCXRESOLUTION": cGetOptionFromOptions = Options.PCXResolution
+  Case "PDFALLOWASSEMBLY": cGetOptionFromOptions = Options.PDFAllowAssembly
+  Case "PDFALLOWDEGRADEDPRINTING": cGetOptionFromOptions = Options.PDFAllowDegradedPrinting
+  Case "PDFALLOWFILLIN": cGetOptionFromOptions = Options.PDFAllowFillIn
+  Case "PDFALLOWSCREENREADERS": cGetOptionFromOptions = Options.PDFAllowScreenReaders
+  Case "PDFCOLORSCMYKTORGB": cGetOptionFromOptions = Options.PDFColorsCMYKToRGB
+  Case "PDFCOLORSCOLORMODEL": cGetOptionFromOptions = Options.PDFColorsColorModel
+  Case "PDFCOLORSPRESERVEHALFTONE": cGetOptionFromOptions = Options.PDFColorsPreserveHalftone
+  Case "PDFCOLORSPRESERVEOVERPRINT": cGetOptionFromOptions = Options.PDFColorsPreserveOverprint
+  Case "PDFCOLORSPRESERVETRANSFER": cGetOptionFromOptions = Options.PDFColorsPreserveTransfer
+  Case "PDFCOMPRESSIONCOLORCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionColorCompression
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionColorCompressionChoice
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGHighFactor
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGLowFactor
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMaximumFactor
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMediumFactor
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionColorCompressionJPEGMinimumFactor
+  Case "PDFCOMPRESSIONCOLORRESAMPLE": cGetOptionFromOptions = Options.PDFCompressionColorResample
+  Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionColorResampleChoice
+  Case "PDFCOMPRESSIONCOLORRESOLUTION": cGetOptionFromOptions = Options.PDFCompressionColorResolution
+  Case "PDFCOMPRESSIONGREYCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionGreyCompression
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionChoice
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGHighFactor
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGLowFactor
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMaximumFactor
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMediumFactor
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": cGetOptionFromOptions = Options.PDFCompressionGreyCompressionJPEGMinimumFactor
+  Case "PDFCOMPRESSIONGREYRESAMPLE": cGetOptionFromOptions = Options.PDFCompressionGreyResample
+  Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionGreyResampleChoice
+  Case "PDFCOMPRESSIONGREYRESOLUTION": cGetOptionFromOptions = Options.PDFCompressionGreyResolution
+  Case "PDFCOMPRESSIONMONOCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionMonoCompression
+  Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": cGetOptionFromOptions = Options.PDFCompressionMonoCompressionChoice
+  Case "PDFCOMPRESSIONMONORESAMPLE": cGetOptionFromOptions = Options.PDFCompressionMonoResample
+  Case "PDFCOMPRESSIONMONORESAMPLECHOICE": cGetOptionFromOptions = Options.PDFCompressionMonoResampleChoice
+  Case "PDFCOMPRESSIONMONORESOLUTION": cGetOptionFromOptions = Options.PDFCompressionMonoResolution
+  Case "PDFCOMPRESSIONTEXTCOMPRESSION": cGetOptionFromOptions = Options.PDFCompressionTextCompression
+  Case "PDFDISALLOWCOPY": cGetOptionFromOptions = Options.PDFDisallowCopy
+  Case "PDFDISALLOWMODIFYANNOTATIONS": cGetOptionFromOptions = Options.PDFDisallowModifyAnnotations
+  Case "PDFDISALLOWMODIFYCONTENTS": cGetOptionFromOptions = Options.PDFDisallowModifyContents
+  Case "PDFDISALLOWPRINTING": cGetOptionFromOptions = Options.PDFDisallowPrinting
+  Case "PDFENCRYPTOR": cGetOptionFromOptions = Options.PDFEncryptor
+  Case "PDFFONTSEMBEDALL": cGetOptionFromOptions = Options.PDFFontsEmbedAll
+  Case "PDFFONTSSUBSETFONTS": cGetOptionFromOptions = Options.PDFFontsSubSetFonts
+  Case "PDFFONTSSUBSETFONTSPERCENT": cGetOptionFromOptions = Options.PDFFontsSubSetFontsPercent
+  Case "PDFGENERALASCII85": cGetOptionFromOptions = Options.PDFGeneralASCII85
+  Case "PDFGENERALAUTOROTATE": cGetOptionFromOptions = Options.PDFGeneralAutorotate
+  Case "PDFGENERALCOMPATIBILITY": cGetOptionFromOptions = Options.PDFGeneralCompatibility
+  Case "PDFGENERALDEFAULT": cGetOptionFromOptions = Options.PDFGeneralDefault
+  Case "PDFGENERALOVERPRINT": cGetOptionFromOptions = Options.PDFGeneralOverprint
+  Case "PDFGENERALRESOLUTION": cGetOptionFromOptions = Options.PDFGeneralResolution
+  Case "PDFHIGHENCRYPTION": cGetOptionFromOptions = Options.PDFHighEncryption
+  Case "PDFLOWENCRYPTION": cGetOptionFromOptions = Options.PDFLowEncryption
+  Case "PDFOPTIMIZE": cGetOptionFromOptions = Options.PDFOptimize
+  Case "PDFOWNERPASS": cGetOptionFromOptions = Options.PDFOwnerPass
+  Case "PDFOWNERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFOwnerPasswordString
+  Case "PDFSIGNINGMULTISIGNATURE": cGetOptionFromOptions = Options.PDFSigningMultiSignature
+  Case "PDFSIGNINGPFXFILE": cGetOptionFromOptions = Options.PDFSigningPFXFile
+  Case "PDFSIGNINGPFXFILEPASSWORD": cGetOptionFromOptions = Options.PDFSigningPFXFilePassword
+  Case "PDFSIGNINGSIGNATURECONTACT": cGetOptionFromOptions = Options.PDFSigningSignatureContact
+  Case "PDFSIGNINGSIGNATURELEFTX": cGetOptionFromOptions = Options.PDFSigningSignatureLeftX
+  Case "PDFSIGNINGSIGNATURELEFTY": cGetOptionFromOptions = Options.PDFSigningSignatureLeftY
+  Case "PDFSIGNINGSIGNATURELOCATION": cGetOptionFromOptions = Options.PDFSigningSignatureLocation
+  Case "PDFSIGNINGSIGNATUREONPAGE": cGetOptionFromOptions = Options.PDFSigningSignatureOnPage
+  Case "PDFSIGNINGSIGNATUREREASON": cGetOptionFromOptions = Options.PDFSigningSignatureReason
+  Case "PDFSIGNINGSIGNATURERIGHTX": cGetOptionFromOptions = Options.PDFSigningSignatureRightX
+  Case "PDFSIGNINGSIGNATURERIGHTY": cGetOptionFromOptions = Options.PDFSigningSignatureRightY
+  Case "PDFSIGNINGSIGNATUREVISIBLE": cGetOptionFromOptions = Options.PDFSigningSignatureVisible
+  Case "PDFSIGNINGSIGNPDF": cGetOptionFromOptions = Options.PDFSigningSignPDF
+  Case "PDFUPDATEMETADATA": cGetOptionFromOptions = Options.PDFUpdateMetadata
+  Case "PDFUSERPASS": cGetOptionFromOptions = Options.PDFUserPass
+  Case "PDFUSERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFUserPasswordString
+  Case "PDFUSESECURITY": cGetOptionFromOptions = Options.PDFUseSecurity
+  Case "PNGCOLORSCOUNT": cGetOptionFromOptions = Options.PNGColorscount
+  Case "PNGRESOLUTION": cGetOptionFromOptions = Options.PNGResolution
+  Case "PRINTAFTERSAVING": cGetOptionFromOptions = Options.PrintAfterSaving
+  Case "PRINTAFTERSAVINGDUPLEX": cGetOptionFromOptions = Options.PrintAfterSavingDuplex
+  Case "PRINTAFTERSAVINGNOCANCEL": cGetOptionFromOptions = Options.PrintAfterSavingNoCancel
+  Case "PRINTAFTERSAVINGPRINTER": cGetOptionFromOptions = Options.PrintAfterSavingPrinter
+  Case "PRINTAFTERSAVINGQUERYUSER": cGetOptionFromOptions = Options.PrintAfterSavingQueryUser
+  Case "PRINTAFTERSAVINGTUMBLE": cGetOptionFromOptions = Options.PrintAfterSavingTumble
+  Case "PRINTERSTOP": cGetOptionFromOptions = Options.PrinterStop
+  Case "PRINTERTEMPPATH": cGetOptionFromOptions = Options.PrinterTemppath
+  Case "PROCESSPRIORITY": cGetOptionFromOptions = Options.ProcessPriority
+  Case "PROGRAMFONT": cGetOptionFromOptions = Options.ProgramFont
+  Case "PROGRAMFONTCHARSET": cGetOptionFromOptions = Options.ProgramFontCharset
+  Case "PROGRAMFONTSIZE": cGetOptionFromOptions = Options.ProgramFontSize
+  Case "PSDCOLORSCOUNT": cGetOptionFromOptions = Options.PSDColorsCount
+  Case "PSDRESOLUTION": cGetOptionFromOptions = Options.PSDResolution
+  Case "PSLANGUAGELEVEL": cGetOptionFromOptions = Options.PSLanguageLevel
+  Case "RAWCOLORSCOUNT": cGetOptionFromOptions = Options.RAWColorsCount
+  Case "RAWRESOLUTION": cGetOptionFromOptions = Options.RAWResolution
+  Case "REMOVEALLKNOWNFILEEXTENSIONS": cGetOptionFromOptions = Options.RemoveAllKnownFileExtensions
+  Case "REMOVESPACES": cGetOptionFromOptions = Options.RemoveSpaces
+  Case "RUNPROGRAMAFTERSAVING": cGetOptionFromOptions = Options.RunProgramAfterSaving
+  Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramname
+  Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramParameters
+  Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": cGetOptionFromOptions = Options.RunProgramAfterSavingWaitUntilReady
+  Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramAfterSavingWindowstyle
+  Case "RUNPROGRAMBEFORESAVING": cGetOptionFromOptions = Options.RunProgramBeforeSaving
+  Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramname
+  Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramParameters
+  Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramBeforeSavingWindowstyle
+  Case "SAVEFILENAME": cGetOptionFromOptions = Options.SaveFilename
+  Case "SENDEMAILAFTERAUTOSAVING": cGetOptionFromOptions = Options.SendEmailAfterAutoSaving
+  Case "SENDMAILMETHOD": cGetOptionFromOptions = Options.SendMailMethod
+  Case "SHOWANIMATION": cGetOptionFromOptions = Options.ShowAnimation
+  Case "STAMPFONTCOLOR": cGetOptionFromOptions = Options.StampFontColor
+  Case "STAMPFONTNAME": cGetOptionFromOptions = Options.StampFontname
+  Case "STAMPFONTSIZE": cGetOptionFromOptions = Options.StampFontsize
+  Case "STAMPOUTLINEFONTTHICKNESS": cGetOptionFromOptions = Options.StampOutlineFontthickness
+  Case "STAMPSTRING": cGetOptionFromOptions = Options.StampString
+  Case "STAMPUSEOUTLINEFONT": cGetOptionFromOptions = Options.StampUseOutlineFont
+  Case "STANDARDAUTHOR": cGetOptionFromOptions = Options.StandardAuthor
+  Case "STANDARDCREATIONDATE": cGetOptionFromOptions = Options.StandardCreationdate
+  Case "STANDARDDATEFORMAT": cGetOptionFromOptions = Options.StandardDateformat
+  Case "STANDARDKEYWORDS": cGetOptionFromOptions = Options.StandardKeywords
+  Case "STANDARDMAILDOMAIN": cGetOptionFromOptions = Options.StandardMailDomain
+  Case "STANDARDMODIFYDATE": cGetOptionFromOptions = Options.StandardModifydate
+  Case "STANDARDSAVEFORMAT": cGetOptionFromOptions = Options.StandardSaveformat
+  Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
+  Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
+  Case "STARTSTANDARDPROGRAM": cGetOptionFromOptions = Options.StartStandardProgram
+  Case "SVGRESOLUTION": cGetOptionFromOptions = Options.SVGResolution
+  Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
+  Case "TIFFRESOLUTION": cGetOptionFromOptions = Options.TIFFResolution
+  Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
+  Case "UPDATEINTERVAL": cGetOptionFromOptions = Options.UpdateInterval
+  Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
+  Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
+  Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
+  Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
+  Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
+  Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
+ End Select
 End Function
 
 Private Function cGetInfoSpoolfile(sInfos As InfoSpoolFile) As clsPDFCreatorInfoSpoolFile
@@ -2391,589 +2367,553 @@ End Select
 End Function
 
 Private Function cGetOptions(sOptions As tOptions) As clsPDFCreatorOptions
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Set cGetOptions = New clsPDFCreatorOptions
-50020  With cGetOptions
-50030   .AdditionalGhostscriptParameters = sOptions.AdditionalGhostscriptParameters
-50040   .AdditionalGhostscriptSearchpath = sOptions.AdditionalGhostscriptSearchpath
-50050   .AddWindowsFontpath = sOptions.AddWindowsFontpath
-50060   .AllowSpecialGSCharsInFilenames = sOptions.AllowSpecialGSCharsInFilenames
-50070   .AutosaveDirectory = sOptions.AutosaveDirectory
-50080   .AutosaveFilename = sOptions.AutosaveFilename
-50090   .AutosaveFormat = sOptions.AutosaveFormat
-50100   .AutosaveStartStandardProgram = sOptions.AutosaveStartStandardProgram
-50110   .BMPColorscount = sOptions.BMPColorscount
-50120   .BMPResolution = sOptions.BMPResolution
-50130   .ClientComputerResolveIPAddress = sOptions.ClientComputerResolveIPAddress
-50140   .Counter = sOptions.Counter
-50150   .DeviceHeightPoints = sOptions.DeviceHeightPoints
-50160   .DeviceWidthPoints = sOptions.DeviceWidthPoints
-50170   .DirectoryGhostscriptBinaries = sOptions.DirectoryGhostscriptBinaries
-50180   .DirectoryGhostscriptFonts = sOptions.DirectoryGhostscriptFonts
-50190   .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
-50200   .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
-50210   .DisableEmail = sOptions.DisableEmail
-50220   .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
-50230   .EPSLanguageLevel = sOptions.EPSLanguageLevel
-50240   .FilenameSubstitutions = sOptions.FilenameSubstitutions
-50250   .FilenameSubstitutionsOnlyInTitle = sOptions.FilenameSubstitutionsOnlyInTitle
-50260   .JPEGColorscount = sOptions.JPEGColorscount
-50270   .JPEGQuality = sOptions.JPEGQuality
-50280   .JPEGResolution = sOptions.JPEGResolution
-50290   .Language = sOptions.Language
-50300   .LastSaveDirectory = sOptions.LastSaveDirectory
-50310   .LastUpdateCheck = sOptions.LastUpdateCheck
-50320   .Logging = sOptions.Logging
-50330   .LogLines = sOptions.LogLines
-50340   .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
-50350   .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
-50360   .NoPSCheck = sOptions.NoPSCheck
-50370   .OnePagePerFile = sOptions.OnePagePerFile
-50380   .OptionsDesign = sOptions.OptionsDesign
-50390   .OptionsEnabled = sOptions.OptionsEnabled
-50400   .OptionsVisible = sOptions.OptionsVisible
-50410   .Papersize = sOptions.Papersize
-50420   .PCLColorsCount = sOptions.PCLColorsCount
-50430   .PCLResolution = sOptions.PCLResolution
-50440   .PCXColorscount = sOptions.PCXColorscount
-50450   .PCXResolution = sOptions.PCXResolution
-50460   .PDFAllowAssembly = sOptions.PDFAllowAssembly
-50470   .PDFAllowDegradedPrinting = sOptions.PDFAllowDegradedPrinting
-50480   .PDFAllowFillIn = sOptions.PDFAllowFillIn
-50490   .PDFAllowScreenReaders = sOptions.PDFAllowScreenReaders
-50500   .PDFColorsCMYKToRGB = sOptions.PDFColorsCMYKToRGB
-50510   .PDFColorsColorModel = sOptions.PDFColorsColorModel
-50520   .PDFColorsPreserveHalftone = sOptions.PDFColorsPreserveHalftone
-50530   .PDFColorsPreserveOverprint = sOptions.PDFColorsPreserveOverprint
-50540   .PDFColorsPreserveTransfer = sOptions.PDFColorsPreserveTransfer
-50550   .PDFCompressionColorCompression = sOptions.PDFCompressionColorCompression
-50560   .PDFCompressionColorCompressionChoice = sOptions.PDFCompressionColorCompressionChoice
-50570   .PDFCompressionColorCompressionJPEGHighFactor = sOptions.PDFCompressionColorCompressionJPEGHighFactor
-50580   .PDFCompressionColorCompressionJPEGLowFactor = sOptions.PDFCompressionColorCompressionJPEGLowFactor
-50590   .PDFCompressionColorCompressionJPEGMaximumFactor = sOptions.PDFCompressionColorCompressionJPEGMaximumFactor
-50600   .PDFCompressionColorCompressionJPEGMediumFactor = sOptions.PDFCompressionColorCompressionJPEGMediumFactor
-50610   .PDFCompressionColorCompressionJPEGMinimumFactor = sOptions.PDFCompressionColorCompressionJPEGMinimumFactor
-50620   .PDFCompressionColorResample = sOptions.PDFCompressionColorResample
-50630   .PDFCompressionColorResampleChoice = sOptions.PDFCompressionColorResampleChoice
-50640   .PDFCompressionColorResolution = sOptions.PDFCompressionColorResolution
-50650   .PDFCompressionGreyCompression = sOptions.PDFCompressionGreyCompression
-50660   .PDFCompressionGreyCompressionChoice = sOptions.PDFCompressionGreyCompressionChoice
-50670   .PDFCompressionGreyCompressionJPEGHighFactor = sOptions.PDFCompressionGreyCompressionJPEGHighFactor
-50680   .PDFCompressionGreyCompressionJPEGLowFactor = sOptions.PDFCompressionGreyCompressionJPEGLowFactor
-50690   .PDFCompressionGreyCompressionJPEGMaximumFactor = sOptions.PDFCompressionGreyCompressionJPEGMaximumFactor
-50700   .PDFCompressionGreyCompressionJPEGMediumFactor = sOptions.PDFCompressionGreyCompressionJPEGMediumFactor
-50710   .PDFCompressionGreyCompressionJPEGMinimumFactor = sOptions.PDFCompressionGreyCompressionJPEGMinimumFactor
-50720   .PDFCompressionGreyResample = sOptions.PDFCompressionGreyResample
-50730   .PDFCompressionGreyResampleChoice = sOptions.PDFCompressionGreyResampleChoice
-50740   .PDFCompressionGreyResolution = sOptions.PDFCompressionGreyResolution
-50750   .PDFCompressionMonoCompression = sOptions.PDFCompressionMonoCompression
-50760   .PDFCompressionMonoCompressionChoice = sOptions.PDFCompressionMonoCompressionChoice
-50770   .PDFCompressionMonoResample = sOptions.PDFCompressionMonoResample
-50780   .PDFCompressionMonoResampleChoice = sOptions.PDFCompressionMonoResampleChoice
-50790   .PDFCompressionMonoResolution = sOptions.PDFCompressionMonoResolution
-50800   .PDFCompressionTextCompression = sOptions.PDFCompressionTextCompression
-50810   .PDFDisallowCopy = sOptions.PDFDisallowCopy
-50820   .PDFDisallowModifyAnnotations = sOptions.PDFDisallowModifyAnnotations
-50830   .PDFDisallowModifyContents = sOptions.PDFDisallowModifyContents
-50840   .PDFDisallowPrinting = sOptions.PDFDisallowPrinting
-50850   .PDFEncryptor = sOptions.PDFEncryptor
-50860   .PDFFontsEmbedAll = sOptions.PDFFontsEmbedAll
-50870   .PDFFontsSubSetFonts = sOptions.PDFFontsSubSetFonts
-50880   .PDFFontsSubSetFontsPercent = sOptions.PDFFontsSubSetFontsPercent
-50890   .PDFGeneralASCII85 = sOptions.PDFGeneralASCII85
-50900   .PDFGeneralAutorotate = sOptions.PDFGeneralAutorotate
-50910   .PDFGeneralCompatibility = sOptions.PDFGeneralCompatibility
-50920   .PDFGeneralDefault = sOptions.PDFGeneralDefault
-50930   .PDFGeneralOverprint = sOptions.PDFGeneralOverprint
-50940   .PDFGeneralResolution = sOptions.PDFGeneralResolution
-50950   .PDFHighEncryption = sOptions.PDFHighEncryption
-50960   .PDFLowEncryption = sOptions.PDFLowEncryption
-50970   .PDFOptimize = sOptions.PDFOptimize
-50980   .PDFOwnerPass = sOptions.PDFOwnerPass
-50990   .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
-51000   .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
-51010   .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
-51020   .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
-51030   .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
-51040   .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
-51050   .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
-51060   .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
-51070   .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
-51080   .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
-51090   .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
-51100   .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
-51110   .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
-51120   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
-51130   .PDFUserPass = sOptions.PDFUserPass
-51140   .PDFUserPasswordString = sOptions.PDFUserPasswordString
-51150   .PDFUseSecurity = sOptions.PDFUseSecurity
-51160   .PNGColorscount = sOptions.PNGColorscount
-51170   .PNGResolution = sOptions.PNGResolution
-51180   .PrintAfterSaving = sOptions.PrintAfterSaving
-51190   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
-51200   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
-51210   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
-51220   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
-51230   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
-51240   .PrinterStop = sOptions.PrinterStop
-51250   .PrinterTemppath = sOptions.PrinterTemppath
-51260   .ProcessPriority = sOptions.ProcessPriority
-51270   .ProgramFont = sOptions.ProgramFont
-51280   .ProgramFontCharset = sOptions.ProgramFontCharset
-51290   .ProgramFontSize = sOptions.ProgramFontSize
-51300   .PSDColorsCount = sOptions.PSDColorsCount
-51310   .PSDResolution = sOptions.PSDResolution
-51320   .PSLanguageLevel = sOptions.PSLanguageLevel
-51330   .RAWColorsCount = sOptions.RAWColorsCount
-51340   .RAWResolution = sOptions.RAWResolution
-51350   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
-51360   .RemoveSpaces = sOptions.RemoveSpaces
-51370   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
-51380   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
-51390   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
-51400   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
-51410   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
-51420   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
-51430   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
-51440   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
-51450   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
-51460   .SaveFilename = sOptions.SaveFilename
-51470   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
-51480   .SendMailMethod = sOptions.SendMailMethod
-51490   .ShowAnimation = sOptions.ShowAnimation
-51500   .StampFontColor = sOptions.StampFontColor
-51510   .StampFontname = sOptions.StampFontname
-51520   .StampFontsize = sOptions.StampFontsize
-51530   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
-51540   .StampString = sOptions.StampString
-51550   .StampUseOutlineFont = sOptions.StampUseOutlineFont
-51560   .StandardAuthor = sOptions.StandardAuthor
-51570   .StandardCreationdate = sOptions.StandardCreationdate
-51580   .StandardDateformat = sOptions.StandardDateformat
-51590   .StandardKeywords = sOptions.StandardKeywords
-51600   .StandardMailDomain = sOptions.StandardMailDomain
-51610   .StandardModifydate = sOptions.StandardModifydate
-51620   .StandardSaveformat = sOptions.StandardSaveformat
-51630   .StandardSubject = sOptions.StandardSubject
-51640   .StandardTitle = sOptions.StandardTitle
-51650   .StartStandardProgram = sOptions.StartStandardProgram
-51660   .SVGResolution = sOptions.SVGResolution
-51670   .TIFFColorscount = sOptions.TIFFColorscount
-51680   .TIFFResolution = sOptions.TIFFResolution
-51690   .Toolbars = sOptions.Toolbars
-51700   .UpdateInterval = sOptions.UpdateInterval
-51710   .UseAutosave = sOptions.UseAutosave
-51720   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51730   .UseCreationDateNow = sOptions.UseCreationDateNow
-51740   .UseCustomPaperSize = sOptions.UseCustomPaperSize
-51750   .UseFixPapersize = sOptions.UseFixPapersize
-51760   .UseStandardAuthor = sOptions.UseStandardAuthor
-51770  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cGetOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Set cGetOptions = New clsPDFCreatorOptions
+ With cGetOptions
+  .AdditionalGhostscriptParameters = sOptions.AdditionalGhostscriptParameters
+  .AdditionalGhostscriptSearchpath = sOptions.AdditionalGhostscriptSearchpath
+  .AddWindowsFontpath = sOptions.AddWindowsFontpath
+  .AllowSpecialGSCharsInFilenames = sOptions.AllowSpecialGSCharsInFilenames
+  .AutosaveDirectory = sOptions.AutosaveDirectory
+  .AutosaveFilename = sOptions.AutosaveFilename
+  .AutosaveFormat = sOptions.AutosaveFormat
+  .AutosaveStartStandardProgram = sOptions.AutosaveStartStandardProgram
+  .BMPColorscount = sOptions.BMPColorscount
+  .BMPResolution = sOptions.BMPResolution
+  .ClientComputerResolveIPAddress = sOptions.ClientComputerResolveIPAddress
+  .Counter = sOptions.Counter
+  .DeviceHeightPoints = sOptions.DeviceHeightPoints
+  .DeviceWidthPoints = sOptions.DeviceWidthPoints
+  .DirectoryGhostscriptBinaries = sOptions.DirectoryGhostscriptBinaries
+  .DirectoryGhostscriptFonts = sOptions.DirectoryGhostscriptFonts
+  .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
+  .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
+  .DisableEmail = sOptions.DisableEmail
+  .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
+  .EPSLanguageLevel = sOptions.EPSLanguageLevel
+  .FilenameSubstitutions = sOptions.FilenameSubstitutions
+  .FilenameSubstitutionsOnlyInTitle = sOptions.FilenameSubstitutionsOnlyInTitle
+  .JPEGColorscount = sOptions.JPEGColorscount
+  .JPEGQuality = sOptions.JPEGQuality
+  .JPEGResolution = sOptions.JPEGResolution
+  .Language = sOptions.Language
+  .LastSaveDirectory = sOptions.LastSaveDirectory
+  .LastUpdateCheck = sOptions.LastUpdateCheck
+  .Logging = sOptions.Logging
+  .LogLines = sOptions.LogLines
+  .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
+  .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
+  .NoPSCheck = sOptions.NoPSCheck
+  .OnePagePerFile = sOptions.OnePagePerFile
+  .OptionsDesign = sOptions.OptionsDesign
+  .OptionsEnabled = sOptions.OptionsEnabled
+  .OptionsVisible = sOptions.OptionsVisible
+  .Papersize = sOptions.Papersize
+  .PCLColorsCount = sOptions.PCLColorsCount
+  .PCLResolution = sOptions.PCLResolution
+  .PCXColorscount = sOptions.PCXColorscount
+  .PCXResolution = sOptions.PCXResolution
+  .PDFAllowAssembly = sOptions.PDFAllowAssembly
+  .PDFAllowDegradedPrinting = sOptions.PDFAllowDegradedPrinting
+  .PDFAllowFillIn = sOptions.PDFAllowFillIn
+  .PDFAllowScreenReaders = sOptions.PDFAllowScreenReaders
+  .PDFColorsCMYKToRGB = sOptions.PDFColorsCMYKToRGB
+  .PDFColorsColorModel = sOptions.PDFColorsColorModel
+  .PDFColorsPreserveHalftone = sOptions.PDFColorsPreserveHalftone
+  .PDFColorsPreserveOverprint = sOptions.PDFColorsPreserveOverprint
+  .PDFColorsPreserveTransfer = sOptions.PDFColorsPreserveTransfer
+  .PDFCompressionColorCompression = sOptions.PDFCompressionColorCompression
+  .PDFCompressionColorCompressionChoice = sOptions.PDFCompressionColorCompressionChoice
+  .PDFCompressionColorCompressionJPEGHighFactor = sOptions.PDFCompressionColorCompressionJPEGHighFactor
+  .PDFCompressionColorCompressionJPEGLowFactor = sOptions.PDFCompressionColorCompressionJPEGLowFactor
+  .PDFCompressionColorCompressionJPEGMaximumFactor = sOptions.PDFCompressionColorCompressionJPEGMaximumFactor
+  .PDFCompressionColorCompressionJPEGMediumFactor = sOptions.PDFCompressionColorCompressionJPEGMediumFactor
+  .PDFCompressionColorCompressionJPEGMinimumFactor = sOptions.PDFCompressionColorCompressionJPEGMinimumFactor
+  .PDFCompressionColorResample = sOptions.PDFCompressionColorResample
+  .PDFCompressionColorResampleChoice = sOptions.PDFCompressionColorResampleChoice
+  .PDFCompressionColorResolution = sOptions.PDFCompressionColorResolution
+  .PDFCompressionGreyCompression = sOptions.PDFCompressionGreyCompression
+  .PDFCompressionGreyCompressionChoice = sOptions.PDFCompressionGreyCompressionChoice
+  .PDFCompressionGreyCompressionJPEGHighFactor = sOptions.PDFCompressionGreyCompressionJPEGHighFactor
+  .PDFCompressionGreyCompressionJPEGLowFactor = sOptions.PDFCompressionGreyCompressionJPEGLowFactor
+  .PDFCompressionGreyCompressionJPEGMaximumFactor = sOptions.PDFCompressionGreyCompressionJPEGMaximumFactor
+  .PDFCompressionGreyCompressionJPEGMediumFactor = sOptions.PDFCompressionGreyCompressionJPEGMediumFactor
+  .PDFCompressionGreyCompressionJPEGMinimumFactor = sOptions.PDFCompressionGreyCompressionJPEGMinimumFactor
+  .PDFCompressionGreyResample = sOptions.PDFCompressionGreyResample
+  .PDFCompressionGreyResampleChoice = sOptions.PDFCompressionGreyResampleChoice
+  .PDFCompressionGreyResolution = sOptions.PDFCompressionGreyResolution
+  .PDFCompressionMonoCompression = sOptions.PDFCompressionMonoCompression
+  .PDFCompressionMonoCompressionChoice = sOptions.PDFCompressionMonoCompressionChoice
+  .PDFCompressionMonoResample = sOptions.PDFCompressionMonoResample
+  .PDFCompressionMonoResampleChoice = sOptions.PDFCompressionMonoResampleChoice
+  .PDFCompressionMonoResolution = sOptions.PDFCompressionMonoResolution
+  .PDFCompressionTextCompression = sOptions.PDFCompressionTextCompression
+  .PDFDisallowCopy = sOptions.PDFDisallowCopy
+  .PDFDisallowModifyAnnotations = sOptions.PDFDisallowModifyAnnotations
+  .PDFDisallowModifyContents = sOptions.PDFDisallowModifyContents
+  .PDFDisallowPrinting = sOptions.PDFDisallowPrinting
+  .PDFEncryptor = sOptions.PDFEncryptor
+  .PDFFontsEmbedAll = sOptions.PDFFontsEmbedAll
+  .PDFFontsSubSetFonts = sOptions.PDFFontsSubSetFonts
+  .PDFFontsSubSetFontsPercent = sOptions.PDFFontsSubSetFontsPercent
+  .PDFGeneralASCII85 = sOptions.PDFGeneralASCII85
+  .PDFGeneralAutorotate = sOptions.PDFGeneralAutorotate
+  .PDFGeneralCompatibility = sOptions.PDFGeneralCompatibility
+  .PDFGeneralDefault = sOptions.PDFGeneralDefault
+  .PDFGeneralOverprint = sOptions.PDFGeneralOverprint
+  .PDFGeneralResolution = sOptions.PDFGeneralResolution
+  .PDFHighEncryption = sOptions.PDFHighEncryption
+  .PDFLowEncryption = sOptions.PDFLowEncryption
+  .PDFOptimize = sOptions.PDFOptimize
+  .PDFOwnerPass = sOptions.PDFOwnerPass
+  .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
+  .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
+  .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
+  .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
+  .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
+  .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
+  .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
+  .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
+  .PDFSigningSignatureOnPage = sOptions.PDFSigningSignatureOnPage
+  .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
+  .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
+  .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
+  .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
+  .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
+  .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
+  .PDFUserPass = sOptions.PDFUserPass
+  .PDFUserPasswordString = sOptions.PDFUserPasswordString
+  .PDFUseSecurity = sOptions.PDFUseSecurity
+  .PNGColorscount = sOptions.PNGColorscount
+  .PNGResolution = sOptions.PNGResolution
+  .PrintAfterSaving = sOptions.PrintAfterSaving
+  .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
+  .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
+  .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
+  .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
+  .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
+  .PrinterStop = sOptions.PrinterStop
+  .PrinterTemppath = sOptions.PrinterTemppath
+  .ProcessPriority = sOptions.ProcessPriority
+  .ProgramFont = sOptions.ProgramFont
+  .ProgramFontCharset = sOptions.ProgramFontCharset
+  .ProgramFontSize = sOptions.ProgramFontSize
+  .PSDColorsCount = sOptions.PSDColorsCount
+  .PSDResolution = sOptions.PSDResolution
+  .PSLanguageLevel = sOptions.PSLanguageLevel
+  .RAWColorsCount = sOptions.RAWColorsCount
+  .RAWResolution = sOptions.RAWResolution
+  .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
+  .RemoveSpaces = sOptions.RemoveSpaces
+  .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
+  .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
+  .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
+  .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
+  .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
+  .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
+  .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
+  .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
+  .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
+  .SaveFilename = sOptions.SaveFilename
+  .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+  .SendMailMethod = sOptions.SendMailMethod
+  .ShowAnimation = sOptions.ShowAnimation
+  .StampFontColor = sOptions.StampFontColor
+  .StampFontname = sOptions.StampFontname
+  .StampFontsize = sOptions.StampFontsize
+  .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+  .StampString = sOptions.StampString
+  .StampUseOutlineFont = sOptions.StampUseOutlineFont
+  .StandardAuthor = sOptions.StandardAuthor
+  .StandardCreationdate = sOptions.StandardCreationdate
+  .StandardDateformat = sOptions.StandardDateformat
+  .StandardKeywords = sOptions.StandardKeywords
+  .StandardMailDomain = sOptions.StandardMailDomain
+  .StandardModifydate = sOptions.StandardModifydate
+  .StandardSaveformat = sOptions.StandardSaveformat
+  .StandardSubject = sOptions.StandardSubject
+  .StandardTitle = sOptions.StandardTitle
+  .StartStandardProgram = sOptions.StartStandardProgram
+  .SVGResolution = sOptions.SVGResolution
+  .TIFFColorscount = sOptions.TIFFColorscount
+  .TIFFResolution = sOptions.TIFFResolution
+  .Toolbars = sOptions.Toolbars
+  .UpdateInterval = sOptions.UpdateInterval
+  .UseAutosave = sOptions.UseAutosave
+  .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+  .UseCreationDateNow = sOptions.UseCreationDateNow
+  .UseCustomPaperSize = sOptions.UseCustomPaperSize
+  .UseFixPapersize = sOptions.UseFixPapersize
+  .UseStandardAuthor = sOptions.UseStandardAuthor
+ End With
 End Function
 
-Private Sub cLetOption(PropertyName As String, value As Variant, Options1 As tOptions, ProfileName As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case UCase$(PropertyName)
-        Case "ADDITIONALGHOSTSCRIPTPARAMETERS": Options1.AdditionalGhostscriptParameters = value
-50030   Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": Options1.AdditionalGhostscriptSearchpath = value
-50040   Case "ADDWINDOWSFONTPATH": Options1.AddWindowsFontpath = value
-50050   Case "ALLOWSPECIALGSCHARSINFILENAMES": Options1.AllowSpecialGSCharsInFilenames = value
-50060   Case "AUTOSAVEDIRECTORY": Options1.AutosaveDirectory = value
-50070   Case "AUTOSAVEFILENAME": Options1.AutosaveFilename = value
-50080   Case "AUTOSAVEFORMAT": Options1.AutosaveFormat = value
-50090   Case "AUTOSAVESTARTSTANDARDPROGRAM": Options1.AutosaveStartStandardProgram = value
-50100   Case "BMPCOLORSCOUNT": Options1.BMPColorscount = value
-50110   Case "BMPRESOLUTION": Options1.BMPResolution = value
-50120   Case "CLIENTCOMPUTERRESOLVEIPADDRESS": Options1.ClientComputerResolveIPAddress = value
-50130   Case "COUNTER": Options1.Counter = value
-50140   Case "DEVICEHEIGHTPOINTS": Options1.DeviceHeightPoints = value
-50150   Case "DEVICEWIDTHPOINTS": Options1.DeviceWidthPoints = value
-50160   Case "DIRECTORYGHOSTSCRIPTBINARIES": Options1.DirectoryGhostscriptBinaries = value
-50170   Case "DIRECTORYGHOSTSCRIPTFONTS": Options1.DirectoryGhostscriptFonts = value
-50180   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": Options1.DirectoryGhostscriptLibraries = value
-50190   Case "DIRECTORYGHOSTSCRIPTRESOURCE": Options1.DirectoryGhostscriptResource = value
-50200   Case "DISABLEEMAIL": Options1.DisableEmail = value
-50210   Case "DONTUSEDOCUMENTSETTINGS": Options1.DontUseDocumentSettings = value
-50220   Case "EPSLANGUAGELEVEL": Options1.EPSLanguageLevel = value
-50230   Case "FILENAMESUBSTITUTIONS": Options1.FilenameSubstitutions = value
-50240   Case "FILENAMESUBSTITUTIONSONLYINTITLE": Options1.FilenameSubstitutionsOnlyInTitle = value
-50250   Case "JPEGCOLORSCOUNT": Options1.JPEGColorscount = value
-50260   Case "JPEGQUALITY": Options1.JPEGQuality = value
-50270   Case "JPEGRESOLUTION": Options1.JPEGResolution = value
-50280   Case "LANGUAGE": Options1.Language = value
-50290   Case "LASTSAVEDIRECTORY": Options1.LastSaveDirectory = value
-50300   Case "LASTUPDATECHECK": Options1.LastUpdateCheck = value
-50310   Case "LOGGING": Options1.Logging = value
-50320   Case "LOGLINES": Options1.LogLines = value
-50330   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": Options1.NoConfirmMessageSwitchingDefaultprinter = value
-50340   Case "NOPROCESSINGATSTARTUP": Options1.NoProcessingAtStartup = value
-50350   Case "NOPSCHECK": Options1.NoPSCheck = value
-50360   Case "ONEPAGEPERFILE": Options1.OnePagePerFile = value
-50370   Case "OPTIONSDESIGN": Options1.OptionsDesign = value
-50380   Case "OPTIONSENABLED": Options1.OptionsEnabled = value
-50390   Case "OPTIONSVISIBLE": Options1.OptionsVisible = value
-50400   Case "PAPERSIZE": Options1.Papersize = value
-50410   Case "PCLCOLORSCOUNT": Options1.PCLColorsCount = value
-50420   Case "PCLRESOLUTION": Options1.PCLResolution = value
-50430   Case "PCXCOLORSCOUNT": Options1.PCXColorscount = value
-50440   Case "PCXRESOLUTION": Options1.PCXResolution = value
-50450   Case "PDFALLOWASSEMBLY": Options1.PDFAllowAssembly = value
-50460   Case "PDFALLOWDEGRADEDPRINTING": Options1.PDFAllowDegradedPrinting = value
-50470   Case "PDFALLOWFILLIN": Options1.PDFAllowFillIn = value
-50480   Case "PDFALLOWSCREENREADERS": Options1.PDFAllowScreenReaders = value
-50490   Case "PDFCOLORSCMYKTORGB": Options1.PDFColorsCMYKToRGB = value
-50500   Case "PDFCOLORSCOLORMODEL": Options1.PDFColorsColorModel = value
-50510   Case "PDFCOLORSPRESERVEHALFTONE": Options1.PDFColorsPreserveHalftone = value
-50520   Case "PDFCOLORSPRESERVEOVERPRINT": Options1.PDFColorsPreserveOverprint = value
-50530   Case "PDFCOLORSPRESERVETRANSFER": Options1.PDFColorsPreserveTransfer = value
-50540   Case "PDFCOMPRESSIONCOLORCOMPRESSION": Options1.PDFCompressionColorCompression = value
-50550   Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": Options1.PDFCompressionColorCompressionChoice = value
-50560   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": Options1.PDFCompressionColorCompressionJPEGHighFactor = value
-50570   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": Options1.PDFCompressionColorCompressionJPEGLowFactor = value
-50580   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMaximumFactor = value
-50590   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMediumFactor = value
-50600   Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMinimumFactor = value
-50610   Case "PDFCOMPRESSIONCOLORRESAMPLE": Options1.PDFCompressionColorResample = value
-50620   Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": Options1.PDFCompressionColorResampleChoice = value
-50630   Case "PDFCOMPRESSIONCOLORRESOLUTION": Options1.PDFCompressionColorResolution = value
-50640   Case "PDFCOMPRESSIONGREYCOMPRESSION": Options1.PDFCompressionGreyCompression = value
-50650   Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": Options1.PDFCompressionGreyCompressionChoice = value
-50660   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": Options1.PDFCompressionGreyCompressionJPEGHighFactor = value
-50670   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": Options1.PDFCompressionGreyCompressionJPEGLowFactor = value
-50680   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMaximumFactor = value
-50690   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMediumFactor = value
-50700   Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMinimumFactor = value
-50710   Case "PDFCOMPRESSIONGREYRESAMPLE": Options1.PDFCompressionGreyResample = value
-50720   Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": Options1.PDFCompressionGreyResampleChoice = value
-50730   Case "PDFCOMPRESSIONGREYRESOLUTION": Options1.PDFCompressionGreyResolution = value
-50740   Case "PDFCOMPRESSIONMONOCOMPRESSION": Options1.PDFCompressionMonoCompression = value
-50750   Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": Options1.PDFCompressionMonoCompressionChoice = value
-50760   Case "PDFCOMPRESSIONMONORESAMPLE": Options1.PDFCompressionMonoResample = value
-50770   Case "PDFCOMPRESSIONMONORESAMPLECHOICE": Options1.PDFCompressionMonoResampleChoice = value
-50780   Case "PDFCOMPRESSIONMONORESOLUTION": Options1.PDFCompressionMonoResolution = value
-50790   Case "PDFCOMPRESSIONTEXTCOMPRESSION": Options1.PDFCompressionTextCompression = value
-50800   Case "PDFDISALLOWCOPY": Options1.PDFDisallowCopy = value
-50810   Case "PDFDISALLOWMODIFYANNOTATIONS": Options1.PDFDisallowModifyAnnotations = value
-50820   Case "PDFDISALLOWMODIFYCONTENTS": Options1.PDFDisallowModifyContents = value
-50830   Case "PDFDISALLOWPRINTING": Options1.PDFDisallowPrinting = value
-50840   Case "PDFENCRYPTOR": Options1.PDFEncryptor = value
-50850   Case "PDFFONTSEMBEDALL": Options1.PDFFontsEmbedAll = value
-50860   Case "PDFFONTSSUBSETFONTS": Options1.PDFFontsSubSetFonts = value
-50870   Case "PDFFONTSSUBSETFONTSPERCENT": Options1.PDFFontsSubSetFontsPercent = value
-50880   Case "PDFGENERALASCII85": Options1.PDFGeneralASCII85 = value
-50890   Case "PDFGENERALAUTOROTATE": Options1.PDFGeneralAutorotate = value
-50900   Case "PDFGENERALCOMPATIBILITY": Options1.PDFGeneralCompatibility = value
-50910   Case "PDFGENERALDEFAULT": Options1.PDFGeneralDefault = value
-50920   Case "PDFGENERALOVERPRINT": Options1.PDFGeneralOverprint = value
-50930   Case "PDFGENERALRESOLUTION": Options1.PDFGeneralResolution = value
-50940   Case "PDFHIGHENCRYPTION": Options1.PDFHighEncryption = value
-50950   Case "PDFLOWENCRYPTION": Options1.PDFLowEncryption = value
-50960   Case "PDFOPTIMIZE": Options1.PDFOptimize = value
-50970   Case "PDFOWNERPASS": Options1.PDFOwnerPass = value
-50980   Case "PDFOWNERPASSWORDSTRING": Options1.PDFOwnerPasswordString = value
-50990   Case "PDFSIGNINGMULTISIGNATURE": Options1.PDFSigningMultiSignature = value
-51000   Case "PDFSIGNINGPFXFILE": Options1.PDFSigningPFXFile = value
-51010   Case "PDFSIGNINGPFXFILEPASSWORD": Options1.PDFSigningPFXFilePassword = value
-51020   Case "PDFSIGNINGSIGNATURECONTACT": Options1.PDFSigningSignatureContact = value
-51030   Case "PDFSIGNINGSIGNATURELEFTX": Options1.PDFSigningSignatureLeftX = value
-51040   Case "PDFSIGNINGSIGNATURELEFTY": Options1.PDFSigningSignatureLeftY = value
-51050   Case "PDFSIGNINGSIGNATURELOCATION": Options1.PDFSigningSignatureLocation = value
-51060   Case "PDFSIGNINGSIGNATUREREASON": Options1.PDFSigningSignatureReason = value
-51070   Case "PDFSIGNINGSIGNATURERIGHTX": Options1.PDFSigningSignatureRightX = value
-51080   Case "PDFSIGNINGSIGNATURERIGHTY": Options1.PDFSigningSignatureRightY = value
-51090   Case "PDFSIGNINGSIGNATUREVISIBLE": Options1.PDFSigningSignatureVisible = value
-51100   Case "PDFSIGNINGSIGNPDF": Options1.PDFSigningSignPDF = value
-51110   Case "PDFUPDATEMETADATA": Options1.PDFUpdateMetadata = value
-51120   Case "PDFUSERPASS": Options1.PDFUserPass = value
-51130   Case "PDFUSERPASSWORDSTRING": Options1.PDFUserPasswordString = value
-51140   Case "PDFUSESECURITY": Options1.PDFUseSecurity = value
-51150   Case "PNGCOLORSCOUNT": Options1.PNGColorscount = value
-51160   Case "PNGRESOLUTION": Options1.PNGResolution = value
-51170   Case "PRINTAFTERSAVING": Options1.PrintAfterSaving = value
-51180   Case "PRINTAFTERSAVINGDUPLEX": Options1.PrintAfterSavingDuplex = value
-51190   Case "PRINTAFTERSAVINGNOCANCEL": Options1.PrintAfterSavingNoCancel = value
-51200   Case "PRINTAFTERSAVINGPRINTER": Options1.PrintAfterSavingPrinter = value
-51210   Case "PRINTAFTERSAVINGQUERYUSER": Options1.PrintAfterSavingQueryUser = value
-51220   Case "PRINTAFTERSAVINGTUMBLE": Options1.PrintAfterSavingTumble = value
-51230   Case "PRINTERSTOP": Options1.PrinterStop = value
-51240   Case "PRINTERTEMPPATH": Options1.PrinterTemppath = value
-51250   Case "PROCESSPRIORITY": Options1.ProcessPriority = value
-51260   Case "PROGRAMFONT": Options1.ProgramFont = value
-51270   Case "PROGRAMFONTCHARSET": Options1.ProgramFontCharset = value
-51280   Case "PROGRAMFONTSIZE": Options1.ProgramFontSize = value
-51290   Case "PSDCOLORSCOUNT": Options1.PSDColorsCount = value
-51300   Case "PSDRESOLUTION": Options1.PSDResolution = value
-51310   Case "PSLANGUAGELEVEL": Options1.PSLanguageLevel = value
-51320   Case "RAWCOLORSCOUNT": Options1.RAWColorsCount = value
-51330   Case "RAWRESOLUTION": Options1.RAWResolution = value
-51340   Case "REMOVEALLKNOWNFILEEXTENSIONS": Options1.RemoveAllKnownFileExtensions = value
-51350   Case "REMOVESPACES": Options1.RemoveSpaces = value
-51360   Case "RUNPROGRAMAFTERSAVING": Options1.RunProgramAfterSaving = value
-51370   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": Options1.RunProgramAfterSavingProgramname = value
-51380   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": Options1.RunProgramAfterSavingProgramParameters = value
-51390   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": Options1.RunProgramAfterSavingWaitUntilReady = value
-51400   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": Options1.RunProgramAfterSavingWindowstyle = value
-51410   Case "RUNPROGRAMBEFORESAVING": Options1.RunProgramBeforeSaving = value
-51420   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": Options1.RunProgramBeforeSavingProgramname = value
-51430   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options1.RunProgramBeforeSavingProgramParameters = value
-51440   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options1.RunProgramBeforeSavingWindowstyle = value
-51450   Case "SAVEFILENAME": Options1.SaveFilename = value
-51460   Case "SENDEMAILAFTERAUTOSAVING": Options1.SendEmailAfterAutoSaving = value
-51470   Case "SENDMAILMETHOD": Options1.SendMailMethod = value
-51480   Case "SHOWANIMATION": Options1.ShowAnimation = value
-51490   Case "STAMPFONTCOLOR": Options1.StampFontColor = value
-51500   Case "STAMPFONTNAME": Options1.StampFontname = value
-51510   Case "STAMPFONTSIZE": Options1.StampFontsize = value
-51520   Case "STAMPOUTLINEFONTTHICKNESS": Options1.StampOutlineFontthickness = value
-51530   Case "STAMPSTRING": Options1.StampString = value
-51540   Case "STAMPUSEOUTLINEFONT": Options1.StampUseOutlineFont = value
-51550   Case "STANDARDAUTHOR": Options1.StandardAuthor = value
-51560   Case "STANDARDCREATIONDATE": Options1.StandardCreationdate = value
-51570   Case "STANDARDDATEFORMAT": Options1.StandardDateformat = value
-51580   Case "STANDARDKEYWORDS": Options1.StandardKeywords = value
-51590   Case "STANDARDMAILDOMAIN": Options1.StandardMailDomain = value
-51600   Case "STANDARDMODIFYDATE": Options1.StandardModifydate = value
-51610   Case "STANDARDSAVEFORMAT": Options1.StandardSaveformat = value
-51620   Case "STANDARDSUBJECT": Options1.StandardSubject = value
-51630   Case "STANDARDTITLE": Options1.StandardTitle = value
-51640   Case "STARTSTANDARDPROGRAM": Options1.StartStandardProgram = value
-51650   Case "SVGRESOLUTION": Options1.SVGResolution = value
-51660   Case "TIFFCOLORSCOUNT": Options1.TIFFColorscount = value
-51670   Case "TIFFRESOLUTION": Options1.TIFFResolution = value
-51680   Case "TOOLBARS": Options1.Toolbars = value
-51690   Case "UPDATEINTERVAL": Options1.UpdateInterval = value
-51700   Case "USEAUTOSAVE": Options1.UseAutosave = value
-51710   Case "USEAUTOSAVEDIRECTORY": Options1.UseAutosaveDirectory = value
-51720   Case "USECREATIONDATENOW": Options1.UseCreationDateNow = value
-51730   Case "USECUSTOMPAPERSIZE": Options1.UseCustomPaperSize = value
-51740   Case "USEFIXPAPERSIZE": Options1.UseFixPapersize = value
-51750   Case "USESTANDARDAUTHOR": Options1.UseStandardAuthor = value
-51760   Case Else:
-51770    mError.Number = 3
-51780    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
-51790    RaiseEvent eError
-51800  End Select
-51810  If ProfileName = "" Then
-51820    Options = Options1
-51830   Else
-51840    SaveOptions Options1, ProfileName
-51850  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cLetOption")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Private Sub cLetOption(PropertyName As String, value As Variant, Options1 As tOptions, Profilename As String)
+ Select Case UCase$(PropertyName)
+  Case "ADDITIONALGHOSTSCRIPTPARAMETERS": Options1.AdditionalGhostscriptParameters = Value
+  Case "ADDITIONALGHOSTSCRIPTSEARCHPATH": Options1.AdditionalGhostscriptSearchpath = Value
+  Case "ADDWINDOWSFONTPATH": Options1.AddWindowsFontpath = Value
+  Case "ALLOWSPECIALGSCHARSINFILENAMES": Options1.AllowSpecialGSCharsInFilenames = Value
+  Case "AUTOSAVEDIRECTORY": Options1.AutosaveDirectory = Value
+  Case "AUTOSAVEFILENAME": Options1.AutosaveFilename = Value
+  Case "AUTOSAVEFORMAT": Options1.AutosaveFormat = Value
+  Case "AUTOSAVESTARTSTANDARDPROGRAM": Options1.AutosaveStartStandardProgram = Value
+  Case "BMPCOLORSCOUNT": Options1.BMPColorscount = Value
+  Case "BMPRESOLUTION": Options1.BMPResolution = Value
+  Case "CLIENTCOMPUTERRESOLVEIPADDRESS": Options1.ClientComputerResolveIPAddress = Value
+  Case "COUNTER": Options1.Counter = Value
+  Case "DEVICEHEIGHTPOINTS": Options1.DeviceHeightPoints = Value
+  Case "DEVICEWIDTHPOINTS": Options1.DeviceWidthPoints = Value
+  Case "DIRECTORYGHOSTSCRIPTBINARIES": Options1.DirectoryGhostscriptBinaries = Value
+  Case "DIRECTORYGHOSTSCRIPTFONTS": Options1.DirectoryGhostscriptFonts = Value
+  Case "DIRECTORYGHOSTSCRIPTLIBRARIES": Options1.DirectoryGhostscriptLibraries = Value
+  Case "DIRECTORYGHOSTSCRIPTRESOURCE": Options1.DirectoryGhostscriptResource = Value
+  Case "DISABLEEMAIL": Options1.DisableEmail = Value
+  Case "DONTUSEDOCUMENTSETTINGS": Options1.DontUseDocumentSettings = Value
+  Case "EPSLANGUAGELEVEL": Options1.EPSLanguageLevel = Value
+  Case "FILENAMESUBSTITUTIONS": Options1.FilenameSubstitutions = Value
+  Case "FILENAMESUBSTITUTIONSONLYINTITLE": Options1.FilenameSubstitutionsOnlyInTitle = Value
+  Case "JPEGCOLORSCOUNT": Options1.JPEGColorscount = Value
+  Case "JPEGQUALITY": Options1.JPEGQuality = Value
+  Case "JPEGRESOLUTION": Options1.JPEGResolution = Value
+  Case "LANGUAGE": Options1.Language = Value
+  Case "LASTSAVEDIRECTORY": Options1.LastSaveDirectory = Value
+  Case "LASTUPDATECHECK": Options1.LastUpdateCheck = Value
+  Case "LOGGING": Options1.Logging = Value
+  Case "LOGLINES": Options1.LogLines = Value
+  Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": Options1.NoConfirmMessageSwitchingDefaultprinter = Value
+  Case "NOPROCESSINGATSTARTUP": Options1.NoProcessingAtStartup = Value
+  Case "NOPSCHECK": Options1.NoPSCheck = Value
+  Case "ONEPAGEPERFILE": Options1.OnePagePerFile = Value
+  Case "OPTIONSDESIGN": Options1.OptionsDesign = Value
+  Case "OPTIONSENABLED": Options1.OptionsEnabled = Value
+  Case "OPTIONSVISIBLE": Options1.OptionsVisible = Value
+  Case "PAPERSIZE": Options1.Papersize = Value
+  Case "PCLCOLORSCOUNT": Options1.PCLColorsCount = Value
+  Case "PCLRESOLUTION": Options1.PCLResolution = Value
+  Case "PCXCOLORSCOUNT": Options1.PCXColorscount = Value
+  Case "PCXRESOLUTION": Options1.PCXResolution = Value
+  Case "PDFALLOWASSEMBLY": Options1.PDFAllowAssembly = Value
+  Case "PDFALLOWDEGRADEDPRINTING": Options1.PDFAllowDegradedPrinting = Value
+  Case "PDFALLOWFILLIN": Options1.PDFAllowFillIn = Value
+  Case "PDFALLOWSCREENREADERS": Options1.PDFAllowScreenReaders = Value
+  Case "PDFCOLORSCMYKTORGB": Options1.PDFColorsCMYKToRGB = Value
+  Case "PDFCOLORSCOLORMODEL": Options1.PDFColorsColorModel = Value
+  Case "PDFCOLORSPRESERVEHALFTONE": Options1.PDFColorsPreserveHalftone = Value
+  Case "PDFCOLORSPRESERVEOVERPRINT": Options1.PDFColorsPreserveOverprint = Value
+  Case "PDFCOLORSPRESERVETRANSFER": Options1.PDFColorsPreserveTransfer = Value
+  Case "PDFCOMPRESSIONCOLORCOMPRESSION": Options1.PDFCompressionColorCompression = Value
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONCHOICE": Options1.PDFCompressionColorCompressionChoice = Value
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGHIGHFACTOR": Options1.PDFCompressionColorCompressionJPEGHighFactor = Value
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGLOWFACTOR": Options1.PDFCompressionColorCompressionJPEGLowFactor = Value
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMAXIMUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMaximumFactor = Value
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMEDIUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMediumFactor = Value
+  Case "PDFCOMPRESSIONCOLORCOMPRESSIONJPEGMINIMUMFACTOR": Options1.PDFCompressionColorCompressionJPEGMinimumFactor = Value
+  Case "PDFCOMPRESSIONCOLORRESAMPLE": Options1.PDFCompressionColorResample = Value
+  Case "PDFCOMPRESSIONCOLORRESAMPLECHOICE": Options1.PDFCompressionColorResampleChoice = Value
+  Case "PDFCOMPRESSIONCOLORRESOLUTION": Options1.PDFCompressionColorResolution = Value
+  Case "PDFCOMPRESSIONGREYCOMPRESSION": Options1.PDFCompressionGreyCompression = Value
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONCHOICE": Options1.PDFCompressionGreyCompressionChoice = Value
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGHIGHFACTOR": Options1.PDFCompressionGreyCompressionJPEGHighFactor = Value
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGLOWFACTOR": Options1.PDFCompressionGreyCompressionJPEGLowFactor = Value
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMAXIMUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMaximumFactor = Value
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMEDIUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMediumFactor = Value
+  Case "PDFCOMPRESSIONGREYCOMPRESSIONJPEGMINIMUMFACTOR": Options1.PDFCompressionGreyCompressionJPEGMinimumFactor = Value
+  Case "PDFCOMPRESSIONGREYRESAMPLE": Options1.PDFCompressionGreyResample = Value
+  Case "PDFCOMPRESSIONGREYRESAMPLECHOICE": Options1.PDFCompressionGreyResampleChoice = Value
+  Case "PDFCOMPRESSIONGREYRESOLUTION": Options1.PDFCompressionGreyResolution = Value
+  Case "PDFCOMPRESSIONMONOCOMPRESSION": Options1.PDFCompressionMonoCompression = Value
+  Case "PDFCOMPRESSIONMONOCOMPRESSIONCHOICE": Options1.PDFCompressionMonoCompressionChoice = Value
+  Case "PDFCOMPRESSIONMONORESAMPLE": Options1.PDFCompressionMonoResample = Value
+  Case "PDFCOMPRESSIONMONORESAMPLECHOICE": Options1.PDFCompressionMonoResampleChoice = Value
+  Case "PDFCOMPRESSIONMONORESOLUTION": Options1.PDFCompressionMonoResolution = Value
+  Case "PDFCOMPRESSIONTEXTCOMPRESSION": Options1.PDFCompressionTextCompression = Value
+  Case "PDFDISALLOWCOPY": Options1.PDFDisallowCopy = Value
+  Case "PDFDISALLOWMODIFYANNOTATIONS": Options1.PDFDisallowModifyAnnotations = Value
+  Case "PDFDISALLOWMODIFYCONTENTS": Options1.PDFDisallowModifyContents = Value
+  Case "PDFDISALLOWPRINTING": Options1.PDFDisallowPrinting = Value
+  Case "PDFENCRYPTOR": Options1.PDFEncryptor = Value
+  Case "PDFFONTSEMBEDALL": Options1.PDFFontsEmbedAll = Value
+  Case "PDFFONTSSUBSETFONTS": Options1.PDFFontsSubSetFonts = Value
+  Case "PDFFONTSSUBSETFONTSPERCENT": Options1.PDFFontsSubSetFontsPercent = Value
+  Case "PDFGENERALASCII85": Options1.PDFGeneralASCII85 = Value
+  Case "PDFGENERALAUTOROTATE": Options1.PDFGeneralAutorotate = Value
+  Case "PDFGENERALCOMPATIBILITY": Options1.PDFGeneralCompatibility = Value
+  Case "PDFGENERALDEFAULT": Options1.PDFGeneralDefault = Value
+  Case "PDFGENERALOVERPRINT": Options1.PDFGeneralOverprint = Value
+  Case "PDFGENERALRESOLUTION": Options1.PDFGeneralResolution = Value
+  Case "PDFHIGHENCRYPTION": Options1.PDFHighEncryption = Value
+  Case "PDFLOWENCRYPTION": Options1.PDFLowEncryption = Value
+  Case "PDFOPTIMIZE": Options1.PDFOptimize = Value
+  Case "PDFOWNERPASS": Options1.PDFOwnerPass = Value
+  Case "PDFOWNERPASSWORDSTRING": Options1.PDFOwnerPasswordString = Value
+  Case "PDFSIGNINGMULTISIGNATURE": Options1.PDFSigningMultiSignature = Value
+  Case "PDFSIGNINGPFXFILE": Options1.PDFSigningPFXFile = Value
+  Case "PDFSIGNINGPFXFILEPASSWORD": Options1.PDFSigningPFXFilePassword = Value
+  Case "PDFSIGNINGSIGNATURECONTACT": Options1.PDFSigningSignatureContact = Value
+  Case "PDFSIGNINGSIGNATURELEFTX": Options1.PDFSigningSignatureLeftX = Value
+  Case "PDFSIGNINGSIGNATURELEFTY": Options1.PDFSigningSignatureLeftY = Value
+  Case "PDFSIGNINGSIGNATURELOCATION": Options1.PDFSigningSignatureLocation = Value
+  Case "PDFSIGNINGSIGNATUREONPAGE": Options1.PDFSigningSignatureOnPage = Value
+  Case "PDFSIGNINGSIGNATUREREASON": Options1.PDFSigningSignatureReason = Value
+  Case "PDFSIGNINGSIGNATURERIGHTX": Options1.PDFSigningSignatureRightX = Value
+  Case "PDFSIGNINGSIGNATURERIGHTY": Options1.PDFSigningSignatureRightY = Value
+  Case "PDFSIGNINGSIGNATUREVISIBLE": Options1.PDFSigningSignatureVisible = Value
+  Case "PDFSIGNINGSIGNPDF": Options1.PDFSigningSignPDF = Value
+  Case "PDFUPDATEMETADATA": Options1.PDFUpdateMetadata = Value
+  Case "PDFUSERPASS": Options1.PDFUserPass = Value
+  Case "PDFUSERPASSWORDSTRING": Options1.PDFUserPasswordString = Value
+  Case "PDFUSESECURITY": Options1.PDFUseSecurity = Value
+  Case "PNGCOLORSCOUNT": Options1.PNGColorscount = Value
+  Case "PNGRESOLUTION": Options1.PNGResolution = Value
+  Case "PRINTAFTERSAVING": Options1.PrintAfterSaving = Value
+  Case "PRINTAFTERSAVINGDUPLEX": Options1.PrintAfterSavingDuplex = Value
+  Case "PRINTAFTERSAVINGNOCANCEL": Options1.PrintAfterSavingNoCancel = Value
+  Case "PRINTAFTERSAVINGPRINTER": Options1.PrintAfterSavingPrinter = Value
+  Case "PRINTAFTERSAVINGQUERYUSER": Options1.PrintAfterSavingQueryUser = Value
+  Case "PRINTAFTERSAVINGTUMBLE": Options1.PrintAfterSavingTumble = Value
+  Case "PRINTERSTOP": Options1.PrinterStop = Value
+  Case "PRINTERTEMPPATH": Options1.PrinterTemppath = Value
+  Case "PROCESSPRIORITY": Options1.ProcessPriority = Value
+  Case "PROGRAMFONT": Options1.ProgramFont = Value
+  Case "PROGRAMFONTCHARSET": Options1.ProgramFontCharset = Value
+  Case "PROGRAMFONTSIZE": Options1.ProgramFontSize = Value
+  Case "PSDCOLORSCOUNT": Options1.PSDColorsCount = Value
+  Case "PSDRESOLUTION": Options1.PSDResolution = Value
+  Case "PSLANGUAGELEVEL": Options1.PSLanguageLevel = Value
+  Case "RAWCOLORSCOUNT": Options1.RAWColorsCount = Value
+  Case "RAWRESOLUTION": Options1.RAWResolution = Value
+  Case "REMOVEALLKNOWNFILEEXTENSIONS": Options1.RemoveAllKnownFileExtensions = Value
+  Case "REMOVESPACES": Options1.RemoveSpaces = Value
+  Case "RUNPROGRAMAFTERSAVING": Options1.RunProgramAfterSaving = Value
+  Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": Options1.RunProgramAfterSavingProgramname = Value
+  Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": Options1.RunProgramAfterSavingProgramParameters = Value
+  Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": Options1.RunProgramAfterSavingWaitUntilReady = Value
+  Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": Options1.RunProgramAfterSavingWindowstyle = Value
+  Case "RUNPROGRAMBEFORESAVING": Options1.RunProgramBeforeSaving = Value
+  Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": Options1.RunProgramBeforeSavingProgramname = Value
+  Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options1.RunProgramBeforeSavingProgramParameters = Value
+  Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options1.RunProgramBeforeSavingWindowstyle = Value
+  Case "SAVEFILENAME": Options1.SaveFilename = Value
+  Case "SENDEMAILAFTERAUTOSAVING": Options1.SendEmailAfterAutoSaving = Value
+  Case "SENDMAILMETHOD": Options1.SendMailMethod = Value
+  Case "SHOWANIMATION": Options1.ShowAnimation = Value
+  Case "STAMPFONTCOLOR": Options1.StampFontColor = Value
+  Case "STAMPFONTNAME": Options1.StampFontname = Value
+  Case "STAMPFONTSIZE": Options1.StampFontsize = Value
+  Case "STAMPOUTLINEFONTTHICKNESS": Options1.StampOutlineFontthickness = Value
+  Case "STAMPSTRING": Options1.StampString = Value
+  Case "STAMPUSEOUTLINEFONT": Options1.StampUseOutlineFont = Value
+  Case "STANDARDAUTHOR": Options1.StandardAuthor = Value
+  Case "STANDARDCREATIONDATE": Options1.StandardCreationdate = Value
+  Case "STANDARDDATEFORMAT": Options1.StandardDateformat = Value
+  Case "STANDARDKEYWORDS": Options1.StandardKeywords = Value
+  Case "STANDARDMAILDOMAIN": Options1.StandardMailDomain = Value
+  Case "STANDARDMODIFYDATE": Options1.StandardModifydate = Value
+  Case "STANDARDSAVEFORMAT": Options1.StandardSaveformat = Value
+  Case "STANDARDSUBJECT": Options1.StandardSubject = Value
+  Case "STANDARDTITLE": Options1.StandardTitle = Value
+  Case "STARTSTANDARDPROGRAM": Options1.StartStandardProgram = Value
+  Case "SVGRESOLUTION": Options1.SVGResolution = Value
+  Case "TIFFCOLORSCOUNT": Options1.TIFFColorscount = Value
+  Case "TIFFRESOLUTION": Options1.TIFFResolution = Value
+  Case "TOOLBARS": Options1.Toolbars = Value
+  Case "UPDATEINTERVAL": Options1.UpdateInterval = Value
+  Case "USEAUTOSAVE": Options1.UseAutosave = Value
+  Case "USEAUTOSAVEDIRECTORY": Options1.UseAutosaveDirectory = Value
+  Case "USECREATIONDATENOW": Options1.UseCreationDateNow = Value
+  Case "USECUSTOMPAPERSIZE": Options1.UseCustomPaperSize = Value
+  Case "USEFIXPAPERSIZE": Options1.UseFixPapersize = Value
+  Case "USESTANDARDAUTHOR": Options1.UseStandardAuthor = Value
+  Case Else:
+   mError.Number = 3
+   mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
+   RaiseEvent eError
+ End Select
+ If Profilename = "" Then
+   Options = Options1
+  Else
+   SaveOptions Options1, Profilename
+ End If
 End Sub
 
 Private Function cLetOptions(sOptions As Variant) As tOptions
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With cLetOptions
-50020   .AdditionalGhostscriptParameters = sOptions.AdditionalGhostscriptParameters
-50030   .AdditionalGhostscriptSearchpath = sOptions.AdditionalGhostscriptSearchpath
-50040   .AddWindowsFontpath = sOptions.AddWindowsFontpath
-50050   .AllowSpecialGSCharsInFilenames = sOptions.AllowSpecialGSCharsInFilenames
-50060   .AutosaveDirectory = sOptions.AutosaveDirectory
-50070   .AutosaveFilename = sOptions.AutosaveFilename
-50080   .AutosaveFormat = sOptions.AutosaveFormat
-50090   .AutosaveStartStandardProgram = sOptions.AutosaveStartStandardProgram
-50100   .BMPColorscount = sOptions.BMPColorscount
-50110   .BMPResolution = sOptions.BMPResolution
-50120   .ClientComputerResolveIPAddress = sOptions.ClientComputerResolveIPAddress
-50130   .Counter = sOptions.Counter
-50140   .DeviceHeightPoints = sOptions.DeviceHeightPoints
-50150   .DeviceWidthPoints = sOptions.DeviceWidthPoints
-50160   .DirectoryGhostscriptBinaries = sOptions.DirectoryGhostscriptBinaries
-50170   .DirectoryGhostscriptFonts = sOptions.DirectoryGhostscriptFonts
-50180   .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
-50190   .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
-50200   .DisableEmail = sOptions.DisableEmail
-50210   .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
-50220   .EPSLanguageLevel = sOptions.EPSLanguageLevel
-50230   .FilenameSubstitutions = sOptions.FilenameSubstitutions
-50240   .FilenameSubstitutionsOnlyInTitle = sOptions.FilenameSubstitutionsOnlyInTitle
-50250   .JPEGColorscount = sOptions.JPEGColorscount
-50260   .JPEGQuality = sOptions.JPEGQuality
-50270   .JPEGResolution = sOptions.JPEGResolution
-50280   .Language = sOptions.Language
-50290   .LastSaveDirectory = sOptions.LastSaveDirectory
-50300   .LastUpdateCheck = sOptions.LastUpdateCheck
-50310   .Logging = sOptions.Logging
-50320   .LogLines = sOptions.LogLines
-50330   .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
-50340   .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
-50350   .NoPSCheck = sOptions.NoPSCheck
-50360   .OnePagePerFile = sOptions.OnePagePerFile
-50370   .OptionsDesign = sOptions.OptionsDesign
-50380   .OptionsEnabled = sOptions.OptionsEnabled
-50390   .OptionsVisible = sOptions.OptionsVisible
-50400   .Papersize = sOptions.Papersize
-50410   .PCLColorsCount = sOptions.PCLColorsCount
-50420   .PCLResolution = sOptions.PCLResolution
-50430   .PCXColorscount = sOptions.PCXColorscount
-50440   .PCXResolution = sOptions.PCXResolution
-50450   .PDFAllowAssembly = sOptions.PDFAllowAssembly
-50460   .PDFAllowDegradedPrinting = sOptions.PDFAllowDegradedPrinting
-50470   .PDFAllowFillIn = sOptions.PDFAllowFillIn
-50480   .PDFAllowScreenReaders = sOptions.PDFAllowScreenReaders
-50490   .PDFColorsCMYKToRGB = sOptions.PDFColorsCMYKToRGB
-50500   .PDFColorsColorModel = sOptions.PDFColorsColorModel
-50510   .PDFColorsPreserveHalftone = sOptions.PDFColorsPreserveHalftone
-50520   .PDFColorsPreserveOverprint = sOptions.PDFColorsPreserveOverprint
-50530   .PDFColorsPreserveTransfer = sOptions.PDFColorsPreserveTransfer
-50540   .PDFCompressionColorCompression = sOptions.PDFCompressionColorCompression
-50550   .PDFCompressionColorCompressionChoice = sOptions.PDFCompressionColorCompressionChoice
-50560   .PDFCompressionColorCompressionJPEGHighFactor = sOptions.PDFCompressionColorCompressionJPEGHighFactor
-50570   .PDFCompressionColorCompressionJPEGLowFactor = sOptions.PDFCompressionColorCompressionJPEGLowFactor
-50580   .PDFCompressionColorCompressionJPEGMaximumFactor = sOptions.PDFCompressionColorCompressionJPEGMaximumFactor
-50590   .PDFCompressionColorCompressionJPEGMediumFactor = sOptions.PDFCompressionColorCompressionJPEGMediumFactor
-50600   .PDFCompressionColorCompressionJPEGMinimumFactor = sOptions.PDFCompressionColorCompressionJPEGMinimumFactor
-50610   .PDFCompressionColorResample = sOptions.PDFCompressionColorResample
-50620   .PDFCompressionColorResampleChoice = sOptions.PDFCompressionColorResampleChoice
-50630   .PDFCompressionColorResolution = sOptions.PDFCompressionColorResolution
-50640   .PDFCompressionGreyCompression = sOptions.PDFCompressionGreyCompression
-50650   .PDFCompressionGreyCompressionChoice = sOptions.PDFCompressionGreyCompressionChoice
-50660   .PDFCompressionGreyCompressionJPEGHighFactor = sOptions.PDFCompressionGreyCompressionJPEGHighFactor
-50670   .PDFCompressionGreyCompressionJPEGLowFactor = sOptions.PDFCompressionGreyCompressionJPEGLowFactor
-50680   .PDFCompressionGreyCompressionJPEGMaximumFactor = sOptions.PDFCompressionGreyCompressionJPEGMaximumFactor
-50690   .PDFCompressionGreyCompressionJPEGMediumFactor = sOptions.PDFCompressionGreyCompressionJPEGMediumFactor
-50700   .PDFCompressionGreyCompressionJPEGMinimumFactor = sOptions.PDFCompressionGreyCompressionJPEGMinimumFactor
-50710   .PDFCompressionGreyResample = sOptions.PDFCompressionGreyResample
-50720   .PDFCompressionGreyResampleChoice = sOptions.PDFCompressionGreyResampleChoice
-50730   .PDFCompressionGreyResolution = sOptions.PDFCompressionGreyResolution
-50740   .PDFCompressionMonoCompression = sOptions.PDFCompressionMonoCompression
-50750   .PDFCompressionMonoCompressionChoice = sOptions.PDFCompressionMonoCompressionChoice
-50760   .PDFCompressionMonoResample = sOptions.PDFCompressionMonoResample
-50770   .PDFCompressionMonoResampleChoice = sOptions.PDFCompressionMonoResampleChoice
-50780   .PDFCompressionMonoResolution = sOptions.PDFCompressionMonoResolution
-50790   .PDFCompressionTextCompression = sOptions.PDFCompressionTextCompression
-50800   .PDFDisallowCopy = sOptions.PDFDisallowCopy
-50810   .PDFDisallowModifyAnnotations = sOptions.PDFDisallowModifyAnnotations
-50820   .PDFDisallowModifyContents = sOptions.PDFDisallowModifyContents
-50830   .PDFDisallowPrinting = sOptions.PDFDisallowPrinting
-50840   .PDFEncryptor = sOptions.PDFEncryptor
-50850   .PDFFontsEmbedAll = sOptions.PDFFontsEmbedAll
-50860   .PDFFontsSubSetFonts = sOptions.PDFFontsSubSetFonts
-50870   .PDFFontsSubSetFontsPercent = sOptions.PDFFontsSubSetFontsPercent
-50880   .PDFGeneralASCII85 = sOptions.PDFGeneralASCII85
-50890   .PDFGeneralAutorotate = sOptions.PDFGeneralAutorotate
-50900   .PDFGeneralCompatibility = sOptions.PDFGeneralCompatibility
-50910   .PDFGeneralDefault = sOptions.PDFGeneralDefault
-50920   .PDFGeneralOverprint = sOptions.PDFGeneralOverprint
-50930   .PDFGeneralResolution = sOptions.PDFGeneralResolution
-50940   .PDFHighEncryption = sOptions.PDFHighEncryption
-50950   .PDFLowEncryption = sOptions.PDFLowEncryption
-50960   .PDFOptimize = sOptions.PDFOptimize
-50970   .PDFOwnerPass = sOptions.PDFOwnerPass
-50980   .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
-50990   .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
-51000   .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
-51010   .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
-51020   .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
-51030   .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
-51040   .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
-51050   .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
-51060   .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
-51070   .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
-51080   .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
-51090   .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
-51100   .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
-51110   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
-51120   .PDFUserPass = sOptions.PDFUserPass
-51130   .PDFUserPasswordString = sOptions.PDFUserPasswordString
-51140   .PDFUseSecurity = sOptions.PDFUseSecurity
-51150   .PNGColorscount = sOptions.PNGColorscount
-51160   .PNGResolution = sOptions.PNGResolution
-51170   .PrintAfterSaving = sOptions.PrintAfterSaving
-51180   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
-51190   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
-51200   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
-51210   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
-51220   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
-51230   .PrinterStop = sOptions.PrinterStop
-51240   .PrinterTemppath = sOptions.PrinterTemppath
-51250   .ProcessPriority = sOptions.ProcessPriority
-51260   .ProgramFont = sOptions.ProgramFont
-51270   .ProgramFontCharset = sOptions.ProgramFontCharset
-51280   .ProgramFontSize = sOptions.ProgramFontSize
-51290   .PSDColorsCount = sOptions.PSDColorsCount
-51300   .PSDResolution = sOptions.PSDResolution
-51310   .PSLanguageLevel = sOptions.PSLanguageLevel
-51320   .RAWColorsCount = sOptions.RAWColorsCount
-51330   .RAWResolution = sOptions.RAWResolution
-51340   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
-51350   .RemoveSpaces = sOptions.RemoveSpaces
-51360   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
-51370   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
-51380   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
-51390   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
-51400   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
-51410   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
-51420   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
-51430   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
-51440   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
-51450   .SaveFilename = sOptions.SaveFilename
-51460   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
-51470   .SendMailMethod = sOptions.SendMailMethod
-51480   .ShowAnimation = sOptions.ShowAnimation
-51490   .StampFontColor = sOptions.StampFontColor
-51500   .StampFontname = sOptions.StampFontname
-51510   .StampFontsize = sOptions.StampFontsize
-51520   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
-51530   .StampString = sOptions.StampString
-51540   .StampUseOutlineFont = sOptions.StampUseOutlineFont
-51550   .StandardAuthor = sOptions.StandardAuthor
-51560   .StandardCreationdate = sOptions.StandardCreationdate
-51570   .StandardDateformat = sOptions.StandardDateformat
-51580   .StandardKeywords = sOptions.StandardKeywords
-51590   .StandardMailDomain = sOptions.StandardMailDomain
-51600   .StandardModifydate = sOptions.StandardModifydate
-51610   .StandardSaveformat = sOptions.StandardSaveformat
-51620   .StandardSubject = sOptions.StandardSubject
-51630   .StandardTitle = sOptions.StandardTitle
-51640   .StartStandardProgram = sOptions.StartStandardProgram
-51650   .SVGResolution = sOptions.SVGResolution
-51660   .TIFFColorscount = sOptions.TIFFColorscount
-51670   .TIFFResolution = sOptions.TIFFResolution
-51680   .Toolbars = sOptions.Toolbars
-51690   .UpdateInterval = sOptions.UpdateInterval
-51700   .UseAutosave = sOptions.UseAutosave
-51710   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51720   .UseCreationDateNow = sOptions.UseCreationDateNow
-51730   .UseCustomPaperSize = sOptions.UseCustomPaperSize
-51740   .UseFixPapersize = sOptions.UseFixPapersize
-51750   .UseStandardAuthor = sOptions.UseStandardAuthor
-51760  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cLetOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ With cLetOptions
+  .AdditionalGhostscriptParameters = sOptions.AdditionalGhostscriptParameters
+  .AdditionalGhostscriptSearchpath = sOptions.AdditionalGhostscriptSearchpath
+  .AddWindowsFontpath = sOptions.AddWindowsFontpath
+  .AllowSpecialGSCharsInFilenames = sOptions.AllowSpecialGSCharsInFilenames
+  .AutosaveDirectory = sOptions.AutosaveDirectory
+  .AutosaveFilename = sOptions.AutosaveFilename
+  .AutosaveFormat = sOptions.AutosaveFormat
+  .AutosaveStartStandardProgram = sOptions.AutosaveStartStandardProgram
+  .BMPColorscount = sOptions.BMPColorscount
+  .BMPResolution = sOptions.BMPResolution
+  .ClientComputerResolveIPAddress = sOptions.ClientComputerResolveIPAddress
+  .Counter = sOptions.Counter
+  .DeviceHeightPoints = sOptions.DeviceHeightPoints
+  .DeviceWidthPoints = sOptions.DeviceWidthPoints
+  .DirectoryGhostscriptBinaries = sOptions.DirectoryGhostscriptBinaries
+  .DirectoryGhostscriptFonts = sOptions.DirectoryGhostscriptFonts
+  .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
+  .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
+  .DisableEmail = sOptions.DisableEmail
+  .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
+  .EPSLanguageLevel = sOptions.EPSLanguageLevel
+  .FilenameSubstitutions = sOptions.FilenameSubstitutions
+  .FilenameSubstitutionsOnlyInTitle = sOptions.FilenameSubstitutionsOnlyInTitle
+  .JPEGColorscount = sOptions.JPEGColorscount
+  .JPEGQuality = sOptions.JPEGQuality
+  .JPEGResolution = sOptions.JPEGResolution
+  .Language = sOptions.Language
+  .LastSaveDirectory = sOptions.LastSaveDirectory
+  .LastUpdateCheck = sOptions.LastUpdateCheck
+  .Logging = sOptions.Logging
+  .LogLines = sOptions.LogLines
+  .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
+  .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
+  .NoPSCheck = sOptions.NoPSCheck
+  .OnePagePerFile = sOptions.OnePagePerFile
+  .OptionsDesign = sOptions.OptionsDesign
+  .OptionsEnabled = sOptions.OptionsEnabled
+  .OptionsVisible = sOptions.OptionsVisible
+  .Papersize = sOptions.Papersize
+  .PCLColorsCount = sOptions.PCLColorsCount
+  .PCLResolution = sOptions.PCLResolution
+  .PCXColorscount = sOptions.PCXColorscount
+  .PCXResolution = sOptions.PCXResolution
+  .PDFAllowAssembly = sOptions.PDFAllowAssembly
+  .PDFAllowDegradedPrinting = sOptions.PDFAllowDegradedPrinting
+  .PDFAllowFillIn = sOptions.PDFAllowFillIn
+  .PDFAllowScreenReaders = sOptions.PDFAllowScreenReaders
+  .PDFColorsCMYKToRGB = sOptions.PDFColorsCMYKToRGB
+  .PDFColorsColorModel = sOptions.PDFColorsColorModel
+  .PDFColorsPreserveHalftone = sOptions.PDFColorsPreserveHalftone
+  .PDFColorsPreserveOverprint = sOptions.PDFColorsPreserveOverprint
+  .PDFColorsPreserveTransfer = sOptions.PDFColorsPreserveTransfer
+  .PDFCompressionColorCompression = sOptions.PDFCompressionColorCompression
+  .PDFCompressionColorCompressionChoice = sOptions.PDFCompressionColorCompressionChoice
+  .PDFCompressionColorCompressionJPEGHighFactor = sOptions.PDFCompressionColorCompressionJPEGHighFactor
+  .PDFCompressionColorCompressionJPEGLowFactor = sOptions.PDFCompressionColorCompressionJPEGLowFactor
+  .PDFCompressionColorCompressionJPEGMaximumFactor = sOptions.PDFCompressionColorCompressionJPEGMaximumFactor
+  .PDFCompressionColorCompressionJPEGMediumFactor = sOptions.PDFCompressionColorCompressionJPEGMediumFactor
+  .PDFCompressionColorCompressionJPEGMinimumFactor = sOptions.PDFCompressionColorCompressionJPEGMinimumFactor
+  .PDFCompressionColorResample = sOptions.PDFCompressionColorResample
+  .PDFCompressionColorResampleChoice = sOptions.PDFCompressionColorResampleChoice
+  .PDFCompressionColorResolution = sOptions.PDFCompressionColorResolution
+  .PDFCompressionGreyCompression = sOptions.PDFCompressionGreyCompression
+  .PDFCompressionGreyCompressionChoice = sOptions.PDFCompressionGreyCompressionChoice
+  .PDFCompressionGreyCompressionJPEGHighFactor = sOptions.PDFCompressionGreyCompressionJPEGHighFactor
+  .PDFCompressionGreyCompressionJPEGLowFactor = sOptions.PDFCompressionGreyCompressionJPEGLowFactor
+  .PDFCompressionGreyCompressionJPEGMaximumFactor = sOptions.PDFCompressionGreyCompressionJPEGMaximumFactor
+  .PDFCompressionGreyCompressionJPEGMediumFactor = sOptions.PDFCompressionGreyCompressionJPEGMediumFactor
+  .PDFCompressionGreyCompressionJPEGMinimumFactor = sOptions.PDFCompressionGreyCompressionJPEGMinimumFactor
+  .PDFCompressionGreyResample = sOptions.PDFCompressionGreyResample
+  .PDFCompressionGreyResampleChoice = sOptions.PDFCompressionGreyResampleChoice
+  .PDFCompressionGreyResolution = sOptions.PDFCompressionGreyResolution
+  .PDFCompressionMonoCompression = sOptions.PDFCompressionMonoCompression
+  .PDFCompressionMonoCompressionChoice = sOptions.PDFCompressionMonoCompressionChoice
+  .PDFCompressionMonoResample = sOptions.PDFCompressionMonoResample
+  .PDFCompressionMonoResampleChoice = sOptions.PDFCompressionMonoResampleChoice
+  .PDFCompressionMonoResolution = sOptions.PDFCompressionMonoResolution
+  .PDFCompressionTextCompression = sOptions.PDFCompressionTextCompression
+  .PDFDisallowCopy = sOptions.PDFDisallowCopy
+  .PDFDisallowModifyAnnotations = sOptions.PDFDisallowModifyAnnotations
+  .PDFDisallowModifyContents = sOptions.PDFDisallowModifyContents
+  .PDFDisallowPrinting = sOptions.PDFDisallowPrinting
+  .PDFEncryptor = sOptions.PDFEncryptor
+  .PDFFontsEmbedAll = sOptions.PDFFontsEmbedAll
+  .PDFFontsSubSetFonts = sOptions.PDFFontsSubSetFonts
+  .PDFFontsSubSetFontsPercent = sOptions.PDFFontsSubSetFontsPercent
+  .PDFGeneralASCII85 = sOptions.PDFGeneralASCII85
+  .PDFGeneralAutorotate = sOptions.PDFGeneralAutorotate
+  .PDFGeneralCompatibility = sOptions.PDFGeneralCompatibility
+  .PDFGeneralDefault = sOptions.PDFGeneralDefault
+  .PDFGeneralOverprint = sOptions.PDFGeneralOverprint
+  .PDFGeneralResolution = sOptions.PDFGeneralResolution
+  .PDFHighEncryption = sOptions.PDFHighEncryption
+  .PDFLowEncryption = sOptions.PDFLowEncryption
+  .PDFOptimize = sOptions.PDFOptimize
+  .PDFOwnerPass = sOptions.PDFOwnerPass
+  .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
+  .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
+  .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
+  .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
+  .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
+  .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
+  .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
+  .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
+  .PDFSigningSignatureOnPage = sOptions.PDFSigningSignatureOnPage
+  .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
+  .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
+  .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
+  .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
+  .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
+  .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
+  .PDFUserPass = sOptions.PDFUserPass
+  .PDFUserPasswordString = sOptions.PDFUserPasswordString
+  .PDFUseSecurity = sOptions.PDFUseSecurity
+  .PNGColorscount = sOptions.PNGColorscount
+  .PNGResolution = sOptions.PNGResolution
+  .PrintAfterSaving = sOptions.PrintAfterSaving
+  .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
+  .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
+  .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
+  .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
+  .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
+  .PrinterStop = sOptions.PrinterStop
+  .PrinterTemppath = sOptions.PrinterTemppath
+  .ProcessPriority = sOptions.ProcessPriority
+  .ProgramFont = sOptions.ProgramFont
+  .ProgramFontCharset = sOptions.ProgramFontCharset
+  .ProgramFontSize = sOptions.ProgramFontSize
+  .PSDColorsCount = sOptions.PSDColorsCount
+  .PSDResolution = sOptions.PSDResolution
+  .PSLanguageLevel = sOptions.PSLanguageLevel
+  .RAWColorsCount = sOptions.RAWColorsCount
+  .RAWResolution = sOptions.RAWResolution
+  .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
+  .RemoveSpaces = sOptions.RemoveSpaces
+  .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
+  .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
+  .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
+  .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
+  .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
+  .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
+  .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
+  .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
+  .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
+  .SaveFilename = sOptions.SaveFilename
+  .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+  .SendMailMethod = sOptions.SendMailMethod
+  .ShowAnimation = sOptions.ShowAnimation
+  .StampFontColor = sOptions.StampFontColor
+  .StampFontname = sOptions.StampFontname
+  .StampFontsize = sOptions.StampFontsize
+  .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+  .StampString = sOptions.StampString
+  .StampUseOutlineFont = sOptions.StampUseOutlineFont
+  .StandardAuthor = sOptions.StandardAuthor
+  .StandardCreationdate = sOptions.StandardCreationdate
+  .StandardDateformat = sOptions.StandardDateformat
+  .StandardKeywords = sOptions.StandardKeywords
+  .StandardMailDomain = sOptions.StandardMailDomain
+  .StandardModifydate = sOptions.StandardModifydate
+  .StandardSaveformat = sOptions.StandardSaveformat
+  .StandardSubject = sOptions.StandardSubject
+  .StandardTitle = sOptions.StandardTitle
+  .StartStandardProgram = sOptions.StartStandardProgram
+  .SVGResolution = sOptions.SVGResolution
+  .TIFFColorscount = sOptions.TIFFColorscount
+  .TIFFResolution = sOptions.TIFFResolution
+  .Toolbars = sOptions.Toolbars
+  .UpdateInterval = sOptions.UpdateInterval
+  .UseAutosave = sOptions.UseAutosave
+  .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+  .UseCreationDateNow = sOptions.UseCreationDateNow
+  .UseCustomPaperSize = sOptions.UseCustomPaperSize
+  .UseFixPapersize = sOptions.UseFixPapersize
+  .UseStandardAuthor = sOptions.UseStandardAuthor
+ End With
 End Function
 ' --- Private functions/Subroutines - end ---
 

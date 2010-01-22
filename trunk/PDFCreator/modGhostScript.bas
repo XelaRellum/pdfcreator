@@ -1651,7 +1651,7 @@ On Error GoTo ErrPtnr_OnError
 50290     multiSignatures = True
 50300   End If
 50310   Call m.signPDFFile(filename, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
-   signatureVisible, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
+   signatureVisible, .PDFSigningSignatureOnPage, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
 50330  End With
 50340  If FileExists(Tempfile) Then
 50350   If KillFile(filename) Then
