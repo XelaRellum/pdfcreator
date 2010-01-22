@@ -686,7 +686,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get cOptionProfile(ByVal Profilename As String, ByVal PropertyName As String) As Variant
+Public Property Get cOptionProfile(ByVal ProfileName As String, ByVal PropertyName As String) As Variant
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -694,15 +694,15 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  If LenB(Trim(Profilename)) > 0 Then
-50060   If ProfileExists(Profilename) = False Then
+50050  If LenB(Trim(ProfileName)) > 0 Then
+50060   If ProfileExists(ProfileName) = False Then
 50070    mError.Number = 11
-50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50080    mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
 50090    RaiseEvent eError
 50100    Exit Property
 50110   End If
 50120  End If
-50130  cOptionProfile = cGetOptionFromOptions(PropertyName, ReadOptions(, , Profilename))
+50130  cOptionProfile = cGetOptionFromOptions(PropertyName, ReadOptions(, , ProfileName))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -715,7 +715,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Let cOptionProfile(ByVal Profilename As String, ByVal PropertyName As String, ByVal value As Variant)
+Public Property Let cOptionProfile(ByVal ProfileName As String, ByVal PropertyName As String, ByVal value As Variant)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -723,15 +723,15 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  If LenB(Trim(Profilename)) > 0 Then
-50060   If ProfileExists(Profilename) = False Then
+50050  If LenB(Trim(ProfileName)) > 0 Then
+50060   If ProfileExists(ProfileName) = False Then
 50070    mError.Number = 11
-50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50080    mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
 50090    RaiseEvent eError
 50100    Exit Property
 50110   End If
 50120  End If
-50130  cLetOption PropertyName, value, Options, Profilename
+50130  cLetOption PropertyName, value, Options, ProfileName
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -782,7 +782,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get cOptionsProfile(ByVal Profilename As String) As clsPDFCreatorOptions
+Public Property Get cOptionsProfile(ByVal ProfileName As String) As clsPDFCreatorOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -790,18 +790,18 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  If LenB(Trim(Profilename)) > 0 Then
-50060   If ProfileExists(Profilename) = False Then
+50050  If LenB(Trim(ProfileName)) > 0 Then
+50060   If ProfileExists(ProfileName) = False Then
 50070    mError.Number = 11
-50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50080    mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
 50090    RaiseEvent eError
 50100    Exit Property
 50110   End If
 50120  End If
-50130  If LenB(Profilename) = 0 Then
+50130  If LenB(ProfileName) = 0 Then
 50140    Set cOptions = cGetOptions(Options)
 50150   Else
-50160    Set cOptions = cGetOptions(ReadOptions(, , Profilename))
+50160    Set cOptions = cGetOptions(ReadOptions(, , ProfileName))
 50170  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
@@ -815,7 +815,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Set cOptionsProfile(ByVal Profilename As String, ByVal Options1 As clsPDFCreatorOptions)
+Public Property Set cOptionsProfile(ByVal ProfileName As String, ByVal Options1 As clsPDFCreatorOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -823,18 +823,18 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  If LenB(Trim(Profilename)) > 0 Then
-50060   If ProfileExists(Profilename) = False Then
+50050  If LenB(Trim(ProfileName)) > 0 Then
+50060   If ProfileExists(ProfileName) = False Then
 50070    mError.Number = 11
-50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50080    mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
 50090    RaiseEvent eError
 50100    Exit Property
 50110   End If
 50120  End If
-50130  If LenB(Profilename) = 0 Then
+50130  If LenB(ProfileName) = 0 Then
 50140    Options = cLetOptions(Options1)
 50150   Else
-50160    SaveOptions cLetOptions(Options1), Profilename
+50160    SaveOptions cLetOptions(Options1), ProfileName
 50170  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
@@ -1893,7 +1893,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function cReadOptions(Optional ByVal Profilename As String = "") As clsPDFCreatorOptions
+Public Function cReadOptions(Optional ByVal ProfileName As String = "") As clsPDFCreatorOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1901,15 +1901,15 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Function
 50040  End If
-50050  If LenB(Trim(Profilename)) > 0 Then
-50060   If ProfileExists(Profilename) = False Then
+50050  If LenB(Trim(ProfileName)) > 0 Then
+50060   If ProfileExists(ProfileName) = False Then
 50070    mError.Number = 11
-50080    mError.Description = Replace$(ErrDescr11, "%1", Profilename)
+50080    mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
 50090    RaiseEvent eError
 50100    Exit Function
 50110   End If
 50120  End If
-50130  Set cReadOptions = cGetOptions(ReadOptions(, , Profilename))
+50130  Set cReadOptions = cGetOptions(ReadOptions(, , ProfileName))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1922,7 +1922,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub cSaveOptions(Optional ByVal Options1 As Variant, Optional ByVal Profilename As String = "") ' Options1 must be a clsPDFCreatorOptions type
+Public Sub cSaveOptions(Optional ByVal Options1 As Variant, Optional ByVal ProfileName As String = "") ' Options1 must be a clsPDFCreatorOptions type
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1932,7 +1932,7 @@ On Error GoTo ErrPtnr_OnError
 50040  End If
 50050  If Not IsMissing(Options1) Then
 50060    If TypeOf Options1 Is clsPDFCreatorOptions Then
-50070      SaveOptions cLetOptions(Options1), Trim$(Profilename)
+50070      SaveOptions cLetOptions(Options1), Trim$(ProfileName)
 50080     Else
 50090      mError.Number = 8
 50100      mError.Description = Replace$(ErrDescr8, "%1", "cSaveOptions")
@@ -2583,7 +2583,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub cLetOption(PropertyName As String, value As Variant, Options1 As tOptions, Profilename As String)
+Private Sub cLetOption(PropertyName As String, value As Variant, Options1 As tOptions, ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -2767,10 +2767,10 @@ On Error GoTo ErrPtnr_OnError
 51780    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
 51790    RaiseEvent eError
 51800  End Select
-51810  If Profilename = "" Then
+51810  If ProfileName = "" Then
 51820    Options = Options1
 51830   Else
-51840    SaveOptions Options1, Profilename
+51840    SaveOptions Options1, ProfileName
 51850  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2976,3 +2976,4 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 ' --- Private functions/Subroutines - end ---
+
