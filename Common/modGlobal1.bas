@@ -14,7 +14,7 @@ Public Const Sourceforge = "http://www.sourceforge.net/projects/pdfcreator"
 Public Const UpdateURL = "http://www.pdfforge.org/products/pdfcreator/update.txt"
 Public Const PDFCreatorLogfile = "PDFCreator.log"
 Public Const PDFCreatorSpoolDirectory = "PDFCreatorSpool"
-Public Const CompatibleLanguageVersion = "0.9.9"
+Public Const CompatibleLanguageVersion = "1.0.0"
 
 Public CancelPrintfiles As Boolean
 Public ChangeDefaultprinter As Boolean
