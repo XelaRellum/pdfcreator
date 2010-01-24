@@ -715,7 +715,7 @@ Public Sub SetFont(frm As Form, ByVal Fontname As String, ByVal Charset As Long,
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control, eB As isExplorerBar, ts As TabStrip, df As dmFrame, f As StdFont
+50010  Dim ctl As Control, ts As TabStrip, df As dmFrame, f As StdFont, trv As TreeView
 50020
 50030  If LenB(Trim$(Fontname)) = 0 Then
 50040   Exit Sub
@@ -745,11 +745,11 @@ On Error GoTo ErrPtnr_OnError
 50280    End With
 50290   End If
 50300
-50310   If TypeOf ctl Is isExplorerBar Then
-50320    Set eB = ctl
-50330    eB.Font.Name = Fontname
-50340    eB.Font.Size = Fontsize
-50350    eB.Font.Charset = Charset
+50310   If TypeOf ctl Is TreeView Then
+50320    Set trv = ctl
+50330    trv.Font.Name = Fontname
+50340    trv.Font.Size = Fontsize
+50350    trv.Font.Charset = Charset
 50360   End If
 50370   If TypeOf ctl Is TabStrip Then
 50380    Set ts = ctl

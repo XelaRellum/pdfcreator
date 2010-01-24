@@ -82,7 +82,6 @@ RelatedDoc=..\TLBs\Edanmo\Edanmo - olelib.tlb - readme.txt
 UserControl=..\Common\XP_ProgressBar.ctl
 UserControl=..\Common\dmFrame.ctl
 UserControl=..\Common\Line3D.ctl
-UserControl=..\Common\isExplorerBar.ctl
 UserControl=ctlOptGhostscript.ctl
 UserControl=ctlOptDirectories.ctl
 UserControl=ctlOptLanguages.ctl
