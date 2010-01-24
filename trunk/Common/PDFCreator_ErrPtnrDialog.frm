@@ -515,7 +515,7 @@ a$ = a$ + UCase$(framFehler.Caption) + vbCrLf
 For f% = 0 To 3
     a$ = a$ + R$ + lblErrTitel(f%) + vbTab + lblError(f%) + vbCrLf
 Next
-a$ = a$ + R$ + "Date/Time:" + vbTab + Date$ + " / " + time$ + vbCrLf
+a$ = a$ + R$ + "Date/Time:" + vbTab + Date$ + " / " + Time$ + vbCrLf
 ' call stack
 a$ = a$ + t$
 a$ = a$ + UCase$(framCallStack.Caption) + vbCrLf
@@ -647,7 +647,7 @@ Public Sub CallStack(a$)
 '.------------------------------------------------------------------------------
 '.  Function :  push a procedure to the call stack
 '.------------------------------------------------------------------------------
-a$ = time$ + " " + a$
+a$ = Time$ + " " + a$
 With CallStackCollection
     If .Count Then .Add a$, , 1 Else .Add a$
     If .Count > CallStackLength% Then .Remove .Count
