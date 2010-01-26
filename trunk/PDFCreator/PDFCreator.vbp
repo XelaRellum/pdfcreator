@@ -105,6 +105,7 @@ UserControl=ctlOptFormatPCL.ctl
 UserControl=ctlOptFormatRAW.ctl
 UserControl=ctlOptFormatSVG.ctl
 ResFile32="PDFCreator.RES"
+UserControl=ctlOptFonts.ctl
 IconForm="frmMain"
 Startup="Sub Main"
 HelpFile=""
