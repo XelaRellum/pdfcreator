@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.1.0.0
-' Date: January, 21. 2010
+' Version: 1.2.0.0
+' Date: January, 29. 2010
 ' Author: Frank Heindörfer
 ' Comments: This script signs a PDF using a exported P12/PFX Zertifikat.
 Option Explicit
@@ -65,7 +65,7 @@ If IsEmpty(certificatePassword) Then
  WScript.Quit
 End If
 				
-pdfforgePDF.signPDFFile fname, tfname, Certificate, certificatePassword, signatureReason, signatureContact, signatureLocation, signatureVisible, signatureOnPage, signaturePositionLowerLeftX, signaturePositionLowerLeftY, signaturePositionUpperRightX, signaturePositionUpperRightY, multiSignatures, nothing
+pdfforgePDF.signPDFFile fname, "", tfname, Certificate, certificatePassword, signatureReason, signatureContact, signatureLocation, signatureVisible, signatureOnPage, signaturePositionLowerLeftX, signaturePositionLowerLeftY, signaturePositionUpperRightX, signaturePositionUpperRightY, multiSignatures, nothing
 
 If fso.FileExists(fname) Then
  fso.DeleteFile(fname)

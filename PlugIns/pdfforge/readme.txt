@@ -5,7 +5,7 @@ Email:    frank@pdfforge.org
 Homepage: http://www.pdfforge.org
 License:  FairPlay License Version 1.0 (FairPlay License.txt)
 Remark:   Using itextsharp 5.0.0.0 (compiled from source)
-Date:     January 21, 2010
+Date:     January 29, 2010
 
 
 Classes, methods of the pdfforge.dll.
@@ -44,7 +44,7 @@ pdfforge.pdf
   int SetBackgroundColor(string sourceFilename, string destinationFilename, int fromPage, int toPage, byte Red, byte Green, byte Blue);
   void SetMetadata(string sourceFilename, string destinationFilename, string author, string creator, string keywords, string subject, string title);
   bool SetMetadataKey(string sourceFilename, string destinationFilename, string key, string value);
-  void SignPDFFile(string sourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword,
+  void SignPDFFile(string sourceFilename, string ownerPasswordSourceFilename, string destinationFilename, string certficateFilename, string certifcatePassword,
       string signatureReason, string signatureContact, string signatureLocation,
       bool signatureVisible, int signatureOnPage,
       int signaturePositionLowerLeftX, int signaturePositionLowerLeftY, int signaturePositionUpperRightX, int signaturePositionUpperRightY,
