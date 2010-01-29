@@ -131,7 +131,7 @@ End Type
 
 Public GS_OutStr As String
 
-Private ParamCommands As Collection
+Private ParamCommands As Collection, currentOwnerPassword As String
 
 Public Sub GSInit(Options As tOptions)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -343,10 +343,10 @@ On Error GoTo ErrPtnr_OnError
 50520   If SetEncryptionParams(encPDF, "", "") = True Then
 50530     tEnc = True
 50540     If Len(encPDF.OwnerPass) > 0 Then
-50550       AddParams "-sOwnerPassword=" & encPDF.OwnerPass
+50550       AddParams "-sOwnerPassword=" & encPDF.OwnerPass: currentOwnerPassword = encPDF.OwnerPass
 50560      Else
 50570       If Len(encPDF.UserPass) > 0 Then
-50580        AddParams "-sOwnerPassword=" & encPDF.UserPass
+50580        AddParams "-sOwnerPassword=" & encPDF.UserPass: currentOwnerPassword = encPDF.OwnerPass
 50590       End If
 50600     End If
 50610     If Len(encPDF.UserPass) > 0 Then
@@ -355,59 +355,56 @@ On Error GoTo ErrPtnr_OnError
 50640     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
 50650     If GS_COMPATIBILITY = "1.4" Or GS_COMPATIBILITY = "1.5" Then
 50660       AddParams "-dEncryptionR=3"
-50670      Else
-50680       AddParams "-dEncryptionR=2"
-50690     End If
-50700     If encPDF.EncryptionLevel = encLow Then
-50710       AddParams "-dKeyLength=40"
-50720      Else
-50730       AddParams "-dKeyLength=128"
-50740     End If
-50750    Else
-50760     If Options.UseAutosave = 0 Then
-50770      MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50780     End If
-50790   End If
-50800  End If
-50810
-50820  If Options.AllowSpecialGSCharsInFilenames = 1 Then
-50830   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50840  End If
-50850  AddParams "-sOutputFile=" & GSOutputFile
-50860
-50870  If Options.DontUseDocumentSettings = 0 Then
-50880   SetColorParams
-50890   SetGreyParams
-50900   SetMonoParams
-50910
-50920   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50930   AddParams "-dUCRandBGInfo=/Preserve"
-50940   AddParams "-dUseFlateCompression=true"
-50950   AddParams "-dParseDSCCommentsForDocInfo=true"
-50960   AddParams "-dParseDSCComments=true"
-50970   AddParams "-dOPM=" & GS_OVERPRINT
-50980   AddParams "-dOffOptimizations=0"
-50990   AddParams "-dLockDistillerParams=false"
-51000   AddParams "-dGrayImageDepth=-1"
-51010   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-51020   AddParams "-dDefaultRenderingIntent=/Default"
-51030   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-51040   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-51050   AddParams "-dDetectBlends=true"
-51060
-51070   AddAdditionalGhostscriptParameters
+50670       AddParams "-dKeyLength=128"
+50680      Else
+50690       AddParams "-dEncryptionR=2"
+50700       AddParams "-dKeyLength=40"
+50710     End If
+50720    Else
+50730     If Options.UseAutosave = 0 Then
+50740      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50750     End If
+50760   End If
+50770  End If
+50780
+50790  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50800   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50810  End If
+50820  AddParams "-sOutputFile=" & GSOutputFile
+50830
+50840  If Options.DontUseDocumentSettings = 0 Then
+50850   SetColorParams
+50860   SetGreyParams
+50870   SetMonoParams
+50880
+50890   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50900   AddParams "-dUCRandBGInfo=/Preserve"
+50910   AddParams "-dUseFlateCompression=true"
+50920   AddParams "-dParseDSCCommentsForDocInfo=true"
+50930   AddParams "-dParseDSCComments=true"
+50940   AddParams "-dOPM=" & GS_OVERPRINT
+50950   AddParams "-dOffOptimizations=0"
+50960   AddParams "-dLockDistillerParams=false"
+50970   AddParams "-dGrayImageDepth=-1"
+50980   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50990   AddParams "-dDefaultRenderingIntent=/Default"
+51000   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+51010   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+51020   AddParams "-dDetectBlends=true"
+51030
+51040   AddAdditionalGhostscriptParameters
+51050
+51060   AddParamCommands
+51070  End If
 51080
-51090   AddParamCommands
-51100  End If
-51110
-51120  AddParams "-f"
-51130  AddParams GSInputFile
-51140  ShowParams
-51150  If tEnc = True Then
-51160    CallGhostscript "PDF with encryption"
-51170   Else
-51180    CallGhostscript "PDF without encryption"
-51190  End If
+51090  AddParams "-f"
+51100  AddParams GSInputFile
+51110  ShowParams
+51120  If tEnc = True Then
+51130    CallGhostscript "PDF with encryption"
+51140   Else
+51150    CallGhostscript "PDF without encryption"
+51160  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1505,7 +1502,7 @@ On Error GoTo ErrPtnr_OnError
 50170           enc = SetEncryptionParams(encPDF, GSInputFile, GSOutputFile)
 50180           If enc = True Then
 50190            Tempfile = GetTempFile(GetTempPath, "~CP")
-50200            KillFile Tempfile
+50200            KillFile Tempfile: currentOwnerPassword = encPDF.OwnerPass
 50210            CreatePDF GSInputFile, Tempfile, Options
 50220            encPDF.InputFile = Tempfile
 50230            retEnc = EncryptPDF(encPDF)
@@ -1543,7 +1540,7 @@ On Error GoTo ErrPtnr_OnError
 50550     End If
 50560     If PDFSigningIsPossible Then
 50570      If .PDFSigningSignPDF = 1 Then
-50580       SignPDF GSOutputFile
+50580       SignPDF GSOutputFile, currentOwnerPassword
 50590      End If
 50600     End If
 50610    End With
@@ -1616,7 +1613,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub SignPDF(filename As String)
+Private Sub SignPDF(filename As String, Optional ownerPasswd As String = "")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1650,7 +1647,7 @@ On Error GoTo ErrPtnr_OnError
 50280    Else
 50290     multiSignatures = True
 50300   End If
-50310   Call m.signPDFFile(filename, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
+50310   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
    signatureVisible, .PDFSigningSignatureOnPage, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
 50330  End With
 50340  If FileExists(Tempfile) Then
@@ -1977,6 +1974,7 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
 
 Public Function CalculatePermissions(ByRef encData As EncryptData) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

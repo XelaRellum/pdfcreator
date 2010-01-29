@@ -1,6 +1,7 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptFormatPDF 
+   AutoRedraw      =   -1  'True
    ClientHeight    =   10140
    ClientLeft      =   0
    ClientTop       =   0
@@ -1001,1377 +1002,885 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub UserControl_Initialize()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control
-50020  Dim i As Long
-50030  tbstrPDFOptions.Left = 0
-50040  tbstrPDFOptions.Top = 0
-50050  tbstrPDFOptions.Height = dmFraPDFSecurity.Height + 420
-50060  UserControl.Height = tbstrPDFOptions.Height + 500
-50070
-50080  With tbstrPDFOptions.Tabs
-50090   .Clear
-50100   .Add , "General"
-50110   .Add , "Compression"
-50120   .Add , "Fonts"
-50130   .Add , "Colors"
-50140   .Add , "Security"
-50150   .Add , "Signing"
-50160  End With
-50170  With cmbPDFDefaultSettings
-50180   .Clear
-50190   For i = 1 To 5
-50200    .AddItem ""
-50210   Next i
-50220  End With
-50230  With cmbPDFCompat
-50240   .Clear
-50250   For i = 1 To 4
-50260    .AddItem ""
-50270   Next i
-50280  End With
-50290  With cmbPDFRotate
-50300   .Clear
-50310   For i = 1 To 3
-50320    .AddItem ""
-50330   Next i
-50340  End With
-50350  With cmbPDFOverprint
-50360   .Clear
-50370   For i = 1 To 2
-50380    .AddItem ""
-50390   Next i
-50400  End With
-50410  With cmbPDFColorComp
-50420   .Clear
-50430   For i = 1 To 7
-50440    .AddItem ""
-50450   Next i
-50460  End With
-50470  With cmbPDFColorResample
-50480   .Clear
-50490   For i = 1 To 2
-50500    .AddItem ""
-50510   Next i
-50520  End With
-50530  With cmbPDFGreyComp
-50540   .Clear
-50550   For i = 1 To 7
-50560    .AddItem ""
-50570   Next i
-50580  End With
-50590  With cmbPDFGreyResample
-50600   .Clear
-50610   For i = 1 To 2
-50620    .AddItem ""
-50630   Next i
-50640  End With
-50650  With cmbPDFMonoComp
-50660   .Clear
-50670   For i = 1 To 3
-50680    .AddItem ""
-50690   Next i
-50700  End With
-50710  With cmbPDFMonoResample
-50720   .Clear
-50730   For i = 1 To 2
-50740    .AddItem ""
-50750   Next i
-50760  End With
-50770  With cmbPDFColorModel
-50780   .Clear
-50790   For i = 1 To 3
-50800    .AddItem ""
-50810   Next i
-50820  End With
-50830  txtPDFRes.Text = 600
-50840  cmbPDFCompat.ListIndex = 1
-50850  cmbPDFRotate.ListIndex = 0
-50860  cmbPDFOverprint.ListIndex = 0
-50870  chkPDFASCII85.value = 0
-50880
-50890  chkPDFTextComp.value = 1
-50900
-50910  chkPDFColorComp.value = 1
-50920  chkPDFColorResample.value = 0
-50930  cmbPDFColorComp.ListIndex = 0
-50940  cmbPDFColorResample.ListIndex = 0
-50950  txtPDFColorRes.Text = 300
-50960
-50970  chkPDFGreyComp.value = 1
-50980  chkPDFGreyResample.value = 0
-50990  cmbPDFGreyComp.ListIndex = 0
-51000  cmbPDFGreyResample.ListIndex = 0
-51010  txtPDFGreyRes.Text = 300
-51020
-51030  chkPDFMonoComp.value = 1
-51040  chkPDFMonoResample.value = 0
-51050  cmbPDFMonoComp.ListIndex = 0
-51060  cmbPDFMonoResample.ListIndex = 0
-51070  txtPDFMonoRes.Text = 1200
-51080
-51090  chkPDFEmbedAll.value = 1
-51100  chkPDFSubSetFonts.value = 1
-51110  txtPDFSubSetPerc.Text = 100
-51120
-51130  cmbPDFColorModel.ListIndex = 1
-51140  chkPDFCMYKtoRGB.value = 1
-51150  chkPDFPreserveOverprint.value = 1
-51160  chkPDFPreserveTransfer.value = 1
-51170  chkPDFPreserveHalftone.value = 0
-51180
-51190  With cmbPDFEncryptor
-51200   .Clear
-51210   .AddItem "Ghostscript (>= 8.14)"
-51220   .ItemData(.NewIndex) = 0
-51230   .AddItem "PDFEnc"
-51240   .ItemData(.NewIndex) = 1
-51250
-51260   SecurityIsPossible = True
-51270
-51280   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
-51290    .RemoveItem 1
-51300    .ListIndex = 0
-51310    Options.PDFEncryptor = .ItemData(.ListIndex)
-51320   End If
-51330   If GhostScriptSecurity = False Then
-51340    .RemoveItem 0
-51350   End If
-51360   If .ListCount = 0 Then
-51370     chkUseSecurity.value = 0
-51380     chkUseSecurity.Enabled = False
-51390     SecurityIsPossible = False
-51400    Else
-51410     For i = 0 To .ListCount - 1
-51420      If .ItemData(i) = Options.PDFEncryptor Then
-51430       .ListIndex = i
-51440       Exit For
-51450      End If
-51460     Next i
-51470     If .ListIndex = -1 Then
-51480      .ListIndex = 0
-51490      Options.PDFEncryptor = .ItemData(.ListIndex)
-51500     End If
-51510   End If
-51520  End With
-51530
-51540  If Options.PDFHighEncryption <> 0 Then
-51550    optEncHigh.value = True
-51560   Else
-51570    optEncLow.value = True
-51580  End If
-51590
-51600   With tbstrPDFOptions
-51610   .Top = 50
-51620   .Left = 0
-51630  End With
-51640
-51650  UpdateSecurityFields
-51660
-51670  tbstrPDFOptions.ZOrder 1
-51680  tbstrPDFOptions_Click
-51690
-51700  SetFrames Options.OptionsDesign
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "UserControl_Initialize")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Dim ctl As Control
+ Dim i As Long
+ tbstrPDFOptions.Left = 0
+ tbstrPDFOptions.Top = 0
+ tbstrPDFOptions.Height = dmFraPDFSecurity.Height + 420
+ UserControl.Height = tbstrPDFOptions.Height + 500
+
+ With tbstrPDFOptions.Tabs
+  .Clear
+  .Add , "General"
+  .Add , "Compression"
+  .Add , "Fonts"
+  .Add , "Colors"
+  .Add , "Security"
+  .Add , "Signing"
+ End With
+ With cmbPDFDefaultSettings
+  .Clear
+  For i = 1 To 5
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFCompat
+  .Clear
+  For i = 1 To 4
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFRotate
+  .Clear
+  For i = 1 To 3
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFOverprint
+  .Clear
+  For i = 1 To 2
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFColorComp
+  .Clear
+  For i = 1 To 7
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFColorResample
+  .Clear
+  For i = 1 To 2
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFGreyComp
+  .Clear
+  For i = 1 To 7
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFGreyResample
+  .Clear
+  For i = 1 To 2
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFMonoComp
+  .Clear
+  For i = 1 To 3
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFMonoResample
+  .Clear
+  For i = 1 To 2
+   .AddItem ""
+  Next i
+ End With
+ With cmbPDFColorModel
+  .Clear
+  For i = 1 To 3
+   .AddItem ""
+  Next i
+ End With
+ txtPDFRes.Text = 600
+ cmbPDFCompat.ListIndex = 1
+ cmbPDFRotate.ListIndex = 0
+ cmbPDFOverprint.ListIndex = 0
+ chkPDFASCII85.value = 0
+
+ chkPDFTextComp.value = 1
+
+ chkPDFColorComp.value = 1
+ chkPDFColorResample.value = 0
+ cmbPDFColorComp.ListIndex = 0
+ cmbPDFColorResample.ListIndex = 0
+ txtPDFColorRes.Text = 300
+
+ chkPDFGreyComp.value = 1
+ chkPDFGreyResample.value = 0
+ cmbPDFGreyComp.ListIndex = 0
+ cmbPDFGreyResample.ListIndex = 0
+ txtPDFGreyRes.Text = 300
+
+ chkPDFMonoComp.value = 1
+ chkPDFMonoResample.value = 0
+ cmbPDFMonoComp.ListIndex = 0
+ cmbPDFMonoResample.ListIndex = 0
+ txtPDFMonoRes.Text = 1200
+
+ chkPDFEmbedAll.value = 1
+ chkPDFSubSetFonts.value = 1
+ txtPDFSubSetPerc.Text = 100
+
+ cmbPDFColorModel.ListIndex = 1
+ chkPDFCMYKtoRGB.value = 1
+ chkPDFPreserveOverprint.value = 1
+ chkPDFPreserveTransfer.value = 1
+ chkPDFPreserveHalftone.value = 0
+
+ With cmbPDFEncryptor
+  .Clear
+  .AddItem "Ghostscript (>= 8.14)"
+  .ItemData(.NewIndex) = 0
+  .AddItem "PDFEnc"
+  .ItemData(.NewIndex) = 1
+
+  SecurityIsPossible = True
+
+  If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
+   .RemoveItem 1
+   .ListIndex = 0
+   Options.PDFEncryptor = .ItemData(.ListIndex)
+  End If
+  If GhostScriptSecurity = False Then
+   .RemoveItem 0
+  End If
+  If .ListCount = 0 Then
+    chkUseSecurity.value = 0
+    chkUseSecurity.Enabled = False
+    SecurityIsPossible = False
+   Else
+    For i = 0 To .ListCount - 1
+     If .ItemData(i) = Options.PDFEncryptor Then
+      .ListIndex = i
+      Exit For
+     End If
+    Next i
+    If .ListIndex = -1 Then
+     .ListIndex = 0
+     Options.PDFEncryptor = .ItemData(.ListIndex)
+    End If
+  End If
+ End With
+
+ If Options.PDFHighEncryption <> 0 Then
+   optEncHigh.value = True
+  Else
+   optEncLow.value = True
+ End If
+
+  With tbstrPDFOptions
+  .Top = 50
+  .Left = 0
+ End With
+
+ UpdateSecurityFields
+
+ tbstrPDFOptions.ZOrder 1
+ tbstrPDFOptions_Click
+
+ SetFrames Options.OptionsDesign
 End Sub
 
 Public Sub SetFrames(OptionsDesign As Long)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control
-50020  For Each ctl In UserControl.Controls
-50030   If TypeOf ctl Is dmFrame Then
-50040    SetFrame ctl, OptionsDesign
-50050   End If
-50060  Next ctl
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "SetFrames")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Dim ctl As Control
+ For Each ctl In UserControl.Controls
+  If TypeOf ctl Is dmFrame Then
+   SetFrame ctl, OptionsDesign
+  End If
+ Next ctl
 End Sub
 
 Private Sub UserControl_Resize()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  tbstrPDFOptions.Width = UserControl.Width
-50020  With dmFraPDFGeneral
-50030   .Top = tbstrPDFOptions.ClientTop + 30
-50040   .Left = tbstrPDFOptions.Left + (tbstrPDFOptions.Width - .Width) / 2
-50050   dmfraPDFCompress.Top = .Top
-50060   dmfraPDFCompress.Left = .Left
-50070   dmFraPDFFonts.Top = .Top
-50080   dmFraPDFFonts.Left = .Left
-50090   dmFraPDFColors.Top = .Top
-50100   dmFraPDFColors.Left = .Left
-50110   dmFraPDFColorOptions.Top = dmFraPDFColors.Top + dmFraPDFColors.Height + 50
-50120   dmFraPDFColorOptions.Left = .Left
-50130   dmFraPDFSecurity.Top = .Top
-50140   dmFraPDFSecurity.Left = .Left
-50150   dmFraPDFSigning.Top = .Top
-50160   dmFraPDFSigning.Left = .Left
-50170  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "UserControl_Resize")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ tbstrPDFOptions.Width = UserControl.Width
+ With dmFraPDFGeneral
+  .Top = tbstrPDFOptions.ClientTop + 30
+  .Left = tbstrPDFOptions.Left + (tbstrPDFOptions.Width - .Width) / 2
+  dmfraPDFCompress.Top = .Top
+  dmfraPDFCompress.Left = .Left
+  dmFraPDFFonts.Top = .Top
+  dmFraPDFFonts.Left = .Left
+  dmFraPDFColors.Top = .Top
+  dmFraPDFColors.Left = .Left
+  dmFraPDFColorOptions.Top = dmFraPDFColors.Top + dmFraPDFColors.Height + 50
+  dmFraPDFColorOptions.Left = .Left
+  dmFraPDFSecurity.Top = .Top
+  dmFraPDFSecurity.Left = .Left
+  dmFraPDFSigning.Top = .Top
+  dmFraPDFSigning.Left = .Left
+ End With
 End Sub
 
 Public Sub SetLanguageStrings()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With LanguageStrings
-50020   tbstrPDFOptions.Tabs(1).Caption = .OptionsPDFGeneral
-50030   tbstrPDFOptions.Tabs(2).Caption = .OptionsPDFCompression
-50040   tbstrPDFOptions.Tabs(3).Caption = .OptionsPDFFonts
-50050   tbstrPDFOptions.Tabs(4).Caption = .OptionsPDFColors
-50060   tbstrPDFOptions.Tabs(5).Caption = .OptionsPDFSecurity
-50070   tbstrPDFOptions.Tabs(6).Caption = .OptionsPDFSigning
-50080
-50090   lblPDFDefaultSettings.Caption = .OptionsPDFGeneralDefaultSettings
-50100   cmbPDFDefaultSettings.List(0) = .OptionsPDFGeneralDefaultSettingsDefault
-50110   cmbPDFDefaultSettings.List(1) = .OptionsPDFGeneralDefaultSettingsScreen
-50120   cmbPDFDefaultSettings.List(2) = .OptionsPDFGeneralDefaultSettingsEbook
-50130   cmbPDFDefaultSettings.List(3) = .OptionsPDFGeneralDefaultSettingsPrinter
-50140   cmbPDFDefaultSettings.List(4) = .OptionsPDFGeneralDefaultSettingsPrepress
-50150
-50160   cmbPDFCompat.List(0) = .OptionsPDFGeneralCompatibility01
-50170   cmbPDFCompat.List(1) = .OptionsPDFGeneralCompatibility02
-50180   cmbPDFCompat.List(2) = .OptionsPDFGeneralCompatibility03
-50190   cmbPDFCompat.List(3) = .OptionsPDFGeneralCompatibility04
-50200   cmbPDFRotate.List(0) = .OptionsPDFGeneralRotate01
-50210   cmbPDFRotate.List(1) = .OptionsPDFGeneralRotate02
-50220   cmbPDFRotate.List(2) = .OptionsPDFGeneralRotate03
-50230   cmbPDFOverprint.List(0) = .OptionsPDFGeneralOverprint01
-50240   cmbPDFOverprint.List(1) = .OptionsPDFGeneralOverprint02
-50250
-50260   cmbPDFColorComp.List(0) = .OptionsPDFCompressionColorComp01
-50270   cmbPDFColorComp.List(1) = .OptionsPDFCompressionColorComp02
-50280   cmbPDFColorComp.List(2) = .OptionsPDFCompressionColorComp03
-50290   cmbPDFColorComp.List(3) = .OptionsPDFCompressionColorComp04
-50300   cmbPDFColorComp.List(4) = .OptionsPDFCompressionColorComp05
-50310   cmbPDFColorComp.List(5) = .OptionsPDFCompressionColorComp06
-50320   cmbPDFColorComp.List(6) = .OptionsPDFCompressionColorComp07
-50330
-50340   cmbPDFColorResample.List(0) = .OptionsPDFCompressionColorResample01
-50350   cmbPDFColorResample.List(1) = .OptionsPDFCompressionColorResample02
-50360
-50370   cmbPDFGreyComp.List(0) = .OptionsPDFCompressionGreyComp01
-50380   cmbPDFGreyComp.List(1) = .OptionsPDFCompressionGreyComp02
-50390   cmbPDFGreyComp.List(2) = .OptionsPDFCompressionGreyComp03
-50400   cmbPDFGreyComp.List(3) = .OptionsPDFCompressionGreyComp04
-50410   cmbPDFGreyComp.List(4) = .OptionsPDFCompressionGreyComp05
-50420   cmbPDFGreyComp.List(5) = .OptionsPDFCompressionGreyComp06
-50430   cmbPDFGreyComp.List(6) = .OptionsPDFCompressionGreyComp07
-50440
-50450   cmbPDFGreyResample.List(0) = .OptionsPDFCompressionGreyResample01
-50460   cmbPDFGreyResample.List(1) = .OptionsPDFCompressionGreyResample02
-50470
-50480   cmbPDFMonoComp.List(0) = .OptionsPDFCompressionMonoComp01
-50490   cmbPDFMonoComp.List(1) = .OptionsPDFCompressionMonoComp02
-50500   cmbPDFMonoComp.List(2) = .OptionsPDFCompressionMonoComp03
-50510
-50520   cmbPDFMonoResample.List(0) = .OptionsPDFCompressionMonoResample01
-50530   cmbPDFMonoResample.List(1) = .OptionsPDFCompressionMonoResample02
-50540
-50550   cmbPDFColorModel.List(0) = .OptionsPDFColorsColorModel01
-50560   cmbPDFColorModel.List(1) = .OptionsPDFColorsColorModel02
-50570   cmbPDFColorModel.List(2) = .OptionsPDFColorsColorModel03
-50580
-50590   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
-50600   chkPDFOptimize.Caption = .OptionsPDFOptimize
-50610   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
-50620   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
-50630   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
-50640   lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
-50650   chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
-50660
-50670   dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
-50680   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
-50690   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
-50700   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
-50710   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
-50720   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
-50730   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
-50740   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
-50750   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
-50760   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
-50770   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
-50780   chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
-50790   chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
-50800   lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
-50810
-50820   dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
-50830   chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
-50840   chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
-50850
-50860   dmFraPDFColors.Caption = .OptionsPDFColorsCaption
-50870   chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
-50880   dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
-50890   chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
-50900   chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
-50910   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
-50920
-50930   dmFraPDFSigning.Caption = .OptionsPDFSigningCaption
-50940   dmFraPDFEncryptor.Caption = .OptionsPDFEncryptor
-50950   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
-50960   chkUseSecurity.Caption = .OptionsPDFUseSecurity
-50970   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
-50980   optEncHigh.Caption = .OptionsPDFEncryptionHigh
-50990   optEncLow.Caption = .OptionsPDFEncryptionLow
-51000   dmFraSecurityPass.Caption = .OptionsPDFPasswords
-51010   chkUserPass.Caption = .OptionsPDFUserPass
-51020   chkOwnerPass.Caption = .OptionsPDFOwnerPass
-51030   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
-51040   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
-51050   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
-51060   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
-51070   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
-51080   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
-51090   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
-51100   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
-51110   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
-51120   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
-51130
-51140   chkSignPDF.Caption = .OptionsPDFSigningSignPdfFile
-51150   lblPFXFile.Caption = .OptionsPDFSigningPfxFile
-51160   lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
-51170   lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
-51180   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
-51190   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
-51200   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
-51210   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
-51220   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
-51230   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
-51240   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
-51250   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
-51260   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
-51270  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "SetLanguageStrings")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ With LanguageStrings
+  tbstrPDFOptions.Tabs(1).Caption = .OptionsPDFGeneral
+  tbstrPDFOptions.Tabs(2).Caption = .OptionsPDFCompression
+  tbstrPDFOptions.Tabs(3).Caption = .OptionsPDFFonts
+  tbstrPDFOptions.Tabs(4).Caption = .OptionsPDFColors
+  tbstrPDFOptions.Tabs(5).Caption = .OptionsPDFSecurity
+  tbstrPDFOptions.Tabs(6).Caption = .OptionsPDFSigning
+
+  lblPDFDefaultSettings.Caption = .OptionsPDFGeneralDefaultSettings
+  cmbPDFDefaultSettings.List(0) = .OptionsPDFGeneralDefaultSettingsDefault
+  cmbPDFDefaultSettings.List(1) = .OptionsPDFGeneralDefaultSettingsScreen
+  cmbPDFDefaultSettings.List(2) = .OptionsPDFGeneralDefaultSettingsEbook
+  cmbPDFDefaultSettings.List(3) = .OptionsPDFGeneralDefaultSettingsPrinter
+  cmbPDFDefaultSettings.List(4) = .OptionsPDFGeneralDefaultSettingsPrepress
+
+  cmbPDFCompat.List(0) = .OptionsPDFGeneralCompatibility01
+  cmbPDFCompat.List(1) = .OptionsPDFGeneralCompatibility02
+  cmbPDFCompat.List(2) = .OptionsPDFGeneralCompatibility03
+  cmbPDFCompat.List(3) = .OptionsPDFGeneralCompatibility04
+  cmbPDFRotate.List(0) = .OptionsPDFGeneralRotate01
+  cmbPDFRotate.List(1) = .OptionsPDFGeneralRotate02
+  cmbPDFRotate.List(2) = .OptionsPDFGeneralRotate03
+  cmbPDFOverprint.List(0) = .OptionsPDFGeneralOverprint01
+  cmbPDFOverprint.List(1) = .OptionsPDFGeneralOverprint02
+
+  cmbPDFColorComp.List(0) = .OptionsPDFCompressionColorComp01
+  cmbPDFColorComp.List(1) = .OptionsPDFCompressionColorComp02
+  cmbPDFColorComp.List(2) = .OptionsPDFCompressionColorComp03
+  cmbPDFColorComp.List(3) = .OptionsPDFCompressionColorComp04
+  cmbPDFColorComp.List(4) = .OptionsPDFCompressionColorComp05
+  cmbPDFColorComp.List(5) = .OptionsPDFCompressionColorComp06
+  cmbPDFColorComp.List(6) = .OptionsPDFCompressionColorComp07
+
+  cmbPDFColorResample.List(0) = .OptionsPDFCompressionColorResample01
+  cmbPDFColorResample.List(1) = .OptionsPDFCompressionColorResample02
+
+  cmbPDFGreyComp.List(0) = .OptionsPDFCompressionGreyComp01
+  cmbPDFGreyComp.List(1) = .OptionsPDFCompressionGreyComp02
+  cmbPDFGreyComp.List(2) = .OptionsPDFCompressionGreyComp03
+  cmbPDFGreyComp.List(3) = .OptionsPDFCompressionGreyComp04
+  cmbPDFGreyComp.List(4) = .OptionsPDFCompressionGreyComp05
+  cmbPDFGreyComp.List(5) = .OptionsPDFCompressionGreyComp06
+  cmbPDFGreyComp.List(6) = .OptionsPDFCompressionGreyComp07
+
+  cmbPDFGreyResample.List(0) = .OptionsPDFCompressionGreyResample01
+  cmbPDFGreyResample.List(1) = .OptionsPDFCompressionGreyResample02
+
+  cmbPDFMonoComp.List(0) = .OptionsPDFCompressionMonoComp01
+  cmbPDFMonoComp.List(1) = .OptionsPDFCompressionMonoComp02
+  cmbPDFMonoComp.List(2) = .OptionsPDFCompressionMonoComp03
+
+  cmbPDFMonoResample.List(0) = .OptionsPDFCompressionMonoResample01
+  cmbPDFMonoResample.List(1) = .OptionsPDFCompressionMonoResample02
+
+  cmbPDFColorModel.List(0) = .OptionsPDFColorsColorModel01
+  cmbPDFColorModel.List(1) = .OptionsPDFColorsColorModel02
+  cmbPDFColorModel.List(2) = .OptionsPDFColorsColorModel03
+
+  dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
+  chkPDFOptimize.Caption = .OptionsPDFOptimize
+  lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
+  lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
+  lblPDFResolution.Caption = .OptionsPDFGeneralResolution
+  lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
+  chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
+
+  dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
+  chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
+  dmFraPDFColor.Caption = .OptionsPDFCompressionColor
+  chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
+  chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
+  lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
+  dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
+  chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
+  chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
+  lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
+  dmFraPDFMono.Caption = .OptionsPDFCompressionMono
+  chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
+  chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
+  lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
+
+  dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
+  chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
+  chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
+
+  dmFraPDFColors.Caption = .OptionsPDFColorsCaption
+  chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
+  dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
+  chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
+  chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
+  chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
+
+  dmFraPDFSigning.Caption = .OptionsPDFSigningCaption
+  dmFraPDFEncryptor.Caption = .OptionsPDFEncryptor
+  dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
+  chkUseSecurity.Caption = .OptionsPDFUseSecurity
+  dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
+  optEncHigh.Caption = .OptionsPDFEncryptionHigh
+  optEncLow.Caption = .OptionsPDFEncryptionLow
+  dmFraSecurityPass.Caption = .OptionsPDFPasswords
+  chkUserPass.Caption = .OptionsPDFUserPass
+  chkOwnerPass.Caption = .OptionsPDFOwnerPass
+  dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
+  dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
+  chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
+  chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
+  chkAllowCopy.Caption = .OptionsPDFDisallowCopy
+  chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
+  chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
+  chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
+  chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
+  chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
+
+  chkSignPDF.Caption = .OptionsPDFSigningSignPdfFile
+  lblPFXFile.Caption = .OptionsPDFSigningPfxFile
+  lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
+  lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
+  lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
+  dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
+  chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
+  lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
+  lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
+  lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
+  lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
+  lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
+  chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
+ End With
 End Sub
 
 Public Sub SetOptions()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options1
-50020   chkAllowAssembly.value = .PDFAllowAssembly
-50030   chkAllowDegradedPrinting.value = .PDFAllowDegradedPrinting
-50040   chkAllowFillIn.value = .PDFAllowFillIn
-50050   chkAllowScreenReaders.value = .PDFAllowScreenReaders
-50060   chkPDFCMYKtoRGB.value = .PDFColorsCMYKToRGB
-50070   cmbPDFColorModel.ListIndex = .PDFColorsColorModel
-50080   chkPDFPreserveHalftone.value = .PDFColorsPreserveHalftone
-50090   chkPDFPreserveOverprint.value = .PDFColorsPreserveOverprint
-50100   chkPDFPreserveTransfer.value = .PDFColorsPreserveTransfer
-50110   chkPDFColorComp.value = .PDFCompressionColorCompression
-50120   cmbPDFColorComp.ListIndex = .PDFCompressionColorCompressionChoice
-50130   chkPDFColorResample.value = .PDFCompressionColorResample
-50140   cmbPDFColorResample.ListIndex = .PDFCompressionColorResampleChoice
-50150   txtPDFColorRes.Text = .PDFCompressionColorResolution
-50160   chkPDFGreyComp.value = .PDFCompressionGreyCompression
-50170   cmbPDFGreyComp.ListIndex = .PDFCompressionGreyCompressionChoice
-50180   chkPDFGreyResample.value = .PDFCompressionGreyResample
-50190   cmbPDFGreyResample.ListIndex = .PDFCompressionGreyResampleChoice
-50200   txtPDFGreyRes.Text = .PDFCompressionGreyResolution
-50210   chkPDFMonoComp.value = .PDFCompressionMonoCompression
-50220   cmbPDFMonoComp.ListIndex = .PDFCompressionMonoCompressionChoice
-50230   chkPDFMonoResample.value = .PDFCompressionMonoResample
-50240   cmbPDFMonoResample.ListIndex = .PDFCompressionMonoResampleChoice
-50250   txtPDFMonoRes.Text = .PDFCompressionMonoResolution
-50260   chkPDFTextComp.value = .PDFCompressionTextCompression
-50270   chkAllowCopy.value = .PDFDisallowCopy
-50280   chkAllowModifyAnnotations.value = .PDFDisallowModifyAnnotations
-50290   chkAllowModifyContents.value = .PDFDisallowModifyContents
-50300   chkAllowPrinting.value = .PDFDisallowPrinting
-50310   cmbPDFEncryptor.ItemData(cmbPDFEncryptor.ListIndex) = .PDFEncryptor
-50320   chkPDFEmbedAll.value = .PDFFontsEmbedAll
-50330   chkPDFSubSetFonts.value = .PDFFontsSubSetFonts
-50340   txtPDFSubSetPerc.Text = .PDFFontsSubSetFontsPercent
-50350   chkPDFASCII85.value = .PDFGeneralASCII85
-50360   cmbPDFRotate.ListIndex = .PDFGeneralAutorotate
-50370   cmbPDFCompat.ListIndex = .PDFGeneralCompatibility
-50380   cmbPDFDefaultSettings.ListIndex = .PDFGeneralDefault
-50390   cmbPDFOverprint.ListIndex = .PDFGeneralOverprint
-50400   txtPDFRes.Text = .PDFGeneralResolution
-50410   optEncHigh.value = .PDFHighEncryption
-50420   optEncLow.value = .PDFLowEncryption
-50430   chkPDFOptimize.value = .PDFOptimize
-50440   chkOwnerPass.value = .PDFOwnerPass
-50450   chkUserPass.value = .PDFUserPass
-50460   chkUseSecurity.value = .PDFUseSecurity
-50470
-50480   chkSignPDF.value = .PDFSigningSignPDF
-50490   txtPFXfile.Text = .PDFSigningPFXFile
-50500   txtSignatureReason.Text = .PDFSigningSignatureReason
-50510   txtSignatureContact.Text = .PDFSigningSignatureContact
-50520   txtSignatureLocation.Text = .PDFSigningSignatureLocation
-50530
-50540   chkSignatureVisible.value = .PDFSigningSignatureVisible
-50550   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
-50560   txtLeftX.Text = .PDFSigningSignatureLeftX
-50570   txtLeftY.Text = .PDFSigningSignatureLeftY
-50580   txtRightX.Text = .PDFSigningSignatureRightX
-50590   txtRightY.Text = .PDFSigningSignatureRightY
-50600   chkMultiSignature.value = .PDFSigningMultiSignature
-50610  End With
-50620  If chkSignPDF.value = 1 Then
-50630    EnableControls True
-50640   Else
-50650    EnableControls False
-50660  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "SetOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ With Options1
+  chkAllowAssembly.value = .PDFAllowAssembly
+  chkAllowDegradedPrinting.value = .PDFAllowDegradedPrinting
+  chkAllowFillIn.value = .PDFAllowFillIn
+  chkAllowScreenReaders.value = .PDFAllowScreenReaders
+  chkPDFCMYKtoRGB.value = .PDFColorsCMYKToRGB
+  cmbPDFColorModel.ListIndex = .PDFColorsColorModel
+  chkPDFPreserveHalftone.value = .PDFColorsPreserveHalftone
+  chkPDFPreserveOverprint.value = .PDFColorsPreserveOverprint
+  chkPDFPreserveTransfer.value = .PDFColorsPreserveTransfer
+  chkPDFColorComp.value = .PDFCompressionColorCompression
+  cmbPDFColorComp.ListIndex = .PDFCompressionColorCompressionChoice
+  chkPDFColorResample.value = .PDFCompressionColorResample
+  cmbPDFColorResample.ListIndex = .PDFCompressionColorResampleChoice
+  txtPDFColorRes.Text = .PDFCompressionColorResolution
+  chkPDFGreyComp.value = .PDFCompressionGreyCompression
+  cmbPDFGreyComp.ListIndex = .PDFCompressionGreyCompressionChoice
+  chkPDFGreyResample.value = .PDFCompressionGreyResample
+  cmbPDFGreyResample.ListIndex = .PDFCompressionGreyResampleChoice
+  txtPDFGreyRes.Text = .PDFCompressionGreyResolution
+  chkPDFMonoComp.value = .PDFCompressionMonoCompression
+  cmbPDFMonoComp.ListIndex = .PDFCompressionMonoCompressionChoice
+  chkPDFMonoResample.value = .PDFCompressionMonoResample
+  cmbPDFMonoResample.ListIndex = .PDFCompressionMonoResampleChoice
+  txtPDFMonoRes.Text = .PDFCompressionMonoResolution
+  chkPDFTextComp.value = .PDFCompressionTextCompression
+  chkAllowCopy.value = .PDFDisallowCopy
+  chkAllowModifyAnnotations.value = .PDFDisallowModifyAnnotations
+  chkAllowModifyContents.value = .PDFDisallowModifyContents
+  chkAllowPrinting.value = .PDFDisallowPrinting
+  cmbPDFEncryptor.ItemData(cmbPDFEncryptor.ListIndex) = .PDFEncryptor
+  chkPDFEmbedAll.value = .PDFFontsEmbedAll
+  chkPDFSubSetFonts.value = .PDFFontsSubSetFonts
+  txtPDFSubSetPerc.Text = .PDFFontsSubSetFontsPercent
+  chkPDFASCII85.value = .PDFGeneralASCII85
+  cmbPDFRotate.ListIndex = .PDFGeneralAutorotate
+  cmbPDFCompat.ListIndex = .PDFGeneralCompatibility
+  cmbPDFDefaultSettings.ListIndex = .PDFGeneralDefault
+  cmbPDFOverprint.ListIndex = .PDFGeneralOverprint
+  txtPDFRes.Text = .PDFGeneralResolution
+'  optEncHigh.value = .PDFHighEncryption
+'  optEncLow.value = .PDFLowEncryption
+  chkPDFOptimize.value = .PDFOptimize
+  chkOwnerPass.value = .PDFOwnerPass
+  chkUserPass.value = .PDFUserPass
+  chkUseSecurity.value = .PDFUseSecurity
+
+  chkSignPDF.value = .PDFSigningSignPDF
+  txtPFXfile.Text = .PDFSigningPFXFile
+  txtSignatureReason.Text = .PDFSigningSignatureReason
+  txtSignatureContact.Text = .PDFSigningSignatureContact
+  txtSignatureLocation.Text = .PDFSigningSignatureLocation
+
+  chkSignatureVisible.value = .PDFSigningSignatureVisible
+  txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
+  txtLeftX.Text = .PDFSigningSignatureLeftX
+  txtLeftY.Text = .PDFSigningSignatureLeftY
+  txtRightX.Text = .PDFSigningSignatureRightX
+  txtRightY.Text = .PDFSigningSignatureRightY
+  chkMultiSignature.value = .PDFSigningMultiSignature
+ End With
+ If chkSignPDF.value = 1 Then
+   EnableControls True
+  Else
+   EnableControls False
+ End If
 End Sub
 
 Public Sub GetOptions()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options1
-50020   .PDFAllowAssembly = Abs(chkAllowAssembly.value)
-50030   .PDFAllowDegradedPrinting = Abs(chkAllowDegradedPrinting.value)
-50040   .PDFAllowFillIn = Abs(chkAllowFillIn.value)
-50050   .PDFAllowScreenReaders = Abs(chkAllowScreenReaders.value)
-50060   .PDFColorsCMYKToRGB = Abs(chkPDFCMYKtoRGB.value)
-50070   If LenB(CStr(cmbPDFColorModel.ListIndex)) > 0 Then
-50080    .PDFColorsColorModel = cmbPDFColorModel.ListIndex
-50090   End If
-50100   .PDFColorsPreserveHalftone = Abs(chkPDFPreserveHalftone.value)
-50110   .PDFColorsPreserveOverprint = Abs(chkPDFPreserveOverprint.value)
-50120   .PDFColorsPreserveTransfer = Abs(chkPDFPreserveTransfer.value)
-50130   .PDFCompressionColorCompression = Abs(chkPDFColorComp.value)
-50140   If LenB(CStr(cmbPDFColorComp.ListIndex)) > 0 Then
-50150    .PDFCompressionColorCompressionChoice = cmbPDFColorComp.ListIndex
-50160   End If
-50170   .PDFCompressionColorResample = Abs(chkPDFColorResample.value)
-50180   If LenB(CStr(cmbPDFColorResample.ListIndex)) > 0 Then
-50190    .PDFCompressionColorResampleChoice = cmbPDFColorResample.ListIndex
-50200   End If
-50210   If LenB(txtPDFColorRes.Text) > 0 Then
-50220    .PDFCompressionColorResolution = txtPDFColorRes.Text
-50230   End If
-50240   .PDFCompressionGreyCompression = Abs(chkPDFGreyComp.value)
-50250   If LenB(CStr(cmbPDFGreyComp.ListIndex)) > 0 Then
-50260    .PDFCompressionGreyCompressionChoice = cmbPDFGreyComp.ListIndex
-50270   End If
-50280   .PDFCompressionGreyResample = Abs(chkPDFGreyResample.value)
-50290   If LenB(CStr(cmbPDFGreyResample.ListIndex)) > 0 Then
-50300    .PDFCompressionGreyResampleChoice = cmbPDFGreyResample.ListIndex
-50310   End If
-50320   If LenB(txtPDFGreyRes.Text) > 0 Then
-50330    .PDFCompressionGreyResolution = txtPDFGreyRes.Text
-50340   End If
-50350   .PDFCompressionMonoCompression = Abs(chkPDFMonoComp.value)
-50360   If LenB(CStr(cmbPDFMonoComp.ListIndex)) > 0 Then
-50370    .PDFCompressionMonoCompressionChoice = cmbPDFMonoComp.ListIndex
-50380   End If
-50390   .PDFCompressionMonoResample = Abs(chkPDFMonoResample.value)
-50400   If LenB(CStr(cmbPDFMonoResample.ListIndex)) > 0 Then
-50410    .PDFCompressionMonoResampleChoice = cmbPDFMonoResample.ListIndex
-50420   End If
-50430   If LenB(txtPDFMonoRes.Text) > 0 Then
-50440    .PDFCompressionMonoResolution = txtPDFMonoRes.Text
-50450   End If
-50460   .PDFCompressionTextCompression = Abs(chkPDFTextComp.value)
-50470   .PDFDisallowCopy = Abs(chkAllowCopy.value)
-50480   .PDFDisallowModifyAnnotations = Abs(chkAllowModifyAnnotations.value)
-50490   .PDFDisallowModifyContents = Abs(chkAllowModifyContents.value)
-50500   .PDFDisallowPrinting = Abs(chkAllowPrinting.value)
-50510   If cmbPDFEncryptor.ListIndex < 0 Then
-50520     .PDFEncryptor = 0
-50530    Else
-50540     .PDFEncryptor = cmbPDFEncryptor.ItemData(cmbPDFEncryptor.ListIndex)
-50550   End If
-50560   .PDFFontsEmbedAll = Abs(chkPDFEmbedAll.value)
-50570   .PDFFontsSubSetFonts = Abs(chkPDFSubSetFonts.value)
-50580   If LenB(txtPDFSubSetPerc.Text) > 0 Then
-50590    .PDFFontsSubSetFontsPercent = txtPDFSubSetPerc.Text
-50600   End If
-50610   .PDFGeneralASCII85 = Abs(chkPDFASCII85.value)
-50620   If LenB(CStr(cmbPDFRotate.ListIndex)) > 0 Then
-50630    .PDFGeneralAutorotate = cmbPDFRotate.ListIndex
-50640   End If
-50650   If LenB(CStr(cmbPDFCompat.ListIndex)) > 0 Then
-50660    .PDFGeneralCompatibility = cmbPDFCompat.ListIndex
-50670   End If
-50680   If LenB(CStr(cmbPDFDefaultSettings.ListIndex)) > 0 Then
-50690    .PDFGeneralDefault = cmbPDFDefaultSettings.ListIndex
-50700   End If
-50710   If LenB(CStr(cmbPDFOverprint.ListIndex)) > 0 Then
-50720    .PDFGeneralOverprint = cmbPDFOverprint.ListIndex
-50730   End If
-50740   If LenB(txtPDFRes.Text) > 0 Then
-50750    .PDFGeneralResolution = txtPDFRes.Text
-50760   End If
-50770   .PDFHighEncryption = Abs(optEncHigh.value)
-50780   .PDFLowEncryption = Abs(optEncLow.value)
-50790   .PDFOptimize = Abs(chkPDFOptimize.value)
-50800   .PDFOwnerPass = Abs(chkOwnerPass.value)
-50810   .PDFUserPass = Abs(chkUserPass.value)
-50820   .PDFUseSecurity = Abs(chkUseSecurity.value)
-50830
-50840   .PDFSigningSignPDF = Abs(chkSignPDF.value)
-50850   .PDFSigningPFXFile = txtPFXfile.Text
-50860   .PDFSigningSignatureReason = txtSignatureReason.Text
-50870   .PDFSigningSignatureContact = txtSignatureContact.Text
-50880   .PDFSigningSignatureLocation = txtSignatureLocation.Text
-50890
-50900   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
-50910   If LenB(txtSignatureOnPage.Text) > 0 Then
-50920    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
-50930   End If
-50940   If LenB(txtLeftX.Text) > 0 Then
-50950    .PDFSigningSignatureLeftX = txtLeftX.Text
-50960   End If
-50970   If LenB(txtLeftY.Text) > 0 Then
-50980    .PDFSigningSignatureLeftY = txtLeftY.Text
-50990   End If
-51000   If LenB(txtRightX.Text) > 0 Then
-51010    .PDFSigningSignatureRightX = txtRightX.Text
-51020   End If
-51030   If LenB(txtRightY.Text) > 0 Then
-51040    .PDFSigningSignatureRightY = txtRightY.Text
-51050   End If
-51060   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
-51070  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "GetOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ With Options1
+  .PDFAllowAssembly = Abs(chkAllowAssembly.value)
+  .PDFAllowDegradedPrinting = Abs(chkAllowDegradedPrinting.value)
+  .PDFAllowFillIn = Abs(chkAllowFillIn.value)
+  .PDFAllowScreenReaders = Abs(chkAllowScreenReaders.value)
+  .PDFColorsCMYKToRGB = Abs(chkPDFCMYKtoRGB.value)
+  If LenB(CStr(cmbPDFColorModel.ListIndex)) > 0 Then
+   .PDFColorsColorModel = cmbPDFColorModel.ListIndex
+  End If
+  .PDFColorsPreserveHalftone = Abs(chkPDFPreserveHalftone.value)
+  .PDFColorsPreserveOverprint = Abs(chkPDFPreserveOverprint.value)
+  .PDFColorsPreserveTransfer = Abs(chkPDFPreserveTransfer.value)
+  .PDFCompressionColorCompression = Abs(chkPDFColorComp.value)
+  If LenB(CStr(cmbPDFColorComp.ListIndex)) > 0 Then
+   .PDFCompressionColorCompressionChoice = cmbPDFColorComp.ListIndex
+  End If
+  .PDFCompressionColorResample = Abs(chkPDFColorResample.value)
+  If LenB(CStr(cmbPDFColorResample.ListIndex)) > 0 Then
+   .PDFCompressionColorResampleChoice = cmbPDFColorResample.ListIndex
+  End If
+  If LenB(txtPDFColorRes.Text) > 0 Then
+   .PDFCompressionColorResolution = txtPDFColorRes.Text
+  End If
+  .PDFCompressionGreyCompression = Abs(chkPDFGreyComp.value)
+  If LenB(CStr(cmbPDFGreyComp.ListIndex)) > 0 Then
+   .PDFCompressionGreyCompressionChoice = cmbPDFGreyComp.ListIndex
+  End If
+  .PDFCompressionGreyResample = Abs(chkPDFGreyResample.value)
+  If LenB(CStr(cmbPDFGreyResample.ListIndex)) > 0 Then
+   .PDFCompressionGreyResampleChoice = cmbPDFGreyResample.ListIndex
+  End If
+  If LenB(txtPDFGreyRes.Text) > 0 Then
+   .PDFCompressionGreyResolution = txtPDFGreyRes.Text
+  End If
+  .PDFCompressionMonoCompression = Abs(chkPDFMonoComp.value)
+  If LenB(CStr(cmbPDFMonoComp.ListIndex)) > 0 Then
+   .PDFCompressionMonoCompressionChoice = cmbPDFMonoComp.ListIndex
+  End If
+  .PDFCompressionMonoResample = Abs(chkPDFMonoResample.value)
+  If LenB(CStr(cmbPDFMonoResample.ListIndex)) > 0 Then
+   .PDFCompressionMonoResampleChoice = cmbPDFMonoResample.ListIndex
+  End If
+  If LenB(txtPDFMonoRes.Text) > 0 Then
+   .PDFCompressionMonoResolution = txtPDFMonoRes.Text
+  End If
+  .PDFCompressionTextCompression = Abs(chkPDFTextComp.value)
+  .PDFDisallowCopy = Abs(chkAllowCopy.value)
+  .PDFDisallowModifyAnnotations = Abs(chkAllowModifyAnnotations.value)
+  .PDFDisallowModifyContents = Abs(chkAllowModifyContents.value)
+  .PDFDisallowPrinting = Abs(chkAllowPrinting.value)
+  If cmbPDFEncryptor.ListIndex < 0 Then
+    .PDFEncryptor = 0
+   Else
+    .PDFEncryptor = cmbPDFEncryptor.ItemData(cmbPDFEncryptor.ListIndex)
+  End If
+  .PDFFontsEmbedAll = Abs(chkPDFEmbedAll.value)
+  .PDFFontsSubSetFonts = Abs(chkPDFSubSetFonts.value)
+  If LenB(txtPDFSubSetPerc.Text) > 0 Then
+   .PDFFontsSubSetFontsPercent = txtPDFSubSetPerc.Text
+  End If
+  .PDFGeneralASCII85 = Abs(chkPDFASCII85.value)
+  If LenB(CStr(cmbPDFRotate.ListIndex)) > 0 Then
+   .PDFGeneralAutorotate = cmbPDFRotate.ListIndex
+  End If
+  If LenB(CStr(cmbPDFCompat.ListIndex)) > 0 Then
+   .PDFGeneralCompatibility = cmbPDFCompat.ListIndex
+  End If
+  If LenB(CStr(cmbPDFDefaultSettings.ListIndex)) > 0 Then
+   .PDFGeneralDefault = cmbPDFDefaultSettings.ListIndex
+  End If
+  If LenB(CStr(cmbPDFOverprint.ListIndex)) > 0 Then
+   .PDFGeneralOverprint = cmbPDFOverprint.ListIndex
+  End If
+  If LenB(txtPDFRes.Text) > 0 Then
+   .PDFGeneralResolution = txtPDFRes.Text
+  End If
+  .PDFHighEncryption = Abs(optEncHigh.value)
+  .PDFLowEncryption = Abs(optEncLow.value)
+  .PDFOptimize = Abs(chkPDFOptimize.value)
+  .PDFOwnerPass = Abs(chkOwnerPass.value)
+  .PDFUserPass = Abs(chkUserPass.value)
+  .PDFUseSecurity = Abs(chkUseSecurity.value)
+
+  .PDFSigningSignPDF = Abs(chkSignPDF.value)
+  .PDFSigningPFXFile = txtPFXfile.Text
+  .PDFSigningSignatureReason = txtSignatureReason.Text
+  .PDFSigningSignatureContact = txtSignatureContact.Text
+  .PDFSigningSignatureLocation = txtSignatureLocation.Text
+
+  .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
+  If LenB(txtSignatureOnPage.Text) > 0 Then
+   .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
+  End If
+  If LenB(txtLeftX.Text) > 0 Then
+   .PDFSigningSignatureLeftX = txtLeftX.Text
+  End If
+  If LenB(txtLeftY.Text) > 0 Then
+   .PDFSigningSignatureLeftY = txtLeftY.Text
+  End If
+  If LenB(txtRightX.Text) > 0 Then
+   .PDFSigningSignatureRightX = txtRightX.Text
+  End If
+  If LenB(txtRightY.Text) > 0 Then
+   .PDFSigningSignatureRightY = txtRightY.Text
+  End If
+  .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
+ End With
 End Sub
 
 Private Sub tbstrPDFOptions_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  dmFraPDFGeneral.Visible = False
-50020  dmfraPDFCompress.Visible = False
-50030  dmFraPDFFonts.Visible = False
-50040  dmFraPDFColors.Visible = False
-50050  dmFraPDFColorOptions.Visible = False
-50060  dmFraPDFSecurity.Visible = False
-50070  dmFraPDFSigning.Visible = False
-50080  dmFraPDFGeneral.Enabled = False
-50090  dmfraPDFCompress.Enabled = False
-50100  dmFraPDFFonts.Enabled = False
-50110  dmFraPDFColors.Enabled = False
-50120  dmFraPDFColorOptions.Enabled = False
-50130  dmFraPDFSecurity.Enabled = False
-50140  dmFraPDFSigning.Enabled = False
-50151  Select Case tbstrPDFOptions.SelectedItem.Index
-        Case 1:
-50170    dmFraPDFGeneral.Visible = True
-50180    dmFraPDFGeneral.Enabled = True
-50190   Case 2:
-50200    dmfraPDFCompress.Visible = True
-50210    dmfraPDFCompress.Enabled = True
-50220    dmFraPDFColor.Visible = True
-50230    dmFraPDFColor.Enabled = True
-50240    dmFraPDFGrey.Visible = True
-50250    dmFraPDFGrey.Enabled = True
-50260    dmFraPDFMono.Visible = True
-50270    dmFraPDFMono.Enabled = True
-50280   Case 3:
-50290    dmFraPDFFonts.Visible = True
-50300    dmFraPDFFonts.Enabled = True
-50310   Case 4:
-50320    dmFraPDFColors.Visible = True
-50330    dmFraPDFColorOptions.Visible = True
-50340    dmFraPDFColors.Enabled = True
-50350    dmFraPDFColorOptions.Enabled = True
-50360   Case 5:
-50370    dmFraPDFSecurity.Visible = True
-50380    dmFraPDFSecurity.Enabled = True
-50390    dmFraPDFEncryptor.Visible = True
-50400    dmFraPDFEncryptor.Enabled = True
-50410    dmFraPDFEncLevel.Visible = True
-50420    dmFraPDFEncLevel.Enabled = True
-50430    dmFraSecurityPass.Visible = True
-50440    dmFraSecurityPass.Enabled = True
-50450    dmFraPDFPermissions.Visible = True
-50460    dmFraPDFPermissions.Enabled = True
-50470    dmFraPDFHighPermissions.Visible = True
-50480    dmFraPDFHighPermissions.Enabled = True
-50490    If SecurityIsPossible = False Then
-50500     MsgBox LanguageStrings.MessagesMsg19
-50510    End If
-50520   Case 6:
-50530    dmFraPDFSigning.Visible = True
-50540    dmFraPDFSigning.Enabled = True
-50550    If PDFSigningIsPossible = False Then
-50560     chkSignPDF.Enabled = False
-50570     EnableControls False
-50580     MsgBox LanguageStrings.MessagesMsg39
-50590    End If
-50600  End Select
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "tbstrPDFOptions_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ dmFraPDFGeneral.Visible = False
+ dmfraPDFCompress.Visible = False
+ dmFraPDFFonts.Visible = False
+ dmFraPDFColors.Visible = False
+ dmFraPDFColorOptions.Visible = False
+ dmFraPDFSecurity.Visible = False
+ dmFraPDFSigning.Visible = False
+ dmFraPDFGeneral.Enabled = False
+ dmfraPDFCompress.Enabled = False
+ dmFraPDFFonts.Enabled = False
+ dmFraPDFColors.Enabled = False
+ dmFraPDFColorOptions.Enabled = False
+ dmFraPDFSecurity.Enabled = False
+ dmFraPDFSigning.Enabled = False
+ Select Case tbstrPDFOptions.SelectedItem.Index
+  Case 1:
+   dmFraPDFGeneral.Visible = True
+   dmFraPDFGeneral.Enabled = True
+  Case 2:
+   dmfraPDFCompress.Visible = True
+   dmfraPDFCompress.Enabled = True
+   dmFraPDFColor.Visible = True
+   dmFraPDFColor.Enabled = True
+   dmFraPDFGrey.Visible = True
+   dmFraPDFGrey.Enabled = True
+   dmFraPDFMono.Visible = True
+   dmFraPDFMono.Enabled = True
+  Case 3:
+   dmFraPDFFonts.Visible = True
+   dmFraPDFFonts.Enabled = True
+  Case 4:
+   dmFraPDFColors.Visible = True
+   dmFraPDFColorOptions.Visible = True
+   dmFraPDFColors.Enabled = True
+   dmFraPDFColorOptions.Enabled = True
+  Case 5:
+   dmFraPDFSecurity.Visible = True
+   dmFraPDFSecurity.Enabled = True
+   dmFraPDFEncryptor.Visible = True
+   dmFraPDFEncryptor.Enabled = True
+   dmFraPDFEncLevel.Visible = True
+   dmFraPDFEncLevel.Enabled = True
+   dmFraSecurityPass.Visible = True
+   dmFraSecurityPass.Enabled = True
+   dmFraPDFPermissions.Visible = True
+   dmFraPDFPermissions.Enabled = True
+   dmFraPDFHighPermissions.Visible = True
+   dmFraPDFHighPermissions.Enabled = True
+   UpdateSecurityFields
+   If cmbPDFCompat.ListIndex < 2 Then
+     optEncLow.Enabled = True
+     optEncHigh.Enabled = False
+    Else
+     optEncLow.Enabled = False
+     optEncHigh.Enabled = True
+   End If
+   If SecurityIsPossible = False Then
+    MsgBox LanguageStrings.MessagesMsg19
+   End If
+  Case 6:
+   dmFraPDFSigning.Visible = True
+   dmFraPDFSigning.Enabled = True
+   If PDFSigningIsPossible = False Then
+    chkSignPDF.Enabled = False
+    EnableControls False
+    MsgBox LanguageStrings.MessagesMsg39
+   End If
+ End Select
 End Sub
 
 Private Sub chkOwnerPass_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkUserPass.value = 0 Then
-50020   If chkOwnerPass.value = 0 Then
-50030    chkOwnerPass.value = 1
-50040   End If
-50050  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkOwnerPass_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkUserPass.value = 0 Then
+  If chkOwnerPass.value = 0 Then
+   chkOwnerPass.value = 1
+  End If
+ End If
 End Sub
 
 Private Sub chkPDFColorComp_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFColorComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkPDFColorComp_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFColorComprSettings
 End Sub
 
 Private Sub chkPDFColorResample_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFColorComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkPDFColorResample_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFColorComprSettings
 End Sub
 
 Private Sub chkPDFGreyComp_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFGreyComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkPDFGreyComp_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFGreyComprSettings
 End Sub
 
 Private Sub chkPDFGreyResample_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFGreyComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkPDFGreyResample_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFGreyComprSettings
 End Sub
 
 Private Sub chkPDFMonoComp_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFMonoComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkPDFMonoComp_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFMonoComprSettings
 End Sub
 
 Private Sub chkPDFMonoResample_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFMonoComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkPDFMonoResample_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFMonoComprSettings
 End Sub
 
 Private Sub SetPDFColorComprSettings()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkPDFColorComp.value = 1 Then
-50020    cmbPDFColorComp.Enabled = True
-50030    If cmbPDFColorComp.ListIndex = 0 Then
-50040      chkPDFColorResample.Enabled = False
-50050      cmbPDFColorResample.Enabled = False
-50060      lblPDFColorRes.Enabled = False
-50070      txtPDFColorRes.Enabled = False
-50080     Else
-50090      chkPDFColorResample.Enabled = True
-50100      If chkPDFColorResample.value = 1 Then
-50110        cmbPDFColorResample.Enabled = True
-50120        lblPDFColorRes.Enabled = True
-50130        txtPDFColorRes.Enabled = True
-50140       Else
-50150        cmbPDFColorResample.Enabled = False
-50160        lblPDFColorRes.Enabled = False
-50170        txtPDFColorRes.Enabled = False
-50180      End If
-50190    End If
-50200   Else
-50210    cmbPDFColorComp.Enabled = False
-50220    chkPDFColorResample.Enabled = False
-50230    cmbPDFColorResample.Enabled = False
-50240    lblPDFColorRes.Enabled = False
-50250    txtPDFColorRes.Enabled = False
-50260  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "SetPDFColorComprSettings")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkPDFColorComp.value = 1 Then
+   cmbPDFColorComp.Enabled = True
+   If cmbPDFColorComp.ListIndex = 0 Then
+     chkPDFColorResample.Enabled = False
+     cmbPDFColorResample.Enabled = False
+     lblPDFColorRes.Enabled = False
+     txtPDFColorRes.Enabled = False
+    Else
+     chkPDFColorResample.Enabled = True
+     If chkPDFColorResample.value = 1 Then
+       cmbPDFColorResample.Enabled = True
+       lblPDFColorRes.Enabled = True
+       txtPDFColorRes.Enabled = True
+      Else
+       cmbPDFColorResample.Enabled = False
+       lblPDFColorRes.Enabled = False
+       txtPDFColorRes.Enabled = False
+     End If
+   End If
+  Else
+   cmbPDFColorComp.Enabled = False
+   chkPDFColorResample.Enabled = False
+   cmbPDFColorResample.Enabled = False
+   lblPDFColorRes.Enabled = False
+   txtPDFColorRes.Enabled = False
+ End If
 End Sub
 
 Private Sub SetPDFGreyComprSettings()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkPDFGreyComp.value = 1 Then
-50020    cmbPDFGreyComp.Enabled = True
-50030    If cmbPDFGreyComp.ListIndex = 0 Then
-50040      chkPDFGreyResample.Enabled = False
-50050      cmbPDFGreyResample.Enabled = False
-50060      lblPDFGreyRes.Enabled = False
-50070      txtPDFGreyRes.Enabled = False
-50080     Else
-50090      chkPDFGreyResample.Enabled = True
-50100      If chkPDFGreyResample.value = 1 Then
-50110        cmbPDFGreyResample.Enabled = True
-50120        lblPDFGreyRes.Enabled = True
-50130        txtPDFGreyRes.Enabled = True
-50140       Else
-50150        cmbPDFGreyResample.Enabled = False
-50160        lblPDFGreyRes.Enabled = False
-50170        txtPDFGreyRes.Enabled = False
-50180      End If
-50190    End If
-50200   Else
-50210    cmbPDFGreyComp.Enabled = False
-50220    chkPDFGreyResample.Enabled = False
-50230    cmbPDFGreyResample.Enabled = False
-50240    lblPDFGreyRes.Enabled = False
-50250    txtPDFGreyRes.Enabled = False
-50260  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "SetPDFGreyComprSettings")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkPDFGreyComp.value = 1 Then
+   cmbPDFGreyComp.Enabled = True
+   If cmbPDFGreyComp.ListIndex = 0 Then
+     chkPDFGreyResample.Enabled = False
+     cmbPDFGreyResample.Enabled = False
+     lblPDFGreyRes.Enabled = False
+     txtPDFGreyRes.Enabled = False
+    Else
+     chkPDFGreyResample.Enabled = True
+     If chkPDFGreyResample.value = 1 Then
+       cmbPDFGreyResample.Enabled = True
+       lblPDFGreyRes.Enabled = True
+       txtPDFGreyRes.Enabled = True
+      Else
+       cmbPDFGreyResample.Enabled = False
+       lblPDFGreyRes.Enabled = False
+       txtPDFGreyRes.Enabled = False
+     End If
+   End If
+  Else
+   cmbPDFGreyComp.Enabled = False
+   chkPDFGreyResample.Enabled = False
+   cmbPDFGreyResample.Enabled = False
+   lblPDFGreyRes.Enabled = False
+   txtPDFGreyRes.Enabled = False
+ End If
 End Sub
 
 Private Sub SetPDFMonoComprSettings()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkPDFMonoComp.value = 1 Then
-50020    cmbPDFMonoComp.Enabled = True
-50030    chkPDFMonoResample.Enabled = True
-50040    If chkPDFMonoResample.value = 1 Then
-50050      cmbPDFMonoResample.Enabled = True
-50060      lblPDFMonoRes.Enabled = True
-50070      txtPDFMonoRes.Enabled = True
-50080     Else
-50090      cmbPDFMonoResample.Enabled = False
-50100      lblPDFMonoRes.Enabled = False
-50110      txtPDFMonoRes.Enabled = False
-50120    End If
-50130   Else
-50140    cmbPDFMonoComp.Enabled = False
-50150    chkPDFMonoResample.Enabled = False
-50160    cmbPDFMonoResample.Enabled = False
-50170    lblPDFMonoRes.Enabled = False
-50180    txtPDFMonoRes.Enabled = False
-50190  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "SetPDFMonoComprSettings")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkPDFMonoComp.value = 1 Then
+   cmbPDFMonoComp.Enabled = True
+   chkPDFMonoResample.Enabled = True
+   If chkPDFMonoResample.value = 1 Then
+     cmbPDFMonoResample.Enabled = True
+     lblPDFMonoRes.Enabled = True
+     txtPDFMonoRes.Enabled = True
+    Else
+     cmbPDFMonoResample.Enabled = False
+     lblPDFMonoRes.Enabled = False
+     txtPDFMonoRes.Enabled = False
+   End If
+  Else
+   cmbPDFMonoComp.Enabled = False
+   chkPDFMonoResample.Enabled = False
+   cmbPDFMonoResample.Enabled = False
+   lblPDFMonoRes.Enabled = False
+   txtPDFMonoRes.Enabled = False
+ End If
 End Sub
 
 Private Sub cmbPDFColorComp_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFColorComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "cmbPDFColorComp_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFColorComprSettings
 End Sub
 
 Private Sub cmbPDFGreyComp_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFGreyComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "cmbPDFGreyComp_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFGreyComprSettings
 End Sub
 
 Private Sub cmbPDFMonoComp_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetPDFMonoComprSettings
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "cmbPDFMonoComp_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub cmbPDFCompat_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  UpdateSecurityFields
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "cmbPDFCompat_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ SetPDFMonoComprSettings
 End Sub
 
 Private Sub UpdateSecurityFields()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If cmbPDFCompat.ListIndex < 2 Then
-50020   optEncLow.value = True
-50030  End If
-50040  If chkUseSecurity.value = False Then
-50050    dmFraPDFEncryptor.Enabled = False
-50060    cmbPDFEncryptor.Enabled = False
-50070
-50080    dmFraPDFEncLevel.Enabled = False
-50090    optEncHigh.Enabled = False
-50100    optEncLow.Enabled = False
-50110
-50120    dmFraSecurityPass.Enabled = False
-50130    chkUserPass.Enabled = False
-50140    chkOwnerPass.Enabled = False
-50150
-50160    dmFraPDFPermissions.Enabled = False
-50170    chkAllowPrinting.Enabled = False
-50180    chkAllowCopy.Enabled = False
-50190    chkAllowModifyAnnotations.Enabled = False
-50200    chkAllowModifyContents.Enabled = False
-50210
-50220    dmFraPDFHighPermissions.Enabled = False
-50230    chkAllowDegradedPrinting.Enabled = False
-50240    chkAllowFillIn.Enabled = False
-50250    chkAllowScreenReaders.Enabled = False
-50260    chkAllowAssembly.Enabled = False
-50270   Else
-50280    dmFraPDFEncryptor.Enabled = True
-50290    cmbPDFEncryptor.Enabled = True
-50300
-50310    dmFraPDFEncLevel.Enabled = True
-50320    If cmbPDFCompat.ListIndex >= 2 Then
-50330      optEncHigh.Enabled = True
-50340     Else
-50350      optEncHigh.Enabled = False
-50360    End If
-50370    optEncLow.Enabled = True
-50380
-50390    dmFraSecurityPass.Enabled = True
-50400    chkUserPass.Enabled = True
-50410    chkOwnerPass.Enabled = True
-50420
-50430    dmFraPDFPermissions.Enabled = True
-50440    chkAllowPrinting.Enabled = True
-50450    chkAllowCopy.Enabled = True
-50460    chkAllowModifyAnnotations.Enabled = True
-50470    chkAllowModifyContents.Enabled = True
-50480
-50490    If optEncHigh.value = True Then
-50500      dmFraPDFHighPermissions.Enabled = True
-50510      chkAllowDegradedPrinting.Enabled = True
-50520      chkAllowFillIn.Enabled = True
-50530      chkAllowScreenReaders.Enabled = True
-50540      chkAllowAssembly.Enabled = True
-50550     Else
-50560      dmFraPDFHighPermissions.Enabled = False
-50570      chkAllowDegradedPrinting.Enabled = False
-50580      chkAllowFillIn.Enabled = False
-50590      chkAllowScreenReaders.Enabled = False
-50600      chkAllowAssembly.Enabled = False
-50610    End If
-50620  End If
-50630  If chkOwnerPass.value = 0 And chkUserPass.value = 0 Then
-50640   chkOwnerPass.value = 1: Options.PDFOwnerPass = 1
-50650  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "UpdateSecurityFields")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkUseSecurity.value = False Then
+   dmFraPDFEncryptor.Enabled = False
+   cmbPDFEncryptor.Enabled = False
+
+   dmFraPDFEncLevel.Enabled = False
+   optEncHigh.Enabled = False
+   optEncLow.Enabled = False
+
+   dmFraSecurityPass.Enabled = False
+   chkUserPass.Enabled = False
+   chkOwnerPass.Enabled = False
+
+   dmFraPDFPermissions.Enabled = False
+   chkAllowPrinting.Enabled = False
+   chkAllowCopy.Enabled = False
+   chkAllowModifyAnnotations.Enabled = False
+   chkAllowModifyContents.Enabled = False
+
+   dmFraPDFHighPermissions.Enabled = False
+   chkAllowDegradedPrinting.Enabled = False
+   chkAllowFillIn.Enabled = False
+   chkAllowScreenReaders.Enabled = False
+   chkAllowAssembly.Enabled = False
+  Else
+   dmFraPDFEncryptor.Enabled = True
+   cmbPDFEncryptor.Enabled = True
+   dmFraPDFEncLevel.Enabled = True
+
+   dmFraSecurityPass.Enabled = True
+   chkUserPass.Enabled = True
+   chkOwnerPass.Enabled = True
+
+   dmFraPDFPermissions.Enabled = True
+   chkAllowPrinting.Enabled = True
+   chkAllowCopy.Enabled = True
+   chkAllowModifyAnnotations.Enabled = True
+   chkAllowModifyContents.Enabled = True
+
+   If cmbPDFCompat.ListIndex < 2 Then
+     optEncLow.Enabled = True
+     optEncHigh.Enabled = False
+     optEncLow.value = True
+     chkAllowDegradedPrinting.Enabled = False
+     chkAllowFillIn.Enabled = False
+     chkAllowScreenReaders.Enabled = False
+     chkAllowAssembly.Enabled = False
+     dmFraPDFHighPermissions.Enabled = False
+    Else
+     optEncLow.Enabled = False
+     optEncHigh.Enabled = True
+     optEncHigh.value = True
+     chkAllowDegradedPrinting.Enabled = True
+     chkAllowFillIn.Enabled = True
+     chkAllowScreenReaders.Enabled = True
+     chkAllowAssembly.Enabled = True
+     dmFraPDFHighPermissions.Enabled = True
+   End If
+ End If
+
+ If chkOwnerPass.value = 0 And chkUserPass.value = 0 Then
+  chkOwnerPass.value = 1
+  Options.PDFOwnerPass = 1
+ End If
 End Sub
 
 Private Sub chkUserPass_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkOwnerPass.value = 0 Then
-50020   If chkUserPass.value = 0 Then
-50030    chkUserPass.value = 1
-50040    chkOwnerPass.value = 1
-50050   End If
-50060   SavePasswordsForThisSession = False
-50070  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkUserPass_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkOwnerPass.value = 0 Then
+  If chkUserPass.value = 0 Then
+   chkUserPass.value = 1
+   chkOwnerPass.value = 1
+  End If
+  SavePasswordsForThisSession = False
+ End If
 End Sub
 
 Private Sub chkUseSecurity_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  UpdateSecurityFields
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkUseSecurity_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub optEncHigh_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  UpdateSecurityFields
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "optEncHigh_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub optEncLow_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  UpdateSecurityFields
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "optEncLow_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ UpdateSecurityFields
 End Sub
 
 Public Property Get PDFOptionsIndex()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  PDFOptionsIndex = tbstrPDFOptions.SelectedItem.Index
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Property
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "PDFOptionsIndex [GET]")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Property
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ PDFOptionsIndex = tbstrPDFOptions.SelectedItem.Index
 End Property
 
 Private Sub chkSignPDF_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkSignPDF.value = 1 Then
-50020    EnableControls True
-50030   Else
-50040    EnableControls False
-50050  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkSignPDF_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkSignPDF.value = 1 Then
+   EnableControls True
+  Else
+   EnableControls False
+ End If
 End Sub
 
 Private Sub EnableControls(value As Boolean)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lblPFXFile.Enabled = value
-50020  txtPFXfile.Enabled = value
-50030  cmdGetPFXFile.Enabled = value
-50040  txtPFXFilePreview.Enabled = value
-50050  lblSignatureReason.Enabled = value
-50060  txtSignatureReason.Enabled = value
-50070  lblSignatureContact.Enabled = value
-50080  txtSignatureContact.Enabled = value
-50090  lblSignatureLocation.Enabled = value
-50100  dmFraSignaturePosition.Enabled = value
-50110  chkSignatureVisible.Enabled = value
-50120  If chkSignatureVisible.value = 1 Then
-50130    EnableSignPositionControls True
-50140   Else
-50150    EnableSignPositionControls False
-50160  End If
-50170  chkMultiSignature.Enabled = value
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "EnableControls")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ lblPFXFile.Enabled = value
+ txtPFXfile.Enabled = value
+ cmdGetPFXFile.Enabled = value
+ txtPFXFilePreview.Enabled = value
+ lblSignatureReason.Enabled = value
+ txtSignatureReason.Enabled = value
+ lblSignatureContact.Enabled = value
+ txtSignatureContact.Enabled = value
+ lblSignatureLocation.Enabled = value
+ dmFraSignaturePosition.Enabled = value
+ chkSignatureVisible.Enabled = value
+ If chkSignatureVisible.value = 1 Then
+   EnableSignPositionControls True
+  Else
+   EnableSignPositionControls False
+ End If
+ chkMultiSignature.Enabled = value
 End Sub
 
 Private Sub EnableSignPositionControls(value As Boolean)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lblLeftX.Enabled = value
-50020  txtLeftX.Enabled = value
-50030  lblLeftY.Enabled = value
-50040  txtLeftY.Enabled = value
-50050  lblRightX.Enabled = value
-50060  txtRightX.Enabled = value
-50070  lblRightY.Enabled = value
-50080  txtRightY.Enabled = value
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "EnableSignPositionControls")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ lblLeftX.Enabled = value
+ txtLeftX.Enabled = value
+ lblLeftY.Enabled = value
+ txtLeftY.Enabled = value
+ lblRightX.Enabled = value
+ txtRightX.Enabled = value
+ lblRightY.Enabled = value
+ txtRightY.Enabled = value
 End Sub
 
 Private Sub chkSignatureVisible_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkSignatureVisible.value = 1 Then
-50020    EnableSignPositionControls True
-50030   Else
-50040    EnableSignPositionControls False
-50050  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkSignatureVisible_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If chkSignatureVisible.value = 1 Then
+   EnableSignPositionControls True
+  Else
+   EnableSignPositionControls False
+ End If
 End Sub
 
 Private Sub cmdGetPFXFile_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim res As Long, files As Collection, certFilename As String
-50020  With Options
-50030   If LenB(.PDFSigningPFXFile) = 0 Then
-50040     res = OpenFileDialog(files, "", "PFX\P12 files (*.pfx,*.p12)|*.pfx;*.p12|PFX files (*.pfx)|*pfx|P12 files (*.p12|*.p12", "*.pfx;*.p12", "C:\", "Choose a certificate", OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
-50050     If res > 0 Then
-50060      certFilename = files(1)
-50070     End If
-50080    Else
-50090     certFilename = .PDFSigningPFXFile
-50100   End If
-50110   txtPFXfile.Text = certFilename
-50120  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "cmdGetPFXFile_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Dim res As Long, files As Collection, certFilename As String
+ With Options
+  If LenB(.PDFSigningPFXFile) = 0 Then
+    res = OpenFileDialog(files, "", "PFX\P12 files (*.pfx,*.p12)|*.pfx;*.p12|PFX files (*.pfx)|*pfx|P12 files (*.p12|*.p12", "*.pfx;*.p12", "C:\", "Choose a certificate", OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
+    If res > 0 Then
+     certFilename = files(1)
+    End If
+   Else
+    certFilename = .PDFSigningPFXFile
+  End If
+  txtPFXfile.Text = certFilename
+ End With
 End Sub
 
 Private Sub txtPFXfile_Change()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  txtPFXFilePreview.Text = txtPFXfile.Text
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtPFXfile_Change")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ txtPFXFilePreview.Text = txtPFXfile.Text
 End Sub
 
 Private Sub txtSignatureOnPage_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  KeyAscii = AllowedKeypressChars(KeyAscii)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtSignatureOnPage_KeyPress")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ KeyAscii = AllowedKeypressChars(KeyAscii)
 End Sub
 
 Private Sub txtLeftX_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  KeyAscii = AllowedKeypressChars(KeyAscii)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtLeftX_KeyPress")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ KeyAscii = AllowedKeypressChars(KeyAscii)
 End Sub
 
 Private Sub txtLeftY_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  KeyAscii = AllowedKeypressChars(KeyAscii)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtLeftY_Change")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ KeyAscii = AllowedKeypressChars(KeyAscii)
 End Sub
 
 Private Sub txtRightX_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  KeyAscii = AllowedKeypressChars(KeyAscii)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtRightX_Change")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ KeyAscii = AllowedKeypressChars(KeyAscii)
 End Sub
 
 Private Sub txtRightY_KeyPress(KeyAscii As Integer)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  KeyAscii = AllowedKeypressChars(KeyAscii)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtRightY_Change")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ KeyAscii = AllowedKeypressChars(KeyAscii)
+End Sub
+
+Private Sub cmbPDFCompat_Click()
+ If cmbPDFCompat.ListIndex < 2 Then
+   optEncLow.value = True
+  Else
+   optEncHigh.value = True
+ End If
 End Sub
