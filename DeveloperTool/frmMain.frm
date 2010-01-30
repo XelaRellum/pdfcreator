@@ -1225,7 +1225,7 @@ Private Sub CreateModOptions()
  Print #fn, "     End If"
  Print #fn, "   End If"
  Print #fn, "   WriteToSpecialLogfile ""Reg-Read options: HKEY_LOCAL_MACHINE"""
- Print #fn, "    If LenB(ProfileName) > 0 Then"
+ Print #fn, "   If LenB(ProfileName) > 0 Then"
  Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator\Profiles\"" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg, False)"
  Print #fn, "    Else"
  Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg, False)"

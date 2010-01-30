@@ -172,7 +172,10 @@ PNGResolution||Long|150|1|<
 
 ' <Program>
 PrintAfterSaving|chkPrintAfterSaving.Value|Boolean|0||
+PrintAfterSavingBitsPerPixel||Long|2|0|2
 PrintAfterSavingDuplex|chkPrintAfterSavingDuplex.Value|Boolean|0||
+PrintAfterSavingMaxResolution||Long|600|72|<
+PrintAfterSavingMaxResolutionEnabled||Boolean|0||
 PrintAfterSavingNoCancel|chkPrintAfterSavingNoCancel.Value|Boolean|0||
 PrintAfterSavingPrinter|cmbPrintAfterSavingPrinter.Text|String|||
 PrintAfterSavingQueryUser|cmbPrintAfterSavingQueryUser.Listindex|Long|0|0|3

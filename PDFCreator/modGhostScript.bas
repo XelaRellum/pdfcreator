@@ -182,69 +182,69 @@ On Error GoTo ErrPtnr_OnError
 50430  PCLColorsCount(0) = "pxlcolor": PCLColorsCount(1) = "pxlmono"
 50440  RAWColorsCount(0) = "bitcmyk": RAWColorsCount(1) = "bitrgb": RAWColorsCount(2) = "bit"
 50450
-50460 With Options
+50460  With Options
 50470  'General
-50480  GS_PDFDEFAULT = PDFDefaultSettings(.PDFGeneralDefault)
-50490  GS_COMPATIBILITY = "1." & (.PDFGeneralCompatibility + 2)
-50500  GS_RESOLUTION = .PDFGeneralResolution
-50510  GS_AUTOROTATE = Rotate(.PDFGeneralAutorotate)
-50520  GS_OVERPRINT = .PDFGeneralOverprint
-50530  GS_ASCII85 = Bool2Text(.PDFGeneralASCII85)
+50480   GS_PDFDEFAULT = PDFDefaultSettings(.PDFGeneralDefault)
+50490   GS_COMPATIBILITY = "1." & (.PDFGeneralCompatibility + 2)
+50500   GS_RESOLUTION = .PDFGeneralResolution
+50510   GS_AUTOROTATE = Rotate(.PDFGeneralAutorotate)
+50520   GS_OVERPRINT = .PDFGeneralOverprint
+50530   GS_ASCII85 = Bool2Text(.PDFGeneralASCII85)
 50540
-50550  'Compression
-50560  GS_COMPRESSPAGES = Bool2Text(.PDFCompressionTextCompression)
-50570  GS_COMPRESSCOLOR = Bool2Text(.PDFCompressionColorCompression)
-50580  GS_COMPRESSGREY = Bool2Text(.PDFCompressionGreyCompression)
-50590  GS_COMPRESSMONO = Bool2Text(.PDFCompressionMonoCompression)
+50550   'Compression
+50560   GS_COMPRESSPAGES = Bool2Text(.PDFCompressionTextCompression)
+50570   GS_COMPRESSCOLOR = Bool2Text(.PDFCompressionColorCompression)
+50580   GS_COMPRESSGREY = Bool2Text(.PDFCompressionGreyCompression)
+50590   GS_COMPRESSMONO = Bool2Text(.PDFCompressionMonoCompression)
 50600
-50610  SelectColorCompression .PDFCompressionColorCompressionChoice
-50620  SelectGreyCompression .PDFCompressionGreyCompressionChoice
-50630  SelectMonoCompression .PDFCompressionMonoCompressionChoice
+50610   SelectColorCompression .PDFCompressionColorCompressionChoice
+50620   SelectGreyCompression .PDFCompressionGreyCompressionChoice
+50630   SelectMonoCompression .PDFCompressionMonoCompressionChoice
 50640
-50650  GS_COMPRESSCOLORVALUE = Bool2Text(.PDFCompressionColorCompression)
-50660  GS_COMPRESSGREYVALUE = Bool2Text(.PDFCompressionGreyCompression)
-50670  GS_COMPRESSMONOVALUE = Bool2Text(.PDFCompressionMonoCompression)
+50650   GS_COMPRESSCOLORVALUE = Bool2Text(.PDFCompressionColorCompression)
+50660   GS_COMPRESSGREYVALUE = Bool2Text(.PDFCompressionGreyCompression)
+50670   GS_COMPRESSMONOVALUE = Bool2Text(.PDFCompressionMonoCompression)
 50680
-50690  GS_COLORRESOLUTION = .PDFCompressionColorResolution
-50700  GS_GREYRESOLUTION = .PDFCompressionGreyResolution
-50710  GS_MONORESOLUTION = .PDFCompressionMonoResolution
+50690   GS_COLORRESOLUTION = .PDFCompressionColorResolution
+50700   GS_GREYRESOLUTION = .PDFCompressionGreyResolution
+50710   GS_MONORESOLUTION = .PDFCompressionMonoResolution
 50720
-50730  GS_COLORRESAMPLE = Bool2Text(.PDFCompressionColorResample)
-50740  GS_GREYRESAMPLE = Bool2Text(.PDFCompressionGreyResample)
-50750  GS_MONORESAMPLE = Bool2Text(.PDFCompressionMonoResample)
+50730   GS_COLORRESAMPLE = Bool2Text(.PDFCompressionColorResample)
+50740   GS_GREYRESAMPLE = Bool2Text(.PDFCompressionGreyResample)
+50750   GS_MONORESAMPLE = Bool2Text(.PDFCompressionMonoResample)
 50760
-50770  GS_COLORRESAMPLEMETHOD = Resample(.PDFCompressionColorResampleChoice)
-50780  GS_GREYRESAMPLEMETHOD = Resample(.PDFCompressionGreyResampleChoice)
-50790  GS_MONORESAMPLEMETHOD = Resample(.PDFCompressionMonoResampleChoice)
+50770   GS_COLORRESAMPLEMETHOD = Resample(.PDFCompressionColorResampleChoice)
+50780   GS_GREYRESAMPLEMETHOD = Resample(.PDFCompressionGreyResampleChoice)
+50790   GS_MONORESAMPLEMETHOD = Resample(.PDFCompressionMonoResampleChoice)
 50800
-50810  'Fonts
-50820  GS_EMBEDALLFONTS = Bool2Text(.PDFFontsEmbedAll)
-50830  GS_SUBSETFONTS = Bool2Text(.PDFFontsSubSetFonts)
-50840  GS_SUBSETFONTPERC = .PDFFontsSubSetFontsPercent
+50810   'Fonts
+50820   GS_EMBEDALLFONTS = Bool2Text(.PDFFontsEmbedAll)
+50830   GS_SUBSETFONTS = Bool2Text(.PDFFontsSubSetFonts)
+50840   GS_SUBSETFONTPERC = .PDFFontsSubSetFontsPercent
 50850
-50860  'Colors
-50870  GS_COLORMODEL = Colormodel(.PDFColorsColorModel)
-50880  GS_CMYKTORGB = Bool2Text(.PDFColorsCMYKToRGB)
-50890  GS_PRESERVEOVERPRINT = Bool2Text(.PDFColorsPreserveOverprint)
-50900  GS_TRANSFERFUNCTIONS = ColorsPreserveTransfer(.PDFColorsPreserveTransfer)
-50910  GS_HALFTONE = Bool2Text(.PDFColorsPreserveHalftone)
+50860   'Colors
+50870   GS_COLORMODEL = Colormodel(.PDFColorsColorModel)
+50880   GS_CMYKTORGB = Bool2Text(.PDFColorsCMYKToRGB)
+50890   GS_PRESERVEOVERPRINT = Bool2Text(.PDFColorsPreserveOverprint)
+50900   GS_TRANSFERFUNCTIONS = ColorsPreserveTransfer(.PDFColorsPreserveTransfer)
+50910   GS_HALFTONE = Bool2Text(.PDFColorsPreserveHalftone)
 50920
-50930  'Bitmap
-50940  GS_PNGColorscount = PNGColorscount(.PNGColorscount)
-50950  GS_JPEGColorscount = JPEGColorscount(.JPEGColorscount)
-50960  GS_BMPColorscount = BMPColorscount(.BMPColorscount)
-50970  GS_PCXColorscount = PCXColorscount(.PCXColorscount)
-50980  GS_TIFFColorscount = TIFFColorscount(.TIFFColorscount)
-50990  GS_JPEGQuality = .JPEGQuality
-51000  GS_PSLanguageLevel = PSLanguageLevel(.PSLanguageLevel)
-51010  GS_EPSLanguageLevel = PSLanguageLevel(.EPSLanguageLevel)
-51020  GS_PSDColorscount = PSDColorsCount(.PSDColorsCount)
-51030  GS_PCLColorscount = PCLColorsCount(.PCLColorsCount)
-51040  GS_RAWColorscount = RAWColorsCount(.RAWColorsCount)
-51050 End With
-51060 'Other
-51070 GS_ERROR = 0
-51080 UseReturnPipe = 1
+50930   'Bitmap
+50940   GS_PNGColorscount = PNGColorscount(.PNGColorscount)
+50950   GS_JPEGColorscount = JPEGColorscount(.JPEGColorscount)
+50960   GS_BMPColorscount = BMPColorscount(.BMPColorscount)
+50970   GS_PCXColorscount = PCXColorscount(.PCXColorscount)
+50980   GS_TIFFColorscount = TIFFColorscount(.TIFFColorscount)
+50990   GS_JPEGQuality = .JPEGQuality
+51000   GS_PSLanguageLevel = PSLanguageLevel(.PSLanguageLevel)
+51010   GS_EPSLanguageLevel = PSLanguageLevel(.EPSLanguageLevel)
+51020   GS_PSDColorscount = PSDColorsCount(.PSDColorsCount)
+51030   GS_PCLColorscount = PCLColorsCount(.PCLColorsCount)
+51040   GS_RAWColorscount = RAWColorsCount(.RAWColorsCount)
+51050  End With
+51060  'Other
+51070  GS_ERROR = 0
+51080  UseReturnPipe = 1
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2537,55 +2537,75 @@ Public Sub CheckForPrintingAfterSaving(GSInputFile As String, Options As tOption
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String
-50020
-50030  If Options.PrintAfterSaving = 0 Then
-50040   Exit Sub
-50050  End If
-50060
-50070  GSInit Options
-50080  InitParams
-50090  Set ParamCommands = New Collection
-50100
-50110  tStr = Options.DirectoryGhostscriptLibraries & GetGhostscriptResourceString
-50120
-50130  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50140   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
-50150  End If
-50160  AddParams "-I" & tStr
-50170  AddParams "-q"
-50180  AddParams "-dNOPAUSE"
-50190  'AddParams "-dSAFER"
-50200  AddParams "-dBATCH"
-50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50220   AddParams "-sFONTPATH=" & GetFontsDirectory
-50230  End If
-50240
-50250  AddParams "-sDEVICE=mswinpr2"
-50260  tStr = ""
-50270  If Options.PrintAfterSavingQueryUser > 0 Then
-50280   tStr = "/QueryUser " & Options.PrintAfterSavingQueryUser
-50290  End If
+50010  Dim tStr As String, PrintAfterSavingBitsPerPixel(2) As String, NoCancelStr As String, sPrinter1 As String, _
+  sQueryUser As String, sDuplex As String, sMaxResolution As String
+50030
+50040  If Options.PrintAfterSaving = 0 Then
+50050   Exit Sub
+50060  End If
+50070
+50080  GSInit Options
+50090  InitParams
+50100  Set ParamCommands = New Collection
+50110
+50120  PrintAfterSavingBitsPerPixel(0) = "1": PrintAfterSavingBitsPerPixel(1) = "4"
+50130  PrintAfterSavingBitsPerPixel(2) = "24"
+50140
+50150
+50160  tStr = Options.DirectoryGhostscriptLibraries & GetGhostscriptResourceString
+50170
+50180  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50190   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50200  End If
+50210  AddParams "-I" & tStr
+50220  AddParams "-q"
+50230  AddParams "-dNOPAUSE"
+50240  AddParams "-dBATCH"
+50250  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50260   AddParams "-sFONTPATH=" & GetFontsDirectory
+50270  End If
+50280
+50290  NoCancelStr = "/NoCancel "
 50300  If Options.PrintAfterSavingNoCancel = 1 Then
-50310   tStr = tStr & " /NoCancel"
-50320  End If
-50330  tStr = Trim$(tStr)
-50340  If LenB(tStr) > 0 Then
-50350   AddParamCommand "<< " & tStr & " >> setpagedevice"
-50360  End If
-50370  AddParams "-sOutputFile=\\spool\" & Options.PrintAfterSavingPrinter
-50380  If Options.PrintAfterSavingDuplex = 1 Then
-50390   If Options.PrintAfterSavingTumble = 1 Then
-50400     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"
-50410    Else
-50420     AddParamCommand "<< /Duplex true /Tumble false >> setpagedevice"
-50430   End If
-50440  End If
-50450  AddParamCommands
-50460  AddParams "-f"
-50470  AddParams GSInputFile
-50480  ShowParams
-50490  CallGhostscript "mswinpr2"
+50310    NoCancelStr = NoCancelStr & "true"
+50320   Else
+50330    NoCancelStr = NoCancelStr & "false"
+50340  End If
+50350
+50360  If Options.PrintAfterSavingQueryUser > 0 Then
+50370    sQueryUser = " /QueryUser " & Options.PrintAfterSavingQueryUser
+50380   Else
+50390    If LenB(Trim$(Options.PrintAfterSavingPrinter)) > 0 Then
+50400      If Mid$(Options.PrintAfterSavingPrinter, 1, 2) = "\\" Then ' network printer
+50410        sPrinter1 = " /OutputFile (" & Replace$(Options.PrintAfterSavingPrinter, "\", "\\") & ") "
+50420       Else
+50430        sPrinter1 = " /OutputFile (" & Replace$("\\spool\" & Options.PrintAfterSavingPrinter, "\", "\\") & ") "
+50440      End If
+50450     Else
+50460      sQueryUser = " /QueryUser 1"
+50470    End If
+50480  End If
+50490
+50500  sMaxResolution = " dup /MaxResolution " & Options.PrintAfterSavingMaxResolution & " put"
+50510  sMaxResolution = ""
+50520
+50530  AddParamCommand "mark " & NoCancelStr & " /BitsPerPixel " & PrintAfterSavingBitsPerPixel(Options.PrintAfterSavingBitsPerPixel) & _
+   sQueryUser & sPrinter1 & _
+  " /UserSettings 1 dict dup /DocumentName (" & Replace$(GSInputFile, "\", "\\") & ") put" & sMaxResolution & " (mswinpr2) finddevice putdeviceprops setdevice"
+50560
+50570  If Options.PrintAfterSavingDuplex = 1 Then
+50580   If Options.PrintAfterSavingTumble = 1 Then
+50590     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"
+50600    Else
+50610     AddParamCommand "<< /Duplex true /Tumble false >> setpagedevice"
+50620   End If
+50630  End If
+50640
+50650  AddParamCommands
+50660  AddParams "-f"
+50670  AddParams GSInputFile
+50680  ShowParams
+50690  CallGhostscript "mswinpr2"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

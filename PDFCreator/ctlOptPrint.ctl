@@ -1,32 +1,50 @@
 VERSION 5.00
 Begin VB.UserControl ctlOptPrint 
-   ClientHeight    =   4425
+   ClientHeight    =   5700
    ClientLeft      =   0
    ClientTop       =   0
-   ClientWidth     =   6765
-   ScaleHeight     =   4425
-   ScaleWidth      =   6765
+   ClientWidth     =   6600
+   ScaleHeight     =   5700
+   ScaleWidth      =   6600
    ToolboxBitmap   =   "ctlOptPrint.ctx":0000
    Begin PDFCreator.dmFrame dmFraProgPrint 
-      Height          =   3930
+      Height          =   5490
       Left            =   120
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   6932
-      Caption         =   "Print after saving"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   9684
+      caption         =   "Print after saving"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptPrint.ctx":0312
+      Begin VB.CheckBox chkPrintAfterSavingMaxResolution 
+         Appearance      =   0  '2D
+         Caption         =   "Set maximum resolution"
+         ForeColor       =   &H80000008&
+         Height          =   255
+         Left            =   120
+         TabIndex        =   12
+         Top             =   4080
+         Width           =   6015
+      End
+      Begin VB.ComboBox cmbPrintAfterSavingMaxResolution 
+         Height          =   315
+         Left            =   420
+         TabIndex        =   11
+         Text            =   "cmbPrintAfterSavingMaxResolution"
+         Top             =   4440
+         Width           =   2130
+      End
+      Begin VB.ComboBox cmbPrintAfterSavingBitsPerPixel 
+         Height          =   315
+         Left            =   120
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   9
+         Top             =   2400
+         Width           =   2130
+      End
       Begin VB.CheckBox chkPrintAfterSaving 
          Appearance      =   0  '2D
          Caption         =   "Print after saving"
@@ -39,18 +57,18 @@ Begin VB.UserControl ctlOptPrint
       End
       Begin VB.ComboBox cmbPrintAfterSavingPrinter 
          Height          =   315
-         Left            =   105
+         Left            =   420
          TabIndex        =   3
-         Top             =   1155
-         Width           =   4770
+         Top             =   1635
+         Width           =   4470
       End
       Begin VB.ComboBox cmbPrintAfterSavingQueryUser 
          Height          =   315
          Left            =   120
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
-         Top             =   1995
-         Width           =   4770
+         Top             =   1035
+         Width           =   4750
       End
       Begin VB.CheckBox chkPrintAfterSavingNoCancel 
          Appearance      =   0  '2D
@@ -59,7 +77,7 @@ Begin VB.UserControl ctlOptPrint
          Height          =   255
          Left            =   120
          TabIndex        =   6
-         Top             =   2625
+         Top             =   5040
          Width           =   6015
       End
       Begin VB.CheckBox chkPrintAfterSavingDuplex 
@@ -74,19 +92,30 @@ Begin VB.UserControl ctlOptPrint
       End
       Begin VB.ComboBox cmbPrintAfterSavingTumble 
          Height          =   315
+         ItemData        =   "ctlOptPrint.ctx":033E
          Left            =   420
+         List            =   "ctlOptPrint.ctx":0340
          Style           =   2  'Dropdown-Liste
          TabIndex        =   8
          Top             =   3360
          Width           =   4470
       End
+      Begin VB.Label lblPrintAfterSavingBitsPerPixel 
+         AutoSize        =   -1  'True
+         Caption         =   "Bits per pixel"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   10
+         Top             =   2160
+         Width           =   885
+      End
       Begin VB.Label lblPrintAfterSavingPrinter 
          AutoSize        =   -1  'True
          Caption         =   "Printer"
          Height          =   195
-         Left            =   120
+         Left            =   420
          TabIndex        =   2
-         Top             =   945
+         Top             =   1425
          Width           =   450
       End
       Begin VB.Label lblPrintAfterSavingQueryUser 
@@ -95,7 +124,7 @@ Begin VB.UserControl ctlOptPrint
          Height          =   195
          Left            =   120
          TabIndex        =   4
-         Top             =   1785
+         Top             =   825
          Width           =   765
       End
    End
@@ -106,6 +135,67 @@ Attribute VB_Creatable = True
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
+
+Private Sub chkPrintAfterSavingMaxResolution_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkPrintAfterSavingMaxResolution.value = 1 Then
+50020    ViewMaxResolution True
+50030   Else
+50040    ViewMaxResolution False
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptPrint", "chkPrintAfterSavingMaxResolution_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbPrintAfterSavingMaxResolution_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptPrint", "cmbPrintAfterSavingMaxResolution_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbPrintAfterSavingQueryUser_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If cmbPrintAfterSavingQueryUser.ListIndex = 0 Then
+50020    cmbPrintAfterSavingPrinter.Enabled = True
+50030    cmbPrintAfterSavingPrinter.BackColor = &H80000005
+50040   Else
+50050    cmbPrintAfterSavingPrinter.Enabled = False
+50060    cmbPrintAfterSavingPrinter.BackColor = &H8000000F
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptPrint", "cmbPrintAfterSavingQueryUser_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
 
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -137,8 +227,23 @@ On Error GoTo ErrPtnr_OnError
 50240   Else
 50250    ViewPrintAfterSaving False
 50260  End If
-50270
-50280  SetFrames Options.OptionsDesign
+50270  With cmbPrintAfterSavingBitsPerPixel
+50280   .Clear
+50290   For i = 1 To 3
+50300    .AddItem ""
+50310   Next i
+50320  End With
+50330  With cmbPrintAfterSavingMaxResolution
+50340   .Clear
+50350   .AddItem "72"
+50360   .AddItem "96"
+50370   .AddItem "150"
+50380   .AddItem "300"
+50390   .AddItem "600"
+50400   .AddItem "1200"
+50410  End With
+50420
+50430  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -209,7 +314,14 @@ On Error GoTo ErrPtnr_OnError
 50130   chkPrintAfterSavingDuplex.Caption = .OptionsPrintAfterSavingDuplex
 50140   cmbPrintAfterSavingTumble.List(0) = .OptionsPrintAfterSavingDuplexTumbleOff
 50150   cmbPrintAfterSavingTumble.List(1) = .OptionsPrintAfterSavingDuplexTumbleOn
-50160  End With
+50160
+50170   lblPrintAfterSavingBitsPerPixel.Caption = .OptionsPrintAfterSavingBitsPerPixel
+50180   cmbPrintAfterSavingBitsPerPixel.List(0) = .OptionsPrintAfterSavingBitsPerPixelMono
+50190   cmbPrintAfterSavingBitsPerPixel.List(1) = .OptionsPrintAfterSavingBitsPerPixelCMYK
+50200   cmbPrintAfterSavingBitsPerPixel.List(2) = .OptionsPrintAfterSavingBitsPerPixelTrueColor
+50210
+50220   chkPrintAfterSavingMaxResolution.Caption = .OptionsPrintAfterSavingMaxResolution
+50230  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -233,7 +345,10 @@ On Error GoTo ErrPtnr_OnError
 50050   cmbPrintAfterSavingPrinter.Text = .PrintAfterSavingPrinter
 50060   cmbPrintAfterSavingQueryUser.ListIndex = .PrintAfterSavingQueryUser
 50070   cmbPrintAfterSavingTumble.ListIndex = .PrintAfterSavingTumble
-50080  End With
+50080   cmbPrintAfterSavingBitsPerPixel.ListIndex = .PrintAfterSavingBitsPerPixel
+50090   chkPrintAfterSavingMaxResolution.value = .PrintAfterSavingMaxResolutionEnabled
+50100   cmbPrintAfterSavingMaxResolution.Text = .PrintAfterSavingMaxResolution
+50110  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -250,18 +365,27 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options1
-50020   .PrintAfterSaving = Abs(chkPrintAfterSaving.value)
-50030   .PrintAfterSavingDuplex = Abs(chkPrintAfterSavingDuplex.value)
-50040   .PrintAfterSavingNoCancel = Abs(chkPrintAfterSavingNoCancel.value)
-50050   .PrintAfterSavingPrinter = cmbPrintAfterSavingPrinter.Text
-50060   If LenB(CStr(cmbPrintAfterSavingQueryUser.ListIndex)) > 0 Then
-50070    .PrintAfterSavingQueryUser = cmbPrintAfterSavingQueryUser.ListIndex
-50080   End If
-50090   If LenB(CStr(cmbPrintAfterSavingTumble.ListIndex)) > 0 Then
-50100    .PrintAfterSavingTumble = cmbPrintAfterSavingTumble.ListIndex
-50110   End If
-50120  End With
+50010  Dim sMaxResolution As String, MaxResolution As Long
+50020  With Options1
+50030   .PrintAfterSaving = Abs(chkPrintAfterSaving.value)
+50040   .PrintAfterSavingDuplex = Abs(chkPrintAfterSavingDuplex.value)
+50050   .PrintAfterSavingNoCancel = Abs(chkPrintAfterSavingNoCancel.value)
+50060   .PrintAfterSavingPrinter = cmbPrintAfterSavingPrinter.Text
+50070   .PrintAfterSavingQueryUser = cmbPrintAfterSavingQueryUser.ListIndex
+50080   .PrintAfterSavingTumble = cmbPrintAfterSavingTumble.ListIndex
+50090   .PrintAfterSavingBitsPerPixel = cmbPrintAfterSavingBitsPerPixel.ListIndex
+50100   .PrintAfterSavingMaxResolutionEnabled = Abs(chkPrintAfterSavingMaxResolution.value)
+50110
+50120   sMaxResolution = Trim$(CStr(cmbPrintAfterSavingMaxResolution.Text))
+50130   If LenB(sMaxResolution) > 0 Then
+50140    If IsNumeric(sMaxResolution) Then
+50150     MaxResolution = CLng(sMaxResolution)
+50160     If MaxResolution >= 72 Then
+50170      .PrintAfterSavingMaxResolution = MaxResolution
+50180     End If
+50190    End If
+50200   End If
+50210  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -316,13 +440,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ViewPrintAfterTumble(Viewit As Boolean)
+Private Sub ViewPrintAfterTumble(ViewIt As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cmbPrintAfterSavingTumble.Enabled = Viewit
+50010  cmbPrintAfterSavingTumble.Enabled = ViewIt
 50020
-50030  If Viewit Then
+50030  If ViewIt Then
 50040    cmbPrintAfterSavingTumble.BackColor = &H80000005
 50050   Else
 50060    cmbPrintAfterSavingTumble.BackColor = &H8000000F
@@ -339,30 +463,34 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ViewPrintAfterSaving(Viewit As Boolean)
+Private Sub ViewPrintAfterSaving(ViewIt As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lblPrintAfterSavingPrinter.Enabled = Viewit
-50020  cmbPrintAfterSavingPrinter.Enabled = Viewit
-50030  lblPrintAfterSavingQueryUser.Enabled = Viewit
-50040  cmbPrintAfterSavingQueryUser.Enabled = Viewit
-50050  chkPrintAfterSavingNoCancel.Enabled = Viewit
-50060  chkPrintAfterSavingDuplex.Enabled = Viewit
-50070
-50080  If Viewit Then
-50090    cmbPrintAfterSavingPrinter.BackColor = &H80000005
-50100    cmbPrintAfterSavingQueryUser.BackColor = &H80000005
-50110   Else
-50120    cmbPrintAfterSavingPrinter.BackColor = &H8000000F
-50130    cmbPrintAfterSavingQueryUser.BackColor = &H8000000F
-50140  End If
-50150
-50160  If chkPrintAfterSavingDuplex.value = 1 And Viewit Then
-50170    ViewPrintAfterTumple True
-50180   Else
-50190    ViewPrintAfterTumple False
-50200  End If
+50010  lblPrintAfterSavingQueryUser.Enabled = ViewIt
+50020  cmbPrintAfterSavingQueryUser.Enabled = ViewIt
+50030  chkPrintAfterSavingNoCancel.Enabled = ViewIt
+50040  chkPrintAfterSavingDuplex.Enabled = ViewIt
+50050  ViewPrintAfterSavingPrinter ViewIt
+50060  chkPrintAfterSavingMaxResolution.Enabled = ViewIt
+50070  ViewMaxResolution ViewIt
+50080
+50090  lblPrintAfterSavingBitsPerPixel.Enabled = ViewIt
+50100  cmbPrintAfterSavingBitsPerPixel.Enabled = ViewIt
+50110
+50120  If ViewIt Then
+50130    cmbPrintAfterSavingQueryUser.BackColor = &H80000005
+50140    cmbPrintAfterSavingBitsPerPixel.BackColor = &H80000005
+50150   Else
+50160    cmbPrintAfterSavingQueryUser.BackColor = &H8000000F
+50170    cmbPrintAfterSavingBitsPerPixel.BackColor = &H8000000F
+50180  End If
+50190
+50200  If chkPrintAfterSavingDuplex.value = 1 And ViewIt Then
+50210    ViewPrintAfterTumple True
+50220   Else
+50230    ViewPrintAfterTumple False
+50240  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -375,13 +503,65 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ViewPrintAfterTumple(Viewit As Boolean)
+Private Sub ViewMaxResolution(ViewIt As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cmbPrintAfterSavingTumble.Enabled = Viewit
+50010  If chkPrintAfterSavingMaxResolution.value = 1 And ViewIt Then
+50020    cmbPrintAfterSavingMaxResolution.Enabled = True
+50030    cmbPrintAfterSavingMaxResolution.BackColor = &H80000005
+50040   Else
+50050    cmbPrintAfterSavingMaxResolution.Enabled = False
+50060    cmbPrintAfterSavingMaxResolution.BackColor = &H8000000F
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptPrint", "ViewMaxResolution")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub ViewPrintAfterSavingPrinter(ViewIt As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  lblPrintAfterSavingPrinter.Enabled = ViewIt
+50020  If ViewIt Then
+50030    If cmbPrintAfterSavingQueryUser.ListIndex = 0 Then
+50040      cmbPrintAfterSavingPrinter.Enabled = True
+50050      cmbPrintAfterSavingPrinter.BackColor = &H80000005
+50060     Else
+50070      cmbPrintAfterSavingPrinter.Enabled = False
+50080      cmbPrintAfterSavingPrinter.BackColor = &H8000000F
+50090    End If
+50100   Else
+50110    cmbPrintAfterSavingPrinter.Enabled = ViewIt
+50120    cmbPrintAfterSavingPrinter.BackColor = &H8000000F
+50130  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptPrint", "ViewPrintAfterSavingPrinter")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub ViewPrintAfterTumple(ViewIt As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cmbPrintAfterSavingTumble.Enabled = ViewIt
 50020
-50030  If Viewit Then
+50030  If ViewIt Then
 50040    cmbPrintAfterSavingTumble.BackColor = &H80000005
 50050   Else
 50060    cmbPrintAfterSavingTumble.BackColor = &H8000000F
