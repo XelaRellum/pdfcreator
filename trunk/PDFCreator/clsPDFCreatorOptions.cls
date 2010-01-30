@@ -132,7 +132,10 @@ Public PDFUseSecurity As Long
 Public PNGColorscount As Long
 Public PNGResolution As Long
 Public PrintAfterSaving As Long
+Public PrintAfterSavingBitsPerPixel As Long
 Public PrintAfterSavingDuplex As Long
+Public PrintAfterSavingMaxResolution As Long
+Public PrintAfterSavingMaxResolutionEnabled As Long
 Public PrintAfterSavingNoCancel As Long
 Public PrintAfterSavingPrinter As String
 Public PrintAfterSavingQueryUser As Long
