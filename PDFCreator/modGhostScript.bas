@@ -129,7 +129,7 @@ Public Type EncryptData
 End Type
 '** End Declarations for Encrypt PDF
 
-Public GS_OutStr As String
+Public GS_OutStr As String, PFXPassword As String
 
 Private ParamCommands As Collection, currentOwnerPassword As String
 
@@ -1617,44 +1617,52 @@ Private Sub SignPDF(filename As String, Optional ownerPasswd As String = "")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim m As Object, PFXPassword As String, signatureVisible As Boolean, multiSignatures As Boolean, Tempfile As String, tStr As String
+50010  Dim m As Object, signatureVisible As Boolean, multiSignatures As Boolean, Tempfile As String, tStr As String
 50020   Dim res As Long, files As Collection, certFilename As String
 50030  With Options
 50040   If LenB(.PDFSigningPFXFile) = 0 Then
-50050     res = OpenFileDialog(files, "", "PFX\P12 files (*.pfx,*.p12)|*.pfx;*.p12|PFX files (*.pfx)|*pfx|P12 files (*.p12|*.p12", "*.pfx;*.p12", "C:\", "Choose a certificate", OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
-50060     If res > 0 Then
-50070      certFilename = files(1)
-50080     End If
-50090    Else
-50100     certFilename = .PDFSigningPFXFile
-50110   End If
-50120   If LenB(.PDFSigningPFXFilePassword) > 0 Then
-50130     PFXPassword = .PDFSigningPFXFilePassword
+50050     res = OpenFileDialog(files, "", _
+     LanguageStrings.OptionsPDFSigningPfxP12Files & " (*.pfx,*.p12)|*.pfx;*.p12|" & _
+     LanguageStrings.OptionsPDFSigningPfxFiles & " (*.pfx)|*pfx|" & _
+     LanguageStrings.OptionsPDFSigningP12Files & " (*.p12|*.p12", _
+     "*.pfx;*.p12", GetMyFiles, LanguageStrings.OptionsPDFSigningChooseCertifcateFile, _
+     OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
+50110     If res > 0 Then
+50120      certFilename = files(1)
+50130     End If
 50140    Else
-50150     'Ask for the password
-50160     PFXPassword = InputBox("Certificate password")
-50170   End If
-50180   Tempfile = GetTempFile(GetTempPath, "~MP")
-50190   KillFile Tempfile
-50200   Set m = CreateObject("pdfForge.pdf.pdf")
-50210   If .PDFSigningSignatureVisible = 0 Then
-50220     signatureVisible = False
-50230    Else
-50240     signatureVisible = True
+50150     certFilename = .PDFSigningPFXFile
+50160   End If
+50170   If LenB(.PDFSigningPFXFilePassword) > 0 Then
+50180     PFXPassword = .PDFSigningPFXFilePassword
+50190    Else
+50200     'Ask for the password
+50210     frmCertificatePassword.Show vbModal
+50220   End If
+50230   If LenB(PFXPassword) = 0 Then
+50240    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
 50250   End If
-50260   If .PDFSigningMultiSignature = 0 Then
-50270     multiSignatures = False
-50280    Else
-50290     multiSignatures = True
-50300   End If
-50310   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
+50260   Tempfile = GetTempFile(GetTempPath, "~MP")
+50270   KillFile Tempfile
+50280   Set m = CreateObject("pdfForge.pdf.pdf")
+50290   If .PDFSigningSignatureVisible = 0 Then
+50300     signatureVisible = False
+50310    Else
+50320     signatureVisible = True
+50330   End If
+50340   If .PDFSigningMultiSignature = 0 Then
+50350     multiSignatures = False
+50360    Else
+50370     multiSignatures = True
+50380   End If
+50390   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
    signatureVisible, .PDFSigningSignatureOnPage, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
-50330  End With
-50340  If FileExists(Tempfile) Then
-50350   If KillFile(filename) Then
-50360    Name Tempfile As filename
-50370   End If
-50380  End If
+50410  End With
+50420  If FileExists(Tempfile) Then
+50430   If KillFile(filename) Then
+50440    Name Tempfile As filename
+50450   End If
+50460  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

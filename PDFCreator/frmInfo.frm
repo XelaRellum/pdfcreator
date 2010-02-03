@@ -12,7 +12,7 @@ Begin VB.Form frmInfo
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   Picture         =   "frmInfo.frx":548A
+   Picture         =   "frmInfo.frx":27A2
    ScaleHeight     =   6015
    ScaleWidth      =   6000
    ShowInTaskbar   =   0   'False
@@ -26,7 +26,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   615
       Left            =   2040
-      Picture         =   "frmInfo.frx":7001
+      Picture         =   "frmInfo.frx":4319
       ScaleHeight     =   41
       ScaleMode       =   3  'Pixel
       ScaleWidth      =   149
@@ -54,7 +54,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   1035
       Left            =   345
-      Picture         =   "frmInfo.frx":76C9
+      Picture         =   "frmInfo.frx":49E1
       ScaleHeight     =   1035
       ScaleWidth      =   2085
       TabIndex        =   2
@@ -79,7 +79,7 @@ Begin VB.Form frmInfo
          BackColor       =   &H00FFFFFF&
          Height          =   495
          Left            =   3360
-         Picture         =   "frmInfo.frx":846F
+         Picture         =   "frmInfo.frx":5787
          Style           =   1  'Grafisch
          TabIndex        =   0
          Top             =   4080
@@ -88,7 +88,7 @@ Begin VB.Form frmInfo
       Begin VB.Image Image1 
          Height          =   555
          Left            =   -15
-         Picture         =   "frmInfo.frx":87D4
+         Picture         =   "frmInfo.frx":5AEC
          Top             =   4020
          Width           =   4380
       End
@@ -101,7 +101,7 @@ Begin VB.Form frmInfo
       ForeColor       =   &H80000008&
       Height          =   15480
       Left            =   1470
-      Picture         =   "frmInfo.frx":9142
+      Picture         =   "frmInfo.frx":645A
       ScaleHeight     =   15480
       ScaleWidth      =   4350
       TabIndex        =   4

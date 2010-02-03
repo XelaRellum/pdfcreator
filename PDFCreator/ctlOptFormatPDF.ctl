@@ -1488,7 +1488,7 @@ On Error GoTo ErrPtnr_OnError
 51120   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
 51130
 51140   chkSignPDF.Caption = .OptionsPDFSigningSignPdfFile
-51150   lblPFXFile.Caption = .OptionsPDFSigningPfxFile
+51150   lblPFXFile.Caption = .OptionsPDFSigningCertificateFile
 51160   lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
 51170   lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
 51180   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
