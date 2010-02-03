@@ -73,7 +73,7 @@ On Error GoTo ErrPtnr_OnError
 50190       process.ID = udtProcessInfo.ProcessID
 50200       process.Modulname = GetStrFromPtrA(udtProcessInfo.pProcessName)
 50210       ProcessIDs.Add process
-50220       WriteToSpecialLogfile "Process found: ProcessID=" & udtProcessInfo.ProcessID & " Username=" & UserName
+50220       WriteToSpecialLogfile "Process found: ProcessID=" & udtProcessInfo.ProcessID & " Username=" & UserName & " Modulname=" & process.Modulname
 50230      End If
 50240     End If
 50250     i = i + 1
