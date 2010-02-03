@@ -2,7 +2,7 @@ VERSION 5.00
 Begin VB.Form ErrPtnr 
    BorderStyle     =   3  'Fester Dialog
    Caption         =   "ProgInfo - Fehlermeldung"
-   ClientHeight    =   5775
+   ClientHeight    =   6165
    ClientLeft      =   1395
    ClientTop       =   2220
    ClientWidth     =   7230
@@ -10,7 +10,7 @@ Begin VB.Form ErrPtnr
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5775
+   ScaleHeight     =   6165
    ScaleWidth      =   7230
    Begin VB.Frame framComment 
       BackColor       =   &H00FF0000&
@@ -63,7 +63,7 @@ Begin VB.Form ErrPtnr
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00000000&
-      Height          =   1575
+      Height          =   1935
       Left            =   0
       TabIndex        =   2
       Top             =   960
@@ -83,7 +83,7 @@ Begin VB.Form ErrPtnr
          Index           =   1
          Left            =   960
          TabIndex        =   6
-         Top             =   720
+         Top             =   1080
          Width           =   975
       End
       Begin VB.Label lblErrTitel 
@@ -92,7 +92,7 @@ Begin VB.Form ErrPtnr
          Index           =   2
          Left            =   960
          TabIndex        =   8
-         Top             =   960
+         Top             =   1320
          Width           =   975
       End
       Begin VB.Label lblErrTitel 
@@ -102,7 +102,7 @@ Begin VB.Form ErrPtnr
          Index           =   3
          Left            =   960
          TabIndex        =   10
-         Top             =   1200
+         Top             =   1560
          Width           =   975
       End
       Begin VB.Label lblError 
@@ -111,7 +111,7 @@ Begin VB.Form ErrPtnr
          BorderStyle     =   1  'Fest Einfach
          Caption         =   "lblError(0)"
          ForeColor       =   &H80000008&
-         Height          =   465
+         Height          =   825
          Index           =   0
          Left            =   2040
          TabIndex        =   5
@@ -129,7 +129,7 @@ Begin VB.Form ErrPtnr
          Index           =   1
          Left            =   2040
          TabIndex        =   7
-         Top             =   720
+         Top             =   1080
          Width           =   840
       End
       Begin VB.Label lblError 
@@ -143,7 +143,7 @@ Begin VB.Form ErrPtnr
          Index           =   2
          Left            =   2040
          TabIndex        =   9
-         Top             =   960
+         Top             =   1320
          Width           =   840
       End
       Begin VB.Label lblError 
@@ -157,7 +157,7 @@ Begin VB.Form ErrPtnr
          Index           =   3
          Left            =   2040
          TabIndex        =   11
-         Top             =   1200
+         Top             =   1560
          Width           =   840
       End
       Begin VB.Label Label1 
@@ -199,7 +199,7 @@ Begin VB.Form ErrPtnr
       Height          =   735
       Left            =   0
       TabIndex        =   12
-      Top             =   2520
+      Top             =   2880
       Width           =   7215
       Begin VB.CommandButton cmdProtocol 
          Caption         =   "&WWW"
@@ -253,7 +253,7 @@ Begin VB.Form ErrPtnr
       Height          =   1695
       Left            =   0
       TabIndex        =   17
-      Top             =   3240
+      Top             =   3600
       Width           =   7215
       Begin VB.ListBox lstCallStack 
          Appearance      =   0  '2D
@@ -280,7 +280,7 @@ Begin VB.Form ErrPtnr
       Height          =   855
       Left            =   0
       TabIndex        =   19
-      Top             =   4920
+      Top             =   5280
       Width           =   7215
       Begin VB.CommandButton cmdContinue 
          Caption         =   "&Repeat Command"

@@ -55,7 +55,7 @@ Begin VB.Form frmPrinters
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   1
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPrinters.frx":628A
+               Picture         =   "frmPrinters.frx":27A2
                Key             =   ""
             EndProperty
          EndProperty
