@@ -42,33 +42,39 @@ On Error GoTo ErrPtnr_OnError
 50220   Set process = ProcessIDs(i)
 50230   If process.ID > 0 Then
 50240    If IsService(process.Modulname, AllActiveServices) = False Then
-50250      If Logging = True Then
-50260       WriteToSpecialLogfile "Process (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & ") seems not to be a service."
-50270      End If
-50280      hProcess = OpenProcess(PROCESS_QUERY_INFORMATION Or PROCESS_VM_READ, False, process.ID)
-50290      If Logging = True Then
-50300       WriteToSpecialLogfile "hProcess (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & "): " & hProcess
-50310      End If
-50320      If IsWinNT4 = True Then
-50330        rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS_NT4, hToken)
-50340       Else
-50350        rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS, hToken)
-50360      End If
-50370      If Logging = True Then
-50380       WriteToSpecialLogfile "rc (OpenProcessToken):" & rc
-50390      End If
-50400      CloseHandle (hProcess)
-50410      If rc <> 0 Then
-50420       GetUserSessionToken = 0
-50430       Exit For
-50440      End If
-50450     Else
-50460      If Logging = True Then
-50470       WriteToSpecialLogfile "Possible service found: ProcessID = " & process.ID & ", Modulename = " & process.Modulname
-50480      End If
-50490    End If
-50500   End If
-50510  Next i
+50250      If LCase$(process.Modulname) <> "iexplore.exe" Then
+50260        If Logging = True Then
+50270         WriteToSpecialLogfile "Process (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & ") seems not to be a service."
+50280        End If
+50290        hProcess = OpenProcess(PROCESS_QUERY_INFORMATION Or PROCESS_VM_READ, False, process.ID)
+50300        If Logging = True Then
+50310         WriteToSpecialLogfile "hProcess (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & "): " & hProcess
+50320        End If
+50330        If IsWinNT4 = True Then
+50340          rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS_NT4, hToken)
+50350         Else
+50360          rc = OpenProcessToken(hProcess, TOKEN_ALL_ACCESS, hToken)
+50370        End If
+50380        If Logging = True Then
+50390         WriteToSpecialLogfile "rc (OpenProcessToken):" & rc
+50400        End If
+50410        CloseHandle (hProcess)
+50420        If rc <> 0 Then
+50430         GetUserSessionToken = 0
+50440         Exit For
+50450        End If
+50460       Else
+50470        If Logging = True Then
+50480         WriteToSpecialLogfile "Ignore process: ProcessID = " & process.ID & ", Modulename = " & process.Modulname
+50490        End If
+50500      End If
+50510     Else
+50520      If Logging = True Then
+50530       WriteToSpecialLogfile "Possible service found: ProcessID = " & process.ID & ", Modulename = " & process.Modulname
+50540      End If
+50550    End If
+50560   End If
+50570  Next i
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

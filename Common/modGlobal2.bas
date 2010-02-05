@@ -72,7 +72,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim FName As String, fn As Long, Path As String, Drive As String
 50020
 50030  If enableSpecialLogging = True Then
-50040   Path = LTrim(Environ$("Systemdrive"))
+50040   Path = LTrim(Environ$("SystemDrive"))
 50050   If LenB(Path) = 0 Then
 50060    SplitPath LTrim(Environ$("Windir")), Drive
 50070    Path = Drive
@@ -80,19 +80,23 @@ On Error GoTo ErrPtnr_OnError
 50090     Path = "c:\"
 50100    End If
 50110   End If
-50120   FName = CompletePath(Path) & "PDFCreator-Errorlog.txt"
-50130   fn = FreeFile
-50140   If FileExists(FName) = False Or CreateFile = True Then
-50150     Open FName For Output As #fn
-50160     Print #fn, "Start: " & Now
-50170     Print #fn, "Windowsversion: " & GetWinVersionStr
-50180     Print #fn, "PDFCreator-Revision: " & GetProgramReleaseStr
-50190    Else
-50200     Open FName For Append As #fn
-50210   End If
-50220   Print #fn, StatusText
-50230   Close #fn
-50240  End If
+50120   Path = CompletePath(Path) & "Temp\"
+50130   If Not DirExists(Path) Then
+50140    MakePath Path
+50150   End If
+50160   FName = Path & "PDFCreator-Errorlog.txt"
+50170   fn = FreeFile
+50180   If FileExists(FName) = False Or CreateFile = True Then
+50190     Open FName For Output As #fn
+50200     Print #fn, "Start: " & Now
+50210     Print #fn, "Windowsversion: " & GetWinVersionStr
+50220     Print #fn, "PDFCreator-Revision: " & GetProgramReleaseStr
+50230    Else
+50240     Open FName For Append As #fn
+50250   End If
+50260   Print #fn, StatusText
+50270   Close #fn
+50280  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -111,7 +115,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim FName As String, fn As Long, Path As String, Drive As String, i As Long
 50020  If enableSpecialLogging = True Then
-50030   Path = LTrim(Environ$("Systemdrive"))
+50030   Path = LTrim(Environ$("SystemDrive"))
 50040   If LenB(Path) = 0 Then
 50050    SplitPath LTrim(Environ$("Windir")), Drive
 50060    Path = Drive
@@ -119,18 +123,22 @@ On Error GoTo ErrPtnr_OnError
 50080     Path = "c:\"
 50090    End If
 50100   End If
-50110   FName = CompletePath(Path) & "PDFCreator-Errorlog.txt"
-50120   fn = FreeFile
-50130   i = 1
-50140   Open FName For Append As #fn
-50150   Print #fn, "Environment:"
-50160   While Environ$(i) <> ""
-50170    Print #fn, Environ$(i)
-50180    DoEvents
-50190    i = i + 1
-50200   Wend
-50210   Close #fn
-50220  End If
+50110   Path = CompletePath(Path) & "Temp\"
+50120   If Not DirExists(Path) Then
+50130    MakePath Path
+50140   End If
+50150   FName = Path & "PDFCreator-Errorlog.txt"
+50160   fn = FreeFile
+50170   i = 1
+50180   Open FName For Append As #fn
+50190   Print #fn, "Environment:"
+50200   While Environ$(i) <> ""
+50210    Print #fn, Environ$(i)
+50220    DoEvents
+50230    i = i + 1
+50240   Wend
+50250   Close #fn
+50260  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -366,7 +374,7 @@ On Error GoTo ErrPtnr_OnError
 50160  reg.SubKey = SubKey
 50170  reg.CreateKey
 50180
-50190  For i = 1 To PrinterProfiles.count
+50190  For i = 1 To PrinterProfiles.Count
 50200   If LCase$(PrinterProfiles(i)(1)) = LCase$(LanguageStrings.OptionsProfileDefaultName) Then
 50210     value = ""
 50220    Else
