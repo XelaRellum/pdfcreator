@@ -466,12 +466,32 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function AdjustCultureCalendar(dateStr As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If GetUserLocaleInfo(LOCALE_USER_DEFAULT&, LOCALE_ICALENDARTYPE) = 7 Then ' Thai
+50020   Mid(dateStr, 1, 4) = CStr(CLng(Mid$(dateStr, 1, 4)) - 543) ' Adjust thai year
+50030  End If
+50040  AdjustCultureCalendar = dateStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDF", "AdjustCultureCalendar")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function GetMetadataString(PDFDocInfo As tPDFDocInfo) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim DocInfoStr As String, PDFDocInfoStr As String, tzi As clsTimeZoneInformation, _
-  tStr As String, ttStr As String, CodePage As Long
+  tStr As String, ttStr As String, CodePage As Long, dStr As String
 50030  CodePage = eCodePage.CP_UTF16
 50040  With PDFDocInfo
 50050   PDFDocInfoStr = PDFDocInfoStr & Chr$(13)
@@ -495,7 +515,7 @@ On Error GoTo ErrPtnr_OnError
 50230    End If
 50240   End If
 50250   If LenB(Trim$(.CreationDate)) > 0 Then
-50260     tStr = "(D:" & .CreationDate & ttStr & ")"
+50260     tStr = "(D:" & AdjustCultureCalendar(.CreationDate) & ttStr & ")"
 50270    Else
 50280     tStr = "()"
 50290   End If
@@ -513,7 +533,7 @@ On Error GoTo ErrPtnr_OnError
 50410   End If
 50420   PDFDocInfoStr = PDFDocInfoStr & Chr$(13) & "/Keywords " & tStr
 50430   If LenB(Trim$(.ModifyDate)) > 0 Then
-50440     tStr = "(D:" & .ModifyDate & ttStr & ")"
+50440     tStr = "(D:" & AdjustCultureCalendar(.ModifyDate) & ttStr & ")"
 50450    Else
 50460     tStr = "()"
 50470   End If

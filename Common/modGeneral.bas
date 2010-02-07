@@ -2468,3 +2468,32 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Function GetUserLocaleInfo(ByVal dwLocaleID As Long, ByVal dwLCType As Long) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim sReturn As String, R As Long
+50020
+50030  R = GetLocaleInfo(dwLocaleID, dwLCType, sReturn, Len(sReturn))
+50040  If R Then
+50050   sReturn = Space$(R)
+50060   R = GetLocaleInfo(dwLocaleID, dwLCType, sReturn, Len(sReturn))
+50070   If R Then
+50080    GetUserLocaleInfo = Left$(sReturn, R - 1)
+50090   End If
+50100  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetUserLocaleInfo")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+
+
