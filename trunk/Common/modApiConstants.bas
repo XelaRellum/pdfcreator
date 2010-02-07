@@ -608,3 +608,7 @@ Public Const SERVICE_ACCEPT_SHUTDOWN   As Long = &H4
 'Windows type used to call the Net API
 Public Const MAX_PREFERRED_LENGTH As Long = -1
 
+' LocaleInfo IDs
+Public Const LOCALE_USER_DEFAULT  As Long = &H400
+Public Const LOCALE_ICALENDARTYPE As Long = &H1009  'type of calendar specifier
+

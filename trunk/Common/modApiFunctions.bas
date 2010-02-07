@@ -78,6 +78,7 @@ Public Declare Function GetCurrentProcess Lib "KERNEL32.DLL" () As Long
 Public Declare Function GetCurrentThread Lib "KERNEL32.DLL" () As Long
 Public Declare Function GetExitCodeProcess Lib "KERNEL32.DLL" (ByVal hProcess As Long, lpExitCode As Long) As Long
 Public Declare Function GetFileAttributesA Lib "KERNEL32.DLL" (ByVal lpFileName As String) As Long
+Public Declare Function GetLocaleInfo Lib "KERNEL32.DLL" Alias "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
 Public Declare Function GetLogicalDriveStrings Lib "KERNEL32.DLL" Alias "GetLogicalDriveStringsA" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
 Public Declare Function GetModuleHandle Lib "KERNEL32.DLL" Alias "GetModuleHandleA" (ByVal lpModuleName As String) As Long
 Public Declare Function GetPriorityClass Lib "KERNEL32.DLL" (ByVal hProcess As Long) As Long
