@@ -2146,14 +2146,19 @@ On Error GoTo ErrPtnr_OnError
        Replace$(CStr(Options.PDFCompressionColorCompressionJPEGMinimumFactor), GetDecimalChar, ".") & _
        " /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
 50470       Case 6:
-50480        AddParams "-dColorImageFilter=/FlateEncode"
-50490       Case 7:
-50500        AddParams "-dColorImageFilter=/LZWEncode"
-50510      End Select
-50520    End If
-50530   Else
-50540    AddParams "-dEncodeColorImages=false"
-50550  End If
+50480        AddParams "-dColorImageFilter=/DCTEncode"
+50490        AddParamCommand ".setpdfwrite << /ColorImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionColorCompressionJPEGManualFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50520       Case 7:
+50530        AddParams "-dColorImageFilter=/FlateEncode"
+50540       Case 8:
+50550        AddParams "-dColorImageFilter=/LZWEncode"
+50560      End Select
+50570    End If
+50580   Else
+50590    AddParams "-dEncodeColorImages=false"
+50600  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2217,14 +2222,19 @@ On Error GoTo ErrPtnr_OnError
        Replace$(CStr(Options.PDFCompressionGreyCompressionJPEGMinimumFactor), GetDecimalChar, ".") & _
        " /Blend 0 /HSample [1 1 1 1] /VSample [1 1 1 1]>> >> setdistillerparams"
 50470       Case 6:
-50480        AddParams "-dGrayImageFilter=/FlateEncode"
-50490       Case 7:
-50500        AddParams "-dGrayImageFilter=/LZWEncode"
-50510      End Select
-50520    End If
-50530   Else
-50540    AddParams "-dEncodeGrayImages=false"
-50550  End If
+50480        AddParams "-dGrayImageFilter=/DCTEncode"
+50490        AddParamCommand ".setpdfwrite << /GrayImageDict <</QFactor " & _
+        Replace$(CStr(Options.PDFCompressionGreyCompressionJPEGManualFactor), GetDecimalChar, ".") & _
+        " /Blend 1 /HSample [2 1 1 2] /VSample [2 1 1 2]>> >> setdistillerparams"
+50520       Case 7:
+50530        AddParams "-dGrayImageFilter=/FlateEncode"
+50540       Case 8:
+50550        AddParams "-dGrayImageFilter=/LZWEncode"
+50560      End Select
+50570    End If
+50580   Else
+50590    AddParams "-dEncodeGrayImages=false"
+50600  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

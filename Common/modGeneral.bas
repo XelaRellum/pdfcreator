@@ -2275,15 +2275,17 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function AllowedKeypressChars(KeyAscii As Integer) As Integer
+Public Function AllowedKeypressChars(KeyAscii As Integer, Optional AdditionalAllowedChars As String = "") As Integer
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If InStr(1, "0123456789" & Chr$(8) & Chr$(13), Chr$(KeyAscii)) = 0 Then
-50020    AllowedKeypressChars = 0
-50030   Else
-50040    AllowedKeypressChars = KeyAscii
-50050  End If
+50010  Dim AllowedChars As String
+50020  AllowedChars = "0123456789" & Chr$(8) & Chr$(13) & AdditionalAllowedChars
+50030  If InStr(1, AllowedChars, Chr$(KeyAscii)) = 0 Then
+50040    AllowedKeypressChars = 0
+50050   Else
+50060    AllowedKeypressChars = KeyAscii
+50070  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

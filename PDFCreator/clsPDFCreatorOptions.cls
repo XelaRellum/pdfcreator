@@ -71,6 +71,7 @@ Public PDFCompressionColorCompression As Long
 Public PDFCompressionColorCompressionChoice As Long
 Public PDFCompressionColorCompressionJPEGHighFactor As Double
 Public PDFCompressionColorCompressionJPEGLowFactor As Double
+Public PDFCompressionColorCompressionJPEGManualFactor As Double
 Public PDFCompressionColorCompressionJPEGMaximumFactor As Double
 Public PDFCompressionColorCompressionJPEGMediumFactor As Double
 Public PDFCompressionColorCompressionJPEGMinimumFactor As Double
@@ -81,6 +82,7 @@ Public PDFCompressionGreyCompression As Long
 Public PDFCompressionGreyCompressionChoice As Long
 Public PDFCompressionGreyCompressionJPEGHighFactor As Double
 Public PDFCompressionGreyCompressionJPEGLowFactor As Double
+Public PDFCompressionGreyCompressionJPEGManualFactor As Double
 Public PDFCompressionGreyCompressionJPEGMaximumFactor As Double
 Public PDFCompressionGreyCompressionJPEGMediumFactor As Double
 Public PDFCompressionGreyCompressionJPEGMinimumFactor As Double
