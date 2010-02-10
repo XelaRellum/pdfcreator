@@ -16,7 +16,7 @@ Begin VB.Form frmPrinting
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
    Begin VB.Frame fraProfile 
-      Caption         =   "Profil"
+      Caption         =   "Profile"
       Height          =   735
       Left            =   120
       TabIndex        =   23
@@ -1101,7 +1101,8 @@ On Error GoTo ErrPtnr_OnError
 50180    Else
 50190     cmdCancel.Caption = .PrintingCancel
 50200   End If
-50210  End With
+50210   fraProfile.Caption = .PrintingProfile
+50220  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
