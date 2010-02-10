@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOptions 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Options"
@@ -38,20 +38,12 @@ Begin VB.Form frmOptions
       TabIndex        =   3
       Top             =   1320
       Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   1879
-      Caption         =   ""
-      BarColorFrom    =   723949
-      BarColorTo      =   132452
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11324
+      _extenty        =   1879
+      caption         =   ""
+      barcolorfrom    =   723949
+      barcolorto      =   132452
+      font            =   "frmOptions.frx":000C
       Begin VB.PictureBox picOptions 
          Appearance      =   0  '2D
          BorderStyle     =   0  'Kein
@@ -104,25 +96,17 @@ Begin VB.Form frmOptions
       TabIndex        =   6
       Top             =   120
       Width           =   9180
-      _ExtentX        =   16193
-      _ExtentY        =   1879
-      Caption         =   "Profil"
-      BarColorFrom    =   723949
-      BarColorTo      =   132452
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   16193
+      _extenty        =   1879
+      caption         =   "Profil"
+      barcolorfrom    =   723949
+      barcolorto      =   132452
+      font            =   "frmOptions.frx":0038
       Begin VB.CommandButton cmdProfileRename 
          Enabled         =   0   'False
          Height          =   375
          Left            =   7200
-         Picture         =   "frmOptions.frx":000C
+         Picture         =   "frmOptions.frx":0064
          Style           =   1  'Grafisch
          TabIndex        =   12
          ToolTipText     =   "Rename profile"
@@ -132,7 +116,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileLoad 
          Height          =   375
          Left            =   8640
-         Picture         =   "frmOptions.frx":0400
+         Picture         =   "frmOptions.frx":0458
          Style           =   1  'Grafisch
          TabIndex        =   11
          ToolTipText     =   "Load profile"
@@ -142,7 +126,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileSave 
          Height          =   375
          Left            =   8160
-         Picture         =   "frmOptions.frx":07FE
+         Picture         =   "frmOptions.frx":0856
          Style           =   1  'Grafisch
          TabIndex        =   10
          ToolTipText     =   "Save profile"
@@ -153,7 +137,7 @@ Begin VB.Form frmOptions
          Enabled         =   0   'False
          Height          =   375
          Left            =   7680
-         Picture         =   "frmOptions.frx":0B93
+         Picture         =   "frmOptions.frx":0BEB
          Style           =   1  'Grafisch
          TabIndex        =   9
          ToolTipText     =   "Delete profile"
@@ -163,7 +147,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileAdd 
          Height          =   375
          Left            =   6720
-         Picture         =   "frmOptions.frx":0F8B
+         Picture         =   "frmOptions.frx":0FE3
          Style           =   1  'Grafisch
          TabIndex        =   8
          ToolTipText     =   "Add profile"
@@ -192,107 +176,107 @@ Begin VB.Form frmOptions
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   26
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":137B
+            Picture         =   "frmOptions.frx":13D3
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":14D5
+            Picture         =   "frmOptions.frx":152D
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":1A6F
+            Picture         =   "frmOptions.frx":1AC7
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":2009
+            Picture         =   "frmOptions.frx":2061
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":25A3
+            Picture         =   "frmOptions.frx":25FB
             Key             =   ""
          EndProperty
          BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":293D
+            Picture         =   "frmOptions.frx":2995
             Key             =   ""
          EndProperty
          BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":2ED7
+            Picture         =   "frmOptions.frx":2F2F
             Key             =   ""
          EndProperty
          BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":37B1
+            Picture         =   "frmOptions.frx":3809
             Key             =   ""
          EndProperty
          BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":3D4B
+            Picture         =   "frmOptions.frx":3DA3
             Key             =   ""
          EndProperty
          BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":42E5
+            Picture         =   "frmOptions.frx":433D
             Key             =   ""
          EndProperty
          BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":487F
+            Picture         =   "frmOptions.frx":48D7
             Key             =   ""
          EndProperty
          BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":4E19
+            Picture         =   "frmOptions.frx":4E71
             Key             =   ""
          EndProperty
          BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":53B3
+            Picture         =   "frmOptions.frx":540B
             Key             =   ""
          EndProperty
          BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":594D
+            Picture         =   "frmOptions.frx":59A5
             Key             =   ""
          EndProperty
          BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":5EE7
+            Picture         =   "frmOptions.frx":5F3F
             Key             =   ""
          EndProperty
          BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":6481
+            Picture         =   "frmOptions.frx":64D9
             Key             =   ""
          EndProperty
          BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":6A1B
+            Picture         =   "frmOptions.frx":6A73
             Key             =   ""
          EndProperty
          BeginProperty ListImage18 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":6FB5
+            Picture         =   "frmOptions.frx":700D
             Key             =   ""
          EndProperty
          BeginProperty ListImage19 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":754F
+            Picture         =   "frmOptions.frx":75A7
             Key             =   ""
          EndProperty
          BeginProperty ListImage20 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":7E29
+            Picture         =   "frmOptions.frx":7E81
             Key             =   ""
          EndProperty
          BeginProperty ListImage21 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":8703
+            Picture         =   "frmOptions.frx":875B
             Key             =   ""
          EndProperty
          BeginProperty ListImage22 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":8C9D
+            Picture         =   "frmOptions.frx":8CF5
             Key             =   ""
          EndProperty
          BeginProperty ListImage23 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":9237
+            Picture         =   "frmOptions.frx":928F
             Key             =   ""
          EndProperty
          BeginProperty ListImage24 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":97D1
+            Picture         =   "frmOptions.frx":9829
             Key             =   ""
          EndProperty
          BeginProperty ListImage25 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":9D6B
+            Picture         =   "frmOptions.frx":9DC3
             Key             =   ""
          EndProperty
          BeginProperty ListImage26 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":A305
+            Picture         =   "frmOptions.frx":A35D
             Key             =   ""
          EndProperty
       EndProperty
@@ -970,13 +954,13 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim tRestart As Boolean, newLanguage As String, Profiles As Collection, i As Long, j As Long, _
   PrinterProfiles As Collection, sa(2) As String, tStr As String
 50030
-50040  tRestart = False
-50050  If UCase$(Options.DirectoryGhostscriptBinaries) <> UCase$(ProfileOptions(0).DirectoryGhostscriptBinaries) Then
-50060   tRestart = True
-50070  End If
-50080
-50090  ' Save all Options/Profiles
-50100  ProfileOptions(cmbProfile.ListIndex) = GetOptionsFromUserControls(ProfileOptions(cmbProfile.ListIndex)) ' Get the current settings
+50040  ' Save all Options/Profiles
+50050  ProfileOptions(cmbProfile.ListIndex) = GetOptionsFromUserControls(ProfileOptions(cmbProfile.ListIndex)) ' Get the current settings
+50060
+50070  tRestart = False
+50080  If UCase$(Options.DirectoryGhostscriptBinaries) <> UCase$(ProfileOptions(0).DirectoryGhostscriptBinaries) Then
+50090   tRestart = True
+50100  End If
 50110
 50120  ' Save default options
 50130  Options = ProfileOptions(0)

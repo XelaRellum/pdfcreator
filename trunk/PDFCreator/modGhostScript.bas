@@ -1,4 +1,4 @@
-Attribute VB_Name = "modGhostscript"
+Attribute VB_Name = "modGhostScript"
 Option Explicit
 
 Public Type tGhostscriptVersion
@@ -248,7 +248,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "GSInit")
+Select Case ErrPtnr.OnError("modGhostScript", "GSInit")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -276,7 +276,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CallGhostscript")
+Select Case ErrPtnr.OnError("modGhostScript", "CallGhostscript")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -408,7 +408,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePDF")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePDF")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -482,7 +482,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePNG")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePNG")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -556,7 +556,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateJPEG")
+Select Case ErrPtnr.OnError("modGhostScript", "CreateJPEG")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -630,7 +630,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateBMP")
+Select Case ErrPtnr.OnError("modGhostScript", "CreateBMP")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -703,7 +703,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePCX")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePCX")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -776,7 +776,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateTIFF")
+Select Case ErrPtnr.OnError("modGhostScript", "CreateTIFF")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -849,7 +849,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePS")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePS")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -922,7 +922,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateEPS")
+Select Case ErrPtnr.OnError("modGhostScript", "CreateEPS")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -962,7 +962,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateTXT")
+Select Case ErrPtnr.OnError("modGhostScript", "CreateTXT")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1071,7 +1071,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePDFA")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePDFA")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1176,7 +1176,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePDFX")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePDFX")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1249,7 +1249,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePSD")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePSD")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1322,7 +1322,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreatePCL")
+Select Case ErrPtnr.OnError("modGhostScript", "CreatePCL")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1395,7 +1395,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateRAW")
+Select Case ErrPtnr.OnError("modGhostScript", "CreateRAW")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1469,7 +1469,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CreateSVG")
+Select Case ErrPtnr.OnError("modGhostScript", "CreateSVG")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1604,7 +1604,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CallGScript")
+Select Case ErrPtnr.OnError("modGhostScript", "CallGScript")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1666,7 +1666,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SignPDF")
+Select Case ErrPtnr.OnError("modGhostScript", "SignPDF")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1720,7 +1720,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "OptimizePDF")
+Select Case ErrPtnr.OnError("modGhostScript", "OptimizePDF")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1741,7 +1741,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "Bool2Text")
+Select Case ErrPtnr.OnError("modGhostScript", "Bool2Text")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1782,7 +1782,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SelectColorCompression")
+Select Case ErrPtnr.OnError("modGhostScript", "SelectColorCompression")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1823,7 +1823,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SelectGreyCompression")
+Select Case ErrPtnr.OnError("modGhostScript", "SelectGreyCompression")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1849,7 +1849,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SelectMonoCompression")
+Select Case ErrPtnr.OnError("modGhostScript", "SelectMonoCompression")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1867,7 +1867,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "InitParams")
+Select Case ErrPtnr.OnError("modGhostScript", "InitParams")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1891,7 +1891,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "ShowParams")
+Select Case ErrPtnr.OnError("modGhostScript", "ShowParams")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1910,7 +1910,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "AddParams")
+Select Case ErrPtnr.OnError("modGhostScript", "AddParams")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1942,7 +1942,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "BuildPermissionString")
+Select Case ErrPtnr.OnError("modGhostScript", "BuildPermissionString")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -1974,7 +1974,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "EncryptPDF")
+Select Case ErrPtnr.OnError("modGhostScript", "EncryptPDF")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2024,7 +2024,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CalculatePermissions")
+Select Case ErrPtnr.OnError("modGhostScript", "CalculatePermissions")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2086,7 +2086,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SetEncryptionParams")
+Select Case ErrPtnr.OnError("modGhostScript", "SetEncryptionParams")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2162,7 +2162,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SetColorParams")
+Select Case ErrPtnr.OnError("modGhostScript", "SetColorParams")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2238,7 +2238,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SetGreyParams")
+Select Case ErrPtnr.OnError("modGhostScript", "SetGreyParams")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2283,7 +2283,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "SetMonoParams")
+Select Case ErrPtnr.OnError("modGhostScript", "SetMonoParams")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2323,7 +2323,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "GhostScriptSecurity")
+Select Case ErrPtnr.OnError("modGhostScript", "GhostScriptSecurity")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2395,7 +2395,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "GetAllGhostscriptversions")
+Select Case ErrPtnr.OnError("modGhostScript", "GetAllGhostscriptversions")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2470,7 +2470,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CheckForStamping")
+Select Case ErrPtnr.OnError("modGhostScript", "CheckForStamping")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2493,7 +2493,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "AddParamCommands")
+Select Case ErrPtnr.OnError("modGhostScript", "AddParamCommands")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2510,7 +2510,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "AddParamCommand")
+Select Case ErrPtnr.OnError("modGhostScript", "AddParamCommand")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2542,7 +2542,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "AddAdditionalGhostscriptParameters")
+Select Case ErrPtnr.OnError("modGhostScript", "AddAdditionalGhostscriptParameters")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2569,65 +2569,64 @@ On Error GoTo ErrPtnr_OnError
 50120  PrintAfterSavingBitsPerPixel(0) = "1": PrintAfterSavingBitsPerPixel(1) = "4"
 50130  PrintAfterSavingBitsPerPixel(2) = "24"
 50140
-50150
-50160  tStr = Options.DirectoryGhostscriptLibraries & GetGhostscriptResourceString
-50170
-50180  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
-50190   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
-50200  End If
-50210  AddParams "-I" & tStr
-50220  AddParams "-q"
-50230  AddParams "-dNOPAUSE"
-50240  AddParams "-dBATCH"
-50250  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50260   AddParams "-sFONTPATH=" & GetFontsDirectory
-50270  End If
-50280
-50290  NoCancelStr = "/NoCancel "
-50300  If Options.PrintAfterSavingNoCancel = 1 Then
-50310    NoCancelStr = NoCancelStr & "true"
-50320   Else
-50330    NoCancelStr = NoCancelStr & "false"
-50340  End If
-50350
-50360  If Options.PrintAfterSavingQueryUser > 0 Then
-50370    sQueryUser = " /QueryUser " & Options.PrintAfterSavingQueryUser
-50380   Else
-50390    If LenB(Trim$(Options.PrintAfterSavingPrinter)) > 0 Then
-50400      If Mid$(Options.PrintAfterSavingPrinter, 1, 2) = "\\" Then ' network printer
-50410        sPrinter1 = " /OutputFile (" & Replace$(Options.PrintAfterSavingPrinter, "\", "\\") & ") "
-50420       Else
-50430        sPrinter1 = " /OutputFile (" & Replace$("\\spool\" & Options.PrintAfterSavingPrinter, "\", "\\") & ") "
-50440      End If
-50450     Else
-50460      sQueryUser = " /QueryUser 1"
-50470    End If
-50480  End If
-50490
-50500  sMaxResolution = " dup /MaxResolution " & Options.PrintAfterSavingMaxResolution & " put"
-50510  sMaxResolution = ""
-50520
-50530  AddParamCommand "mark " & NoCancelStr & " /BitsPerPixel " & PrintAfterSavingBitsPerPixel(Options.PrintAfterSavingBitsPerPixel) & _
+50150  tStr = Options.DirectoryGhostscriptLibraries & GetGhostscriptResourceString
+50160
+50170  If LenB(LTrim(Options.AdditionalGhostscriptSearchpath)) > 0 Then
+50180   tStr = tStr & ";" & LTrim(Options.AdditionalGhostscriptSearchpath)
+50190  End If
+50200  AddParams "-I" & tStr
+50210  AddParams "-q"
+50220  AddParams "-dNOPAUSE"
+50230  AddParams "-dBATCH"
+50240  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50250   AddParams "-sFONTPATH=" & GetFontsDirectory
+50260  End If
+50270
+50280  NoCancelStr = "/NoCancel "
+50290  If Options.PrintAfterSavingNoCancel = 1 Then
+50300    NoCancelStr = NoCancelStr & "true"
+50310   Else
+50320    NoCancelStr = NoCancelStr & "false"
+50330  End If
+50340
+50350  If Options.PrintAfterSavingQueryUser > 0 Then
+50360    sQueryUser = " /QueryUser " & Options.PrintAfterSavingQueryUser
+50370   Else
+50380    If LenB(Trim$(Options.PrintAfterSavingPrinter)) > 0 Then
+50390      If Mid$(Options.PrintAfterSavingPrinter, 1, 2) = "\\" Then ' network printer
+50400        sPrinter1 = " /OutputFile (" & Replace$(Options.PrintAfterSavingPrinter, "\", "\\") & ") "
+50410       Else
+50420        sPrinter1 = " /OutputFile (" & Replace$("\\spool\" & Options.PrintAfterSavingPrinter, "\", "\\") & ") "
+50430      End If
+50440     Else
+50450      sQueryUser = " /QueryUser 1"
+50460    End If
+50470  End If
+50480
+50490  sMaxResolution = " dup /MaxResolution " & Options.PrintAfterSavingMaxResolution & " put"
+50500  sMaxResolution = ""
+50510
+50520  AddParamCommand "mark " & NoCancelStr & " /BitsPerPixel " & PrintAfterSavingBitsPerPixel(Options.PrintAfterSavingBitsPerPixel) & _
    sQueryUser & sPrinter1 & _
   " /UserSettings 1 dict dup /DocumentName (" & Replace$(GSInputFile, "\", "\\") & ") put" & sMaxResolution & " (mswinpr2) finddevice putdeviceprops setdevice"
-50560
-50570  If Options.PrintAfterSavingDuplex = 1 Then
-50580   If Options.PrintAfterSavingTumble = 1 Then
-50590     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"
-50600    Else
-50610     AddParamCommand "<< /Duplex true /Tumble false >> setpagedevice"
-50620   End If
-50630  End If
-50640
-50650  AddParamCommands
-50660  AddParams "-f"
-50670  AddParams GSInputFile
-50680  ShowParams
-50690  CallGhostscript "mswinpr2"
+50550
+50560  If Options.PrintAfterSavingDuplex = 1 Then
+50570   If Options.PrintAfterSavingTumble = 1 Then
+50580     AddParamCommand "<< /Duplex true /Tumble true >> setpagedevice"
+50590    Else
+50600     AddParamCommand "<< /Duplex true /Tumble false >> setpagedevice"
+50610   End If
+50620  End If
+50630
+50640  AddParamCommands
+50650  AddParams "-f"
+50660  AddParams GSInputFile
+50670  ShowParams
+50680  CallGhostscript "mswinpr2"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "CheckForPrintingAfterSaving")
+Select Case ErrPtnr.OnError("modGhostScript", "CheckForPrintingAfterSaving")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2732,7 +2731,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "ConvertFile")
+Select Case ErrPtnr.OnError("modGhostScript", "ConvertFile")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -2762,7 +2761,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "GetGhostscriptVersion")
+Select Case ErrPtnr.OnError("modGhostScript", "GetGhostscriptVersion")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2788,7 +2787,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostscript", "GetGhostscriptResourceString")
+Select Case ErrPtnr.OnError("modGhostScript", "GetGhostscriptResourceString")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

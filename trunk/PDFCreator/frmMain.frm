@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmMain 
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
@@ -710,7 +710,7 @@ On Error GoTo ErrPtnr_OnError
 50160   InstanceCounter = InstanceCounter - 1
 50170  End If
 50180
-50190  PDFSpoolerPath = GetPDFCreatorApplicationPath & "PDFSpooler.exe"
+50190  PDFSpoolerPath = GetPDFCreatorApplicationPath & PDFSpoolerExe
 50200  If Restart = True And FileExists(PDFSpoolerPath) = True Then
 50210   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", GetPDFCreatorApplicationPath, 1
 50220  End If
