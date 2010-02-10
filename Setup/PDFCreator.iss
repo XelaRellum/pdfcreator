@@ -604,8 +604,8 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Ghostscrip
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptVersion; Valuedata: {#GhostscriptVersion}; Flags: uninsdeletevalue; Components: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Flags: uninsdeletevalue; Components: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Flags: uninsdeletevalue; Components: ghostscript
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Flags: uninsdeletevalue; Components: ghostscript
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Flags: uninsdeletevalue; Components: ghostscript
+;Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Flags: uninsdeletevalue; Components: ghostscript
+;Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Flags: uninsdeletevalue; Components: ghostscript
 #Endif
 
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UninstallString; Valuedata: {app}\unins000.exe; Flags: uninsdeletevalue
