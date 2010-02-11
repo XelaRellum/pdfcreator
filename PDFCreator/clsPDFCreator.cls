@@ -29,6 +29,7 @@ Private Const ErrDescr8 = "Function '%1': Options1 is not a 'clsPDFCreatorOption
 Private Const ErrDescr9 = "No valid file '%1' was given!"
 Private Const ErrDescr10 = "Empty array 'Arguments'!"
 Private Const ErrDescr11 = "The profile '%1' doesn't exists!"
+Private Const ErrDescr12 = "The printer '%1' is not installed!"
 
 Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
 Private WithEvents eActionTimer As Timer
@@ -1820,7 +1821,13 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Sub
 50040  End If
-50050  PrintFile filename
+50050  If FileExists(filename) = False Then
+50060   mError.Number = 5
+50070   mError.Description = Replace$(ErrDescr5, "%1", filename)
+50080   RaiseEvent eError
+50090   Exit Sub
+50100  End If
+50110  PrintFile filename
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1881,12 +1888,18 @@ Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tPrintername As String
-50020  If LenB(Printername) = 0 Then
-50030    tPrintername = cDefaultPrinter
-50040   Else
-50050    tPrintername = Printername
-50060  End If
-50070  ShellAndWait 0, "open", "RUNDLL32.EXE", "PRINTUI.DLL,PrintUIEntry /n """ & tPrintername & """ /k", GetPDFCreatorApplicationPath, wNormal, WCNone
+50020  If Not PrinterIsInstalled(Printername) Then
+50030   mError.Number = 12
+50040   mError.Description = Replace$(ErrDescr12, "%1", Printername)
+50050   RaiseEvent eError
+50060   Exit Sub
+50070  End If
+50080  If LenB(Printername) = 0 Then
+50090    tPrintername = cDefaultPrinter
+50100   Else
+50110    tPrintername = Printername
+50120  End If
+50130  ShellAndWait 0, "open", "RUNDLL32.EXE", "PRINTUI.DLL,PrintUIEntry /n """ & tPrintername & """ /k", GetPDFCreatorApplicationPath, wNormal, WCNone
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
