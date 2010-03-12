@@ -29,7 +29,14 @@ Private Const ErrDescr8 = "Function '%1': Options1 is not a 'clsPDFCreatorOption
 Private Const ErrDescr9 = "No valid file '%1' was given!"
 Private Const ErrDescr10 = "Empty array 'Arguments'!"
 Private Const ErrDescr11 = "The profile '%1' doesn't exists!"
-Private Const ErrDescr12 = "The printer '%1' is not installed!"
+Private Const ErrDescr12 = "The profile '%1' already exists!"
+Private Const ErrDescr13 = "The name for the profile could not be empty!"
+Private Const ErrDescr14 = "You can't delete the profile '%1' because it is associate with the printer '%2'."
+Private Const ErrDescr15 = "The old profile '%1' has the same name like the new profile '%2'."
+Private Const ErrDescr16 = "The printer '%1' is not installed!"
+Private Const ErrDescr17 = "The printer '%1' is already installed!"
+Private Const ErrDescr18 = "You must be an administrator to install or delete a printer!"
+Private Const ErrDescr19 = "The printer is not a PDFCreator printer!"
 
 Private mForm As frmMain, mError As clsPDFCreatorError, mProgramIsRunning As Boolean
 Private WithEvents eActionTimer As Timer
@@ -76,6 +83,80 @@ End Sub
 ' --- Class subroutines - end ---
 
 ' --- Public properties - begin ---
+Public Property Get cPrinterProfile(ByVal Printername As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim PrinterProfiles As Collection, i As Long
+50020  If Not PrinterIsInstalled(Printername) Then
+50030   mError.Number = 15
+50040   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50050   RaiseEvent eError
+50060   Exit Property
+50070  End If
+50080
+50090  Set PrinterProfiles = GetPrinterProfiles
+50100  For i = 1 To PrinterProfiles.Count
+50110   If StrComp(Printername, PrinterProfiles(i)(0)) = 0 Then
+50120    cPrinterProfile = PrinterProfiles(i)(1)
+50130   End If
+50140  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrinterProfile [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Let cPrinterProfile(ByVal Printername As String, ByVal ProfileName As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim PrinterProfiles As Collection, PrinterProfiles2 As Collection, i As Long, sa(1) As String
+50020  If Not PrinterIsInstalled(Printername) Then
+50030   mError.Number = 15
+50040   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50050   RaiseEvent eError
+50060   Exit Property
+50070  End If
+50080  ProfileName = Trim$(ProfileName)
+50090  If ProfileExists(ProfileName) = False Then
+50100   mError.Number = 11
+50110   mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
+50120   RaiseEvent eError
+50130   Exit Property
+50140  End If
+50150
+50160  Set PrinterProfiles = GetPrinterProfiles
+50170  Set PrinterProfiles2 = New Collection
+50180
+50190  For i = 1 To PrinterProfiles.Count
+50200   sa(0) = PrinterProfiles(i)(0)
+50210   If StrComp(sa(0), Printername) = 0 Then
+50220     sa(1) = ProfileName
+50230    Else
+50240     sa(1) = PrinterProfiles(i)(1)
+50250   End If
+50260   PrinterProfiles2.Add sa
+50270  Next i
+50280  SavePrinterProfiles PrinterProfiles2
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrinterProfile [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
 Public Property Get cIsClosed() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1226,6 +1307,280 @@ End Property
 ' --- Public properties - end ---
 
 ' --- Public functions/Subroutines - begin ---
+Public Function cIsAdministrator() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cIsAdministrator = IsAdmin
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cIsAdministrator")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cPrinterIsInstalled(ByVal Printername As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If PrinterIsInstalled(Printername) = True Then
+50020    cPrinterIsInstalled = True
+50030   Else
+50040    cPrinterIsInstalled = False
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cPrinterIsInstalled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cAddPDFCreatorPrinter(ByVal Printername As String, Optional ByVal ProfileName As String = "") As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Not IsAdmin Then
+50020   mError.Number = 17
+50030   mError.Description = ErrDescr18
+50040   RaiseEvent eError
+50050   Exit Function
+50060  End If
+50070  If PrinterIsInstalled(Printername) = True Then
+50080   mError.Number = 16
+50090   mError.Description = Replace$(ErrDescr17, "%1", Printername)
+50100   RaiseEvent eError
+50110   Exit Function
+50120  End If
+50130  ProfileName = Trim$(ProfileName)
+50140  If LenB(ProfileName) > 0 Then
+50150   If ProfileExists(ProfileName) = False Then
+50160    mError.Number = 11
+50170    mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
+50180    RaiseEvent eError
+50190    Exit Function
+50200   End If
+50210  End If
+50220  cAddPDFCreatorPrinter = InstallPrinter(Printername, "PDFCreator", "PDFCreator:", "")
+50230  If LenB(ProfileName) > 0 Then
+50240   cPrinterProfile(Printername) = ProfileName
+50250  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cAddPDFCreatorPrinter")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cProfileExists(ByVal ProfileName As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  cProfileExists = ProfileExists(ProfileName)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cProfileExists")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cDeletePDFCreatorPrinter(ByVal Printername As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim PDFCreatorPrinters As Collection, i As Long
+50020  If Not IsAdmin Then
+50030   mError.Number = 17
+50040   mError.Description = ErrDescr18
+50050   RaiseEvent eError
+50060   Exit Function
+50070  End If
+50080  If Not PrinterIsInstalled(Printername) Then
+50090   mError.Number = 15
+50100   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50110   RaiseEvent eError
+50120   Exit Function
+50130  End If
+50140  Set PDFCreatorPrinters = GetPDFCreatorPrinters()
+50150
+50160  For i = 1 To PDFCreatorPrinters.Count
+50170   If StrComp(PDFCreatorPrinters(i), Printername, vbTextCompare) = 0 Then
+50180    Exit For
+50190   End If
+50200  Next i
+50210  If i > PDFCreatorPrinters.Count Then
+50220   mError.Number = 18
+50230   mError.Description = ErrDescr19
+50240   RaiseEvent eError
+50250   Exit Function
+50260  End If
+50270  cDeletePDFCreatorPrinter = UnInstallPrinter(Printername, "")
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cDeletePDFCreatorPrinter")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cGetProfileNames() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cGetProfileNames = GetProfiles
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetProfileNames")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cAddProfile(ByVal ProfileName As String, Optional ByVal Options1 As clsPDFCreatorOptions) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Profiles As Collection, i As Long
+50020  ProfileName = Trim$(ProfileName)
+50030  If LenB(ProfileName) = 0 Then
+50040   mError.Number = 13
+50050   mError.Description = ErrDescr13
+50060   RaiseEvent eError
+50070   Exit Function
+50080  End If
+50090  If ProfileExists(ProfileName) = True Then
+50100   mError.Number = 12
+50110   mError.Description = Replace$(ErrDescr12, "%1", ProfileName)
+50120   RaiseEvent eError
+50130   Exit Function
+50140  End If
+50150  If Options1 Is Nothing Then
+50160   Set Options1 = cStandardOptions
+50170  End If
+50180  SaveOptions cLetOptions(Options1), ProfileName
+50190  If ProfileExists(ProfileName) = True Then
+50200   cAddProfile = True
+50210  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cAddProfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function cRenameProfile(ByVal OldProfileName As String, ByVal NewProfileName As String) As Boolean
+ Dim Options1 As clsPDFCreatorOptions, tmpOptions As tOptions
+ OldProfileName = Trim$(OldProfileName)
+ NewProfileName = Trim$(NewProfileName)
+ If (LenB(OldProfileName) = 0) Or (LenB(NewProfileName) = 0) Then
+  mError.Number = 13
+  mError.Description = ErrDescr13
+  RaiseEvent eError
+  Exit Function
+ End If
+ If ProfileExists(OldProfileName) = False Then
+  mError.Number = 11
+  mError.Description = Replace$(ErrDescr11, "%1", OldProfileName)
+  RaiseEvent eError
+  Exit Function
+ End If
+ If StrComp(OldProfileName, NewProfileName, vbTextCompare) = 0 Then
+  mError.Number = 14
+  mError.Description = Replace$(Replace$(ErrDescr14, "%1", OldProfileName), "%2", NewProfileName)
+  RaiseEvent eError
+  Exit Function
+ End If
+ If ProfileExists(NewProfileName) = True Then
+  mError.Number = 12
+  mError.Description = Replace$(ErrDescr12, "%1", NewProfileName)
+  RaiseEvent eError
+  Exit Function
+ End If
+ 
+ SaveOptions ReadOptions(, , OldProfileName), NewProfileName
+ DeleteProfile OldProfileName
+End Function
+
+Public Function cDeleteProfile(ByVal ProfileName As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim errStr As String, sProfileAssociatedPrinters As String
+50020  ProfileName = Trim$(ProfileName)
+50030  If LenB(ProfileName) = 0 Then
+50040   mError.Number = 13
+50050   mError.Description = ErrDescr13
+50060   RaiseEvent eError
+50070   Exit Function
+50080  End If
+50090  If ProfileExists(ProfileName) = False Then
+50100   mError.Number = 11
+50110   mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
+50120   RaiseEvent eError
+50130   Exit Function
+50140  End If
+50150  errStr = ErrDescr14
+50160
+50170  sProfileAssociatedPrinters = ProfileAssociatedPrinters(ProfileName)
+50180  If LenB(sProfileAssociatedPrinters) > 0 Then
+50190   mError.Number = 14
+50200   If InStr(1, sProfileAssociatedPrinters, ",", vbTextCompare) > 0 Then
+50210    errStr = Replace$(errStr, "printer", "printers", , vbTextCompare)
+50220    mError.Description = errStr
+50230   End If
+50240   RaiseEvent eError
+50250   Exit Function
+50260  End If
+50270
+50280  DeleteProfile ProfileName
+50290
+50300  If ProfileExists(ProfileName) = False Then
+50310   cDeleteProfile = True
+50320  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cDeleteProfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Sub cAddPrintjob(ByVal filename As String) ' Supported file types: Postscript, JPEG, BMP
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1771,6 +2126,23 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function cGetPrinterProfiles() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Set cGetPrinterProfiles = GetPrinterProfiles
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cGetPrinterProfiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function cGetLogfile() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1889,8 +2261,8 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tPrintername As String
 50020  If Not PrinterIsInstalled(Printername) Then
-50030   mError.Number = 12
-50040   mError.Description = Replace$(ErrDescr12, "%1", Printername)
+50030   mError.Number = 15
+50040   mError.Description = Replace$(ErrDescr16, "%1", Printername)
 50050   RaiseEvent eError
 50060   Exit Sub
 50070  End If
