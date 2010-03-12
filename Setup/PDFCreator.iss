@@ -65,7 +65,7 @@
 #endif
 
 #ifdef CompileHelp
- #if (fileexists("C:\Program Files\HTML Help Workshop\HHC.EXE")==0)
+ #if (fileexists("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE")==0)
   #error Please install the "HTML Help Workshop" first!
  #endif
  #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
@@ -862,7 +862,7 @@ Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:Oth
 Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:OtherTasks}; Flags: unchecked; Check: Not UseWinExplorer
 
 [_ISToolPreCompile]
-Name: C:\Program Files\Inno Setup 5\ISCC.exe; Parameters: """PDFCreator - BrowserAddOn.iss"""; Flags: abortonerror
+Name: C:\Program Files (x86)\Inno Setup 5\ISCC.exe; Parameters: """PDFCreator - BrowserAddOn.iss"""; Flags: abortonerror
 
 [_ISToolPostCompile]
 Name: C:\PDFCreator\Setup\Installation\PostCompilingSetup.cmd; Parameters: ; Flags: abortonerror
