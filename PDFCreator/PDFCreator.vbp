@@ -1,6 +1,6 @@
 Type=OleExe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\system32\stdole2.tlb#OLE Automation
-Reference=*\G{3181A65A-CC39-4CDE-A4DF-2E889E6F1AF1}#1.51#0#..\..\Program Files\Common Files\Edanmo\olelib.tlb#Edanmo's OLE interfaces & functions v1.81
+Reference=*\G{3181A65A-CC39-4CDE-A4DF-2E889E6F1AF1}#1.51#0#C:\Windows\system32\olelib.tlb#Edanmo's OLE interfaces & functions v1.81
 Reference=*\G{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0#C:\Windows\System32\ieframe.dll#Microsoft Internet Controls
 Reference=*\G{C88FCAC2-DE90-11D3-9876-8517F6B99C68}#1.6#0#C:\Windows\System32\olelib2.tlb#Edanmo's OLE interfaces for Implements v1.51
 Reference=*\G{20C62CAE-15DA-101B-B9A8-444553540000}#1.1#0#C:\Windows\system32\MSMAPI32.OCX#Microsoft MAPI Controls 6.0
@@ -26,7 +26,6 @@ Form=..\Common\PDFCreator_ErrPtnrDialog.frm
 Form=frmAnimation.frm
 Form=frmCertificatePassword.frm
 Form=frmFileinfo.frm
-Form=frmInfo.frm
 Form=frmLog.frm
 Form=frmMain.frm
 Form=frmOptions.frm
