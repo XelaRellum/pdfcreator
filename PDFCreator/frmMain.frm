@@ -5,7 +5,7 @@ Begin VB.Form frmMain
    Caption         =   "PDFCreator"
    ClientHeight    =   3765
    ClientLeft      =   225
-   ClientTop       =   825
+   ClientTop       =   855
    ClientWidth     =   9510
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -745,7 +745,7 @@ On Error GoTo ErrPtnr_OnError
 50050  With LanguageStrings
 50060   Set reg = New clsRegistry
 50070   With reg
-50080    .hkey = HKEY_LOCAL_MACHINE
+50080    .hKey = HKEY_LOCAL_MACHINE
 50090    .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 50100    Version = .GetRegistryValue("ApplicationVersion")
 50110   End With
@@ -1094,7 +1094,7 @@ On Error GoTo ErrPtnr_OnError
 50130    upd.CheckForUpdates True
 50140    SetLastUpdateCeck Now
 50150   Case 8:
-50160    frmInfo.Show , Me
+50160    frmAbout.Show , Me 'frmInfo.Show , Me
 50170  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
