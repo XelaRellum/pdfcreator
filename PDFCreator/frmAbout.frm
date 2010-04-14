@@ -304,35 +304,100 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private Sub cmdClose_Click()
-Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmAbout", "cmdClose_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()
-If LanguageStrings.CommonLanguagename = "Deutsch" Or LanguageStrings.CommonLanguagename = "English" Then
-    lblTranslator.Caption = ""
-Else
-    lblTranslator.Caption = """" + LanguageStrings.CommonLanguagename + """ by " + LanguageStrings.CommonAuthor
-End If
-
-imgDonate.MousePointer = 99
-imgDonate.MouseIcon = LoadResPicture(1000, vbResCursor)
-lblHomepage.MousePointer = 99
-lblHomepage.MouseIcon = LoadResPicture(1000, vbResCursor)
-Dim i As Integer
-For i = 0 To lblLink.Count - 1
-    lblLink(i).MousePointer = 99
-    lblLink(i).MouseIcon = LoadResPicture(1000, vbResCursor)
-Next
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 If LanguageStrings.CommonLanguagename = "Deutsch" Or LanguageStrings.CommonLanguagename = "English" Then
+50020     lblTranslator.Caption = ""
+50030 Else
+50040     lblTranslator.Caption = """" + LanguageStrings.CommonLanguagename + """ by " + LanguageStrings.CommonAuthor
+50050 End If
+50060
+50070 imgDonate.MousePointer = 99
+50080 imgDonate.MouseIcon = LoadResPicture(1000, vbResCursor)
+50090 lblHomepage.MousePointer = 99
+50100 lblHomepage.MouseIcon = LoadResPicture(1000, vbResCursor)
+50110 Dim i As Integer
+50120 For i = 0 To lblLink.Count - 1
+50130     lblLink(i).MousePointer = 99
+50140     lblLink(i).MouseIcon = LoadResPicture(1000, vbResCursor)
+50150 Next
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmAbout", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub imgDonate_Click()
-OpenDocument PaypalPDFCreator
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 OpenDocument PaypalPDFCreator
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmAbout", "imgDonate_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub lblHomepage_Click()
-OpenDocument "http://www.pdfforge.org"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 OpenDocument "http://www.pdfforge.org"
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmAbout", "lblHomepage_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub lblLink_Click(Index As Integer)
-OpenDocument "http://" + lblLink(Index).Caption
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 OpenDocument "http://" + lblLink(Index).Caption
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmAbout", "lblLink_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
