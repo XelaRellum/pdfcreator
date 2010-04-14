@@ -745,7 +745,7 @@ On Error GoTo ErrPtnr_OnError
 50050  With LanguageStrings
 50060   Set reg = New clsRegistry
 50070   With reg
-50080    .hKey = HKEY_LOCAL_MACHINE
+50080    .hkey = HKEY_LOCAL_MACHINE
 50090    .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 50100    Version = .GetRegistryValue("ApplicationVersion")
 50110   End With
@@ -1094,7 +1094,7 @@ On Error GoTo ErrPtnr_OnError
 50130    upd.CheckForUpdates True
 50140    SetLastUpdateCeck Now
 50150   Case 8:
-50160    frmAbout.Show , Me 'frmInfo.Show , Me
+50160    frmAbout.Show vbModal, Me 'frmInfo.Show , Me
 50170  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
