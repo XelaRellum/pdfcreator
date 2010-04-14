@@ -54,10 +54,10 @@ Begin VB.Form frmAbout
          Strikethrough   =   0   'False
       EndProperty
       Height          =   255
-      Left            =   2880
+      Left            =   2640
       TabIndex        =   11
       Top             =   1920
-      Width           =   5295
+      Width           =   5535
    End
    Begin VB.Image imgDonate 
       Height          =   465
@@ -151,7 +151,7 @@ Begin VB.Form frmAbout
    End
    Begin VB.Line Line2 
       X1              =   2640
-      X2              =   4800
+      X2              =   5040
       Y1              =   1320
       Y2              =   1320
    End
@@ -254,7 +254,7 @@ Begin VB.Form frmAbout
    End
    Begin VB.Label Label2 
       BackColor       =   &H00FFFFFF&
-      Caption         =   "Special Thanks"
+      Caption         =   "Special Thanks to"
       BeginProperty Font 
          Name            =   "Arial Rounded MT Bold"
          Size            =   14.25
@@ -308,7 +308,12 @@ Unload Me
 End Sub
 
 Private Sub Form_Load()
-lblTranslator.Caption = LanguageStrings.CommonLanguagename + " by " + LanguageStrings.CommonAuthor
+If LanguageStrings.CommonLanguagename = "Deutsch" Or LanguageStrings.CommonLanguagename = "English" Then
+    lblTranslator.Caption = ""
+Else
+    lblTranslator.Caption = """" + LanguageStrings.CommonLanguagename + """ by " + LanguageStrings.CommonAuthor
+End If
+
 imgDonate.MousePointer = 99
 imgDonate.MouseIcon = LoadResPicture(1000, vbResCursor)
 lblHomepage.MousePointer = 99
