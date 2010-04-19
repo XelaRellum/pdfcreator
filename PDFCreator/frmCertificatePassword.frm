@@ -89,8 +89,8 @@ Public Sub ChangeLanguage()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With LanguageStrings
-50020   Me.Caption = .OptionsPDFSigningCertificateFile
-50030   dmFraCerticatePasword.Caption = .OptionsPDFSigningCertificateFile
+50020   Me.Caption = .OptionsPDFSigningCerticatePassword
+50030   dmFraCerticatePasword.Caption = .OptionsPDFSigningCerticatePassword
 50040   chkShowCertificatePassword.Caption = .OptionsPDFSigningCerticatePasswordShowPassword
 50050   cmdOk.Caption = .OptionsPDFSigningCerticatePasswordOk
 50060   cmdCancel.Caption = .OptionsPDFSigningCerticatePasswordCancel
