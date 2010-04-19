@@ -1548,10 +1548,12 @@ On Error GoTo ErrPtnr_OnError
 50740   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
 50750   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
 50760   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
+        lblPDFColorCompFac.Caption = .OptionsPDFCompressionColorCompFac
 50770   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
 50780   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
 50790   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
 50800   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
+        lblPDFGreyCompFac.Caption = .OptionsPDFCompressionGreyCompFac
 50810   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
 50820   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
 50830   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
@@ -2560,7 +2562,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim res As Long, files As Collection, certFilename As String
 50020  With Options
 50030   If LenB(.PDFSigningPFXFile) = 0 Then
-50040     res = OpenFileDialog(files, "", "PFX\P12 files (*.pfx,*.p12)|*.pfx;*.p12|PFX files (*.pfx)|*pfx|P12 files (*.p12|*.p12", "*.pfx;*.p12", "C:\", "Choose a certificate", OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
+50040     res = OpenFileDialog(files, "", LanguageStrings.OptionsPDFSigningPfxP12Files + " (*.pfx,*.p12)|*.pfx;*.p12|" + LanguageStrings.OptionsPDFSigningPfxFiles + " (*.pfx)|*pfx|" + LanguageStrings.OptionsPDFSigningP12Files + " (*.p12|*.p12", "*.pfx;*.p12", "C:\", LanguageStrings.OptionsPDFSigningChooseCertifcateFile, OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
 50050     If res > 0 Then
 50060      certFilename = files(1)
 50070     End If
