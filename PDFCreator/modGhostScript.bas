@@ -1641,31 +1641,32 @@ On Error GoTo ErrPtnr_OnError
 50220   End If
 50230   If LenB(PFXPassword) = 0 Then
 50240    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
-50250   End If
-50260   Tempfile = GetTempFile(GetTempPath, "~MP")
-50270   KillFile Tempfile
-50280   If .PDFSigningSignatureVisible = 0 Then
-50290     signatureVisible = False
-50300    Else
-50310     signatureVisible = True
-50320   End If
-50330   If .PDFSigningMultiSignature = 0 Then
-50340     multiSignatures = False
-50350    Else
-50360     multiSignatures = True
-50370   End If
-50380   If ownerPasswd = vbNullString Then
-50390    ownerPasswd = ""
-50400   End If
-50410   Set m = CreateObject("pdfforge.pdf.pdf")
-50420   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
+50250    Exit Sub
+50260   End If
+50270   Tempfile = GetTempFile(GetTempPath, "~MP")
+50280   KillFile Tempfile
+50290   If .PDFSigningSignatureVisible = 0 Then
+50300     signatureVisible = False
+50310    Else
+50320     signatureVisible = True
+50330   End If
+50340   If .PDFSigningMultiSignature = 0 Then
+50350     multiSignatures = False
+50360    Else
+50370     multiSignatures = True
+50380   End If
+50390   If ownerPasswd = vbNullString Then
+50400    ownerPasswd = ""
+50410   End If
+50420   Set m = CreateObject("pdfforge.pdf.pdf")
+50430   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
    signatureVisible, .PDFSigningSignatureOnPage, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
-50440  End With
-50450  If FileExists(Tempfile) Then
-50460   If KillFile(filename) Then
-50470    Name Tempfile As filename
-50480   End If
-50490  End If
+50450  End With
+50460  If FileExists(Tempfile) Then
+50470   If KillFile(filename) Then
+50480    Name Tempfile As filename
+50490   End If
+50500  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
