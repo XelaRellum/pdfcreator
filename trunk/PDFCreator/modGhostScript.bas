@@ -1637,36 +1637,37 @@ On Error GoTo ErrPtnr_OnError
 50180     PFXPassword = .PDFSigningPFXFilePassword
 50190    Else
 50200     'Ask for the password
-50210     frmCertificatePassword.Show vbModal
-50220   End If
-50230   If LenB(PFXPassword) = 0 Then
-50240    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
-50250    Exit Sub
-50260   End If
-50270   Tempfile = GetTempFile(GetTempPath, "~MP")
-50280   KillFile Tempfile
-50290   If .PDFSigningSignatureVisible = 0 Then
-50300     signatureVisible = False
-50310    Else
-50320     signatureVisible = True
-50330   End If
-50340   If .PDFSigningMultiSignature = 0 Then
-50350     multiSignatures = False
-50360    Else
-50370     multiSignatures = True
-50380   End If
-50390   If ownerPasswd = vbNullString Then
-50400    ownerPasswd = ""
-50410   End If
-50420   Set m = CreateObject("pdfforge.pdf.pdf")
-50430   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
+50210     frmCertificatePassword.certFilename = certFilename
+50220     frmCertificatePassword.Show vbModal
+50230   End If
+50240   If LenB(PFXPassword) = 0 Then
+50250    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
+50260    Exit Sub
+50270   End If
+50280   Tempfile = GetTempFile(GetTempPath, "~MP")
+50290   KillFile Tempfile
+50300   If .PDFSigningSignatureVisible = 0 Then
+50310     signatureVisible = False
+50320    Else
+50330     signatureVisible = True
+50340   End If
+50350   If .PDFSigningMultiSignature = 0 Then
+50360     multiSignatures = False
+50370    Else
+50380     multiSignatures = True
+50390   End If
+50400   If ownerPasswd = vbNullString Then
+50410    ownerPasswd = ""
+50420   End If
+50430   Set m = CreateObject("pdfforge.pdf.pdf")
+50440   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
    signatureVisible, .PDFSigningSignatureOnPage, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
-50450  End With
-50460  If FileExists(Tempfile) Then
-50470   If KillFile(filename) Then
-50480    Name Tempfile As filename
-50490   End If
-50500  End If
+50460  End With
+50470  If FileExists(Tempfile) Then
+50480   If KillFile(filename) Then
+50490    Name Tempfile As filename
+50500   End If
+50510  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
