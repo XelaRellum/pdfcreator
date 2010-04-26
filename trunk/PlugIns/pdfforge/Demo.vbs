@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: December, 24. 2007
+' Version: 1.0.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Shows some functions of the pdfforge.dll.
 
@@ -25,7 +25,6 @@ If CDbl(Replace(WScript.Version,".",",")) < 5.1 then
 End if
 
 WshShell.Popup "Please wait some seconds ...", 5, AppTitle, vbInformation
-
 
 Set pdfText = Wscript.CreateObject("pdfforge.pdf.PDFText")
 pdfText.FontColorBlue = 0
@@ -80,9 +79,13 @@ DeleteFile imfname
 pdfforge.NUp tfname, fname, 4
 DeleteFile tfname
 
+Set WshShell = Nothing
+Set pdfText = Nothing
+Set tools = Nothing
 Set pdfforge = Nothing
-
+Set fso = Nothing
 MsgBox "Ready"
+
 
 Private Sub DeleteFile(filename)
  Dim fso

@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.1.0.0
-' Date: December, 27. 2008
+' Version: 1.1.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Create a pdf testdocument with 4 pages per sheet.
 
@@ -35,3 +35,7 @@ f1 = p & "TestDocument.pdf"
 f2 = p & "nUp.pdf"
 pdfforge.CreatePDFTestdocument f1, 16, s
 pdfforge.NUp f1, f2, 4
+
+Set pdfforge = Nothing
+Set fso = Nothing
+MsgBox "Ready"

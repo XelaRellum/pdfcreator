@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: December, 24. 2007
+' Version: 1.0.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Set a new metadata value of a pdf file.
 
@@ -41,3 +41,7 @@ pdfforge.SetMetadataKey f1, f2, "Author", "Frank & Philip"
 fso.DeleteFile f1
 fso.MoveFile f2, f1
 MsgBox "New value for author: " & pdfforge.GetMetadata(f1, "Author")
+
+Set pdfforge = Nothing
+Set fso = Nothing
+MsgBox "Ready"

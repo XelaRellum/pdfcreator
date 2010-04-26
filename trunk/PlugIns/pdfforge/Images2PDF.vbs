@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.2.0.0
-' Date: April 07, 2009
+' Version: 1.2.0.1
+' Date: April 26, 2010
 ' Author: Frank Heindörfer
 ' Comments: Create a pdf files from a set of pictures.
 
@@ -42,6 +42,9 @@ resFile = AddBackslash(fso.GetParentFolderName(files(0))) & fso.GetBaseName(file
 pdfforge.Images2PDF_2 (files), (resFile), 0
 
 Set pdfforge = Nothing
+Set fso = Nothing
+Set objArgs = Nothing
+MsgBox "Ready"
 
 Function AddBackslash(Path)
  If Right(Path, 1) <> "\" Then

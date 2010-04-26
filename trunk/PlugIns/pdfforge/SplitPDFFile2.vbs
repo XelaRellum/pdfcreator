@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: November, 15. 2009
+' Version: 1.0.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Splits a pdf file.
 
@@ -35,3 +35,7 @@ For i = 0 to objArgs.Count - 1
  pdfforge.SplitPDFFile objArgs(i), objArgs(i)
 Next
 
+Set objArgs = Nothing
+Set pdfforge = Nothing
+Set fso = Nothing
+MsgBox "Ready"

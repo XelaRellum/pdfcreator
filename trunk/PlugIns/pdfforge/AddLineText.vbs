@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: September, 18. 2009
+' Version: 1.0.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Create a pdf testdocument with 10 pages and add a text and add a line.
 
@@ -60,4 +60,5 @@ pdfText.FillOpacity = 0.5
 pdfforge.AddTextToPDFFile "Result2.pdf", "Result3.pdf", 1, 1, (pdfText)
 
 Set pdfforge = Nothing
+Set fso = Nothing
 MsgBox "Ready"

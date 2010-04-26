@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 1.2.0.0
-' Date: January, 29. 2010
+' Version: 1.2.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: This script signs a PDF using a exported P12/PFX Zertifikat.
 Option Explicit
@@ -22,7 +22,7 @@ Const signaturePositionUpperRightY = 200
 Const multiSignatures = true
 
 				
-Dim objArgs, fname, tfname, fso, WshShell, oExec, pdfforgePDF, certificatePassword
+Dim objArgs, fname, tfname, fso, WshShell, oExec, pdfforge, certificatePassword
 
 Set objArgs = WScript.Arguments
 
@@ -44,9 +44,9 @@ If UCase(fso.GetExtensionName(fname)) <> "PDF" Then
 End If
 
 On Error Resume Next
-Set pdfforgePDF = CreateObject("pdfforge.pdf.PDF")
+Set pdfforge = CreateObject("pdfforge.pdf.pdf")
 If err.number = 429 Then
- MsgBox "The pdfforge.dll coming with PDFCreator is not installed! A possible reason could be a missing Microsoft .Net 1.1!", vbExclamation, AppTitle
+ MsgBox "The pdfforge.dll coming with PDFCreator is not installed! A possible reason could be a missing Microsoft .Net 2.0!", vbExclamation, AppTitle
  WScript.Quit
 End If
 On Error Goto 0
@@ -65,7 +65,7 @@ If IsEmpty(certificatePassword) Then
  WScript.Quit
 End If
 				
-pdfforgePDF.signPDFFile fname, "", tfname, Certificate, certificatePassword, signatureReason, signatureContact, signatureLocation, signatureVisible, signatureOnPage, signaturePositionLowerLeftX, signaturePositionLowerLeftY, signaturePositionUpperRightX, signaturePositionUpperRightY, multiSignatures, nothing
+pdfforge.signPDFFile fname, "", tfname, Certificate, certificatePassword, signatureReason, signatureContact, signatureLocation, signatureVisible, signatureOnPage, signaturePositionLowerLeftX, signaturePositionLowerLeftY, signaturePositionUpperRightX, signaturePositionUpperRightY, multiSignatures, nothing
 
 If fso.FileExists(fname) Then
  fso.DeleteFile(fname)
@@ -74,9 +74,9 @@ End If
 fso.MoveFile tfname, fname
 
 Set objArgs = Nothing
-Set pdfforgePDF = Nothing
+Set pdfforge = Nothing
 Set fso = Nothing
-
+MsgBox "Ready"
 
 Function BrowseForFile(pstrPath)
  Const OFN_EXPLORER = &H80000
