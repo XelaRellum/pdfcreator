@@ -334,8 +334,8 @@ Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: HELPfi
 
 Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
-Source: License\FairPlay License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp; Check: IsDotNET11Installed
-Source: License\FairPlay License.txt; DestDir: {app}\PlugIns\pdfforge\; Components: program; Flags: ignoreversion comparetimestamp; Check: IsDotNET11Installed
+Source: License\FairPlay License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp; Check: IsDotNET20Installed
+Source: License\FairPlay License.txt; DestDir: {app}\PlugIns\pdfforge\; Components: program; Flags: ignoreversion comparetimestamp; Check: IsDotNET20Installed
 Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 
 ;Languages
@@ -480,23 +480,23 @@ Source: Installation\PDFCreator Browser Add On-14_0_170_setup.exe; DestDir: {app
 
 ; PlugIns
 ; pdfforge
-Source: ..\PlugIns\pdfforge\readme_NotInstalled.txt; DestDir: {app}\PlugIns\pdfforge\; DestName: readme.txt; Components: program; Check: Not IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\pdfforge.dll; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\itextsharp.dll; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\readme.txt; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
+Source: ..\PlugIns\pdfforge\readme_NotInstalled.txt; DestDir: {app}\PlugIns\pdfforge\; DestName: readme.txt; Components: program; Check: Not IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\pdfforge.dll; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\itextsharp.dll; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\readme.txt; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
 Source: ..\PlugIns\pdfforge\AddLineText.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
-Source: ..\PlugIns\pdfforge\CopyPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\CreateTestpage.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\Demo.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\GetMetadaFromPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\Images2PDF.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\MergePDFFiles.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\nUp.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\SetMetadaPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\SignPDF.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\SplitPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\StampPDFFileWithImage.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
-Source: ..\PlugIns\pdfforge\StampPDFFileWithPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET11Installed
+Source: ..\PlugIns\pdfforge\CopyPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\CreateTestpage.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\Demo.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\GetMetadaFromPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\Images2PDF.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\MergePDFFiles.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\nUp.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\SetMetadaPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\SignPDF.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\SplitPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\StampPDFFileWithImage.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\StampPDFFileWithPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; OnlyBelowVersion: 0,5.2
@@ -688,7 +688,7 @@ Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shel
 
 Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile
 
-Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: """{app}\PlugIns\pdfforge\pdfforge.dll"" /codebase"; Components: program; Flags: runhidden; Check: IsDotNET11Installed
+Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: """{app}\PlugIns\pdfforge\pdfforge.dll"" /codebase"; Components: program; Flags: runhidden; Check: IsDotNET20Installed
 #ENDIF
 
 #IFDEF IncludeBrowserAddOn
@@ -698,7 +698,7 @@ Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={
 
 [UninstallRun]
 Filename: {app}\PDFCreator.exe; Parameters: /UnRegServer; Flags: skipifdoesntexist runhidden
-Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: {app}\PlugIns\pdfforge\pdfforge.dll /unregister; Flags: runhidden; Check: IsDotNET11Installed
+Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: {app}\PlugIns\pdfforge\pdfforge.dll /unregister; Flags: runhidden; Check: IsDotNET20Installed
 
 [UninstallDelete]
 Name: {app}\SetupLog.txt; Type: files
@@ -1234,9 +1234,9 @@ begin
  Result := resStr;
 end;
 
-function IsDotNET11Installed(): boolean;
+function IsDotNET20Installed(): boolean;
 begin
- Result := RegKeyExists(HKLM, 'SOFTWARE\Microsoft\NET Framework Setup\NDP\v1.1.4322');
+ Result := DirExists(GetWinDir() + '\Microsoft.NET\Framework\v2.0.50727');
 end;
 
 function GetDotNet11RegAsm(Default:String): string;
@@ -1246,7 +1246,7 @@ begin
  if RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\.NETFramework',
      'InstallRoot', InstallRoot) then
   begin
-   Result := InstallRoot + 'v1.1.4322\RegAsm.exe';
+   Result := InstallRoot + 'v2.0.50727\RegAsm.exe';
   end;
 end;
 
@@ -2312,7 +2312,7 @@ begin
    SaveStringToFile(LogFile, 'ProcessorArchitecture: IA64'+#13#10, True);
  end;
 
- If IsDotNET11Installed then begin
+ If IsDotNET20Installed then begin
    SaveStringToFile(LogFile, '.Net 1.1: true'+#13#10, True)
    SaveStringToFile(LogFile, '.Net 1.1 regasm.exe:' + GetDotNet11RegAsm('')+#13#10, True)
   end else
