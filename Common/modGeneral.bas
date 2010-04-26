@@ -2319,17 +2319,28 @@ Public Function DotNet1_1Installed() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry
-50020  Set reg = New clsRegistry
-50030  reg.hkey = HKEY_LOCAL_MACHINE
-50040  reg.KeyRoot = "Software"
-50050  reg.SubKey = "Microsoft\NET Framework Setup\NDP\v1.1.4322"
-50060  DotNet1_1Installed = reg.KeyExists
-50070  Set reg = Nothing
+50010  DotNet1_1Installed = DirExists(CompletePath(Environ$("Systemroot")) & "Microsoft.NET\Framework\v1.1.4322")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGeneral", "DotNet1_1Installed")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function DotNet2_0Installed() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  DotNet2_0Installed = DirExists(CompletePath(Environ$("Systemroot")) & "Microsoft.NET\Framework\v2.0.50727")
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "DotNet2_0Installed")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2343,7 +2354,7 @@ Public Function PDFUpdateMetadataIsPossible() As Boolean
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\pdfforge.dll") And _
-  FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") And DotNet1_1Installed Then
+  FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") And DotNet2_0Installed Then
 50030   PDFUpdateMetadataIsPossible = True
 50040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2363,7 +2374,7 @@ Public Function PDFSigningIsPossible() As Boolean
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\pdfforge.dll") And _
-  FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") And DotNet1_1Installed Then
+  FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") And DotNet2_0Installed Then
 50030   PDFSigningIsPossible = True
 50040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
