@@ -1501,36 +1501,49 @@ End Select
 End Function
 
 Public Function cRenameProfile(ByVal OldProfileName As String, ByVal NewProfileName As String) As Boolean
- Dim Options1 As clsPDFCreatorOptions, tmpOptions As tOptions
- OldProfileName = Trim$(OldProfileName)
- NewProfileName = Trim$(NewProfileName)
- If (LenB(OldProfileName) = 0) Or (LenB(NewProfileName) = 0) Then
-  mError.Number = 13
-  mError.Description = ErrDescr13
-  RaiseEvent eError
-  Exit Function
- End If
- If ProfileExists(OldProfileName) = False Then
-  mError.Number = 11
-  mError.Description = Replace$(ErrDescr11, "%1", OldProfileName)
-  RaiseEvent eError
-  Exit Function
- End If
- If StrComp(OldProfileName, NewProfileName, vbTextCompare) = 0 Then
-  mError.Number = 14
-  mError.Description = Replace$(Replace$(ErrDescr14, "%1", OldProfileName), "%2", NewProfileName)
-  RaiseEvent eError
-  Exit Function
- End If
- If ProfileExists(NewProfileName) = True Then
-  mError.Number = 12
-  mError.Description = Replace$(ErrDescr12, "%1", NewProfileName)
-  RaiseEvent eError
-  Exit Function
- End If
- 
- SaveOptions ReadOptions(, , OldProfileName), NewProfileName
- DeleteProfile OldProfileName
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim Options1 As clsPDFCreatorOptions, tmpOptions As tOptions
+50020  OldProfileName = Trim$(OldProfileName)
+50030  NewProfileName = Trim$(NewProfileName)
+50040  If (LenB(OldProfileName) = 0) Or (LenB(NewProfileName) = 0) Then
+50050   mError.Number = 13
+50060   mError.Description = ErrDescr13
+50070   RaiseEvent eError
+50080   Exit Function
+50090  End If
+50100  If ProfileExists(OldProfileName) = False Then
+50110   mError.Number = 11
+50120   mError.Description = Replace$(ErrDescr11, "%1", OldProfileName)
+50130   RaiseEvent eError
+50140   Exit Function
+50150  End If
+50160  If StrComp(OldProfileName, NewProfileName, vbTextCompare) = 0 Then
+50170   mError.Number = 14
+50180   mError.Description = Replace$(Replace$(ErrDescr14, "%1", OldProfileName), "%2", NewProfileName)
+50190   RaiseEvent eError
+50200   Exit Function
+50210  End If
+50220  If ProfileExists(NewProfileName) = True Then
+50230   mError.Number = 12
+50240   mError.Description = Replace$(ErrDescr12, "%1", NewProfileName)
+50250   RaiseEvent eError
+50260   Exit Function
+50270  End If
+50280
+50290  SaveOptions ReadOptions(, , OldProfileName), NewProfileName
+50300  DeleteProfile OldProfileName
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreator", "cRenameProfile")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Function cDeleteProfile(ByVal ProfileName As String) As Boolean
