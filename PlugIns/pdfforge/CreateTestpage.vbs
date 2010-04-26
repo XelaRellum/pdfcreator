@@ -29,4 +29,4 @@ Next
 
 Set pdfforge = Wscript.CreateObject("pdfforge.pdf.pdf")
 pdfforge.CreatePDFTestdocument "TestDocument.pdf", 100, s
-pdfforge = Nothing
+Set pdfforge = Nothing
