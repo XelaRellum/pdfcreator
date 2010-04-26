@@ -61,7 +61,7 @@ Begin VB.Form frmCertificatePassword
          Left            =   240
          TabIndex        =   2
          Top             =   960
-         Width           =   4335
+         Width           =   3975
       End
       Begin VB.TextBox txtCertificatePassword 
          Appearance      =   0  '2D
@@ -71,7 +71,22 @@ Begin VB.Form frmCertificatePassword
          PasswordChar    =   "*"
          TabIndex        =   1
          Top             =   480
-         Width           =   4335
+         Width           =   3975
+      End
+      Begin VB.Image imgValidCertificatePassword 
+         Height          =   240
+         Left            =   4440
+         Picture         =   "frmCertificatePassword.frx":27A2
+         Top             =   720
+         Visible         =   0   'False
+         Width           =   240
+      End
+      Begin VB.Image imgInvalidCertificatePassword 
+         Height          =   240
+         Left            =   4320
+         Picture         =   "frmCertificatePassword.frx":2D2C
+         Top             =   505
+         Width           =   240
       End
    End
 End
@@ -83,6 +98,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private ScreenMousePointer As Long
+Private m As Object
+Public certFilename As String
 
 Public Sub ChangeLanguage()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -156,7 +173,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmCertificatePassword", "cmdOk_Click")
+Select Case ErrPtnr.OnError("frmCertificatePassword", "cmdOK_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -172,6 +189,9 @@ On Error GoTo ErrPtnr_OnError
 50010  ChangeLanguage
 50020  ScreenMousePointer = Screen.MousePointer
 50030  Screen.MousePointer = vbDefault
+50040  Set m = CreateObject("pdfforge.pdf.pdf")
+50050  imgValidCertificatePassword.Left = imgInvalidCertificatePassword.Left
+50060  imgValidCertificatePassword.Top = imgInvalidCertificatePassword.Top
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -188,11 +208,39 @@ Private Sub Form_Unload(Cancel As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Screen.MousePointer = ScreenMousePointer
+50010  Set m = Nothing
+50020  Screen.MousePointer = ScreenMousePointer
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmCertificatePassword", "Form_Unload")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub SetIcon(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If value = True Then
+50020    If imgValidCertificatePassword.Visible = False Then
+50030     imgValidCertificatePassword.Visible = True
+50040     imgInvalidCertificatePassword.Visible = False
+50050    End If
+50060   Else
+50070    If imgInvalidCertificatePassword.Visible = False Then
+50080     imgInvalidCertificatePassword.Visible = True
+50090     imgValidCertificatePassword.Visible = False
+50100    End If
+50110  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmCertificatePassword", "SetIcon")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -207,9 +255,16 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If LenB(txtCertificatePassword.Text) = 0 Then
 50020    cmdOk.Enabled = False
-50030   Else
-50040    cmdOk.Enabled = True
-50050  End If
+50030    SetIcon False
+50040   Else
+50050    If m.IsValidCertificatePassword(certFilename, txtCertificatePassword.Text) Then
+50060      cmdOk.Enabled = True
+50070      SetIcon True
+50080     Else
+50090      cmdOk.Enabled = False
+50100      SetIcon False
+50110    End If
+50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
