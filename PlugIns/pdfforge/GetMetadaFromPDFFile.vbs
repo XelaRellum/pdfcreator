@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: December, 24. 2007
+' Version: 1.0.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Get a metadata value from a pdf file.
 
@@ -36,3 +36,7 @@ f1 = p + "TestDocument.pdf"
 
 pdfforge.CreatePDFTestdocument f1, 100, s
 MsgBox "Creator: " & pdfforge.GetMetadata(f1, "Creator")
+
+Set pdfforge = Nothing
+Set fso = Nothing
+MsgBox "Ready"

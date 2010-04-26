@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: December, 24. 2007
+' Version: 1.0.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Create a pdf testdocument with 100 pages and stamp the pages 1 until 4 with an external image.
 
@@ -44,3 +44,8 @@ pdfforge.StampPDFFileWithImage f2, f3, im, 3, 4, true, 1, 9
 fso.DeleteFile f1
 fso.DeleteFile f2
 fso.DeleteFile im
+
+Set tools = Nothing
+Set pdfforge = Nothing
+Set fso = Nothing
+MsgBox "Ready"

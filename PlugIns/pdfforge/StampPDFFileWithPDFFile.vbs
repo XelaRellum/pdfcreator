@@ -3,8 +3,8 @@
 ' License: FairPlay
 ' Homepage: http://www.pdfforge.org/products/pdfcreator
 ' Windows Scripting Host version: 5.1
-' Version: 1.0.0.0
-' Date: December, 24. 2007
+' Version: 1.0.0.1
+' Date: April, 26. 2010
 ' Author: Frank Heindörfer
 ' Comments: Create a pdf testdocument with 100 pages and copy the pages from 2 until 7 in a new pdf document.
 
@@ -38,3 +38,8 @@ Next
 tools.CreateTestImage "TestImage.png"
 pdfforge.StampPDFFileWithImage "TestDocument.pdf", "TestDocumentStamped.pdf", "TestImage.png", true, 0.8, 0, 1, 2
 fso.DeleteFile "TestImage.png"
+
+Set tools = Nothing
+Set pdfforge = Nothing
+Set fso = Nothing
+MsgBox "Ready"

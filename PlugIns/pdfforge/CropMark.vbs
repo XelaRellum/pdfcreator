@@ -29,5 +29,7 @@ Set pdfLine  = Wscript.CreateObject("pdfforge.pdf.pdfline")
 ' Add crop marks to a pdf using the standard line object.
 pdfforge.AddCropMarksToPDFFile "TestDocument.pdf", "TestDocument_1.pdf", 1, 2, 3, 3, 3, 3, (pdfline)
 
+Set pdfLine = Nothing
 Set pdfforge = Nothing
+Set fso = Nothing
 MsgBox "Ready"
