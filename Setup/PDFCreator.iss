@@ -1,6 +1,6 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.3.7 (with ISPP) and ISTool 5.3.0.1
-; Installation from Frank Heindörfer
+; Setup created with Inno Setup QuickStart Pack 5.3.9 (with ISPP) and ISTool 5.3.0.1
+; Installation script created by Frank Heindörfer
 
 ;#define Test
 
@@ -20,11 +20,11 @@
 #define GhostscriptLicense "GPL"
 
 #ifdef FastCompilation
- #define CompressionMode="none"
- #define SetupLZMACompressionMode "none"
+ #define Compression="none"
+ #define InternalCompressLevel="none"
 #else
- #define CompressionMode="lzma/ultra"
- #define SetupLZMACompressionMode "ultra"
+ #define Compression="lzma2/ultra64"
+ #define InternalCompressLevel="ultra64"
 #endif
 
 #Ifdef IncludeGhostscript
@@ -158,14 +158,14 @@ AppUpdatesURL={#Homepage}
 AppVersion={#AppVersion}
 ArchitecturesAllowed=x86 x64
 ChangesAssociations=true
-Compression={#CompressionMode}
+Compression={#Compression}
 CreateUninstallRegKey=false
 DefaultDirName={reg:HKLM\{#UninstallRegStr2},Inno Setup: App Path|{pf}\{#AppName}}
 DefaultGroupName={#AppName}
 DisableDirPage=false
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
-InternalCompressLevel={#SetupLZMACompressionMode}
+InternalCompressLevel={#InternalCompressLevel}
 LicenseFile=.\License\Program license - english.rtf
 #Ifdef IncludeGhostscript
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_setup
