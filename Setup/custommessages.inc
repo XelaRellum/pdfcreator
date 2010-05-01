@@ -19,6 +19,7 @@
 ;#include "Language includes\italian.inc"
 ;#include "Language includes\japanese.inc"
 ;#include "Language includes\korean.inc"
+#include "Language includes\latvian.inc"
 ;#include "Language includes\lithuanian.inc"
 ;#include "Language includes\norwegian_bokmal.inc"
 ;#include "Language includes\polish.inc"
