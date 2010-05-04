@@ -42,7 +42,7 @@ On Error GoTo ErrPtnr_OnError
 50220   Set process = ProcessIDs(i)
 50230   If process.ID > 0 Then
 50240    If IsService(process.Modulname, AllActiveServices) = False Then
-50250      If LCase$(process.Modulname) <> "iexplore.exe" And LCase$(process.Modulname) <> "crome.exe" Then
+50250      If LCase$(process.Modulname) <> "iexplore.exe" And LCase$(process.Modulname) <> "chrome.exe" Then
 50260        If Logging = True Then
 50270         WriteToSpecialLogfile "Process (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & ") seems not to be a service."
 50280        End If
