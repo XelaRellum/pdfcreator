@@ -5,7 +5,7 @@ Public Function GetPDFCreatorTempfolder(Optional Preview As Boolean = False, Opt
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetPDFCreatorTempfolder = ResolveEnvironment(GetSubstFilename2(Options.PrinterTemppath, Preview, Temppath))
+50010  GetPDFCreatorTempfolder = ResolveEnvironment(GetSubstFilename2(PrinterTempPath, Preview, Temppath))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

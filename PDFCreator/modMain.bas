@@ -7,6 +7,8 @@ Public InputFilename As String, ShowAnimationWindow As Boolean, _
 Private UnLoadFile As Boolean, ClearCacheDir As Boolean, _
  OutputFilename As String, InitSettings As Boolean, frmMainSUP As Long, _
  AddWindowsExplorerIntegration As Boolean, RemoveWindowsExplorerIntegration As Boolean
+ 
+Public PrinterTempPath As String
 
 Private bInstallPrinter As Boolean, InstallPrinterName As String, bUninstallPrinter As Boolean, UnInstallPrinterName As String
 Private bInstallWindowsPrinter As Boolean, bUninstallWindowsPrinter As Boolean
@@ -473,7 +475,7 @@ On Error GoTo ErrPtnr_OnError
 50350  End If
 50360
 50370  Options = ReadOptions
-50380
+50380  PrinterTempPath = Options.PrinterTempPath
 50390  If LenB(Optionsfile) > 0 Then
 50400   Options = ReadOptionsINI(Options, Optionsfile, False, False)
 50410  End If
