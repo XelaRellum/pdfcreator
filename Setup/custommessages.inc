@@ -10,7 +10,7 @@
 ;#include "Language includes\estonian.inc"
 ;#include "Language includes\finnish.inc"
 #include "Language includes\french.inc"
-;#include "Language includes\galician.inc"
+#include "Language includes\galician.inc"
 #include "Language includes\german.inc"
 ;#include "Language includes\greek.inc"
 ;#include "Language includes\hebrew.inc"
