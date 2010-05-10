@@ -2892,20 +2892,19 @@ Public Sub SaveOptions(sOptions As tOptions, Optional ProfileName As String = ""
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tStr As String
+50010  CorrectOptionsBeforeSaving
 50020
-50030  CorrectOptionsBeforeSaving
+50030  ProfileName = Trim$(ProfileName)
 50040
-50050  ProfileName = Trim$(ProfileName)
-50060  If LenB(ProfileName) > 0 Then
-50070   tStr = "_" & ProfileName
-50080  End If
-50090
-50100  If InstalledAsServer Then
-50110    SaveOptionsREG sOptions, HKEY_LOCAL_MACHINE, ProfileName
-50120   Else
-50130    SaveOptionsREG sOptions, , ProfileName
-50140  End If
+50050  If InstalledAsServer Then
+50060    SaveOptionsREG sOptions, HKEY_LOCAL_MACHINE, ProfileName
+50070   Else
+50080    If LenB(ProfileName) > 0 Then
+50090     If HKLMProfileExists(ProfileName) = False Then
+50100      SaveOptionsREG sOptions, , ProfileName
+50110     End If
+50120    End If
+50130  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

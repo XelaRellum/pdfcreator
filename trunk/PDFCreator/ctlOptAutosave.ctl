@@ -170,6 +170,37 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private ControlsEnabled As Boolean
+
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlsEnabled = value
+50020  chkUseAutosave.Enabled = value
+50030  cmbAutosaveFormat.Enabled = value
+50040  txtAutosaveFilename.Enabled = value
+50050  txtAutosaveDirectory.Enabled = value
+50060  lblAutosaveformat.Enabled = value
+50070  lblAutosaveFilename.Enabled = value
+50080  lblAutosaveFilenameTokens.Enabled = value
+50090  txtAutoSaveFilenamePreview.Enabled = value
+50100  chkUseAutosaveDirectory.Enabled = value
+50110  txtAutoSaveDirectoryPreview.Enabled = value
+50120  chkAutosaveStartStandardProgram.Enabled = value
+50130  chkAutosaveSendEmail.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptAutosave", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -218,7 +249,8 @@ On Error GoTo ErrPtnr_OnError
 50420   .ListIndex = 0
 50430  End With
 50440
-50450  SetFrames Options.OptionsDesign
+50450  ControlsEnabled = True
+50460  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -442,38 +474,42 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ViewAutosave(Viewit As Boolean)
+Private Sub ViewAutosave(ViewIt As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lblAutosaveformat.Enabled = Viewit
-50020  cmbAutosaveFormat.Enabled = Viewit
-50030  lblAutosaveFilename.Enabled = Viewit
-50040  txtAutosaveFilename.Enabled = Viewit
-50050  txtAutoSaveFilenamePreview.Enabled = Viewit
-50060  lblAutosaveFilenameTokens.Enabled = Viewit
-50070  cmbAutoSaveFilenameTokens.Enabled = Viewit
-50080  chkUseAutosaveDirectory.Enabled = Viewit
-50090  txtAutoSaveDirectoryPreview.Enabled = Viewit
-50100  chkAutosaveStartStandardProgram.Enabled = Viewit
-50110  chkAutosaveSendEmail.Enabled = Viewit
-50120
-50130  If Viewit Then
-50140    cmbAutosaveFormat.BackColor = &H80000005
-50150    cmbAutoSaveFilenameTokens.BackColor = &H80000005
-50160    txtAutosaveFilename.BackColor = &H80000005
-50170    txtAutosaveDirectory.BackColor = &H80000005
-50180   Else
-50190    cmbAutosaveFormat.BackColor = &H8000000F
-50200    cmbAutoSaveFilenameTokens.BackColor = &H8000000F
-50210    txtAutosaveFilename.BackColor = &H8000000F
-50220    txtAutosaveDirectory.BackColor = &H8000000F
-50230  End If
-50240  If chkUseAutosaveDirectory.value = 1 And Viewit Then
-50250    ViewAutosaveDirectory True
-50260   Else
-50270    ViewAutosaveDirectory False
-50280  End If
+50010  If ControlsEnabled = False Then
+50020   ViewIt = False
+50030  End If
+50040
+50050  lblAutosaveformat.Enabled = ViewIt
+50060  cmbAutosaveFormat.Enabled = ViewIt
+50070  lblAutosaveFilename.Enabled = ViewIt
+50080  txtAutosaveFilename.Enabled = ViewIt
+50090  txtAutoSaveFilenamePreview.Enabled = ViewIt
+50100  lblAutosaveFilenameTokens.Enabled = ViewIt
+50110  cmbAutoSaveFilenameTokens.Enabled = ViewIt
+50120  chkUseAutosaveDirectory.Enabled = ViewIt
+50130  txtAutoSaveDirectoryPreview.Enabled = ViewIt
+50140  chkAutosaveStartStandardProgram.Enabled = ViewIt
+50150  chkAutosaveSendEmail.Enabled = ViewIt
+50160
+50170  If ViewIt Then
+50180    cmbAutosaveFormat.BackColor = &H80000005
+50190    cmbAutoSaveFilenameTokens.BackColor = &H80000005
+50200    txtAutosaveFilename.BackColor = &H80000005
+50210    txtAutosaveDirectory.BackColor = &H80000005
+50220   Else
+50230    cmbAutosaveFormat.BackColor = &H8000000F
+50240    cmbAutoSaveFilenameTokens.BackColor = &H8000000F
+50250    txtAutosaveFilename.BackColor = &H8000000F
+50260    txtAutosaveDirectory.BackColor = &H8000000F
+50270  End If
+50280  If chkUseAutosaveDirectory.value = 1 And ViewIt Then
+50290    ViewAutosaveDirectory True
+50300   Else
+50310    ViewAutosaveDirectory False
+50320  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -486,14 +522,14 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ViewAutosaveDirectory(Viewit As Boolean)
+Private Sub ViewAutosaveDirectory(ViewIt As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  txtAutosaveDirectory.Enabled = Viewit
-50020  txtAutoSaveDirectoryPreview.Enabled = Viewit
-50030  cmdGetAutosaveDirectory.Enabled = Viewit
-50040  If Viewit = True Then
+50010  txtAutosaveDirectory.Enabled = ViewIt
+50020  txtAutoSaveDirectoryPreview.Enabled = ViewIt
+50030  cmdGetAutosaveDirectory.Enabled = ViewIt
+50040  If ViewIt And ControlsEnabled Then
 50050    txtAutosaveDirectory.BackColor = &H80000005
 50060   Else
 50070    txtAutosaveDirectory.BackColor = &H8000000F
@@ -514,7 +550,7 @@ Private Sub chkUseAutosave_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkUseAutosave.value = 1 Then
+50010  If chkUseAutosave.value = 1 And ControlsEnabled Then
 50020    ViewAutosave True
 50030   Else
 50040    ViewAutosave False

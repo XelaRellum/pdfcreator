@@ -242,8 +242,28 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private mEnabled As Boolean
+Private mControlsEnabled As Boolean
 
-Public Property Let ControlEnabled(value As Boolean)
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  mControlsEnabled = value
+50020  ControlsEnabled = value
+50030  dmFraProgGhostscript.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGhostscript", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Property Let ControlsEnabled(value As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -263,12 +283,16 @@ On Error GoTo ErrPtnr_OnError
 50140  txtAdditionalGhostscriptSearchpath.Visible = mEnabled
 50150  chkAddWindowsFontpath.Enabled = mEnabled
 50160  chkAddWindowsFontpath.Visible = mEnabled
-50170  lblEnableNotice.Enabled = Not mEnabled
-50180  lblEnableNotice.Visible = Not mEnabled
+50170  lblEnableNotice.Visible = Not mEnabled
+50180  If mControlsEnabled Then
+50190    lblEnableNotice.Enabled = Not mEnabled
+50200   Else
+50210    lblEnableNotice.Enabled = False
+50220  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptGhostscript", "ControlEnabled [LET]")
+Select Case ErrPtnr.OnError("ctlOptGhostscript", "ControlsEnabled [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -306,7 +330,8 @@ On Error GoTo ErrPtnr_OnError
 50060  lblEnableNotice.Top = lblGhostscriptversion.Top
 50070  lblEnableNotice.Left = lblGhostscriptversion.Left
 50080
-50090  SetFrames Options.OptionsDesign
+50090  mControlsEnabled = True
+50100  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

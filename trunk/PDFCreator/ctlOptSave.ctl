@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptSave 
    ClientHeight    =   5865
    ClientLeft      =   0
@@ -251,6 +251,55 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private ControlsEnabled As Boolean
+
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlsEnabled = value
+50020
+50030  lblSaveFilename.Enabled = value
+50040  txtSaveFilename.Enabled = value
+50050  lblSaveFilenameTokens.Enabled = value
+50060  cmbSaveFilenameTokens.Enabled = value
+50070  txtSavePreview.Enabled = value
+50080  chkSpaces.Enabled = value
+50090  lblStandardSaveformat.Enabled = value
+50100  cmbStandardSaveFormat.Enabled = value
+50110  chkAllowSpecialGSCharsInFilenames.Enabled = value
+50120  dmFraProgSave.Enabled = value
+50130
+50140  txtFilenameSubst(0).Enabled = value
+50150  lblEqual.Enabled = value
+50160  txtFilenameSubst(1).Enabled = value
+50170  If value = False Then
+50180   cmdFilenameSubstMove(0).Enabled = value
+50190   cmdFilenameSubstMove(1).Enabled = value
+50200  End If
+50210  lsvFilenameSubst.Enabled = value
+50220  If value = False Then
+50230    lsvFilenameSubst.ForeColor = &H80000002
+50240   Else
+50250    lsvFilenameSubst.ForeColor = &H80000008
+50260  End If
+50270  cmdFilenameSubst(0).Enabled = value
+50280  cmdFilenameSubst(1).Enabled = value
+50290  cmdFilenameSubst(2).Enabled = value
+50300  chkFilenameSubst.Enabled = value
+50310  dmFraFilenameSubstitutions.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptSave", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -314,9 +363,10 @@ On Error GoTo ErrPtnr_OnError
 50570  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
 50580  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
 50590
-50600  CheckCmdFilenameSubst
-50610
-50620  SetFrames Options.OptionsDesign
+50600  ControlsEnabled = True
+50610  CheckCmdFilenameSubst
+50620
+50630  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -411,6 +461,9 @@ On Error GoTo ErrPtnr_OnError
 50250   cmbStandardSaveFormat.ListIndex = .StandardSaveformat
 50260   chkAllowSpecialGSCharsInFilenames.value = .AllowSpecialGSCharsInFilenames
 50270  End With
+50280  If ControlsEnabled Then
+50290   CheckCmdFilenameSubst
+50300  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -620,17 +673,21 @@ Private Sub MoveUpFilenameSubstitutions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tStrL As String, tStrR As String
-50020  With lsvFilenameSubst
-50030   tStrL = .ListItems(.SelectedItem.Index).Text
-50040   tStrR = .ListItems(.SelectedItem.Index).SubItems(1)
-50050   .ListItems(.SelectedItem.Index).Text = .ListItems(.SelectedItem.Index - 1).Text
-50060   .ListItems(.SelectedItem.Index).SubItems(1) = .ListItems(.SelectedItem.Index - 1).SubItems(1)
-50070   .ListItems(.SelectedItem.Index - 1).Text = tStrL
-50080   .ListItems(.SelectedItem.Index - 1).SubItems(1) = tStrR
-50090   .ListItems(.SelectedItem.Index - 1).Selected = True
-50100   .ListItems(.SelectedItem.Index).EnsureVisible
-50110  End With
-50120  Set_txtFilenameSubst
+50020  If lsvFilenameSubst.SelectedItem.Index = 1 Then
+50030   CheckCmdFilenameSubst
+50040   Exit Sub
+50050  End If
+50060  With lsvFilenameSubst
+50070   tStrL = .ListItems(.SelectedItem.Index).Text
+50080   tStrR = .ListItems(.SelectedItem.Index).SubItems(1)
+50090   .ListItems(.SelectedItem.Index).Text = .ListItems(.SelectedItem.Index - 1).Text
+50100   .ListItems(.SelectedItem.Index).SubItems(1) = .ListItems(.SelectedItem.Index - 1).SubItems(1)
+50110   .ListItems(.SelectedItem.Index - 1).Text = tStrL
+50120   .ListItems(.SelectedItem.Index - 1).SubItems(1) = tStrR
+50130   .ListItems(.SelectedItem.Index - 1).Selected = True
+50140   .ListItems(.SelectedItem.Index).EnsureVisible
+50150  End With
+50160  Set_txtFilenameSubst
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

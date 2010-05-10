@@ -145,6 +145,28 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private ControlsEnabled As Boolean
+
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlsEnabled = value
+50020
+50030  chkPrintAfterSaving.Enabled = value
+50040  dmFraProgPrint.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptPrint", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub chkPrintAfterSavingMaxResolution_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -252,7 +274,8 @@ On Error GoTo ErrPtnr_OnError
 50400   .AddItem "1200"
 50410  End With
 50420
-50430  SetFrames Options.OptionsDesign
+50430  ControlsEnabled = True
+50440  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -412,7 +435,7 @@ Private Sub chkPrintAfterSaving_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkPrintAfterSaving.value = 1 Then
+50010  If chkPrintAfterSaving.value = 1 And ControlsEnabled Then
 50020    ViewPrintAfterSaving True
 50030   Else
 50040    ViewPrintAfterSaving False

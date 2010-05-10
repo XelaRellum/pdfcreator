@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptGeneral 
    ClientHeight    =   5850
    ClientLeft      =   0
@@ -372,6 +372,55 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private ControlsEnabled As Boolean
+
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlsEnabled = value
+50020
+50030  chkNoConfirmMessageSwitchingDefaultprinter.Enabled = value
+50040  chkNoProcessingAtStartup.Enabled = value
+50050  cmbOptionsDesign.Enabled = value
+50060  sldProcessPriority.Enabled = value
+50070  cmbSendMailMethod.Enabled = value
+50080  chkShowAnimation.Enabled = value
+50090  cmbUpdateInterval.Enabled = value
+50100
+50110  cmdTestpage.Enabled = value
+50120  lblProcessPriority.Enabled = value
+50130  lblSendMailMethod.Enabled = value
+50140  cmdShellintegration(0).Enabled = value
+50150  cmdShellintegration(1).Enabled = value
+50160  cmdAsso.Enabled = value
+50170  lblOptionsDesign.Enabled = value
+50180  cmdInstallBrowserAddOn.Enabled = value
+50190  lblUpdateInterval.Enabled = value
+50200  cmdCheckNow.Enabled = value
+50210
+50220  If value = True Then
+50230    SetProgramOptions
+50240    tbstrProgGeneral_Click
+50250   Else
+50260    dmFraProgGeneral1.Enabled = False
+50270    dmFraBrowserAddOn.Enabled = False
+50280    dmFraProgGeneral2.Enabled = False
+50290    dmFraShellIntegration.Enabled = False
+50300    dmFraCheckUpdate.Enabled = False
+50310  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGeneral", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub cmdCheckNow_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -437,50 +486,41 @@ On Error GoTo ErrPtnr_OnError
 50390   Next i
 50400  End With
 50410
-50420  If IsWin9xMe = False Then
-50430   If IsAdmin = False Then
-50440    cmdShellintegration(0).Enabled = False
-50450    cmdShellintegration(1).Enabled = False
-50460   End If
-50470  End If
-50480  If IsPsAssociate = False Then
-50490    cmdAsso.Enabled = True
-50500   Else
-50510    cmdAsso.Enabled = False
-50520  End If
-50530  With sldProcessPriority
-50540   .TextPosition = sldBelowRight
-50550   .TickFrequency = 1
-50560   .TickStyle = sldTopLeft
-50571   Select Case .value
+50420  With sldProcessPriority
+50430   .TextPosition = sldBelowRight
+50440   .TickFrequency = 1
+50450   .TickStyle = sldTopLeft
+50461   Select Case .value
          Case 0: 'Idle
-50590     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
-50600    Case 1: 'Normal
-50610     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
-50620    Case 2: 'High
-50630     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
-50640    Case 3: 'Realtime
-50650     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
-50660   End Select
-50670  End With
-50680
-50690  If IsWin9xMe = False Then
-50700    lblProcessPriority.Enabled = True
-50710    sldProcessPriority.Enabled = True
-50720   Else
-50730    lblProcessPriority.Enabled = False
-50740    sldProcessPriority.Enabled = False
-50750  End If
-50760
-50770  If FileExists(CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe") And (Not BrowserAddOnIsInstalled) Then
-50780    dmFraBrowserAddOn.Enabled = True
-50790    cmdInstallBrowserAddOn.Enabled = True
-50800   Else
-50810    dmFraBrowserAddOn.Enabled = False
-50820    cmdInstallBrowserAddOn.Enabled = False
-50830  End If
-50840
-50850  SetFrames Options.OptionsDesign
+50480     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityIdle
+50490    Case 1: 'Normal
+50500     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityNormal
+50510    Case 2: 'High
+50520     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityHigh
+50530    Case 3: 'Realtime
+50540     lblProcessPriority.Caption = LanguageStrings.OptionsProcesspriority & ": " & LanguageStrings.OptionsProcesspriorityRealtime
+50550   End Select
+50560  End With
+50570
+50580  If IsWin9xMe = False Then
+50590    lblProcessPriority.Enabled = True
+50600    sldProcessPriority.Enabled = True
+50610   Else
+50620    lblProcessPriority.Enabled = False
+50630    sldProcessPriority.Enabled = False
+50640  End If
+50650
+50660  If FileExists(CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe") And (Not BrowserAddOnIsInstalled) Then
+50670    dmFraBrowserAddOn.Enabled = True
+50680    cmdInstallBrowserAddOn.Enabled = True
+50690   Else
+50700    dmFraBrowserAddOn.Enabled = False
+50710    cmdInstallBrowserAddOn.Enabled = False
+50720  End If
+50730
+50740  SetFrames Options.OptionsDesign
+50750  ControlsEnabled = True
+50760  SetProgramOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -608,8 +648,8 @@ Public Sub SetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With Options1
-50020   chkNoConfirmMessageSwitchingDefaultprinter = .NoConfirmMessageSwitchingDefaultprinter
-50030   chkNoProcessingAtStartup = .NoProcessingAtStartup
+50020   chkNoConfirmMessageSwitchingDefaultprinter.value = .NoConfirmMessageSwitchingDefaultprinter
+50030   chkNoProcessingAtStartup.value = .NoProcessingAtStartup
 50040   cmbOptionsDesign.ListIndex = .OptionsDesign
 50050   sldProcessPriority.value = .ProcessPriority
 50060   cmbSendMailMethod.ListIndex = .SendMailMethod
@@ -620,6 +660,33 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptGeneral", "SetOptions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub SetProgramOptions()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If IsWin9xMe = False Then
+50020   If IsAdmin = False Then
+50030    cmdShellintegration(0).Enabled = False
+50040    cmdShellintegration(1).Enabled = False
+50050   End If
+50060  End If
+50070  If IsPsAssociate = False Then
+50080    cmdAsso.Enabled = True
+50090   Else
+50100    cmdAsso.Enabled = False
+50110  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGeneral", "SetProgramOptions")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -671,22 +738,26 @@ On Error GoTo ErrPtnr_OnError
 50060    dmFraShellIntegration.Visible = False
 50070    dmFraCheckUpdate.Enabled = False
 50080    dmFraCheckUpdate.Visible = False
-50090    dmFraProgGeneral1.Enabled = True
-50100    dmFraProgGeneral1.Visible = True
-50110    dmFraBrowserAddOn.Enabled = True
-50120    dmFraBrowserAddOn.Visible = True
-50130   Case 2
-50140    dmFraProgGeneral1.Enabled = False
-50150    dmFraProgGeneral1.Visible = False
-50160    dmFraBrowserAddOn.Enabled = False
-50170    dmFraBrowserAddOn.Visible = False
-50180    dmFraProgGeneral2.Enabled = True
-50190    dmFraProgGeneral2.Visible = True
-50200    dmFraShellIntegration.Enabled = True
+50090    dmFraProgGeneral1.Visible = True
+50100    dmFraBrowserAddOn.Visible = True
+50110    If ControlsEnabled Then
+50120     dmFraProgGeneral1.Enabled = True
+50130     dmFraBrowserAddOn.Enabled = True
+50140    End If
+50150   Case 2
+50160    dmFraProgGeneral1.Enabled = False
+50170    dmFraProgGeneral1.Visible = False
+50180    dmFraBrowserAddOn.Enabled = False
+50190    dmFraBrowserAddOn.Visible = False
+50200    dmFraProgGeneral2.Visible = True
 50210    dmFraShellIntegration.Visible = True
-50220    dmFraCheckUpdate.Enabled = True
-50230    dmFraCheckUpdate.Visible = True
-50240  End Select
+50220    dmFraCheckUpdate.Visible = True
+50230    If ControlsEnabled Then
+50240     dmFraProgGeneral2.Enabled = True
+50250     dmFraShellIntegration.Enabled = True
+50260     dmFraCheckUpdate.Enabled = True
+50270    End If
+50280  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
