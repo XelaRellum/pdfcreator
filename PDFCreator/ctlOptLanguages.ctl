@@ -124,8 +124,28 @@ Public ParentForm As Form
 Private LangFiles As Collection, Languages As Collection, FirstStart As Boolean, OldLangListIndex As Long
 
 Private mEnabled As Boolean
+Private mControlsEnabled As Boolean
 
-Public Property Let ControlEnabled(value As Boolean)
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  mControlsEnabled = value
+50020  ControlsEnabled = value
+50030  dmFraProgLanguage.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptLanguages", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Property Let ControlsEnabled(value As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -145,12 +165,16 @@ On Error GoTo ErrPtnr_OnError
 50140  cmdLanguageRefresh.Visible = mEnabled
 50150  cmdLanguageInstall.Enabled = mEnabled
 50160  cmdLanguageInstall.Visible = mEnabled
-50170  lblEnableNotice.Enabled = Not mEnabled
-50180  lblEnableNotice.Visible = Not mEnabled
+50170  lblEnableNotice.Visible = Not mEnabled
+50180  If mControlsEnabled Then
+50190    lblEnableNotice.Enabled = Not mEnabled
+50200   Else
+50210    lblEnableNotice.Enabled = False
+50220  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptLanguages", "ControlEnabled [LET]")
+Select Case ErrPtnr.OnError("ctlOptLanguages", "ControlsEnabled [LET]")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Property
@@ -196,7 +220,8 @@ On Error GoTo ErrPtnr_OnError
 50140
 50150  ReadAllLanguages LanguagePath, True
 50160
-50170  SetFrames Options.OptionsDesign
+50170  mControlsEnabled = True
+50180  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

@@ -38,12 +38,20 @@ Begin VB.Form frmOptions
       TabIndex        =   3
       Top             =   1320
       Width           =   6420
-      _extentx        =   11324
-      _extenty        =   1879
-      caption         =   ""
-      barcolorfrom    =   723949
-      barcolorto      =   132452
-      font            =   "frmOptions.frx":000C
+      _ExtentX        =   11324
+      _ExtentY        =   1879
+      Caption         =   ""
+      BarColorFrom    =   723949
+      BarColorTo      =   132452
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.PictureBox picOptions 
          Appearance      =   0  '2D
          BorderStyle     =   0  'Kein
@@ -96,17 +104,25 @@ Begin VB.Form frmOptions
       TabIndex        =   6
       Top             =   120
       Width           =   9180
-      _extentx        =   16193
-      _extenty        =   1879
-      caption         =   "Profil"
-      barcolorfrom    =   723949
-      barcolorto      =   132452
-      font            =   "frmOptions.frx":0038
+      _ExtentX        =   16193
+      _ExtentY        =   1879
+      Caption         =   "Profil"
+      BarColorFrom    =   723949
+      BarColorTo      =   132452
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CommandButton cmdProfileRename 
          Enabled         =   0   'False
          Height          =   375
          Left            =   7200
-         Picture         =   "frmOptions.frx":0064
+         Picture         =   "frmOptions.frx":000C
          Style           =   1  'Grafisch
          TabIndex        =   12
          ToolTipText     =   "Rename profile"
@@ -116,7 +132,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileLoad 
          Height          =   375
          Left            =   8640
-         Picture         =   "frmOptions.frx":0458
+         Picture         =   "frmOptions.frx":0400
          Style           =   1  'Grafisch
          TabIndex        =   11
          ToolTipText     =   "Load profile"
@@ -126,7 +142,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileSave 
          Height          =   375
          Left            =   8160
-         Picture         =   "frmOptions.frx":0856
+         Picture         =   "frmOptions.frx":07FE
          Style           =   1  'Grafisch
          TabIndex        =   10
          ToolTipText     =   "Save profile"
@@ -137,7 +153,7 @@ Begin VB.Form frmOptions
          Enabled         =   0   'False
          Height          =   375
          Left            =   7680
-         Picture         =   "frmOptions.frx":0BEB
+         Picture         =   "frmOptions.frx":0B93
          Style           =   1  'Grafisch
          TabIndex        =   9
          ToolTipText     =   "Delete profile"
@@ -147,7 +163,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileAdd 
          Height          =   375
          Left            =   6720
-         Picture         =   "frmOptions.frx":0FE3
+         Picture         =   "frmOptions.frx":0F8B
          Style           =   1  'Grafisch
          TabIndex        =   8
          ToolTipText     =   "Add profile"
@@ -176,107 +192,107 @@ Begin VB.Form frmOptions
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   26
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":13D3
+            Picture         =   "frmOptions.frx":137B
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":152D
+            Picture         =   "frmOptions.frx":14D5
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":1AC7
+            Picture         =   "frmOptions.frx":1A6F
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":2061
+            Picture         =   "frmOptions.frx":2009
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":25FB
+            Picture         =   "frmOptions.frx":25A3
             Key             =   ""
          EndProperty
          BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":2995
+            Picture         =   "frmOptions.frx":293D
             Key             =   ""
          EndProperty
          BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":2F2F
+            Picture         =   "frmOptions.frx":2ED7
             Key             =   ""
          EndProperty
          BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":3809
+            Picture         =   "frmOptions.frx":37B1
             Key             =   ""
          EndProperty
          BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":3DA3
+            Picture         =   "frmOptions.frx":3D4B
             Key             =   ""
          EndProperty
          BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":433D
+            Picture         =   "frmOptions.frx":42E5
             Key             =   ""
          EndProperty
          BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":48D7
+            Picture         =   "frmOptions.frx":487F
             Key             =   ""
          EndProperty
          BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":4E71
+            Picture         =   "frmOptions.frx":4E19
             Key             =   ""
          EndProperty
          BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":540B
+            Picture         =   "frmOptions.frx":53B3
             Key             =   ""
          EndProperty
          BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":59A5
+            Picture         =   "frmOptions.frx":594D
             Key             =   ""
          EndProperty
          BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":5F3F
+            Picture         =   "frmOptions.frx":5EE7
             Key             =   ""
          EndProperty
          BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":64D9
+            Picture         =   "frmOptions.frx":6481
             Key             =   ""
          EndProperty
          BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":6A73
+            Picture         =   "frmOptions.frx":6A1B
             Key             =   ""
          EndProperty
          BeginProperty ListImage18 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":700D
+            Picture         =   "frmOptions.frx":6FB5
             Key             =   ""
          EndProperty
          BeginProperty ListImage19 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":75A7
+            Picture         =   "frmOptions.frx":754F
             Key             =   ""
          EndProperty
          BeginProperty ListImage20 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":7E81
+            Picture         =   "frmOptions.frx":7E29
             Key             =   ""
          EndProperty
          BeginProperty ListImage21 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":875B
+            Picture         =   "frmOptions.frx":8703
             Key             =   ""
          EndProperty
          BeginProperty ListImage22 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":8CF5
+            Picture         =   "frmOptions.frx":8C9D
             Key             =   ""
          EndProperty
          BeginProperty ListImage23 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":928F
+            Picture         =   "frmOptions.frx":9237
             Key             =   ""
          EndProperty
          BeginProperty ListImage24 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":9829
+            Picture         =   "frmOptions.frx":97D1
             Key             =   ""
          EndProperty
          BeginProperty ListImage25 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":9DC3
+            Picture         =   "frmOptions.frx":9D6B
             Key             =   ""
          EndProperty
          BeginProperty ListImage26 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":A35D
+            Picture         =   "frmOptions.frx":A305
             Key             =   ""
          EndProperty
       EndProperty
@@ -328,20 +344,34 @@ On Error GoTo ErrPtnr_OnError
 50040   End If
 50050   OldProfile = cmbProfile.ListIndex
 50060   If cmbProfile.ListIndex = 0 Then
-50070     optGhostscript.ControlEnabled = True
-50080     optLanguages.ControlEnabled = True
+50070     optGhostscript.ControlsEnabled = True
+50080     optLanguages.ControlsEnabled = True
 50090     cmdProfileRename.Enabled = False
 50100     cmdProfileDelete.Enabled = False
-50110    Else
-50120     optGhostscript.ControlEnabled = False
-50130     optLanguages.ControlEnabled = False
-50140     cmdProfileRename.Enabled = True
-50150     cmdProfileDelete.Enabled = True
-50160   End If
-50170   Options1 = ProfileOptions(cmbProfile.ListIndex)
-50180   Options1.Language = CurrentLanguage
-50190   SetOptions
-50200  End If
+50110     cmdProfileSave.Enabled = True
+50120     cmdReset.Enabled = True
+50130     SetSubOption LastNodeKey, True
+50140    Else
+50150     If HKLMProfileExists(cmbProfile.List(cmbProfile.ListIndex)) And InstalledAsServer = False Then
+50160       cmdProfileRename.Enabled = False
+50170       cmdProfileDelete.Enabled = False
+50180       cmdProfileSave.Enabled = False
+50190       cmdReset.Enabled = False
+50200       SetSubOption LastNodeKey, False
+50210      Else
+50220       cmdProfileRename.Enabled = True
+50230       cmdProfileDelete.Enabled = True
+50240       cmdProfileSave.Enabled = True
+50250       cmdReset.Enabled = True
+50260       SetSubOption LastNodeKey, True
+50270     End If
+50280     optGhostscript.ControlsEnabled = False
+50290     optLanguages.ControlsEnabled = False
+50300   End If
+50310   Options1 = ProfileOptions(cmbProfile.ListIndex)
+50320   Options1.Language = CurrentLanguage
+50330   SetOptions
+50340  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -954,7 +984,7 @@ On Error GoTo ErrPtnr_OnError
 50300  ' Add all new/renamed profiles
 50310  For i = 1 To cmbProfile.ListCount - 1
 50320   ProfileOptions(i).LastUpdateCheck = Options.LastUpdateCheck
-50330   ProfileOptions(i).PrinterTempPath = PrinterTempPath
+50330   ProfileOptions(i).PrinterTemppath = PrinterTemppath
 50340   SaveOptions ProfileOptions(i), cmbProfile.List(i)
 50350  Next i
 50360  ' Ready profiles saving
@@ -1009,362 +1039,366 @@ On Error GoTo ErrPtnr_OnError
 50050  Dim ctl1 As Control, ctl2 As Control, sa(2) As String
 50060  Dim Profiles As Collection, PrinterProfiles As Collection
 50070  Dim nodeProgram As Node, nodeFormats As Node
-50080
-50090  Set TempPrinterProfiles = New Collection
+50080  Dim tmpProfiles As Collection
+50090
 50100
-50110  Options1 = Options
-50120  CurrentLanguage = Options.Language
-50130
-50140  UnloadForm = False
-50150  Me.Icon = LoadResPicture(2120, vbResIcon)
-50160  KeyPreview = True
-50170
-50180  cmbProfile.Top = (cmdProfileAdd.Height - cmbProfile.Height) / 2 + cmdProfileAdd.Top
+50110  Set TempPrinterProfiles = New Collection
+50120
+50130  Options1 = Options
+50140  CurrentLanguage = Options.Language
+50150
+50160  UnloadForm = False
+50170  Me.Icon = LoadResPicture(2120, vbResIcon)
+50180  KeyPreview = True
 50190
-50200  oldLanguage = Options.Language
+50200  cmbProfile.Top = (cmdProfileAdd.Height - cmbProfile.Height) / 2 + cmdProfileAdd.Top
 50210
-50220  With Screen
-50230   .MousePointer = vbHourglass
-50240   Move (.Width - Width) / 2, (.Height - Height) / 2
-50250  End With
-50260
-50270  trvOptions.Indentation = 0
-50280  trvOptions.LineStyle = tvwTreeLines
-50290  Set trvOptions.ImageList = imlIeb
-50300  trvOptions.Nodes.Clear
-50310  With LanguageStrings
-50320   Set nodeProgram = trvOptions.Nodes.Add(, , "Program", .OptionsTreeProgram, 1)
-50330   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramGeneral", .OptionsProgramGeneralSymbol, 1
-50340   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramGhostscript", .OptionsProgramGhostscriptSymbol, 2
-50350   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramDocument", .OptionsProgramDocumentSymbol, 3
-50360   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramSave", .OptionsProgramSaveSymbol, 4
-50370   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramAutosave", .OptionsProgramAutosaveSymbol, 5
-50380   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramActions", .OptionsProgramActionsSymbol, 7
-50390   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramPrint", .OptionsProgramPrintSymbol, 8
-50400   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramFonts", .OptionsProgramFontSymbol, 9
-50410   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramLanguages", .OptionsProgramLanguagesSymbol, 10
-50420   Set nodeFormats = trvOptions.Nodes.Add(, , "Formats", .OptionsTreeFormats, 11)
-50430   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPDF", .OptionsPDFSymbol, 11
-50440   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPNG", .OptionsPNGSymbol, 12
-50450   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsJPEG", .OptionsJPEGSymbol, 13
-50460   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsBMP", .OptionsBMPSymbol, 14
-50470   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPCX", .OptionsPCXSymbol, 15
-50480   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsTIFF", .OptionsTIFFSymbol, 16
-50490   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPS", .OptionsPSSymbol, 17
-50500   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsEPS", .OptionsEPSSymbol, 18
-50510   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsTXT", .OptionsTXTSymbol, 21
-50520   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPSD", .OptionsPSDSymbol, 22
-50530   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPCL", .OptionsPCLSymbol, 23
-50540   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsRAW", .OptionsRAWSymbol, 24
-50550   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsSVG", .OptionsSVGSymbol, 26
-50560  End With
-50570  nodeProgram.Expanded = True
-50580  nodeFormats.Expanded = True
-50590
-50600  With LanguageStrings
-50610   Set picOptions = LoadResPicture(2101, vbResIcon)
-50620   Me.Caption = .DialogPrinterOptions
-50630   cmdCancel.Caption = .OptionsCancel
-50640   cmdReset.Caption = .OptionsReset
-50650   cmdSave.Caption = .OptionsSave
-50660  End With
-50670
-50680  SetFrame dmFraDescription
-50690  SetFrame dmFraProfile
-50700
-50710  ' Add ActionsControl
-50720  Set optActionsControl = Controls.Add("PDFCreator.ctlOptActions", "ctlOptActions")
-50730  optActionsControl.Width = dmFraDescription.Width
-50740  Set optActions = optActionsControl.object
-50750  optActions.SetLanguageStrings
-50760  optActions.SetOptions
-50770  ' Add AutosaveControl
-50780  Set optAutosaveControl = Controls.Add("PDFCreator.ctlOptAutosave", "ctlOptAutosave")
-50790  optAutosaveControl.Width = dmFraDescription.Width
-50800  Set optAutosave = optAutosaveControl.object
-50810  optAutosave.SetLanguageStrings
-50820  optAutosave.SetOptions
-50830  ' Add DirectoriesControl
-50840 ' Set optDirectoriesControl = Controls.Add("PDFCreator.ctlOptDirectories", "ctlOptDirectories")
-50850 ' optDirectoriesControl.Width = dmFraDescription.Width
-50860 ' Set optDirectories = optDirectoriesControl.object
-50870 ' optDirectories.SetLanguageStrings
-50880 ' optDirectories.SetOptions
-50890  ' Add DocumentControl
-50900  Set optDocumentControl = Controls.Add("PDFCreator.ctlOptDocument", "ctlOptDocument")
-50910  optDocumentControl.Width = dmFraDescription.Width
-50920  Set optDocument = optDocumentControl.object
-50930  optDocument.SetLanguageStrings
-50940  optDocument.SetOptions
-50950  ' Add FontsControl
-50960  Set optFontsControl = Controls.Add("PDFCreator.ctlOptFonts", "ctlOptFonts")
-50970  optFontsControl.Width = dmFraDescription.Width
-50980  Set optFonts = optFontsControl.object
-50990  optFonts.SetLanguageStrings
-51000  optFonts.SetOptions
-51010  ' Add FormatPNGControl
-51020  Set optFormatPNGControl = Controls.Add("PDFCreator.ctlOptFormatPNG", "ctlOptFormatPNG")
-51030  optFormatPNGControl.Width = dmFraDescription.Width
-51040  Set optFormatPNG = optFormatPNGControl.object
-51050  optFormatPNG.SetLanguageStrings
-51060  optFormatPNG.SetOptions
-51070  ' Add FormatJPEQControl
-51080  Set optFormatJPEGControl = Controls.Add("PDFCreator.ctlOptFormatJPEG", "ctlOptFormatJPEG")
-51090  optFormatJPEGControl.Width = dmFraDescription.Width
-51100  Set optFormatJPEG = optFormatJPEGControl.object
-51110  optFormatJPEG.SetLanguageStrings
-51120  optFormatJPEG.SetOptions
-51130  ' Add FormatBMPControl
-51140  Set optFormatBMPControl = Controls.Add("PDFCreator.ctlOptFormatBMP", "ctlOptFormatBMP")
-51150  optFormatBMPControl.Width = dmFraDescription.Width
-51160  Set optFormatBMP = optFormatBMPControl.object
-51170  optFormatBMP.SetLanguageStrings
-51180  optFormatBMP.SetOptions
-51190  ' Add FormatPCXControl
-51200  Set optFormatPCXControl = Controls.Add("PDFCreator.ctlOptFormatPCX", "ctlOptFormatPCX")
-51210  optFormatPCXControl.Width = dmFraDescription.Width
-51220  Set optFormatPCX = optFormatPCXControl.object
-51230  optFormatPCX.SetLanguageStrings
-51240  optFormatPCX.SetOptions
-51250  ' Add FormatTIFFControl
-51260  Set optFormatTIFFControl = Controls.Add("PDFCreator.ctlOptFormatTIFF", "ctlOptFormatTIFF")
-51270  optFormatTIFFControl.Width = dmFraDescription.Width
-51280  Set optFormatTIFF = optFormatTIFFControl.object
-51290  optFormatTIFF.SetLanguageStrings
-51300  optFormatTIFF.SetOptions
-51310  ' Add FormatPDFControl
-51320  Set optFormatPDFControl = Controls.Add("PDFCreator.ctlOptFormatPDF", "ctlOptFormatPDF")
-51330  optFormatPDFControl.Width = dmFraDescription.Width
-51340  Set optFormatPDF = optFormatPDFControl.object
-51350  optFormatPDF.SetLanguageStrings
-51360  optFormatPDF.SetOptions
-51370  ' Add FormatPS
-51380  Set optFormatPSControl = Controls.Add("PDFCreator.ctlOptFormatPS", "ctlOptFormatPS")
-51390  optFormatPSControl.Width = dmFraDescription.Width
-51400  Set optFormatPS = optFormatPSControl.object
-51410  optFormatPS.SetLanguageStrings
-51420  optFormatPS.SetOptions
-51430  ' Add FormatEPSControl
-51440  Set optFormatEPSControl = Controls.Add("PDFCreator.ctlOptFormatEPS", "ctlOptFormatEPS")
-51450  optFormatEPSControl.Width = dmFraDescription.Width
-51460  Set optFormatEPS = optFormatEPSControl.object
-51470  optFormatEPS.SetLanguageStrings
-51480  optFormatEPS.SetOptions
-51490  ' Add FormatTXTControl
-51500  Set optFormatTXTControl = Controls.Add("PDFCreator.ctlOptFormatTXT", "ctlOptFormatTXT")
-51510  optFormatTXTControl.Width = dmFraDescription.Width
-51520  Set optFormatTXT = optFormatTXTControl.object
-51530  optFormatTXT.SetLanguageStrings
-51540  optFormatTXT.SetOptions
-51550  ' Add FormatPSDControl
-51560  Set optFormatPSDControl = Controls.Add("PDFCreator.ctlOptFormatPSD", "ctlOptFormatPSD")
-51570  optFormatPSDControl.Width = dmFraDescription.Width
-51580  Set optFormatPSD = optFormatPSDControl.object
-51590  optFormatPSD.SetLanguageStrings
-51600  optFormatPSD.SetOptions
-51610  ' Add FormatPCLControl
-51620  Set optFormatPCLControl = Controls.Add("PDFCreator.ctlOptFormatPCL", "ctlOptFormatPCL")
-51630  optFormatPCLControl.Width = dmFraDescription.Width
-51640  Set optFormatPCL = optFormatPCLControl.object
-51650  optFormatPCL.SetLanguageStrings
-51660  optFormatPCL.SetOptions
-51670  ' Add FormatRAWControl
-51680  Set optFormatRAWControl = Controls.Add("PDFCreator.ctlOptFormatRAW", "ctlOptFormatRAW")
-51690  optFormatRAWControl.Width = dmFraDescription.Width
-51700  Set optFormatRAW = optFormatRAWControl.object
-51710  optFormatRAW.SetLanguageStrings
-51720  optFormatRAW.SetOptions
-51730  ' Add FormatSVGControl
-51740  Set optFormatSVGControl = Controls.Add("PDFCreator.ctlOptFormatSVG", "ctlOptFormatSVG")
-51750  optFormatSVGControl.Width = dmFraDescription.Width
-51760  Set optFormatSVG = optFormatSVGControl.object
-51770  optFormatSVG.SetLanguageStrings
-51780  optFormatSVG.SetOptions
-51790 ' ' Add FormatXCFControl - Doesn't work
-51800 ' Set optFormatXCFControl = Controls.Add("PDFCreator.ctlOptFormatXCF", "ctlOptFormatXCF")
-51810 ' optFormatXCFControl.Width = dmFraDescription.Width
-51820 ' Set optFormatXCF = optFormatXCFControl.object
-51830 ' optFormatXCF.SetLanguageStrings
-51840 ' optFormatXCF.SetOptions
-51850  ' Add GhostscriptControl
-51860  Set optGhostscriptControl = Controls.Add("PDFCreator.ctlOptGhostscript", "ctlOptGhostscript")
-51870  optGhostscriptControl.Width = dmFraDescription.Width
-51880  Set optGhostscript = optGhostscriptControl.object
-51890  optGhostscript.SetLanguageStrings
-51900  optGhostscript.SetOptions
-51910  ' Add LanguagesControl
-51920  Set optLanguagesControl = Controls.Add("PDFCreator.ctlOptLanguages", "ctlOptLanguages")
-51930  optLanguagesControl.Width = dmFraDescription.Width
-51940  Set optLanguages = optLanguagesControl.object
-51950  optLanguages.SetLanguageStrings
-51960  optLanguages.SetOptions
-51970  ' Add PrintControl
-51980  Set optPrintControl = Controls.Add("PDFCreator.ctlOptPrint", "ctlOptPrint")
-51990  optPrintControl.Width = dmFraDescription.Width
-52000  Set optPrint = optPrintControl.object
-52010  optPrint.SetLanguageStrings
-52020  optPrint.SetOptions
-52030  ' Add SaveControl
-52040  '
-52050  Set optSaveControl = Controls.Add("PDFCreator.ctlOptSave", "ctlOptSave")
-52060  optSaveControl.Width = dmFraDescription.Width
-52070  Set optSave = optSaveControl.object
-52080  optSave.SetLanguageStrings
-52090  optSave.SetOptions
-52100  ' Add GeneralControl
-52110  '
-52120  Set optGeneralControl = Controls.Add("PDFCreator.ctlOptGeneral", "ctlOptGeneral")
-52130  optGeneralControl.Width = dmFraDescription.Width
-52140  Set optGeneral = optGeneralControl.object
-52150  optGeneral.SetLanguageStrings
-52160 '
-52170  optGeneral.SetOptions
-52180
-52190  dmFraProfile.Caption = LanguageStrings.OptionsProfile
-52200  cmbProfile.Clear
-52210  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
-52220
-52230  Set Profiles = GetProfiles
-52240  ReDim ProfileNames(Profiles.Count)
-52250  ReDim ProfileOptions(Profiles.Count)
-52260  ProfileNames(0) = LanguageStrings.OptionsProfileDefaultName
-52270  ProfileOptions(0) = Options
-52280
-52290  With dmFraDescription
-52300   .Caption = LanguageStrings.OptionsTreeProgram
-52310   .Visible = True
-52320
-52330   optActionsControl.Top = .Top + .Height + ControlTop
-52340   optActionsControl.Left = .Left
-52350   optActionsControl.Width = .Width
-52360   optAutosaveControl.Top = .Top + .Height + ControlTop
-52370   optAutosaveControl.Left = .Left
-52380   optAutosaveControl.Width = .Width
-52390 '  optDirectoriesControl.Top = .Top + .Height + ControlTop
-52400 '  optDirectoriesControl.Left = .Left
-52410 '  optDirectoriesControl.Width = .Width
-52420   optDocumentControl.Top = .Top + .Height + ControlTop
-52430   optDocumentControl.Left = .Left
-52440   optDocumentControl.Width = .Width
-52450   optFontsControl.Top = .Top + .Height + ControlTop
-52460   optFontsControl.Left = .Left
-52470   optFontsControl.Width = .Width
-52480   optFormatPNGControl.Top = .Top + .Height + ControlTop
-52490   optFormatPNGControl.Left = .Left
-52500   optFormatPNGControl.Width = .Width
-52510   optFormatJPEGControl.Top = .Top + .Height + ControlTop
-52520   optFormatJPEGControl.Left = .Left
-52530   optFormatJPEGControl.Width = .Width
-52540   optFormatBMPControl.Top = .Top + .Height + ControlTop
-52550   optFormatBMPControl.Left = .Left
-52560   optFormatBMPControl.Width = .Width
-52570   optFormatPCXControl.Top = .Top + .Height + ControlTop
-52580   optFormatPCXControl.Left = .Left
-52590   optFormatPCXControl.Width = .Width
-52600   optFormatTIFFControl.Top = .Top + .Height + ControlTop
-52610   optFormatTIFFControl.Left = .Left
-52620   optFormatTIFFControl.Width = .Width
-52630   optFormatPDFControl.Top = .Top + .Height + ControlTop
-52640   optFormatPDFControl.Left = .Left
-52650   optFormatPDFControl.Width = .Width
-52660   optFormatPSControl.Top = .Top + .Height + ControlTop
-52670   optFormatPSControl.Left = .Left
-52680   optFormatPSControl.Width = .Width
-52690   optFormatEPSControl.Top = .Top + .Height + ControlTop
-52700   optFormatEPSControl.Left = .Left
-52710   optFormatEPSControl.Width = .Width
-52720   optFormatTXTControl.Top = .Top + .Height + ControlTop
-52730   optFormatTXTControl.Left = .Left
-52740   optFormatTXTControl.Width = .Width
-52750   optFormatPSDControl.Top = .Top + .Height + ControlTop
-52760   optFormatPSDControl.Left = .Left
-52770   optFormatPSDControl.Width = .Width
-52780   optFormatPCLControl.Top = .Top + .Height + ControlTop
-52790   optFormatPCLControl.Left = .Left
-52800   optFormatPCLControl.Width = .Width
-52810   optFormatRAWControl.Top = .Top + .Height + ControlTop
-52820   optFormatRAWControl.Left = .Left
-52830   optFormatRAWControl.Width = .Width
-52840   optFormatSVGControl.Top = .Top + .Height + ControlTop
-52850   optFormatSVGControl.Left = .Left
-52860   optFormatSVGControl.Width = .Width
-52870 '  optFormatXCFControl.Top = .Top + .Height + ControlTop
-52880 '  optFormatXCFControl.Left = .Left
-52890 '  optFormatXCFControl.Width = .Width
-52900   optGeneralControl.Top = .Top + .Height + ControlTop
-52910   optGeneralControl.Left = .Left
-52920   optGeneralControl.Width = .Width
-52930   optGhostscriptControl.Top = .Top + .Height + ControlTop
-52940   optGhostscriptControl.Left = .Left
-52950   optGhostscriptControl.Width = .Width
-52960   optLanguagesControl.Top = .Top + .Height + ControlTop
-52970   optLanguagesControl.Left = .Left
-52980   optLanguagesControl.Width = .Width
-52990   optPrintControl.Top = .Top + .Height + ControlTop
-53000   optPrintControl.Left = .Left
-53010   optPrintControl.Width = .Width
-53020   optSaveControl.Top = .Top + .Height + ControlTop
-53030   optSaveControl.Left = .Left
-53040   optSaveControl.Width = .Width
-53050
-53060   cmdCancel.Left = .Left
-53070   cmdReset.Left = .Left + (.Width - cmdReset.Width) / 2
-53080   cmdSave.Left = .Left + .Width - cmdSave.Width
-53090  End With
-53100
-53110  For i = 1 To Profiles.Count
-53120   cmbProfile.AddItem Profiles(i)
-53130   ProfileNames(i) = Profiles(i)
-53140   ProfileOptions(i) = ReadOptions(, , Profiles(i))
-53150  Next i
-53160  SetProfile CurrentPrinterProfile
-53170
-53180  If cmbProfile.ListIndex = 0 Then
-53190    optGhostscript.ControlEnabled = True
-53200    optLanguages.ControlEnabled = True
-53210    cmdProfileRename.Enabled = False
-53220    cmdProfileDelete.Enabled = False
-53230   Else
-53240    optGhostscript.ControlEnabled = False
-53250    optLanguages.ControlEnabled = False
-53260    cmdProfileRename.Enabled = True
-53270    cmdProfileDelete.Enabled = True
-53280  End If
-53290
-53300  Set PrinterProfiles = GetPrinterProfiles
-53310  For i = 1 To PrinterProfiles.Count
-53320   sa(0) = PrinterProfiles(i)(0)
-53330   sa(1) = PrinterProfiles(i)(1)
-53340   sa(2) = PrinterProfiles(i)(1)
-53350   TempPrinterProfiles.Add sa
-53360  Next i
-53370
-53380  With LanguageStrings
-53390   cmdProfileAdd.ToolTipText = .OptionsProfileAdd
-53400   cmdProfileDelete.ToolTipText = .OptionsProfileDel
-53410   cmdProfileRename.ToolTipText = .OptionsProfileRenameProfile
-53420   cmdProfileSave.ToolTipText = .OptionsProfileSaveToDisc
-53430   cmdProfileLoad.ToolTipText = .OptionsProfileLoadFromDisc
-53440   cmbProfile.List(0) = .OptionsProfileDefaultName
-53450  End With
-53460
-53470  If ShowOnlyOptions = True Then
-53480   FormInTaskbar Me, True, True
-53490   Caption = "PDFCreator - " & Caption
-53500  End If
-53510
-53520  ShowAcceleratorsInForm Me, True
-53530
-53540  Screen.MousePointer = vbNormal
-53550
-53560  With Options
-53570   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-53580  End With
-53590
-53600  LastNodeKey = ""
-53610  trvOptions.Nodes("Program").Selected = True
-53620  trvOptions_NodeClick trvOptions.Nodes("Program")
-53630  LoadReady = True
+50220  oldLanguage = Options.Language
+50230
+50240  With Screen
+50250   .MousePointer = vbHourglass
+50260   Move (.Width - Width) / 2, (.Height - Height) / 2
+50270  End With
+50280
+50290  trvOptions.Indentation = 0
+50300  trvOptions.LineStyle = tvwTreeLines
+50310  Set trvOptions.ImageList = imlIeb
+50320  trvOptions.Nodes.Clear
+50330  With LanguageStrings
+50340   Set nodeProgram = trvOptions.Nodes.Add(, , "Program", .OptionsTreeProgram, 1)
+50350   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramGeneral", .OptionsProgramGeneralSymbol, 1
+50360   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramGhostscript", .OptionsProgramGhostscriptSymbol, 2
+50370   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramDocument", .OptionsProgramDocumentSymbol, 3
+50380   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramSave", .OptionsProgramSaveSymbol, 4
+50390   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramAutosave", .OptionsProgramAutosaveSymbol, 5
+50400   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramActions", .OptionsProgramActionsSymbol, 7
+50410   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramPrint", .OptionsProgramPrintSymbol, 8
+50420   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramFonts", .OptionsProgramFontSymbol, 9
+50430   trvOptions.Nodes.Add nodeProgram, tvwChild, "ProgramLanguages", .OptionsProgramLanguagesSymbol, 10
+50440   Set nodeFormats = trvOptions.Nodes.Add(, , "Formats", .OptionsTreeFormats, 11)
+50450   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPDF", .OptionsPDFSymbol, 11
+50460   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPNG", .OptionsPNGSymbol, 12
+50470   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsJPEG", .OptionsJPEGSymbol, 13
+50480   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsBMP", .OptionsBMPSymbol, 14
+50490   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPCX", .OptionsPCXSymbol, 15
+50500   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsTIFF", .OptionsTIFFSymbol, 16
+50510   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPS", .OptionsPSSymbol, 17
+50520   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsEPS", .OptionsEPSSymbol, 18
+50530   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsTXT", .OptionsTXTSymbol, 21
+50540   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPSD", .OptionsPSDSymbol, 22
+50550   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsPCL", .OptionsPCLSymbol, 23
+50560   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsRAW", .OptionsRAWSymbol, 24
+50570   trvOptions.Nodes.Add nodeFormats, tvwChild, "FormatsSVG", .OptionsSVGSymbol, 26
+50580  End With
+50590  nodeProgram.Expanded = True
+50600  nodeFormats.Expanded = True
+50610
+50620  With LanguageStrings
+50630   Set picOptions = LoadResPicture(2101, vbResIcon)
+50640   Me.Caption = .DialogPrinterOptions
+50650   cmdCancel.Caption = .OptionsCancel
+50660   cmdReset.Caption = .OptionsReset
+50670   cmdSave.Caption = .OptionsSave
+50680  End With
+50690
+50700  SetFrame dmFraDescription
+50710  SetFrame dmFraProfile
+50720
+50730  ' Add ActionsControl
+50740  Set optActionsControl = Controls.Add("PDFCreator.ctlOptActions", "ctlOptActions")
+50750  optActionsControl.Width = dmFraDescription.Width
+50760  Set optActions = optActionsControl.object
+50770  optActions.SetLanguageStrings
+50780  optActions.SetOptions
+50790  ' Add AutosaveControl
+50800  Set optAutosaveControl = Controls.Add("PDFCreator.ctlOptAutosave", "ctlOptAutosave")
+50810  optAutosaveControl.Width = dmFraDescription.Width
+50820  Set optAutosave = optAutosaveControl.object
+50830  optAutosave.SetLanguageStrings
+50840  optAutosave.SetOptions
+50850  ' Add DirectoriesControl
+50860 ' Set optDirectoriesControl = Controls.Add("PDFCreator.ctlOptDirectories", "ctlOptDirectories")
+50870 ' optDirectoriesControl.Width = dmFraDescription.Width
+50880 ' Set optDirectories = optDirectoriesControl.object
+50890 ' optDirectories.SetLanguageStrings
+50900 ' optDirectories.SetOptions
+50910  ' Add DocumentControl
+50920  Set optDocumentControl = Controls.Add("PDFCreator.ctlOptDocument", "ctlOptDocument")
+50930  optDocumentControl.Width = dmFraDescription.Width
+50940  Set optDocument = optDocumentControl.object
+50950  optDocument.SetLanguageStrings
+50960  optDocument.SetOptions
+50970  ' Add FontsControl
+50980  Set optFontsControl = Controls.Add("PDFCreator.ctlOptFonts", "ctlOptFonts")
+50990  optFontsControl.Width = dmFraDescription.Width
+51000  Set optFonts = optFontsControl.object
+51010  optFonts.SetLanguageStrings
+51020  optFonts.SetOptions
+51030  ' Add FormatPNGControl
+51040  Set optFormatPNGControl = Controls.Add("PDFCreator.ctlOptFormatPNG", "ctlOptFormatPNG")
+51050  optFormatPNGControl.Width = dmFraDescription.Width
+51060  Set optFormatPNG = optFormatPNGControl.object
+51070  optFormatPNG.SetLanguageStrings
+51080  optFormatPNG.SetOptions
+51090  ' Add FormatJPEQControl
+51100  Set optFormatJPEGControl = Controls.Add("PDFCreator.ctlOptFormatJPEG", "ctlOptFormatJPEG")
+51110  optFormatJPEGControl.Width = dmFraDescription.Width
+51120  Set optFormatJPEG = optFormatJPEGControl.object
+51130  optFormatJPEG.SetLanguageStrings
+51140  optFormatJPEG.SetOptions
+51150  ' Add FormatBMPControl
+51160  Set optFormatBMPControl = Controls.Add("PDFCreator.ctlOptFormatBMP", "ctlOptFormatBMP")
+51170  optFormatBMPControl.Width = dmFraDescription.Width
+51180  Set optFormatBMP = optFormatBMPControl.object
+51190  optFormatBMP.SetLanguageStrings
+51200  optFormatBMP.SetOptions
+51210  ' Add FormatPCXControl
+51220  Set optFormatPCXControl = Controls.Add("PDFCreator.ctlOptFormatPCX", "ctlOptFormatPCX")
+51230  optFormatPCXControl.Width = dmFraDescription.Width
+51240  Set optFormatPCX = optFormatPCXControl.object
+51250  optFormatPCX.SetLanguageStrings
+51260  optFormatPCX.SetOptions
+51270  ' Add FormatTIFFControl
+51280  Set optFormatTIFFControl = Controls.Add("PDFCreator.ctlOptFormatTIFF", "ctlOptFormatTIFF")
+51290  optFormatTIFFControl.Width = dmFraDescription.Width
+51300  Set optFormatTIFF = optFormatTIFFControl.object
+51310  optFormatTIFF.SetLanguageStrings
+51320  optFormatTIFF.SetOptions
+51330  ' Add FormatPDFControl
+51340  Set optFormatPDFControl = Controls.Add("PDFCreator.ctlOptFormatPDF", "ctlOptFormatPDF")
+51350  optFormatPDFControl.Width = dmFraDescription.Width
+51360  Set optFormatPDF = optFormatPDFControl.object
+51370  optFormatPDF.SetLanguageStrings
+51380  optFormatPDF.SetOptions
+51390  ' Add FormatPS
+51400  Set optFormatPSControl = Controls.Add("PDFCreator.ctlOptFormatPS", "ctlOptFormatPS")
+51410  optFormatPSControl.Width = dmFraDescription.Width
+51420  Set optFormatPS = optFormatPSControl.object
+51430  optFormatPS.SetLanguageStrings
+51440  optFormatPS.SetOptions
+51450  ' Add FormatEPSControl
+51460  Set optFormatEPSControl = Controls.Add("PDFCreator.ctlOptFormatEPS", "ctlOptFormatEPS")
+51470  optFormatEPSControl.Width = dmFraDescription.Width
+51480  Set optFormatEPS = optFormatEPSControl.object
+51490  optFormatEPS.SetLanguageStrings
+51500  optFormatEPS.SetOptions
+51510  ' Add FormatTXTControl
+51520  Set optFormatTXTControl = Controls.Add("PDFCreator.ctlOptFormatTXT", "ctlOptFormatTXT")
+51530  optFormatTXTControl.Width = dmFraDescription.Width
+51540  Set optFormatTXT = optFormatTXTControl.object
+51550  optFormatTXT.SetLanguageStrings
+51560  optFormatTXT.SetOptions
+51570  ' Add FormatPSDControl
+51580  Set optFormatPSDControl = Controls.Add("PDFCreator.ctlOptFormatPSD", "ctlOptFormatPSD")
+51590  optFormatPSDControl.Width = dmFraDescription.Width
+51600  Set optFormatPSD = optFormatPSDControl.object
+51610  optFormatPSD.SetLanguageStrings
+51620  optFormatPSD.SetOptions
+51630  ' Add FormatPCLControl
+51640  Set optFormatPCLControl = Controls.Add("PDFCreator.ctlOptFormatPCL", "ctlOptFormatPCL")
+51650  optFormatPCLControl.Width = dmFraDescription.Width
+51660  Set optFormatPCL = optFormatPCLControl.object
+51670  optFormatPCL.SetLanguageStrings
+51680  optFormatPCL.SetOptions
+51690  ' Add FormatRAWControl
+51700  Set optFormatRAWControl = Controls.Add("PDFCreator.ctlOptFormatRAW", "ctlOptFormatRAW")
+51710  optFormatRAWControl.Width = dmFraDescription.Width
+51720  Set optFormatRAW = optFormatRAWControl.object
+51730  optFormatRAW.SetLanguageStrings
+51740  optFormatRAW.SetOptions
+51750  ' Add FormatSVGControl
+51760  Set optFormatSVGControl = Controls.Add("PDFCreator.ctlOptFormatSVG", "ctlOptFormatSVG")
+51770  optFormatSVGControl.Width = dmFraDescription.Width
+51780  Set optFormatSVG = optFormatSVGControl.object
+51790  optFormatSVG.SetLanguageStrings
+51800  optFormatSVG.SetOptions
+51810 ' ' Add FormatXCFControl - Doesn't work
+51820 ' Set optFormatXCFControl = Controls.Add("PDFCreator.ctlOptFormatXCF", "ctlOptFormatXCF")
+51830 ' optFormatXCFControl.Width = dmFraDescription.Width
+51840 ' Set optFormatXCF = optFormatXCFControl.object
+51850 ' optFormatXCF.SetLanguageStrings
+51860 ' optFormatXCF.SetOptions
+51870  ' Add GhostscriptControl
+51880  Set optGhostscriptControl = Controls.Add("PDFCreator.ctlOptGhostscript", "ctlOptGhostscript")
+51890  optGhostscriptControl.Width = dmFraDescription.Width
+51900  Set optGhostscript = optGhostscriptControl.object
+51910  optGhostscript.SetLanguageStrings
+51920  optGhostscript.SetOptions
+51930  ' Add LanguagesControl
+51940  Set optLanguagesControl = Controls.Add("PDFCreator.ctlOptLanguages", "ctlOptLanguages")
+51950  optLanguagesControl.Width = dmFraDescription.Width
+51960  Set optLanguages = optLanguagesControl.object
+51970  optLanguages.SetLanguageStrings
+51980  optLanguages.SetOptions
+51990  ' Add PrintControl
+52000  Set optPrintControl = Controls.Add("PDFCreator.ctlOptPrint", "ctlOptPrint")
+52010  optPrintControl.Width = dmFraDescription.Width
+52020  Set optPrint = optPrintControl.object
+52030  optPrint.SetLanguageStrings
+52040  optPrint.SetOptions
+52050  ' Add SaveControl
+52060  '
+52070  Set optSaveControl = Controls.Add("PDFCreator.ctlOptSave", "ctlOptSave")
+52080  optSaveControl.Width = dmFraDescription.Width
+52090  Set optSave = optSaveControl.object
+52100  optSave.SetLanguageStrings
+52110  optSave.SetOptions
+52120
+52130  ' Add GeneralControl
+52140  '
+52150  Set optGeneralControl = Controls.Add("PDFCreator.ctlOptGeneral", "ctlOptGeneral")
+52160  optGeneralControl.Width = dmFraDescription.Width
+52170  Set optGeneral = optGeneralControl.object
+52180  optGeneral.SetLanguageStrings
+52190 '
+52200  optGeneral.SetOptions
+52210
+52220  dmFraProfile.Caption = LanguageStrings.OptionsProfile
+52230  cmbProfile.Clear
+52240  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
+52250
+52260  Set Profiles = GetProfiles
+52270  ReDim ProfileNames(Profiles.Count)
+52280  ReDim ProfileOptions(Profiles.Count)
+52290  ProfileNames(0) = LanguageStrings.OptionsProfileDefaultName
+52300  ProfileOptions(0) = Options
+52310
+52320  With dmFraDescription
+52330   .Caption = LanguageStrings.OptionsTreeProgram
+52340   .Visible = True
+52350
+52360   optActionsControl.Top = .Top + .Height + ControlTop
+52370   optActionsControl.Left = .Left
+52380   optActionsControl.Width = .Width
+52390   optAutosaveControl.Top = .Top + .Height + ControlTop
+52400   optAutosaveControl.Left = .Left
+52410   optAutosaveControl.Width = .Width
+52420 '  optDirectoriesControl.Top = .Top + .Height + ControlTop
+52430 '  optDirectoriesControl.Left = .Left
+52440 '  optDirectoriesControl.Width = .Width
+52450   optDocumentControl.Top = .Top + .Height + ControlTop
+52460   optDocumentControl.Left = .Left
+52470   optDocumentControl.Width = .Width
+52480   optFontsControl.Top = .Top + .Height + ControlTop
+52490   optFontsControl.Left = .Left
+52500   optFontsControl.Width = .Width
+52510   optFormatPNGControl.Top = .Top + .Height + ControlTop
+52520   optFormatPNGControl.Left = .Left
+52530   optFormatPNGControl.Width = .Width
+52540   optFormatJPEGControl.Top = .Top + .Height + ControlTop
+52550   optFormatJPEGControl.Left = .Left
+52560   optFormatJPEGControl.Width = .Width
+52570   optFormatBMPControl.Top = .Top + .Height + ControlTop
+52580   optFormatBMPControl.Left = .Left
+52590   optFormatBMPControl.Width = .Width
+52600   optFormatPCXControl.Top = .Top + .Height + ControlTop
+52610   optFormatPCXControl.Left = .Left
+52620   optFormatPCXControl.Width = .Width
+52630   optFormatTIFFControl.Top = .Top + .Height + ControlTop
+52640   optFormatTIFFControl.Left = .Left
+52650   optFormatTIFFControl.Width = .Width
+52660   optFormatPDFControl.Top = .Top + .Height + ControlTop
+52670   optFormatPDFControl.Left = .Left
+52680   optFormatPDFControl.Width = .Width
+52690   optFormatPSControl.Top = .Top + .Height + ControlTop
+52700   optFormatPSControl.Left = .Left
+52710   optFormatPSControl.Width = .Width
+52720   optFormatEPSControl.Top = .Top + .Height + ControlTop
+52730   optFormatEPSControl.Left = .Left
+52740   optFormatEPSControl.Width = .Width
+52750   optFormatTXTControl.Top = .Top + .Height + ControlTop
+52760   optFormatTXTControl.Left = .Left
+52770   optFormatTXTControl.Width = .Width
+52780   optFormatPSDControl.Top = .Top + .Height + ControlTop
+52790   optFormatPSDControl.Left = .Left
+52800   optFormatPSDControl.Width = .Width
+52810   optFormatPCLControl.Top = .Top + .Height + ControlTop
+52820   optFormatPCLControl.Left = .Left
+52830   optFormatPCLControl.Width = .Width
+52840   optFormatRAWControl.Top = .Top + .Height + ControlTop
+52850   optFormatRAWControl.Left = .Left
+52860   optFormatRAWControl.Width = .Width
+52870   optFormatSVGControl.Top = .Top + .Height + ControlTop
+52880   optFormatSVGControl.Left = .Left
+52890   optFormatSVGControl.Width = .Width
+52900 '  optFormatXCFControl.Top = .Top + .Height + ControlTop
+52910 '  optFormatXCFControl.Left = .Left
+52920 '  optFormatXCFControl.Width = .Width
+52930   optGeneralControl.Top = .Top + .Height + ControlTop
+52940   optGeneralControl.Left = .Left
+52950   optGeneralControl.Width = .Width
+52960   optGhostscriptControl.Top = .Top + .Height + ControlTop
+52970   optGhostscriptControl.Left = .Left
+52980   optGhostscriptControl.Width = .Width
+52990   optLanguagesControl.Top = .Top + .Height + ControlTop
+53000   optLanguagesControl.Left = .Left
+53010   optLanguagesControl.Width = .Width
+53020   optPrintControl.Top = .Top + .Height + ControlTop
+53030   optPrintControl.Left = .Left
+53040   optPrintControl.Width = .Width
+53050   optSaveControl.Top = .Top + .Height + ControlTop
+53060   optSaveControl.Left = .Left
+53070   optSaveControl.Width = .Width
+53080
+53090   cmdCancel.Left = .Left
+53100   cmdReset.Left = .Left + (.Width - cmdReset.Width) / 2
+53110   cmdSave.Left = .Left + .Width - cmdSave.Width
+53120  End With
+53130
+53140  For i = 1 To Profiles.Count
+53150   cmbProfile.AddItem Profiles(i)
+53160   ProfileNames(i) = Profiles(i)
+53170   ProfileOptions(i) = ReadOptions(True, , Profiles(i))
+53180  Next i
+53190  SetProfile CurrentPrinterProfile
+53200
+53210  If cmbProfile.ListIndex = 0 Then
+53220    optGhostscript.ControlsEnabled = True
+53230    optLanguages.ControlsEnabled = True
+53240    cmdProfileRename.Enabled = False
+53250    cmdProfileDelete.Enabled = False
+53260   Else
+53270    optGhostscript.ControlsEnabled = False
+53280    optLanguages.ControlsEnabled = False
+53290    cmdProfileRename.Enabled = True
+53300    cmdProfileDelete.Enabled = True
+53310  End If
+53320
+53330  Set PrinterProfiles = GetPrinterProfiles
+53340  For i = 1 To PrinterProfiles.Count
+53350   sa(0) = PrinterProfiles(i)(0)
+53360   sa(1) = PrinterProfiles(i)(1)
+53370   sa(2) = PrinterProfiles(i)(1)
+53380   TempPrinterProfiles.Add sa
+53390  Next i
+53400
+53410  With LanguageStrings
+53420   cmdProfileAdd.ToolTipText = .OptionsProfileAdd
+53430   cmdProfileDelete.ToolTipText = .OptionsProfileDel
+53440   cmdProfileRename.ToolTipText = .OptionsProfileRenameProfile
+53450   cmdProfileSave.ToolTipText = .OptionsProfileSaveToDisc
+53460   cmdProfileLoad.ToolTipText = .OptionsProfileLoadFromDisc
+53470   cmbProfile.List(0) = .OptionsProfileDefaultName
+53480  End With
+53490
+53500  If ShowOnlyOptions = True Then
+53510   FormInTaskbar Me, True, True
+53520   Caption = "PDFCreator - " & Caption
+53530  End If
+53540
+53550  ShowAcceleratorsInForm Me, True
+53560
+53570  Screen.MousePointer = vbNormal
+53580
+53590  With Options
+53600   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+53610  End With
+53620
+53630  trvOptions.Nodes("Program").Selected = True
+53640  SetSubOption "Program", True
+53650  LastNodeKey = "Program"
+53660
+53670  LoadReady = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1404,11 +1438,12 @@ On Error GoTo ErrPtnr_OnError
 50210  optLanguages.SetOptions
 50220  optPrint.SetOptions
 50230  optSave.SetOptions
-50240  optGeneral.SetOptions
-50250
-50260  With Options
-50270   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50280  End With
+50240
+50250  optGeneral.SetOptions
+50260
+50270  With Options
+50280   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50290  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1443,166 +1478,206 @@ Private Sub trvOptions_NodeClick(ByVal Node As MSComctlLib.Node)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control
-50020
-50030  If LastNodeKey = Node.key Or (LastNodeKey = "Program" And Node.key = "ProgramGeneral") Or (LastNodeKey = "ProgramGeneral" And Node.key = "Program") Then
-50040    Exit Sub
-50050   Else
-50060    LastNodeKey = Node.key
-50070  End If
-50080
-50090  optActionsControl.Visible = False
-50100  optAutosaveControl.Visible = False
-50110 ' optDirectoriesControl.Visible = False
-50120  optDocumentControl.Visible = False
-50130  optFontsControl.Visible = False
-50140  optFormatPNGControl.Visible = False
-50150  optFormatJPEGControl.Visible = False
-50160  optFormatBMPControl.Visible = False
-50170  optFormatPCXControl.Visible = False
-50180  optFormatTIFFControl.Visible = False
-50190  optFormatPDFControl.Visible = False
-50200  optFormatPSControl.Visible = False
-50210  optFormatEPSControl.Visible = False
-50220  optFormatTXTControl.Visible = False
-50230  optFormatPSDControl.Visible = False
-50240  optFormatPCLControl.Visible = False
-50250  optFormatRAWControl.Visible = False
-50260  optFormatSVGControl.Visible = False
-50270 ' optFormatXCFControl.Visible = False
-50280  optGeneralControl.Visible = False
-50290  optGhostscriptControl.Visible = False
-50300  optLanguagesControl.Visible = False
-50310  optPrintControl.Visible = False
-50320  optSaveControl.Visible = False
-50330
-50341  Select Case UCase$(Node.key)
+50010  If LastNodeKey = Node.key Or (LastNodeKey = "Program" And Node.key = "ProgramGeneral") Or (LastNodeKey = "ProgramGeneral" And Node.key = "Program") Then
+50020    Exit Sub
+50030   Else
+50040    LastNodeKey = Node.key
+50050  End If
+50060  If HKLMProfileExists(cmbProfile.List(cmbProfile.ListIndex)) And InstalledAsServer = False Then
+50070    SetSubOption Node.key, False
+50080   Else
+50090    SetSubOption Node.key, True
+50100  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "trvOptions_NodeClick")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub SetSubOption(SubOptionName As String, SubOptionsEnabled As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  optActionsControl.Visible = False
+50020  optAutosaveControl.Visible = False
+50030 ' optDirectoriesControl.Visible = False
+50040  optDocumentControl.Visible = False
+50050  optFontsControl.Visible = False
+50060  optFormatPNGControl.Visible = False
+50070  optFormatJPEGControl.Visible = False
+50080  optFormatBMPControl.Visible = False
+50090  optFormatPCXControl.Visible = False
+50100  optFormatTIFFControl.Visible = False
+50110  optFormatPDFControl.Visible = False
+50120  optFormatPSControl.Visible = False
+50130  optFormatEPSControl.Visible = False
+50140  optFormatTXTControl.Visible = False
+50150  optFormatPSDControl.Visible = False
+50160  optFormatPCLControl.Visible = False
+50170  optFormatRAWControl.Visible = False
+50180  optFormatSVGControl.Visible = False
+50190 ' optFormatXCFControl.Visible = False
+50200  optGeneralControl.Visible = False
+50210  optGhostscriptControl.Visible = False
+50220  optLanguagesControl.Visible = False
+50230  optPrintControl.Visible = False
+50240  optSaveControl.Visible = False
+50250
+50261  Select Case UCase$(SubOptionName)
         Case "PROGRAM", "PROGRAMGENERAL"
-50360    Set picOptions = LoadResPicture(2101, vbResIcon)
-50370    lblOptions.Caption = LanguageStrings.OptionsProgramGeneralDescription
-50380    optGeneralControl.Visible = True
-50390    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50400   Case "PROGRAMGHOSTSCRIPT"
-50410    Set picOptions = LoadResPicture(2119, vbResIcon)
-50420    lblOptions.Caption = LanguageStrings.OptionsProgramGhostscriptDescription
-50430    optGhostscriptControl.Visible = True
+50280    Set picOptions = LoadResPicture(2101, vbResIcon)
+50290    lblOptions.Caption = LanguageStrings.OptionsProgramGeneralDescription
+50300    optGeneral.SetControlsEnabled SubOptionsEnabled
+50310    optGeneralControl.Visible = True
+50320    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50330   Case "PROGRAMGHOSTSCRIPT"
+50340    Set picOptions = LoadResPicture(2119, vbResIcon)
+50350    lblOptions.Caption = LanguageStrings.OptionsProgramGhostscriptDescription
+50360    optGhostscript.SetControlsEnabled SubOptionsEnabled
+50370    optGhostscriptControl.Visible = True
+50380    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50390   Case "PROGRAMDOCUMENT"
+50400    Set picOptions = LoadResPicture(2105, vbResIcon)
+50410    lblOptions.Caption = LanguageStrings.OptionsProgramDocumentDescription
+50420    optDocument.SetControlsEnabled SubOptionsEnabled
+50430    optDocumentControl.Visible = True
 50440    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50450   Case "PROGRAMDOCUMENT"
-50460    Set picOptions = LoadResPicture(2105, vbResIcon)
-50470    lblOptions.Caption = LanguageStrings.OptionsProgramDocumentDescription
-50480    optDocumentControl.Visible = True
-50490    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50500   Case "PROGRAMSAVE"
-50510    Set picOptions = LoadResPicture(2106, vbResIcon)
-50520    lblOptions.Caption = LanguageStrings.OptionsProgramSaveDescription
-50530
-50540    optSaveControl.Visible = True
-50550    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50560   Case "PROGRAMAUTOSAVE"
-50570    Set picOptions = LoadResPicture(2103, vbResIcon)
-50580    lblOptions.Caption = LanguageStrings.OptionsProgramAutosaveDescription
-50590    optAutosaveControl.Visible = True
-50600    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50610 '  Case "PROGRAMDIRECTORIES"
-50620 '   Set picOptions = LoadResPicture(2104, vbResIcon)
-50630 '   lblOptions.Caption = LanguageStrings.OptionsProgramDirectoriesDescription
-50640 '   optDirectoriesControl.Visible = True
-50650 '   dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50660   Case "PROGRAMACTIONS"
-50670    Set picOptions = LoadResPicture(2121, vbResIcon)
-50680    lblOptions.Caption = LanguageStrings.OptionsProgramActionsDescription
-50690    optActionsControl.Visible = True
-50700    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50710   Case "PROGRAMPRINT"
-50720    Set picOptions = LoadResPicture(2122, vbResIcon)
-50730    lblOptions.Caption = LanguageStrings.OptionsProgramPrintDescription
-50740    optPrintControl.Visible = True
-50750    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50760   Case "PROGRAMFONTS"
-50770    Set picOptions = LoadResPicture(2102, vbResIcon)
-50780    lblOptions.Caption = LanguageStrings.OptionsProgramFontDescription
-50790    optFontsControl.Visible = True
-50800    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
-50810   Case "PROGRAMLANGUAGES"
-50820    Set picOptions = LoadResPicture(2123, vbResIcon)
-50830    lblOptions.Caption = LanguageStrings.OptionsProgramLanguagesDescription
+50450   Case "PROGRAMSAVE"
+50460    Set picOptions = LoadResPicture(2106, vbResIcon)
+50470    lblOptions.Caption = LanguageStrings.OptionsProgramSaveDescription
+50480    optSave.SetControlsEnabled SubOptionsEnabled
+50490    optSaveControl.Visible = True
+50500    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50510   Case "PROGRAMAUTOSAVE"
+50520    Set picOptions = LoadResPicture(2103, vbResIcon)
+50530    lblOptions.Caption = LanguageStrings.OptionsProgramAutosaveDescription
+50540    optAutosave.SetControlsEnabled SubOptionsEnabled
+50550    optAutosaveControl.Visible = True
+50560    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50570 '  Case "PROGRAMDIRECTORIES"
+50580 '   Set picOptions = LoadResPicture(2104, vbResIcon)
+50590 '   lblOptions.Caption = LanguageStrings.OptionsProgramDirectoriesDescription
+50600 '   optDirectoriesControl.Visible = True
+50610 '   dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50620   Case "PROGRAMACTIONS"
+50630    Set picOptions = LoadResPicture(2121, vbResIcon)
+50640    lblOptions.Caption = LanguageStrings.OptionsProgramActionsDescription
+50650    optActions.SetControlsEnabled SubOptionsEnabled
+50660    optActionsControl.Visible = True
+50670    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50680   Case "PROGRAMPRINT"
+50690    Set picOptions = LoadResPicture(2122, vbResIcon)
+50700    lblOptions.Caption = LanguageStrings.OptionsProgramPrintDescription
+50710    optPrint.SetControlsEnabled SubOptionsEnabled
+50720    optPrintControl.Visible = True
+50730    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50740   Case "PROGRAMFONTS"
+50750    Set picOptions = LoadResPicture(2102, vbResIcon)
+50760    lblOptions.Caption = LanguageStrings.OptionsProgramFontDescription
+50770    optFonts.SetControlsEnabled SubOptionsEnabled
+50780    optFontsControl.Visible = True
+50790    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
+50800   Case "PROGRAMLANGUAGES"
+50810    Set picOptions = LoadResPicture(2123, vbResIcon)
+50820    lblOptions.Caption = LanguageStrings.OptionsProgramLanguagesDescription
+50830    optLanguages.SetControlsEnabled SubOptionsEnabled
 50840    optLanguagesControl.Visible = True
 50850    dmFraDescription.Caption = LanguageStrings.OptionsTreeProgram
 50860   Case "FORMATS", "FORMATSPDF"
 50870    Set picOptions = LoadResPicture(2111, vbResIcon)
 50880    lblOptions.Caption = LanguageStrings.OptionsPDFDescription
-50890    optFormatPDFControl.Visible = True
-50900    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-50910   Case "FORMATSPNG"
-50920    Set picOptions = LoadResPicture(2112, vbResIcon)
-50930    lblOptions.Caption = LanguageStrings.OptionsPNGDescription
-50940    optFormatPNGControl.Visible = True
-50950    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-50960   Case "FORMATSJPEG"
-50970    Set picOptions = LoadResPicture(2113, vbResIcon)
-50980    lblOptions.Caption = LanguageStrings.OptionsJPEGDescription
-50990    optFormatJPEGControl.Visible = True
-51000    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51010   Case "FORMATSBMP"
-51020    Set picOptions = LoadResPicture(2114, vbResIcon)
-51030    lblOptions.Caption = LanguageStrings.OptionsBMPDescription
-51040    optFormatBMPControl.Visible = True
-51050    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51060   Case "FORMATSPCX"
-51070    Set picOptions = LoadResPicture(2115, vbResIcon)
-51080    lblOptions.Caption = LanguageStrings.OptionsPCXDescription
-51090    optFormatPCXControl.Visible = True
-51100    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51110   Case "FORMATSTIFF"
-51120    Set picOptions = LoadResPicture(2116, vbResIcon)
-51130    lblOptions.Caption = LanguageStrings.OptionsTIFFDescription
-51140    optFormatTIFFControl.Visible = True
+50890    optFormatPDF.SetControlsEnabled SubOptionsEnabled
+50900    optFormatPDFControl.Visible = True
+50910    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+50920   Case "FORMATSPNG"
+50930    Set picOptions = LoadResPicture(2112, vbResIcon)
+50940    lblOptions.Caption = LanguageStrings.OptionsPNGDescription
+50950    optFormatPNG.SetControlsEnabled SubOptionsEnabled
+50960    optFormatPNGControl.Visible = True
+50970    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+50980   Case "FORMATSJPEG"
+50990    Set picOptions = LoadResPicture(2113, vbResIcon)
+51000    lblOptions.Caption = LanguageStrings.OptionsJPEGDescription
+51010    optFormatJPEG.SetControlsEnabled SubOptionsEnabled
+51020    optFormatJPEGControl.Visible = True
+51030    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51040   Case "FORMATSBMP"
+51050    Set picOptions = LoadResPicture(2114, vbResIcon)
+51060    lblOptions.Caption = LanguageStrings.OptionsBMPDescription
+51070    optFormatBMP.SetControlsEnabled SubOptionsEnabled
+51080    optFormatBMPControl.Visible = True
+51090    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51100   Case "FORMATSPCX"
+51110    Set picOptions = LoadResPicture(2115, vbResIcon)
+51120    lblOptions.Caption = LanguageStrings.OptionsPCXDescription
+51130    optFormatPCX.SetControlsEnabled SubOptionsEnabled
+51140    optFormatPCXControl.Visible = True
 51150    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51160   Case "FORMATSPS"
-51170    Set picOptions = LoadResPicture(2117, vbResIcon)
-51180    lblOptions.Caption = LanguageStrings.OptionsPSDescription
-51190    optFormatPSControl.Visible = True
-51200    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51210   Case "FORMATSEPS"
-51220    Set picOptions = LoadResPicture(2118, vbResIcon)
-51230    lblOptions.Caption = LanguageStrings.OptionsEPSDescription
-51240    optFormatEPSControl.Visible = True
-51250    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51260   Case "FORMATSTXT"
-51270    Set picOptions = LoadResPicture(2124, vbResIcon)
-51280    lblOptions.Caption = LanguageStrings.OptionsTXTDescription
-51290    optFormatTXTControl.Visible = True
-51300    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51310   Case "FORMATSPSD"
-51320    Set picOptions = LoadResPicture(2125, vbResIcon)
-51330    lblOptions.Caption = LanguageStrings.OptionsPSDDescription
-51340    optFormatPSDControl.Visible = True
-51350    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51360   Case "FORMATSPCL"
-51370    Set picOptions = LoadResPicture(2126, vbResIcon)
-51380    lblOptions.Caption = LanguageStrings.OptionsPCLDescription
-51390    optFormatPCLControl.Visible = True
-51400    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51410   Case "FORMATSRAW"
-51420    Set picOptions = LoadResPicture(2127, vbResIcon)
-51430    lblOptions.Caption = LanguageStrings.OptionsRAWDescription
-51440    optFormatRAWControl.Visible = True
+51160   Case "FORMATSTIFF"
+51170    Set picOptions = LoadResPicture(2116, vbResIcon)
+51180    lblOptions.Caption = LanguageStrings.OptionsTIFFDescription
+51190    optFormatTIFF.SetControlsEnabled SubOptionsEnabled
+51200    optFormatTIFFControl.Visible = True
+51210    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51220   Case "FORMATSPS"
+51230    Set picOptions = LoadResPicture(2117, vbResIcon)
+51240    lblOptions.Caption = LanguageStrings.OptionsPSDescription
+51250    optFormatPS.SetControlsEnabled SubOptionsEnabled
+51260    optFormatPSControl.Visible = True
+51270    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51280   Case "FORMATSEPS"
+51290    Set picOptions = LoadResPicture(2118, vbResIcon)
+51300    lblOptions.Caption = LanguageStrings.OptionsEPSDescription
+51310    optFormatEPS.SetControlsEnabled SubOptionsEnabled
+51320    optFormatEPSControl.Visible = True
+51330    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51340   Case "FORMATSTXT"
+51350    Set picOptions = LoadResPicture(2124, vbResIcon)
+51360    lblOptions.Caption = LanguageStrings.OptionsTXTDescription
+51370    optFormatTXT.SetControlsEnabled SubOptionsEnabled
+51380    optFormatTXTControl.Visible = True
+51390    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51400   Case "FORMATSPSD"
+51410    Set picOptions = LoadResPicture(2125, vbResIcon)
+51420    lblOptions.Caption = LanguageStrings.OptionsPSDDescription
+51430    optFormatPSD.SetControlsEnabled SubOptionsEnabled
+51440    optFormatPSDControl.Visible = True
 51450    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51460   Case "FORMATSSVG"
-51470    Set picOptions = LoadResPicture(2129, vbResIcon)
-51480    lblOptions.Caption = LanguageStrings.OptionsSVGDescription
-51490    optFormatSVGControl.Visible = True
-51500    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51510 '  Case "FORMATSXCF"
-51520 '   Set picOptions = LoadResPicture(2128, vbResIcon)
-51530 '   lblOptions.Caption = LanguageStrings.OptionsXCFDescription
-51540 '   optFormatXCFControl.Visible = True
-51550 '   dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
-51560  End Select
+51460   Case "FORMATSPCL"
+51470    Set picOptions = LoadResPicture(2126, vbResIcon)
+51480    lblOptions.Caption = LanguageStrings.OptionsPCLDescription
+51490    optFormatPCL.SetControlsEnabled SubOptionsEnabled
+51500    optFormatPCLControl.Visible = True
+51510    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51520   Case "FORMATSRAW"
+51530    Set picOptions = LoadResPicture(2127, vbResIcon)
+51540    lblOptions.Caption = LanguageStrings.OptionsRAWDescription
+51550    optFormatRAW.SetControlsEnabled SubOptionsEnabled
+51560    optFormatRAWControl.Visible = True
+51570    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51580   Case "FORMATSSVG"
+51590    Set picOptions = LoadResPicture(2129, vbResIcon)
+51600    lblOptions.Caption = LanguageStrings.OptionsSVGDescription
+51610    optFormatSVG.SetControlsEnabled SubOptionsEnabled
+51620    optFormatSVGControl.Visible = True
+51630    dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51640 '  Case "FORMATSXCF"
+51650 '   Set picOptions = LoadResPicture(2128, vbResIcon)
+51660 '   lblOptions.Caption = LanguageStrings.OptionsXCFDescription
+51670 '   optFormatXCFControl.Visible = True
+51680 '   dmFraDescription.Caption = LanguageStrings.OptionsTreeFormats
+51690  End Select
+51700
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmOptions", "trvOptions_NodeClick")
+Select Case ErrPtnr.OnError("frmOptions", "SetSubOption")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

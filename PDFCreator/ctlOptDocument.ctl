@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptDocument 
    ClientHeight    =   5895
    ClientLeft      =   0
@@ -14,12 +14,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   8
       Top             =   480
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   4604
-      caption         =   "Document 2"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":0312
+      _ExtentX        =   10927
+      _ExtentY        =   4604
+      Caption         =   "Document 2"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkUseFixPaperSize 
          Appearance      =   0  '2D
          Caption         =   "Use a fix papersize"
@@ -98,12 +106,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   17
       Top             =   2880
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   4604
-      caption         =   "Stamp"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":033E
+      _ExtentX        =   10927
+      _ExtentY        =   4604
+      Caption         =   "Stamp"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtStampString 
          Appearance      =   0  '2D
          Height          =   315
@@ -195,12 +211,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   1
       Top             =   480
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   3969
-      caption         =   "Document 1"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":036A
+      _ExtentX        =   10927
+      _ExtentY        =   3969
+      Caption         =   "Document 1"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkUseCreationDateNow 
          Appearance      =   0  '2D
          Caption         =   "Use the current Date/Time for 'Creation Date'"
@@ -233,9 +257,9 @@ Begin VB.UserControl ctlOptDocument
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "ctlOptDocument.ctx":0396
+         ItemData        =   "ctlOptDocument.ctx":0312
          Left            =   3720
-         List            =   "ctlOptDocument.ctx":0398
+         List            =   "ctlOptDocument.ctx":0314
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
          Top             =   840
@@ -287,6 +311,41 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private StampFont As tFont
+Private ControlsEnabled As Boolean
+
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlsEnabled = value
+50020
+50030  chkUseStandardAuthor.Enabled = value
+50040  chkUseCreationDateNow.Enabled = value
+50050  chkOnePagePerFile.Enabled = value
+50060  dmFraProgDocument1.Enabled = value
+50070
+50080  lblStampString.Enabled = value
+50090  txtStampString.Enabled = value
+50100  lblStampFontcolor.Enabled = value
+50110  picStampFontColor.Enabled = value
+50120  lblFontNameSize.Enabled = value
+50130  chkStampUseOutlineFont.Enabled = value
+50140
+50150  dmFraProgStamp.Enabled = value
+50160
+50170  chkUseFixPaperSize.Enabled = value
+50180  dmFraProgDocument2.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptDocument", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
 
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -496,7 +555,7 @@ On Error GoTo ErrPtnr_OnError
 50250   lblFontNameSize.Caption = .StampFontname & ", " & .StampFontsize
 50260  End With
 50270
-50280  If chkUseStandardAuthor.value = 1 Then
+50280  If chkUseStandardAuthor.value = 1 And ControlsEnabled Then
 50290    txtStandardAuthor.Enabled = True
 50300    txtStandardAuthor.BackColor = &H80000005
 50310   Else
@@ -510,7 +569,7 @@ On Error GoTo ErrPtnr_OnError
 50390    txtOutlineFontThickness.Left = lblOutlineFontThickness.Left + lblOutlineFontThickness.Width + 50
 50400  End If
 50410  txtOutlineFontThickness.Top = lblOutlineFontThickness.Top + (lblOutlineFontThickness.Height - txtOutlineFontThickness.Height) / 2
-50420  If chkStampUseOutlineFont.value = 1 Then
+50420  If chkStampUseOutlineFont.value = 1 And ControlsEnabled Then
 50430    lblOutlineFontThickness.Enabled = True
 50440    txtOutlineFontThickness.Enabled = True
 50450    txtOutlineFontThickness.BackColor = &H80000005
@@ -519,7 +578,7 @@ On Error GoTo ErrPtnr_OnError
 50480    txtOutlineFontThickness.Enabled = False
 50490    txtOutlineFontThickness.BackColor = &H8000000F
 50500  End If
-50510  If chkUseFixPaperSize.value = 1 Then
+50510  If chkUseFixPaperSize.value = 1 And ControlsEnabled Then
 50520    cmbDocumentPapersizes.Enabled = True
 50530    chkUseCustomPapersize.Enabled = True
 50540    If chkUseCustomPapersize.value = 1 Then
@@ -617,18 +676,22 @@ On Error GoTo ErrPtnr_OnError
         Case 1
 50030    dmFraProgDocument2.Enabled = False
 50040    dmFraProgDocument2.Visible = False
-50050    dmFraProgDocument1.Enabled = True
-50060    dmFraProgDocument1.Visible = True
-50070    dmFraProgStamp.Enabled = True
-50080    dmFraProgStamp.Visible = True
-50090   Case 2
-50100    dmFraProgDocument1.Enabled = False
-50110    dmFraProgDocument1.Visible = False
-50120    dmFraProgStamp.Enabled = False
-50130    dmFraProgStamp.Visible = False
-50140    dmFraProgDocument2.Enabled = True
-50150    dmFraProgDocument2.Visible = True
-50160  End Select
+50050    dmFraProgDocument1.Visible = True
+50060    dmFraProgStamp.Visible = True
+50070    If ControlsEnabled Then
+50080     dmFraProgDocument1.Enabled = True
+50090     dmFraProgStamp.Enabled = True
+50100    End If
+50110   Case 2
+50120    dmFraProgDocument1.Enabled = False
+50130    dmFraProgDocument1.Visible = False
+50140    dmFraProgStamp.Enabled = False
+50150    dmFraProgStamp.Visible = False
+50160    dmFraProgDocument2.Visible = True
+50170    If ControlsEnabled Then
+50180     dmFraProgDocument2.Enabled = True
+50190    End If
+50200  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -645,11 +708,11 @@ Private Sub txtStampString_Change()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Viewit As Boolean
+50010  Dim ViewIt As Boolean
 50020  If LenB(txtStampString.Text) > 0 Then
-50030    Viewit = True
+50030    ViewIt = True
 50040   Else
-50050    Viewit = False
+50050    ViewIt = False
 50060  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

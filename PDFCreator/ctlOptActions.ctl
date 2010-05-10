@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
 Begin VB.UserControl ctlOptActions 
    ClientHeight    =   4950
    ClientLeft      =   0
@@ -260,6 +260,32 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private ControlsEnabled As Boolean
+
+Public Sub SetControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlsEnabled = value
+50020
+50030  chkRunProgramBeforeSaving.Enabled = value
+50040  dmFraProgActionsRunProgramBeforeSaving.Enabled = value
+50050  chkRunProgramAfterSaving.Enabled = value
+50060  dmFraProgActionsRunProgramAfterSaving.Enabled = value
+50070  tbstrProgActions.Enabled = value
+50080  dmFraProgActions.Enabled = value
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptActions", "SetControlsEnabled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -334,7 +360,8 @@ On Error GoTo ErrPtnr_OnError
 50680   End If
 50690  Next i
 50700
-50710  SetFrames Options.OptionsDesign
+50710  ControlsEnabled = True
+50720  SetFrames Options.OptionsDesign
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -512,7 +539,7 @@ Private Sub chkRunProgramBeforeSaving_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkRunProgramBeforeSaving.value = 1 Then
+50010  If chkRunProgramBeforeSaving.value = 1 And ControlsEnabled Then
 50020    ViewRunProgramBeforeSaving True
 50030   Else
 50040    ViewRunProgramBeforeSaving False
@@ -533,7 +560,7 @@ Private Sub chkRunProgramAfterSaving_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkRunProgramAfterSaving.value = 1 Then
+50010  If chkRunProgramAfterSaving.value = 1 And ControlsEnabled Then
 50020    ViewRunProgramAfterSaving True
 50030   Else
 50040    ViewRunProgramAfterSaving False
@@ -578,21 +605,21 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ViewRunProgramAfterSaving(Viewit As Boolean)
+Private Sub ViewRunProgramAfterSaving(ViewIt As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lblRunProgramAfterSavingProgramname.Enabled = Viewit
-50020  cmbRunProgramAfterSavingProgramname.Enabled = Viewit
-50030  lblRunProgramAfterSavingProgramParameters.Enabled = Viewit
-50040  txtRunProgramAfterSavingProgramParameters.Enabled = Viewit
-50050  chkRunProgramAfterSavingWaitUntilReady.Enabled = Viewit
-50060  lblRunProgramAfterSavingWindowstyle.Enabled = Viewit
-50070  cmbRunProgramAfterSavingWindowstyle.Enabled = Viewit
-50080  cmdRunProgramAfterSavingPrognameChoice.Enabled = Viewit
-50090  cmdRunProgramAfterSavingPrognameEdit.Enabled = Viewit
+50010  lblRunProgramAfterSavingProgramname.Enabled = ViewIt
+50020  cmbRunProgramAfterSavingProgramname.Enabled = ViewIt
+50030  lblRunProgramAfterSavingProgramParameters.Enabled = ViewIt
+50040  txtRunProgramAfterSavingProgramParameters.Enabled = ViewIt
+50050  chkRunProgramAfterSavingWaitUntilReady.Enabled = ViewIt
+50060  lblRunProgramAfterSavingWindowstyle.Enabled = ViewIt
+50070  cmbRunProgramAfterSavingWindowstyle.Enabled = ViewIt
+50080  cmdRunProgramAfterSavingPrognameChoice.Enabled = ViewIt
+50090  cmdRunProgramAfterSavingPrognameEdit.Enabled = ViewIt
 50100
-50110  If Viewit Then
+50110  If ViewIt Then
 50120    cmbRunProgramAfterSavingProgramname.BackColor = &H80000005
 50130    cmbRunProgramAfterSavingWindowstyle.BackColor = &H80000005
 50140    txtRunProgramAfterSavingProgramParameters.BackColor = &H80000005
@@ -615,20 +642,20 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub ViewRunProgramBeforeSaving(Viewit As Boolean)
+Private Sub ViewRunProgramBeforeSaving(ViewIt As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lblRunProgramBeforeSavingProgramname.Enabled = Viewit
-50020  cmbRunProgramBeforeSavingProgramname.Enabled = Viewit
-50030  lblRunProgramBeforeSavingProgramParameters.Enabled = Viewit
-50040  txtRunProgramBeforeSavingProgramParameters.Enabled = Viewit
-50050  lblRunProgramBeforeSavingWindowstyle.Enabled = Viewit
-50060  cmbRunProgramBeforeSavingWindowstyle.Enabled = Viewit
-50070  cmdRunProgramBeforeSavingPrognameChoice.Enabled = Viewit
-50080  cmdRunProgramBeforeSavingPrognameEdit.Enabled = Viewit
+50010  lblRunProgramBeforeSavingProgramname.Enabled = ViewIt
+50020  cmbRunProgramBeforeSavingProgramname.Enabled = ViewIt
+50030  lblRunProgramBeforeSavingProgramParameters.Enabled = ViewIt
+50040  txtRunProgramBeforeSavingProgramParameters.Enabled = ViewIt
+50050  lblRunProgramBeforeSavingWindowstyle.Enabled = ViewIt
+50060  cmbRunProgramBeforeSavingWindowstyle.Enabled = ViewIt
+50070  cmdRunProgramBeforeSavingPrognameChoice.Enabled = ViewIt
+50080  cmdRunProgramBeforeSavingPrognameEdit.Enabled = ViewIt
 50090
-50100  If Viewit Then
+50100  If ViewIt Then
 50110    cmbRunProgramBeforeSavingProgramname.BackColor = &H80000005
 50120    cmbRunProgramBeforeSavingWindowstyle.BackColor = &H80000005
 50130    txtRunProgramBeforeSavingProgramParameters.BackColor = &H80000005

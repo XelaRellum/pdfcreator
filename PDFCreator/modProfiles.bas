@@ -21,7 +21,38 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modProfiles", "ProfileAssociatedPrinter")
+Select Case ErrPtnr.OnError("modProfiles", "ProfileAssociatedPrinters")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function HKLMProfileExists(ByVal ProfileName As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, keys As Collection, i As Long
+50020
+50030  Set reg = New clsRegistry
+50040
+50050  reg.hkey = HKEY_LOCAL_MACHINE
+50060  reg.KeyRoot = "Software\PDFCreator\Profiles\"
+50070  Set keys = reg.EnumRegistryKeys(reg.hkey, reg.KeyRoot)
+50080
+50090  For i = 1 To keys.Count
+50100   If LCase$(keys(i)) = LCase$(ProfileName) Then
+50110    HKLMProfileExists = True
+50120    Exit Function
+50130   End If
+50140  Next i
+50150  HKLMProfileExists = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modProfiles", "HKLMProfileExists")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -59,17 +90,32 @@ Public Function GetProfiles() As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry
+50010  Dim reg As clsRegistry, tmpProfiles1 As Collection, tmpProfiles2 As Collection, i As Long
 50020
 50030  Set reg = New clsRegistry
-50040  reg.KeyRoot = "Software\PDFCreator\Profiles\"
-50050
-50060  If InstalledAsServer Then
-50070    reg.hkey = HKEY_LOCAL_MACHINE
-50080   Else
-50090    reg.hkey = HKEY_CURRENT_USER
-50100  End If
-50110  Set GetProfiles = reg.EnumRegistryKeys(reg.hkey, reg.KeyRoot)
+50040
+50050  If InstalledAsServer Then
+50060    reg.hkey = HKEY_LOCAL_MACHINE
+50070    reg.KeyRoot = "Software\PDFCreator\Profiles\"
+50080    Set GetProfiles = reg.EnumRegistryKeys(reg.hkey, reg.KeyRoot)
+50090   Else
+50100    reg.hkey = HKEY_USERS
+50110    reg.KeyRoot = ".\Default\Software\PDFCreator\Profiles\"
+50120    Set tmpProfiles1 = reg.EnumRegistryKeys(reg.hkey, reg.KeyRoot)
+50130    reg.hkey = HKEY_CURRENT_USER
+50140    reg.KeyRoot = "Software\PDFCreator\Profiles\"
+50150    Set tmpProfiles2 = reg.EnumRegistryKeys(reg.hkey, reg.KeyRoot)
+50160    For i = 1 To tmpProfiles2.Count
+50170     AddSortedStr tmpProfiles1, tmpProfiles2(i)
+50180    Next i
+50190    reg.hkey = HKEY_LOCAL_MACHINE
+50200    reg.KeyRoot = "Software\PDFCreator\Profiles\"
+50210    Set tmpProfiles2 = reg.EnumRegistryKeys(reg.hkey, reg.KeyRoot)
+50220    For i = 1 To tmpProfiles2.Count
+50230     AddSortedStr tmpProfiles1, tmpProfiles2(i)
+50240    Next i
+50250    Set GetProfiles = tmpProfiles1
+50260  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
