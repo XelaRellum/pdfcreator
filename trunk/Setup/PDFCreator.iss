@@ -366,7 +366,7 @@ Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Com
 ;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
@@ -833,8 +833,8 @@ Name: languages\russian; Description: Russian; Types: full custom; Check: IsLang
 Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
 Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
 
-;Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
-;Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
+Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
+Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
 
 Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
 Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
