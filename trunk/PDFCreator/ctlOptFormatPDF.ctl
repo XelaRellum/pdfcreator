@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptFormatPDF 
    AutoRedraw      =   -1  'True
    ClientHeight    =   11385
@@ -2585,14 +2585,15 @@ On Error GoTo ErrPtnr_OnError
 50070  lblSignatureContact.Enabled = value
 50080  txtSignatureContact.Enabled = value
 50090  lblSignatureLocation.Enabled = value
-50100  dmFraSignaturePosition.Enabled = value
-50110  chkSignatureVisible.Enabled = value
-50120  If chkSignatureVisible.value = 1 Then
-50130    EnableSignPositionControls True
-50140   Else
-50150    EnableSignPositionControls False
-50160  End If
-50170  chkMultiSignature.Enabled = value
+50100  txtSignatureLocation.Enabled = value
+50110  dmFraSignaturePosition.Enabled = value
+50120  chkSignatureVisible.Enabled = value
+50130  If chkSignatureVisible.value = 1 Then
+50140    EnableSignPositionControls True
+50150   Else
+50160    EnableSignPositionControls False
+50170  End If
+50180  chkMultiSignature.Enabled = value
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
