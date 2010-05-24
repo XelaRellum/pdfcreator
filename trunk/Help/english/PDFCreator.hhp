@@ -3,7 +3,7 @@ Compatibility=1.1 or later
 Compiled file=PDFCreator_english.chm
 Contents file=toc.hhc
 Default Window=Main
-Default topic=html\welcome.htm
+Default topic=html\7.html
 Display compile progress=Yes
 Error log file=buildlog.txt
 Full-text search=Yes
@@ -12,66 +12,85 @@ Language=0x409 Englisch (USA)
 Title=PDFCreator Help
 
 [WINDOWS]
-Main="PDFCreator Help","toc.hhc","index.hhk","html\welcome.htm","html\welcome.htm",,,,,0x23520,,0x3006,[239,185,788,634],,,,,,,0
+Main="PDFCreator Help","toc.hhc","index.hhk","html\7.html","html\7.html",,,,,0x23520,,0x3006,[239,185,788,634],,,,,,,0
 
 [FILES]
-html\acknowledgements.htm
-html\actions.htm
-html\afpl.htm
-html\autosave.htm
-html\bmpsettings.htm
-html\changelang.htm
-html\combine.htm
-html\comclspdfcreator.htm
-html\comclspdfcreatorerror.htm
-html\comclspdfcreatorinfospoolfile.htm
-html\comclspdfcreatoroptions.htm
-html\cominterface.htm
-html\commandline.htm
-html\createlang.htm
-html\createpdf.htm
-html\directories.htm
-html\docproperties.htm
-html\emailpdf.htm
-html\epssettings.htm
-html\faq.htm
-html\features.htm
-html\fontsettings.htm
-html\generalsettings.htm
-html\ghostscriptsettings.htm
-html\gpl.htm
-html\hiddensettings.htm
-html\installationtypes.htm
-html\installlang.htm
-html\introduction.htm
-html\jpegsettings.htm
-html\multipleprinters.htm
-html\online.htm
-html\psdsettings.htm
-html\pclsettings.htm
-html\pcxsettings.htm
-html\pdfcolors.htm
-html\pdfcompression.htm
-html\pdffonts.htm
-html\pdfgeneral.htm
-html\pdfsecurity.htm
-html\pngsettings.htm
-html\pdfsignatures.htm
-html\print.htm
-html\profiles.htm
-html\pssettings.htm
-html\rawsettings.htm
-html\savesettings.htm
-html\settings.htm
-html\support.htm
-html\svgsettings.htm
-html\tiffsettings.htm
-html\transtool.htm
-html\txtsettings.htm
-html\update.htm
-html\welcome.htm
-html\whatis.htm
-html\whatislang.htm
-html\whatsnew.htm
+html\7.html
+html\4415.html
+html\4416.html
+html\4417.html
+html\4418.html
+html\4419.html
+html\4420.html
+html\4421.html
+html\4667.html
+html\4423.html
+html\4424.html
+html\4425.html
+html\4426.html
+html\4427.html
+html\4669.html
+html\4429.html
+html\4430.html
+html\4431.html
+html\4432.html
+html\4433.html
+html\4434.html
+html\4436.html
+html\4437.html
+html\4438.html
+html\4439.html
+html\4440.html
+html\4441.html
+html\4442.html
+html\4443.html
+html\4444.html
+html\4445.html
+html\4446.html
+html\4469.html
+html\4470.html
+html\4471.html
+html\4472.html
+html\4473.html
+html\4474.html
+html\4475.html
+html\4476.html
+html\4477.html
+html\4478.html
+html\4479.html
+html\4480.html
+html\4481.html
+html\3009.html
+html\3011.html
+html\3012.html
+html\3168.html
+html\3013.html
+html\4656.html
+html\3014.html
+html\3015.html
+html\3016.html
+html\3017.html
+html\3019.html
+html\3018.html
+html\5419.html
+html\3020.html
+html\4396.html
+html\4391.html
+html\4482.html
+html\4483.html
+html\4484.html
+html\4485.html
+html\4486.html
+html\4487.html
+html\4488.html
+html\4489.html
+html\4490.html
+html\4491.html
+html\4492.html
+html\4493.html
+html\4494.html
+html\4497.html
+html\4495.html
+html\4496.html
 
 [INFOTYPES]
