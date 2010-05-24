@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Setup Command Line Parameters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../media/helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Help</td>
+  </tr>
+  <tr>
+    <td background="../media/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Setup Command Line Parameters</p>
+<p>The Setup program accepts optional command line parameters. These can be useful to system administrators, and to other programs calling the Setup program.</p> <p><strong>/SP-</strong><br /> Disables the This will install... Do you wish to continue? prompt at the beginning of Setup. Of course, this will have no effect if the DisableStartupPrompt [Setup] section directive was set to yes.</p> <p><strong>/SILENT, /VERYSILENT</strong><br /> Instructs Setup to be silent or very silent. When Setup is silent the wizard and the background window are not displayed but the installation progress window is. When a setup is very silent this installation progress window is not displayed. Everything else is normal so for example error messages during installation are displayed and the startup prompt is (if you haven't disabled it with DisableStartupPrompt or the '/SP-' command line option explained above)<br /> If a restart is necessary and the '/NORESTART' command isn't used (see below) and Setup is silent, it will display a Reboot now? message box. If it's very silent it will reboot without asking.</p> <p><strong>/NOCANCEL</strong><br /> Prevents the user from cancelling during the installation process, by disabling the Cancel button and ignoring clicks on the close button. Useful along with /SILENT.</p> <p><strong>/NORESTART</strong><br /> When combined with /SILENT or /VERYSILENT, instructs Setup not to reboot even if it's necessary.</p> <p><strong>/LOADINF=&quot;filename&quot;</strong><br /> Instructs Setup to load the settings from the specified file after having checked the command line. This file can be prepared using the '/SAVEINF=' command as explained below.<br /> Don't forget to use quotes if the filename contains spaces.</p> <p><strong>/SAVEINF=&quot;filename&quot;</strong><br /> Instructs Setup to save installation settings to the specified file.<br /> Don't forget to use quotes if the filename contains spaces.</p> <p><strong>/LANG=language</strong><br /> Specifies the language to use. language specifies the internal name of the language as specified in a [Languages] section entry.</p> <p>When a valid /LANG parameter is used, the Select Language dialog will be suppressed.</p> <p><strong>/DIR=&quot;x:\dirname&quot;</strong><br /> Overrides the default directory name displayed on the Select Destination Directory wizard page. A fully qualified pathname must be specified. If the [Setup] section directive DisableDirPage was set to yes, this command line parameter is ignored.</p> <p><strong>/GROUP=&quot;folder name&quot;</strong><br /> Overrides the default folder name displayed on the Select Start Menu Folder wizard page. If the [Setup] section directive DisableProgramGroupPage was set to yes, this command line parameter is ignored.</p> <p><strong>/NOICONS</strong><br /> Instructs Setup to initially check the Don't create any icons check box on the Select Start Menu Folder wizard page.</p> <p><strong>/COMP separated list of component names&quot;</strong><br /> Overrides the default components settings. Using this command line parameter causes Setup to automatically select a custom type.</p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
