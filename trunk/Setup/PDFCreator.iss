@@ -68,9 +68,9 @@
  #if (fileexists("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE")==0)
   #error Please install the "HTML Help Workshop" first!
  #endif
- #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
- #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
- #expr Exec("C:\Program Files\HTML Help Workshop\HHC.EXE", "..\Help\french\PDFCreator.hhp" ,".\")
+ #expr Exec("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
+ #expr Exec("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
+ #expr Exec("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE", "..\Help\french\PDFCreator.hhp" ,".\")
 #endif
 
 #define GetFileVersionVBExe(str S)     Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + Local[3] + Local[4]
