@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOptions 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Options"
@@ -657,70 +657,70 @@ On Error GoTo ErrPtnr_OnError
 50020   KeyCode = 0
 50031   Select Case trvOptions.SelectedItem.key
          Case "Program", "ProgramGeneral"
-50050     Call HTMLHelp_ShowTopic("html\generalsettings.htm")
+50050     Call HTMLHelp_ShowTopic("html\general-settings.html")
 50060    Case "ProgramGhostscript"
-50070     Call HTMLHelp_ShowTopic("html\ghostscript.htm")
+50070     Call HTMLHelp_ShowTopic("html\ghostscript-settings.html")
 50080    Case "ProgramDocument"
-50090     Call HTMLHelp_ShowTopic("html\docproperties.htm")
+50090     Call HTMLHelp_ShowTopic("html\document-properties.html")
 50100    Case "ProgramSave"
-50110     Call HTMLHelp_ShowTopic("html\savesettings.htm")
+50110     Call HTMLHelp_ShowTopic("html\save-settings.html")
 50120    Case "ProgramAutosave"
-50130     Call HTMLHelp_ShowTopic("html\autosave.htm")
+50130     Call HTMLHelp_ShowTopic("html\autosave-mode.html")
 50140    Case "ProgramActions"
-50150     Call HTMLHelp_ShowTopic("html\actions.htm")
+50150     Call HTMLHelp_ShowTopic("html\actions.html")
 50160    Case "ProgramPrint"
-50170     Call HTMLHelp_ShowTopic("html\print.htm")
+50170     Call HTMLHelp_ShowTopic("html\print.html")
 50180    Case "ProgramFonts"
-50190     Call HTMLHelp_ShowTopic("html\fontsettings.htm")
+50190     Call HTMLHelp_ShowTopic("html\font-settings.html")
 50200    Case "ProgramLanguages"
-50210     Call HTMLHelp_ShowTopic("html\changelang.htm")
+50210     Call HTMLHelp_ShowTopic("html\change-the-language.html")
 50220    Case "Formats", "FormatsPDF"
 50230     If trvOptions.SelectedItem.key = "FormatsPDF" Then
 50241       Select Case optFormatPDF.PDFOptionsIndex
              Case 1
-50260         Call HTMLHelp_ShowTopic("html\pdfgeneral.htm")
+50260         Call HTMLHelp_ShowTopic("html\general.html")
 50270        Case 2
-50280         Call HTMLHelp_ShowTopic("html\pdfcompression.htm")
+50280         Call HTMLHelp_ShowTopic("html\compression.html")
 50290        Case 3
-50300         Call HTMLHelp_ShowTopic("html\pdffonts.htm")
+50300         Call HTMLHelp_ShowTopic("html\fonts.html")
 50310        Case 4
-50320         Call HTMLHelp_ShowTopic("html\pdfcolors.htm")
+50320         Call HTMLHelp_ShowTopic("html\colors.html")
 50330        Case 5
-50340         Call HTMLHelp_ShowTopic("html\pdfsecurity.htm")
+50340         Call HTMLHelp_ShowTopic("html\security.html")
 50350        Case 6
-50360         Call HTMLHelp_ShowTopic("html\pdfsigning.htm")
+50360         Call HTMLHelp_ShowTopic("html\signing.html")
 50370       Case Else
-50380        Call HTMLHelp_ShowTopic("html\pdfgeneral.htm")
+50380        Call HTMLHelp_ShowTopic("html\general.html")
 50390       End Select
 50400      Else
-50410       Call HTMLHelp_ShowTopic("html\pdfgeneral.htm")
+50410       Call HTMLHelp_ShowTopic("html\general.html")
 50420     End If
 50430    Case "FormatsPNG"
-50440     Call HTMLHelp_ShowTopic("html\pngsettings.htm")
+50440     Call HTMLHelp_ShowTopic("html\png.html")
 50450    Case "FormatsJPEG"
-50460     Call HTMLHelp_ShowTopic("html\jpegsettings.htm")
+50460     Call HTMLHelp_ShowTopic("html\jpeg.html")
 50470    Case "FormatsBMP"
-50480     Call HTMLHelp_ShowTopic("html\bmpsettings.htm")
+50480     Call HTMLHelp_ShowTopic("html\bmp.html")
 50490    Case "FormatsPCX"
-50500     Call HTMLHelp_ShowTopic("html\pcxsettings.htm")
+50500     Call HTMLHelp_ShowTopic("html\pcx.html")
 50510    Case "FormatsTIFF"
-50520     Call HTMLHelp_ShowTopic("html\tiffsettings.htm")
+50520     Call HTMLHelp_ShowTopic("html\tiff.html")
 50530    Case "FormatsPS"
-50540     Call HTMLHelp_ShowTopic("html\pssettings.htm")
+50540     Call HTMLHelp_ShowTopic("html\ps.html")
 50550    Case "FormatsEPS"
-50560     Call HTMLHelp_ShowTopic("html\epssettings.htm")
+50560     Call HTMLHelp_ShowTopic("html\eps.html")
 50570    Case "FormatsTXT"
-50580     Call HTMLHelp_ShowTopic("html\txtsettings.htm")
+50580     Call HTMLHelp_ShowTopic("html\text.html")
 50590    Case "FormatsPSD"
-50600     Call HTMLHelp_ShowTopic("html\psdsettings.htm")
+50600     Call HTMLHelp_ShowTopic("html\psd.html")
 50610    Case "FormatsPCL"
-50620     Call HTMLHelp_ShowTopic("html\pclsettings.htm")
+50620     Call HTMLHelp_ShowTopic("html\pcl.html")
 50630    Case "FormatsRAW"
-50640     Call HTMLHelp_ShowTopic("html\rawsettings.htm")
+50640     Call HTMLHelp_ShowTopic("html\raw.html")
 50650    Case "FormatsSVG"
-50660     Call HTMLHelp_ShowTopic("html\svgsettings.htm")
+50660     Call HTMLHelp_ShowTopic("html\svg.html")
 50670    Case Else
-50680     Call HTMLHelp_ShowTopic("html\generalsettings.htm")
+50680     Call HTMLHelp_ShowTopic("html\general-settings.html")
 50690    End Select
 50700  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

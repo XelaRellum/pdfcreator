@@ -195,7 +195,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If KeyCode = vbKeyF1 Then
 50020   KeyCode = 0
-50030   Call HTMLHelp_ShowTopic("html\pdfsecurity.htm")
+50030   Call HTMLHelp_ShowTopic("html\security.html")
 50040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
