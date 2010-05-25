@@ -472,7 +472,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If KeyCode = vbKeyF1 Then
 50020   KeyCode = 0
-50030   Call HTMLHelp_ShowTopic("html\welcome.htm")
+50030   Call HTMLHelp_ShowTopic("html\pdfcreator-user-manual.html")
 50040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1082,7 +1082,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim upd As clsUpdate
 50021  Select Case Index
         Case 0:
-50040    Call HTMLHelp_ShowTopic("html\welcome.htm")
+50040    Call HTMLHelp_ShowTopic("html\pdfcreator-user-manual.html")
 50050   Case 2:
 50060    OpenDocument PaypalPDFCreator
 50070   Case 4:
@@ -1432,7 +1432,7 @@ On Error GoTo ErrPtnr_OnError
 50300     Case 15
 50310      DocumentSave
 50320     Case 17
-50330      Call HTMLHelp_ShowTopic("html\welcome.htm")
+50330      Call HTMLHelp_ShowTopic("html\pdfcreator-user-manual.html")
 50340    End Select
 50350   Case 1
 50361    Select Case Button.Index

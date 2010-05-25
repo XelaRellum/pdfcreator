@@ -2899,12 +2899,10 @@ On Error GoTo ErrPtnr_OnError
 50050  If InstalledAsServer Then
 50060    SaveOptionsREG sOptions, HKEY_LOCAL_MACHINE, ProfileName
 50070   Else
-50080    If LenB(ProfileName) > 0 Then
-50090     If HKLMProfileExists(ProfileName) = False Then
-50100      SaveOptionsREG sOptions, , ProfileName
-50110     End If
-50120    End If
-50130  End If
+50080    If HKLMProfileExists(ProfileName) = False Then
+50090     SaveOptionsREG sOptions, , ProfileName
+50100    End If
+50110  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
