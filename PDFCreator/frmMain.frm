@@ -751,57 +751,60 @@ On Error GoTo ErrPtnr_OnError
 50110   End With
 50120   Set reg = Nothing
 50130   Caption = App.title & " - " & .CommonTitle
-50140
-50150   mnPrinterMain.Caption = .DialogPrinter
-50160   Dim m As String
-50170   m = mnPrinter(0).Caption
-50180   mnPrinter(0).Caption = .DialogPrinterPrinters
-50190   mnPrinter(2).Caption = .DialogPrinterPrinterStop
-50200   mnPrinter(4).Caption = .DialogPrinterOptions
-50210   mnPrinter(6).Caption = .DialogPrinterLogging
-50220   mnPrinter(7).Caption = .DialogPrinterLogfile
-50230   mnPrinter(9).Caption = .DialogPrinterClose
-50240
-50250   mnDocumentMain.Caption = .DialogDocument
-50260   mnDocument(0).Caption = .DialogDocumentPrint
-50270   mnDocument(2).Caption = .DialogDocumentAdd
-50280   mnDocument(3).Caption = .DialogDocumentAddFromClipboard
-50290   mnDocument(4).Caption = .DialogDocumentDelete
-50300
-50310   mnDocument(6).Caption = .DialogDocumentTop
-50320   mnDocument(7).Caption = .DialogDocumentUp
-50330   mnDocument(8).Caption = .DialogDocumentDown
-50340   mnDocument(9).Caption = .DialogDocumentBottom
-50350
-50360   mnDocument(11).Caption = .DialogDocumentCombine
-50370   mnDocument(12).Caption = .DialogDocumentCombineAll
+50140   If InstalledAsServer Then
+50150    Caption = App.title & " - " & .CommonTitle & " (Server)"
+50160   End If
+50170
+50180   mnPrinterMain.Caption = .DialogPrinter
+50190   Dim m As String
+50200   m = mnPrinter(0).Caption
+50210   mnPrinter(0).Caption = .DialogPrinterPrinters
+50220   mnPrinter(2).Caption = .DialogPrinterPrinterStop
+50230   mnPrinter(4).Caption = .DialogPrinterOptions
+50240   mnPrinter(6).Caption = .DialogPrinterLogging
+50250   mnPrinter(7).Caption = .DialogPrinterLogfile
+50260   mnPrinter(9).Caption = .DialogPrinterClose
+50270
+50280   mnDocumentMain.Caption = .DialogDocument
+50290   mnDocument(0).Caption = .DialogDocumentPrint
+50300   mnDocument(2).Caption = .DialogDocumentAdd
+50310   mnDocument(3).Caption = .DialogDocumentAddFromClipboard
+50320   mnDocument(4).Caption = .DialogDocumentDelete
+50330
+50340   mnDocument(6).Caption = .DialogDocumentTop
+50350   mnDocument(7).Caption = .DialogDocumentUp
+50360   mnDocument(8).Caption = .DialogDocumentDown
+50370   mnDocument(9).Caption = .DialogDocumentBottom
 50380
-50390   mnDocument(14).Caption = .DialogDocumentSave
-50400
-50410   mnDocument(16).Caption = .DialogDocumentCombineAllSend
-50420   mnDocument(17).Caption = .DialogDocumentSend
+50390   mnDocument(11).Caption = .DialogDocumentCombine
+50400   mnDocument(12).Caption = .DialogDocumentCombineAll
+50410
+50420   mnDocument(14).Caption = .DialogDocumentSave
 50430
-50440   mnViewMain.Caption = .DialogView
-50450   mnView(0).Caption = .DialogViewToolbars
-50460   mnView(2).Caption = .DialogViewStatusbar
-50470   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
-50480   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
-50490
-50500   mnHelpMain.Caption = .DialogInfo
-50510   mnHelp(2).Caption = .DialogInfoPaypal
-50520   mnHelp(4).Caption = .DialogInfoHomepage
-50530   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
-50540   mnHelp(6).Caption = .DialogInfoCheckUpdates
-50550   mnHelp(8).Caption = .DialogInfoInfo
-50560
-50570   lsv.ColumnHeaders("Date").Text = .ListDate
-50580   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
-50590   lsv.ColumnHeaders("Filename").Text = .ListFilename
-50600   lsv.ColumnHeaders("Size").Text = .ListSize
-50610   lsv.ColumnHeaders("Status").Text = .ListStatus
-50620
-50630   txtEmailAddress.ToolTipText = .DialogEmailAddress
-50640  End With
+50440   mnDocument(16).Caption = .DialogDocumentCombineAllSend
+50450   mnDocument(17).Caption = .DialogDocumentSend
+50460
+50470   mnViewMain.Caption = .DialogView
+50480   mnView(0).Caption = .DialogViewToolbars
+50490   mnView(2).Caption = .DialogViewStatusbar
+50500   mnViewToolbars(0).Caption = .DialogViewToolbarsStandard
+50510   mnViewToolbars(1).Caption = .DialogViewToolbarsEmail
+50520
+50530   mnHelpMain.Caption = .DialogInfo
+50540   mnHelp(2).Caption = .DialogInfoPaypal
+50550   mnHelp(4).Caption = .DialogInfoHomepage
+50560   mnHelp(5).Caption = .DialogInfoPDFCreatorSourceforge
+50570   mnHelp(6).Caption = .DialogInfoCheckUpdates
+50580   mnHelp(8).Caption = .DialogInfoInfo
+50590
+50600   lsv.ColumnHeaders("Date").Text = .ListDate
+50610   lsv.ColumnHeaders("Documenttitle").Text = .ListDocumenttitle
+50620   lsv.ColumnHeaders("Filename").Text = .ListFilename
+50630   lsv.ColumnHeaders("Size").Text = .ListSize
+50640   lsv.ColumnHeaders("Status").Text = .ListStatus
+50650
+50660   txtEmailAddress.ToolTipText = .DialogEmailAddress
+50670  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
