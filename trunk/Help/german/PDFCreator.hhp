@@ -1,0 +1,96 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=PDFCreator_german.chm
+Contents file=toc.hhc
+Default Window=Main
+Default topic=html\pdfcreator-user-manual.html
+Display compile progress=Yes
+Error log file=buildlog.txt
+Full-text search=Yes
+Index file=index.hhk
+Language=0x407 Deutsch (Deutschland)
+Title=PDFCreator Hilfe
+
+[WINDOWS]
+Main="PDFCreator Hilfe","toc.hhc","index.hhk","html\pdfcreator-user-manual.html","html\pdfcreator-user-manual.html",,,,,0x23520,,0x3006,[239,185,788,634],,,,,,,0
+
+[FILES]
+html\pdfcreator-user-manual.html
+html\introduction.html
+html\features.html
+html\whats-new.html
+html\what-is-pdfcreator.html
+html\using-pdfcreator.html
+html\create-a-pdf.html
+html\email-a-pdf.html
+html\combine-documents.html
+html\command-line-parameters.html
+html\change-the-language.html
+html\updating-pdfcreator.html
+html\using-multiple-printers.html
+html\settings-in-pdfcreator.html
+html\program-settings.html
+html\general-settings.html
+html\ghostscript-settings.html
+html\document-properties.html
+html\save-settings.html
+html\autosave-mode.html
+html\actions.html
+html\print.html
+html\font-settings.html
+html\format-settings.html
+html\pdf.html
+html\general.html
+html\compression.html
+html\fonts.html
+html\colors.html
+html\security.html
+html\signing.html
+html\png.html
+html\jpeg.html
+html\bmp.html
+html\pcx.html
+html\tiff.html
+html\ps.html
+html\eps.html
+html\text.html
+html\psd.html
+html\pcl.html
+html\raw.html
+html\svg.html
+html\hidden-settings.html
+html\using-profiles.html
+html\frequently-asked-questions-faq.html
+html\the-printer-driver-is-not-compatible-with-a-policy-enabled-on-your-computer.html
+html\i-have-net-3x-installed-but-there-is-no-pdfforgedll.html
+html\is-the-pdfcreator-toolbar-spyware.html
+html\is-pdfcreator-really-free.html
+html\my-antivirus-program-says-that-pdfcreator-contains-a-virus-dont-you-check-your-files.html
+html\after-installing-pdfcreator-a-msi-installer-shows-up.html
+html\after-installing-pdfcreator-i-get-an-error-exception-einouterror-in-module-isxxxxxexe-at-0000631c-file-not-found.html
+html\after-upgrading-to-windows-7-pdfcreator-does-not-work-anymore.html
+html\setup-error-pdfcreator-is-already-installed.html
+html\setup-command-line-parameters.html
+html\why-does-black-text-appear-to-be-slightly-grey.html
+html\why-cant-some-scripts-be-executed-under-vista-64-bit--windows-7-64-bit.html
+html\why-doesnt-pdfcreator-use-my-original-filename.html
+html\how-can-i-translate-pdfcreator-into-my-language.html
+html\word-documents-with-custom-page-size-are-converted-in-default-size.html
+html\com-interface.html
+html\clspdfcreator.html
+html\clspdfcreatorerror.html
+html\clspdfcreatorinfospoolfile.html
+html\clspdfcreatoroptions.html
+html\the-translation-tool.html
+html\what-is-a-language-file.html
+html\create-a-language-file.html
+html\install-a-language-file.html
+html\pdfcreator-online.html
+html\license.html
+html\gnu-general-public-license.html
+html\aladdin-free-public-license.html
+html\fairplay-license.html
+html\support-pdfcreator.html
+html\acknowledgements.html
+
+[INFOTYPES]
