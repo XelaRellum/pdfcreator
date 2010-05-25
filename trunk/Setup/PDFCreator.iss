@@ -650,6 +650,11 @@ Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: L
 Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 
+; Remove old virtualstore settings
+Root: HKCU; Subkey: Software\Classes\VirtualStore\MACHINE\SOFTWARE\PDFCreator; Flags: deletekey; MinVersion: 0,6.0.6000; OnlyBelowVersion: 0,0; Check: Not IsWin64
+Root: HKCU; Subkey: Software\Classes\VirtualStore\MACHINE\SOFTWARE\Wow6432Node\PDFCreator; Flags: deletekey; MinVersion: 0,6.0.6000; OnlyBelowVersion: 0,0; Check: IsWin64
+
+; Ghostscript
 #Ifdef GhostscriptVersion
 Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation
 Root: HKLM; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptFonts; Valuedata: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: uninsdeletevalue; Check: IsServerInstallation

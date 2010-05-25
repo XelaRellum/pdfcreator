@@ -1398,7 +1398,11 @@ On Error GoTo ErrPtnr_OnError
 53640  SetSubOption "Program", True
 53650  LastNodeKey = "Program"
 53660
-53670  LoadReady = True
+53670  If InstalledAsServer = True And IsAdmin = False Then
+53680   cmdSave.Enabled = False
+53690  End If
+53700
+53710  LoadReady = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
