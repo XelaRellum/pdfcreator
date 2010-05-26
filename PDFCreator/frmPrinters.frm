@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPrinters 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Form1"
@@ -8,6 +8,7 @@ Begin VB.Form frmPrinters
    ClientTop       =   345
    ClientWidth     =   6780
    Icon            =   "frmPrinters.frx":0000
+   KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
@@ -357,6 +358,13 @@ Case 2: Exit Sub
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+If KeyCode = vbKeyF1 Then
+    KeyCode = 0
+    Call HTMLHelp_ShowTopic("html\using-multiple-printers.html")
+End If
 End Sub
 
 Private Sub Form_Load()
