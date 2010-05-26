@@ -1266,14 +1266,20 @@ Private Sub CreateMutexIfNecessary()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If mutexLocal.MutexHandle = 0 Then
-50020  ' Create a lokal mutex
-50030    mutexLocal.CreateMutex PDFCreator_GUID
-50040  End If
-50050  If mutexGlobal.MutexHandle = 0 Then
-50060  ' Create a global mutex
-50070    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-50080  End If
+50010  If mutexLocal Is Nothing Then
+50020   Set mutexLocal = New clsMutex
+50030  End If
+50040  If mutexLocal.MutexHandle = 0 Then
+50050   ' Create a lokal mutex
+50060    mutexLocal.CreateMutex PDFCreator_GUID
+50070  End If
+50080  If mutexGlobal Is Nothing Then
+50090   Set mutexGlobal = New clsMutex
+50100  End If
+50110  If mutexGlobal.MutexHandle = 0 Then
+50120  ' Create a global mutex
+50130    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

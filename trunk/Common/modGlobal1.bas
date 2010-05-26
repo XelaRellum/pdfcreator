@@ -66,6 +66,8 @@ Public StopURLPrinting As Boolean
 Public ShutDown As Boolean
 Public CurrentLanguage As String
 Public CurrentPrinterProfile As String
+Public InstalledAsServer As Boolean
+Public PrinterTemppath As String
 
 Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

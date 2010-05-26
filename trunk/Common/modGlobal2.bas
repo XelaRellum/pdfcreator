@@ -5,7 +5,7 @@ Public Function GetPDFCreatorTempfolder(Optional Preview As Boolean = False, Opt
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetPDFCreatorTempfolder = ResolveEnvironment(GetSubstFilename2(PrinterTempPath, Preview, Temppath))
+50010  GetPDFCreatorTempfolder = ResolveEnvironment(GetSubstFilename2(PrinterTemppath, Preview, Temppath))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -18,7 +18,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function InstalledAsServer() As Boolean
+Public Function CheckInstalledAsServer() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
