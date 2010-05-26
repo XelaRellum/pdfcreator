@@ -472,7 +472,7 @@ Public Property Get cInstalledAsServer() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cInstalledAsServer = InstalledAsServer
+50010  cInstalledAsServer = CheckInstalledAsServer
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:

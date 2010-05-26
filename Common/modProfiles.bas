@@ -188,3 +188,26 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Function GetPrinterProfiles() As Collection
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry
+50020  Set reg = New clsRegistry
+50030  If InstalledAsServer Then
+50040    Set GetPrinterProfiles = reg.EnumRegistryValues(HKEY_LOCAL_MACHINE, "Software\PDFCreator\Printers")
+50050   Else
+50060    Set GetPrinterProfiles = reg.EnumRegistryValues(HKEY_CURRENT_USER, "Software\PDFCreator\Printers")
+50070  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modProfiles", "GetPrinterProfiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+

@@ -8,34 +8,20 @@ Private UnLoadFile As Boolean, ClearCacheDir As Boolean, _
  OutputFilename As String, InitSettings As Boolean, frmMainSUP As Long, _
  AddWindowsExplorerIntegration As Boolean, RemoveWindowsExplorerIntegration As Boolean
  
-Public PrinterTempPath As String
-
 Private bInstallPrinter As Boolean, InstallPrinterName As String, bUninstallPrinter As Boolean, UnInstallPrinterName As String
 Private bInstallWindowsPrinter As Boolean, bUninstallWindowsPrinter As Boolean
 Private SetupLogFile As String, bNoMsg As Boolean, OutputSubFormat As String
 Public IsFrmMainLoaded As Boolean
 
 Public Sub Main()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If App.StartMode = vbSModeStandalone Or IsInIDE Then
-50020    InstanceCounter = InstanceCounter + 1
-50030    ProgramIsVisible = True
-50040    StartProgram
-50050   Else
-50060    ProgramWindowState = 1
-50070  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modMain", "Main")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ InstalledAsServer = CheckInstalledAsServer
+ If App.StartMode = vbSModeStandalone Or IsInIDE Then
+   InstanceCounter = InstanceCounter + 1
+   ProgramIsVisible = True
+   StartProgram
+  Else
+   ProgramWindowState = 1
+ End If
 End Sub
 
 Public Sub StartProgram(Optional Params As String)
@@ -475,7 +461,7 @@ On Error GoTo ErrPtnr_OnError
 50350  End If
 50360
 50370  Options = ReadOptions
-50380  PrinterTempPath = Options.PrinterTempPath
+50380  PrinterTemppath = Options.PrinterTemppath
 50390  If LenB(Optionsfile) > 0 Then
 50400   Options = ReadOptionsINI(Options, Optionsfile, False, False)
 50410  End If

@@ -17,7 +17,7 @@ On Error GoTo ErrPtnr_OnError
   hToken As Long, hProfile As Long, AppPath As String, AppParams As String, _
   stdio As clsStdIO, cinStr As String, SpooltimeSeconds As Double, _
   LoggedInConsole As Boolean, Tempfile As String, res As Long
-50060
+50060  InstalledAsServer = CheckInstalledAsServer
 50070  ' Reduce the working size of used memory
 50080  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
 50090
