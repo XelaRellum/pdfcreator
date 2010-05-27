@@ -13,22 +13,14 @@ Begin VB.UserControl ctlOptAutosave
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   8969
-      Caption         =   "Autosave"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
+      _extentx        =   11245
+      _extenty        =   8969
+      caption         =   "Autosave"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptAutosave.ctx":0312
+      textshaddowcolor=   12582912
       Begin VB.TextBox txtAutoSaveDirectoryPreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -62,6 +54,7 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.CheckBox chkUseAutosaveDirectory 
          Appearance      =   0  '2D
          Caption         =   "For autosave use this directory"
+         Enabled         =   0   'False
          ForeColor       =   &H80000008&
          Height          =   255
          Left            =   120
@@ -90,9 +83,9 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptAutosave.ctx":0312
+         ItemData        =   "ctlOptAutosave.ctx":033E
          Left            =   3690
-         List            =   "ctlOptAutosave.ctx":0314
+         List            =   "ctlOptAutosave.ctx":0340
          Style           =   2  'Dropdown-Liste
          TabIndex        =   7
          Top             =   1785
@@ -118,6 +111,7 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.CheckBox chkAutosaveStartStandardProgram 
          Appearance      =   0  '2D
          Caption         =   "After auto-saving open the document with the default program."
+         Enabled         =   0   'False
          ForeColor       =   &H80000008&
          Height          =   360
          Left            =   120
@@ -128,6 +122,7 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.CheckBox chkAutosaveSendEmail 
          Appearance      =   0  '2D
          Caption         =   "Send an email after auto-saving"
+         Enabled         =   0   'False
          ForeColor       =   &H80000008&
          Height          =   240
          Left            =   120
@@ -176,19 +171,27 @@ Public Sub SetControlsEnabled(value As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  ControlsEnabled = value
-50020  chkUseAutosave.Enabled = value
-50030  cmbAutosaveFormat.Enabled = value
-50040  txtAutosaveFilename.Enabled = value
-50050  txtAutosaveDirectory.Enabled = value
-50060  lblAutosaveformat.Enabled = value
-50070  lblAutosaveFilename.Enabled = value
-50080  lblAutosaveFilenameTokens.Enabled = value
-50090  txtAutoSaveFilenamePreview.Enabled = value
-50100  chkUseAutosaveDirectory.Enabled = value
-50110  txtAutoSaveDirectoryPreview.Enabled = value
-50120  chkAutosaveStartStandardProgram.Enabled = value
-50130  chkAutosaveSendEmail.Enabled = value
+50010  If value = False Then
+50020    ControlsEnabled = value
+50030    chkUseAutosave.Enabled = value
+50040    cmbAutosaveFormat.Enabled = value
+50050    txtAutosaveFilename.Enabled = value
+50060    txtAutosaveDirectory.Enabled = value
+50070    lblAutosaveformat.Enabled = value
+50080    lblAutosaveFilename.Enabled = value
+50090    lblAutosaveFilenameTokens.Enabled = value
+50100    txtAutoSaveFilenamePreview.Enabled = value
+50110    chkUseAutosaveDirectory.Enabled = value
+50120    txtAutoSaveDirectoryPreview.Enabled = value
+50130    chkAutosaveStartStandardProgram.Enabled = value
+50140    chkAutosaveSendEmail.Enabled = value
+50150   Else
+50160    If chkUseAutosave.value = 1 Then
+50170      ViewAutosave True
+50180     Else
+50190      ViewAutosave False
+50200    End If
+50210  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

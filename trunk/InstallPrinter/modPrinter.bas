@@ -88,8 +88,8 @@ On Error GoTo ErrPtnr_OnError
 50500    End If
 50510    If orgValue <> value Then
 50520     Call .SetRegistryValue("RequiredPrivileges", value, REG_MULTI_SZ)
-50530     Debug.Print StopService("Spooler")
-50540     Debug.Print StartService("Spooler")
+50530     'Debug.Print StopService("Spooler")
+50540     'Debug.Print StartService("Spooler")
 50550    End If
 50560   End With
 50570  End If
