@@ -1,5 +1,5 @@
 ; PDFCreator Browser Add OnInstallation
-; Setup created with Inno Setup QuickStart Pack 5.3.6 (with ISPP) and ISTool 5.3.0.1
+; Setup created with Inno Setup QuickStart Pack 5.3.9 (with ISPP) and ISTool 5.3.0.1
 ; Installation from Frank Heindörfer
 
 ;#define Test
