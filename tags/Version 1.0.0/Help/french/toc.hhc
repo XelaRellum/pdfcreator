@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="pdfforge&reg; BookExporter">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Aide PDFCreator">
+		<param name="Local" value="html\pdfcreator-user-manual.html">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Introduction">
+			<param name="Local" value="html\introduction.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Qu'est-ce que PDFCreator?">
+				<param name="Local" value="html\what-is-pdfcreator.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Fontionnalit&eacute;s">
+				<param name="Local" value="html\features.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Nouveaut&eacute;s">
+				<param name="Local" value="html\whats-new.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Utiliser PDFCreator">
+			<param name="Local" value="html\using-pdfcreator.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Cr&eacute;er un PDF">
+				<param name="Local" value="html\create-a-pdf.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Envoyer un document PDF par email">
+				<param name="Local" value="html\email-a-pdf.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Utiliser des imprimantes multiples">
+				<param name="Local" value="html\using-multiple-printers.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Fusionner des documents">
+				<param name="Local" value="html\combine-documents.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Param&egrave;tres de ligne de commande">
+				<param name="Local" value="html\command-line-parameters.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Changer de langue">
+				<param name="Local" value="html\change-the-language.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Mise &#224; jour de PDCreator">
+				<param name="Local" value="html\updating-pdfcreator.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Options de PDFCreator">
+			<param name="Local" value="html\settings-in-pdfcreator.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Utiliser des profils">
+				<param name="Local" value="html\using-profiles.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Param&egrave;tres du programme">
+				<param name="Local" value="html\program-settings.html">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Param&egrave;tres g&eacute;n&eacute;raux">
+					<param name="Local" value="html\general-settings.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Param&egrave;tres Ghostscript">
+					<param name="Local" value="html\ghostscript-settings.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Propri&eacute;t&eacute;s du document">
+					<param name="Local" value="html\document-properties.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Param&egrave;tres d'enregistrement">
+					<param name="Local" value="html\save-settings.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Enregistrement automatique">
+					<param name="Local" value="html\autosave-mode.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Actions">
+					<param name="Local" value="html\actions.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Impression">
+					<param name="Local" value="html\print.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="Polices">
+					<param name="Local" value="html\font-settings.html">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Formats">
+				<param name="Local" value="html\format-settings.html">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="PDF">
+					<param name="Local" value="html\pdf.html">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="G&eacute;n&eacute;ral">
+						<param name="Local" value="html\general.html">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="Compression">
+						<param name="Local" value="html\compression.html">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="Polices">
+						<param name="Local" value="html\fonts.html">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="Couleurs">
+						<param name="Local" value="html\colors.html">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="S&eacute;curit&eacute;">
+						<param name="Local" value="html\security.html">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="Signature">
+						<param name="Local" value="html\signing.html">
+						</OBJECT>
+				</UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="JPEG">
+					<param name="Local" value="html\jpeg.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="PNG">
+					<param name="Local" value="html\png.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="BMP">
+					<param name="Local" value="html\bmp.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="PCX">
+					<param name="Local" value="html\pcx.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="TIFF">
+					<param name="Local" value="html\tiff.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="PS">
+					<param name="Local" value="html\ps.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="EPS">
+					<param name="Local" value="html\eps.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="TEXT">
+					<param name="Local" value="html\text.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="PSD">
+					<param name="Local" value="html\psd.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="PCL">
+					<param name="Local" value="html\pcl.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="RAW">
+					<param name="Local" value="html\raw.html">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="SVG">
+					<param name="Local" value="html\svg.html">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Options cach&eacute;es">
+				<param name="Local" value="html\hidden-settings.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Foire aux questions (FAQ)">
+			<param name="Local" value="html\frequently-asked-questions-faq.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Apr&egrave;s l'installation de PDFCreator, une fen&ecirc;tre de l'installateur MSI appara&#238;t.">
+				<param name="Local" value="html\after-installing-pdfcreator-a-msi-installer-shows-up.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Apr&egrave;s le passage &#224; Windows 7, PDFCreator ne fonctionne plus">
+				<param name="Local" value="html\after-upgrading-to-windows-7-pdfcreator-does-not-work-anymore.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Apr&egrave;s l'installation, j'obtiens un message d'erreur "Exception EInOutError in module is-XXXXX.exe at 0000631C. File not found". Que faire?">
+				<param name="Local" value="html\after-installing-pdfcreator-i-get-an-error-exception-einouterror-in-module-isxxxxxexe-at-0000631c-file-not-found.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Comment puis-je traduire PDFCreator dans la langue de mon pays ?">
+				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value=".Net 3.x est install&eacute;, mais il n'y a pas pdfforge.dll">
+				<param name="Local" value="html\i-have-net-3x-installed-but-there-is-no-pdfforgedll.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="PDFCreator est-il r&eacute;ellement gratuit ?">
+				<param name="Local" value="html\is-pdfcreator-really-free.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Est-ce que la barre d'outil PDFCreator est un Spyware ?">
+				<param name="Local" value="html\is-the-pdfcreator-toolbar-spyware.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Mon antivirus me dit que PDFCreator contient un virus. Vous ne v&eacute;rifiez pas vos fichiers ?">
+				<param name="Local" value="html\my-antivirus-program-says-that-pdfcreator-contains-a-virus-dont-you-check-your-files.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Setup Command Line Parameters">
+				<param name="Local" value="html\setup-command-line-parameters.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Errreur d'installation : PDFCreator est d&eacute;j&#224; install&eacute;">
+				<param name="Local" value="html\setup-error-pdfcreator-is-already-installed.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Le drive d'imprimante n'est pas compatible avec une r&egrave;gle en vigueur sur votre ordinateur">
+				<param name="Local" value="html\the-printer-driver-is-not-compatible-with-a-policy-enabled-on-your-computer.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Why can't some scripts be executed under Vista (64 bit) / Windows 7 (64 bit)?">
+				<param name="Local" value="html\why-cant-some-scripts-be-executed-under-vista-64-bit--windows-7-64-bit.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Pourquoi le texte noir appara&#238;t en fait l&eacute;g&egrave;rement gris ?">
+				<param name="Local" value="html\why-does-black-text-appear-to-be-slightly-grey.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Pourquoi PDFCreator n'utilise pas le nom d'origine de mon fichier ?">
+				<param name="Local" value="html\why-doesnt-pdfcreator-use-my-original-filename.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Les documents Word avec un format de page personnalis&eacute; sont convertis &#224; la taille standard par d&eacute;faut">
+				<param name="Local" value="html\word-documents-with-custom-page-size-are-converted-in-default-size.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="COM Interface">
+			<param name="Local" value="html\com-interface.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="clsPDFCreator">
+				<param name="Local" value="html\clspdfcreator.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="clsPDFCreatorError">
+				<param name="Local" value="html\clspdfcreatorerror.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="clsPDFCreatorInfoSpoolFile">
+				<param name="Local" value="html\clspdfcreatorinfospoolfile.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="clsPDFCreatorOptions">
+				<param name="Local" value="html\clspdfcreatoroptions.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="L'outil de traduction (Translation tool)">
+			<param name="Local" value="html\the-translation-tool.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Qu'est-ce qu'un fichier de traduction?">
+				<param name="Local" value="html\what-is-a-language-file.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Cr&eacute;er un fichier de traduction">
+				<param name="Local" value="html\create-a-language-file.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Installer un fichier de traduction">
+				<param name="Local" value="html\install-a-language-file.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="PDFCreator en ligne">
+			<param name="Local" value="html\pdfcreator-online.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="License">
+			<param name="Local" value="html\license.html">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GNU General Public License">
+				<param name="Local" value="html\gnu-general-public-license.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Aladdin Free Public License">
+				<param name="Local" value="html\aladdin-free-public-license.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="FairPlay License">
+				<param name="Local" value="html\fairplay-license.html">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Soutenir PDFCreator">
+			<param name="Local" value="html\support-pdfcreator.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Remerciements">
+			<param name="Local" value="html\acknowledgements.html">
+			</OBJECT>
+	</UL>
+</UL>
+</BODY></HTML>
