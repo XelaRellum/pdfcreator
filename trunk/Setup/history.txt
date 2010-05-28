@@ -4,6 +4,27 @@ Copyright (C)2002-2010 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
+Version 1.0 (Mai 28th, 2010)
+-------------------------------------------------------------------------------
+    * Improvements: Uses GPL-Ghostscript 8.71 now.
+    * Added the feature to set the color\grey compression factor manually to get the best realtion between file size and quality of pdf files
+    * Improved print after saving (color printing, set maximum resolution)
+    * Improved the signing feature (set signature on page is freely definable)
+    * PDFCreator can handle signing and encrypting in one step
+    * Improved the setup: 64bit printer driver installable on a 32bit system
+    * Added a better dialog for the certificate password
+    * Added the font dialog to the options dialog again
+    * Improved the PDFCreator class (check for an existing printer in cPrintPrinterTestpage, check for an existing file in cPrintfile)
+
+    * Bug Fixes: Fixed a crashing options dialog
+    * Fixed the "481 - invalid picture" bug
+    * Fixed a bug reading the options on Win9xMe systems
+    * Fixed a bug if the user uses Thai calendar format
+    * Fixed a bug using different Ghostscript versions
+    * Fixed some minor bugs.
+
+    * Known issues No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 Version 0.9.9 (January 4., 2010)
 -------------------------------------------------------------------------------
 Improvements:
