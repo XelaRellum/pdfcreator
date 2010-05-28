@@ -926,7 +926,7 @@ Private Function Create_eDoc() As String
  OutputFile = Trim$(SaveFilename)
  SplitPath OutputFile, , Path
  Options.LastSaveDirectory = Path
- SaveOption Options, "LastSaveDirectory"
+ SaveOption Options, "LastSaveDirectory", cmbProfile.List(cmbProfile.ListIndex)
  frmMain.SetSystrayIcon 3
  If Options.ShowAnimation = 1 Then
    ShowAnimation True
