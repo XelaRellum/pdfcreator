@@ -18,32 +18,32 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CheckInstalledAsServer()
+Public Function CheckInstalledAsServer() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim reg As clsRegistry
-50020  InstalledAsServer = False
+50020  CheckInstalledAsServer = False
 50030  Set reg = New clsRegistry
 50040  With reg
 50050   .hkey = HKEY_LOCAL_MACHINE
 50060   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
 50070   If .GetRegistryValue("PDFServer") = 1 Then
-50080    InstalledAsServer = True
+50080    CheckInstalledAsServer = True
 50090   End If
 50100  End With
 50110  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
+Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGlobal2", "InstalledAsServer")
 Case 0: Resume
 Case 1: Resume Next
-Case 2: Exit Sub
+Case 2: Exit Function
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
+End Function
 
 Public Function ProgramIsRunning(GUIDStr As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
