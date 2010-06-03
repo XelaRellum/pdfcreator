@@ -22,7 +22,7 @@
 #include "Language includes\latvian.inc"
 ;#include "Language includes\lithuanian.inc"
 ;#include "Language includes\norwegian_bokmal.inc"
-;#include "Language includes\polish.inc"
+#include "Language includes\polish.inc"
 #include "Language includes\portuguese_br.inc"
 ;#include "Language includes\romanian.inc"
 #include "Language includes\russian.inc"
