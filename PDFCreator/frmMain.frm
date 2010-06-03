@@ -1203,7 +1203,7 @@ On Error GoTo ErrPtnr_OnError
 50210      End If
 50220    End If
 50230  End Select
-50240  SaveOptions Options
+50240  SaveOption Options, "Toolbars"
 50250  DrawToolbars
 50260  SetDocMenuAndToolbar
 50270  Form_Resize

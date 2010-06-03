@@ -69,7 +69,7 @@ On Error GoTo ErrPtnr_OnError
         Case 0:
 50030    ChangeDefaultprinter = True
 50040    Options.NoConfirmMessageSwitchingDefaultprinter = chkAskAgain.value
-50050    SaveOptions Options
+50050    SaveOption Options, "NoConfirmMessageSwitchingDefaultprinter"
 50060   Case 1:
 50070  End Select
 50080  Unload Me

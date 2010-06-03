@@ -107,7 +107,7 @@ On Error GoTo ErrPtnr_OnError
 50010  If ShowOnlyLogfile Then
 50020   If chkLogging.value <> Options.Logging Then
 50030    Options.Logging = chkLogging.value
-50040    SaveOptions Options
+50040    SaveOption Options, "Logging"
 50050   End If
 50060  End If
 50070  Unload Me

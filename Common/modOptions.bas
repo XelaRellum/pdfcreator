@@ -7496,7 +7496,7 @@ Public Sub SetLanguage(Language As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Options.Language = Language
-50020  SaveOptions Options
+50020  SaveOption Options, "Language"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
