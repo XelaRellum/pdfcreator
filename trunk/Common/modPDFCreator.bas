@@ -194,7 +194,7 @@ On Error GoTo ErrPtnr_OnError
 50060   Temppath = CompletePath(GetTempPath)
 50070   MakePath Temppath
 50080   Options.PrinterTemppath = Temppath
-50090   SaveOptions Options
+50090   SaveOption Options, "PrinterTemppath"
 50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

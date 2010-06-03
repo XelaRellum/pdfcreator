@@ -261,9 +261,9 @@ On Error GoTo ErrPtnr_OnError
 50040    Options.StartStandardProgram = 0
 50050  End If
 50060  If cmbProfile.ListIndex = 0 Then
-50070    SaveOptions Options
+50070    SaveOption Options, "StartStandardProgram"
 50080   Else
-50090    SaveOptions Options, cmbProfile.List(cmbProfile.ListIndex)
+50090    SaveOption Options, "StartStandardProgram", cmbProfile.List(cmbProfile.ListIndex)
 50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
