@@ -18,7 +18,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function CheckInstalledAsServer() As Boolean
+Public Sub CheckInstalledAsServer()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -34,16 +34,16 @@ On Error GoTo ErrPtnr_OnError
 50100  End With
 50110  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
+Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGlobal2", "InstalledAsServer")
 Case 0: Resume
 Case 1: Resume Next
-Case 2: Exit Function
+Case 2: Exit Sub
 Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
+End Sub
 
 Public Function ProgramIsRunning(GUIDStr As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

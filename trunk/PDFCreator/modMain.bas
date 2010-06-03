@@ -14,7 +14,7 @@ Private SetupLogFile As String, bNoMsg As Boolean, OutputSubFormat As String
 Public IsFrmMainLoaded As Boolean
 
 Public Sub Main()
- InstalledAsServer = CheckInstalledAsServer
+ CheckInstalledAsServer
  If App.StartMode = vbSModeStandalone Or IsInIDE Then
    InstanceCounter = InstanceCounter + 1
    ProgramIsVisible = True
