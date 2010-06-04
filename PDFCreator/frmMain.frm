@@ -4,8 +4,8 @@ Begin VB.Form frmMain
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
    ClientHeight    =   3765
-   ClientLeft      =   225
-   ClientTop       =   855
+   ClientLeft      =   165
+   ClientTop       =   735
    ClientWidth     =   9510
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -656,7 +656,7 @@ On Error GoTo ErrPtnr_OnError
 50220  End With
 50230
 50240  With Options
-50250   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50250   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50260  End With
 50270
 50280  ChangeLanguage
@@ -1530,27 +1530,27 @@ On Error GoTo ErrPtnr_OnError
 50390         opt2 = Options
 50400         Options = opt
 50410         Autosave
-50411         SaveOption Options, "Counter", PrinterDefaultProfile
-50420         opt2.Counter = Options.Counter
-50430         Options = opt2
-50440        Else
-50450         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
-50460          OldPrinter = isf.REDMON_PRINTER
-50470         End If
-50480         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
-50490         frmPrinting.Show , Me
-50500       End If
-50560      End If
-50570     End If
-50580     If PrinterStop = False And NoProcessing = False Then
-50590       mnPrinter(2).Checked = False
-50600       tlb(0).Buttons(1).Image = 1
-50610      Else
-50620       mnPrinter(2).Checked = True
-50630       tlb(0).Buttons(1).Image = 2
-50640     End If
-50650   End If
-50660  End If
+50420         SaveOption Options, "Counter", PrinterDefaultProfile
+50430         opt2.Counter = Options.Counter
+50440         Options = opt2
+50450        Else
+50460         If LenB(isf.REDMON_PRINTER) > 0 And UCase$(OldPrinter) <> UCase$(isf.REDMON_PRINTER) Then
+50470          OldPrinter = isf.REDMON_PRINTER
+50480         End If
+50490         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.REDMON_PRINTER)
+50500         frmPrinting.Show , Me
+50510       End If
+50520      End If
+50530     End If
+50540     If PrinterStop = False And NoProcessing = False Then
+50550       mnPrinter(2).Checked = False
+50560       tlb(0).Buttons(1).Image = 1
+50570      Else
+50580       mnPrinter(2).Checked = True
+50590       tlb(0).Buttons(1).Image = 2
+50600     End If
+50610   End If
+50620  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

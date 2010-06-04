@@ -14,14 +14,27 @@ Private SetupLogFile As String, bNoMsg As Boolean, OutputSubFormat As String
 Public IsFrmMainLoaded As Boolean
 
 Public Sub Main()
- InstalledAsServer = CheckInstalledAsServer
- If App.StartMode = vbSModeStandalone Or IsInIDE Then
-   InstanceCounter = InstanceCounter + 1
-   ProgramIsVisible = True
-   StartProgram
-  Else
-   ProgramWindowState = 1
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  InstalledAsServer = CheckInstalledAsServer
+50020  If App.StartMode = vbSModeStandalone Or IsInIDE Then
+50030    InstanceCounter = InstanceCounter + 1
+50040    ProgramIsVisible = True
+50050    StartProgram
+50060   Else
+50070    ProgramWindowState = 1
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "Main")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Public Sub StartProgram(Optional Params As String)
@@ -707,7 +720,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub SetFont(frm As Form, ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
+Public Sub SetFontUserControl(UserControlObject As Variant, ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -722,7 +735,7 @@ On Error GoTo ErrPtnr_OnError
 50090  f.Size = Fontsize
 50100  f.Charset = Charset
 50110
-50120  For Each ctl In frm.Controls
+50120  For Each ctl In UserControlObject.object.Controls
 50130   If TypeOf ctl Is Label Or _
      TypeOf ctl Is Form Or _
      TypeOf ctl Is ComboBox Or _
@@ -766,7 +779,79 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modMain", "SetFont")
+Select Case ErrPtnr.OnError("modMain", "SetFontUserControl")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub SetFontControls(ctls As Variant, ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim ctl As Control, ts As TabStrip, df As dmFrame, f As StdFont, trv As TreeView
+50020
+50030  If LenB(Trim$(Fontname)) = 0 Then
+50040   Exit Sub
+50050  End If
+50060
+50070  Set f = New StdFont
+50080  f.Name = Fontname
+50090  f.Size = Fontsize
+50100  f.Charset = Charset
+50110
+50120  For Each ctl In ctls
+50130   If TypeOf ctl Is Label Or _
+     TypeOf ctl Is Form Or _
+     TypeOf ctl Is ComboBox Or _
+     TypeOf ctl Is CheckBox Or _
+     TypeOf ctl Is CommandButton Or _
+     TypeOf ctl Is ListView Or _
+     TypeOf ctl Is StatusBar Or _
+     TypeOf ctl Is TextBox Or _
+     TypeOf ctl Is Frame Then
+50220    With ctl
+50230     .Font = Fontname
+50240     .Font.Italic = False
+50250     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
+50260      .Fontsize = Fontsize
+50270     End If
+50280     .Font.Charset = Charset
+50290    End With
+50300   End If
+50310
+50320   If TypeOf ctl Is TreeView Then
+50330    Set trv = ctl
+50340    ctl.Font.Italic = False
+50350    trv.Font.Name = Fontname
+50360    trv.Font.Size = Fontsize
+50370    trv.Font.Charset = Charset
+50380   End If
+50390   If TypeOf ctl Is TabStrip Then
+50400    Set ts = ctl
+50410    ctl.Font.Italic = False
+50420    ts.Font.Name = Fontname
+50430    ts.Font.Size = Fontsize
+50440    ts.Font.Charset = Charset
+50450   End If
+50460   If TypeOf ctl Is dmFrame Then
+50470    Set df = ctl
+50480    df.Font.Italic = False
+50490    df.Font.Name = Fontname
+50500    df.Font.Size = Fontsize
+50510    df.Font.Charset = Charset
+50520    Set df.Font = f
+50530   End If
+50540  Next ctl
+50550
+50560  Set f = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modMain", "SetFontControls")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

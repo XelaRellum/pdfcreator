@@ -38,20 +38,12 @@ Begin VB.Form frmOptions
       TabIndex        =   3
       Top             =   1320
       Width           =   6420
-      _ExtentX        =   11324
-      _ExtentY        =   1879
-      Caption         =   ""
-      BarColorFrom    =   723949
-      BarColorTo      =   132452
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11324
+      _extenty        =   1879
+      caption         =   ""
+      barcolorfrom    =   723949
+      barcolorto      =   132452
+      font            =   "frmOptions.frx":000C
       Begin VB.PictureBox picOptions 
          Appearance      =   0  '2D
          BorderStyle     =   0  'Kein
@@ -104,25 +96,17 @@ Begin VB.Form frmOptions
       TabIndex        =   6
       Top             =   120
       Width           =   9180
-      _ExtentX        =   16193
-      _ExtentY        =   1879
-      Caption         =   "Profil"
-      BarColorFrom    =   723949
-      BarColorTo      =   132452
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   16193
+      _extenty        =   1879
+      caption         =   "Profil"
+      barcolorfrom    =   723949
+      barcolorto      =   132452
+      font            =   "frmOptions.frx":0038
       Begin VB.CommandButton cmdProfileRename 
          Enabled         =   0   'False
          Height          =   375
          Left            =   7200
-         Picture         =   "frmOptions.frx":000C
+         Picture         =   "frmOptions.frx":0064
          Style           =   1  'Grafisch
          TabIndex        =   12
          ToolTipText     =   "Rename profile"
@@ -132,7 +116,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileLoad 
          Height          =   375
          Left            =   8640
-         Picture         =   "frmOptions.frx":0400
+         Picture         =   "frmOptions.frx":0458
          Style           =   1  'Grafisch
          TabIndex        =   11
          ToolTipText     =   "Load profile"
@@ -142,7 +126,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileSave 
          Height          =   375
          Left            =   8160
-         Picture         =   "frmOptions.frx":07FE
+         Picture         =   "frmOptions.frx":0856
          Style           =   1  'Grafisch
          TabIndex        =   10
          ToolTipText     =   "Save profile"
@@ -153,7 +137,7 @@ Begin VB.Form frmOptions
          Enabled         =   0   'False
          Height          =   375
          Left            =   7680
-         Picture         =   "frmOptions.frx":0B93
+         Picture         =   "frmOptions.frx":0BEB
          Style           =   1  'Grafisch
          TabIndex        =   9
          ToolTipText     =   "Delete profile"
@@ -163,7 +147,7 @@ Begin VB.Form frmOptions
       Begin VB.CommandButton cmdProfileAdd 
          Height          =   375
          Left            =   6720
-         Picture         =   "frmOptions.frx":0F8B
+         Picture         =   "frmOptions.frx":0FE3
          Style           =   1  'Grafisch
          TabIndex        =   8
          ToolTipText     =   "Add profile"
@@ -192,107 +176,107 @@ Begin VB.Form frmOptions
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   26
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":137B
+            Picture         =   "frmOptions.frx":13D3
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":14D5
+            Picture         =   "frmOptions.frx":152D
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":1A6F
+            Picture         =   "frmOptions.frx":1AC7
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":2009
+            Picture         =   "frmOptions.frx":2061
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":25A3
+            Picture         =   "frmOptions.frx":25FB
             Key             =   ""
          EndProperty
          BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":293D
+            Picture         =   "frmOptions.frx":2995
             Key             =   ""
          EndProperty
          BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":2ED7
+            Picture         =   "frmOptions.frx":2F2F
             Key             =   ""
          EndProperty
          BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":37B1
+            Picture         =   "frmOptions.frx":3809
             Key             =   ""
          EndProperty
          BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":3D4B
+            Picture         =   "frmOptions.frx":3DA3
             Key             =   ""
          EndProperty
          BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":42E5
+            Picture         =   "frmOptions.frx":433D
             Key             =   ""
          EndProperty
          BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":487F
+            Picture         =   "frmOptions.frx":48D7
             Key             =   ""
          EndProperty
          BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":4E19
+            Picture         =   "frmOptions.frx":4E71
             Key             =   ""
          EndProperty
          BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":53B3
+            Picture         =   "frmOptions.frx":540B
             Key             =   ""
          EndProperty
          BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":594D
+            Picture         =   "frmOptions.frx":59A5
             Key             =   ""
          EndProperty
          BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":5EE7
+            Picture         =   "frmOptions.frx":5F3F
             Key             =   ""
          EndProperty
          BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":6481
+            Picture         =   "frmOptions.frx":64D9
             Key             =   ""
          EndProperty
          BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":6A1B
+            Picture         =   "frmOptions.frx":6A73
             Key             =   ""
          EndProperty
          BeginProperty ListImage18 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":6FB5
+            Picture         =   "frmOptions.frx":700D
             Key             =   ""
          EndProperty
          BeginProperty ListImage19 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":754F
+            Picture         =   "frmOptions.frx":75A7
             Key             =   ""
          EndProperty
          BeginProperty ListImage20 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":7E29
+            Picture         =   "frmOptions.frx":7E81
             Key             =   ""
          EndProperty
          BeginProperty ListImage21 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":8703
+            Picture         =   "frmOptions.frx":875B
             Key             =   ""
          EndProperty
          BeginProperty ListImage22 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":8C9D
+            Picture         =   "frmOptions.frx":8CF5
             Key             =   ""
          EndProperty
          BeginProperty ListImage23 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":9237
+            Picture         =   "frmOptions.frx":928F
             Key             =   ""
          EndProperty
          BeginProperty ListImage24 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":97D1
+            Picture         =   "frmOptions.frx":9829
             Key             =   ""
          EndProperty
          BeginProperty ListImage25 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":9D6B
+            Picture         =   "frmOptions.frx":9DC3
             Key             =   ""
          EndProperty
          BeginProperty ListImage26 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmOptions.frx":A305
+            Picture         =   "frmOptions.frx":A35D
             Key             =   ""
          EndProperty
       EndProperty
@@ -306,7 +290,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private UnloadForm As Boolean, LoadReady As Boolean, oldLanguage As String, Languages As Collection
- 
+
 Private optActionsControl As VBControlExtender, optActions As ctlOptActions
 Private optAutosaveControl As VBControlExtender, optAutosave As ctlOptAutosave
 'Private optDirectoriesControl As VBControlExtender, optDirectories As ctlOptDirectories
@@ -346,32 +330,34 @@ On Error GoTo ErrPtnr_OnError
 50060   If cmbProfile.ListIndex = 0 Then
 50070     optGhostscript.ControlsEnabled = True
 50080     optLanguages.ControlsEnabled = True
-50090     cmdProfileRename.Enabled = False
-50100     cmdProfileDelete.Enabled = False
-50110     cmdProfileSave.Enabled = True
-50120     cmdReset.Enabled = True
-50130     SetSubOption LastNodeKey, True
-50140    Else
-50150     If HKLMProfileExists(cmbProfile.List(cmbProfile.ListIndex)) And InstalledAsServer = False Then
-50160       cmdProfileRename.Enabled = False
-50170       cmdProfileDelete.Enabled = False
-50180       cmdProfileSave.Enabled = False
-50190       cmdReset.Enabled = False
-50200       SetSubOption LastNodeKey, False
-50210      Else
-50220       cmdProfileRename.Enabled = True
-50230       cmdProfileDelete.Enabled = True
-50240       cmdProfileSave.Enabled = True
-50250       cmdReset.Enabled = True
-50260       SetSubOption LastNodeKey, True
-50270     End If
-50280     optGhostscript.ControlsEnabled = False
-50290     optLanguages.ControlsEnabled = False
-50300   End If
-50310   Options1 = ProfileOptions(cmbProfile.ListIndex)
-50320   Options1.Language = CurrentLanguage
-50330   SetOptions
-50340  End If
+50090     optFonts.ControlsEnabled = True
+50100     cmdProfileRename.Enabled = False
+50110     cmdProfileDelete.Enabled = False
+50120     cmdProfileSave.Enabled = True
+50130     cmdReset.Enabled = True
+50140     SetSubOption LastNodeKey, True
+50150    Else
+50160     If HKLMProfileExists(cmbProfile.List(cmbProfile.ListIndex)) And InstalledAsServer = False Then
+50170       cmdProfileRename.Enabled = False
+50180       cmdProfileDelete.Enabled = False
+50190       cmdProfileSave.Enabled = False
+50200       cmdReset.Enabled = False
+50210       SetSubOption LastNodeKey, False
+50220      Else
+50230       cmdProfileRename.Enabled = True
+50240       cmdProfileDelete.Enabled = True
+50250       cmdProfileSave.Enabled = True
+50260       cmdReset.Enabled = True
+50270       SetSubOption LastNodeKey, True
+50280     End If
+50290     optGhostscript.ControlsEnabled = False
+50300     optLanguages.ControlsEnabled = False
+50310     optFonts.ControlsEnabled = False
+50320   End If
+50330   Options1 = ProfileOptions(cmbProfile.ListIndex)
+50340   Options1.Language = CurrentLanguage
+50350   SetOptions
+50360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -829,16 +815,23 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim f As Form, LanguagePath As String
 50020
-50030  If CurrentLanguage <> Options.Language Then
-50040   SetLanguage oldLanguage
-50050   LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
-50060   LoadLanguage LanguagePath & oldLanguage & ".ini"
-50070   For Each f In Forms
-50080    f.ChangeLanguage
-50090   Next
-50100  End If
-50110
-50120  Unload Me
+50030  If optFonts.SetTestFontBack Then
+50040   With Options
+50050    SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50060    SetFontControls frmMain.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50070   End With
+50080  End If
+50090
+50100  If CurrentLanguage <> Options.Language Then
+50110   SetLanguage oldLanguage
+50120   LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
+50130   LoadLanguage LanguagePath & oldLanguage & ".ini"
+50140   For Each f In Forms
+50150    f.ChangeLanguage
+50160   Next
+50170  End If
+50180
+50190  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -887,14 +880,55 @@ On Error GoTo ErrPtnr_OnError
 50300   optSave.SetOptions
 50310
 50320   With Options
-50330    SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50340    SetFont frmMain, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50330    SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50340    SetFontControls frmMain.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50350   End With
 50360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmOptions", "cmdReset_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub SetUserControlsFont()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  optActions.SetFont
+50020  optAutosave.SetFont
+50030 ' optDirectories.SetFont
+50040  optDocument.SetFont
+50050  optFonts.SetFont
+50060  optFormatPNG.SetFont
+50070  optFormatJPEG.SetFont
+50080  optFormatBMP.SetFont
+50090  optFormatPCX.SetFont
+50100  optFormatTIFF.SetFont
+50110  optFormatPDF.SetFont
+50120  optFormatPS.SetFont
+50130  optFormatEPS.SetFont
+50140  optFormatTXT.SetFont
+50150  optFormatPSD.SetFont
+50160  optFormatPCL.SetFont
+50170  optFormatRAW.SetFont
+50180  optFormatSVG.SetFont
+50190 ' optFormatXCF.SetFont
+50200
+50210  optGeneral.SetFont
+50220  optGhostscript.SetFont
+50230  optLanguages.SetFont
+50240  optPrint.SetFont
+50250  optSave.SetFont
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmOptions", "SetUserControlsFont")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1250,159 +1284,158 @@ On Error GoTo ErrPtnr_OnError
 52160  optGeneralControl.Width = dmFraDescription.Width
 52170  Set optGeneral = optGeneralControl.object
 52180  optGeneral.SetLanguageStrings
-52190 '
-52200  optGeneral.SetOptions
-52210
-52220  dmFraProfile.Caption = LanguageStrings.OptionsProfile
-52230  cmbProfile.Clear
-52240  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
-52250
-52260  Set Profiles = GetProfiles
-52270  ReDim ProfileNames(Profiles.Count)
-52280  ReDim ProfileOptions(Profiles.Count)
-52290  ProfileNames(0) = LanguageStrings.OptionsProfileDefaultName
-52300  ProfileOptions(0) = Options
-52310
-52320  With dmFraDescription
-52330   .Caption = LanguageStrings.OptionsTreeProgram
-52340   .Visible = True
-52350
-52360   optActionsControl.Top = .Top + .Height + ControlTop
-52370   optActionsControl.Left = .Left
-52380   optActionsControl.Width = .Width
-52390   optAutosaveControl.Top = .Top + .Height + ControlTop
-52400   optAutosaveControl.Left = .Left
-52410   optAutosaveControl.Width = .Width
-52420 '  optDirectoriesControl.Top = .Top + .Height + ControlTop
-52430 '  optDirectoriesControl.Left = .Left
-52440 '  optDirectoriesControl.Width = .Width
-52450   optDocumentControl.Top = .Top + .Height + ControlTop
-52460   optDocumentControl.Left = .Left
-52470   optDocumentControl.Width = .Width
-52480   optFontsControl.Top = .Top + .Height + ControlTop
-52490   optFontsControl.Left = .Left
-52500   optFontsControl.Width = .Width
-52510   optFormatPNGControl.Top = .Top + .Height + ControlTop
-52520   optFormatPNGControl.Left = .Left
-52530   optFormatPNGControl.Width = .Width
-52540   optFormatJPEGControl.Top = .Top + .Height + ControlTop
-52550   optFormatJPEGControl.Left = .Left
-52560   optFormatJPEGControl.Width = .Width
-52570   optFormatBMPControl.Top = .Top + .Height + ControlTop
-52580   optFormatBMPControl.Left = .Left
-52590   optFormatBMPControl.Width = .Width
-52600   optFormatPCXControl.Top = .Top + .Height + ControlTop
-52610   optFormatPCXControl.Left = .Left
-52620   optFormatPCXControl.Width = .Width
-52630   optFormatTIFFControl.Top = .Top + .Height + ControlTop
-52640   optFormatTIFFControl.Left = .Left
-52650   optFormatTIFFControl.Width = .Width
-52660   optFormatPDFControl.Top = .Top + .Height + ControlTop
-52670   optFormatPDFControl.Left = .Left
-52680   optFormatPDFControl.Width = .Width
-52690   optFormatPSControl.Top = .Top + .Height + ControlTop
-52700   optFormatPSControl.Left = .Left
-52710   optFormatPSControl.Width = .Width
-52720   optFormatEPSControl.Top = .Top + .Height + ControlTop
-52730   optFormatEPSControl.Left = .Left
-52740   optFormatEPSControl.Width = .Width
-52750   optFormatTXTControl.Top = .Top + .Height + ControlTop
-52760   optFormatTXTControl.Left = .Left
-52770   optFormatTXTControl.Width = .Width
-52780   optFormatPSDControl.Top = .Top + .Height + ControlTop
-52790   optFormatPSDControl.Left = .Left
-52800   optFormatPSDControl.Width = .Width
-52810   optFormatPCLControl.Top = .Top + .Height + ControlTop
-52820   optFormatPCLControl.Left = .Left
-52830   optFormatPCLControl.Width = .Width
-52840   optFormatRAWControl.Top = .Top + .Height + ControlTop
-52850   optFormatRAWControl.Left = .Left
-52860   optFormatRAWControl.Width = .Width
-52870   optFormatSVGControl.Top = .Top + .Height + ControlTop
-52880   optFormatSVGControl.Left = .Left
-52890   optFormatSVGControl.Width = .Width
-52900 '  optFormatXCFControl.Top = .Top + .Height + ControlTop
-52910 '  optFormatXCFControl.Left = .Left
-52920 '  optFormatXCFControl.Width = .Width
-52930   optGeneralControl.Top = .Top + .Height + ControlTop
-52940   optGeneralControl.Left = .Left
-52950   optGeneralControl.Width = .Width
-52960   optGhostscriptControl.Top = .Top + .Height + ControlTop
-52970   optGhostscriptControl.Left = .Left
-52980   optGhostscriptControl.Width = .Width
-52990   optLanguagesControl.Top = .Top + .Height + ControlTop
-53000   optLanguagesControl.Left = .Left
-53010   optLanguagesControl.Width = .Width
-53020   optPrintControl.Top = .Top + .Height + ControlTop
-53030   optPrintControl.Left = .Left
-53040   optPrintControl.Width = .Width
-53050   optSaveControl.Top = .Top + .Height + ControlTop
-53060   optSaveControl.Left = .Left
-53070   optSaveControl.Width = .Width
-53080
-53090   cmdCancel.Left = .Left
-53100   cmdReset.Left = .Left + (.Width - cmdReset.Width) / 2
-53110   cmdSave.Left = .Left + .Width - cmdSave.Width
-53120  End With
-53130
-53140  For i = 1 To Profiles.Count
-53150   cmbProfile.AddItem Profiles(i)
-53160   ProfileNames(i) = Profiles(i)
-53170   ProfileOptions(i) = ReadOptions(True, , Profiles(i))
-53180  Next i
-53190  SetProfile CurrentPrinterProfile
-53200
-53210  If cmbProfile.ListIndex = 0 Then
-53220    optGhostscript.ControlsEnabled = True
-53230    optLanguages.ControlsEnabled = True
-53240    cmdProfileRename.Enabled = False
-53250    cmdProfileDelete.Enabled = False
-53260   Else
-53270    optGhostscript.ControlsEnabled = False
-53280    optLanguages.ControlsEnabled = False
-53290    cmdProfileRename.Enabled = True
-53300    cmdProfileDelete.Enabled = True
-53310  End If
-53320
-53330  Set PrinterProfiles = GetPrinterProfiles
-53340  For i = 1 To PrinterProfiles.Count
-53350   sa(0) = PrinterProfiles(i)(0)
-53360   sa(1) = PrinterProfiles(i)(1)
-53370   sa(2) = PrinterProfiles(i)(1)
-53380   TempPrinterProfiles.Add sa
-53390  Next i
-53400
-53410  With LanguageStrings
-53420   cmdProfileAdd.ToolTipText = .OptionsProfileAdd
-53430   cmdProfileDelete.ToolTipText = .OptionsProfileDel
-53440   cmdProfileRename.ToolTipText = .OptionsProfileRenameProfile
-53450   cmdProfileSave.ToolTipText = .OptionsProfileSaveToDisc
-53460   cmdProfileLoad.ToolTipText = .OptionsProfileLoadFromDisc
-53470   cmbProfile.List(0) = .OptionsProfileDefaultName
-53480  End With
-53490
-53500  If ShowOnlyOptions = True Then
-53510   FormInTaskbar Me, True, True
-53520   Caption = "PDFCreator - " & Caption
-53530  End If
-53540
-53550  ShowAcceleratorsInForm Me, True
-53560
-53570  Screen.MousePointer = vbNormal
-53580
-53590  With Options
-53600   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-53610  End With
-53620
-53630  trvOptions.Nodes("Program").Selected = True
-53640  SetSubOption "Program", True
-53650  LastNodeKey = "Program"
-53660
-53670  If InstalledAsServer = True And IsAdmin = False Then
-53680   cmdSave.Enabled = False
-53690  End If
-53700
-53710  LoadReady = True
+52190  optGeneral.SetOptions
+52200
+52210  dmFraProfile.Caption = LanguageStrings.OptionsProfile
+52220  cmbProfile.Clear
+52230  cmbProfile.AddItem LanguageStrings.OptionsProfileDefaultName
+52240
+52250  Set Profiles = GetProfiles
+52260  ReDim ProfileNames(Profiles.Count)
+52270  ReDim ProfileOptions(Profiles.Count)
+52280  ProfileNames(0) = LanguageStrings.OptionsProfileDefaultName
+52290  ProfileOptions(0) = Options
+52300
+52310  With dmFraDescription
+52320   .Caption = LanguageStrings.OptionsTreeProgram
+52330   .Visible = True
+52340
+52350   optActionsControl.Top = .Top + .Height + ControlTop
+52360   optActionsControl.Left = .Left
+52370   optActionsControl.Width = .Width
+52380   optAutosaveControl.Top = .Top + .Height + ControlTop
+52390   optAutosaveControl.Left = .Left
+52400   optAutosaveControl.Width = .Width
+52410 '  optDirectoriesControl.Top = .Top + .Height + ControlTop
+52420 '  optDirectoriesControl.Left = .Left
+52430 '  optDirectoriesControl.Width = .Width
+52440   optDocumentControl.Top = .Top + .Height + ControlTop
+52450   optDocumentControl.Left = .Left
+52460   optDocumentControl.Width = .Width
+52470   optFontsControl.Top = .Top + .Height + ControlTop
+52480   optFontsControl.Left = .Left
+52490   optFontsControl.Width = .Width
+52500   optFormatPNGControl.Top = .Top + .Height + ControlTop
+52510   optFormatPNGControl.Left = .Left
+52520   optFormatPNGControl.Width = .Width
+52530   optFormatJPEGControl.Top = .Top + .Height + ControlTop
+52540   optFormatJPEGControl.Left = .Left
+52550   optFormatJPEGControl.Width = .Width
+52560   optFormatBMPControl.Top = .Top + .Height + ControlTop
+52570   optFormatBMPControl.Left = .Left
+52580   optFormatBMPControl.Width = .Width
+52590   optFormatPCXControl.Top = .Top + .Height + ControlTop
+52600   optFormatPCXControl.Left = .Left
+52610   optFormatPCXControl.Width = .Width
+52620   optFormatTIFFControl.Top = .Top + .Height + ControlTop
+52630   optFormatTIFFControl.Left = .Left
+52640   optFormatTIFFControl.Width = .Width
+52650   optFormatPDFControl.Top = .Top + .Height + ControlTop
+52660   optFormatPDFControl.Left = .Left
+52670   optFormatPDFControl.Width = .Width
+52680   optFormatPSControl.Top = .Top + .Height + ControlTop
+52690   optFormatPSControl.Left = .Left
+52700   optFormatPSControl.Width = .Width
+52710   optFormatEPSControl.Top = .Top + .Height + ControlTop
+52720   optFormatEPSControl.Left = .Left
+52730   optFormatEPSControl.Width = .Width
+52740   optFormatTXTControl.Top = .Top + .Height + ControlTop
+52750   optFormatTXTControl.Left = .Left
+52760   optFormatTXTControl.Width = .Width
+52770   optFormatPSDControl.Top = .Top + .Height + ControlTop
+52780   optFormatPSDControl.Left = .Left
+52790   optFormatPSDControl.Width = .Width
+52800   optFormatPCLControl.Top = .Top + .Height + ControlTop
+52810   optFormatPCLControl.Left = .Left
+52820   optFormatPCLControl.Width = .Width
+52830   optFormatRAWControl.Top = .Top + .Height + ControlTop
+52840   optFormatRAWControl.Left = .Left
+52850   optFormatRAWControl.Width = .Width
+52860   optFormatSVGControl.Top = .Top + .Height + ControlTop
+52870   optFormatSVGControl.Left = .Left
+52880   optFormatSVGControl.Width = .Width
+52890 '  optFormatXCFControl.Top = .Top + .Height + ControlTop
+52900 '  optFormatXCFControl.Left = .Left
+52910 '  optFormatXCFControl.Width = .Width
+52920   optGeneralControl.Top = .Top + .Height + ControlTop
+52930   optGeneralControl.Left = .Left
+52940   optGeneralControl.Width = .Width
+52950   optGhostscriptControl.Top = .Top + .Height + ControlTop
+52960   optGhostscriptControl.Left = .Left
+52970   optGhostscriptControl.Width = .Width
+52980   optLanguagesControl.Top = .Top + .Height + ControlTop
+52990   optLanguagesControl.Left = .Left
+53000   optLanguagesControl.Width = .Width
+53010   optPrintControl.Top = .Top + .Height + ControlTop
+53020   optPrintControl.Left = .Left
+53030   optPrintControl.Width = .Width
+53040   optSaveControl.Top = .Top + .Height + ControlTop
+53050   optSaveControl.Left = .Left
+53060   optSaveControl.Width = .Width
+53070
+53080   cmdCancel.Left = .Left
+53090   cmdReset.Left = .Left + (.Width - cmdReset.Width) / 2
+53100   cmdSave.Left = .Left + .Width - cmdSave.Width
+53110  End With
+53120
+53130  For i = 1 To Profiles.Count
+53140   cmbProfile.AddItem Profiles(i)
+53150   ProfileNames(i) = Profiles(i)
+53160   ProfileOptions(i) = ReadOptions(True, , Profiles(i))
+53170  Next i
+53180  SetProfile CurrentPrinterProfile
+53190
+53200  If cmbProfile.ListIndex = 0 Then
+53210    optGhostscript.ControlsEnabled = True
+53220    optLanguages.ControlsEnabled = True
+53230    cmdProfileRename.Enabled = False
+53240    cmdProfileDelete.Enabled = False
+53250   Else
+53260    optGhostscript.ControlsEnabled = False
+53270    optLanguages.ControlsEnabled = False
+53280    cmdProfileRename.Enabled = True
+53290    cmdProfileDelete.Enabled = True
+53300  End If
+53310
+53320  Set PrinterProfiles = GetPrinterProfiles
+53330  For i = 1 To PrinterProfiles.Count
+53340   sa(0) = PrinterProfiles(i)(0)
+53350   sa(1) = PrinterProfiles(i)(1)
+53360   sa(2) = PrinterProfiles(i)(1)
+53370   TempPrinterProfiles.Add sa
+53380  Next i
+53390
+53400  With LanguageStrings
+53410   cmdProfileAdd.ToolTipText = .OptionsProfileAdd
+53420   cmdProfileDelete.ToolTipText = .OptionsProfileDel
+53430   cmdProfileRename.ToolTipText = .OptionsProfileRenameProfile
+53440   cmdProfileSave.ToolTipText = .OptionsProfileSaveToDisc
+53450   cmdProfileLoad.ToolTipText = .OptionsProfileLoadFromDisc
+53460   cmbProfile.List(0) = .OptionsProfileDefaultName
+53470  End With
+53480
+53490  If ShowOnlyOptions = True Then
+53500   FormInTaskbar Me, True, True
+53510   Caption = "PDFCreator - " & Caption
+53520  End If
+53530
+53540  ShowAcceleratorsInForm Me, True
+53550
+53560  Screen.MousePointer = vbNormal
+53570
+53580  With Options
+53590   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+53600  End With
+53610
+53620  trvOptions.Nodes("Program").Selected = True
+53630  SetSubOption "Program", True
+53640  LastNodeKey = "Program"
+53650
+53660  If InstalledAsServer = True And IsAdmin = False Then
+53670   cmdSave.Enabled = False
+53680  End If
+53690
+53700  LoadReady = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1446,7 +1479,7 @@ On Error GoTo ErrPtnr_OnError
 50250  optGeneral.SetOptions
 50260
 50270  With Options
-50280   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50280   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50290  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1492,6 +1525,11 @@ On Error GoTo ErrPtnr_OnError
 50080   Else
 50090    SetSubOption Node.key, True
 50100  End If
+50110  If cmbProfile.ListIndex > 0 Then
+50120   optGhostscript.ControlsEnabled = False
+50130   optFonts.ControlsEnabled = False
+50140   optLanguages.ControlsEnabled = False
+50150  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
