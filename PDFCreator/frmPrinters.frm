@@ -364,10 +364,16 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 If KeyCode = vbKeyF1 Then
-50020     KeyCode = 0
-50030     Call HTMLHelp_ShowTopic("html\using-multiple-printers.html")
-50040 End If
+50010  If KeyCode = vbKeyF1 Then
+50020   KeyCode = 0
+50030   Call HTMLHelp_ShowTopic("html\using-multiple-printers.html")
+50040  End If
+50050
+50060  With Options
+50070   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50080  End With
+50090
+50100  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

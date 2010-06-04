@@ -201,8 +201,13 @@ On Error GoTo ErrPtnr_OnError
 50270   Width = 0.75 * .Width
 50280   Move (.Width - Width) / 2, (.Height - Height) / 2
 50290  End With
-50300  ShowAcceleratorsInForm Me, True
-50310  Timer1.Enabled = True
+50300
+50310  With Options
+50320   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50330  End With
+50340
+50350  ShowAcceleratorsInForm Me, True
+50360  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

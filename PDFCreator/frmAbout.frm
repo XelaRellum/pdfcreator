@@ -307,7 +307,7 @@ Private Sub cmdClose_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 Unload Me
+50010  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -324,21 +324,28 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 If LanguageStrings.CommonLanguagename = "Deutsch" Or LanguageStrings.CommonLanguagename = "English" Then
-50020     lblTranslator.Caption = ""
-50030 Else
-50040     lblTranslator.Caption = """" + LanguageStrings.CommonLanguagename + """ by " + LanguageStrings.CommonAuthor
-50050 End If
-50060
-50070 imgDonate.MousePointer = 99
-50080 imgDonate.MouseIcon = LoadResPicture(1000, vbResCursor)
-50090 lblHomepage.MousePointer = 99
-50100 lblHomepage.MouseIcon = LoadResPicture(1000, vbResCursor)
-50110 Dim i As Integer
-50120 For i = 0 To lblLink.Count - 1
-50130     lblLink(i).MousePointer = 99
-50140     lblLink(i).MouseIcon = LoadResPicture(1000, vbResCursor)
-50150 Next
+50010  Dim i As Long
+50020
+50030  If LanguageStrings.CommonLanguagename = "Deutsch" Or LanguageStrings.CommonLanguagename = "English" Then
+50040    lblTranslator.Caption = ""
+50050   Else
+50060    lblTranslator.Caption = """" + LanguageStrings.CommonLanguagename + """ by " + LanguageStrings.CommonAuthor
+50070  End If
+50080
+50090  imgDonate.MousePointer = 99
+50100  imgDonate.MouseIcon = LoadResPicture(1000, vbResCursor)
+50110  lblHomepage.MousePointer = 99
+50120  lblHomepage.MouseIcon = LoadResPicture(1000, vbResCursor)
+50130  For i = 0 To lblLink.Count - 1
+50140   lblLink(i).MousePointer = 99
+50150   lblLink(i).MouseIcon = LoadResPicture(1000, vbResCursor)
+50160  Next i
+50170
+50180  With Options
+50190   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50200  End With
+50210
+50220  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

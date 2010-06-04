@@ -117,7 +117,12 @@ On Error GoTo ErrPtnr_OnError
 50030  ChangeDefaultprinter = False
 50040  ChangeLanguage
 50050  chkAskAgain.value = Options.NoConfirmMessageSwitchingDefaultprinter
-50060  ShowAcceleratorsInForm Me, True
+50060
+50070  With Options
+50080   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50090  End With
+50100
+50110  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -136,6 +141,8 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  lblSwitchDefaultprinter.Caption = LanguageStrings.MessagesMsg35
 50020  chkAskAgain.Caption = LanguageStrings.MessagesMsg36
+50030  cmd(0).Caption = LanguageStrings.OptionsPassOK
+50040  cmd(1).Caption = LanguageStrings.OptionsPassCancel
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

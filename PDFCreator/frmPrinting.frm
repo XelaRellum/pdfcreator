@@ -520,33 +520,36 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010
-50020  Me.Icon = LoadResPicture(2120, vbResIcon)
-50030  Me.KeyPreview = True
-50040  Caption = App.EXEName
-50050  Caption = App.title & " " & GetProgramReleaseStr
-50060  Printing = True
-50070
-50080  With anmProcess
-50090   .Top = 0
-50100   .Left = 0
-50110   .Width = 260 * Screen.TwipsPerPixelX
-50120   .Height = 66 * Screen.TwipsPerPixelY
-50130  End With
-50140
-50150  If frmMain.Visible = False Then
-50160   FormInTaskbar Me, True, True
-50170  End If
-50180
-50190  ChangeLanguage
-50200
-50210  InitForm
-50220
-50230  UpdateProfiles
-50240
-50250  ShowAcceleratorsInForm Me, True
-50260  SetTopMost Me, True, True
-50270  SetTopMost Me, False, True
+50010  Me.Icon = LoadResPicture(2120, vbResIcon)
+50020  Me.KeyPreview = True
+50030  Caption = App.EXEName
+50040  Caption = App.title & " " & GetProgramReleaseStr
+50050  Printing = True
+50060
+50070  With anmProcess
+50080   .Top = 0
+50090   .Left = 0
+50100   .Width = 260 * Screen.TwipsPerPixelX
+50110   .Height = 66 * Screen.TwipsPerPixelY
+50120  End With
+50130
+50140  If frmMain.Visible = False Then
+50150   FormInTaskbar Me, True, True
+50160  End If
+50170
+50180  ChangeLanguage
+50190
+50200  InitForm
+50210
+50220  UpdateProfiles
+50230
+50240  With Options
+50250   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50260  End With
+50270
+50280  ShowAcceleratorsInForm Me, True
+50290  SetTopMost Me, True, True
+50300  SetTopMost Me, False, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
