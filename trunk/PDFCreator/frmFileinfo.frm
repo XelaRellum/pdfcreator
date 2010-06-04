@@ -84,6 +84,9 @@ On Error GoTo ErrPtnr_OnError
 50010  txt.Left = 0
 50020  txt.Top = 0
 50030  Set Me.Font = txt.Font
+50040  With Options
+50050   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50060  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

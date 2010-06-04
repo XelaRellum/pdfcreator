@@ -224,7 +224,12 @@ On Error GoTo ErrPtnr_OnError
 50090  End With
 50100  bSuccess = False
 50110  bFinished = False
-50120  ShowAcceleratorsInForm Me, True
+50120
+50130  With Options
+50140   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50150  End With
+50160
+50170  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

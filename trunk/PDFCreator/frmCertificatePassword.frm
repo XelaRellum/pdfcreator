@@ -192,6 +192,12 @@ On Error GoTo ErrPtnr_OnError
 50040  Set m = CreateObject("pdfforge.pdf.pdf")
 50050  imgValidCertificatePassword.Left = imgInvalidCertificatePassword.Left
 50060  imgValidCertificatePassword.Top = imgInvalidCertificatePassword.Top
+50070
+50080  With Options
+50090   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50100  End With
+50110
+50120  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

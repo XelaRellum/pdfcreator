@@ -152,8 +152,13 @@ On Error GoTo ErrPtnr_OnError
 50150   .ShowText = True
 50160  End With
 50170  ChangeLanguage
-50180  ShowAcceleratorsInForm Me, True
-50190  Timer1.Enabled = True
+50180
+50190  With Options
+50200   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50210  End With
+50220
+50230  ShowAcceleratorsInForm Me, True
+50240  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
