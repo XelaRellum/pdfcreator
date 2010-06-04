@@ -443,7 +443,7 @@ On Error GoTo ErrPtnr_OnError
 50030  chkAddWindowsFontpath.value = Options1.AddWindowsFontpath
 50040
 50050  cmbAdditionalGhostscriptParameters.Clear
-50060  cmbAdditionalGhostscriptParameters.AddItem "=-dTextAlphaBits=4|-dGraphicsAlphaBits=4|-dDOINTERPOLATE"
+50060  cmbAdditionalGhostscriptParameters.AddItem "-dTextAlphaBits=4|-dGraphicsAlphaBits=4|-dDOINTERPOLATE"
 50070
 50080  cmbAdditionalGhostscriptParameters.Text = Options1.AdditionalGhostscriptParameters
 50090  txtAdditionalGhostscriptSearchpath.Text = Options1.AdditionalGhostscriptSearchpath
