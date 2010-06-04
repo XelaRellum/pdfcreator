@@ -13,20 +13,12 @@ Begin VB.UserControl ctlOptFonts
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   8281
-      Caption         =   "Programfont"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   8281
+      caption         =   "Programfont"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptFonts.ctx":0312
       Begin VB.ComboBox cmbProgramFontsize 
          Appearance      =   0  '2D
          Height          =   315
@@ -81,6 +73,16 @@ Begin VB.UserControl ctlOptFonts
          Top             =   4095
          Width           =   1755
       End
+      Begin VB.Label lblEnableNotice 
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   255
+         Left            =   120
+         TabIndex        =   11
+         Top             =   4800
+         Visible         =   0   'False
+         Width           =   5895
+      End
       Begin VB.Label lblProgfont 
          AutoSize        =   -1  'True
          Caption         =   "Programfont"
@@ -126,21 +128,18 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
+Private mEnabled As Boolean
+Private mControlsEnabled As Boolean
+
+Public SetTestFontBack As Boolean
+
 Public Sub SetControlsEnabled(value As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  cmbFonts.Enabled = value
-50020  cmbCharset.Enabled = value
-50030  cmbProgramFontsize.Enabled = value
-50040  lblProgfont.Enabled = value
-50050  lblProgcharset.Enabled = value
-50060  lblSize.Enabled = value
-50070  lblTesttext.Enabled = value
-50080  txtTest.Enabled = value
-50090  cmdTest.Enabled = value
-50100  cmdCancelTest.Enabled = value
-50110  dmFraProgFont.Enabled = value
+50010  mControlsEnabled = value
+50020  ControlsEnabled = value
+50030  dmFraProgFont.Enabled = value
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -153,124 +152,211 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Property Let ControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  mEnabled = value
+50020
+50030  cmbFonts.Enabled = mEnabled
+50040  cmbFonts.Visible = mEnabled
+50050  cmbCharset.Enabled = mEnabled
+50060  cmbCharset.Visible = mEnabled
+50070  cmbProgramFontsize.Enabled = mEnabled
+50080  cmbProgramFontsize.Visible = mEnabled
+50090  lblProgfont.Enabled = mEnabled
+50100  lblProgfont.Visible = mEnabled
+50110  lblProgcharset.Enabled = mEnabled
+50120  lblProgcharset.Visible = mEnabled
+50130  lblSize.Enabled = mEnabled
+50140  lblSize.Visible = mEnabled
+50150  lblTesttext.Enabled = mEnabled
+50160  lblTesttext.Visible = mEnabled
+50170  txtTest.Enabled = mEnabled
+50180  txtTest.Visible = mEnabled
+50190  cmdTest.Enabled = mEnabled
+50200  cmdTest.Visible = mEnabled
+50210  cmdCancelTest.Enabled = mEnabled
+50220  cmdCancelTest.Visible = mEnabled
+50230
+50240  lblEnableNotice.Visible = Not mEnabled
+50250  If mControlsEnabled Then
+50260    lblEnableNotice.Enabled = Not mEnabled
+50270   Else
+50280    lblEnableNotice.Enabled = False
+50290  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFonts", "ControlsEnabled [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get ControlEnabled() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlEnabled = mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFonts", "ControlEnabled [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim ctl As Control
-50020  dmFraProgFont.Left = 0
-50030  dmFraProgFont.Top = 0
-50040  UserControl.Height = dmFraProgFont.Height
-50050
-50060  Dim i As Long, fi As Long, tStr As String, SMF As Collection, _
+50020  Dim i As Long, fi As Long, tStr As String, SMF As Collection, _
   cSystem As clsSystem
-50080  Set cSystem = New clsSystem
-50090  Set SMF = cSystem.GetSystemFont(frmMain, Menu)
-50100  txtTest.Text = vbNullString
-50110  For i = 33 To 255
-50120   txtTest.Text = txtTest.Text & Chr$(i)
-50130 '  If UnloadForm Then
-50140 '   TimerReady = True
-50150 '   Exit Sub
-50160 '  End If
-50170   DoEvents
-50180  Next i
-50190  With cmbCharset
-50200   .Clear
-50210   .AddItem "0, Western": .ItemData(.NewIndex) = 0
-50220   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
-50230   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
-50240   .AddItem "128, Japanese": .ItemData(.NewIndex) = 128
-50250   .AddItem "129, Hangeul": .ItemData(.NewIndex) = 129
-50260   .AddItem "130, Hangeul (Johab)": .ItemData(.NewIndex) = 130
-50270   .AddItem "134, Chinese_GB2312": .ItemData(.NewIndex) = 134
-50280   .AddItem "136, Chinese_BIG5": .ItemData(.NewIndex) = 136
-50290   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
-50300   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
-50310   .AddItem "163, Vietnamese": .ItemData(.NewIndex) = 163
-50320   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
-50330   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
-50340   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
-50350   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
-50360   .AddItem "222, Thai": .ItemData(.NewIndex) = 222
-50370   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
-50380   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
-50390   .Text = 0
-50400  End With
-50410  With cmbProgramFontsize
-50420   .AddItem "8"
-50430   .AddItem "9"
-50440   .AddItem "10"
-50450   .AddItem "11"
-50460   .AddItem "12"
-50470   .AddItem "14"
-50480   .AddItem "16"
-50490   .AddItem "18"
-50500   .AddItem "20"
-50510   .AddItem "22"
-50520   .AddItem "24"
-50530   .AddItem "26"
-50540   .AddItem "28"
-50550   .AddItem "36"
-50560   .AddItem "48"
-50570   .AddItem "72"
-50580  End With
-50590  cmbProgramFontsize.Text = 8
-50600  cmbCharset.Text = cmbCharset.ItemData(0)
-50610  cmbCharset.Text = Options.ProgramFontCharset
-50620  fi = -1
-50630  With cmbFonts
-50640   For i = 1 To Screen.FontCount
-50650    tStr = Trim$(Screen.Fonts(i))
-50660    If LenB(tStr) > 0 Then
-50670     cmbFonts.AddItem tStr
-50680     If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
-50690      fi = i
-50700     End If
-50710    End If
-50720 '   If UnloadForm Then
-50730 '    TimerReady = True
-50740 '    Exit Sub
-50750 '   End If
-50760    DoEvents
-50770   Next i
-50780  End With
-50790
-50800 ' Form_Resize
-50810
-50820  cmbProgramFontsize.Width = txtTest.Width - _
-  (cmbProgramFontsize.Left - txtTest.Left)
+50040
+50050  dmFraProgFont.Left = 0
+50060  dmFraProgFont.Top = 0
+50070  UserControl.Height = dmFraProgFont.Height
+50080  lblEnableNotice.Top = lblProgfont.Top
+50090  lblEnableNotice.Left = lblProgfont.Left
+50100
+50110  Set cSystem = New clsSystem
+50120  Set SMF = cSystem.GetSystemFont(frmMain, Menu)
+50130  txtTest.Text = vbNullString
+50140  For i = 33 To 255
+50150   txtTest.Text = txtTest.Text & Chr$(i)
+50160 '  If UnloadForm Then
+50170 '   TimerReady = True
+50180 '   Exit Sub
+50190 '  End If
+50200   DoEvents
+50210  Next i
+50220  With cmbCharset
+50230   .Clear
+50240   .AddItem "0, Western": .ItemData(.NewIndex) = 0
+50250   .AddItem "2, Symbol": .ItemData(.NewIndex) = 2
+50260   .AddItem "77, Mac": .ItemData(.NewIndex) = 77
+50270   .AddItem "128, Japanese": .ItemData(.NewIndex) = 128
+50280   .AddItem "129, Hangeul": .ItemData(.NewIndex) = 129
+50290   .AddItem "130, Hangeul (Johab)": .ItemData(.NewIndex) = 130
+50300   .AddItem "134, Chinese_GB2312": .ItemData(.NewIndex) = 134
+50310   .AddItem "136, Chinese_BIG5": .ItemData(.NewIndex) = 136
+50320   .AddItem "161, Greek": .ItemData(.NewIndex) = 161
+50330   .AddItem "162, Turkish": .ItemData(.NewIndex) = 162
+50340   .AddItem "163, Vietnamese": .ItemData(.NewIndex) = 163
+50350   .AddItem "177, Hebrew": .ItemData(.NewIndex) = 177
+50360   .AddItem "178, Arabic": .ItemData(.NewIndex) = 178
+50370   .AddItem "186, Baltic": .ItemData(.NewIndex) = 186
+50380   .AddItem "204, Cyrillic": .ItemData(.NewIndex) = 204
+50390   .AddItem "222, Thai": .ItemData(.NewIndex) = 222
+50400   .AddItem "238, Central European": .ItemData(.NewIndex) = 238
+50410   .AddItem "255, DOS/OEM": .ItemData(.NewIndex) = 255
+50420   .Text = 0
+50430  End With
+50440  With cmbProgramFontsize
+50450   .AddItem "8"
+50460   .AddItem "9"
+50470   .AddItem "10"
+50480   .AddItem "11"
+50490   .AddItem "12"
+50500   .AddItem "14"
+50510   .AddItem "16"
+50520   .AddItem "18"
+50530   .AddItem "20"
+50540   .AddItem "22"
+50550   .AddItem "24"
+50560   .AddItem "26"
+50570   .AddItem "28"
+50580   .AddItem "36"
+50590   .AddItem "48"
+50600   .AddItem "72"
+50610  End With
+50620  cmbProgramFontsize.Text = 8
+50630  cmbCharset.Text = cmbCharset.ItemData(0)
+50640  cmbCharset.Text = Options.ProgramFontCharset
+50650  fi = -1
+50660  With cmbFonts
+50670   For i = 1 To Screen.FontCount
+50680    tStr = Trim$(Screen.Fonts(i))
+50690    If LenB(tStr) > 0 Then
+50700     cmbFonts.AddItem tStr
+50710     If UCase$(cmbFonts.List(i)) = UCase$(SMF(1)(0)) Then
+50720      fi = i
+50730     End If
+50740    End If
+50750 '   If UnloadForm Then
+50760 '    TimerReady = True
+50770 '    Exit Sub
+50780 '   End If
+50790    DoEvents
+50800   Next i
+50810  End With
+50820
+50830 ' Form_Resize
 50840
-50850  If fi >= 0 Then
-50860   cmbFonts.ListIndex = fi
-50870   cmbCharset.Text = SMF(1)(2)
-50880   cmbProgramFontsize.Text = SMF(1)(1)
-50890   txtTest.Font = cmbFonts.List(cmbFonts.ListIndex)
-50900   txtTest.Font.Charset = cmbCharset.Text
-50910  End If
-50920
-50930  With cmbCharset
-50940   .Top = cmbFonts.Top
-50950   .Left = lblProgcharset.Left
-50960   .Width = 2295
-50970   .SelStart = 0
-50980   .SelLength = 0
-50990  End With
-51000  With cmbProgramFontsize
-51010   .Top = cmbFonts.Top
-51020   .Left = lblSize.Left
-51030   .Width = 765
-51040   .SelStart = 0
-51050   .SelLength = 0
-51060  End With
-51070
-51080  CorrectCmbCharset
-51090
-51100  SetFrames Options.OptionsDesign
+50850  cmbProgramFontsize.Width = txtTest.Width - _
+  (cmbProgramFontsize.Left - txtTest.Left)
+50870
+50880  If fi >= 0 Then
+50890   cmbFonts.ListIndex = fi
+50900   cmbCharset.Text = SMF(1)(2)
+50910   cmbProgramFontsize.Text = SMF(1)(1)
+50920   txtTest.Font = cmbFonts.List(cmbFonts.ListIndex)
+50930   txtTest.Font.Charset = cmbCharset.Text
+50940  End If
+50950
+50960  With cmbCharset
+50970   .Top = cmbFonts.Top
+50980   .Left = lblProgcharset.Left
+50990   .Width = 2295
+51000   .SelStart = 0
+51010   .SelLength = 0
+51020  End With
+51030  With cmbProgramFontsize
+51040   .Top = cmbFonts.Top
+51050   .Left = lblSize.Left
+51060   .Width = 765
+51070   .SelStart = 0
+51080   .SelLength = 0
+51090  End With
+51100
+51110  CorrectCmbCharset
+51120
+51130  mControlsEnabled = True
+51140  SetFrames Options.OptionsDesign
+51150
+51160  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptFonts", "UserControl_Initialize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub SetFont()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With Options
+50020   SetFontControls UserControl.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50030  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFonts", "SetFont")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -404,15 +490,16 @@ Public Sub GetOptions()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options
+50010  With Options1
 50020   .ProgramFont = cmbFonts.List(cmbFonts.ListIndex)
 50030   If LenB(cmbCharset.Text) > 0 Then
-50040    .ProgramFontCharset = cmbCharset.Text
-50050   End If
-50060   If LenB(cmbProgramFontsize.Text) > 0 Then
-50070    .ProgramFontSize = cmbProgramFontsize.Text
-50080   End If
-50090  End With
+50040    CorrectCmbCharset
+50050    .ProgramFontCharset = cmbCharset.Text
+50060   End If
+50070   If LenB(cmbProgramFontsize.Text) > 0 Then
+50080    .ProgramFontSize = cmbProgramFontsize.Text
+50090   End If
+50100  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -528,21 +615,24 @@ On Error GoTo ErrPtnr_OnError
 50190   tFontSize = .Size
 50200   tFontCharset = .Charset
 50210  End With
-50220  SetFontUserControl cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), CLng(cmbProgramFontsize.Text)
-50230  cmbCharset.Text = tCharset
-50240  SetFont frmMain, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), cmbProgramFontsize.Text
-50250 ' ieb.Refresh
-50260  With cmdTest.Font
-50270   .Name = tFontname
-50280   .Size = tFontSize
-50290   .Charset = tFontCharset
-50300  End With
-50310  With cmdCancelTest
-50320   .Font.Name = tFontname
-50330   .Font.Size = tFontSize
-50340   .Font.Charset = tFontCharset
-50350   .Enabled = True
-50360  End With
+50220  cmbCharset.Text = tCharset
+50230
+50240  SetTestFontBack = True
+50250  SetFontControls UserControl.Controls, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), CLng(cmbProgramFontsize.Text)
+50260  SetFontControls frmMain.Controls, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), CLng(cmbProgramFontsize.Text)
+50270  SetFontControls frmOptions.Controls, cmbFonts.List(cmbFonts.ListIndex), CLng(tStr), CLng(cmbProgramFontsize.Text)
+50280
+50290  With cmdTest.Font
+50300   .Name = tFontname
+50310   .Size = tFontSize
+50320   .Charset = tFontCharset
+50330  End With
+50340  With cmdCancelTest
+50350   .Font.Name = tFontname
+50360   .Font.Size = tFontSize
+50370   .Font.Charset = tFontCharset
+50380   .Enabled = True
+50390  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -560,10 +650,13 @@ Private Sub cmdCancelTest_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With Options
-50020   SetFont frmOptions, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50030   cmbCharset.Text = .ProgramFontCharset
-50040   SetFont frmMain, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50050  End With
+50020   cmbCharset.Text = .ProgramFontCharset
+50030   SetFontControls frmOptions.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50040   SetFontControls frmMain.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50050   SetFontControls frmOptions.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50060   SetFontControls UserControl.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50070  End With
+50080  SetTestFontBack = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -638,7 +731,7 @@ Private Sub cmbProgramFontSize_Change()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tL As Long
-50020 If Trim$(cmbProgramFontsize.Text) = vbNullString Then
+50020  If Trim$(cmbProgramFontsize.Text) = vbNullString Then
 50030   cmbProgramFontsize.Text = 8
 50040  End If
 50050  tL = CLng(cmbProgramFontsize.Text)
@@ -736,74 +829,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptFonts", "ComboSetListWidth")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Public Sub SetFontUserControl(ByVal Fontname As String, ByVal Charset As Long, ByVal Fontsize As Long)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim ctl As Control, ts As TabStrip, df As dmFrame, f As StdFont, trv As TreeView
-50020
-50030  If LenB(Trim$(Fontname)) = 0 Then
-50040   Exit Sub
-50050  End If
-50060
-50070  Set f = New StdFont
-50080  f.Name = Fontname
-50090  f.Size = Fontsize
-50100  f.Charset = Charset
-50110
-50120  For Each ctl In UserControl.Controls
-50130   If TypeOf ctl Is Label Or _
-     TypeOf ctl Is Form Or _
-     TypeOf ctl Is ComboBox Or _
-     TypeOf ctl Is CheckBox Or _
-     TypeOf ctl Is CommandButton Or _
-     TypeOf ctl Is ListView Or _
-     TypeOf ctl Is StatusBar Or _
-     TypeOf ctl Is TextBox Or _
-     TypeOf ctl Is Frame Then
-50220    With ctl
-50230     .Font = Fontname
-50240     If Not (TypeOf ctl Is StatusBar) And Not (TypeOf ctl Is ListView) Then
-50250      .Fontsize = Fontsize
-50260     End If
-50270     .Font.Charset = Charset
-50280    End With
-50290   End If
-50300
-50310   If TypeOf ctl Is TreeView Then
-50320    Set trv = ctl
-50330    trv.Font.Name = Fontname
-50340    trv.Font.Size = Fontsize
-50350    trv.Font.Charset = Charset
-50360   End If
-50370   If TypeOf ctl Is TabStrip Then
-50380    Set ts = ctl
-50390    ts.Font.Name = Fontname
-50400    ts.Font.Size = Fontsize
-50410    ts.Font.Charset = Charset
-50420   End If
-50430   If TypeOf ctl Is dmFrame Then
-50440    Set df = ctl
-50450    df.Font.Name = Fontname
-50460    df.Font.Size = Fontsize
-50470    df.Font.Charset = Charset
-50480    Set df.Font = f
-50490   End If
-50500  Next ctl
-50510
-50520  Set f = Nothing
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptFonts", "SetFontUserControl")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

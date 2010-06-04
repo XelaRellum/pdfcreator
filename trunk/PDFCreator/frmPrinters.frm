@@ -361,10 +361,23 @@ End Select
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
-If KeyCode = vbKeyF1 Then
-    KeyCode = 0
-    Call HTMLHelp_ShowTopic("html\using-multiple-printers.html")
-End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010 If KeyCode = vbKeyF1 Then
+50020     KeyCode = 0
+50030     Call HTMLHelp_ShowTopic("html\using-multiple-printers.html")
+50040 End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinters", "Form_KeyDown")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Private Sub Form_Load()

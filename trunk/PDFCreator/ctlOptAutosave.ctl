@@ -13,14 +13,22 @@ Begin VB.UserControl ctlOptAutosave
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _extentx        =   11245
-      _extenty        =   8969
-      caption         =   "Autosave"
-      caption3d       =   2
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptAutosave.ctx":0312
-      textshaddowcolor=   12582912
+      _ExtentX        =   11245
+      _ExtentY        =   8969
+      Caption         =   "Autosave"
+      Caption3D       =   2
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      TextShaddowColor=   12582912
       Begin VB.TextBox txtAutoSaveDirectoryPreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -83,9 +91,9 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptAutosave.ctx":033E
+         ItemData        =   "ctlOptAutosave.ctx":0312
          Left            =   3690
-         List            =   "ctlOptAutosave.ctx":0340
+         List            =   "ctlOptAutosave.ctx":0314
          Style           =   2  'Dropdown-Liste
          TabIndex        =   7
          Top             =   1785
@@ -254,10 +262,31 @@ On Error GoTo ErrPtnr_OnError
 50440
 50450  ControlsEnabled = True
 50460  SetFrames Options.OptionsDesign
+50470
+50480  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptAutosave", "UserControl_Initialize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub SetFont()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With Options
+50020   SetFontControls UserControl.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50030  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptAutosave", "SetFont")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

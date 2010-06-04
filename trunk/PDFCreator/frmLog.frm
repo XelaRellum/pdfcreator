@@ -175,7 +175,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Me.Icon = LoadResPicture(2120, vbResIcon)
 50020  KeyPreview = True
 50030  With Options
-50040   SetFont Me, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50040   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50050  End With
 50060  ChangeLanguage
 50070  If Options.Logging = 1 Then

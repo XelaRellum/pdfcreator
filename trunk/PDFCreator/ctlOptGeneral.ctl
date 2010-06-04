@@ -43,7 +43,7 @@ Begin VB.UserControl ctlOptGeneral
          Height          =   315
          ItemData        =   "ctlOptGeneral.ctx":0312
          Left            =   120
-         List            =   "ctlOptGeneral.ctx":0314
+         List            =   "ctlOptGeneral.ctx":0319
          Style           =   2  'Dropdown-Liste
          TabIndex        =   24
          Top             =   600
@@ -177,9 +177,9 @@ Begin VB.UserControl ctlOptGeneral
       End
       Begin VB.ComboBox cmbOptionsDesign 
          Height          =   315
-         ItemData        =   "ctlOptGeneral.ctx":0316
+         ItemData        =   "ctlOptGeneral.ctx":0330
          Left            =   120
-         List            =   "ctlOptGeneral.ctx":0318
+         List            =   "ctlOptGeneral.ctx":0337
          Style           =   2  'Dropdown-Liste
          TabIndex        =   16
          Top             =   1620
@@ -509,14 +509,35 @@ On Error GoTo ErrPtnr_OnError
 50620    lblProcessPriority.Enabled = False
 50630    sldProcessPriority.Enabled = False
 50640  End If
-50650
-50660  SetFrames Options.OptionsDesign
-50670  ControlsEnabled = True
+50650  SetFrames Options.OptionsDesign
+50660  ControlsEnabled = True
+50670
 50680  SetProgramOptions
+50690
+50700  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptGeneral", "UserControl_Initialize")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub SetFont()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With Options
+50020   SetFontControls UserControl.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50030  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGeneral", "SetFont")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

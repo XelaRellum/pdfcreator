@@ -36,7 +36,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGlobal2", "InstalledAsServer")
+Select Case ErrPtnr.OnError("modGlobal2", "CheckInstalledAsServer")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
