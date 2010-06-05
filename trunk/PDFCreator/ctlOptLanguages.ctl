@@ -39,7 +39,7 @@ Begin VB.UserControl ctlOptLanguages
       End
       Begin VB.CommandButton cmdLanguageRefresh 
          Caption         =   "Refresh List"
-         Height          =   375
+         Height          =   495
          Left            =   4080
          TabIndex        =   5
          Top             =   1545
@@ -47,10 +47,10 @@ Begin VB.UserControl ctlOptLanguages
       End
       Begin VB.CommandButton cmdLanguageInstall 
          Caption         =   "Install"
-         Height          =   375
+         Height          =   495
          Left            =   4080
          TabIndex        =   6
-         Top             =   2025
+         Top             =   2160
          Width           =   1575
       End
       Begin VB.ComboBox cmbCurrentLanguage 
