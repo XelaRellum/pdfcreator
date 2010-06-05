@@ -181,11 +181,11 @@ Begin VB.UserControl ctlOptSave
          Caption         =   "Substitutions only in <Title>"
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   240
+         Left            =   120
          TabIndex        =   19
          Top             =   2160
          Value           =   1  'Aktiviert
-         Width           =   3255
+         Width           =   6015
       End
       Begin VB.TextBox txtFilenameSubst 
          Appearance      =   0  '2D
