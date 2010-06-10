@@ -24,7 +24,7 @@ Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5
 ;Name: norwegian_bokmal;   MessagesFile: compiler:Languages\Norwegian.isl
 Name: polish;             MessagesFile: compiler:Languages\Polish.isl
 Name: portuguese_br;      MessagesFile: compiler:Languages\BrazilianPortuguese.isl
-;Name: romanian;           MessagesFile: Innosetup languages files\Romanian-6-5.1.11.isl
+Name: romanian;           MessagesFile: Innosetup languages files\Romanian-6-5.1.11.isl
 Name: russian;            MessagesFile: compiler:Languages\Russian.isl
 Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
 Name: slovenian;          MessagesFile: compiler:Languages\Slovenian.isl
