@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.3.9 (with ISPP) and ISTool 5.3.0.1
+; Setup created with Inno Setup QuickStart Pack 5.3.10 (with ISPP) and ISTool 5.3.0.1
 ; Installation script created by Frank Heindörfer
 
 ;#define Test
