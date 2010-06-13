@@ -4,26 +4,46 @@ Copyright (C)2002-2010 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
+
+Version 1.0.1 (June 13th, 2010)
+-------------------------------------------------------------------------------
+Improvements: 
+- Added more languages that were updated for 1.0.x 
+
+Bug Fixes: 
+- Fixed a bug using the setting zip for pdf color\grey compression 
+- Fixed a bug using additional Ghostscript parameters 
+- Fixed a bug with program font settings 
+- Fixed a bug in saving the last location where a PDF was saved 
+
+Known issues: 
+- No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.) 
+ 
+
 Version 1.0 (Mai 28th, 2010)
 -------------------------------------------------------------------------------
-    * Improvements: Uses GPL-Ghostscript 8.71 now.
-    * Added the feature to set the color\grey compression factor manually to get the best realtion between file size and quality of pdf files
-    * Improved print after saving (color printing, set maximum resolution)
-    * Improved the signing feature (set signature on page is freely definable)
-    * PDFCreator can handle signing and encrypting in one step
-    * Improved the setup: 64bit printer driver installable on a 32bit system
-    * Added a better dialog for the certificate password
-    * Added the font dialog to the options dialog again
-    * Improved the PDFCreator class (check for an existing printer in cPrintPrinterTestpage, check for an existing file in cPrintfile)
+Improvements:
+- Uses GPL-Ghostscript 8.71 now.
+- Added the feature to set the color\grey compression factor manually to get the best realtion between file size and quality of pdf files
+- Improved print after saving (color printing, set maximum resolution)
+- Improved the signing feature (set signature on page is freely definable)
+- PDFCreator can handle signing and encrypting in one step
+- Improved the setup: 64bit printer driver installable on a 32bit system
+- Added a better dialog for the certificate password
+- Added the font dialog to the options dialog again
+- Improved the PDFCreator class (check for an existing printer in cPrintPrinterTestpage, check for an existing file in cPrintfile)
 
-    * Bug Fixes: Fixed a crashing options dialog
-    * Fixed the "481 - invalid picture" bug
-    * Fixed a bug reading the options on Win9xMe systems
-    * Fixed a bug if the user uses Thai calendar format
-    * Fixed a bug using different Ghostscript versions
-    * Fixed some minor bugs.
+Bug Fixes:
+- Fixed a crashing options dialog
+- Fixed the "481 - invalid picture" bug
+- Fixed a bug reading the options on Win9xMe systems
+- Fixed a bug if the user uses Thai calendar format
+- Fixed a bug using different Ghostscript versions
+- Fixed some minor bugs.
 
-    * Known issues No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+Known issues:
+- No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 
 Version 0.9.9 (January 4., 2010)
 -------------------------------------------------------------------------------
@@ -38,6 +58,7 @@ Bug Fixes:
 
 Known issues:
 - No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 
 Version 0.9.8 (April 8, 2009)
 -------------------------------------------------------------------------------
@@ -54,6 +75,7 @@ Bug Fixes:
 Known issues:
 - No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
 
+
 Version 0.9.7 (February 3, 2009)
 -------------------------------------------------------------------------------
 Improvements:
@@ -68,6 +90,7 @@ Bug Fixes:
 
 Known issues:
 - No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 
 Version 0.9.6 (September 19, 2008)
 -------------------------------------------------------------------------------
@@ -84,6 +107,7 @@ Bug Fixes:
 
 Known issues:
 - No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 
 Version 0.9.5 (December 24, 2007)
 -------------------------------------------------------------------------------
@@ -102,6 +126,7 @@ Bug Fixes:
 Known issues:
 - Only basic Vista support.
 - No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 
 Version 0.9.3 (August 25, 2006)
 -------------------------------------------------------------------------------
@@ -124,6 +149,7 @@ Known issues:
    http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm
    http://www.transcom.de/transcom/de/tipps-tricks/acrobat/2004_pdf-t-maker.htm
 
+
 Version 0.9.2 (June 18, 2006)
 -------------------------------------------------------------------------------
 Improvements:
@@ -141,6 +167,7 @@ Known issues:
   PDF-T-Maker:
    http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm
    http://www.transcom.de/transcom/de/tipps-tricks/acrobat/2004_pdf-t-maker.htm
+
 
 Version 0.9.1 (April 20, 2006)
 -------------------------------------------------------------------------------
@@ -164,6 +191,7 @@ Known issues:
   PDF-T-Maker:
    http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm
    http://www.transcom.de/transcom/de/tipps-tricks/acrobat/2004_pdf-t-maker.htm
+
 
 Version 0.9.0 (January 19, 2006)
 -------------------------------------------------------------------------------
@@ -190,6 +218,7 @@ Known issues:
   PDF-T-Maker:
    http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm
    http://www.transcom.de/transcom/de/tipps-tricks/acrobat/2004_pdf-t-maker.htm
+
 
 Version 0.8.0 (April 2, 2004)
 -------------------------------------------------------------------------------

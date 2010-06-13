@@ -1,4 +1,4 @@
-Title: PDFCreator Version 1.0.0
+Title: PDFCreator Version 1.0.1
 Authors: Philip Chinery, Frank Heindörfer
 Releasedate: May 28th,  2010
 
