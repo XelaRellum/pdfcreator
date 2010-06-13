@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Signing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../media/helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Help</td>
+  </tr>
+  <tr>
+    <td background="../media/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Signing</p>
+<p>Signing PDF files enables the receipient to verfiy, that the document is from the proper person and has not been modified after signing. This is done with a private/public key mechanism. The private key is used to encrypt a fingerprint of the document (the hash). This can be decrypted with the public key and then be compared with a hash created from the present document. These only match, when private and public key match and the document has not been modified.</p>        <p>To digitally sign a PDF, there are several requirements, that need to be met:</p>  	  <ol>  	  <li>A digital Certificate in a PFX\P12 file that is enable to create digital signatures.</li>  	  <li>.Net 1.1 must be installed. That means, that digital signatures in PDFCreator have no support for <i>Windows 95</i> and <i>Windows NT 4 Workstation</i>, as .Net 1.1 is not available for these operating systems.</li>  	  <li>The file pdfforge.dll has to be located in the application directory of PDFCreator under <i>PlugIns\pdfforge</i>. If .Net 1.1 is installed, this DLL will be automatically installed with PDFCreator.</li>   	  </ol>  	  <p><strong>Pfx/P12 file:</strong> The file with the signature. It stores the private key which is used to encrypt the hash value.</p>        <p><strong>Signature reason:</strong> The reason for the cerfitifacte. This is a piece of text, describing, why the document is signed.</p>        <p><strong>Signature contact:</strong> The name of the contact person, that signed the file.</p>        <p><strong>Signature location:</strong> Place (Country, City etc.), where the file has been signed.</p>        <p><strong>Signature position:</strong> Allows to let Acrobat Reader show an icon showing the validity of the signature. The coordinates for this icon can be set with the LeftX/Y and RightX/Y values. You can also define the page on which the signature will be displayed. If set to a value below zero, it will be displayed on the last page.</p>        <p><strong>Multi signature allowed:</strong> Allows the PDF to be signed by other people afterwards.</p>        <p>You can get free certificates at <a target="_blank" href="http://www.cacert.org">http://www.cacert.org</a>. Please note, that this is not a register-and-go service. CACert is based on a web of trust, where you are verified by people and can verify other people. It takes a bit of work to get enough points for a trusted status, but it really is free and you should give it a try.</p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
