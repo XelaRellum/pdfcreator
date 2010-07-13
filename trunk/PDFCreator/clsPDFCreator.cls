@@ -117,34 +117,43 @@ Public Property Let cPrinterProfile(ByVal Printername As String, ByVal ProfileNa
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim PrinterProfiles As Collection, PrinterProfiles2 As Collection, i As Long, sa(1) As String
-50020  If Not PrinterIsInstalled(Printername) Then
-50030   mError.Number = 15
-50040   mError.Description = Replace$(ErrDescr16, "%1", Printername)
-50050   RaiseEvent eError
-50060   Exit Property
-50070  End If
-50080  ProfileName = Trim$(ProfileName)
-50090  If ProfileExists(ProfileName) = False Then
-50100   mError.Number = 11
-50110   mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
-50120   RaiseEvent eError
-50130   Exit Property
-50140  End If
-50150
-50160  Set PrinterProfiles = GetPrinterProfiles
-50170  Set PrinterProfiles2 = New Collection
-50180
-50190  For i = 1 To PrinterProfiles.Count
-50200   sa(0) = PrinterProfiles(i)(0)
-50210   If StrComp(sa(0), Printername) = 0 Then
-50220     sa(1) = ProfileName
-50230    Else
-50240     sa(1) = PrinterProfiles(i)(1)
-50250   End If
-50260   PrinterProfiles2.Add sa
-50270  Next i
-50280  SavePrinterProfiles PrinterProfiles2
+50010  Dim PrinterProfiles As Collection, PrinterProfiles2 As Collection, i As Long, sa(1) As String, _
+  foundPrinter As Boolean
+50030
+50040  If Not PrinterIsInstalled(Printername) Then
+50050   mError.Number = 15
+50060   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50070   RaiseEvent eError
+50080   Exit Property
+50090  End If
+50100  ProfileName = Trim$(ProfileName)
+50110  If ProfileExists(ProfileName) = False Then
+50120   mError.Number = 11
+50130   mError.Description = Replace$(ErrDescr11, "%1", ProfileName)
+50140   RaiseEvent eError
+50150   Exit Property
+50160  End If
+50170
+50180  Set PrinterProfiles = GetPrinterProfiles
+50190  Set PrinterProfiles2 = New Collection
+50200
+50210  foundPrinter = False
+50220  For i = 1 To PrinterProfiles.Count
+50230   sa(0) = PrinterProfiles(i)(0)
+50240   If StrComp(sa(0), Printername) = 0 Then
+50250     sa(1) = ProfileName
+50260     foundPrinter = True
+50270    Else
+50280     sa(1) = PrinterProfiles(i)(1)
+50290   End If
+50300   PrinterProfiles2.Add sa
+50310  Next i
+50320  If foundPrinter = False Then
+50330   sa(0) = Printername
+50340   sa(1) = ProfileName
+50350   PrinterProfiles2.Add sa
+50360  End If
+50370  SavePrinterProfiles PrinterProfiles2
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
