@@ -694,7 +694,7 @@ Filename: {app}\SetupLog.txt; Description: SetupLog.txt; Flags: postinstall shel
 
 Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile
 
-Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: """{app}\PlugIns\pdfforge\pdfforge.dll"" /codebase"; Components: program; Flags: runhidden; Check: IsDotNET20Installed
+Filename: {code:GetDotNet20RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: """{app}\PlugIns\pdfforge\pdfforge.dll"" /codebase"; Components: program; Flags: runhidden; Check: IsDotNET20Installed
 #ENDIF
 
 #IFDEF IncludeBrowserAddOn
@@ -704,7 +704,7 @@ Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={
 
 [UninstallRun]
 Filename: {app}\PDFCreator.exe; Parameters: /UnRegServer; Flags: skipifdoesntexist runhidden
-Filename: {code:GetDotNet11RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: {app}\PlugIns\pdfforge\pdfforge.dll /unregister; Flags: runhidden; Check: IsDotNET20Installed
+Filename: {code:GetDotNet20RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: {app}\PlugIns\pdfforge\pdfforge.dll /unregister; Flags: runhidden; Check: IsDotNET20Installed
 
 [UninstallDelete]
 Name: {app}\SetupLog.txt; Type: files
@@ -1248,7 +1248,7 @@ begin
  Result := DirExists(GetWinDir() + '\Microsoft.NET\Framework\v2.0.50727');
 end;
 
-function GetDotNet11RegAsm(Default:String): string;
+function GetDotNet20RegAsm(Default:String): string;
 var
  InstallRoot: String;
 begin
@@ -2323,7 +2323,7 @@ begin
 
  If IsDotNET20Installed then begin
    SaveStringToFile(LogFile, '.Net 1.1: true'+#13#10, True)
-   SaveStringToFile(LogFile, '.Net 1.1 regasm.exe:' + GetDotNet11RegAsm('')+#13#10, True)
+   SaveStringToFile(LogFile, '.Net 1.1 regasm.exe:' + GetDotNet20RegAsm('')+#13#10, True)
   end else
    SaveStringToFile(LogFile, '.Net 1.1: false'+#13#10, True);
 
