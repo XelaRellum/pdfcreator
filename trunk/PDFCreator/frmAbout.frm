@@ -344,7 +344,7 @@ On Error GoTo ErrPtnr_OnError
 50180  With Options
 50190   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50200  End With
-50210
+50210  Me.Caption = "Info - PDFCreator " & App.Major & "." & App.Minor & "." & App.Revision
 50220  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
