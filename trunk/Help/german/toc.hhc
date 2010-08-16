@@ -260,6 +260,10 @@
 				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Wie lautet die Export Control Classification Number (ECCN) von PDFCreator?">
+				<param name="Local" value="html\what-is-the-export-control-classification-number-eccn-of-pdfcreator.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Word-Dokumente mit benutzerdef. Seiteneinstellungen werden immer in das A4 Format konvertiert.">
 				<param name="Local" value="html\word-documents-with-custom-page-size-are-converted-in-default-size.html">
 				</OBJECT>
