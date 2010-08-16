@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Signature</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../media/helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">Aide PDFCreator</td>
+  </tr>
+  <tr>
+    <td background="../media/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Signature</p>
+<p>Signer les fichiers PDF permet au destinataire de vérifier que le document a  bien été rédigé par l'auteur indiqué et qu'il n'a&nbsp;pas été modifié après la  signature. Ce système est basé sur un mécanisme de clé publique/clé privée. La  clé privée est utilisée pour chiffrer une empreinte (hash)&nbsp;du document. Cette  empreinte cryptée peut être décryptée à l'aide de la clé publique, pour ensuite  être comparée avec une empreinte du document à vérifier. Les deux empreintes  correspondent&nbsp;uniquement lorsque les deux clés publique et privée vont de paire,  et lorsque le document n'a pas été modifié.</p> <p>Pour signer numériquement un fochier PDF, plusieurs éléments sont  nécessaires&nbsp;:</p> <ol><li>Un certificat numérique au format&nbsp;PFX\P12 permettant de signer des fichiers.</li><li>.Net 1.1 doit être installé. Ceci entraîne que la signature de documents PDF  n'est pas possible sous&nbsp;<i>Windows 95</i> et <i>Windows NT 4 Workstation</i>,  puisque&nbsp;.Net 1.1 n'est pas supporté par ces systèmes.</li><li>Le fichier&nbsp;pdfforge.dll doit être présent dans le répertoire d'installation  de&nbsp;PDFCreator dans <i>PlugIns\pdfforge</i>. Si .Net 1.1 est installé, cette DLL  sera automatiquement installée en même temps que&nbsp;PDFCreator.</li></ol> <p><strong>Fichier Pfx/P12&nbsp;:</strong> Le fichier contenant la signature. Il  contient la clé privée utilisée pour crypter l'empreinte du PDF à signer.</p> <p><strong>Raison signature&nbsp;:</strong> La raison de la signature. C'est un texte  court qui indique pourquoi le fichier est signé numériquement.</p> <p><strong>Contact signature :</strong> Le nom de la personne qui a signé le  fichier.</p> <p><strong>Localisation signature&nbsp;:</strong> Endroit&nbsp;(Pays, ville, etc.), où le  fichier a été signé.</p> <p><strong>Position signature :</strong> Permet à Acrobat Reader d'afficher un  icône qui indique&nbsp;la validité de la signature. Les coordonnées de cet icône  peuvent être réglées grâce aux valeurs X/Y gauche et X/Y droite. Vous pouvez aussi définir la page dans laquelle la signature sera affichée. Si ce paramètre est réglé à une valeur négative, la signature sera affichée sur la dernière page.</p> <p><strong>Signature multiple autorisée :</strong> Permet la signature  ultérieure du fichier par d'autres personnes.</p> <p>Vous pouvez obtenir des certificats gratuits à l'adresse <a href="http://www.cacert.org/" target="_blank">http://www.cacert.org</a>. Notez que  ce n'est pas un service où un simple enregistrement suffit.&nbsp;CACert est basé sur  un réseau de confiance, au sein duquel vous êtes évalué par d'autres personnes,  et dans lequel vous pouvez évaluer d'autres personnes. Cela nécessite un peu de  travail pour récolter suffisamment de points afin accéder à un statut &quot;de  confiance&quot;, mais c'est réellement gratuit et nous vous encourageons à essayer.</p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
