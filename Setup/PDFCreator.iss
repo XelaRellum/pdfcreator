@@ -2325,10 +2325,10 @@ begin
  end;
 
  If IsDotNET20Installed then begin
-   SaveStringToFile(LogFile, '.Net 1.1: true'+#13#10, True)
-   SaveStringToFile(LogFile, '.Net 1.1 regasm.exe:' + GetDotNet20RegAsm('')+#13#10, True)
+   SaveStringToFile(LogFile, '.Net 2.0: true'+#13#10, True)
+   SaveStringToFile(LogFile, '.Net 2.0 regasm.exe:' + GetDotNet20RegAsm('')+#13#10, True)
   end else
-   SaveStringToFile(LogFile, '.Net 1.1: false'+#13#10, True);
+   SaveStringToFile(LogFile, '.Net 2.0: false'+#13#10, True);
 
  SaveStringToFile(LogFile, 'SystemDir: '+GetSystemDir+#13#10, True);
  SaveStringToFile(LogFile, 'TempDir: '+GetTempDir+#13#10, True);
