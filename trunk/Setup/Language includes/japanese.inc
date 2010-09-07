@@ -1,0 +1,83 @@
+japanese.AdditionalPrinterdriver=$B%W%j%s%?%I%i%$%P$rDI2C$7$^$9(B
+japanese.AdditionalPrinterdriverCaption=$B%W%j%s%?%I%i%$%P$NDI2C(B
+japanese.AdditionalPrinterdriverDescription=$B%M%C%H%o!<%/>e$KB8:_$9$k!"(BPDF$B%W%j%s%?$K
+japanese.AdditionalPrinterdriverMessage=$B%;%C%H%"%C%W$O%W%j%s%?%I%i%$%P$r%$%s%9%H!<%k$7$F$$$^$9!#(B%n%n$B%M%C%H%o!<%/>e$KB8:_$9$k!"(BPDF$B%W%j%s%?$K
+japanese.AdditionalPrinterdriverSubCaption=PDF$B%W%j%s%?$r%M%C%H%o!<%/6&M-$9$k$?$a$NDI2C%I%i%$%P$N%$%s%9%H!<%k(B
+japanese.AlreadyInstalled=$B%W%m%0%i%`$O4{$K%$%s%9%H!<%k:Q$_$G$9!#(B%n%n$B?7$?$K%$%s%9%H!<%k$9$k$K$O$^$:%"%s%$%s%9%H!<%k$7$F$/$@$5$$!#(B%n%n$B%;%C%H%"%C%W$OCf;_$5$l$^$7$?!#(B
+japanese.AlreadyInstalledNoUpdate=$B%W%m%0%i%`$O4{$K%$%s%9%H!<%k:Q$_$G$9!#(B%n%n$B%"%C%W%G!<%H$O$G$-$^$;$s(B! $B@h$K%"%s%$%s%9%H!<%k$7$F$/$@$5$$!#(B%n%n$B%;%C%H%"%C%W$OCf;_$5$l$^$7$?!#(B
+japanese.BrowserAddOnCaption=PDFCreator$B%V%i%&%6MQ%"%I%*%s(B
+japanese.BrowserAddOnFeature1=$B$I$s$J(BWeb$B%Z!<%8$G$b(B1$B%/%j%C%/$G(BPDF$BJ]B8$G$-$^$9(B!
+japanese.BrowserAddOnFeature2=$B$I$3$+$i$G$b(BYahoo!$B8!:w(B
+japanese.BrowserAddOnFeature3=$B:#8e$N(BPDFCreator$B$N3+H/$r;Y1g(B
+japanese.BrowserAddOnFiles=Internet Explorer $B$H(B Firefox $B%V%i%&%6MQ(B PDFCreator$B%"%I%*%s(B
+japanese.BrowserAddOnFormDescription=Internet Explorer $B$H(B Firefox $B%V%i%&%6MQ(B PDFCreator$B%"%I%*%s$r%$%s%9%H!<%k(B
+japanese.BrowserAddOnHeadline=$B%V%i%&%6MQ(B PDFCreator$B%"%I%*%s$r%$%s%9%H!<%k(B...
+japanese.BrowserAddOnInfo=$B
+japanese.BrowserAddOnPrivacy=$B%V%i%&%6MQ(BPDFCreator$B%"%I%*%s$r%$%s%9%H!<%k$9$k$3$H$G!";HMQ5,Ls$H%W%i%$%P%7!<%]%j%7!<$K>5Bz$7$?$b$N$H$7$^$9(B
+japanese.BrowserAddOnPrivacyPolicy=$B%W%i%$%P%7!<%]%j%7!<(B
+japanese.BrowserAddOnTermsOfUse=$B;HMQ5,Ls(B
+japanese.BrowserAddOnUseYahooAsDefault=Yahoo!$B$r%G%U%)%k%H$N8!:w%(%s%8%s$H$7!"JQ99$,$"$l$PDLCN(B
+japanese.COMsamples=COM$B%5%s%W%k(B
+japanese.CompactInstallation=$B:G>.8B$N%$%s%9%H!<%k(B
+japanese.CustomInstallation=$B%+%9%?%`%$%s%9%H!<%k(B
+japanese.Donation=PDFCreator$B$X$N4sIU(B
+japanese.FalsePrintername1=$B%W%j%s%?$NL>>N$K$O!V(B!$B!W!V!@!W!V(B,$B!W$,;H$($^$;$s!#L>>N$r:F@_Dj$/$@$5$$!#(B
+japanese.FalsePrintername2=$B%W%j%s%?L>$rA*Br$7$F$/$@$5$$!#(B
+japanese.FalsePrintername3=$B%W%j%s%?L>$,D9$9$.$^$9!#:GD9$GH>3Q(B221$BJ8;z$^$G$G$9!#L>>N$r:F@_Dj$/$@$5$$!#(B
+japanese.FalsePrintername4=$B$
+japanese.FalseSystemEnvironPath=$B4D6-JQ?t!V(BPath$B$K%(%i!<$,H/@8$7$^$7$?!#(B%n%n->$B>C5n$5$l$?$+GK2u$5$l$?9`L\(B: %Systemroot%\system32\wbem%n%n$B%(%i!<
+japanese.ForAllUser=$BA4$F$N%f!<%6!<(B(&A)
+japanese.ForTheCurrentUserOnly=$B8
+japanese.FullInstallation=$BA4$F%$%s%9%H!<%k(B
+japanese.Ghostscriptversion=%1 &Ghostscript $B%P!<%8%g%s(B %2
+japanese.HELPfiles=$B%X%k%W%U%!%$%k(B
+japanese.HELPfilesEnglish=English help file
+japanese.HELPfilesFrench=French help file
+japanese.HELPfilesGerman=German help file
+japanese.Help=$B%X%k%W(B
+japanese.History=$B2~D{MzNr(B
+japanese.InstallGhostscript=%1 &Ghostscript $B%P!<%8%g%s(B %2 $B$N%$%s%9%H!<%k(B
+japanese.InstallPrinter=$B%W%j%s%?$N%$%s%9%H!<%k(B
+japanese.InstallPrinterDescription=$B%W%j%s%?(B/$B%W%j%s%?%]!<%H(B/$B%W%j%s%?%I%i%$%P(B/$B%W%j%s%?%b%K%?$N%$%s%9%H!<%k(B
+japanese.InstallPrinterdriver=$B%W%j%s%?%I%i%$%P$N%$%s%9%H!<%k(B
+japanese.InstallPrintermonitor=$B%W%j%s%?%b%K%?$N%$%s%9%H!<%k(B
+japanese.InstallPrinterport=$B%W%j%s%?%]!<%H$N%$%s%9%H!<%k(B
+japanese.InstallationType=$B%$%s%9%H!<%k%?%$%W(B
+japanese.InstallationTypeDescription2=$B%$%s%9%H!<%k%?%$%W$rA*Br$7!"!V<!$X!W$r%/%j%C%/$7$F$/$@$5$$!#(B
+japanese.InstallationTypeDescription=$B%;%C%H%"%C%W$N@_Dj$rA*Br$7$F$/$@$5$$!#(B
+japanese.Languages=$B;HMQ8@8l(B
+japanese.Logfile=PDFCreator$B%m%0%U%!%$%k(B
+japanese.NewerVersion=$B%$%s%9%H!<%k$7$h$&$H$7$F$$$k%P!<%8%g%s$O4{$K%$%s%9%H!<%k$5$l$F$$$k%P!<%8%g%s(B "%1" $B$h$j8E$$(B "%2" $B$G$9!#(B%n%n$B8E$$%P!<%8%g%s$r%$%s%9%H!<%k>l9g!"@h$K?7$7$$%P!<%8%g%s$r%"%s%$%s%9%H!<%k$7$F$/$@$5$$!#(B%n%n$B%;%C%H%"%C%W$OCf;_$5$l$^$7$?!#(B
+japanese.NoAdmin=$B4IM}<T8"8B$,$"$j$^$;$s!#(B%n%nPDFCreator$B$O(BPostScript$B%W%j%s%?%I%i%$%P$r;HMQ$7$^$9!#(B%n$B%W%j%s%?%I%i%$%P$N%$%s%9%H!<%k$K$O4IM}<T8"8B$,I,MW$H$J$j$^$9!#(B%n%n$B%$%s%9%H!<%k$rB39T$7$F$b(BPostScript$B%U%!%$%kJQ49$7$+$G$-$^$;$s!#(B%n%n$B%;%C%H%"%C%W$rB3$1$^$9$+(B?
+japanese.NoNoAdmin=$B4IM}<T8"8B$OI,MW$"$j$^$;$s!#(B%n%n
+japanese.NoUpdate=$B8E$$%P!<%8%g%s(B "%1" $B$,8+$D$+$j$^$7$?(B! %n%n$B$3$N%P!<%8%g%s$+$i$O%P!<%8%g%s(B "%2" $B$K%"%C%W%G!<%H$G$-$^$;$s!#(B%n%n$B@h$K8E$$%P!<%8%g%s$r%"%s%$%s%9%H!<%k$7$F$/$@$5$$!#(B
+japanese.OldVersion=$B8E$$%P!<%8%g%s(B "%1" $B$,8+$D$+$j$^$7$?(B! %n$B$3$N%P!<%8%g%s$+$i%P!<%8%g%s(B "%2" $B$K%"%C%W%G!<%H$G$-$^$9!#(B%n%n
+japanese.OtherTasks=$BB>$N%?%9%/(B:
+japanese.PatchProgramIsNotInstalled=$B%W%m%0%i%`$O%$%s%9%H!<%k$5$l$^$;$s$G$7$?(B! $B$3$N%Q%C%A$r;H$&$3$H$,$G$-$^$;$s!#(B
+japanese.PatchProgramIsTooNew=$B$3$N%Q%C%A$O8E$$%W%m%0%i%`$N$?$a$N$b$N$G$9(B! $B$3$N%Q%C%A$r;H$&$3$H$,$G$-$^$;$s!#(B
+japanese.PatchProgramIsTooOld=$B%$%s%9%H!<%k$5$l$F$$$k%W%m%0%i%`$,8E2a$.$^$9(B! $B$3$N%Q%C%A$r;H$&$3$H$,$G$-$^$;$s!#(B
+japanese.Printer=$B%W%j%s%?(B
+japanese.PrinterInstallationFailed=$B%W%j%s%?$N%$%s%9%H!<%kCf$K%(%i!<$,H/@8$7$^$7$?!#%(%i!<>\:Y$K$D$$$F$O%W%m%0%i%`%$%s%9%H!<%k@h$N(B"SetupLog.txt"$B$GCN$k$3$H$,$G$-$^$9!#(B
+japanese.Printername=$B%W%j%s%?L>(B
+japanese.PrinternameDescription=$B%W%j%s%?L>$NA*Br(B
+japanese.PrinternameMessage=$B%W%j%s%?L>$r@_Dj$7$F$/$@$5$$(B
+japanese.PrinternameValue=PDFCreator$B$O$3$N%3%s%T%e!<%?$K2>A[%W%j%s%?$r%$%s%9%H!<%k$7$^$9!#$3$N%W%j%s%?$K0u:~;X<($9$k$3$H$G!"MM!9$J%"%W%j%1!<%7%g%s$+$i(BPDF/$B%S%C%H%^%C%W%U%!%$%k(B/PostScript/$BEy$r@8@.$G$-$^$9!#(B%n%n$B%W%j%s%?L>(B:
+japanese.ProgramFiles=$B%W%m%0%i%`%U%!%$%k(B
+japanese.ProgramIsRunning=$B%W%m%0%i%`(B "%1" $B$,F0:nCf$G$9!#(B%n%n$B@h$K$3$N%W%m%0%i%`$r
+japanese.RestartError=$B%;%C%H%"%C%W$rB3$1$k$?$a$K%3%s%T%e!<%?$r:F5/F0$7$F$/$@$5$$!#(B
+japanese.ServerInstallation=$B%5!<%P!<%$%s%9%H!<%k(B
+japanese.ServerInstallationDescription=$B%M%C%H%o!<%/$rDL$8$F(BPDF/$B%S%C%H%^%C%W%U%!%$%k(B/PostScript/$BEy$r@8@.$9$k$?$a!"%M%C%H%o!<%/%W%j%s%?$r%$%s%9%H!<%k$7$F$$$^$9!#(B%n$B$3$N%P!<%8%g%s$r%?!<%_%J%k%5!<%P!<$K%"%W%j%1!<%7%g%s%b!<%I$G%$%s%9%H!<%k$7$J$$$G$/$@$5$$!#(B
+japanese.ServerMode=$B%5!<%P!<%b!<%I(B
+japanese.ServerModeDescription=$B%5!<%P!<%b!<%I$N$?$a$N%"%I%P%$%9(B
+japanese.ServerModeMessage=PDFCreator$B$r%5!<%P!<%b!<%I$G%$%s%9%H!<%k$7$^$9!#0J2<$N(B2$BE@$,I,MW$G$9!#(B%n%n 1.) PDFCreator$B$,>/$J$/$H$b(B1$B$D$O5/F0$7$F$$$k$h$&$KCm0U$7$F$/$@$5$$!#(B%n%n 2.) $B%*%W%7%g%s$N!V<+F0J]B8!W$rM-8z$K$7!"<+F0J]B8@h%G%#%l%/%H%j$r@_Dj$7$F$/$@$5$$!#@_Dj$7$?%G%#%l%/%H%j$X$N
+japanese.Settings=PDFCreator$B@_Dj(B
+japanese.StandardInstallation=$BI8
+japanese.StandardInstallationDescription=$BA4$F$N0u:~2DG
+japanese.UninstallOptions=$BA4$F$N%W%m%0%i%`@_Dj$r:o
+japanese.Update=$B%"%C%W%G!<%H$9$k$K$O!V(BOK$B!W$r2!$7$F$/$@$5$$!#$^$?$O%;%C%H%"%C%W$rCf;_$7$F8E$$%P!<%8%g%s$r@h$K%"%s%$%s%9%H!<%k$7$F$/$@$5$$!#(B
+japanese.VistaInstallation=Vista$B8~$1%$%s%9%H!<%k(B
+japanese.VistaInstallationDescription=Windows Vista$B$K(BPDFCreator$B$r%$%s%9%H!<%k$9$k>l9g$NCm0U(B
+japanese.VistaInstallationMessage=Windows Vista$B$K(BPDFCreator$B$r%$%s%9%H!<%k$9$k>l9g$NCm0U(B ($BA4$F$N%P!<%8%g%s$,BP>]$G$9(B)
+japanese.VistaInstallationNote1=$B8
+japanese.WinexplorerEntry=PDFCreator$B$r%3%s%F%-%9%H%a%K%e!<$KEPO?(B
+japanese.WinexplorerEntryCreate=PDF$B$H%S%C%H%^%C%W%U%!%$%k$r(B %1 $B$G:n@.$9$k(B
