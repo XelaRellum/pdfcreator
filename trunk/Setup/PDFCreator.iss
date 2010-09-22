@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.3.10 (with ISPP) and ISTool 5.3.0.1
+; Setup created with Inno Setup QuickStart Pack 5.3.11a (with ISPP) and InnoIDE 1.0.0.0050
 ; Installation script created by Frank Heindörfer
 
 ;#define Test
@@ -28,7 +28,7 @@
 #endif
 
 #Ifdef IncludeGhostscript
- #define GhostscriptVersion "8.70"
+ #define GhostscriptVersion "9.00"
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 
@@ -484,21 +484,9 @@ Source: Installation\PDFCreator Browser Add On-14_0_170_setup.exe; DestDir: {app
 ; pdfforge
 Source: ..\PlugIns\pdfforge\readme_NotInstalled.txt; DestDir: {app}\PlugIns\pdfforge\; DestName: readme.txt; Components: program; Check: Not IsDotNET20Installed
 Source: ..\PlugIns\pdfforge\pdfforge.dll; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
+Source: ..\PlugIns\pdfforge\pdfforge.chm; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
 Source: ..\PlugIns\pdfforge\itextsharp.dll; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
 Source: ..\PlugIns\pdfforge\readme.txt; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\AddLineText.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
-Source: ..\PlugIns\pdfforge\CopyPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\CreateTestpage.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\Demo.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\GetMetadaFromPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\Images2PDF.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\MergePDFFiles.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\nUp.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\SetMetadaPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\SignPDF.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\SplitPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\StampPDFFileWithImage.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
-Source: ..\PlugIns\pdfforge\StampPDFFileWithPDFFile.vbs; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; OnlyBelowVersion: 0,5.2
