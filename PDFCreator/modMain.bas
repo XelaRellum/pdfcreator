@@ -17,14 +17,16 @@ Public Sub Main()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  InstalledAsServer = CheckInstalledAsServer
-50020  If App.StartMode = vbSModeStandalone Or IsInIDE Then
-50030    InstanceCounter = InstanceCounter + 1
-50040    ProgramIsVisible = True
-50050    StartProgram
-50060   Else
-50070    ProgramWindowState = 1
-50080  End If
+50010  PDFCreatorApplicationPath = GetPDFCreatorApplicationPath
+50020  InstalledAsServer = CheckInstalledAsServer
+50030  pdfforgeDllInstalled = pdfforgeDllIsInstalled
+50040  If App.StartMode = vbSModeStandalone Or IsInIDE Then
+50050    InstanceCounter = InstanceCounter + 1
+50060    ProgramIsVisible = True
+50070    StartProgram
+50080   Else
+50090    ProgramWindowState = 1
+50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -452,7 +454,7 @@ On Error GoTo ErrPtnr_OnError
 50130
 50140  InitLanguagesStrings
 50150  ReadLanguageFromOptions
-50160  LanguagePath = CompletePath(GetPDFCreatorApplicationPath) & "Languages\"
+50160  LanguagePath = CompletePath(PDFCreatorApplicationPath) & "Languages\"
 50170  If FileExists(CompletePath(GetMyAppData) & "PDFCreator\Languages\" & Options.Language & ".ini") Then
 50180    Languagefile = CompletePath(GetMyAppData) & "PDFCreator\Languages\" & Options.Language & ".ini"
 50190   Else
@@ -512,7 +514,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, tStr As String
 50020  fn = FreeFile
-50030  tStr = GetPDFCreatorApplicationPath & "Unload.tmp"
+50030  tStr = PDFCreatorApplicationPath & "Unload.tmp"
 50040  If FileExists(tStr) = False Then
 50050   Open tStr For Output As #fn
 50060   Close #fn
@@ -705,7 +707,7 @@ On Error GoTo ErrPtnr_OnError
 50810  End If
 50820
 50830  SecurityIsPossible = False
-50840  If GSRevision.intRevision >= 814 Or FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") Then
+50840  If GSRevision.intRevision >= 814 Or FileExists(PDFCreatorApplicationPath & "pdfenc.exe") Then
 50850   SecurityIsPossible = True
 50860  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

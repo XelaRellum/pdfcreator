@@ -336,11 +336,11 @@ On Error GoTo ErrPtnr_OnError
 50450      End If
 50460    End If
 50470   End If
-50480
-50490  End If
-50500  tEnc = False
-50510  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True And Options.PDFEncryptor = 0 Then
-50520   If SetEncryptionParams(encPDF, "", "") = True Then
+50480  End If
+50490  tEnc = False
+50500  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True Then
+50510   If Options.PDFAes128Encryption = 0 Then
+50520    If SetEncryptionParams(encPDF, "", "") = True Then
 50530     tEnc = True
 50540     If Len(encPDF.OwnerPass) > 0 Then
 50550       AddParams "-sOwnerPassword=" & encPDF.OwnerPass: currentOwnerPassword = encPDF.OwnerPass
@@ -364,47 +364,48 @@ On Error GoTo ErrPtnr_OnError
 50730     If Options.UseAutosave = 0 Then
 50740      MsgBox LanguageStrings.MessagesMsg23, vbCritical
 50750     End If
-50760   End If
-50770  End If
-50780
-50790  If Options.AllowSpecialGSCharsInFilenames = 1 Then
-50800   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50810  End If
-50820  AddParams "-sOutputFile=" & GSOutputFile
-50830
-50840  If Options.DontUseDocumentSettings = 0 Then
-50850   SetColorParams
-50860   SetGreyParams
-50870   SetMonoParams
-50880
-50890   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50900   AddParams "-dUCRandBGInfo=/Preserve"
-50910   AddParams "-dUseFlateCompression=true"
-50920   AddParams "-dParseDSCCommentsForDocInfo=true"
-50930   AddParams "-dParseDSCComments=true"
-50940   AddParams "-dOPM=" & GS_OVERPRINT
-50950   AddParams "-dOffOptimizations=0"
-50960   AddParams "-dLockDistillerParams=false"
-50970   AddParams "-dGrayImageDepth=-1"
-50980   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50990   AddParams "-dDefaultRenderingIntent=/Default"
-51000   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-51010   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-51020   AddParams "-dDetectBlends=true"
-51030
-51040   AddAdditionalGhostscriptParameters
-51050
-51060   AddParamCommands
-51070  End If
-51080
-51090  AddParams "-f"
-51100  AddParams GSInputFile
-51110  ShowParams
-51120  If tEnc = True Then
-51130    CallGhostscript "PDF with encryption"
-51140   Else
-51150    CallGhostscript "PDF without encryption"
-51160  End If
+50760    End If
+50770   End If
+50780  End If
+50790
+50800  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50810   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50820  End If
+50830  AddParams "-sOutputFile=" & GSOutputFile
+50840
+50850  If Options.DontUseDocumentSettings = 0 Then
+50860   SetColorParams
+50870   SetGreyParams
+50880   SetMonoParams
+50890
+50900   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50910   AddParams "-dUCRandBGInfo=/Preserve"
+50920   AddParams "-dUseFlateCompression=true"
+50930   AddParams "-dParseDSCCommentsForDocInfo=true"
+50940   AddParams "-dParseDSCComments=true"
+50950   AddParams "-dOPM=" & GS_OVERPRINT
+50960   AddParams "-dOffOptimizations=0"
+50970   AddParams "-dLockDistillerParams=false"
+50980   AddParams "-dGrayImageDepth=-1"
+50990   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+51000   AddParams "-dDefaultRenderingIntent=/Default"
+51010   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+51020   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+51030   AddParams "-dDetectBlends=true"
+51040
+51050   AddAdditionalGhostscriptParameters
+51060
+51070   AddParamCommands
+51080  End If
+51090
+51100  AddParams "-f"
+51110  AddParams GSInputFile
+51120  ShowParams
+51130  If tEnc = True Then
+51140    CallGhostscript "PDF with encryption"
+51150   Else
+51160    CallGhostscript "PDF without encryption"
+51170  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1498,109 +1499,110 @@ On Error GoTo ErrPtnr_OnError
 50130       KillFile Tempfile
 50140      Else
 50150       If .PDFUseSecurity <> 0 And SecurityIsPossible = True Then
-50160         If .PDFEncryptor = 1 Then
+50160         If pdfforgeDllInstalled And .PDFAes128Encryption = 1 Then
 50170           enc = SetEncryptionParams(encPDF, GSInputFile, GSOutputFile)
 50180           If enc = True Then
 50190            Tempfile = GetTempFile(GetTempPath, "~CP")
-50200            KillFile Tempfile: currentOwnerPassword = encPDF.OwnerPass
-50210            CreatePDF GSInputFile, Tempfile, Options
-50220            encPDF.InputFile = Tempfile
-50230            retEnc = EncryptPDF(encPDF)
-50240            KillFile encPDF.InputFile
+50200            KillFile Tempfile
+50210            currentOwnerPassword = encPDF.OwnerPass
+50220            CreatePDF GSInputFile, Tempfile, Options
+50230            encPDF.InputFile = Tempfile
+50240            retEnc = EncryptPDFUsingPdfforgeDll(encPDF)
 50250            If retEnc = False Then
 50260             IfLoggingWriteLogfile "Error with encryption - using unencrypted file"
-50270             Name GSInputFile As GSOutputFile
-50280            End If
-50290           End If
-50300          Else
-50310           tL = .PDFOptimize
-50320           .PDFOptimize = 0
-50330           CreatePDF GSInputFile, GSOutputFile, Options
-50340           .PDFOptimize = tL
-50350         End If
-50360        Else
-50370         CreatePDF GSInputFile, GSOutputFile, Options
-50380       End If
-50390     End If
-50400     If PDFUpdateMetadataIsPossible Then
-50410      If .PDFUpdateMetadata > 0 Then
-50420       If .PDFUpdateMetadata = 2 Or _
+50270             KillFile GSOutputFile
+50280             If FileExists(GSOutputFile) = False Then
+50290              Name Tempfile As GSOutputFile
+50300             End If
+50310            End If
+50320           End If
+50330          Else
+50340           tL = .PDFOptimize
+50350           .PDFOptimize = 0
+50360           CreatePDF GSInputFile, GSOutputFile, Options
+50370           .PDFOptimize = tL
+50380         End If
+50390        Else
+50400         CreatePDF GSInputFile, GSOutputFile, Options
+50410       End If
+50420     End If
+50430     If pdfforgeDllInstalled Then
+50440      If .PDFUpdateMetadata > 0 Then
+50450       If .PDFUpdateMetadata = 2 Or _
        (.PDFUpdateMetadata = 1 And (InStr(1, .AdditionalGhostscriptParameters, "dpdfa", vbTextCompare) > 0)) Then
-50440        Set m = CreateObject("pdfForge.pdf.pdf")
-50450        Tempfile = GetTempFile(GetTempPath, "~MP")
-50460        KillFile Tempfile
-50470        Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
-50480        If FileExists(Tempfile) Then
-50490         If KillFile(GSOutputFile) Then
-50500          Name Tempfile As GSOutputFile
-50510         End If
-50520        End If
-50530       End If
-50540      End If
-50550     End If
-50560     If PDFSigningIsPossible Then
-50570      If .PDFSigningSignPDF = 1 Then
-50580       SignPDF GSOutputFile, currentOwnerPassword
-50590      End If
-50600     End If
-50610    End With
-50620   Case 1: 'PNG
-50630    CreatePNG GSInputFile, GSOutputFile, Options
-50640   Case 2: 'JPEG
-50650    CreateJPEG GSInputFile, GSOutputFile, Options
-50660   Case 3: 'BMP
-50670    CreateBMP GSInputFile, GSOutputFile, Options
-50680   Case 4: 'PCX
-50690    CreatePCX GSInputFile, GSOutputFile, Options
-50700   Case 5: 'TIFF
-50710    CreateTIFF GSInputFile, GSOutputFile, Options
-50720   Case 6: 'PS
-50730    CreatePS GSInputFile, GSOutputFile, Options
-50740   Case 7: 'EPS
-50750    CreateEPS GSInputFile, GSOutputFile, Options
-50760   Case 8: 'TXT
-50770    CreateTXT GSInputFile, Options
-50780    CreateTextFile GSOutputFile, GS_OutStr
-50790   Case 9: 'PDFA
-50800    CreatePDFA GSInputFile, GSOutputFile, Options
-50810    With Options
-50820     If PDFUpdateMetadataIsPossible Then
-50830      If .PDFUpdateMetadata > 0 Then
-50840       Set m = CreateObject("pdfForge.pdf.pdf")
-50850       Tempfile = GetTempFile(GetTempPath, "~MP")
-50860       KillFile Tempfile
-50870       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
-50880       If FileExists(Tempfile) Then
-50890        If KillFile(GSOutputFile) Then
-50900         Name Tempfile As GSOutputFile
-50910        End If
-50920       End If
-50930      End If
-50940     End If
-50950     If PDFSigningIsPossible Then
-50960      If .PDFSigningSignPDF = 1 Then
-50970       SignPDF GSOutputFile
-50980      End If
-50990     End If
-51000    End With
-51010   Case 10: 'PDFX
-51020    CreatePDFX GSInputFile, GSOutputFile, Options
-51030    With Options
-51040     If PDFSigningIsPossible Then
-51050      If .PDFSigningSignPDF = 1 Then
-51060       SignPDF GSOutputFile
-51070      End If
-51080     End If
-51090    End With
-51100   Case 11: 'PSD
-51110    CreatePSD GSInputFile, GSOutputFile, Options
-51120   Case 12: 'PCL
-51130    CreatePCL GSInputFile, GSOutputFile, Options
-51140   Case 13: 'RAW
-51150    CreateRAW GSInputFile, GSOutputFile, Options
-51160   Case 14: 'SVG
-51170    CreateSVG GSInputFile, GSOutputFile, Options
-51180  End Select
+50470        Set m = CreateObject("pdfForge.pdf.pdf")
+50480        Tempfile = GetTempFile(GetTempPath, "~MP")
+50490        KillFile Tempfile
+50500        Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
+50510        If FileExists(Tempfile) Then
+50520         If KillFile(GSOutputFile) Then
+50530          Name Tempfile As GSOutputFile
+50540         End If
+50550        End If
+50560       End If
+50570      End If
+50580     End If
+50590     If DotNet20Installed And pdfforgeDllInstalled Then
+50600      If .PDFSigningSignPDF = 1 Then
+50610       SignPDF GSOutputFile, currentOwnerPassword
+50620      End If
+50630     End If
+50640    End With
+50650   Case 1: 'PNG
+50660    CreatePNG GSInputFile, GSOutputFile, Options
+50670   Case 2: 'JPEG
+50680    CreateJPEG GSInputFile, GSOutputFile, Options
+50690   Case 3: 'BMP
+50700    CreateBMP GSInputFile, GSOutputFile, Options
+50710   Case 4: 'PCX
+50720    CreatePCX GSInputFile, GSOutputFile, Options
+50730   Case 5: 'TIFF
+50740    CreateTIFF GSInputFile, GSOutputFile, Options
+50750   Case 6: 'PS
+50760    CreatePS GSInputFile, GSOutputFile, Options
+50770   Case 7: 'EPS
+50780    CreateEPS GSInputFile, GSOutputFile, Options
+50790   Case 8: 'TXT
+50800    CreateTXT GSInputFile, Options
+50810    CreateTextFile GSOutputFile, GS_OutStr
+50820   Case 9: 'PDFA
+50830    CreatePDFA GSInputFile, GSOutputFile, Options
+50840    With Options
+50850     If DotNet20Installed And pdfforgeDllInstalled Then
+50860      If .PDFUpdateMetadata > 0 Then
+50870       Set m = CreateObject("pdfForge.pdf.pdf")
+50880       Tempfile = GetTempFile(GetTempPath, "~MP")
+50890       KillFile Tempfile
+50900       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
+50910       If FileExists(Tempfile) Then
+50920        If KillFile(GSOutputFile) Then
+50930         Name Tempfile As GSOutputFile
+50940        End If
+50950       End If
+50960      End If
+50970      If .PDFSigningSignPDF = 1 Then
+50980       SignPDF GSOutputFile
+50990      End If
+51000     End If
+51010    End With
+51020   Case 10: 'PDFX
+51030    CreatePDFX GSInputFile, GSOutputFile, Options
+51040    With Options
+51050     If DotNet20Installed And pdfforgeDllInstalled Then
+51060      If .PDFSigningSignPDF = 1 Then
+51070       SignPDF GSOutputFile
+51080      End If
+51090     End If
+51100    End With
+51110   Case 11: 'PSD
+51120    CreatePSD GSInputFile, GSOutputFile, Options
+51130   Case 12: 'PCL
+51140    CreatePCL GSInputFile, GSOutputFile, Options
+51150   Case 13: 'RAW
+51160    CreateRAW GSInputFile, GSOutputFile, Options
+51170   Case 14: 'SVG
+51180    CreateSVG GSInputFile, GSOutputFile, Options
+51190  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1967,7 +1969,7 @@ On Error GoTo ErrPtnr_OnError
 50050 ' strShell = App.Path & "\pdfencrypt.exe """ & encData.InputFile & """ """ & encData.OutputFile & """ User=" & encData.UserPass & " Owner=" & encData.OwnerPass & " " & strPermissions & " " & encData.EncryptionLevel
 50060 ' strShell = CompletePath(Options.DirectoryJava) & "Java.exe -cp """ & CompletePath(App.Path) & "iText.jar"" com.lowagie.tools.encrypt_pdf """ & encData.InputFile & """ """ & encData.OutputFile & """ """ & encData.UserPass & """ """ & encData.OwnerPass & """ " & strPermissions & " " & encData.EncryptionLevel
 50070
-50080  strShell = GetPDFCreatorApplicationPath & "pdfenc.exe """ & encData.InputFile & """ """ & encData.OutputFile & """ """ & encData.UserPass & """ """ & encData.OwnerPass & """ " & strPermissions & " " & encData.EncryptionLevel
+50080  strShell = PDFCreatorApplicationPath & "pdfenc.exe """ & encData.InputFile & """ """ & encData.OutputFile & """ """ & encData.UserPass & """ """ & encData.OwnerPass & """ " & strPermissions & " " & encData.EncryptionLevel
 50090
 50100  IfLoggingWriteLogfile strShell
 50110
@@ -1988,6 +1990,76 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function EncryptPDFUsingPdfforgeDllTest() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim pdf As Object, enc As Object
+50020  Set enc = CreateObject("pdfForge.pdf.PDFEncryptor")
+50030
+50040  enc.AllowAssembly = False
+50050  enc.AllowCopy = False
+50060  enc.AllowFillIn = False
+50070  enc.AllowModifyAnnotations = False
+50080  enc.AllowModifyContents = False
+50090  enc.AllowPrinting = True
+50100  enc.AllowPrintingHighResolution = False
+50110  enc.AllowScreenReaders = True
+50120  enc.EncryptionMethode = 2
+50130  enc.OwnerPassword = "pdfforge"
+50140  enc.UserPassword = ""
+50150  Set pdf = CreateObject("pdfForge.pdf.pdf")
+50160  pdf.CreatePDFTestDocument "test.pdf", 10, "This is an example.", True
+50170  pdf.EncryptPDFFile "test.pdf", "encrypted.pdf", enc
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostScript", "EncryptPDFUsingPdfforgeDllTest")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function EncryptPDFUsingPdfforgeDll(encData As EncryptData) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim m As Object, enc As Object, res As Long
+50020  Set m = CreateObject("pdfforge.pdf.pdf")
+50030  Set enc = CreateObject("pdfforge.pdf.PDFEncryptor")
+50040
+50050  enc.AllowAssembly = encData.AllowAssembly
+50060  enc.AllowCopy = Not encData.DisallowCopy
+50070  enc.AllowFillIn = encData.AllowFillIn
+50080  enc.AllowModifyAnnotations = Not encData.DisallowModifyAnnotations
+50090  enc.AllowModifyContents = Not encData.DisallowModifyContents
+50100  enc.AllowPrinting = Not encData.DisallowPrinting
+50110  enc.AllowPrintingHighResolution = Not encData.AllowDegradedPrinting
+50120  enc.AllowScreenReaders = encData.AllowFillIn
+50130  enc.EncryptionMethod = 2
+50140  enc.OwnerPassword = encData.OwnerPass
+50150  enc.UserPassword = encData.UserPass
+50160
+50170  res = m.EncryptPDFFile(encData.InputFile, encData.OutputFile, enc)
+50180  If res = 0 Then
+50190   EncryptPDFUsingPdfforgeDll = True
+50200  Else
+50210   EncryptPDFUsingPdfforgeDll = False
+50220  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostScript", "EncryptPDFUsingPdfforgeDll")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
 
 Public Function CalculatePermissions(ByRef encData As EncryptData) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2529,7 +2601,7 @@ Private Sub AddAdditionalGhostscriptParameters()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tStr As String, tStrf() As String, i As Long
-50020  tStr = Replace$(Trim$(Options.AdditionalGhostscriptParameters), "<app>", GetPDFCreatorApplicationPath, , , vbTextCompare)
+50020  tStr = Replace$(Trim$(Options.AdditionalGhostscriptParameters), "<app>", PDFCreatorApplicationPath, , , vbTextCompare)
 50030  tStr = Replace$(Trim$(tStr), "<gslib>", CompletePath(Options.DirectoryGhostscriptLibraries), , , vbTextCompare)
 50040  If LenB(tStr) > 0 Then
 50050   If InStr(1, tStr, "|") > 0 Then

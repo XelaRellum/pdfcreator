@@ -58,6 +58,7 @@ Public PCLColorsCount As Long
 Public PCLResolution As Long
 Public PCXColorscount As Long
 Public PCXResolution As Long
+Public PDFAes128Encryption As Long
 Public PDFAllowAssembly As Long
 Public PDFAllowDegradedPrinting As Long
 Public PDFAllowFillIn As Long

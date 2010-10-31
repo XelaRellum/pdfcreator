@@ -59,7 +59,7 @@ Begin VB.UserControl ctlOptGeneral
          Width           =   1080
       End
    End
-   Begin PDFCreator.dmFrame dmFraBrowserAddOn 
+   Begin PDFCreator.dmFrame dmFraToolbar 
       Height          =   1185
       Left            =   6720
       TabIndex        =   21
@@ -81,7 +81,7 @@ Begin VB.UserControl ctlOptGeneral
          Strikethrough   =   0   'False
       EndProperty
       TextShaddowColor=   12582912
-      Begin VB.CommandButton cmdInstallBrowserAddOn 
+      Begin VB.CommandButton cmdInstallToolbar 
          Caption         =   "&Install Browser Add On"
          Enabled         =   0   'False
          Height          =   495
@@ -395,7 +395,7 @@ On Error GoTo ErrPtnr_OnError
 50150  cmdShellintegration(1).Enabled = value
 50160  cmdAsso.Enabled = value
 50170  lblOptionsDesign.Enabled = value
-50180  cmdInstallBrowserAddOn.Enabled = value
+50180  cmdInstallToolbar.Enabled = value
 50190  lblUpdateInterval.Enabled = value
 50200  cmdCheckNow.Enabled = value
 50210
@@ -404,7 +404,7 @@ On Error GoTo ErrPtnr_OnError
 50240    tbstrProgGeneral_Click
 50250   Else
 50260    dmFraProgGeneral1.Enabled = False
-50270    dmFraBrowserAddOn.Enabled = False
+50270    dmFraToolbar.Enabled = False
 50280    dmFraProgGeneral2.Enabled = False
 50290    dmFraShellIntegration.Enabled = False
 50300    dmFraCheckUpdate.Enabled = False
@@ -449,7 +449,7 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  tbstrProgGeneral.Left = 0
 50040  tbstrProgGeneral.Top = 0
-50050  tbstrProgGeneral.Height = dmFraProgGeneral1.Height + dmFraBrowserAddOn.Height + 500
+50050  tbstrProgGeneral.Height = dmFraProgGeneral1.Height + dmFraToolbar.Height + 500
 50060  UserControl.Height = tbstrProgGeneral.Height + 100
 50070
 50080  With tbstrProgGeneral
@@ -577,7 +577,7 @@ On Error GoTo ErrPtnr_OnError
 50030   .Top = tbstrProgGeneral.ClientTop + 50
 50040   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
 50050  End With
-50060  With dmFraBrowserAddOn
+50060  With dmFraToolbar
 50070   .Top = dmFraProgGeneral1.Top + dmFraProgGeneral1.Height + 50
 50080   .Left = dmFraProgGeneral1.Left
 50090  End With
@@ -634,8 +634,8 @@ On Error GoTo ErrPtnr_OnError
 50220   cmdTestpage.Caption = .OptionsPrintTestpage
 50230   lblProcessPriority.Caption = .OptionsProcesspriority
 50240   cmdAsso.Caption = .OptionsAssociatePSFiles
-50250   dmFraBrowserAddOn.Caption = .OptionsBrowserAddOn
-50260   cmdInstallBrowserAddOn.Caption = .OptionsBrowserAddOnInstall
+50250   dmFraToolbar.Caption = .OptionsToolbar
+50260   cmdInstallToolbar.Caption = .OptionsToolbarInstall
 50270   dmFraCheckUpdate.Caption = .OptionsCheckUpdateDescription
 50280   lblUpdateInterval.Caption = .OptionsCheckUpdateInterval
 50290   cmbUpdateInterval.List(0) = .OptionsCheckUpdateInterval01
@@ -696,12 +696,12 @@ On Error GoTo ErrPtnr_OnError
 50090   Else
 50100    cmdAsso.Enabled = False
 50110  End If
-50120  If FileExists(CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe") And (Not BrowserAddOnIsInstalled) Then
-50130    dmFraBrowserAddOn.Enabled = True
-50140    cmdInstallBrowserAddOn.Enabled = True
+50120  If FileExists(CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-14_0_170_setup.exe") And (Not ToolbarIsInstalled) Then
+50130    dmFraToolbar.Enabled = True
+50140    cmdInstallToolbar.Enabled = True
 50150   Else
-50160    dmFraBrowserAddOn.Enabled = False
-50170    cmdInstallBrowserAddOn.Enabled = False
+50160    dmFraToolbar.Enabled = False
+50170    cmdInstallToolbar.Enabled = False
 50180  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -759,16 +759,16 @@ On Error GoTo ErrPtnr_OnError
 50070    dmFraCheckUpdate.Enabled = False
 50080    dmFraCheckUpdate.Visible = False
 50090    dmFraProgGeneral1.Visible = True
-50100    dmFraBrowserAddOn.Visible = True
+50100    dmFraToolbar.Visible = True
 50110    If ControlsEnabled Then
 50120     dmFraProgGeneral1.Enabled = True
-50130     dmFraBrowserAddOn.Enabled = True
+50130     dmFraToolbar.Enabled = True
 50140    End If
 50150   Case 2
 50160    dmFraProgGeneral1.Enabled = False
 50170    dmFraProgGeneral1.Visible = False
-50180    dmFraBrowserAddOn.Enabled = False
-50190    dmFraBrowserAddOn.Visible = False
+50180    dmFraToolbar.Enabled = False
+50190    dmFraToolbar.Visible = False
 50200    dmFraProgGeneral2.Visible = True
 50210    dmFraShellIntegration.Visible = True
 50220    dmFraCheckUpdate.Visible = True
@@ -854,15 +854,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub cmdInstallBrowserAddOn_Click()
+Private Sub cmdInstallToolbar_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Shell """" & CompletePath(App.Path) & "BrowserAddOn\PDFCreator Browser Add On-14_0_170_setup.exe"""
+50010  Shell """" & CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-14_0_170_setup"""
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptGeneral", "cmdInstallBrowserAddOn_Click")
+Select Case ErrPtnr.OnError("ctlOptGeneral", "cmdInstallToolbar_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
