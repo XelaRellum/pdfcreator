@@ -72,6 +72,7 @@ PCXColorscount|cmbPCXColors.Listindex|Long|0|0|5
 PCXResolution||Long|150|1|<
 
 ' <Printing Formats PDF Security>
+PDFAes128Encryption|optEncAes128.Value|Boolean|0||
 PDFAllowAssembly|chkAllowAssembly.Value|Boolean|0||
 PDFAllowDegradedPrinting|chkAllowDegradedPrinting.Value|Boolean|0||
 PDFAllowFillIn|chkAllowFillIn.Value|Boolean|0||
