@@ -68,6 +68,8 @@ Public CurrentLanguage As String
 Public CurrentPrinterProfile As String
 Public InstalledAsServer As Boolean
 Public PrinterTemppath As String
+Public pdfforgeDllInstalled As Boolean
+Public PDFCreatorApplicationPath As String
 
 Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

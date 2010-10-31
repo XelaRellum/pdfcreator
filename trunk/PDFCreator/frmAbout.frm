@@ -326,26 +326,28 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long
 50020
-50030  If LanguageStrings.CommonLanguagename = "Deutsch" Or LanguageStrings.CommonLanguagename = "English" Then
-50040    lblTranslator.Caption = ""
-50050   Else
-50060    lblTranslator.Caption = """" + LanguageStrings.CommonLanguagename + """ by " + LanguageStrings.CommonAuthor
-50070  End If
-50080
-50090  imgDonate.MousePointer = 99
-50100  imgDonate.MouseIcon = LoadResPicture(1000, vbResCursor)
-50110  lblHomepage.MousePointer = 99
-50120  lblHomepage.MouseIcon = LoadResPicture(1000, vbResCursor)
-50130  For i = 0 To lblLink.Count - 1
-50140   lblLink(i).MousePointer = 99
-50150   lblLink(i).MouseIcon = LoadResPicture(1000, vbResCursor)
-50160  Next i
-50170
-50180  With Options
-50190   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50200  End With
-50210  Me.Caption = "Info - PDFCreator " & App.Major & "." & App.Minor & "." & App.Revision
-50220  ShowAcceleratorsInForm Me, True
+50030  ChangeLanguage
+50040
+50050  If LanguageStrings.CommonLanguagename = "Deutsch" Or LanguageStrings.CommonLanguagename = "English" Then
+50060    lblTranslator.Caption = ""
+50070   Else
+50080    lblTranslator.Caption = """" + LanguageStrings.CommonLanguagename + """ by " + LanguageStrings.CommonAuthor
+50090  End If
+50100
+50110  imgDonate.MousePointer = 99
+50120  imgDonate.MouseIcon = LoadResPicture(1000, vbResCursor)
+50130  lblHomepage.MousePointer = 99
+50140  lblHomepage.MouseIcon = LoadResPicture(1000, vbResCursor)
+50150  For i = 0 To lblLink.Count - 1
+50160   lblLink(i).MousePointer = 99
+50170   lblLink(i).MouseIcon = LoadResPicture(1000, vbResCursor)
+50180  Next i
+50190
+50200  With Options
+50210   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50220  End With
+50230
+50240  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -362,7 +364,7 @@ Private Sub imgDonate_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 OpenDocument PaypalPDFCreator
+50010  OpenDocument PaypalPDFCreator
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -379,7 +381,7 @@ Private Sub lblHomepage_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 OpenDocument "http://www.pdfforge.org"
+50010  OpenDocument "http://www.pdfforge.org"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -396,7 +398,7 @@ Private Sub lblLink_Click(Index As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 OpenDocument "http://" + lblLink(Index).Caption
+50010  OpenDocument "http://" + lblLink(Index).Caption
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -408,3 +410,23 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Sub ChangeLanguage()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With LanguageStrings
+50020   Me.Caption = .DialogInfoTitle & " PDFCreator " & App.Major & "." & App.Minor & "." & App.Revision
+50030  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmAbout", "ChangeLanguage")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+

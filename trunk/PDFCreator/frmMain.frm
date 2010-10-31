@@ -4,8 +4,8 @@ Begin VB.Form frmMain
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
    ClientHeight    =   3765
-   ClientLeft      =   165
-   ClientTop       =   735
+   ClientLeft      =   225
+   ClientTop       =   855
    ClientWidth     =   9510
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
@@ -710,9 +710,9 @@ On Error GoTo ErrPtnr_OnError
 50160   InstanceCounter = InstanceCounter - 1
 50170  End If
 50180
-50190  PDFSpoolerPath = GetPDFCreatorApplicationPath & PDFSpoolerExe
+50190  PDFSpoolerPath = PDFCreatorApplicationPath & PDFSpoolerExe
 50200  If Restart = True And FileExists(PDFSpoolerPath) = True Then
-50210   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", GetPDFCreatorApplicationPath, 1
+50210   ShellExecute 0, vbNullString, """" & PDFSpoolerPath & """", "-SL200 -STTRUE", PDFCreatorApplicationPath, 1
 50220  End If
 50230
 50240  If Not mutexLocal Is Nothing Then
@@ -1365,7 +1365,7 @@ On Error GoTo ErrPtnr_OnError
 50080  CheckClipboardForBitmap
 50090
 50100  DoEvents
-50110  If FileExists(GetPDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
+50110  If FileExists(PDFCreatorApplicationPath & "Unload.tmp") = True Or Restart = True Then
 50120   InTimer1 = False
 50130   Unload Me
 50140   Exit Sub

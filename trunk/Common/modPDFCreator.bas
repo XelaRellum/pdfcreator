@@ -228,11 +228,11 @@ On Error GoTo ErrPtnr_OnError
 50140   .KeyRoot = "Postscript\Shell\Open"
 50150   .CreateKey "Command"
 50160   .KeyRoot = "Postscript\Shell\Open\Command"
-50170   .SetRegistryValue "", """" & GetPDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""", REG_SZ
+50170   .SetRegistryValue "", """" & PDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""", REG_SZ
 50180   .KeyRoot = "Postscript"
 50190   .CreateKey "DefaultIcon"
 50200   .KeyRoot = "PostScript\DefaultIcon"
-50210   .SetRegistryValue "", GetPDFCreatorApplicationPath & App.EXEName & ".exe,0", REG_SZ
+50210   .SetRegistryValue "", PDFCreatorApplicationPath & App.EXEName & ".exe,0", REG_SZ
 50220  End With
 50230  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -261,9 +261,9 @@ On Error GoTo ErrPtnr_OnError
 50080    reg.KeyRoot = "Postscript"
 50090    If reg.KeyExists = True Then
 50100     reg.KeyRoot = "Postscript\DefaultIcon"
-50110     If UCase$(reg.GetRegistryValue("")) = UCase$(GetPDFCreatorApplicationPath & App.EXEName & ".exe,0") Then
+50110     If UCase$(reg.GetRegistryValue("")) = UCase$(PDFCreatorApplicationPath & App.EXEName & ".exe,0") Then
 50120      reg.KeyRoot = "Postscript\Shell\Open\Command"
-50130      If UCase$(reg.GetRegistryValue("")) = UCase$("""" & GetPDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""") Then
+50130      If UCase$(reg.GetRegistryValue("")) = UCase$("""" & PDFCreatorApplicationPath & App.EXEName & ".exe"" -IF""%1""") Then
 50140       IsPsAssociate = True
 50150      End If
 50160     End If
@@ -460,44 +460,43 @@ End Select
 End Function
 
 Public Function EnterPasswords(ByRef UserPass As String, ByRef OwnerPass As String, f As Form) As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If Options.PDFUserPass <> 0 Or Options.PDFOwnerPass <> 0 Then
-50020    With f
-50030     .Visible = False
-50040     .dmFraUserPass.Enabled = Options.PDFUserPass
-50050     .lblUserPass.Enabled = Options.PDFUserPass
-50060     .lblUserPassRepeat.Enabled = Options.PDFUserPass
-50070     .dmFraOwnerPass.Enabled = Options.PDFOwnerPass
-50080     .lblOwnerPass.Enabled = Options.PDFOwnerPass
-50090     .lblOwnerPassRepeat.Enabled = Options.PDFOwnerPass
-50100     .iPasswords = Abs(Options.PDFUserPass) + Abs(Options.PDFOwnerPass * 2)
-50110     .Show vbModal
-50120     Do
-50130      Sleep 100
-50140      DoEvents
-50150     Loop While .bFinished = False
-50160    End With
-50170    EnterPasswords = f.bSuccess
-50180    UserPass = f.txtUserPass.Text
-50190    OwnerPass = f.txtOwnerPass.Text
-50200    Unload f
-50210   Else
-50220    EnterPasswords = False
-50230    UserPass = ""
-50240    OwnerPass = ""
-50250  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDFCreator", "EnterPasswords")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ If Options.PDFUserPass <> 0 Or Options.PDFOwnerPass <> 0 Then
+   With f
+    .Visible = False
+    .dmFraUserPass.Enabled = Options.PDFUserPass
+    .lblUserPass.Enabled = Options.PDFUserPass
+    .chkShowUserPasswordChars.Enabled = Options.PDFUserPass
+    If .dmFraUserPass.Enabled Then
+      .txtUserPass.BackColor = &H80000005
+     Else
+      .txtUserPass.BackColor = .dmFraUserPass.BackColor
+    End If
+    
+    .dmFraOwnerPass.Enabled = Options.PDFOwnerPass
+    .lblOwnerPass.Enabled = Options.PDFOwnerPass
+    .chkShowOwnerPasswordChars.Enabled = Options.PDFOwnerPass
+    If .dmFraOwnerPass.Enabled Then
+      .txtOwnerPass.BackColor = &H80000005
+     Else
+      .txtOwnerPass.BackColor = .dmFraOwnerPass.BackColor
+    End If
+    
+    .iPasswords = Abs(Options.PDFUserPass) + Abs(Options.PDFOwnerPass * 2)
+    .Show vbModal
+    Do
+     Sleep 100
+     DoEvents
+    Loop While .bFinished = False
+   End With
+   EnterPasswords = f.bSuccess
+   UserPass = f.txtUserPass.Text
+   OwnerPass = f.txtOwnerPass.Text
+   Unload f
+  Else
+   EnterPasswords = False
+   UserPass = ""
+   OwnerPass = ""
+ End If
 End Function
 
 Public Sub AddExplorerIntegration()
@@ -522,7 +521,7 @@ On Error GoTo ErrPtnr_OnError
 50160        reg.KeyRoot = sKey & "\shell\" & Uninstall_GUID
 50170        reg.SubKey = ""
 50180        If reg.KeyExists = False Then
-50190         Path = CompletePath(GetPDFCreatorApplicationPath)
+50190         Path = CompletePath(PDFCreatorApplicationPath)
 50200         If Len(Path) > 1 Then
 50210          reg.CreateKey
 50220          reg.SetRegistryValue "", LanguageStrings.OptionsShellIntegrationCaption, REG_SZ
@@ -590,17 +589,17 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case UCase$(Options.Language)
         Case "GERMAN"
-50030    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_german.chm"
+50030    HelpFile = PDFCreatorApplicationPath & "PDFCreator_german.chm"
 50040   Case "FRENCH"
-50050    HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_french.chm"
+50050    HelpFile = PDFCreatorApplicationPath & "PDFCreator_french.chm"
 50060  End Select
 50070  If LenB(HelpFile) = 0 Then
-50080   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
+50080   HelpFile = PDFCreatorApplicationPath & "PDFCreator_english.chm"
 50090  End If
 50100
 50110  If Not FileExists(HelpFile) Then
 50120 '  MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & HelpFile, vbExclamation
-50130   HelpFile = GetPDFCreatorApplicationPath & "PDFCreator_english.chm"
+50130   HelpFile = PDFCreatorApplicationPath & "PDFCreator_english.chm"
 50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

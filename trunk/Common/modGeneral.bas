@@ -712,7 +712,7 @@ On Error GoTo ErrPtnr_OnError
 50180    End If
 50190  End If
 50200  If Trim$(TempDir) = vbNullString Then
-50210   TempDir = GetPDFCreatorApplicationPath & "Temp\"
+50210   TempDir = PDFCreatorApplicationPath & "Temp\"
 50220  End If
 50230
 50240  GetTempPath = CompletePath(TempDir)
@@ -2315,11 +2315,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function DotNet1_1Installed() As Boolean
+Public Function DotNet11Installed() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  DotNet1_1Installed = DirExists(CompletePath(Environ$("Systemroot")) & "Microsoft.NET\Framework\v1.1.4322")
+50010  DotNet11Installed = DirExists(CompletePath(Environ$("Systemroot")) & "Microsoft.NET\Framework\v1.1.4322")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2332,11 +2332,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function DotNet2_0Installed() As Boolean
+Public Function DotNet20Installed() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  DotNet2_0Installed = DirExists(CompletePath(Environ$("Systemroot")) & "Microsoft.NET\Framework\v2.0.50727")
+50010  DotNet20Installed = DirExists(CompletePath(Environ$("Systemroot")) & "Microsoft.NET\Framework\v2.0.50727")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2349,38 +2349,18 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function PDFUpdateMetadataIsPossible() As Boolean
+Public Function pdfforgeDllIsInstalled() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\pdfforge.dll") And _
-  FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") And DotNet2_0Installed Then
-50030   PDFUpdateMetadataIsPossible = True
+50010  If FileExists(PDFCreatorApplicationPath & "PlugIns\pdfforge\pdfforge.dll") And _
+  FileExists(PDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") Then
+50030   pdfforgeDllIsInstalled = True
 50040  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "PDFUpdateMetadataIsPossible")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Public Function PDFSigningIsPossible() As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\pdfforge.dll") And _
-  FileExists(GetPDFCreatorApplicationPath & "PlugIns\pdfforge\itextsharp.dll") And DotNet2_0Installed Then
-50030   PDFSigningIsPossible = True
-50040  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "PDFSigningIsPossible")
+Select Case ErrPtnr.OnError("modGeneral", "pdfforgeDllIsInstalled")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2403,7 +2383,7 @@ Function ReadCompleteFile(ByRef filename As String) As String
  Close fn
 End Function
 
-Function BrowserAddOnIsInstalled() As Boolean
+Function ToolbarIsInstalled() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -2412,12 +2392,12 @@ On Error GoTo ErrPtnr_OnError
 50030  If DirExists(Path) Then
 50040    res = FindFiles(Path, files, "*.dll", vbNormal, True)
 50050    If files.Count > 0 Then
-50060      BrowserAddOnIsInstalled = True
+50060      ToolbarIsInstalled = True
 50070     Else
-50080      BrowserAddOnIsInstalled = False
+50080      ToolbarIsInstalled = False
 50090    End If
 50100   Else
-50110    BrowserAddOnIsInstalled = False
+50110    ToolbarIsInstalled = False
 50120  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function

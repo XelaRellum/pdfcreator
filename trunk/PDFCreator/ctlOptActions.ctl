@@ -330,14 +330,14 @@ On Error GoTo ErrPtnr_OnError
 50380    ViewRunProgramBeforeSaving False
 50390  End If
 50400
-50410  Set files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\", "*.*", SortedByName)
+50410  Set files = GetFiles(PDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\", "*.*", SortedByName)
 50420  For i = 1 To files.Count
 50430   tsf = Split(files(i), "|")
 50440   SplitPath tsf(1), , Path, filename, , Ext
 50450   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
    UCase$(Ext) <> "JPG" And UCase$(Ext) <> "BMP" And UCase$(Ext) <> "PCX" And _
    UCase$(Ext) <> "TIF" And UCase$(Ext) <> "EPS" And UCase$(Ext) <> "PS" Then
-50480    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\") Then
+50480    If UCase$(tsf(0)) <> UCase$(PDFCreatorApplicationPath & "Scripts\RunProgramAfterSaving\") Then
 50490      cmbRunProgramAfterSavingProgramname.AddItem tsf(0)
 50500     Else
 50510      cmbRunProgramAfterSavingProgramname.AddItem filename
@@ -345,14 +345,14 @@ On Error GoTo ErrPtnr_OnError
 50530   End If
 50540  Next i
 50550
-50560  Set files = GetFiles(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\", "*.*", SortedByName)
+50560  Set files = GetFiles(PDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\", "*.*", SortedByName)
 50570  For i = 1 To files.Count
 50580   tsf = Split(files(i), "|")
 50590   SplitPath tsf(1), , Path, filename, , Ext
 50600   If UCase$(Ext) <> "TXT" And UCase$(Ext) <> "PDF" And UCase$(Ext) <> "PNG" And _
    UCase$(Ext) <> "JPG" And UCase$(Ext) <> "BMP" And UCase$(Ext) <> "PCX" And _
    UCase$(Ext) <> "TIF" And UCase$(Ext) <> "EPS" And UCase$(Ext) <> "PS" Then
-50630    If UCase$(tsf(0)) <> UCase$(GetPDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\") Then
+50630    If UCase$(tsf(0)) <> UCase$(PDFCreatorApplicationPath & "Scripts\RunProgramBeforeSaving\") Then
 50640      cmbRunProgramBeforeSavingProgramname.AddItem tsf(0)
 50650     Else
 50660      cmbRunProgramBeforeSavingProgramname.AddItem filename
@@ -737,7 +737,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramAfterSavingProgramname.Text)
 50030  SplitPath Program, drv
 50040  If LenB(drv) = 0 Then
-50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50050   Program = ResolveRelativePath(Program, PDFCreatorApplicationPath)
 50060  End If
 50070  If FileExists(Program) = True Then
 50080   If IsFileEditable(Program) Then
@@ -794,7 +794,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramBeforeSavingProgramname.Text)
 50030  SplitPath Program, drv
 50040  If LenB(drv) = 0 Then
-50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50050   Program = ResolveRelativePath(Program, PDFCreatorApplicationPath)
 50060  End If
 50070  If FileExists(Program) = True Then
 50080   If IsFileEditable(Program) Then
@@ -821,7 +821,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramAfterSavingProgramname.Text)
 50030  SplitPath Program, drv
 50040  If LenB(drv) = 0 Then
-50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50050   Program = ResolveRelativePath(Program, PDFCreatorApplicationPath)
 50060  End If
 50070  If FileExists(Program) = True Then
 50080    If IsFileEditable(Program) Then
@@ -873,7 +873,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Program = RemoveLeadingAndTrailingQuotes(cmbRunProgramBeforeSavingProgramname.Text)
 50030  SplitPath Program, drv
 50040  If LenB(drv) = 0 Then
-50050   Program = ResolveRelativePath(Program, GetPDFCreatorApplicationPath)
+50050   Program = ResolveRelativePath(Program, PDFCreatorApplicationPath)
 50060  End If
 50070  If FileExists(Program) = True Then
 50080    If IsFileEditable(Program) Then

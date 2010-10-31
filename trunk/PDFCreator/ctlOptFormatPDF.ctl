@@ -12,7 +12,7 @@ Begin VB.UserControl ctlOptFormatPDF
    Begin PDFCreator.dmFrame dmFraPDFSigning 
       Height          =   5535
       Left            =   12960
-      TabIndex        =   47
+      TabIndex        =   45
       Top             =   120
       Width           =   6195
       _ExtentX        =   10927
@@ -33,7 +33,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "Sign pdf file"
          Height          =   255
          Left            =   120
-         TabIndex        =   69
+         TabIndex        =   67
          Top             =   360
          Width           =   5895
       End
@@ -41,7 +41,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "Multi signature allowed"
          Height          =   255
          Left            =   120
-         TabIndex        =   68
+         TabIndex        =   66
          Top             =   5160
          Width           =   5895
       End
@@ -49,7 +49,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Appearance      =   0  '2D
          Height          =   285
          Left            =   120
-         TabIndex        =   57
+         TabIndex        =   55
          Top             =   2760
          Width           =   5325
       End
@@ -57,7 +57,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Appearance      =   0  '2D
          Height          =   285
          Left            =   3120
-         TabIndex        =   55
+         TabIndex        =   53
          Top             =   2040
          Width           =   2805
       End
@@ -65,7 +65,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Appearance      =   0  '2D
          Height          =   285
          Left            =   120
-         TabIndex        =   53
+         TabIndex        =   51
          Top             =   2040
          Width           =   2805
       End
@@ -75,7 +75,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Height          =   285
          Left            =   120
          Locked          =   -1  'True
-         TabIndex        =   51
+         TabIndex        =   49
          Top             =   1320
          Width           =   5910
       End
@@ -83,7 +83,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "..."
          Height          =   300
          Left            =   5640
-         TabIndex        =   49
+         TabIndex        =   47
          Top             =   960
          Width           =   375
       End
@@ -91,14 +91,14 @@ Begin VB.UserControl ctlOptFormatPDF
          Appearance      =   0  '2D
          Height          =   285
          Left            =   120
-         TabIndex        =   48
+         TabIndex        =   46
          Top             =   960
          Width           =   5325
       End
       Begin PDFCreator.dmFrame dmFraSignaturePosition 
          Height          =   1935
          Left            =   120
-         TabIndex        =   58
+         TabIndex        =   56
          Top             =   3120
          Width           =   5955
          _ExtentX        =   10504
@@ -120,7 +120,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   240
-            TabIndex        =   73
+            TabIndex        =   71
             Text            =   "1"
             Top             =   960
             Width           =   1000
@@ -129,7 +129,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Signature visible in PDF"
             Height          =   255
             Left            =   240
-            TabIndex        =   67
+            TabIndex        =   65
             Top             =   360
             Width           =   5415
          End
@@ -138,7 +138,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   4560
-            TabIndex        =   66
+            TabIndex        =   64
             Text            =   "200"
             Top             =   1560
             Width           =   1000
@@ -148,7 +148,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   3120
-            TabIndex        =   64
+            TabIndex        =   62
             Text            =   "200"
             Top             =   1560
             Width           =   1000
@@ -158,7 +158,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   1680
-            TabIndex        =   62
+            TabIndex        =   60
             Text            =   "100"
             Top             =   1560
             Width           =   1000
@@ -168,7 +168,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   240
-            TabIndex        =   60
+            TabIndex        =   58
             Text            =   "100"
             Top             =   1560
             Width           =   1000
@@ -178,7 +178,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Show signature on page"
             Height          =   195
             Left            =   240
-            TabIndex        =   72
+            TabIndex        =   70
             Top             =   720
             Width           =   1725
          End
@@ -187,7 +187,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Right Y"
             Height          =   195
             Left            =   4560
-            TabIndex        =   65
+            TabIndex        =   63
             Top             =   1320
             Width           =   525
          End
@@ -196,7 +196,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Right X"
             Height          =   195
             Left            =   3120
-            TabIndex        =   63
+            TabIndex        =   61
             Top             =   1320
             Width           =   525
          End
@@ -205,7 +205,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Left Y"
             Height          =   195
             Left            =   1680
-            TabIndex        =   61
+            TabIndex        =   59
             Top             =   1320
             Width           =   420
          End
@@ -214,7 +214,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Left X"
             Height          =   195
             Left            =   240
-            TabIndex        =   59
+            TabIndex        =   57
             Top             =   1320
             Width           =   420
          End
@@ -224,7 +224,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "Signature location"
          Height          =   195
          Left            =   120
-         TabIndex        =   56
+         TabIndex        =   54
          Top             =   2520
          Width           =   1275
       End
@@ -233,7 +233,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "Signature contact"
          Height          =   195
          Left            =   3120
-         TabIndex        =   54
+         TabIndex        =   52
          Top             =   1800
          Width           =   1260
       End
@@ -242,7 +242,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "Signature reason"
          Height          =   195
          Left            =   120
-         TabIndex        =   52
+         TabIndex        =   50
          Top             =   1800
          Width           =   1200
       End
@@ -251,7 +251,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "PFX\P12 file"
          Height          =   195
          Left            =   120
-         TabIndex        =   50
+         TabIndex        =   48
          Top             =   720
          Width           =   900
       End
@@ -352,13 +352,13 @@ Begin VB.UserControl ctlOptFormatPDF
       End
    End
    Begin PDFCreator.dmFrame dmFraPDFSecurity 
-      Height          =   5535
+      Height          =   4815
       Left            =   6600
       TabIndex        =   27
       Top             =   5760
       Width           =   6195
       _ExtentX        =   10927
-      _ExtentY        =   9763
+      _ExtentY        =   8493
       Caption         =   "Security"
       BarColorFrom    =   16744576
       BarColorTo      =   4194304
@@ -384,8 +384,8 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin PDFCreator.dmFrame dmFraPDFHighPermissions 
          Height          =   855
          Left            =   120
-         TabIndex        =   42
-         Top             =   4560
+         TabIndex        =   40
+         Top             =   3840
          Width           =   5955
          _ExtentX        =   10504
          _ExtentY        =   1508
@@ -407,7 +407,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   43
+            TabIndex        =   41
             Top             =   300
             Width           =   2865
          End
@@ -417,7 +417,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   44
+            TabIndex        =   42
             Top             =   300
             Width           =   2760
          End
@@ -427,7 +427,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   45
+            TabIndex        =   43
             Top             =   525
             Width           =   2865
          End
@@ -437,7 +437,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   46
+            TabIndex        =   44
             Top             =   525
             Width           =   2760
          End
@@ -445,8 +445,8 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin PDFCreator.dmFrame dmFraPDFPermissions 
          Height          =   855
          Left            =   120
-         TabIndex        =   37
-         Top             =   3600
+         TabIndex        =   35
+         Top             =   2880
          Width           =   5955
          _ExtentX        =   10504
          _ExtentY        =   1508
@@ -468,7 +468,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   38
+            TabIndex        =   36
             Top             =   300
             Width           =   2865
          End
@@ -478,7 +478,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   40
+            TabIndex        =   38
             Top             =   525
             Width           =   2865
          End
@@ -488,7 +488,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   39
+            TabIndex        =   37
             Top             =   300
             Width           =   2760
          End
@@ -498,7 +498,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   3100
-            TabIndex        =   41
+            TabIndex        =   39
             Top             =   525
             Width           =   2760
          End
@@ -506,8 +506,8 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin PDFCreator.dmFrame dmFraSecurityPass 
          Height          =   855
          Left            =   120
-         TabIndex        =   34
-         Top             =   2640
+         TabIndex        =   32
+         Top             =   1920
          Width           =   5955
          _ExtentX        =   10504
          _ExtentY        =   1508
@@ -529,7 +529,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   35
+            TabIndex        =   33
             Top             =   300
             Width           =   5700
          End
@@ -539,19 +539,19 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   36
+            TabIndex        =   34
             Top             =   525
             Width           =   5700
          End
       End
       Begin PDFCreator.dmFrame dmFraPDFEncLevel 
-         Height          =   855
+         Height          =   1095
          Left            =   120
-         TabIndex        =   31
-         Top             =   1680
+         TabIndex        =   29
+         Top             =   720
          Width           =   5955
          _ExtentX        =   10504
-         _ExtentY        =   1508
+         _ExtentY        =   1931
          Caption         =   "Encryption level"
          BarColorFrom    =   16744576
          BarColorTo      =   4194304
@@ -564,13 +564,23 @@ Begin VB.UserControl ctlOptFormatPDF
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
+         Begin VB.OptionButton optEncAes128 
+            Appearance      =   0  '2D
+            Caption         =   "Very high (AES 128 Bit - Adobe Acrobat 7.0 and above)"
+            ForeColor       =   &H80000008&
+            Height          =   255
+            Left            =   120
+            TabIndex        =   98
+            Top             =   750
+            Width           =   5775
+         End
          Begin VB.OptionButton optEncLow 
             Appearance      =   0  '2D
             Caption         =   "Low (40 Bit - Adobe Acrobat 3.0 and above)"
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   32
+            TabIndex        =   30
             Top             =   300
             Width           =   5775
          End
@@ -580,41 +590,9 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   33
+            TabIndex        =   31
             Top             =   525
             Width           =   5775
-         End
-      End
-      Begin PDFCreator.dmFrame dmFraPDFEncryptor 
-         Height          =   855
-         Left            =   120
-         TabIndex        =   29
-         Top             =   720
-         Width           =   5955
-         _ExtentX        =   10504
-         _ExtentY        =   1508
-         Caption         =   "Encryptor"
-         BarColorFrom    =   16744576
-         BarColorTo      =   4194304
-         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-            Name            =   "MS Sans Serif"
-            Size            =   8.25
-            Charset         =   0
-            Weight          =   400
-            Underline       =   0   'False
-            Italic          =   0   'False
-            Strikethrough   =   0   'False
-         EndProperty
-         Begin VB.ComboBox cmbPDFEncryptor 
-            Appearance      =   0  '2D
-            Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":0316
-            Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0318
-            Style           =   2  'Dropdown-Liste
-            TabIndex        =   30
-            Top             =   360
-            Width           =   5715
          End
       End
    End
@@ -700,7 +678,7 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin PDFCreator.dmFrame dmFraPDFMono 
          Height          =   1815
          Left            =   720
-         TabIndex        =   90
+         TabIndex        =   88
          Top             =   3240
          Visible         =   0   'False
          Width           =   5595
@@ -723,18 +701,18 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   2880
-            TabIndex        =   95
+            TabIndex        =   93
             Top             =   1380
             Width           =   735
          End
          Begin VB.ComboBox cmbPDFMonoResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":031A
+            ItemData        =   "ctlOptFormatPDF.ctx":0316
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":031C
+            List            =   "ctlOptFormatPDF.ctx":0318
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   94
+            TabIndex        =   92
             Tag             =   "Bicubic|Subsample|Average"
             Top             =   1380
             Width           =   2610
@@ -745,18 +723,18 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   93
+            TabIndex        =   91
             Top             =   1080
             Width           =   2610
          End
          Begin VB.ComboBox cmbPDFMonoComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":031E
+            ItemData        =   "ctlOptFormatPDF.ctx":031A
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0320
+            List            =   "ctlOptFormatPDF.ctx":031C
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   92
+            TabIndex        =   90
             Top             =   660
             Width           =   2610
          End
@@ -766,7 +744,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   91
+            TabIndex        =   89
             Top             =   360
             Width           =   2610
          End
@@ -775,7 +753,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Resolution"
             Height          =   195
             Left            =   2880
-            TabIndex        =   96
+            TabIndex        =   94
             Top             =   1080
             Width           =   750
          End
@@ -783,7 +761,7 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin PDFCreator.dmFrame dmFraPDFGrey 
          Height          =   1815
          Left            =   360
-         TabIndex        =   83
+         TabIndex        =   81
          Top             =   2400
          Visible         =   0   'False
          Width           =   5595
@@ -808,7 +786,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Height          =   285
             Left            =   2880
             Locked          =   -1  'True
-            TabIndex        =   98
+            TabIndex        =   96
             Top             =   660
             Width           =   735
          End
@@ -818,18 +796,18 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   88
+            TabIndex        =   86
             Top             =   360
             Width           =   2610
          End
          Begin VB.ComboBox cmbPDFGreyComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":0322
+            ItemData        =   "ctlOptFormatPDF.ctx":031E
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0324
+            List            =   "ctlOptFormatPDF.ctx":0320
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   87
+            TabIndex        =   85
             Top             =   660
             Width           =   2610
          End
@@ -839,18 +817,18 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   86
+            TabIndex        =   84
             Top             =   1080
             Width           =   2610
          End
          Begin VB.ComboBox cmbPDFGreyResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":0326
+            ItemData        =   "ctlOptFormatPDF.ctx":0322
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0328
+            List            =   "ctlOptFormatPDF.ctx":0324
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   85
+            TabIndex        =   83
             Tag             =   "Bicubic|Subsample|Average"
             Top             =   1380
             Width           =   2610
@@ -860,7 +838,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   2880
-            TabIndex        =   84
+            TabIndex        =   82
             Top             =   1380
             Width           =   735
          End
@@ -869,7 +847,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Factor"
             Height          =   195
             Left            =   2880
-            TabIndex        =   99
+            TabIndex        =   97
             Top             =   360
             Width           =   450
          End
@@ -878,7 +856,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Resolution"
             Height          =   195
             Left            =   2880
-            TabIndex        =   89
+            TabIndex        =   87
             Top             =   1080
             Width           =   750
          End
@@ -886,7 +864,7 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin PDFCreator.dmFrame dmFraPDFColor 
          Height          =   1815
          Left            =   240
-         TabIndex        =   74
+         TabIndex        =   72
          Top             =   1200
          Width           =   5595
          _ExtentX        =   9869
@@ -910,7 +888,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Height          =   285
             Left            =   2880
             Locked          =   -1  'True
-            TabIndex        =   81
+            TabIndex        =   79
             Top             =   660
             Width           =   735
          End
@@ -920,7 +898,7 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   77
+            TabIndex        =   75
             Top             =   1080
             Width           =   2610
          End
@@ -930,29 +908,29 @@ Begin VB.UserControl ctlOptFormatPDF
             ForeColor       =   &H80000008&
             Height          =   255
             Left            =   120
-            TabIndex        =   79
+            TabIndex        =   77
             Top             =   360
             Width           =   2610
          End
          Begin VB.ComboBox cmbPDFColorComp 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":032A
+            ItemData        =   "ctlOptFormatPDF.ctx":0326
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":032C
+            List            =   "ctlOptFormatPDF.ctx":0328
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   78
+            TabIndex        =   76
             Top             =   660
             Width           =   2610
          End
          Begin VB.ComboBox cmbPDFColorResample 
             Appearance      =   0  '2D
             Height          =   315
-            ItemData        =   "ctlOptFormatPDF.ctx":032E
+            ItemData        =   "ctlOptFormatPDF.ctx":032A
             Left            =   120
-            List            =   "ctlOptFormatPDF.ctx":0330
+            List            =   "ctlOptFormatPDF.ctx":032C
             Style           =   2  'Dropdown-Liste
-            TabIndex        =   76
+            TabIndex        =   74
             Tag             =   "Bicubic|Subsample|Average"
             Top             =   1380
             Width           =   2610
@@ -962,7 +940,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Appearance      =   0  '2D
             Height          =   285
             Left            =   2880
-            TabIndex        =   75
+            TabIndex        =   73
             Top             =   1380
             Width           =   735
          End
@@ -971,7 +949,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Factor"
             Height          =   195
             Left            =   2880
-            TabIndex        =   82
+            TabIndex        =   80
             Top             =   360
             Width           =   450
          End
@@ -980,7 +958,7 @@ Begin VB.UserControl ctlOptFormatPDF
             Caption         =   "Resolution"
             Height          =   195
             Left            =   2880
-            TabIndex        =   80
+            TabIndex        =   78
             Top             =   1080
             Width           =   750
          End
@@ -998,7 +976,7 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin MSComctlLib.TabStrip tbstrPDFImageCompression 
          Height          =   2415
          Left            =   120
-         TabIndex        =   97
+         TabIndex        =   95
          Top             =   720
          Width           =   5895
          _ExtentX        =   10398
@@ -1047,20 +1025,20 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFDefaultSettings 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":0332
+         ItemData        =   "ctlOptFormatPDF.ctx":032E
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0334
+         List            =   "ctlOptFormatPDF.ctx":0330
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   70
+         TabIndex        =   68
          Top             =   555
          Width           =   2655
       End
       Begin VB.ComboBox cmbPDFRotate 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":0336
+         ItemData        =   "ctlOptFormatPDF.ctx":0332
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0338
+         List            =   "ctlOptFormatPDF.ctx":0334
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
          Tag             =   "None|All|PageByPage"
@@ -1070,9 +1048,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFCompat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":033A
+         ItemData        =   "ctlOptFormatPDF.ctx":0336
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":033C
+         List            =   "ctlOptFormatPDF.ctx":0338
          Style           =   2  'Dropdown-Liste
          TabIndex        =   3
          Top             =   1215
@@ -1091,9 +1069,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFOverprint 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":033E
+         ItemData        =   "ctlOptFormatPDF.ctx":033A
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0340
+         List            =   "ctlOptFormatPDF.ctx":033C
          Style           =   2  'Dropdown-Liste
          TabIndex        =   10
          Top             =   3420
@@ -1125,7 +1103,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "Default settings:"
          Height          =   195
          Left            =   120
-         TabIndex        =   71
+         TabIndex        =   69
          Top             =   360
          Width           =   1140
       End
@@ -1180,13 +1158,13 @@ Begin VB.UserControl ctlOptFormatPDF
       End
    End
    Begin MSComctlLib.TabStrip tbstrPDFOptions 
-      Height          =   5415
+      Height          =   6015
       Left            =   0
       TabIndex        =   0
       Top             =   0
       Width           =   6420
       _ExtentX        =   11324
-      _ExtentY        =   9551
+      _ExtentY        =   10610
       _Version        =   393216
       BeginProperty Tabs {1EFB6598-857C-11D1-B16A-00C0F0283628} 
          NumTabs         =   1
@@ -1287,6 +1265,60 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub optEncAes128_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UpdateSecurityFields
+50020  cmbPDFCompat.ListIndex = 3
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "optEncAes128_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub optEncHigh_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UpdateSecurityFields
+50020  cmbPDFCompat.ListIndex = 2
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "optEncHigh_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub optEncLow_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  UpdateSecurityFields
+50020  cmbPDFCompat.ListIndex = 1
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "optEncLow_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub txtColorCompressionFactor_KeyPress(KeyAscii As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1313,7 +1345,7 @@ On Error GoTo ErrPtnr_OnError
 50030
 50040  tbstrPDFOptions.Left = 0
 50050  tbstrPDFOptions.Top = 0
-50060  tbstrPDFOptions.Height = dmFraPDFSecurity.Height + 420
+50060  tbstrPDFOptions.Height = dmFraPDFSigning.Height + 420
 50070  UserControl.Height = tbstrPDFOptions.Height + 500
 50080
 50090  With tbstrPDFOptions.Tabs
@@ -1427,68 +1459,41 @@ On Error GoTo ErrPtnr_OnError
 51170  chkPDFPreserveTransfer.value = 1
 51180  chkPDFPreserveHalftone.value = 0
 51190
-51200  With cmbPDFEncryptor
-51210   .Clear
-51220   .AddItem "Ghostscript (>= 8.14)"
-51230   .ItemData(.NewIndex) = 0
-51240   .AddItem "PDFEnc"
-51250   .ItemData(.NewIndex) = 1
-51260
-51270   SecurityIsPossible = True
-51280
-51290   If FileExists(GetPDFCreatorApplicationPath & "pdfenc.exe") = False Then
-51300    .RemoveItem 1
-51310    .ListIndex = 0
-51320    Options.PDFEncryptor = .ItemData(.ListIndex)
-51330   End If
-51340   If GhostScriptSecurity = False Then
-51350    .RemoveItem 0
-51360   End If
-51370   If .ListCount = 0 Then
-51380     chkUseSecurity.value = 0
-51390     chkUseSecurity.Enabled = False
-51400     SecurityIsPossible = False
-51410    Else
-51420     For i = 0 To .ListCount - 1
-51430      If .ItemData(i) = Options.PDFEncryptor Then
-51440       .ListIndex = i
-51450       Exit For
-51460      End If
-51470     Next i
-51480     If .ListIndex = -1 Then
-51490      .ListIndex = 0
-51500      Options.PDFEncryptor = .ItemData(.ListIndex)
-51510     End If
-51520   End If
-51530  End With
-51540
-51550  If Options.PDFHighEncryption <> 0 Then
-51560    optEncHigh.value = True
-51570   Else
-51580    optEncLow.value = True
-51590  End If
-51600
-51610   With tbstrPDFOptions
-51620   .Top = 50
-51630   .Left = 0
-51640  End With
-51650
-51660  dmFraPDFGrey.Left = dmFraPDFColor.Left
-51670  dmFraPDFGrey.Top = dmFraPDFColor.Top
-51680  dmFraPDFMono.Left = dmFraPDFColor.Left
-51690  dmFraPDFMono.Top = dmFraPDFColor.Top
-51700  tbstrPDFImageCompression.Tabs(1).Selected = True
-51710  dmFraPDFGrey.Visible = False
-51720  dmFraPDFMono.Visible = False
-51730
-51740  UpdateSecurityFields
-51750
-51760  tbstrPDFOptions.ZOrder 1
-51770  tbstrPDFOptions_Click
-51780
-51790  SetFrames Options.OptionsDesign
-51800
-51810  SetFont
+51200   If GhostScriptSecurity = False Then
+51210    chkUseSecurity.value = 0
+51220    chkUseSecurity.Enabled = False
+51230    SecurityIsPossible = False
+51240   End If
+51250
+51260  If Options.PDFAes128Encryption <> 0 Then
+51270    optEncAes128.value = True
+51280   ElseIf Options.PDFHighEncryption <> 0 Then
+51290    optEncHigh.value = True
+51300   Else
+51310    optEncLow.value = True
+51320  End If
+51330
+51340  With tbstrPDFOptions
+51350   .Top = 50
+51360   .Left = 0
+51370  End With
+51380
+51390  dmFraPDFGrey.Left = dmFraPDFColor.Left
+51400  dmFraPDFGrey.Top = dmFraPDFColor.Top
+51410  dmFraPDFMono.Left = dmFraPDFColor.Left
+51420  dmFraPDFMono.Top = dmFraPDFColor.Top
+51430  tbstrPDFImageCompression.Tabs(1).Selected = True
+51440  dmFraPDFGrey.Visible = False
+51450  dmFraPDFMono.Visible = False
+51460
+51470  UpdateSecurityFields
+51480
+51490  tbstrPDFOptions.ZOrder 1
+51500  tbstrPDFOptions_Click
+51510
+51520  SetFrames Options.OptionsDesign
+51530
+51540  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1680,40 +1685,39 @@ On Error GoTo ErrPtnr_OnError
 50990   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
 51000
 51010   dmFraPDFSigning.Caption = .OptionsPDFSigningCaption
-51020   dmFraPDFEncryptor.Caption = .OptionsPDFEncryptor
-51030   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
-51040   chkUseSecurity.Caption = .OptionsPDFUseSecurity
-51050   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
-51060   optEncHigh.Caption = .OptionsPDFEncryptionHigh
-51070   optEncLow.Caption = .OptionsPDFEncryptionLow
-51080   dmFraSecurityPass.Caption = .OptionsPDFPasswords
-51090   chkUserPass.Caption = .OptionsPDFUserPass
-51100   chkOwnerPass.Caption = .OptionsPDFOwnerPass
-51110   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
-51120   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
-51130   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
-51140   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
-51150   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
-51160   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
-51170   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
-51180   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
-51190   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
-51200   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
-51210
-51220   chkSignPDF.Caption = .OptionsPDFSigningSignPdfFile
-51230   lblPFXFile.Caption = .OptionsPDFSigningCertificateFile
-51240   lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
-51250   lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
-51260   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
-51270   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
-51280   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
-51290   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
-51300   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
-51310   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
-51320   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
-51330   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
-51340   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
-51350  End With
+51020   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
+51030   chkUseSecurity.Caption = .OptionsPDFUseSecurity
+51040   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
+51050   optEncHigh.Caption = .OptionsPDFEncryptionHigh
+51060   optEncLow.Caption = .OptionsPDFEncryptionLow
+51070   dmFraSecurityPass.Caption = .OptionsPDFPasswords
+51080   chkUserPass.Caption = .OptionsPDFUserPass
+51090   chkOwnerPass.Caption = .OptionsPDFOwnerPass
+51100   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
+51110   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
+51120   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
+51130   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
+51140   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
+51150   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
+51160   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
+51170   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
+51180   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
+51190   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
+51200
+51210   chkSignPDF.Caption = .OptionsPDFSigningSignPdfFile
+51220   lblPFXFile.Caption = .OptionsPDFSigningCertificateFile
+51230   lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
+51240   lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
+51250   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
+51260   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
+51270   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
+51280   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
+51290   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
+51300   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
+51310   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
+51320   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
+51330   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
+51340  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1760,44 +1764,61 @@ On Error GoTo ErrPtnr_OnError
 50280   chkAllowModifyAnnotations.value = .PDFDisallowModifyAnnotations
 50290   chkAllowModifyContents.value = .PDFDisallowModifyContents
 50300   chkAllowPrinting.value = .PDFDisallowPrinting
-50310   cmbPDFEncryptor.ItemData(cmbPDFEncryptor.ListIndex) = .PDFEncryptor
-50320   chkPDFEmbedAll.value = .PDFFontsEmbedAll
-50330   chkPDFSubSetFonts.value = .PDFFontsSubSetFonts
-50340   chkPDFSubSetFonts_Click
-50350   txtPDFSubSetPerc.Text = .PDFFontsSubSetFontsPercent
-50360   chkPDFASCII85.value = .PDFGeneralASCII85
-50370   cmbPDFRotate.ListIndex = .PDFGeneralAutorotate
-50380   cmbPDFCompat.ListIndex = .PDFGeneralCompatibility
-50390   cmbPDFDefaultSettings.ListIndex = .PDFGeneralDefault
-50400   cmbPDFOverprint.ListIndex = .PDFGeneralOverprint
-50410   txtPDFRes.Text = .PDFGeneralResolution
-50420 '  optEncHigh.value = .PDFHighEncryption
-50430 '  optEncLow.value = .PDFLowEncryption
-50440   chkPDFOptimize.value = .PDFOptimize
-50450   chkOwnerPass.value = .PDFOwnerPass
-50460   chkUserPass.value = .PDFUserPass
-50470   chkUseSecurity.value = .PDFUseSecurity
-50480
-50490   chkSignPDF.value = .PDFSigningSignPDF
-50500   txtPFXfile.Text = .PDFSigningPFXFile
-50510   txtSignatureReason.Text = .PDFSigningSignatureReason
-50520   txtSignatureContact.Text = .PDFSigningSignatureContact
-50530   txtSignatureLocation.Text = .PDFSigningSignatureLocation
-50540
-50550   chkSignatureVisible.value = .PDFSigningSignatureVisible
-50560   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
-50570   txtLeftX.Text = .PDFSigningSignatureLeftX
-50580   txtLeftY.Text = .PDFSigningSignatureLeftY
-50590   txtRightX.Text = .PDFSigningSignatureRightX
-50600   txtRightY.Text = .PDFSigningSignatureRightY
-50610   chkMultiSignature.value = .PDFSigningMultiSignature
-50620  End With
-50630  If chkSignPDF.value = 1 Then
-50640    EnableControls True
-50650   Else
-50660    EnableControls False
-50670  End If
-50680  UpdateSecurityFields
+50310   chkPDFEmbedAll.value = .PDFFontsEmbedAll
+50320   chkPDFSubSetFonts.value = .PDFFontsSubSetFonts
+50330   chkPDFSubSetFonts_Click
+50340   txtPDFSubSetPerc.Text = .PDFFontsSubSetFontsPercent
+50350   chkPDFASCII85.value = .PDFGeneralASCII85
+50360   cmbPDFRotate.ListIndex = .PDFGeneralAutorotate
+50370   cmbPDFCompat.ListIndex = .PDFGeneralCompatibility
+50380   cmbPDFDefaultSettings.ListIndex = .PDFGeneralDefault
+50390   cmbPDFOverprint.ListIndex = .PDFGeneralOverprint
+50400   txtPDFRes.Text = .PDFGeneralResolution
+50410
+50420   chkPDFOptimize.value = .PDFOptimize
+50430   chkOwnerPass.value = .PDFOwnerPass
+50440   chkUserPass.value = .PDFUserPass
+50450   chkUseSecurity.value = .PDFUseSecurity
+50460
+50470   chkSignPDF.value = .PDFSigningSignPDF
+50480   txtPFXfile.Text = .PDFSigningPFXFile
+50490   txtSignatureReason.Text = .PDFSigningSignatureReason
+50500   txtSignatureContact.Text = .PDFSigningSignatureContact
+50510   txtSignatureLocation.Text = .PDFSigningSignatureLocation
+50520
+50530   chkSignatureVisible.value = .PDFSigningSignatureVisible
+50540   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
+50550   txtLeftX.Text = .PDFSigningSignatureLeftX
+50560   txtLeftY.Text = .PDFSigningSignatureLeftY
+50570   txtRightX.Text = .PDFSigningSignatureRightX
+50580   txtRightY.Text = .PDFSigningSignatureRightY
+50590   chkMultiSignature.value = .PDFSigningMultiSignature
+50600
+50610   If pdfforgeDllInstalled Then
+50620    optEncAes128.Enabled = True
+50630    If .PDFAes128Encryption = 1 Then
+50640     optEncAes128.value = True
+50650    ElseIf .PDFHighEncryption = 1 Then
+50660     optEncHigh.value = True
+50670    Else
+50680     optEncLow.value = True
+50690    End If
+50700   Else
+50710    optEncAes128.Enabled = False
+50720    If .PDFAes128Encryption = 1 Or .PDFHighEncryption = 1 Then
+50730     optEncHigh.value = True
+50740    Else
+50750     optEncLow.value = True
+50760    End If
+50770   End If
+50780  End With
+50790
+50800  If chkSignPDF.value = 1 Then
+50810    EnableControls True
+50820   Else
+50830    EnableControls False
+50840  End If
+50850  UpdateSecurityFields
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1874,63 +1895,60 @@ On Error GoTo ErrPtnr_OnError
 50580   .PDFDisallowModifyAnnotations = Abs(chkAllowModifyAnnotations.value)
 50590   .PDFDisallowModifyContents = Abs(chkAllowModifyContents.value)
 50600   .PDFDisallowPrinting = Abs(chkAllowPrinting.value)
-50610   If cmbPDFEncryptor.ListIndex < 0 Then
-50620     .PDFEncryptor = 0
-50630    Else
-50640     .PDFEncryptor = cmbPDFEncryptor.ItemData(cmbPDFEncryptor.ListIndex)
+50610   .PDFFontsEmbedAll = Abs(chkPDFEmbedAll.value)
+50620   .PDFFontsSubSetFonts = Abs(chkPDFSubSetFonts.value)
+50630   If LenB(txtPDFSubSetPerc.Text) > 0 Then
+50640    .PDFFontsSubSetFontsPercent = txtPDFSubSetPerc.Text
 50650   End If
-50660   .PDFFontsEmbedAll = Abs(chkPDFEmbedAll.value)
-50670   .PDFFontsSubSetFonts = Abs(chkPDFSubSetFonts.value)
-50680   If LenB(txtPDFSubSetPerc.Text) > 0 Then
-50690    .PDFFontsSubSetFontsPercent = txtPDFSubSetPerc.Text
-50700   End If
-50710   .PDFGeneralASCII85 = Abs(chkPDFASCII85.value)
-50720   If LenB(CStr(cmbPDFRotate.ListIndex)) > 0 Then
-50730    .PDFGeneralAutorotate = cmbPDFRotate.ListIndex
-50740   End If
-50750   If LenB(CStr(cmbPDFCompat.ListIndex)) > 0 Then
-50760    .PDFGeneralCompatibility = cmbPDFCompat.ListIndex
-50770   End If
-50780   If LenB(CStr(cmbPDFDefaultSettings.ListIndex)) > 0 Then
-50790    .PDFGeneralDefault = cmbPDFDefaultSettings.ListIndex
-50800   End If
-50810   If LenB(CStr(cmbPDFOverprint.ListIndex)) > 0 Then
-50820    .PDFGeneralOverprint = cmbPDFOverprint.ListIndex
-50830   End If
-50840   If LenB(txtPDFRes.Text) > 0 Then
-50850    .PDFGeneralResolution = txtPDFRes.Text
-50860   End If
-50870   .PDFHighEncryption = Abs(optEncHigh.value)
-50880   .PDFLowEncryption = Abs(optEncLow.value)
-50890   .PDFOptimize = Abs(chkPDFOptimize.value)
-50900   .PDFOwnerPass = Abs(chkOwnerPass.value)
-50910   .PDFUserPass = Abs(chkUserPass.value)
-50920   .PDFUseSecurity = Abs(chkUseSecurity.value)
-50930
-50940   .PDFSigningSignPDF = Abs(chkSignPDF.value)
-50950   .PDFSigningPFXFile = txtPFXfile.Text
-50960   .PDFSigningSignatureReason = txtSignatureReason.Text
-50970   .PDFSigningSignatureContact = txtSignatureContact.Text
-50980   .PDFSigningSignatureLocation = txtSignatureLocation.Text
-50990
-51000   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
-51010   If LenB(txtSignatureOnPage.Text) > 0 Then
-51020    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
+50660   .PDFGeneralASCII85 = Abs(chkPDFASCII85.value)
+50670   If LenB(CStr(cmbPDFRotate.ListIndex)) > 0 Then
+50680    .PDFGeneralAutorotate = cmbPDFRotate.ListIndex
+50690   End If
+50700   If LenB(CStr(cmbPDFCompat.ListIndex)) > 0 Then
+50710    .PDFGeneralCompatibility = cmbPDFCompat.ListIndex
+50720   End If
+50730   If LenB(CStr(cmbPDFDefaultSettings.ListIndex)) > 0 Then
+50740    .PDFGeneralDefault = cmbPDFDefaultSettings.ListIndex
+50750   End If
+50760   If LenB(CStr(cmbPDFOverprint.ListIndex)) > 0 Then
+50770    .PDFGeneralOverprint = cmbPDFOverprint.ListIndex
+50780   End If
+50790   If LenB(txtPDFRes.Text) > 0 Then
+50800    .PDFGeneralResolution = txtPDFRes.Text
+50810   End If
+50820   .PDFHighEncryption = Abs(optEncHigh.value)
+50830   .PDFLowEncryption = Abs(optEncLow.value)
+50840   .PDFAes128Encryption = Abs(optEncAes128.value)
+50850
+50860   .PDFOptimize = Abs(chkPDFOptimize.value)
+50870   .PDFOwnerPass = Abs(chkOwnerPass.value)
+50880   .PDFUserPass = Abs(chkUserPass.value)
+50890   .PDFUseSecurity = Abs(chkUseSecurity.value)
+50900
+50910   .PDFSigningSignPDF = Abs(chkSignPDF.value)
+50920   .PDFSigningPFXFile = txtPFXfile.Text
+50930   .PDFSigningSignatureReason = txtSignatureReason.Text
+50940   .PDFSigningSignatureContact = txtSignatureContact.Text
+50950   .PDFSigningSignatureLocation = txtSignatureLocation.Text
+50960
+50970   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
+50980   If LenB(txtSignatureOnPage.Text) > 0 Then
+50990    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
+51000   End If
+51010   If LenB(txtLeftX.Text) > 0 Then
+51020    .PDFSigningSignatureLeftX = txtLeftX.Text
 51030   End If
-51040   If LenB(txtLeftX.Text) > 0 Then
-51050    .PDFSigningSignatureLeftX = txtLeftX.Text
+51040   If LenB(txtLeftY.Text) > 0 Then
+51050    .PDFSigningSignatureLeftY = txtLeftY.Text
 51060   End If
-51070   If LenB(txtLeftY.Text) > 0 Then
-51080    .PDFSigningSignatureLeftY = txtLeftY.Text
+51070   If LenB(txtRightX.Text) > 0 Then
+51080    .PDFSigningSignatureRightX = txtRightX.Text
 51090   End If
-51100   If LenB(txtRightX.Text) > 0 Then
-51110    .PDFSigningSignatureRightX = txtRightX.Text
+51100   If LenB(txtRightY.Text) > 0 Then
+51110    .PDFSigningSignatureRightY = txtRightY.Text
 51120   End If
-51130   If LenB(txtRightY.Text) > 0 Then
-51140    .PDFSigningSignatureRightY = txtRightY.Text
-51150   End If
-51160   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
-51170  End With
+51130   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
+51140  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2031,26 +2049,26 @@ On Error GoTo ErrPtnr_OnError
 50380    End If
 50390   Case 5:
 50400    dmFraPDFSecurity.Visible = True
-50410    dmFraPDFEncryptor.Visible = True
-50420    dmFraPDFEncLevel.Visible = True
-50430    dmFraSecurityPass.Visible = True
-50440    dmFraPDFPermissions.Visible = True
-50450    dmFraPDFHighPermissions.Visible = True
-50460    If ControlsEnabled Then
-50470     dmFraPDFSecurity.Enabled = True
-50480     dmFraPDFEncryptor.Enabled = True
-50490     dmFraPDFEncLevel.Enabled = True
-50500     dmFraSecurityPass.Enabled = True
-50510     dmFraPDFPermissions.Enabled = True
-50520     dmFraPDFHighPermissions.Enabled = True
-50530    End If
-50540    UpdateSecurityFields
-50550    If cmbPDFCompat.ListIndex < 2 Then
-50560      optEncLow.Enabled = True
-50570      optEncHigh.Enabled = False
-50580     Else
-50590      optEncLow.Enabled = False
-50600      optEncHigh.Enabled = True
+50410    dmFraPDFEncLevel.Visible = True
+50420    dmFraSecurityPass.Visible = True
+50430    dmFraPDFPermissions.Visible = True
+50440    dmFraPDFHighPermissions.Visible = True
+50450    If ControlsEnabled Then
+50460     dmFraPDFSecurity.Enabled = True
+50470     dmFraPDFEncLevel.Enabled = True
+50480     dmFraSecurityPass.Enabled = True
+50490     dmFraPDFPermissions.Enabled = True
+50500     dmFraPDFHighPermissions.Enabled = True
+50510    End If
+50520    UpdateSecurityFields
+50530    If cmbPDFCompat.ListIndex < 2 Then
+50540      optEncLow.Enabled = True
+50550      optEncHigh.Enabled = False
+50560      optEncAes128.Enabled = False
+50570     Else
+50580      optEncLow.Enabled = False
+50590      optEncHigh.Enabled = True
+50600      optEncAes128.Enabled = True
 50610    End If
 50620    UpdateSecurityFields
 50630    If SecurityIsPossible = False Then
@@ -2059,7 +2077,7 @@ On Error GoTo ErrPtnr_OnError
 50660   Case 6:
 50670    dmFraPDFSigning.Visible = True
 50680    dmFraPDFSigning.Enabled = True
-50690    If PDFSigningIsPossible = False Then
+50690    If DotNet20Installed = False Or pdfforgeDllInstalled = False Then
 50700     chkSignPDF.Enabled = False
 50710     EnableControls False
 50720     MsgBox LanguageStrings.MessagesMsg39
@@ -2441,68 +2459,65 @@ Private Sub UpdateSecurityFields()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If chkUseSecurity.value = False Or ControlsEnabled = False Then
-50020    dmFraPDFEncryptor.Enabled = False
-50030    cmbPDFEncryptor.Enabled = False
-50040
-50050    dmFraPDFEncLevel.Enabled = False
-50060    optEncHigh.Enabled = False
-50070    optEncLow.Enabled = False
-50080
-50090    dmFraSecurityPass.Enabled = False
-50100    chkUserPass.Enabled = False
-50110    chkOwnerPass.Enabled = False
-50120
-50130    dmFraPDFPermissions.Enabled = False
-50140    chkAllowPrinting.Enabled = False
-50150    chkAllowCopy.Enabled = False
-50160    chkAllowModifyAnnotations.Enabled = False
-50170    chkAllowModifyContents.Enabled = False
-50180
-50190    dmFraPDFHighPermissions.Enabled = False
-50200    chkAllowDegradedPrinting.Enabled = False
-50210    chkAllowFillIn.Enabled = False
-50220    chkAllowScreenReaders.Enabled = False
-50230    chkAllowAssembly.Enabled = False
-50240   Else
-50250    dmFraPDFEncryptor.Enabled = True
-50260    cmbPDFEncryptor.Enabled = True
-50270    dmFraPDFEncLevel.Enabled = True
+50020    dmFraPDFEncLevel.Enabled = False
+50030    optEncAes128.Enabled = False
+50040    optEncHigh.Enabled = False
+50050    optEncLow.Enabled = False
+50060
+50070    dmFraSecurityPass.Enabled = False
+50080    chkUserPass.Enabled = False
+50090    chkOwnerPass.Enabled = False
+50100
+50110    dmFraPDFPermissions.Enabled = False
+50120    chkAllowPrinting.Enabled = False
+50130    chkAllowCopy.Enabled = False
+50140    chkAllowModifyAnnotations.Enabled = False
+50150    chkAllowModifyContents.Enabled = False
+50160
+50170    dmFraPDFHighPermissions.Enabled = False
+50180    chkAllowDegradedPrinting.Enabled = False
+50190    chkAllowFillIn.Enabled = False
+50200    chkAllowScreenReaders.Enabled = False
+50210    chkAllowAssembly.Enabled = False
+50220   Else
+50230    dmFraPDFEncLevel.Enabled = True
+50240
+50250    dmFraSecurityPass.Enabled = True
+50260    chkUserPass.Enabled = True
+50270    chkOwnerPass.Enabled = True
 50280
-50290    dmFraSecurityPass.Enabled = True
-50300    chkUserPass.Enabled = True
-50310    chkOwnerPass.Enabled = True
-50320
-50330    dmFraPDFPermissions.Enabled = True
-50340    chkAllowPrinting.Enabled = True
-50350    chkAllowCopy.Enabled = True
-50360    chkAllowModifyAnnotations.Enabled = True
-50370    chkAllowModifyContents.Enabled = True
-50380
-50390    If cmbPDFCompat.ListIndex < 2 Then
-50400      optEncLow.Enabled = True
-50410      optEncHigh.Enabled = False
-50420      optEncLow.value = True
+50290    dmFraPDFPermissions.Enabled = True
+50300    chkAllowPrinting.Enabled = True
+50310    chkAllowCopy.Enabled = True
+50320    chkAllowModifyAnnotations.Enabled = True
+50330    chkAllowModifyContents.Enabled = True
+50340    optEncLow.Enabled = True
+50350    optEncHigh.Enabled = True
+50360    If pdfforgeDllInstalled Then
+50370      optEncAes128.Enabled = True
+50380     Else
+50390      optEncAes128.Enabled = False
+50400    End If
+50410
+50420    If optEncLow.value = True Then
 50430      chkAllowDegradedPrinting.Enabled = False
 50440      chkAllowFillIn.Enabled = False
 50450      chkAllowScreenReaders.Enabled = False
 50460      chkAllowAssembly.Enabled = False
 50470      dmFraPDFHighPermissions.Enabled = False
 50480     Else
-50490      optEncLow.Enabled = False
-50500      optEncHigh.Enabled = True
-50510      optEncHigh.value = True
-50520      chkAllowDegradedPrinting.Enabled = True
-50530      chkAllowFillIn.Enabled = True
-50540      chkAllowScreenReaders.Enabled = True
-50550      chkAllowAssembly.Enabled = True
-50560      dmFraPDFHighPermissions.Enabled = True
-50570    End If
-50580  End If
-50590
-50600  If chkOwnerPass.value = 0 And chkUserPass.value = 0 Then
-50610   chkOwnerPass.value = 1
-50620   Options.PDFOwnerPass = 1
-50630  End If
+50490      chkAllowDegradedPrinting.Enabled = True
+50500      chkAllowFillIn.Enabled = True
+50510      chkAllowScreenReaders.Enabled = True
+50520      chkAllowAssembly.Enabled = True
+50530      dmFraPDFHighPermissions.Enabled = True
+50540    End If
+50550  End If
+50560
+50570  If chkOwnerPass.value = 0 And chkUserPass.value = 0 Then
+50580   chkOwnerPass.value = 1
+50590   Options.PDFOwnerPass = 1
+50600  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2803,10 +2818,8 @@ Private Sub cmbPDFCompat_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If cmbPDFCompat.ListIndex < 2 Then
-50020    optEncLow.value = True
-50030   Else
-50040    optEncHigh.value = True
-50050  End If
+50020   optEncLow.value = True
+50030  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
