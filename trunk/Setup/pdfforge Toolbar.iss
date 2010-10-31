@@ -1,6 +1,6 @@
-; PDFCreator Browser Add OnInstallation
+; pdfforge Toolbar Installation
 ; Setup created with Inno Setup QuickStart Pack 5.3.9 (with ISPP) and ISTool 5.3.0.1
-; Installation from Frank Heindörfer
+; Installation from pdfforge
 
 ;#define Test
 
@@ -23,18 +23,19 @@
 #define GetFileVersionVBExe(str S)     Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + Local[3] + Local[4]
 #define GetFileVersionVBExeLine(str S) Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])-1), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])-1), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + '_' + Local[3] + '_'  + Local[4]
 
+#define Company              "pdfforge GbR"
 #define Homepage             "http://www.pdfforge.org"
 #define SourceforgeHomepage  "http://www.sf.net/projects/pdfcreator"
-#define Appname              "PDFCreator Browser Add On"
+#define Appname              "pdfforge Toolbar"
 #define AppExename           "pdfforgeToolbar-stub-1.exe"
 
-;#define BrowserAddOn         "..\BrowserAddOn\pdfforgeBrowserAddOn128.exe"
-#define BrowserAddOn         "..\BrowserAddOn\" + AppExename
+;#define Toolbar         "..\Toolbar\pdfforgeToolbar128.exe"
+#define Toolbar         "..\Toolbar\" + AppExename
 
-#define AppVersion           GetFileVersionVBExe(BrowserAddOn)
+#define AppVersion           GetFileVersionVBExe(Toolbar)
 
-#define PDFCreatorVersion    GetFileVersionVBExe(BrowserAddOn)
-#define SetupAppVersion      GetFileVersionVBExeLine(BrowserAddOn)
+#define PDFCreatorVersion    GetFileVersionVBExe(Toolbar)
+#define SetupAppVersion      GetFileVersionVBExeLine(Toolbar)
 
 #define AppID                "{0001B4FD-9EA3-4D90-A79E-FD14BA3AB01E}"
 #define AppIDStr             "{" + AppID
@@ -45,17 +46,17 @@
 
 #define ChannelID 302398
 
-#include "BrowserAddOnForm.isd"
+#include "ToolbarForm.isd"
 
 [Setup]
 AllowNoIcons=true
 AlwaysRestart=false
 AppContact={#Homepage}
-AppCopyright=© Frank Heindörfer, Philip Chinery
+AppCopyright=© {#Company}
 AppID={#AppIDStr}
 AppName={#AppName}
 AppVerName={#AppName} {#AppVersionStr}
-AppPublisher=Philip Chinery, Frank Heindörfer
+AppPublisher={#Company}
 AppPublisherURL={#Homepage}
 AppSupportURL={#Homepage}
 AppUpdatesURL={#Homepage}
@@ -79,21 +80,21 @@ SolidCompression=true
 UsePreviousAppDir=true
 
 VersionInfoVersion={#AppVersion}
-VersionInfoCompany=Frank Heindörfer, Philip Chinery
-VersionInfoDescription=PDFCreator Browser Add On
+VersionInfoCompany={#Company}
+VersionInfoDescription=pdfforge Toolbar
 VersionInfoProductName={#AppName}
 VersionInfoProductVersion={#AppVersion}
 VersionInfoTextVersion={#AppVersion}
 
-WizardImageFile=..\Pictures\Setup\PDFCreatorBrowserAddOnBig.bmp
+WizardImageFile=..\Pictures\Setup\pdfforgeToolbarBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
 
 MinVersion=0,5.0.2195
 
 [Files]
-; BrowserAddOn
-Source: ..\Pictures\BrowserAddOn\BrowserAddOn.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
-Source: {#BrowserAddOn}; DestDir: {tmp}; DestName: {#AppExename}; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Tasks: 
+; Toolbar
+Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
+Source: {#Toolbar}; DestDir: {tmp}; DestName: {#AppExename}; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 
 [Messages]
 ;Remove the 'StatusRunProgram' message
@@ -124,7 +125,7 @@ end;
 
 function DontUseYahooSearch:Boolean;
 begin
- Result:=Not chkUseYahooAsDefault.Checked;
+ Result:=Not chkUseYahoo.Checked;
 end;
 
 function AnalyzeCommandlineParameters:Boolean;
@@ -140,7 +141,7 @@ begin
   if (paramstr(i)='-?') or (paramstr(i)='/?') then begin
    Msgbox('Additional setup commandline parameters: '#13#10#13#10 +
     '/? - this help screen'#13#10 +
-    '/DontUseYahooSearch - Don''t use Yahoo search if installing Browser Add On'
+    '/DontUseYahooSearch - Don''t use Yahoo search if installing pdfforge Toolbar'
     ,mbInformation,MB_OK);
    exit;
   end;
@@ -160,11 +161,14 @@ begin
  end;
  msg:=ExpandConstant('{cm:AlreadyInstalled}');
 
- If ProgramIsInstalled then begin
+ If ToolbarIsInstalled then begin
   msgbox(msg,mbInformation, MB_OK);
   Result:=false;
   exit
  end;
+
+ SetupApplication := 'Toolbar';
+
  Result:=true;
 end;
 
@@ -172,16 +176,16 @@ function NextButtonClick(CurPageID: Integer): Boolean;
 begin
  Result:=False;
  if CurPageID=wpReady then begin
-  LogFile:=ExpandConstant('{tmp}')+'\PDFCreator-Browser Add On-SetupLog.txt';
+  LogFile:=ExpandConstant('{tmp}')+'\pdfforge Toolbar - SetupLog.txt';
  end;
  Result:=True;
 end;
 
 procedure InitializeWizard();
 begin
- BrowserAddOnForm_CreatePage(wpSelectDir);
+ ToolbarPage := ToolbarForm_CreatePage(wpSelectDir);
  if (cmdlDontUseYahooSearch) then
-  chkUseYahooAsDefault.Checked := false;
+  chkUseYahoo.Checked := false;
 end;
 
 function GetPDFCreatorToolbar1InstallLocation : String;
