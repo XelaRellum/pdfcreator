@@ -3549,7 +3549,11 @@ begin
   S := S + MemoGroupInfo;
   if length(S)>0 then S := S + NewLine + NewLine;
   S := S + MemoTasksInfo;
-  Result := S;
+  if InstallToolbar then begin
+   S := S + NewLine + NewLine + ExpandConstant('{cm:ToolbarFormDescription}');
+   if Not DontUseYahooSearch then S := S + NewLine + Space + ExpandConstant('{cm:ToolbarUseYahoo}');
+  end;
+  Result := S + NewLine;
 end;
 
 function GetPDFCreatorToolbar1InstallLocation : String;
@@ -3772,8 +3776,7 @@ begin
 
      If InstallOnThisVersion('0,6.0.6000','0,0')=irInstall then begin // Vista and above
       SaveStringToFile(LogFile, #13#10+'Vista spooler rights adjusting:' + AdjustSpoolerPrivileges + #13#10#13#10, True);
-     
-	 end
+	   end
 
      s:=LowerCase(WizardSelectedTasks(false));
      if Pos('winexplorer',s)>0 then
