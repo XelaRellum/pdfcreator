@@ -83,7 +83,6 @@ begin
   Top := ScaleY(yoffs1 + 30);
   Width := ScaleX(100);
   Height := ScaleY(15);
-  Font.Style := [fsBold];
   Caption := ExpandConstant('{cm:ToolbarFeature1}');
  end;
  lblToolbarFeature2 := TLabel.Create(Page);
@@ -94,6 +93,7 @@ begin
   Top := ScaleY(yoffs1 + 50);
   Width := ScaleX(100);
   Height := ScaleY(15);
+  Font.Style := [fsBold];
   Caption := ' • ' + ExpandConstant('{cm:ToolbarFeature2}');
  end;
  lblToolbarFeature3 := TLabel.Create(Page);
@@ -104,6 +104,7 @@ begin
   Top := ScaleY(yoffs1 + 65);
   Width := ScaleX(100);
   Height := ScaleY(15);
+  Font.Style := [fsBold];
   Caption := ' • ' + ExpandConstant('{cm:ToolbarFeature3}');
  end;
  lblToolbarFeature4 := TLabel.Create(Page);
@@ -116,19 +117,21 @@ begin
   Height := ScaleY(15);
   Caption := ExpandConstant('{cm:ToolbarFeature4}');
  end;
+
  chkInstallToolbar := TCheckBox.Create(Page);
  with chkInstallToolbar do
  begin
   Parent := Page.Surface;
   Caption := ExpandConstant('{cm:ToolbarInstallToolbar}');
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 105);
+  Top := ScaleY(yoffs1 + 100);
   Width := ScaleX(418);
-  Height := ScaleY(17);
+  Height := ScaleY(35);
   Checked := True;
   State := cbChecked;
   Onclick := @onclick_chkInstallToolbar;
  end;
+ SetWindowLong(chkInstallToolbar.Handle, -16, GetWindowLong2(chkInstallToolbar.Handle, -16) or BS_MULTILINE);
 
  chkUseYahoo := TCheckBox.Create(Page);
  with chkUseYahoo do
@@ -136,11 +139,11 @@ begin
   Parent := Page.Surface;
   Caption := ExpandConstant('{cm:ToolbarUseYahoo}');
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 120);
+  Top := ScaleY(yoffs1 + 130);
   Width := ScaleX(418);
   Checked := True;
   State := cbChecked;
-  Height := 40;
+  Height := ScaleY(35);
  end;
  SetWindowLong(chkUseYahoo.Handle, -16, GetWindowLong2(chkUseYahoo.Handle, -16) or BS_MULTILINE);
 
@@ -150,7 +153,7 @@ begin
   Parent := Page.Surface;
   AutoSize := False;
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 160);
+  Top := ScaleY(yoffs1 + 164);
   Width := ScaleX(418);
   Height := ScaleY(55);
   Font.Size := 7;
@@ -158,23 +161,12 @@ begin
   Caption := ExpandConstant('{cm:ToolbarNote}');
  end;
  
- lblToolbarPrivacyPolicy := TLabel.Create(Page);
- with lblToolbarPrivacyPolicy do
- begin
-  Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 192);
-  Width := ScaleX(397);
-  Height := ScaleY(39);
-  AutoSize := False;
-  WordWrap := True;
-  Caption := ExpandConstant('{cm:ToolbarPrivacyPolicy}');
- end;
  lblTermsOfUseHyperlink := TLabel.Create(Page);
  with lblTermsOfUseHyperlink do
  begin
   Parent := Page.Surface;
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 220);
+  Top := ScaleY(yoffs1 + 224);
   Width := ScaleX(180);
   Height := ScaleY(13);
   Font.Color := 16711680;
@@ -189,7 +181,7 @@ begin
  begin
   Parent := Page.Surface;
   Alignment := taRightJustify;
-  Top := ScaleY(yoffs1 + 220);
+  Top := ScaleY(yoffs1 + 224);
   Height := ScaleY(13);
   Font.Color := 16711680;
   Font.Style := [fsUnderline];
@@ -205,7 +197,7 @@ begin
  begin
   Parent := Page.Surface;
   Alignment := taCenter;
-  Top := ScaleY(yoffs1 + 220);
+  Top := ScaleY(yoffs1 + 224);
   Height := ScaleY(13);
   Font.Color := 16711680;
   Font.Style := [fsUnderline];
