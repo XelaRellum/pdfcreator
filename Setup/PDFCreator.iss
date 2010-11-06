@@ -1053,7 +1053,8 @@ var progTitel, progHandle: TArrayOfString;
 
     cmdlPrintername, cmdlPPDFile, cmdlREGFile,
     cmdlSaveInfFile, cmdlLoadInfFile: String;
-    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlNoToolbar, cmdlDontUseYahooSearch: Boolean;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall: Boolean;
+    ToolbarInstallSetting: LongInt;
 
     desktopicon, desktopicon_common, desktopicon_user,
     quicklaunchicon, fileassoc, winexplorer: Boolean;
@@ -2877,10 +2878,6 @@ begin
    cmdlSilent:=true;
   if uppercase(paramstr(i))='/FORCEINSTALL' then
    cmdlForceInstall:=true;
-  if uppercase(paramstr(i))='/NOTOOLBAR' then
-   cmdlNoToolbar:=true;
-  if uppercase(paramstr(i))='/DONTUSEYAHOOSEARCH' then
-   cmdlDontUseYahooSearch:=true;
 
   cmdParam:='/LoadInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -3038,6 +3035,16 @@ begin
    'fileassoc':          fileassoc:=true;
    'winexplorer':        winexplorer:=true;
   end
+
+ ToolbarInstallSetting := 2;
+ if IniKeyExists('Setup','Toolbar',cmdlLoadInfFile) then begin
+  tRes:=Trim(GetIniString('Setup', 'Toolbar', '2', cmdlLoadInfFile));
+  if tRes = '0' then
+    ToolbarInstallSetting := 0
+   else
+    if tRes = '1' then
+     ToolbarInstallSetting := 1;
+ end;
 end;
 
 procedure SaveInf;
@@ -3082,6 +3089,13 @@ begin
    tasks:=copy(tasks,2,length(tasks)-1);
   res:=SetIniString('Setup', 'Tasks', tasks, cmdlSaveInfFile)
  end
+
+ if Not InstallToolbar then
+   res:=SetIniString('Setup', 'Toolbar', '0', cmdlSaveInfFile)
+  else if DontUseYahooSearch then
+     res:=SetIniString('Setup', 'Toolbar', '1', cmdlSaveInfFile)
+   else
+     res:=SetIniString('Setup', 'Toolbar', '2', cmdlSaveInfFile);
 end;
 
 function RestartNecessary(): Boolean;
@@ -3431,11 +3445,11 @@ begin
 #IFDEF IncludeToolbar
  ToolbarPage := ToolbarForm_CreatePage(wpSelectDir);
  If InstallOnThisVersion('0,5.0.2195','0, 0')=irInstall then begin // Not Win9xMe, Not WinNT4
-   If (ToolbarIsInstalled=true) or (cmdlNoToolbar=true) then begin
-     SkipToolbarPage := true;
+   If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then begin
+     if ToolbarIsInstalled then SkipToolbarPage := true;
      chkInstallToolbar.Checked := false;
     end else
-     if (cmdlDontUseYahooSearch) then 
+     if (ToolbarInstallSetting = 1) then 
       chkUseYahoo.Checked := false;
   end else begin
    SkipToolbarPage := true;
