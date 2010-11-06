@@ -3036,7 +3036,6 @@ begin
    'winexplorer':        winexplorer:=true;
   end
 
- ToolbarInstallSetting := 2;
  if IniKeyExists('Setup','Toolbar',cmdlLoadInfFile) then begin
   tRes:=Trim(GetIniString('Setup', 'Toolbar', '2', cmdlLoadInfFile));
   if tRes = '0' then
@@ -3280,6 +3279,7 @@ begin
   exit
  end;
 
+ ToolbarInstallSetting := 2;
  If cmdlLoadInfFile<>'' then LoadInf;
 
  CountCurrentPDFCreatorPrinters:=GetPDFCreatorPrinters(CurrentPDFCreatorPrinters);
