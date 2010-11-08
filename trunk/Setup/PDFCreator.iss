@@ -8,7 +8,6 @@
 #define IncludeToolbar
 #define Localization
 
-#define ProgramLicense "GNU"
 #define GhostscriptLicense "GPL"
 
 #ifdef FastCompilation
