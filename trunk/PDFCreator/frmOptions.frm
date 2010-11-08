@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmOptions 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Options"
-   ClientHeight    =   9180
+   ClientHeight    =   8730
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   9255
@@ -12,7 +12,7 @@ Begin VB.Form frmOptions
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   9180
+   ScaleHeight     =   8730
    ScaleWidth      =   9255
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
@@ -20,7 +20,7 @@ Begin VB.Form frmOptions
       Height          =   7815
       Left            =   0
       TabIndex        =   13
-      Top             =   1320
+      Top             =   840
       Width           =   2655
       _ExtentX        =   4683
       _ExtentY        =   13785
@@ -36,7 +36,7 @@ Begin VB.Form frmOptions
       Height          =   1065
       Left            =   2760
       TabIndex        =   3
-      Top             =   1320
+      Top             =   840
       Width           =   6420
       _ExtentX        =   11324
       _ExtentY        =   1879
@@ -79,7 +79,7 @@ Begin VB.Form frmOptions
       Height          =   495
       Left            =   2880
       TabIndex        =   1
-      Top             =   8640
+      Top             =   8160
       Width           =   1815
    End
    Begin VB.CommandButton cmdReset 
@@ -87,7 +87,7 @@ Begin VB.Form frmOptions
       Height          =   495
       Left            =   5160
       TabIndex        =   2
-      Top             =   8640
+      Top             =   8160
       Width           =   1815
    End
    Begin VB.CommandButton cmdSave 
@@ -95,17 +95,17 @@ Begin VB.Form frmOptions
       Height          =   495
       Left            =   7320
       TabIndex        =   0
-      Top             =   8640
+      Top             =   8160
       Width           =   1815
    End
    Begin PDFCreator.dmFrame dmFraProfile 
-      Height          =   1065
+      Height          =   825
       Left            =   0
       TabIndex        =   6
-      Top             =   120
+      Top             =   0
       Width           =   9180
       _ExtentX        =   16193
-      _ExtentY        =   1879
+      _ExtentY        =   1455
       Caption         =   "Profil"
       BarColorFrom    =   723949
       BarColorTo      =   132452
@@ -126,7 +126,7 @@ Begin VB.Form frmOptions
          Style           =   1  'Grafisch
          TabIndex        =   12
          ToolTipText     =   "Rename profile"
-         Top             =   480
+         Top             =   330
          Width           =   375
       End
       Begin VB.CommandButton cmdProfileLoad 
@@ -136,7 +136,7 @@ Begin VB.Form frmOptions
          Style           =   1  'Grafisch
          TabIndex        =   11
          ToolTipText     =   "Load profile"
-         Top             =   480
+         Top             =   330
          Width           =   375
       End
       Begin VB.CommandButton cmdProfileSave 
@@ -146,7 +146,7 @@ Begin VB.Form frmOptions
          Style           =   1  'Grafisch
          TabIndex        =   10
          ToolTipText     =   "Save profile"
-         Top             =   480
+         Top             =   330
          Width           =   375
       End
       Begin VB.CommandButton cmdProfileDelete 
@@ -157,7 +157,7 @@ Begin VB.Form frmOptions
          Style           =   1  'Grafisch
          TabIndex        =   9
          ToolTipText     =   "Delete profile"
-         Top             =   480
+         Top             =   330
          Width           =   375
       End
       Begin VB.CommandButton cmdProfileAdd 
@@ -167,7 +167,7 @@ Begin VB.Form frmOptions
          Style           =   1  'Grafisch
          TabIndex        =   8
          ToolTipText     =   "Add profile"
-         Top             =   480
+         Top             =   330
          Width           =   375
       End
       Begin VB.ComboBox cmbProfile 
@@ -175,13 +175,13 @@ Begin VB.Form frmOptions
          Left            =   120
          Style           =   2  'Dropdown-Liste
          TabIndex        =   7
-         Top             =   480
+         Top             =   360
          Width           =   6375
       End
    End
    Begin MSComctlLib.ImageList imlIeb 
       Left            =   2760
-      Top             =   2640
+      Top             =   2040
       _ExtentX        =   1005
       _ExtentY        =   1005
       BackColor       =   -2147483643
