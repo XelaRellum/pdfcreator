@@ -1094,7 +1094,7 @@ On Error GoTo ErrPtnr_OnError
 50100    OpenDocument Sourceforge
 50110   Case 6:
 50120    Set upd = New clsUpdate
-50130    upd.CheckForUpdates True
+50130    upd.CheckForUpdates True, True
 50140    SetLastUpdateCeck Now
 50150   Case 8:
 50160    frmAbout.Show vbModal, Me 'frmInfo.Show , Me

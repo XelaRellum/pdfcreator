@@ -427,7 +427,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim upd As clsUpdate
 50020  Set upd = New clsUpdate
-50030  upd.CheckForUpdates True
+50030  upd.CheckForUpdates True, True
 50040  SetLastUpdateCeck Now
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
