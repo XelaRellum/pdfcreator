@@ -337,7 +337,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CheckForUpdateAutomatically(ShowMessageNoNewUpdates As Boolean, ShowErrorMessage As Boolean)
+Public Sub CheckForUpdateAutomatically(ShowMessageNoNewUpdates As Boolean, ShowErrorMessage As Boolean, TimeOutInMs As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -372,32 +372,30 @@ On Error GoTo ErrPtnr_OnError
 50290   Exit Sub
 50300  End If
 50310
-50320  If (Options.UpdateInterval) = 1 Then ' Once a day
-50330    diff = DateDiff("d", lucDate, curDate)
+50320  diff = DateDiff("d", lucDate, curDate)
+50330  If (Options.UpdateInterval) = 1 Then ' Once a day
 50340    If diff >= 1 Then
 50350     Set upd = New clsUpdate
-50360     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage
+50360     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage, TimeOutInMs
 50370     SetLastUpdateCeck curDate
 50380    End If
 50390   ElseIf (Options.UpdateInterval) = 2 Then ' Once a week
-50400    diff = DateDiff("d", lucDate, curDate)
-50410    If diff >= 7 Then
-50420     Set upd = New clsUpdate
-50430     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage
-50440     SetLastUpdateCeck curDate
-50450    End If
-50460   Else ' Once a month
-50470    diff = DateDiff("m", lucDate, curDate)
-50480    If diff >= 1 Then
-50490     Set upd = New clsUpdate
-50500     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage
-50510     SetLastUpdateCeck curDate
-50520    End If
-50530  End If
+50400    If diff >= 7 Then
+50410     Set upd = New clsUpdate
+50420     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage, TimeOutInMs
+50430     SetLastUpdateCeck curDate
+50440    End If
+50450   Else ' Once a month
+50460    If diff >= 30 Then
+50470     Set upd = New clsUpdate
+50480     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage, TimeOutInMs
+50490     SetLastUpdateCeck curDate
+50500    End If
+50510  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral2", "CheckForUpdate")
+Select Case ErrPtnr.OnError("modGeneral2", "CheckForUpdateAutomatically")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

@@ -71,7 +71,7 @@ On Error GoTo ErrPtnr_OnError
 50260   Exit Sub
 50270  End If
 50280
-50290  CheckForUpdateAutomatically False, False
+50290  CheckForUpdateAutomatically False, False, 2000
 50300
 50310  If AddWindowsExplorerIntegration = True And RemoveWindowsExplorerIntegration = False Then
 50320   AddExplorerIntegration
