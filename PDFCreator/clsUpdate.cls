@@ -20,35 +20,37 @@ Public Sub CheckForUpdates(Optional ShowMessageNoNewUpdates As Boolean = False, 
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim updStr As String, updStrA() As String, aw As Long, errStr As String
+50010  Dim updStr As String, updStrA() As String, aw As Long, errStr As String, mp As Long
 50020  Set dl = New clsDownload
-50030  updStr = dl.DownloadString(UpdateURL, TimeOutInMs)
-50040 '   updStr = dl.DownloadString("http://localhost:8080/update.txt")
-50050  If Len(updStr) > 0 Then
-50060    If CheckPDFCreatorVersion(updStr) > 0 Then
-50070      updStrA = Split(updStr, ".")
-50080      If updStrA(3) = 0 Then
-50090        updStr = "[" & updStrA(0) & "." & updStrA(1) & "." & updStrA(2) & "]"
-50100       Else
-50110        updStr = "[" & updStrA(0) & "." & updStrA(1) & "." & updStrA(2) & " Beta " & updStrA(3) & "]"
-50120      End If
-50130      aw = MsgBox(Replace$(LanguageStrings.MessagesMsg32, "%1", updStr), vbYesNo + vbQuestion)
-50140      If aw = vbYes Then
-50150       OpenDocument "http://www.pdfforge.org/products/pdfcreator/download"
-50160      End If
-50170     Else
-50180      If ShowMessageNoNewUpdates Then
-50190       IfLoggingWriteLogfile LanguageStrings.MessagesMsg33
-50200       MsgBox LanguageStrings.MessagesMsg33, vbOKOnly + vbInformation
-50210      End If
-50220    End If
-50230   Else
-50240    errStr = LanguageStrings.MessagesMsg31 & ": " & dl.ErrorDescription & " [" & dl.ErrorNumber & "]"
-50250    IfLoggingWriteLogfile "CheckForUpdates: " & errStr
-50260    If ShowErrorMessage Then
-50270     MsgBox errStr, vbOKOnly + vbExclamation
-50280    End If
-50290  End If
+50030  mp = Screen.MousePointer
+50040  Screen.MousePointer = vbHourglass
+50050  updStr = dl.DownloadString(UpdateURL, TimeOutInMs)
+50060  Screen.MousePointer = mp
+50070  If Len(updStr) > 0 Then
+50080    If CheckPDFCreatorVersion(updStr) > 0 Then
+50090      updStrA = Split(updStr, ".")
+50100      If updStrA(3) = 0 Then
+50110        updStr = "[" & updStrA(0) & "." & updStrA(1) & "." & updStrA(2) & "]"
+50120       Else
+50130        updStr = "[" & updStrA(0) & "." & updStrA(1) & "." & updStrA(2) & " Beta " & updStrA(3) & "]"
+50140      End If
+50150      aw = MsgBox(Replace$(LanguageStrings.MessagesMsg32, "%1", updStr), vbYesNo + vbQuestion)
+50160      If aw = vbYes Then
+50170       OpenDocument "http://www.pdfforge.org/products/pdfcreator/download"
+50180      End If
+50190     Else
+50200      If ShowMessageNoNewUpdates Then
+50210       IfLoggingWriteLogfile LanguageStrings.MessagesMsg33
+50220       MsgBox LanguageStrings.MessagesMsg33, vbOKOnly + vbInformation
+50230      End If
+50240    End If
+50250   Else
+50260    errStr = LanguageStrings.MessagesMsg31 & ": " & dl.ErrorDescription & " [" & dl.ErrorNumber & "]"
+50270    IfLoggingWriteLogfile "CheckForUpdates: " & errStr
+50280    If ShowErrorMessage Then
+50290     MsgBox errStr, vbOKOnly + vbExclamation
+50300    End If
+50310  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
