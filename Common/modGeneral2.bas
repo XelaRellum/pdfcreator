@@ -337,7 +337,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CheckForUpdate()
+Public Sub CheckForUpdateAutomatically(ShowMessageNoNewUpdates As Boolean, ShowErrorMessage As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -376,21 +376,21 @@ On Error GoTo ErrPtnr_OnError
 50330    diff = DateDiff("d", lucDate, curDate)
 50340    If diff >= 1 Then
 50350     Set upd = New clsUpdate
-50360     upd.CheckForUpdates
+50360     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage
 50370     SetLastUpdateCeck curDate
 50380    End If
 50390   ElseIf (Options.UpdateInterval) = 2 Then ' Once a week
 50400    diff = DateDiff("d", lucDate, curDate)
 50410    If diff >= 7 Then
 50420     Set upd = New clsUpdate
-50430     upd.CheckForUpdates
+50430     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage
 50440     SetLastUpdateCeck curDate
 50450    End If
 50460   Else ' Once a month
 50470    diff = DateDiff("m", lucDate, curDate)
 50480    If diff >= 1 Then
 50490     Set upd = New clsUpdate
-50500     upd.CheckForUpdates
+50500     upd.CheckForUpdates ShowMessageNoNewUpdates, ShowErrorMessage
 50510     SetLastUpdateCeck curDate
 50520    End If
 50530  End If
