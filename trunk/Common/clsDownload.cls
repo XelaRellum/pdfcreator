@@ -29,6 +29,7 @@ Private Const INTERNET_FLAG_RELOAD = &H80000000
 Private Const HTTP_QUERY_CONTENT_LENGTH = 5
 Private Const HTTP_QUERY_STATUS_CODE = 19
 Private Const HTTP_QUERY_FILE_URL = 904
+Private Const INTERNET_OPTION_CONNECT_TIMEOUT = 2
 
 ' Opens a HTTP session for a given site.
 Private Declare Function InternetConnect Lib "wininet.dll" Alias "InternetConnectA" _
@@ -62,6 +63,10 @@ ByRef lBufferLength As Long, ByRef lIndex As Long) As Integer
 Private Declare Function GetInputState Lib "user32" () As Long
 Private Declare Function GetTickCount Lib "kernel32" () As Long
 
+Private Declare Function InternetSetOption Lib "wininet.dll" Alias "InternetSetOptionA" _
+ (ByVal hInternet As Long, ByVal dwOption As Long, lpBuffer As Long, ByVal dwBufferLength As Long) As Boolean
+
+
 Private mvarStatus As Byte
 Private mvarSize As Long
 Private mvarReceivedBytes As Long
@@ -92,83 +97,88 @@ On Error GoTo ErrPtnr_OnError
 50150  Dim DLStart             As Long
 50160  Dim resStr              As String
 50170
-50180  StopDownload = False
-50190  Size = 0
-50200  Speed = 0
-50210  ReceivedBytes = 0
-50220  Downloadtime = 0
-50230  ErrorNumber = 0
-50240  ErrorDescription = ""
-50250  resStr = ""
-50260
-50270  status = 1
-50280
-50290  If cURL.GetURL(URL) And cURL.lScheme = InternetSchemeHttp Then
-50300     hInternetSession = InternetOpen(scUserAgent, INTERNET_OPEN_TYPE_PRECONFIG, vbNullString, vbNullString, 0)
-50310     If CBool(hInternetSession) Then
-50320         hInternetConnect = InternetConnect(hInternetSession, cURL.HostName, cURL.Port, cURL.UserName, cURL.Password, INTERNET_SERVICE_HTTP, 0, 0)
-50330         If hInternetConnect > 0 Then
-50340             hHttpOpenRequest = HttpOpenRequest(hInternetConnect, "GET", cURL.URLPath & cURL.URLExtraInfo, "HTTP/1.1", vbNullString, 0, INTERNET_FLAG_RELOAD, 0)
-50350             If CBool(hHttpOpenRequest) Then
-50360                 iRetVal = HttpSendRequest(hHttpOpenRequest, vbNullString, 0, 0, 0)
-50370                 If iRetVal Then
-50380                     StatusCode = CLng(GetQueryInfo(ByVal hHttpOpenRequest, HTTP_QUERY_STATUS_CODE))
-50390                     If StatusCode <> 200 Then
-50400                         ErrorNumber = StatusCode
-50410                         ErrorDescription = LanguageStrings.MessagesMsg26
-50420                         If StatusCode = 404 Then
-50430                             ErrorNumber = 404
-50440                             ErrorDescription = LanguageStrings.MessagesMsg27
-50450                         End If
-50460                         RaiseEvent Update
-50470                         Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
-50480                         Exit Function
-50490                     End If
-50500                     ContentLength = CLng(GetQueryInfo(ByVal hHttpOpenRequest, HTTP_QUERY_CONTENT_LENGTH))
-50510                     Size = ContentLength
-50520                     If Size = 0 Then
-50530                         ErrorNumber = 3
-50540                         ErrorDescription = LanguageStrings.MessagesMsg28
-50550                         RaiseEvent Update
-50560                         Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
-50570                         Exit Function
-50580                     End If
-50590                     If StatusCode = 200 Then
-50600                         bDoLoop = True
-50610                         Duration = 1: DLStart = GetTickCount
-50620                         Do
-50630                             sReadBuffer = vbNullString
-50640                             Start = GetTickCount
-50650                             bDoLoop = InternetReadFile(hHttpOpenRequest, sReadBuffer, Len(sReadBuffer), lNumberOfBytesRead)
-50660                             Ende = GetTickCount
-50670                             resStr = resStr & Left$(sReadBuffer, lNumberOfBytesRead)
-50680                             Duration = Duration + Ende - Start
-50690                             ReceivedBytes = ReceivedBytes + lNumberOfBytesRead
-50700                             Speed = ReceivedBytes / (Duration / 1000)
-50710                             Downloadtime = Ende - DLStart
-50720                             RaiseEvent Update
-50730                             If GetInputState <> 0 Then DoEvents
-50740                             If StopDownload = True Then
-50750                                 Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
-50760                                 Exit Function
-50770                             End If
-50780                         Loop Until lNumberOfBytesRead < Len(sReadBuffer) Or bDoLoop = 0
-50790                     End If
-50800                  Else
-50810                     ErrorNumber = 1
-50820                     ErrorDescription = LanguageStrings.MessagesMsg44
-50830                     RaiseEvent Update
-50840                 End If
-50850             End If
-50860         End If
-50870     End If
-50880    Else
-50890     ErrorNumber = 2
-50900     ErrorDescription = LanguageStrings.MessagesMsg30
-50910     RaiseEvent Update
-50920  End If
-50930  Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
-50940  DownloadString = resStr
+50180  Dim lTimeoutInMs       As Long
+50190  Dim bRet               As Boolean
+50200
+50210  StopDownload = False
+50220  Size = 0
+50230  Speed = 0
+50240  ReceivedBytes = 0
+50250  Downloadtime = 0
+50260  ErrorNumber = 0
+50270  ErrorDescription = ""
+50280  resStr = ""
+50290
+50300  status = 1
+50310  lTimeoutInMs = 1000
+50320
+50330  If cURL.GetURL(URL) And cURL.lScheme = InternetSchemeHttp Then
+50340     hInternetSession = InternetOpen(scUserAgent, INTERNET_OPEN_TYPE_PRECONFIG, vbNullString, vbNullString, 0)
+50350     If CBool(hInternetSession) Then
+50360         hInternetConnect = InternetConnect(hInternetSession, cURL.HostName, cURL.Port, cURL.UserName, cURL.Password, INTERNET_SERVICE_HTTP, 0, 0)
+50370         If hInternetConnect > 0 Then
+50380             hHttpOpenRequest = HttpOpenRequest(hInternetConnect, "GET", cURL.URLPath & cURL.URLExtraInfo, "HTTP/1.1", vbNullString, 0, INTERNET_FLAG_RELOAD, 0)
+50390             If CBool(hHttpOpenRequest) Then
+50400                 bRet = InternetSetOption(hHttpOpenRequest, INTERNET_OPTION_CONNECT_TIMEOUT, lTimeoutInMs, 4)
+50410                 iRetVal = HttpSendRequest(hHttpOpenRequest, vbNullString, 0, 0, 0)
+50420                 If iRetVal Then
+50430                     StatusCode = CLng(GetQueryInfo(ByVal hHttpOpenRequest, HTTP_QUERY_STATUS_CODE))
+50440                     If StatusCode <> 200 Then
+50450                         ErrorNumber = StatusCode
+50460                         ErrorDescription = LanguageStrings.MessagesMsg26
+50470                         If StatusCode = 404 Then
+50480                             ErrorNumber = 404
+50490                             ErrorDescription = LanguageStrings.MessagesMsg27
+50500                         End If
+50510                         RaiseEvent Update
+50520                         Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
+50530                         Exit Function
+50540                     End If
+50550                     ContentLength = CLng(GetQueryInfo(ByVal hHttpOpenRequest, HTTP_QUERY_CONTENT_LENGTH))
+50560                     Size = ContentLength
+50570                     If Size = 0 Then
+50580                         ErrorNumber = 3
+50590                         ErrorDescription = LanguageStrings.MessagesMsg28
+50600                         RaiseEvent Update
+50610                         Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
+50620                         Exit Function
+50630                     End If
+50640                     If StatusCode = 200 Then
+50650                         bDoLoop = True
+50660                         Duration = 1: DLStart = GetTickCount
+50670                         Do
+50680                             sReadBuffer = vbNullString
+50690                             Start = GetTickCount
+50700                             bDoLoop = InternetReadFile(hHttpOpenRequest, sReadBuffer, Len(sReadBuffer), lNumberOfBytesRead)
+50710                             Ende = GetTickCount
+50720                             resStr = resStr & Left$(sReadBuffer, lNumberOfBytesRead)
+50730                             Duration = Duration + Ende - Start
+50740                             ReceivedBytes = ReceivedBytes + lNumberOfBytesRead
+50750                             Speed = ReceivedBytes / (Duration / 1000)
+50760                             Downloadtime = Ende - DLStart
+50770                             RaiseEvent Update
+50780                             If GetInputState <> 0 Then DoEvents
+50790                             If StopDownload = True Then
+50800                                 Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
+50810                                 Exit Function
+50820                             End If
+50830                         Loop Until lNumberOfBytesRead < Len(sReadBuffer) Or bDoLoop = 0
+50840                     End If
+50850                  Else
+50860                     ErrorNumber = 1
+50870                     ErrorDescription = LanguageStrings.MessagesMsg44
+50880                     RaiseEvent Update
+50890                 End If
+50900             End If
+50910         End If
+50920     End If
+50930    Else
+50940     ErrorNumber = 2
+50950     ErrorDescription = LanguageStrings.MessagesMsg30
+50960     RaiseEvent Update
+50970  End If
+50980  Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
+50990  DownloadString = resStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
