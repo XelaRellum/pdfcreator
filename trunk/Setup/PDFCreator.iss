@@ -3170,8 +3170,6 @@ end;
 function UnstallMsiInstallation(): Boolean;
 var
  UninstallString: String;
- ResultCode,res: LongInt;
-
  ErrorCode: Integer;
  p:LongInt;
  s1, s2: String;
@@ -3190,7 +3188,7 @@ begin
  result := ShellExec('', s1, s2, '', SW_SHOW, ewWaitUntilTerminated, ErrorCode);
 end;
 
-function UnstallInnosetupInstallation(): Boolean;
+procedure UnstallInnosetupInstallation();
 var
  UninstallString: String;
  ResultCode,res: LongInt;
@@ -3210,7 +3208,7 @@ begin
  end
 end;
 
-function UninstallPDFCreator(): LongInt;
+procedure UninstallPDFCreator();
 begin
  If UnstallMsiInstallation then
    UnstallMsiInstallation
@@ -3258,20 +3256,17 @@ begin
  else
   UninstallRegKey := 'SOFTWARE\' + UninstallKey
 
-//----------------------------------------------------------
  res := 0;
  if IsPDFCreatorInstalled then begin
-//  res := MsgBox(ExpandConstant('{cm:RestartAlreadyAskOverwrite}'), mbConfirmation, MB_YESNO);
   res := MsgBox(Msg[11], mbConfirmation, MB_YESNO);
   if res = IDYES then begin
-   res := UninstallPDFCreator;
+   UninstallPDFCreator;
   end else begin
    result := false;
    exit;
   end
  end
  result := false;
-//----------------------------------------------------------
 
  If AnalyzeCommandlineParameters=false then begin
   result:=false;
@@ -3839,7 +3834,9 @@ end;
 
 procedure RemoveExplorerIntegretation();
 var
- keys: TArrayOfString; i :LongInt;tStr:String;
+ keys: TArrayOfString;
+ i: LongInt;
+ tStr: String;
 begin
  if RegGetSubkeyNames(HKEY_CLASSES_ROOT, '', keys) then begin
   for i:=0 to GetArrayLength(keys)-1 do begin
@@ -3898,4 +3895,3 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
-
