@@ -55,7 +55,6 @@ var
  lblToolbarFeature4: TLabel;
  yoffs1 : LongInt;
  imgToolbar: TBitmapImage;
- lblToolbarPrivacyPolicy: TLabel;
  lblToolbarNote: TLabel;
  lblTermsOfUseHyperlink: TLabel;
  lblPrivacyPolicyHyperlink: TLabel;
