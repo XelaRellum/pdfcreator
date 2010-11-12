@@ -327,7 +327,7 @@ Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion c
 ;Languages
 ;Source: ..\PDFCreator\Languages\basque.ini; DestDir: {app}\languages; Components: languages\basque; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
@@ -732,8 +732,8 @@ Name: languages; Description: {cm:Languages}; Types: full custom
 ;Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
 ;Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
 
-;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
-;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
 
 ;Name: languages\chinese_traditional; Description: Chinese traditional; Types: full; Check: Not IsLanguage('chinese_traditional'); Flags: dontinheritcheck
 ;Name: languages\chinese_traditional; Description: Chinese traditional; Types: full custom; Check: IsLanguage('chinese_traditional'); Flags: dontinheritcheck
