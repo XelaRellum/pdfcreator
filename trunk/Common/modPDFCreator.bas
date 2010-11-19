@@ -460,43 +460,56 @@ End Select
 End Function
 
 Public Function EnterPasswords(ByRef UserPass As String, ByRef OwnerPass As String, f As Form) As Boolean
- If Options.PDFUserPass <> 0 Or Options.PDFOwnerPass <> 0 Then
-   With f
-    .Visible = False
-    .dmFraUserPass.Enabled = Options.PDFUserPass
-    .lblUserPass.Enabled = Options.PDFUserPass
-    .chkShowUserPasswordChars.Enabled = Options.PDFUserPass
-    If .dmFraUserPass.Enabled Then
-      .txtUserPass.BackColor = &H80000005
-     Else
-      .txtUserPass.BackColor = .dmFraUserPass.BackColor
-    End If
-    
-    .dmFraOwnerPass.Enabled = Options.PDFOwnerPass
-    .lblOwnerPass.Enabled = Options.PDFOwnerPass
-    .chkShowOwnerPasswordChars.Enabled = Options.PDFOwnerPass
-    If .dmFraOwnerPass.Enabled Then
-      .txtOwnerPass.BackColor = &H80000005
-     Else
-      .txtOwnerPass.BackColor = .dmFraOwnerPass.BackColor
-    End If
-    
-    .iPasswords = Abs(Options.PDFUserPass) + Abs(Options.PDFOwnerPass * 2)
-    .Show vbModal
-    Do
-     Sleep 100
-     DoEvents
-    Loop While .bFinished = False
-   End With
-   EnterPasswords = f.bSuccess
-   UserPass = f.txtUserPass.Text
-   OwnerPass = f.txtOwnerPass.Text
-   Unload f
-  Else
-   EnterPasswords = False
-   UserPass = ""
-   OwnerPass = ""
- End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Options.PDFUserPass <> 0 Or Options.PDFOwnerPass <> 0 Then
+50020    With f
+50030     .Visible = False
+50040     .dmFraUserPass.Enabled = Options.PDFUserPass
+50050     .lblUserPass.Enabled = Options.PDFUserPass
+50060     .chkShowUserPasswordChars.Enabled = Options.PDFUserPass
+50070     If .dmFraUserPass.Enabled Then
+50080       .txtUserPass.BackColor = &H80000005
+50090      Else
+50100       .txtUserPass.BackColor = .dmFraUserPass.BackColor
+50110     End If
+50120
+50130     .dmFraOwnerPass.Enabled = Options.PDFOwnerPass
+50140     .lblOwnerPass.Enabled = Options.PDFOwnerPass
+50150     .chkShowOwnerPasswordChars.Enabled = Options.PDFOwnerPass
+50160     If .dmFraOwnerPass.Enabled Then
+50170       .txtOwnerPass.BackColor = &H80000005
+50180      Else
+50190       .txtOwnerPass.BackColor = .dmFraOwnerPass.BackColor
+50200     End If
+50210
+50220     .iPasswords = Abs(Options.PDFUserPass) + Abs(Options.PDFOwnerPass * 2)
+50230     .Show vbModal
+50240     Do
+50250      Sleep 100
+50260      DoEvents
+50270     Loop While .bFinished = False
+50280    End With
+50290    EnterPasswords = f.bSuccess
+50300    UserPass = f.txtUserPass.Text
+50310    OwnerPass = f.txtOwnerPass.Text
+50320    Unload f
+50330   Else
+50340    EnterPasswords = False
+50350    UserPass = ""
+50360    OwnerPass = ""
+50370  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDFCreator", "EnterPasswords")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Sub AddExplorerIntegration()
