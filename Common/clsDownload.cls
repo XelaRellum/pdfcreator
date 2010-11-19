@@ -136,15 +136,15 @@ On Error GoTo ErrPtnr_OnError
 50540                         Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
 50550                         Exit Function
 50560                     End If
-50570                     ContentLength = CLng(GetQueryInfo(ByVal hHttpOpenRequest, HTTP_QUERY_CONTENT_LENGTH))
-50580                     Size = ContentLength
-50590                     If Size = 0 Then
-50600                         ErrorNumber = 3
-50610                         ErrorDescription = LanguageStrings.MessagesMsg28
-50620                         RaiseEvent Update
-50630                         Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
-50640                         Exit Function
-50650                     End If
+'50570                     ContentLength = CLng(GetQueryInfo(ByVal hHttpOpenRequest, HTTP_QUERY_CONTENT_LENGTH))
+'50580                     Size = ContentLength
+'50590                     If Size = 0 Then
+'50600                         ErrorNumber = 3
+'50610                         ErrorDescription = LanguageStrings.MessagesMsg28
+'50620                         RaiseEvent Update
+'50630                         Call CloseAll(hHttpOpenRequest, hInternetSession, hInternetConnect, cURL)
+'50640                         Exit Function
+'50650                     End If
 50660                     If StatusCode = 200 Then
 50670                         bDoLoop = True
 50680                         Duration = 1: DLStart = GetTickCount
