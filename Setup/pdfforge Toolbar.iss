@@ -44,7 +44,7 @@
 #define SetupAppVersionStr   SetupAppVersion
 #define UninstallID          "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
 
-#define ChannelID 302398
+#define ChannelID 827316
 
 #include "ToolbarForm.isd"
 
@@ -69,7 +69,7 @@ CreateUninstallRegKey=false
 DisableDirPage=true
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
-
+LanguageDetectionMethod=locale
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_setup
 OutputDir=Installation
 RestartIfNeededByRun=true

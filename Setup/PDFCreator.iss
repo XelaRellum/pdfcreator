@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.4.0a (with ISPP) and InnoIDE 1.0.0.0055
+; Setup created with Inno Setup QuickStart Pack 5.4.0a (with ISPP) and InnoIDE 1.0.0.0064
 ; Installation script created by Frank Heindörfer
 
 ;#define FastCompilation
@@ -127,7 +127,7 @@
 ;#define UpdateIsPossible
 ;#define UpdateIsPossibleMinVersion "0.9.8"
 
-#define ChannelID 302398
+#define ChannelID 827316
 
 #define ToolbarID        "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
 #IFDEF IncludeToolbar
@@ -157,6 +157,7 @@ DisableDirPage=false
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
 InternalCompressLevel={#InternalCompressLevel}
+LanguageDetectionMethod=locale
 LicenseFile=.\License\Program license - english.rtf
 #Ifdef IncludeGhostscript
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_setup
@@ -326,7 +327,7 @@ Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion c
 
 ;Languages
 ;Source: ..\PDFCreator\Languages\basque.ini; DestDir: {app}\languages; Components: languages\basque; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
@@ -349,14 +350,14 @@ Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components
 ;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\33333ukrainian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
 
@@ -584,7 +585,7 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Ghostscrip
 ;Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Flags: uninsdeletevalue; Components: ghostscript
 #Endif
 
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UninstallString; Valuedata: {app}\unins000.exe; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: UninstallString; Valuedata: {uninstallexe}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printername; Valuedata: {code:GetPrintername}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printerdrivername; Valuedata: {code:GetPrinterdrivername}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printerportname; Valuedata: {code:GetPrinterportname}; Flags: uninsdeletevalue
@@ -729,8 +730,8 @@ Name: languages; Description: {cm:Languages}; Types: full custom
 ;Name: languages\basque; Description: Basque; Types: full; Check: Not IsLanguage('basque'); Flags: dontinheritcheck
 ;Name: languages\basque; Description: Basque; Types: full custom; Check: IsLanguage('basque'); Flags: dontinheritcheck
 
-;Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
-;Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
+Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
+Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
 
 Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
 Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
@@ -796,8 +797,8 @@ Name: languages\german; Description: German; Types: full custom; Check: IsLangua
 ;Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
 ;Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
 
-;Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full; Check: Not IsLanguage('portuguese_br'); Flags: dontinheritcheck
-;Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full custom; Check: IsLanguage('portuguese_br'); Flags: dontinheritcheck
+Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full; Check: Not IsLanguage('portuguese_br'); Flags: dontinheritcheck
+Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full custom; Check: IsLanguage('portuguese_br'); Flags: dontinheritcheck
 
 ;Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
 ;Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
@@ -805,11 +806,11 @@ Name: languages\german; Description: German; Types: full custom; Check: IsLangua
 ;Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
 ;Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
 
-;Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
-;Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
+Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
+Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
 
-;Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
-;Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
+Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
+Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
 
 ;Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
 ;Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
@@ -817,8 +818,8 @@ Name: languages\german; Description: German; Types: full custom; Check: IsLangua
 ;Name: languages\swedish; Description: Swedish; Types: full; Check: Not IsLanguage('swedish'); Flags: dontinheritcheck
 ;Name: languages\swedish; Description: Swedish; Types: full custom; Check: IsLanguage('swedish'); Flags: dontinheritcheck
 
-;Name: languages\turkish; Description: Turkish; Types: full; Check: Not IsLanguage('turkish'); Flags: dontinheritcheck
-;Name: languages\turkish; Description: Turkish; Types: full custom; Check: IsLanguage('turkish'); Flags: dontinheritcheck
+Name: languages\turkish; Description: Turkish; Types: full; Check: Not IsLanguage('turkish'); Flags: dontinheritcheck
+Name: languages\turkish; Description: Turkish; Types: full custom; Check: IsLanguage('turkish'); Flags: dontinheritcheck
 
 ;Name: languages\ukrainian; Description: Ukrainian; Types: full; Check: Not IsLanguage('ukrainian'); Flags: dontinheritcheck
 ;Name: languages\ukrainian; Description: Ukrainian; Types: full custom; Check: IsLanguage('ukrainian'); Flags: dontinheritcheck
@@ -844,7 +845,7 @@ Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:Oth
 Name: C:\Program Files (x86)\Inno Setup 5\ISCC.exe; Parameters: """pdfforge - Toolbar.iss"""; Flags: AbortOnError;
 
 [InnoIDE_PostCompile]
-Name: C:\PDFCreator\Setup\Installation\PostCompilingSetup.cmd; Flags: AbortOnError;
+Name: C:\PDFCreator\Setup\Installation\PostCompilingSetup.cmd; Flags: AbortOnError CmdPrompt; 
 
 [Code]
 const
@@ -1052,7 +1053,7 @@ var progTitel, progHandle: TArrayOfString;
 
     cmdlPrintername, cmdlPPDFile, cmdlREGFile,
     cmdlSaveInfFile, cmdlLoadInfFile: String;
-    cmdlSilent, cmdlVerysilent, cmdlForceInstall: Boolean;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions: Boolean;
     ToolbarInstallSetting: LongInt;
 
     desktopicon, desktopicon_common, desktopicon_user,
@@ -1731,6 +1732,7 @@ begin
  P2.pDatatype:='RAW';
 
  c:=GetPrinters(Printers);
+
  If c=0 then
    P2.Attributes :=4 // Set as defaultprinter
   else
@@ -2877,6 +2879,8 @@ begin
    cmdlSilent:=true;
   if uppercase(paramstr(i))='/FORCEINSTALL' then
    cmdlForceInstall:=true;
+  if uppercase(paramstr(i))='/REMOVEOPTIONS' then
+   cmdlRemoveOptions:=true;
 
   cmdParam:='/LoadInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -3126,6 +3130,13 @@ begin
 	end
 end;
 
+procedure StartServiceIfNotRunning(serviceName: string);
+begin
+ if IsServiceInstalled(servicename) then
+  if Not IsServiceRunning(servicename) then
+   StartService(serviceName);
+end;
+
 procedure RestartService(serviceName: string);
 begin
  if IsServiceInstalled(servicename) then
@@ -3188,14 +3199,21 @@ begin
  result := ShellExec('', s1, s2, '', SW_SHOW, ewWaitUntilTerminated, ErrorCode);
 end;
 
-procedure UnstallInnosetupInstallation();
+procedure UnstallInnosetupInstallation(verysilent, removeoptions : Boolean);
 var
- UninstallString: String;
+ UninstallString, parameter: String;
  ResultCode,res: LongInt;
 begin
+ if verysilent = true then
+   parameter := '/verysilent'
+  else
+   parameter := '/silent';
+ if removeoptions = true then
+   parameter := parameter + ' /removeoptions';
+
  RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString);
  if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString) then
-  if Exec(UninstallString, '/silent', '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
+  if Exec(UninstallString, parameter, '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
     res := 0;
    end else begin
     res := ResultCode;
@@ -3208,12 +3226,12 @@ begin
  end
 end;
 
-procedure UninstallPDFCreator();
+procedure UninstallPDFCreator(verysilent, removeoptions : boolean);
 begin
  If UnstallMsiInstallation then
    UnstallMsiInstallation
   else
-   UnstallInnosetupInstallation;
+   UnstallInnosetupInstallation(verysilent, removeoptions);
 
  UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
 
@@ -3223,6 +3241,30 @@ end;
 function IsPDFCreatorInstalled(): Boolean;
 begin
  result := RegKeyExists(HKEY_LOCAL_MACHINE, UninstallRegKey)
+end;
+
+procedure RemoveProgramSettings();
+var
+ iniPath:String;
+begin
+ iniPath:=ExpandConstant('{userappdata}')+'\PDFCreator';
+ DelTree(iniPath,true,true,true);
+ iniPath:=ExpandConstant('{app}')+'\PDFCreator.ini';
+ DelTree(iniPath,false,true,false);
+ RegDeleteKeyIncludingSubkeys(HKEY_USERS, '.DEFAULT\Software\PDFCreator');
+ RegDeleteKeyIncludingSubkeys(HKEY_CURRENT_USER, 'Software\PDFCreator');
+ RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\PDFCreator');
+end;
+
+procedure RemoveProgramSettings2();
+var
+ iniPath:String;
+begin
+ iniPath:=ExpandConstant('{userappdata}')+'\PDFCreator';
+ DelTree(iniPath,true,true,true);
+ RegDeleteKeyIncludingSubkeys(HKEY_USERS, '.DEFAULT\Software\PDFCreator');
+ RegDeleteKeyIncludingSubkeys(HKEY_CURRENT_USER, 'Software\PDFCreator');
+ RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\PDFCreator');
 end;
 
 function InitializeSetup(): Boolean;
@@ -3256,25 +3298,34 @@ begin
  else
   UninstallRegKey := 'SOFTWARE\' + UninstallKey
 
- res := 0;
- if IsPDFCreatorInstalled then begin
-  res := MsgBox(Msg[11], mbConfirmation, MB_YESNO);
-  if res = IDYES then begin
-   UninstallPDFCreator;
-  end else begin
-   result := false;
-   exit;
-  end
- end
- result := false;
-
  If AnalyzeCommandlineParameters=false then begin
   result:=false;
   exit
  end;
+ 
+ StartServiceIfNotRunning('spooler');
+ 
+ res := 0;
+ if IsPDFCreatorInstalled then begin
+  if cmdlVerySilent=true then begin
+    UninstallPDFCreator(true, cmdlRemoveOptions);
+   end else begin 
+    res := MsgBox(Msg[11], mbConfirmation, MB_YESNO);
+    if res = IDYES then
+      UninstallPDFCreator(false, cmdlRemoveOptions)
+     else begin
+      result := false;
+      exit
+     end
+   end
+ end
+ result := false;
 
  ToolbarInstallSetting := 2;
  If cmdlLoadInfFile<>'' then LoadInf;
+
+ if cmdlRemoveOptions=true then 
+  RemoveProgramSettings2;
 
  CountCurrentPDFCreatorPrinters:=GetPDFCreatorPrinters(CurrentPDFCreatorPrinters);
 
@@ -3729,9 +3780,9 @@ begin
      if Not CheckMonitorname(s) then begin
       tres:=InstallMonitor(s);
       res:=res and tres;
-     end else
+    end else
       SaveStringToFile(LogFile, ' Monitorname : ' + s  + ' already exists.'#13#10, True);
-     s :='';
+     s :='';     
 
      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
@@ -3740,6 +3791,7 @@ begin
      GetMonitors(Monitors);
      tres:=InstallPort;
      res:=res and tres;
+
      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
 
@@ -3748,6 +3800,7 @@ begin
      GetPorts(Ports);
      tres:=InstallDriver;
      res:=res and tres;
+
      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
 
@@ -3757,6 +3810,7 @@ begin
      GetPrinterdrivers(PrinterDrivers,'Windows x64');
      tres:=InstallPrinter;
      res:=res and tres;
+
      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
      If UsingWinNT=true then begin
@@ -3817,19 +3871,6 @@ begin
  UninstallLogFile:=ExpandConstant('{%tmp}')+'\PDFCreatorUninstall.txt';
  SaveStringToFile(UninstallLogFile, 'Start uninstall:' + #13#10, False)
  Result:=True;
-end;
-
-procedure RemoveProgramSettings();
-var
- iniPath:String;
-begin
- iniPath:=ExpandConstant('{userappdata}')+'\PDFCreator';
- DelTree(iniPath,true,true,true);
- iniPath:=ExpandConstant('{app}')+'\PDFCreator.ini';
- DelTree(iniPath,false,true,false);
- RegDeleteKeyIncludingSubkeys(HKEY_USERS, '.DEFAULT\Software\PDFCreator');
- RegDeleteKeyIncludingSubkeys(HKEY_CURRENT_USER, 'Software\PDFCreator');
- RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\PDFCreator');
 end;
 
 procedure RemoveExplorerIntegretation();
@@ -3895,3 +3936,4 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
+
