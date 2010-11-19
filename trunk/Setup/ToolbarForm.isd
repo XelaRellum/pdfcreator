@@ -93,8 +93,9 @@ begin
   Width := ScaleX(100);
   Height := ScaleY(15);
   Font.Style := [fsBold];
-  Caption := ' • ' + ExpandConstant('{cm:ToolbarFeature2}');
+  Caption := ' * ' + ExpandConstant('{cm:ToolbarFeature2}');
  end;
+ 
  lblToolbarFeature3 := TLabel.Create(Page);
  with lblToolbarFeature3 do
  begin
@@ -104,8 +105,9 @@ begin
   Width := ScaleX(100);
   Height := ScaleY(15);
   Font.Style := [fsBold];
-  Caption := ' • ' + ExpandConstant('{cm:ToolbarFeature3}');
+  Caption := ' * ' + ExpandConstant('{cm:ToolbarFeature3}');
  end;
+ 
  lblToolbarFeature4 := TLabel.Create(Page);
  with lblToolbarFeature4 do
  begin
@@ -145,7 +147,7 @@ begin
   Height := ScaleY(35);
  end;
  SetWindowLong(chkUseYahoo.Handle, -16, GetWindowLong2(chkUseYahoo.Handle, -16) or BS_MULTILINE);
-
+ 
  lblToolbarNote := TLabel.Create(Page);
  with lblToolbarNote do
  begin
@@ -155,7 +157,10 @@ begin
   Top := ScaleY(yoffs1 + 164);
   Width := ScaleX(418);
   Height := ScaleY(55);
-  Font.Size := 7;
+  if ActiveLanguage = 'chinese_simplified' then
+   Font.Size := 9
+  else
+   Font.Size := 7;
   WordWrap := True;
   Caption := ExpandConstant('{cm:ToolbarNote}');
  end;

@@ -70,8 +70,10 @@ Begin VB.UserControl ctlOptLanguages
          _ExtentX        =   6800
          _ExtentY        =   7461
          View            =   3
+         LabelEdit       =   1
          LabelWrap       =   -1  'True
-         HideSelection   =   -1  'True
+         HideSelection   =   0   'False
+         FullRowSelect   =   -1  'True
          _Version        =   393217
          ForeColor       =   -2147483640
          BackColor       =   -2147483643
@@ -543,7 +545,7 @@ End Sub
 Private Sub cmdLanguageRemove_Click()
  On Error GoTo ErrorHandler
  Dim oldLanguage As String
- Kill LangFiles(cmbCurrentLanguage.ListIndex + 1)
+ KillFile LangFiles(cmbCurrentLanguage.ListIndex + 1)
  If StrComp(LangFiles(cmbCurrentLanguage.ListIndex + 1), oldLanguage, vbTextCompare) <> 0 Then
   Options.Language = "english"
  End If
