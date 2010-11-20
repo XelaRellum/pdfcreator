@@ -5,11 +5,11 @@ Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
 
-Version 1.1.0 (November 14th, 2010)
+Version 1.1.0 (November 20th, 2010)
 -------------------------------------------------------------------------------
 Improvements: 
 - Using Ghostscript 9.0 now
-- Aes 128 bit encryption for pdf files is supported
+- AES 128 bit encryption for pdf files is supported
 - Improved setup: Old versions of PDFCreator don't have to be uninstalled anymore.
 
 Bug Fixes:
