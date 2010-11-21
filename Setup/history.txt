@@ -5,7 +5,7 @@ Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
 
-Version 1.1.0 (November 20th, 2010)
+Version 1.1.0 (November 21st, 2010)
 -------------------------------------------------------------------------------
 Improvements: 
 - Using Ghostscript 9.0 now
