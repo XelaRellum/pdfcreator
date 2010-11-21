@@ -613,17 +613,17 @@ Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueN
 ; Application
 Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Check: IsServerInstallation; Flags: createvalueifdoesntexist
 Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Flags: createvalueifdoesntexist; Check: IsServerInstallation
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: createvalueifdoesntexist; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Check: IsServerInstallation
 Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: {app}\Temp\; Flags: createvalueifdoesntexist; Check: IsServerInstallation
 
 Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: <MyFiles>; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: <MyFiles>; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
-Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; MinVersion: 0,4.0.1381; Check: Not IsServerInstallation
 Root: HKU; Subkey: .DEFAULT\Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; MinVersion: 0,4.0.1381; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 
 Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: <MyFiles>; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: <MyFiles>; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
-Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
+Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Check: Not IsServerInstallation
 Root: HKCU; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: <Temp>PDFCreator\; Flags: createvalueifdoesntexist; Check: Not IsServerInstallation
 
 ; Remove old virtualstore settings
