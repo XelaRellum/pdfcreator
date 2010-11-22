@@ -2866,9 +2866,7 @@ begin
     '/ForceInstall - force the installation'#13#10 +
     '/Printername=<PrinterName> - set a different printername'#13#10 +
     '/PPDFile=<PPDFile> - use an own ppd-file'#13#10 +
-    '/REGFile=<REGFile> - use an own registry-file'#13#10 +
-    '/NoToolbar - Don''t install the toolbar'#13#10 +
-    '/DontUseYahooSearch - Don''t use Yahoo search if installing pdfforge Toolbar'
+    '/REGFile=<REGFile> - use an own registry-file'
     ,mbInformation,MB_OK);
    exit;
   end;
