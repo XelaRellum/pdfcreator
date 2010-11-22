@@ -14,7 +14,7 @@
 #include "Language includes\german.inc"
 ;#include "Language includes\greek.inc"
 ;#include "Language includes\hebrew.inc"
-;#include "Language includes\hungarian.inc"
+#include "Language includes\hungarian.inc"
 ;#include "Language includes\indonesian.inc"
 ;#include "Language includes\italian.inc"
 ;#include "Language includes\japanese.inc"
