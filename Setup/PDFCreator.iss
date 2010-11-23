@@ -337,7 +337,7 @@ Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Component
 ;Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\finnish.ini; DestDir: {app}\languages; Components: languages\finnish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\hebrew.ini; DestDir: {app}\languages; Components: languages\hebrew; Flags: ignoreversion
@@ -464,7 +464,7 @@ Source: ..\COM\Samples\Python\Testpage2PDF.py; DestDir: {app}\COM\Python; Compon
 #IFDEF IncludeToolbar
 Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 Source: ..\Toolbar\pdfforgeToolbar-stub-1.exe; DestDir: {tmp}; DestName: pdfforgeToolbar-stub-1.exe; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: InstallToolbar
-Source: Installation\pdfforge Toolbar-14_0_170_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
+Source: Installation\pdfforge Toolbar-4_1_0_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 
 ; PlugIns
@@ -759,8 +759,8 @@ Name: languages\english; Description: English; Types: full compact custom; Flags
 Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
 Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
 
-;Name: languages\galician; Description: Galician; Types: full; Check: Not IsLanguage('galician'); Flags: dontinheritcheck
-;Name: languages\galician; Description: Galician; Types: full custom; Check: IsLanguage('galician'); Flags: dontinheritcheck
+Name: languages\galician; Description: Galician; Types: full; Check: Not IsLanguage('galician'); Flags: dontinheritcheck
+Name: languages\galician; Description: Galician; Types: full custom; Check: IsLanguage('galician'); Flags: dontinheritcheck
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
 Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german'); Flags: dontinheritcheck
