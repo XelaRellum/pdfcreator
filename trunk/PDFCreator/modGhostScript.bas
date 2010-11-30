@@ -163,7 +163,7 @@ On Error GoTo ErrPtnr_OnError
 50240
 50250  BMPColorscount(0) = "bmp32b": BMPColorscount(1) = "bmp16m"
 50260  BMPColorscount(2) = "bmp256": BMPColorscount(3) = "bmp16"
-50270  BMPColorscount(4) = "bmpsep8": BMPColorscount(5) = "bmpsep1"
+50270  BMPColorscount(4) = "bmp256": BMPColorscount(5) = "bmpmono"
 50280  BMPColorscount(6) = "bmpgray"
 50290
 50300  PCXColorscount(0) = "pcxcmyk": PCXColorscount(1) = "pcx24b"
