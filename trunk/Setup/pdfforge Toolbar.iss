@@ -93,7 +93,7 @@ MinVersion=0,5.0.2195
 
 [Files]
 ; Toolbar
-Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
+;Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 Source: {#Toolbar}; DestDir: {tmp}; DestName: {#AppExename}; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 
 [Messages]

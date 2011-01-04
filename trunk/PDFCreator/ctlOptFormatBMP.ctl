@@ -118,7 +118,7 @@ On Error GoTo ErrPtnr_OnError
 50060
 50070  With cmbBMPColors
 50080   .Clear
-50090   For i = 1 To 7
+50090   For i = 1 To 8
 50100    .AddItem ""
 50110   Next i
 50120   .ListIndex = 0
@@ -208,14 +208,15 @@ On Error GoTo ErrPtnr_OnError
 50030   cmbBMPColors.List(1) = .OptionsBMPColorscount02
 50040   cmbBMPColors.List(2) = .OptionsBMPColorscount03
 50050   cmbBMPColors.List(3) = .OptionsBMPColorscount04
-50060   cmbBMPColors.List(4) = .OptionsBMPColorscount05
-50070   cmbBMPColors.List(5) = .OptionsBMPColorscount06
+50060   cmbBMPColors.List(4) = .OptionsBMPColorscount05_2
+50070   cmbBMPColors.List(5) = .OptionsBMPColorscount06_2
 50080   cmbBMPColors.List(6) = .OptionsBMPColorscount07
-50090
-50100   dmFraBMPGeneral.Caption = .OptionsImageSettings
-50110   lblBitmapResolution = .OptionsBitmapResolution
-50120   lblBitmapColors = .OptionsPDFColors
-50130  End With
+50090   cmbBMPColors.List(7) = .OptionsBMPColorscount08
+50100
+50110   dmFraBMPGeneral.Caption = .OptionsImageSettings
+50120   lblBitmapResolution = .OptionsBitmapResolution
+50130   lblBitmapColors = .OptionsPDFColors
+50140  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

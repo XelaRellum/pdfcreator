@@ -336,7 +336,7 @@ On Error GoTo ErrPtnr_OnError
 51390   .PrintAfterSavingTumble = "0"
 51400   .PrinterStop = "0"
 51410   If InstalledAsServer Then
-51420     .PrinterTemppath = CompletePath(PDFCreatorApplicationPath) & "Temp\"
+51420     .PrinterTemppath = CompletePath(GetPDFCreatorApplicationPath) & "Temp\"
 51430    Else
 51440     .PrinterTemppath = "<Temp>PDFCreator\"
 51450   End If
@@ -577,7 +577,7 @@ On Error GoTo ErrPtnr_OnError
 51050   End If
 51060   tStr = hOpt.Retrieve("BMPColorscount")
 51070   If IsNumeric(tStr) Then
-51080     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+51080     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
 51090       .BMPColorscount = CLng(tStr)
 51100      Else
 51110       If UseStandard Then
@@ -664,7 +664,7 @@ On Error GoTo ErrPtnr_OnError
 51920     .DirectoryGhostscriptBinaries = CompletePath(tStr)
 51930    Else
 51940     If UseStandard Then
-51950      tStr = PDFCreatorApplicationPath
+51950      tStr = GetPDFCreatorApplicationPath
 51960      .DirectoryGhostscriptBinaries = CompletePath(tStr)
 51970     End If
 51980   End If
@@ -673,7 +673,7 @@ On Error GoTo ErrPtnr_OnError
 52010     .DirectoryGhostscriptFonts = CompletePath(tStr)
 52020    Else
 52030     If UseStandard Then
-52040      tStr = PDFCreatorApplicationPath & "fonts"
+52040      tStr = GetPDFCreatorApplicationPath & "fonts"
 52050      .DirectoryGhostscriptFonts = CompletePath(tStr)
 52060     End If
 52070   End If
@@ -682,7 +682,7 @@ On Error GoTo ErrPtnr_OnError
 52100     .DirectoryGhostscriptLibraries = CompletePath(tStr)
 52110    Else
 52120     If UseStandard Then
-52130      tStr = PDFCreatorApplicationPath & "lib"
+52130      tStr = GetPDFCreatorApplicationPath & "lib"
 52140      .DirectoryGhostscriptLibraries = CompletePath(tStr)
 52150     End If
 52160   End If
@@ -3386,7 +3386,7 @@ On Error GoTo ErrPtnr_OnError
 50090     .DirectoryGhostscriptBinaries = CompletePath(tStr)
 50100    Else
 50110     If UseStandard Then
-50120      tStr = PDFCreatorApplicationPath
+50120      tStr = GetPDFCreatorApplicationPath
 50130      .DirectoryGhostscriptBinaries = CompletePath(tStr)
 50140     End If
 50150   End If
@@ -3395,7 +3395,7 @@ On Error GoTo ErrPtnr_OnError
 50180     .DirectoryGhostscriptFonts = CompletePath(tStr)
 50190    Else
 50200     If UseStandard Then
-50210      tStr = PDFCreatorApplicationPath & "fonts"
+50210      tStr = GetPDFCreatorApplicationPath & "fonts"
 50220      .DirectoryGhostscriptFonts = CompletePath(tStr)
 50230     End If
 50240   End If
@@ -3404,7 +3404,7 @@ On Error GoTo ErrPtnr_OnError
 50270     .DirectoryGhostscriptLibraries = CompletePath(tStr)
 50280    Else
 50290     If UseStandard Then
-50300      tStr = PDFCreatorApplicationPath & "lib"
+50300      tStr = GetPDFCreatorApplicationPath & "lib"
 50310      .DirectoryGhostscriptLibraries = CompletePath(tStr)
 50320     End If
 50330   End If
@@ -3678,7 +3678,7 @@ On Error GoTo ErrPtnr_OnError
 53010   reg.SubKey = "Printing\Formats\Bitmap\Colors"
 53020   tStr = reg.GetRegistryValue("BMPColorscount")
 53030   If IsNumeric(tStr) Then
-53040     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+53040     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
 53050       .BMPColorscount = CLng(tStr)
 53060      Else
 53070       If UseStandard Then
