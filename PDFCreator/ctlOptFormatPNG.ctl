@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin VB.UserControl ctlOptFormatPNG 
-   ClientHeight    =   1830
+   ClientHeight    =   1650
    ClientLeft      =   0
    ClientTop       =   0
    ClientWidth     =   6615
-   ScaleHeight     =   1830
+   ScaleHeight     =   1650
    ScaleWidth      =   6615
    ToolboxBitmap   =   "ctlOptFormatPNG.ctx":0000
    Begin PDFCreator.dmFrame dmFraPNGGeneral 
@@ -14,7 +14,7 @@ Begin VB.UserControl ctlOptFormatPNG
       Top             =   120
       Width           =   6375
       _ExtentX        =   11245
-      _ExtentY        =   2566
+      _ExtentY        =   4048
       Caption         =   "PNG"
       BarColorFrom    =   16744576
       BarColorTo      =   4194304
@@ -208,11 +208,13 @@ On Error GoTo ErrPtnr_OnError
 50030   cmbPNGColors.List(1) = .OptionsPNGColorscount02
 50040   cmbPNGColors.List(2) = .OptionsPNGColorscount03
 50050   cmbPNGColors.List(3) = .OptionsPNGColorscount04
-50060
-50070   dmFraPNGGeneral.Caption = .OptionsImageSettings
-50080   lblBitmapResolution = .OptionsBitmapResolution
-50090   lblBitmapColors = .OptionsPDFColors
-50100  End With
+50060   cmbPNGColors.List(4) = .OptionsPNGColorscount05
+50070   cmbPNGColors.List(5) = .OptionsPNGColorscount06
+50080
+50090   dmFraPNGGeneral.Caption = .OptionsImageSettings
+50100   lblBitmapResolution = .OptionsBitmapResolution
+50110   lblBitmapColors = .OptionsPDFColors
+50120  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

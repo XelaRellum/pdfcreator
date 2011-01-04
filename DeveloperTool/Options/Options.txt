@@ -170,7 +170,7 @@ PDFUserPasswordString||String|||
 PDFUseSecurity|chkUseSecurity.Value|Boolean|0||
 
 ' <Printing Formats Bitmap Colors>
-PNGColorscount|cmbPNGColors.Listindex|Long|0|0|4
+PNGColorscount|cmbPNGColors.Listindex|Long|0|0|5
 PNGResolution||Long|150|1|<
 
 ' <Program>

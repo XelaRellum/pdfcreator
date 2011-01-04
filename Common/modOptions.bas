@@ -2014,7 +2014,7 @@ On Error GoTo ErrPtnr_OnError
 65420   End If
 65430   tStr = hOpt.Retrieve("PNGColorscount")
 65440   If IsNumeric(tStr) Then
-65450     If CLng(tStr) >= 0 And CLng(tStr) <= 4 Then
+65450     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
 65460       .PNGColorscount = CLng(tStr)
 65470      Else
 65480       If UseStandard Then
@@ -3804,7 +3804,7 @@ On Error GoTo ErrPtnr_OnError
 54270   End If
 54280   tStr = reg.GetRegistryValue("PNGColorscount")
 54290   If IsNumeric(tStr) Then
-54300     If CLng(tStr) >= 0 And CLng(tStr) <= 4 Then
+54300     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
 54310       .PNGColorscount = CLng(tStr)
 54320      Else
 54330       If UseStandard Then
