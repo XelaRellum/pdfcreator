@@ -11,7 +11,7 @@ AutosaveFormat|cmbAutosaveFormat.Listindex|Long|0|0|14
 AutosaveStartStandardProgram|chkAutosaveStartStandardProgram.Value|Boolean|0||
 
 ' <Printing Formats Bitmap Colors>
-BMPColorscount|cmbBMPColors.Listindex|Long|1|0|6
+BMPColorscount|cmbBMPColors.Listindex|Long|1|0|7
 BMPResolution||Long|150|1|<
 
 ' <Program>

@@ -139,7 +139,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Rotate(2) As String, Resample(2) As String, Colormodel(2) As String, _
   ColorsPreserveTransfer(1) As String
-50030  Dim PNGColorscount(4) As String, JPEGColorscount(1) As String, BMPColorscount(6) As String, _
+50030  Dim PNGColorscount(4) As String, JPEGColorscount(1) As String, BMPColorscount(7) As String, _
   PCXColorscount(5) As String, TIFFColorscount(7) As String, _
   PSLanguageLevel(3) As String, PSDColorsCount(1) As String, _
   PCLColorsCount(1) As String, RAWColorsCount(2) As String, _
@@ -163,8 +163,8 @@ On Error GoTo ErrPtnr_OnError
 50240
 50250  BMPColorscount(0) = "bmp32b": BMPColorscount(1) = "bmp16m"
 50260  BMPColorscount(2) = "bmp256": BMPColorscount(3) = "bmp16"
-50270  BMPColorscount(4) = "bmp256": BMPColorscount(5) = "bmpmono"
-50280  BMPColorscount(6) = "bmpgray"
+50270  BMPColorscount(4) = "bmpsep8": BMPColorscount(5) = "bmpsep1"
+50280  BMPColorscount(6) = "bmpgray": BMPColorscount(7) = "bmpmono"
 50290
 50300  PCXColorscount(0) = "pcxcmyk": PCXColorscount(1) = "pcx24b"
 50310  PCXColorscount(2) = "pcx256": PCXColorscount(3) = "pcx16"

@@ -54,7 +54,6 @@ var
  lblToolbarFeature3: TLabel;
  lblToolbarFeature4: TLabel;
  yoffs1 : LongInt;
- imgToolbar: TBitmapImage;
  lblToolbarNote: TLabel;
  lblTermsOfUseHyperlink: TLabel;
  lblPrivacyPolicyHyperlink: TLabel;
@@ -62,24 +61,24 @@ var
 begin
  Page := CreateCustomPage(PreviousPageId, ExpandConstant('{cm:ToolbarCaption}'), ExpandConstant('{cm:ToolbarFormDescription}') );
  yoffs1 := 0;
- imgToolbar := TBitmapImage.Create(Page);
- with imgToolbar do
- begin
-  Parent := Page.Surface;
-  ExtractTemporaryFile('Toolbar.bmp');
-  Bitmap.LoadFromFile(ExpandConstant('{tmp}')+'\Toolbar.bmp');
-  Left := ScaleX(0);
-  Top := ScaleY(yoffs1);
-  Width := ScaleX(300);
-  Height := ScaleY(25);
-  AutoSize := True;
- end;
+// imgToolbar := TBitmapImage.Create(Page);
+// with imgToolbar do
+// begin
+//  Parent := Page.Surface;
+//  ExtractTemporaryFile('Toolbar.bmp');
+//  Bitmap.LoadFromFile(ExpandConstant('{tmp}')+'\Toolbar.bmp');
+//  Left := ScaleX(0);
+//  Top := ScaleY(yoffs1);
+//  Width := ScaleX(300);
+//  Height := ScaleY(25);
+//  AutoSize := True;
+// end;
  lblToolbarFeature1 := TLabel.Create(Page);
  with lblToolbarFeature1 do
  begin
   Parent := Page.Surface;
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 30);
+  Top := ScaleY(yoffs1);
   Width := ScaleX(100);
   Height := ScaleY(15);
   Caption := ExpandConstant('{cm:ToolbarFeature1}');
@@ -89,7 +88,7 @@ begin
  begin
   Parent := Page.Surface;
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 50);
+  Top := ScaleY(yoffs1 + 20);
   Width := ScaleX(100);
   Height := ScaleY(15);
   Font.Style := [fsBold];
@@ -101,7 +100,7 @@ begin
  begin
   Parent := Page.Surface;
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 65);
+  Top := ScaleY(yoffs1 + 35);
   Width := ScaleX(100);
   Height := ScaleY(15);
   Font.Style := [fsBold];
@@ -113,7 +112,7 @@ begin
  begin
   Parent := Page.Surface;
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 85);
+  Top := ScaleY(yoffs1 + 65);
   Width := ScaleX(0);
   Height := ScaleY(15);
   Caption := ExpandConstant('{cm:ToolbarFeature4}');
@@ -125,7 +124,7 @@ begin
   Parent := Page.Surface;
   Caption := ExpandConstant('{cm:ToolbarInstallToolbar}');
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 100);
+  Top := ScaleY(yoffs1 + 90);
   Width := ScaleX(418);
   Height := ScaleY(35);
   Checked := True;
@@ -140,7 +139,7 @@ begin
   Parent := Page.Surface;
   Caption := ExpandConstant('{cm:ToolbarUseYahoo}');
   Left := ScaleX(0);
-  Top := ScaleY(yoffs1 + 130);
+  Top := ScaleY(yoffs1 + 120);
   Width := ScaleX(418);
   Checked := True;
   State := cbChecked;
