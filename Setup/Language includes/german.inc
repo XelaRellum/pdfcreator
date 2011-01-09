@@ -60,6 +60,7 @@ german.ServerMode=Serverinstallation
 german.ServerModeDescription=Hinweise zum Servermodus
 german.ServerModeMessage=Sie wollen PDFCreator im Serverbetrieb installieren.%n%nFür den Serverbetrieb sind zwei Voraussetzungen nötig:%n%n1.) Bitte sorgen Sie dafür, dass immer eine Instanz von PDFCreator gestartet ist.%n%n2.) Aktivieren Sie in den Einstellungen das "Automatische Speichern" und wählen Sie ein Verzeichnis für die automatische Speicherung. Verwenden Sie dafür ein Benutzerkonto, dass Schreibzugriffsrechte auf dieses Verzeichnis hat. Für den Verzeichnisnamen können Sie UNC-Pfadangaben, sowie Dateinamen-Tokens verwenden.%n%n     Beispiel: \\file1\users\<username>\PDFs%n%n%nHinweis: Richten Sie bitte selber eine Freigabe für den Drucker mit den dazugehörigen Benutzerrechten ein.
 german.Settings=PDFCreator Einstellungen
+german.ShowHelpAfterSetup=Zeige Hilfe nach der Installation
 german.StandardInstallation=Standardinstallation
 german.StandardInstallationDescription=Installiert einen Drucker, über den alle druckbaren Dateien in PDF, Bilddateien oder Postscriptdateien konvertiert werden können.%nWählen Sie diese Option für die Installation auf einen Einzelplatzrechner oder auf einen Terminalserver.
 german.ToolbarCaption=pdfforge Toolbar

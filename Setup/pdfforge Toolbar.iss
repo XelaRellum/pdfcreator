@@ -1,5 +1,5 @@
 ; pdfforge Toolbar Installation
-; Setup created with Inno Setup QuickStart Pack 5.3.9 (with ISPP) and ISTool 5.3.0.1
+; Setup created with Inno Setup QuickStart Pack 5.4.0a (with ISPP) and InnoIDE 1.0.0.0070
 ; Installation from pdfforge
 
 ;#define Test
@@ -26,6 +26,7 @@
 #define Company              "pdfforge GbR"
 #define Homepage             "http://www.pdfforge.org"
 #define SourceforgeHomepage  "http://www.sf.net/projects/pdfcreator"
+#define WelcomePage          "http://www.pdfforge.org/pdfcreator/welcome"
 #define Appname              "pdfforge Toolbar"
 #define AppExename           "pdfforgeToolbar-stub-1.exe"
 
@@ -109,6 +110,7 @@ StatusRunProgram=
 [Run]
 Filename: {tmp}\{#AppExename}; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=1"" /UM""http://download.mybrowserbar.com/vkits/dlv1/{#ChannelID}/pdfforgeToolbar.msi"""; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: Not DontUseYahooSearch
 Filename: {tmp}\{#AppExename}; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=0"" /UM""http://download.mybrowserbar.com/vkits/dlv1/{#ChannelID}/pdfforgeToolbar.msi"""; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: DontUseYahooSearch
+Filename: {#WelcomePage}; Description: {cm:ShowHelpAfterSetup}; Flags: postinstall shellexec skipifsilent
 
 [Code]
 var
