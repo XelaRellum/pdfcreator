@@ -87,7 +87,7 @@ On Error GoTo ErrPtnr_OnError
 50730    Options = ReadOptions(True, hProfile)
 50740    WriteToSpecialLogfile "Read options: ready"
 50750  End If
-50760
+50760  PrinterTemppath = Options.PrinterTemppath
 50770  WriteToSpecialLogfile ""
 50780  WriteToSpecialLogfile "Options.DirectoryGhostscriptBinaries=" & Options.DirectoryGhostscriptBinaries
 50790  WriteToSpecialLogfile "Options.DirectoryGhostscriptFonts=" & Options.DirectoryGhostscriptFonts
