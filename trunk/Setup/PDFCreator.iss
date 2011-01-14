@@ -332,7 +332,7 @@ Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Component
 ;Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
@@ -360,7 +360,7 @@ Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Compone
 ;Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\33333ukrainian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
 
 ;Reg file
 Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {%tmp}; Components: program; Flags: ignoreversion  external deleteafterinstall; Check: UseOwnREGFile
@@ -744,8 +744,8 @@ Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLang
 ;Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
 ;Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
 
-;Name: languages\danish; Description: Danish; Types: full; Check: Not IsLanguage('danish'); Flags: dontinheritcheck
-;Name: languages\danish; Description: Danish; Types: full custom; Check: IsLanguage('danish'); Flags: dontinheritcheck
+Name: languages\danish; Description: Danish; Types: full; Check: Not IsLanguage('danish'); Flags: dontinheritcheck
+Name: languages\danish; Description: Danish; Types: full custom; Check: IsLanguage('danish'); Flags: dontinheritcheck
 
 ;Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
 ;Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch'); Flags: dontinheritcheck
@@ -826,8 +826,8 @@ Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: Is
 ;Name: languages\ukrainian; Description: Ukrainian; Types: full; Check: Not IsLanguage('ukrainian'); Flags: dontinheritcheck
 ;Name: languages\ukrainian; Description: Ukrainian; Types: full custom; Check: IsLanguage('ukrainian'); Flags: dontinheritcheck
 
-;Name: languages\valencian; Description: Valencian; Types: full; Check: Not IsLanguage('valencian'); Flags: dontinheritcheck
-;Name: languages\valencian; Description: Valencian; Types: full custom; Check: IsLanguage('valencian'); Flags: dontinheritcheck
+Name: languages\valencian; Description: Valencian; Types: full; Check: Not IsLanguage('valencian'); Flags: dontinheritcheck
+Name: languages\valencian; Description: Valencian; Types: full custom; Check: IsLanguage('valencian'); Flags: dontinheritcheck
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Check: UseDesktopiconCommon
