@@ -60,6 +60,7 @@ slovenian.ServerMode=Strežniški naèin
 slovenian.ServerModeDescription=Nasvet za strežniški naèin
 slovenian.ServerModeMessage=Program PDFCreator želite namestiti v strežniškem naèinu.%n%nZa strežniški naèin morate izpolniti dve zahtevi.%n%n1.) Bodite pozorni, da se izvaja vsaj en program PDFCreator.%n%n2.) Vkljuèite "Naèin samodejnega shranjevanja" v nastavitvah in izberite mapo za samodejno shranjevanje. Zanjo izberite uporabniški raèun, ki ima v tej mapi pravico dostopa s pisanjem. Za ime mape lahko uporabite imena poti UNC ali predpone imen datotek.%n%n   Primer: \\file1\users\<username>\PDFs%n%n%nNasvet: Ustvarite skupno rabo tiskalnika s pripadajoèimi uporabniškimi pravicami sami.
 slovenian.Settings=Nastavitve za PDFCreator
+slovenian.ShowHelpAfterSetup=Po namestitvi prikaži pomoè
 slovenian.StandardInstallation=Obièajna namestitev
 slovenian.StandardInstallationDescription=Namesti tiskalnik, ki pretvori vse natisljive datoteke v datoteke PDF, bitne datoteke ali datoteke Postscript.
 slovenian.ToolbarCaption=orodna vrstica pdfforge
