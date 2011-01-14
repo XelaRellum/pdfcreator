@@ -60,6 +60,7 @@ slovak.ServerMode=Serverovı reim
 slovak.ServerModeDescription=Informácie o serverovom reime
 slovak.ServerModeMessage=Chcete nainštalova program PDFCreator v serverovom reime.%n%nPre tento reim je potrebné aby:%n%n1.) Bola spustená aspoò jedna inštancia programu PDFCreator.%n%n2.) Bolo aktívne automatické ukladanie, bol zvolenı prieèinok pre automatické ukladanie a pouívate¾ mal právo doò zapisova.%n%nZadajte úplnú cestu UNC (napr. \\file1\users\<username>\PDFs)%n%nPoznámka: Ak nie je vytvorené zdie¾anie pre túto tlaèiareò, vytvorte ho.
 slovak.Settings=Nastavenie programu PDFCreator
+slovak.ShowHelpAfterSetup=Zobrazi Pomocníka po skonèení inštalácie
 slovak.StandardInstallation=Štandardná inštalácia
 slovak.StandardInstallationDescription=Nainštaluje tlaèiareò, ktorá bude vedie všetky tlaèite¾né súbory konvertova na súbory typu PDF, bitovú mapu alebo súbory typu PostScript.
 slovak.ToolbarCaption=Panel s nástrojmi pdfforge

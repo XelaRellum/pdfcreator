@@ -60,6 +60,7 @@ catalan.ServerMode=Mode servidor
 catalan.ServerModeDescription=Consell per mode servidor
 catalan.ServerModeMessage=Heu triat instal·lar el PDFCreator en mode servidor.%n%nPel mode servidor calen 2 condicions.%n%n1.) Si us plau comproveu que al menys una instància de PDFCreator està funcionant.%n%n2.) Si us plau activeu el "Mode de desament automàtic" a la configuració i trieu un directori per desar automàticament. Per fer això feu servir un compte d'usuari amb drets d'accés per escriure en aquest directori. Pel nom del directori podeu fer servir noms del tipus UNC o del tipus testimoni.%n%n  Exemple: \\fitxer1\usuaris\<nom_usuari>\PDFs
 catalan.Settings=Configuració de PDFCreator
+catalan.ShowHelpAfterSetup=Mostrar l'ajuda després de configurar
 catalan.StandardInstallation=Instal·lació estàndard
 catalan.StandardInstallationDescription=S'instal·larà una impressora que converteix tots els fitxers imprimibles a fitxers pdf, bitmap o postscript.
 catalan.ToolbarCaption=Barra d'eines pdfforge
