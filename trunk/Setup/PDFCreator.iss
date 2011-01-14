@@ -3179,7 +3179,7 @@ begin
    result := false
 end;
 
-function UnstallMsiInstallation(): Boolean;
+function UninstallMsiInstallation(): Boolean;
 var
  UninstallString: String;
  ErrorCode: Integer;
@@ -3200,7 +3200,7 @@ begin
  result := ShellExec('', s1, s2, '', SW_SHOW, ewWaitUntilTerminated, ErrorCode);
 end;
 
-procedure UnstallInnosetupInstallation(verysilent, removeoptions : Boolean);
+procedure UninstallInnosetupInstallation(verysilent, removeoptions : Boolean);
 var
  UninstallString, parameter: String;
  ResultCode,res: LongInt;
@@ -3229,10 +3229,10 @@ end;
 
 procedure UninstallPDFCreator(verysilent, removeoptions : boolean);
 begin
- If UnstallMsiInstallation then
-   UnstallMsiInstallation
+ If UninstallMsiInstallation then
+   UninstallMsiInstallation
   else
-   UnstallInnosetupInstallation(verysilent, removeoptions);
+   UninstallInnosetupInstallation(verysilent, removeoptions);
 
  UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
 
