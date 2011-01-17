@@ -42,7 +42,7 @@ On Error GoTo ErrPtnr_OnError
 50220   Set process = ProcessIDs(i)
 50230   If process.ID > 0 Then
 50240    If IsService(process.Modulname, AllActiveServices) = False Then
-50250      If LCase$(process.Modulname) <> "iexplore.exe" And LCase$(process.Modulname) <> "chrome.exe" And LCase$(process.Modulname) <> "acrord32.exe" Then
+50250      If ProcessWithLessPrivileges(process.Modulname) = False Then
 50260        If Logging = True Then
 50270         WriteToSpecialLogfile "Process (ProcessID = " & process.ID & ", Modulename = " & process.Modulname & ") seems not to be a service."
 50280        End If
@@ -79,6 +79,38 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modRunAsUser", "GetUserSessionToken")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function ProcessWithLessPrivileges(processName As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim processList As String, processes() As String, i As Long
+50020  Dim reg As clsRegistry
+50030  Set reg = New clsRegistry
+50040  With reg
+50050   .hkey = HKEY_LOCAL_MACHINE
+50060   .KeyRoot = "Software\PDFCreator\PDFSpooler"
+50070   processList = .GetRegistryValue("ProcessWithLessPrivileges")
+50080  End With
+50090  processes = Split(processList, "|")
+50100  For i = LBound(processes) To UBound(processes)
+50110   If StrComp(processName, processes(i), vbTextCompare) = 0 Then
+50120    ProcessWithLessPrivileges = True
+50130    Exit Function
+50140   End If
+50150  Next i
+50160  ProcessWithLessPrivileges = False
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modRunAsUser", "ProcessWithLessPrivileges")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
