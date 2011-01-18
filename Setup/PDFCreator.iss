@@ -342,7 +342,7 @@ Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\hebrew.ini; DestDir: {app}\languages; Components: languages\hebrew; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\irish.ini; DestDir: {app}\languages; Components: languages\irish; Flags: ignoreversion
@@ -576,6 +576,7 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: TranstoolV
 
 ;PDFCreator HKLM
 Root: HKLM; Subkey: SOFTWARE\PDFCreator\Program; ValueType: string; ValueName: ApplicationVersion; Valuedata: {#AppVersion}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: SOFTWARE\PDFCreator\PDFSpooler; ValueType: string; ValueName: ProcessWithLessPrivileges; Valuedata: "iexplore.exe|chrome.exe|acrord32.exe"; Flags: uninsdeletevalue
 
 #Ifdef GhostscriptVersion
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptCopyright; Valuedata: {#GhostscriptLicense}; Flags: uninsdeletevalue; Components: ghostscript
@@ -773,8 +774,8 @@ Name: languages\german; Description: German; Types: full custom; Check: IsLangua
 ;Name: languages\hebrew; Description: Hebrew; Types: full; Check: Not IsLanguage('hebrew'); Flags: dontinheritcheck
 ;Name: languages\hebrew; Description: Hebrew; Types: full custom; Check: IsLanguage('hebrew'); Flags: dontinheritcheck
 
-;Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
-;Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
+Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
+Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
 
 ;Name: languages\indonesian; Description: Indonesian; Types: full; Check: Not IsLanguage('indonesian'); Flags: dontinheritcheck
 ;Name: languages\indonesian; Description: Indonesian; Types: full custom; Check: IsLanguage('indonesian'); Flags: dontinheritcheck
@@ -3266,6 +3267,16 @@ begin
  RegDeleteKeyIncludingSubkeys(HKEY_USERS, '.DEFAULT\Software\PDFCreator');
  RegDeleteKeyIncludingSubkeys(HKEY_CURRENT_USER, 'Software\PDFCreator');
  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, 'Software\PDFCreator');
+end;
+
+function NeedRestart(): Boolean;
+begin
+ if IsServiceRunning('Spooler') then
+   result := false
+  else begin
+   SaveStringToFile(LogFile, 'Spooler service: is NOT running -> Suggest a restart'#13#10, True);
+   result := true
+ end  
 end;
 
 function InitializeSetup(): Boolean;
