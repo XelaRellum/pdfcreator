@@ -1,6 +1,6 @@
-Title: PDFCreator Version 1.1.0
+Title: PDFCreator Version 1.2.0
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: November 21st,  2010
+Releasedate: January 23rd,  2011
 
 Look at the readme.txt-Files in 'Setup', 'Printer', 'Printer\Redmon'.
 
