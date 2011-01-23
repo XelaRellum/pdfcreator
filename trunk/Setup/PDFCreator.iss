@@ -160,6 +160,7 @@ ExtraDiskSpaceRequired=10303775
 InternalCompressLevel={#InternalCompressLevel}
 LanguageDetectionMethod=locale
 LicenseFile=.\License\Program license - english.rtf
+LZMAUseSeparateProcess=yes
 #Ifdef IncludeGhostscript
 OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_setup
 #ELSE
