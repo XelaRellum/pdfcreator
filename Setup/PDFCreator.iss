@@ -342,14 +342,14 @@ Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components
 ;Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\hebrew.ini; DestDir: {app}\languages; Components: languages\hebrew; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\hebrew.ini; DestDir: {app}\languages; Components: languages\hebrew; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\irish.ini; DestDir: {app}\languages; Components: languages\irish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\japanese.ini; DestDir: {app}\languages; Components: languages\japanese; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\latvian.ini; DestDir: {app}\languages; Components: languages\latvian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
@@ -772,8 +772,8 @@ Name: languages\german; Description: German; Types: full custom; Check: IsLangua
 ;Name: languages\greek; Description: Greek; Types: full; Check: Not IsLanguage('greek'); Flags: dontinheritcheck
 ;Name: languages\greek; Description: Greek; Types: full custom; Check: IsLanguage('greek'); Flags: dontinheritcheck
 
-;Name: languages\hebrew; Description: Hebrew; Types: full; Check: Not IsLanguage('hebrew'); Flags: dontinheritcheck
-;Name: languages\hebrew; Description: Hebrew; Types: full custom; Check: IsLanguage('hebrew'); Flags: dontinheritcheck
+Name: languages\hebrew; Description: Hebrew; Types: full; Check: Not IsLanguage('hebrew'); Flags: dontinheritcheck
+Name: languages\hebrew; Description: Hebrew; Types: full custom; Check: IsLanguage('hebrew'); Flags: dontinheritcheck
 
 Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
 Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
@@ -789,8 +789,8 @@ Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: Is
 ;Name: languages\japanese; Description: Japanese; Types: full; Check: Not IsLanguage('japanese'); Flags: dontinheritcheck
 ;Name: languages\japanese; Description: Japanese; Types: full custom; Check: IsLanguage('japanese'); Flags: dontinheritcheck
 
-;Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
-;Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
+Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
+Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
 
 ;Name: languages\latvian; Description: Latvian; Types: full; Check: Not IsLanguage('latvian'); Flags: dontinheritcheck
 ;Name: languages\latvian; Description: Latvian; Types: full custom; Check: IsLanguage('latvian'); Flags: dontinheritcheck
