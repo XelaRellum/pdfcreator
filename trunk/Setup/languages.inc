@@ -13,14 +13,14 @@ Name: french;             MessagesFile: compiler:Languages\French.isl
 ;Name: galician;           MessagesFile: Innosetup languages files\Galician-2-5.1.11.isl
 Name: german;             MessagesFile: compiler:Languages\German.isl; LicenseFile: .\License\Program license - german.rtf
 ;Name: greek;              MessagesFile: Innosetup languages files\Greek-4-5.1.11.isl
-;Name: hebrew;             MessagesFile: compiler:Languages\Hebrew.isl
+Name: hebrew;             MessagesFile: compiler:Languages\Hebrew.isl
 Name: hungarian;          MessagesFile: compiler:Languages\Hungarian.isl
 ;Name: indonesian;         MessagesFile: Innosetup languages files\Indonesian-5.1.11.isl
 ;Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 ;Name: japanese;           MessagesFile: compiler:Languages\Japanese.isl
 ;Name: korean;             MessagesFile: Innosetup languages files\Korean-5-5.1.11.isl
 ;Name: latvian;            MessagesFile: Innosetup languages files\Latvian-1-5.1.11.isl
-;Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.11.isl
+Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.11.isl
 ;Name: norwegian_bokmal;   MessagesFile: compiler:Languages\Norwegian.isl
 ;Name: polish;             MessagesFile: compiler:Languages\Polish.isl
 Name: portuguese_br;      MessagesFile: compiler:Languages\BrazilianPortuguese.isl
