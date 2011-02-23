@@ -3,8 +3,8 @@ Name: english;            MessagesFile: compiler:Default.isl
 ;Name: basque;             MessagesFile: compiler:Languages\Basque.isl
 Name: catalan;            MessagesFile: compiler:Languages\Catalan.isl
 Name: chinese_simplified; MessagesFile: Innosetup languages files\ChineseSimp-12-5.1.11.isl
-;Name: chinese_traditional; MessagesFile: Innosetup languages files\ChineseTrad-2-5.1.11.isl
-;Name: czech;              MessagesFile: compiler:Languages\Czech.isl
+Name: chinese_traditional; MessagesFile: Innosetup languages files\ChineseTrad-2-5.1.11.isl
+Name: czech;              MessagesFile: compiler:Languages\Czech.isl
 Name: danish;              MessagesFile: compiler:Languages\Danish.isl
 Name: dutch;              MessagesFile: compiler:Languages\Dutch.isl
 ;Name: estonian;           MessagesFile: Innosetup languages files\Estonian-2-5.1.0.isl
@@ -24,7 +24,7 @@ Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5
 ;Name: norwegian_bokmal;   MessagesFile: compiler:Languages\Norwegian.isl
 Name: polish;             MessagesFile: compiler:Languages\Polish.isl
 Name: portuguese_br;      MessagesFile: compiler:Languages\BrazilianPortuguese.isl
-;Name: romanian;           MessagesFile: Innosetup languages files\Romanian-6-5.1.11.isl
+Name: romanian;           MessagesFile: Innosetup languages files\Romanian-6-5.1.11.isl
 ;Name: russian;            MessagesFile: compiler:Languages\Russian.isl
 Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
 Name: slovenian;          MessagesFile: compiler:Languages\Slovenian.isl
