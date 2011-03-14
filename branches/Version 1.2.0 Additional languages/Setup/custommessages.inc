@@ -32,5 +32,5 @@
 #include "Language includes\spanish.inc"
 #include "Language includes\swedish.inc"
 ;#include "Language includes\ukrainian.inc"
-;#include "Language includes\turkish.inc"
+#include "Language includes\turkish.inc"
 #include "Language includes\valencian.inc"

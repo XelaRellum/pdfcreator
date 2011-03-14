@@ -736,6 +736,9 @@ Name: languages; Description: {cm:Languages}; Types: full custom
 ;Name: languages\basque; Description: Basque; Types: full; Check: Not IsLanguage('basque'); Flags: dontinheritcheck
 ;Name: languages\basque; Description: Basque; Types: full custom; Check: IsLanguage('basque'); Flags: dontinheritcheck
 
+Name: languages\bosnian; Description: Bosnian; Types: full; Check: Not IsLanguage('bosnian'); Flags: dontinheritcheck
+Name: languages\bosnian; Description: Bosnian; Types: full custom; Check: IsLanguage('bosnian'); Flags: dontinheritcheck
+
 Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
 Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
 
