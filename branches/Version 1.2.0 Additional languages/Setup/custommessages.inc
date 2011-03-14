@@ -1,6 +1,7 @@
 ; english must be the first entry
 #include "Language includes\english.inc"
 ;#include "Language includes\basque.inc"
+#include "Language includes\bosnian.inc"
 #include "Language includes\catalan.inc"
 #include "Language includes\chinese_simplified.inc"
 #include "Language includes\chinese_traditional.inc"
