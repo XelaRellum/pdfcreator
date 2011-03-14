@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Einstellungen in PDFCreator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../media/helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Hilfe</td>
+  </tr>
+  <tr>
+    <td background="../media/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Einstellungen in PDFCreator</p>
+<p>Seit Version 0.8.1 RC8 verwendet PDFCreator zum Speichern der Einstellungen  die Registry. Wird die &quot;Standardinstallation&quot; gewählt speichert PDFCreator alle  Einstellungen unter den folgendem Schlüssel:  <em><strong>HKCU\Software\PDFCreator</strong></em></p><p>Bei einem Betriebssystem von Windows 2000 und darüber, speichert das Setup  einige Einstellungen für den Standardbenutzer unter dem Schlüssel:  <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em><br /><br />Bei der  &quot;Serverinstallation&quot; werden die Einstellungen unter dem Schlüssel:  <em><strong>HKLM\Software\PDFCreator</strong></em> gespeichert.<br /><br /><strong>Vorgehensweise  beim Lesen der Einstellungen</strong></p><p>Bei einem Betriebssystem von Windows 2000 und darüber liest PDFCreator zuerst  die Einstellungen des Standardbenutzers. Sind dort keine Einstellungen  vorhanden, verwendet PDFCreator interne Standardeinstellungen. Danach liest  PDFCreator die Einstellungen des Benutzer. Alle gefundenen Einstellungen  überschreiben die Standardeinstellungen. Abschließend überprüft PDFCreator ob  Rechnereinstellungen  in<br /><em>HKLM\Software\PDFCreator</em><br />vorhanden sind.  Gefundenen Rechnereinstellungen überschreiben die Einstellungen des Benutzers.  Damit wird es Administratoren ermöglicht, Einstellungen für alle Benutzer  festzulegen.<br /><br /><strong>Vorgehensweise beim Speichern der  Einstellungen</strong></p><p>Wurde die &quot;Standardinstallation&quot; gewählt, speichert PDFCreator die  Einstellungen entweder unter: <br /><em>HKCU\Software\PDFCreator</em> <br /><br />Wurde die  &quot;Serverinstallation&quot; gewählt, speichert PDFCreator die Einstellungen entweder  unter: <br /><em>HKLM\Software\PDFCreator </em><br /><br /><strong>Hinweis:</strong> Werden andere Einstellungen als Standardwerte  benötigt, können der Kommandozeilenparameter /REGFile= des  Setupprogrammes verwendet werden.  Für weitere Informationen verwenden Sie den Kommandozeilenparameter /?.<br /><span style="color: rgb(204, 0, 0);">Seit Version 0.9.9 wird der alte INI-Modus nicht mehr unterstützt.</span></p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
