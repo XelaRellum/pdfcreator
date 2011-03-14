@@ -19,7 +19,7 @@
 #endif
 
 #Ifdef IncludeGhostscript
- #define GhostscriptVersion "9.00"
+ #define GhostscriptVersion "9.01"
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 
