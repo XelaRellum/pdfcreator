@@ -14,20 +14,12 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   8
       Top             =   480
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   4604
-      Caption         =   "Document 2"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   4604
+      caption         =   "Document 2"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptDocument.ctx":0312
       Begin VB.CheckBox chkUseFixPaperSize 
          Appearance      =   0  '2D
          Caption         =   "Use a fix papersize"
@@ -106,20 +98,12 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   17
       Top             =   2880
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   4604
-      Caption         =   "Stamp"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   4604
+      caption         =   "Stamp"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptDocument.ctx":033E
       Begin VB.TextBox txtStampString 
          Appearance      =   0  '2D
          Height          =   315
@@ -211,20 +195,12 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   1
       Top             =   480
       Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   3969
-      Caption         =   "Document 1"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   10927
+      _extenty        =   3969
+      caption         =   "Document 1"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptDocument.ctx":036A
       Begin VB.CheckBox chkUseCreationDateNow 
          Appearance      =   0  '2D
          Caption         =   "Use the current Date/Time for 'Creation Date'"
@@ -257,9 +233,9 @@ Begin VB.UserControl ctlOptDocument
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "ctlOptDocument.ctx":0312
+         ItemData        =   "ctlOptDocument.ctx":0396
          Left            =   3720
-         List            =   "ctlOptDocument.ctx":0314
+         List            =   "ctlOptDocument.ctx":0398
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
          Top             =   840
@@ -320,21 +296,78 @@ On Error GoTo ErrPtnr_OnError
 50010  ControlsEnabled = value
 50020
 50030  chkUseStandardAuthor.Enabled = value
-50040  chkUseCreationDateNow.Enabled = value
-50050  chkOnePagePerFile.Enabled = value
-50060  dmFraProgDocument1.Enabled = value
-50070
-50080  lblStampString.Enabled = value
-50090  txtStampString.Enabled = value
-50100  lblStampFontcolor.Enabled = value
-50110  picStampFontColor.Enabled = value
-50120  lblFontNameSize.Enabled = value
-50130  chkStampUseOutlineFont.Enabled = value
-50140
-50150  dmFraProgStamp.Enabled = value
-50160
-50170  chkUseFixPaperSize.Enabled = value
-50180  dmFraProgDocument2.Enabled = value
+50040  If chkUseStandardAuthor.Enabled = True And chkUseStandardAuthor.value = 1 Then
+50050    txtStandardAuthor.Enabled = True
+50060    txtStandardAuthor.BackColor = &H80000005
+50070    lblAuthorTokens.Enabled = True
+50080    cmbAuthorTokens.Enabled = True
+50090    cmbAuthorTokens.BackColor = &H80000005
+50100   Else
+50110    txtStandardAuthor.Enabled = False
+50120    txtStandardAuthor.BackColor = &H8000000F
+50130    lblAuthorTokens.Enabled = False
+50140    cmbAuthorTokens.Enabled = False
+50150    cmbAuthorTokens.BackColor = &H8000000F
+50160  End If
+50170
+50180  chkUseCreationDateNow.Enabled = value
+50190  chkOnePagePerFile.Enabled = value
+50200  dmFraProgDocument1.Enabled = value
+50210
+50220  lblStampString.Enabled = value
+50230  txtStampString.Enabled = value
+50240  lblStampFontcolor.Enabled = value
+50250  picStampFontColor.Enabled = value
+50260  lblFontNameSize.Enabled = value
+50270  chkStampUseOutlineFont.Enabled = value
+50280  If chkStampUseOutlineFont.Enabled = True And chkStampUseOutlineFont.value = 1 Then
+50290    lblOutlineFontThickness.Enabled = True
+50300    txtOutlineFontThickness.Enabled = True
+50310    txtOutlineFontThickness.BackColor = &H80000005
+50320   Else
+50330    lblOutlineFontThickness.Enabled = False
+50340    txtOutlineFontThickness.Enabled = False
+50350    txtOutlineFontThickness.BackColor = &H8000000F
+50360  End If
+50370
+50380  dmFraProgStamp.Enabled = value
+50390
+50400  dmFraProgDocument2.Enabled = value
+50410  chkUseFixPaperSize.Enabled = value
+50420  If chkUseFixPaperSize.Enabled = True And chkUseFixPaperSize.value = 1 Then
+50430    chkUseCustomPapersize.Enabled = True
+50440    If chkUseCustomPapersize.value = 1 Then
+50450      lblCustomPapersizeWidth.Enabled = True
+50460      lblCustomPapersizeHeight.Enabled = True
+50470      txtCustomPapersizeWidth.Enabled = True
+50480      txtCustomPapersizeWidth.BackColor = &H80000005
+50490      txtCustomPapersizeHeight.Enabled = True
+50500      txtCustomPapersizeHeight.BackColor = &H80000005
+50510      lblCustomPapersizeInfo.Enabled = True
+50520      cmbDocumentPapersizes.Enabled = False
+50530      cmbDocumentPapersizes.BackColor = &H8000000F
+50540     Else
+50550      cmbDocumentPapersizes.Enabled = True
+50560      cmbDocumentPapersizes.BackColor = &H80000005
+50570      lblCustomPapersizeWidth.Enabled = False
+50580      lblCustomPapersizeHeight.Enabled = False
+50590      txtCustomPapersizeWidth.Enabled = False
+50600      txtCustomPapersizeWidth.BackColor = &H8000000F
+50610      txtCustomPapersizeHeight.Enabled = False
+50620      txtCustomPapersizeHeight.BackColor = &H8000000F
+50630      lblCustomPapersizeInfo.Enabled = False
+50640    End If
+50650   Else
+50660    cmbDocumentPapersizes.Enabled = False
+50670    chkUseCustomPapersize.Enabled = False
+50680    lblCustomPapersizeWidth.Enabled = False
+50690    lblCustomPapersizeHeight.Enabled = False
+50700    txtCustomPapersizeWidth.Enabled = False
+50710    txtCustomPapersizeWidth.BackColor = &H8000000F
+50720    txtCustomPapersizeHeight.Enabled = False
+50730    txtCustomPapersizeHeight.BackColor = &H8000000F
+50740    lblCustomPapersizeInfo.Enabled = False
+50750  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -785,16 +818,18 @@ On Error GoTo ErrPtnr_OnError
 50070    txtCustomPapersizeHeight.BackColor = &H80000005
 50080    lblCustomPapersizeInfo.Enabled = True
 50090    cmbDocumentPapersizes.Enabled = False
-50100   Else
-50110    cmbDocumentPapersizes.Enabled = True
-50120    lblCustomPapersizeWidth.Enabled = False
-50130    lblCustomPapersizeHeight.Enabled = False
-50140    txtCustomPapersizeWidth.Enabled = False
-50150    txtCustomPapersizeWidth.BackColor = &H8000000F
-50160    txtCustomPapersizeHeight.Enabled = False
-50170    txtCustomPapersizeHeight.BackColor = &H8000000F
-50180    lblCustomPapersizeInfo.Enabled = False
-50190  End If
+50100    cmbDocumentPapersizes.BackColor = &H8000000F
+50110   Else
+50120    cmbDocumentPapersizes.Enabled = True
+50130    cmbDocumentPapersizes.BackColor = &H80000005
+50140    lblCustomPapersizeWidth.Enabled = False
+50150    lblCustomPapersizeHeight.Enabled = False
+50160    txtCustomPapersizeWidth.Enabled = False
+50170    txtCustomPapersizeWidth.BackColor = &H8000000F
+50180    txtCustomPapersizeHeight.Enabled = False
+50190    txtCustomPapersizeHeight.BackColor = &H8000000F
+50200    lblCustomPapersizeInfo.Enabled = False
+50210  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -864,13 +899,15 @@ On Error GoTo ErrPtnr_OnError
 50020    txtStandardAuthor.Enabled = True
 50030    txtStandardAuthor.BackColor = &H80000005
 50040    cmbAuthorTokens.Enabled = True
-50050    lblAuthorTokens.Enabled = True
-50060   Else
-50070    txtStandardAuthor.Enabled = False
-50080    txtStandardAuthor.BackColor = &H8000000F
-50090    cmbAuthorTokens.Enabled = False
-50100    lblAuthorTokens.Enabled = False
-50110  End If
+50050    cmbAuthorTokens.BackColor = &H80000005
+50060    lblAuthorTokens.Enabled = True
+50070   Else
+50080    txtStandardAuthor.Enabled = False
+50090    txtStandardAuthor.BackColor = &H8000000F
+50100    cmbAuthorTokens.Enabled = False
+50110    cmbAuthorTokens.BackColor = &H8000000F
+50120    lblAuthorTokens.Enabled = False
+50130  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
