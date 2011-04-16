@@ -19,7 +19,7 @@
 #endif
 
 #Ifdef IncludeGhostscript
- #define GhostscriptVersion "9.01"
+ #define GhostscriptVersion "9.02"
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 
@@ -479,16 +479,21 @@ Source: ..\PlugIns\pdfforge\pdfforge.chm; DestDir: {app}\PlugIns\pdfforge\; Comp
 Source: ..\PlugIns\pdfforge\itextsharp.dll; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
 Source: ..\PlugIns\pdfforge\readme.txt; DestDir: {app}\PlugIns\pdfforge\; Components: program; Check: IsDotNET20Installed
 
+; Images2PDF
+Source: ..\Images2PDF\Images2PDF.exe; DestDir: {app}\Images2PDF\; Components: Images2PDF
+Source: ..\Images2PDF\DataStorage.dll; DestDir: {app}\Images2PDF\; Components: Images2PDF
+
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; OnlyBelowVersion: 0,5.2
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; Permissions: users-modify; MinVersion: 0,6.0
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; IconFilename: {app}\{#AppExename}; IconIndex: 0; Flags: createonlyiffileexists
-Name: {group}\AFPL License; Filename: {app}\AFPL License.txt; WorkingDir: {app}
-Name: {group}\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
-Name: {group}\FairPlay License; Filename: {app}\FairPlay License.txt; WorkingDir: {app}
+Name: {group}\Licenses\AFPL License; Filename: {app}\AFPL License.txt; WorkingDir: {app}
+Name: {group}\Licenses\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
+Name: {group}\Licenses\FairPlay License; Filename: {app}\FairPlay License.txt; WorkingDir: {app}
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
+Name: {group}\Images2PDF; Filename: {app}\Images2PDF\Images2PDF.exe; WorkingDir: {app}\Images2PDF; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\{cm:Donation}; Filename: {app}\{cm:Donation}.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 27
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 26
@@ -518,31 +523,31 @@ Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: IconFile; Str
 ;PrinterMonitor
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}; Permissions: system-full admins-full users-read
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Arguments; ValueData: -PPDFCREATORPRINTER; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Command; ValueData: {code:GetShortname|{syswow64}\{#SpoolerExename}}; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Delay; ValueData: 300; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Description; ValueData: PDFCreator Redirected Port; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileDebug; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileUse; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Output; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Printer; ValueData: {code:GetPrintername}; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Printerror; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: ShowWindow; ValueData: 0; Flags: uninsdeletevalue; Permissions: system-full admins-full users-read
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Arguments; ValueData: -PPDFCREATORPRINTER; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Command; ValueData: {code:GetShortname|{syswow64}\{#SpoolerExename}}; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Delay; ValueData: 300; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Description; ValueData: "PDFCreator Redirected Port"; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileDebug; ValueData: 0; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileUse; ValueData: 0; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Output; ValueData: 0; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Printer; ValueData: {code:GetPrintername}; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Printerror; ValueData: 0; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Permissions: "system-full admins-full users-read"; 
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: ShowWindow; ValueData: 0; Permissions: "system-full admins-full users-read"; 
 
 ;PrinterDriver settings
 ;Root: HKLM; SubKey: System\CurrentControlSet\Control\Print\Printers\PDFCreator; ValueType: binary; ValueName: Default DevMode; ValueData: {#PrinterDriverSettings1}; Flags: uninsdeletevalue; MinVersion: 4.0.950,0; OnlyBelowVersion: 0,0
-Root: HKU; SubKey: .DEFAULT\Printers\DevModePerUser; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
-Root: HKU; SubKey: .DEFAULT\Printers\DevModes2; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
-Root: HKCU; SubKey: Printers\DevModePerUser; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
-Root: HKCU; SubKey: Printers\DevModes2; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; Flags: uninsdeletevalue; MinVersion: 0,4.0.1381
+Root: HKU; SubKey: .DEFAULT\Printers\DevModePerUser; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; MinVersion: 0,4.0.1381
+Root: HKU; SubKey: .DEFAULT\Printers\DevModes2; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; MinVersion: 0,4.0.1381
+Root: HKCU; SubKey: Printers\DevModePerUser; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; MinVersion: 0,4.0.1381
+Root: HKCU; SubKey: Printers\DevModes2; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; MinVersion: 0,4.0.1381
 
 ;Uninstall - Deletekey
-Root: HKLM; Subkey: {#PrintReg}Printers\{code:GetPrintername}; Flags: uninsdeletekey dontcreatekey
-Root: HKLM; Subkey: {#PrintReg}Environments\Windows 4.0\Drivers\{code:GetPrinterdrivername}; Flags: uninsdeletekey dontcreatekey; MinVersion: 4.00.950,0
-Root: HKLM; Subkey: {#PrintReg}Environments\Windows NT x86\Drivers\{code:GetPrinterdrivername}; Flags: uninsdeletekey dontcreatekey; MinVersion: 0,4.00.1381
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; Flags: uninsdeletekey dontcreatekey
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}; Flags: uninsdeletekey dontcreatekey
+Root: HKLM; Subkey: {#PrintReg}Printers\{code:GetPrintername}; Flags: dontcreatekey
+Root: HKLM; Subkey: {#PrintReg}Environments\Windows 4.0\Drivers\{code:GetPrinterdrivername}; Flags: dontcreatekey; MinVersion: 4.00.950,0
+Root: HKLM; Subkey: {#PrintReg}Environments\Windows NT x86\Drivers\{code:GetPrinterdrivername}; Flags: dontcreatekey; MinVersion: 0,4.00.1381
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; Flags: dontcreatekey
+Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}; Flags: dontcreatekey
 
 ;File-Assoc
 Root: HKCR; SubKey: .ps; ValueType: string; ValueData: PostScript; Flags: uninsdeletekeyifempty noerror; Tasks: fileassoc
@@ -720,6 +725,9 @@ Name: program; Description: {cm:Programfiles}; Types: full compact custom; Flags
 Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Flags: fixed; Check: IsGhostscriptInstalled(true)
 Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Check: IsGhostscriptInstalled(false)
 #ENDIF
+
+Name: Images2PDF; Description: Images2PDF; Types: full custom; Check: IsDotNET20Installed
+Name: Images2PDF; Description: Images2PDF ({cm:RequiresDotNet20}); Flags: fixed; Check: Not IsDotNET20Installed
 
 Name: COMsamples; Description: {cm:COMsamples}; Types: full custom
 
@@ -1064,7 +1072,7 @@ var progTitel, progHandle: TArrayOfString;
 
     cmdlPrintername, cmdlPPDFile, cmdlREGFile,
     cmdlSaveInfFile, cmdlLoadInfFile: String;
-    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions: Boolean;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions, cmdlDontInstallPrinters: Boolean;
     ToolbarInstallSetting: LongInt;
 
     desktopicon, desktopicon_common, desktopicon_user,
@@ -1163,6 +1171,29 @@ end;
 function GetActiveLanguage(Default:string):String;
 begin
  Result:=ActiveLanguage();
+end;
+
+procedure Split(Expression, Delimeter : String; var res :TArrayOfString);
+var
+ i, l :Integer; sl :tStringList;
+begin
+ SetArrayLength(res, 0);
+ sl:=tStringList.Create;
+ try
+  l:=Length(Delimeter);
+  while Length(Expression)>0 do begin
+   i:=pos(Delimeter, Expression);
+   if i <= 0 then
+    i:=Length(Expression)+1;
+   sl.Add (Copy(Expression, 1, i-1));
+   Delete(Expression, 1, i+l-1);
+  end;
+  SetArrayLength (res, sl.Count);
+  for i:=0 to (sl.Count-1) do
+   res[i]:=sl[i];
+ finally
+  sl.free;
+ end;
 end;
 
 function GetPrinterTemppath(Default:string): String;
@@ -2024,7 +2055,10 @@ end;
 
 function IsPrinterInstallationSuccessfully:Boolean;
 begin
- Result:=PrinterInstallationSuccessfully
+ if cmdlDontInstallPrinters = false then
+   Result:=PrinterInstallationSuccessfully
+  else
+   Result:=true;
 end;
 
 function StartService(ServiceName: string) : boolean;
@@ -2755,29 +2789,6 @@ begin
  Result:=ResultStr;
 end;
 
-procedure Split(Expression, Delimeter : String; var res :TArrayOfString);
-var
- i, l :Integer; sl :tStringList;
-begin
- SetArrayLength(res, 0);
- sl:=tStringList.Create;
- try
-  l:=Length(Delimeter);
-  while Length(Expression)>0 do begin
-   i:=pos(Delimeter, Expression);
-   if i <= 0 then
-    i:=Length(Expression)+1;
-   sl.Add (Copy(Expression, 1, i-1));
-   Delete(Expression, 1, i+l-1);
-  end;
-  SetArrayLength (res, sl.Count);
-  for i:=0 to (sl.Count-1) do
-   res[i]:=sl[i];
- finally
-  sl.free;
- end;
-end;
-
 function IsDirInSystemEnvironPath(const Directory :String):Boolean;
 var
  Path :String; d:array of string; i:Integer;
@@ -2890,6 +2901,8 @@ begin
    cmdlForceInstall:=true;
   if uppercase(paramstr(i))='/REMOVEOPTIONS' then
    cmdlRemoveOptions:=true;
+  if uppercase(paramstr(i))='/DONTINSTALLPRINTERS' then
+   cmdlDontInstallPrinters:=true;
 
   cmdParam:='/LoadInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -3221,6 +3234,8 @@ begin
  if removeoptions = true then
    parameter := parameter + ' /removeoptions';
 
+ parameter := parameter + ' /dontuninstallprinters';
+
  RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString);
  if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString) then
   if Exec(UninstallString, parameter, '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
@@ -3236,14 +3251,15 @@ begin
  end
 end;
 
-procedure UninstallPDFCreator(verysilent, removeoptions : boolean);
+procedure UninstallPDFCreator(verysilent, removeoptions, dontUninstallPrinters : boolean);
 begin
  If UninstallMsiInstallation then
    UninstallMsiInstallation
   else
    UninstallInnosetupInstallation(verysilent, removeoptions);
 
- UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
+ if dontUninstallPrinters=false then
+  UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
 
  RemovePDFCreatorUninstallKey;
 end;
@@ -3327,12 +3343,13 @@ begin
  
  res := 0;
  if IsPDFCreatorInstalled then begin
+  cmdlDontInstallPrinters := true;
   if cmdlVerySilent=true then begin
-    UninstallPDFCreator(true, cmdlRemoveOptions);
+    UninstallPDFCreator(true, cmdlRemoveOptions, cmdlDontInstallPrinters);
    end else begin 
     res := MsgBox(Msg[11], mbConfirmation, MB_YESNO);
     if res = IDYES then
-      UninstallPDFCreator(false, cmdlRemoveOptions)
+      UninstallPDFCreator(false, cmdlRemoveOptions, cmdlDontInstallPrinters)
      else begin
       result := false;
       exit
@@ -3340,7 +3357,7 @@ begin
    end
  end
  result := false;
-
+ 
  ToolbarInstallSetting := 2;
  If cmdlLoadInfFile<>'' then LoadInf;
 
@@ -3768,88 +3785,93 @@ var
 begin
   if CurStep = ssPostinstall then begin
    AdditionalPrinterProgressSteps:=5; AdditionalPrinterProgressIndex:=0;
-   If InstallWin9xPrinterdriver then
-    AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
-   If InstallWinNtPrinterdriver then
-    AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
-   If InstallWin2kXP2k3Printerdriver32bit then
-    AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
-   If InstallWinXP2k3Printerdriver64bit then
-    AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
+   If cmdlDontInstallPrinters = false then begin
+    If InstallWin9xPrinterdriver then
+     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
+    If InstallWinNtPrinterdriver then
+     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
+    If InstallWin2kXP2k3Printerdriver32bit then
+     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
+    If InstallWinXP2k3Printerdriver64bit then
+     AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
+   end;
    ProgressPage.SetProgress(0, 0);
    ProgressPage.Show;
    try
-     PrintSystem:='windows';
-     SaveStringToFile(LogFile, 'Printerstatus before installing:' + #13#10, True);
-     SavePrinterInformations;
-     PrinterDriverDirectoryLog('Windows 4.0');
-     If UsingWinNT then
-      PrinterDriverDirectoryLog('Windows NT x86');
-     If IsWin64 then begin
-      PrinterDriverDirectoryLog('Windows x64');
-      PrinterDriverDirectoryLog('Windows IA64');
-     end;
-     res:=true;
+     If cmdlDontInstallPrinters = false then begin
+      PrintSystem:='windows';
+      SaveStringToFile(LogFile, 'Printerstatus before installing:' + #13#10, True);
+      SavePrinterInformations;
+      PrinterDriverDirectoryLog('Windows 4.0');
+      If UsingWinNT then
+       PrinterDriverDirectoryLog('Windows NT x86');
+      If IsWin64 then begin
+       PrinterDriverDirectoryLog('Windows x64');
+       PrinterDriverDirectoryLog('Windows IA64');
+      end;
+      res:=true;
 
-     AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
-     ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
-     ProgressPage.SetText(ExpandConstant('{cm:InstallPrintermonitor}'), GetPrinterMonitorname(''));
-     GetPorts(Ports);
+      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
+      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+      ProgressPage.SetText(ExpandConstant('{cm:InstallPrintermonitor}'), GetPrinterMonitorname(''));
+      GetPorts(Ports);
 
-     s := GetPrintermonitorname('');
-     if Not CheckMonitorname(s) then begin
-      tres:=InstallMonitor(s);
+      s := GetPrintermonitorname('');
+      if Not CheckMonitorname(s) then begin
+       tres:=InstallMonitor(s);
+       res:=res and tres;
+      end else
+       SaveStringToFile(LogFile, ' Monitorname : ' + s  + ' already exists.'#13#10, True);
+      s :='';     
+
+      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
+      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+
+      ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterport}'), GetPrinterPortname(''));
+      GetMonitors(Monitors);
+      tres:=InstallPort;
       res:=res and tres;
-    end else
-      SaveStringToFile(LogFile, ' Monitorname : ' + s  + ' already exists.'#13#10, True);
-     s :='';     
 
-     AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
-     ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
+      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
 
-     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterport}'), GetPrinterPortname(''));
-     GetMonitors(Monitors);
-     tres:=InstallPort;
-     res:=res and tres;
+      ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'), GetPrinterDrivername(''));
+      GetMonitors(Monitors);
+      GetPorts(Ports);
+      tres:=InstallDriver;
+      res:=res and tres;
 
-     AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
-     ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
+      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
 
-     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterdriver}'), GetPrinterDrivername(''));
-     GetMonitors(Monitors);
-     GetPorts(Ports);
-     tres:=InstallDriver;
-     res:=res and tres;
+      ProgressPage.SetText(ExpandConstant('{cm:InstallPrinter}'), GetPrintername(''));
+      GetPrinterdrivers(PrinterDrivers,'Windows 4.0');
+      GetPrinterdrivers(PrinterDrivers,'Windows NT x86');
+      GetPrinterdrivers(PrinterDrivers,'Windows x64');
+      tres:=InstallPrinter;
+      res:=res and tres;
 
-     AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
-     ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
+      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+      If UsingWinNT=true then begin
+       s:='SYSTEM\CurrentControlSet\Control\Print\Printers\'+GetPrintername('')+'\PrinterDriverData';
+       If RegKeyExists(HKLM,s)=true then
+        RegWriteDWordValue(HKLM,s,'FreeMem',32767);
+      end
+      GetPrinters(Printers);
+      SaveStringToFile(LogFile, #13#10+'Printerstatus after installing:' + #13#10, True);
+      SavePrinterInformations;
 
-     ProgressPage.SetText(ExpandConstant('{cm:InstallPrinter}'), GetPrintername(''));
-     GetPrinterdrivers(PrinterDrivers,'Windows 4.0');
-     GetPrinterdrivers(PrinterDrivers,'Windows NT x86');
-     GetPrinterdrivers(PrinterDrivers,'Windows x64');
-     tres:=InstallPrinter;
-     res:=res and tres;
+      If InstallOnThisVersion('0,6.0.6000','0,0')=irInstall then begin // Vista and above
+       SaveStringToFile(LogFile, #13#10+'Vista spooler rights adjusting:' + AdjustSpoolerPrivileges + #13#10#13#10, True);
+	    end
 
-     AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
-     ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
-     If UsingWinNT=true then begin
-      s:='SYSTEM\CurrentControlSet\Control\Print\Printers\'+GetPrintername('')+'\PrinterDriverData';
-      If RegKeyExists(HKLM,s)=true then
-       RegWriteDWordValue(HKLM,s,'FreeMem',32767);
-     end
-     GetPrinters(Printers);
-     SaveStringToFile(LogFile, #13#10+'Printerstatus after installing:' + #13#10, True);
-     SavePrinterInformations;
-
-     If InstallOnThisVersion('0,6.0.6000','0,0')=irInstall then begin // Vista and above
-      SaveStringToFile(LogFile, #13#10+'Vista spooler rights adjusting:' + AdjustSpoolerPrivileges + #13#10#13#10, True);
-	   end
+      PrinterInstallationSuccessfully:=res;
+     end; 
 
      s:=LowerCase(WizardSelectedTasks(false));
      if Pos('winexplorer',s)>0 then
       IntegrateWinexplorer;
-     PrinterInstallationSuccessfully:=res;
 
      sfn := ExpandConstant('{app}') + '\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\';
      icc := 'eciRGB_v2.icc';
@@ -3875,7 +3897,7 @@ begin
 
      if cmdlSaveInfFile<>'' Then SaveInf;
     finally
-      if res=false then
+      if res=false and cmdlDontInstallPrinters = false then
        MsgBox(ExpandConstant('{cm:PrinterInstallationFailed}'),mbError,MB_OK + MB_SETFOREGROUND);
       ProgressPage.Hide;
     end;
@@ -3890,6 +3912,7 @@ begin
  Printername:='PDFCreator';
  UninstallLogFile:=ExpandConstant('{%tmp}')+'\PDFCreatorUninstall.txt';
  SaveStringToFile(UninstallLogFile, 'Start uninstall:' + #13#10, False)
+
  Result:=True;
 end;
 
@@ -3912,7 +3935,7 @@ end;
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
  tStr :String; i:LongInt;
- saveoptions, silent, verysilent, removeOptions:boolean;
+ saveoptions, silent, verysilent, removeOptions, dontUninstallPrinters:boolean;
 begin
   case CurUninstallStep of
     usUninstall:
@@ -3928,6 +3951,8 @@ begin
          verysilent:=true;
         if lowercase(ParamStr(i))='/removeoptions' then
          removeOptions:=true;
+        if lowercase(ParamStr(i))='/dontuninstallprinters' then
+         dontUninstallPrinters:=true;
        end;
        SaveStringToFile(UninstallLogFile, ' Uninstall options:' + #13#10, True)
        if removeOptions=true then
@@ -3948,8 +3973,16 @@ begin
          if (silent=false) and (verysilent=false) then
           if MsgBox(ExpandConstant('{cm:UninstallOptions}'), mbConfirmation, MB_YESNO) = IDYES then
            RemoveProgramSettings;
+       
+       if dontUninstallPrinters=true then
+         SaveStringToFile(UninstallLogFile, '  DontUninstallPrinters=True' + #13#10, True)
+        else
+         SaveStringToFile(UninstallLogFile, '  DontUninstallPrinters=False' + #13#10, True);
+
        RemoveExplorerIntegretation;
-       UninstallCompletePrinter(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, UninstallLogFile)
+       
+       if dontUninstallPrinters=false then
+        UninstallCompletePrinter(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, UninstallLogFile)
       end;
   end;
 end;
