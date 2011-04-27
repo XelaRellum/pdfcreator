@@ -1529,7 +1529,7 @@ On Error GoTo ErrPtnr_OnError
 50380       If opt.UseAutosave = 1 Then
 50390         opt2 = Options
 50400         Options = opt
-50410         Autosave
+50410         Autosave PDFSpoolfile
 50420         SaveOption Options, "Counter", PrinterDefaultProfile
 50430         opt2.Counter = Options.Counter
 50440         Options = opt2
