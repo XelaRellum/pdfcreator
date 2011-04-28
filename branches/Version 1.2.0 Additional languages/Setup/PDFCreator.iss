@@ -333,6 +333,7 @@ Source: ..\PDFCreator\Languages\bosnian.ini; DestDir: {app}\languages; Component
 Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\corsican.ini; DestDir: {app}\languages; Components: languages\corsican; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
@@ -748,6 +749,8 @@ Name: languages\chinese_simplified; Description: Chinese simplified; Types: full
 Name: languages\chinese_traditional; Description: Chinese traditional; Types: full; Check: Not IsLanguage('chinese_traditional'); Flags: dontinheritcheck
 Name: languages\chinese_traditional; Description: Chinese traditional; Types: full custom; Check: IsLanguage('chinese_traditional'); Flags: dontinheritcheck
 
+Name: languages\corsican; Description: Corsican; Types: full; Flags: dontinheritcheck
+
 ;Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
 ;Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
 
@@ -856,7 +859,7 @@ Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:Oth
 Name: C:\Program Files (x86)\Inno Setup 5\ISCC.exe; Parameters: """pdfforge - Toolbar.iss"""; Flags: AbortOnError;
 
 [InnoIDE_PostCompile]
-Name: C:\PDFCreator\Setup\Installation\PostCompilingSetup.cmd; Flags: AbortOnError CmdPrompt; 
+Name: ..\Installation\PostCompilingSetup.cmd; Flags: AbortOnError CmdPrompt; 
 
 [Code]
 const
