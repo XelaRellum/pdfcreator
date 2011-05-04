@@ -52,6 +52,7 @@ german.PrinternameMessage=Bitte wählen Sie einen Namen für den Drucker aus.
 german.PrinternameValue=PDFCreator installiert einen Drucker auf Ihren Rechner. Über diesen Drucker kann jede Anwendung, die drucken kann, PDF Dokumente, Bilddateien oder Postscript Dateien erzeugen.%n%nName des Druckers:
 german.ProgramFiles=Programm Dateien
 german.ProgramIsRunning=Das Programm "%1" wird gerade verwendet.%n%nBitte beenden Sie das Programm erst.%n%n
+german.RequiresDotNet20=Benötigt .Net 2.0
 german.RestartAlreadyAskOverwrite=PDFCreator ist bereits installiert. Es ist notwendig die bestehende Installation [Version %1] zu deinstallieren, bevor die Installation mit dieser Version [Version %2] fortgesetzt wird.%n%nSoll die bestehende Version [Version %1] jetzt deinstalliert werden?
 german.RestartError=Das Setup kann erst nach einem Neustart fortgeführt werden.
 german.ServerInstallation=Serverinstallation
