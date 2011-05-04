@@ -52,6 +52,7 @@ english.PrinternameMessage=Please choose a name for the printer.
 english.PrinternameValue=PDFCreator installs a printer on your computer. With this printer each application that is able to print, can create PDF-files, bitmap-files or postscript-files.%n%nName of printer:
 english.ProgramFiles=Programfiles
 english.ProgramIsRunning=The program "%1" is running.%n%nPlease close the program first.%n%n
+english.RequiresDotNet20=Requires .Net 2.0
 english.RestartAlreadyAskOverwrite=PDFCreator is already installed. It is necessary to uninstall the existing installation [version %1] before installing this version [version %2].%n%nShould the existing version [version %1] uninstall now?
 english.RestartError=Please restart your system first to continue setup.
 english.ServerInstallation=Server installation
