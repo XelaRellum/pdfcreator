@@ -24,7 +24,7 @@
 				<param name="Local" value="html\features.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Whats new?">
+				<param name="Name" value="What's new?">
 				<param name="Local" value="html\whats-new.html">
 				</OBJECT>
 		</UL>

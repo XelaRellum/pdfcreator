@@ -204,6 +204,10 @@
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Das Gradzeichen ragt in nachfolgende Zeichen hinein.">
+				<param name="Local" value="html\the-degree-symbol-overlaps-the-following-character.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Der Druckertreiber ist nicht mit einer Richtlinie des Rechners kompatibel.">
 				<param name="Local" value="html\the-printer-driver-is-not-compatible-with-a-policy-enabled-on-your-computer.html">
 				</OBJECT>
