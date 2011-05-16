@@ -1,5 +1,5 @@
 ; pdfforge Toolbar Installation
-; Setup created with Inno Setup QuickStart Pack 5.4.0a (with ISPP) and InnoIDE 1.0.0.0070
+; Setup created with Inno Setup QuickStart Pack 5.4.2a (with ISPP) and InnoIDE 1.0.0.0070
 ; Installation from pdfforge
 
 ;#define Test
