@@ -4,7 +4,7 @@ Copyright (C)2002-2011 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
-Version 1.2.1 (May18th, 2011)
+Version 1.2.1 (May 18th, 2011)
 -------------------------------------------------------------------------------
 Improvements:
 - Improved uninstaller: future versions will not detele profiles during the update
