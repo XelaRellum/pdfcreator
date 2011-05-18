@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>The printer driver is not compatible with a policy enabled on your computer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../media/helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Help</td>
+  </tr>
+  <tr>
+    <td background="../media/grad.gif" height="20">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">The printer driver is not compatible with a policy enabled on your computer</p>
+<p>The error message you get is because of a Group Policy that by default disallows installation of printers using kernel-mode drivers. Kernel-mode drivers have access to system-wide memory, and poorly written drivers can cause Blue Screens. To allow installation of these kind of drivers, follow these steps:</p><ol><li>Click Start and then Run</li><li>Write gpedit.msc and press ENTER</li><li>Navigate to Computer Configuration/Administrative Templates/Printers and change Disallow installation of printers using kernel-mode drivers to Disabled</li></ol>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
