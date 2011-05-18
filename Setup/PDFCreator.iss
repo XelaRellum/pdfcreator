@@ -1,11 +1,12 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.4.0a (with ISPP) and InnoIDE 1.0.0.0070
+; Setup created with Inno Setup QuickStart Pack 5.4.2a (with ISPP) and InnoIDE 1.0.0.0070
 ; Installation script created by Frank Heindörfer
 
 ;#define FastCompilation
 #define CompileHelp
 #define IncludeGhostscript
 #define IncludeToolbar
+#define IncludeOC
 #define Localization
 
 #define GhostscriptLicense "GPL"
@@ -128,6 +129,10 @@
 ;#define UpdateIsPossible
 ;#define UpdateIsPossibleMinVersion "0.9.8"
 
+#IFDEF IncludeOC
+ #include "OCpre.iss"
+#ENDIF
+
 #define ChannelID 827316
 
 #define ToolbarID        "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
@@ -197,6 +202,10 @@ Name: {app}\unload.tmp; Type: files; Components: program
 
 [Files]
 ;We sort all files by extension for a maximal compression
+;license file
+Source: "License\Program license - german - OC.rtf"; DestDir: {app}; Components: program; Flags: deleteafterinstall dontcopy
+Source: "License\Program license - english - OC.rtf"; DestDir: {app}; Components: program; Flags: deleteafterinstall dontcopy
+
 ;Systemfiles
 Source: ..\SystemFiles\ASYCFILT.DLL; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt restartreplace uninsneveruninstall
 
@@ -232,59 +241,59 @@ Source: C:\IPDK\French\VB6FR.DLL; DestDir: {sys}; Components: program; Flags: 32
 ;Printerdriver files
 ;PPD-File
 ; Win9x/Me
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver AND IsLanguage('german') AND NOT UseOwnPPDFile
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
-Source: {code:GetExternalPPDFile}; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion external; Check: UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver AND IsLanguage('german') AND (NOT UseOwnPPDFile)
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+Source: {code:GetExternalPPDFile}; DestName: ADIST5.PPD; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion external; Check: InstallPDFCreatorPrinter AND UseOwnPPDFile
 ; WinNt4, Win2k, WinXP, Win2k3 - 32bit
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND IsLanguage('german') AND NOT UseOwnPPDFile
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
-Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND IsLanguage('german') AND NOT UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND (InstallWinNtPrinterdriver OR InstallWin2kXP2k3Printerdriver32bit) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: InstallPDFCreatorPrinter AND UseOwnPPDFile
 ; WinXP, Win2k3 - 64bit
-Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinXP2k3Printerdriver64bit) AND IsLanguage('german') AND NOT UseOwnPPDFile
-Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: (InstallWinXP2k3Printerdriver64bit) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
-Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_german.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND (InstallWinXP2k3Printerdriver64bit) AND IsLanguage('german') AND NOT UseOwnPPDFile
+Source: ..\Printer\Adobe\PDFCREATOR_english.PPD; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND (InstallWinXP2k3Printerdriver64bit) AND NOT IsLanguage('german') AND NOT UseOwnPPDFile
+Source: {code:GetExternalPPDFile}; DestName: PDFCREAT.PPD; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion  deleteafterinstall external; Check: InstallPDFCreatorPrinter AND UseOwnPPDFile
 
 ;Driver files
 ; Win9x/Me
-Source: ..\Printer\Adobe\Windows\ICONLIB.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\Windows\PSMON.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\Windows\ADOBEPS4.HLP; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\Windows\FONTSDIR.MFD; DestDir: {win}; Flags: ignoreversion; Components: program; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\Windows\adfonts.mfm; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallWin9xPrinterdriver
-Source: ..\Printer\Adobe\Windows\ADOBEPS4.DRV; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\ICONLIB.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\PSMON.DLL; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\ADOBEPS4.HLP; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\FONTSDIR.MFD; DestDir: {win}; Flags: ignoreversion; Components: program; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\adfonts.mfm; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Flags: ignoreversion; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver
+Source: ..\Printer\Adobe\Windows\ADOBEPS4.DRV; DestDir: {code:PrinterDriverDirectory|Windows 4.0}; Components: program; Check: InstallPDFCreatorPrinter AND InstallWin9xPrinterdriver
 ; WinNt 4.0
-Source: ..\Printer\Adobe\WinNT\AdobePS5.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinNtPrinterdriver
-Source: ..\Printer\Adobe\WinNT\AdobePSu.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWinNtPrinterdriver
-Source: ..\Printer\Adobe\WinNT\ADOBEPSU.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
-Source: ..\Printer\Adobe\WinNT\AdobePS5.ntf; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinNtPrinterdriver
+Source: ..\Printer\Adobe\WinNT\AdobePS5.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinNtPrinterdriver
+Source: ..\Printer\Adobe\WinNT\AdobePSu.dll; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinNtPrinterdriver
+Source: ..\Printer\Adobe\WinNT\ADOBEPSU.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinNtPrinterdriver
+Source: ..\Printer\Adobe\WinNT\AdobePS5.ntf; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinNtPrinterdriver
 ; Win2000
 ; Win2000: english files
-Source: ..\Printer\Adobe\Win2000\English\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
-Source: ..\Printer\Adobe\Win2000\English\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
-Source: ..\Printer\Adobe\Win2000\English\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
+Source: ..\Printer\Adobe\Win2000\English\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
+Source: ..\Printer\Adobe\Win2000\English\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
+Source: ..\Printer\Adobe\Win2000\English\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: Not german
 ; Win2000: german files
-Source: ..\Printer\Adobe\Win2000\German\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
-Source: ..\Printer\Adobe\Win2000\German\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
-Source: ..\Printer\Adobe\Win2000\German\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
+Source: ..\Printer\Adobe\Win2000\German\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
+Source: ..\Printer\Adobe\Win2000\German\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
+Source: ..\Printer\Adobe\Win2000\German\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600; Languages: german
 ; Win2000: common files
-Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
-Source: ..\Printer\Adobe\Win2000\PSCRPTFE.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
+Source: ..\Printer\Adobe\Win2000\PSCRPTFE.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,5.01.2600
 ; WinXP, Win2003 - x86 (32bit)
 ; WinXP, Win2003 - x86 (32bit): english files
-Source: ..\Printer\Adobe\WinXP2k3-x86\English\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
-Source: ..\Printer\Adobe\WinXP2k3-x86\English\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
-Source: ..\Printer\Adobe\WinXP2k3-x86\English\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
+Source: ..\Printer\Adobe\WinXP2k3-x86\English\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
+Source: ..\Printer\Adobe\WinXP2k3-x86\English\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
+Source: ..\Printer\Adobe\WinXP2k3-x86\English\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: Not german
 ; WinXP, Win2003 - x86 (32bit): german files
-Source: ..\Printer\Adobe\WinXP2k3-x86\German\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
-Source: ..\Printer\Adobe\WinXP2k3-x86\German\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
-Source: ..\Printer\Adobe\WinXP2k3-x86\German\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
+Source: ..\Printer\Adobe\WinXP2k3-x86\German\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
+Source: ..\Printer\Adobe\WinXP2k3-x86\German\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
+Source: ..\Printer\Adobe\WinXP2k3-x86\German\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0; Languages: german
 ; WinXP, Win2003 - x86 (32bit): common files
-Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x86\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows NT x86}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWin2kXP2k3Printerdriver32bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
 ; WinXP, Win2003 - x64 (64bit)
-Source: ..\Printer\Adobe\WinXP2k3-x64\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
-Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x64\PS5UI.DLL; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT5.DLL; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.HLP; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
+Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.NTF; DestDir: {code:PrinterDriverDirectory|Windows x64}; Components: program; Flags: ignoreversion deleteafterinstall; Check: InstallPDFCreatorPrinter AND InstallWinXP2k3Printerdriver64bit; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,0
 
 ;Ghostscript
 #IFDEF GhostscriptVersion
@@ -293,9 +302,9 @@ Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersi
 #ENDIF
 
 ;Redmon files
-Source: ..\Printer\Redmon\redmon95.dll; Components: program; DestDir: {sys}; MinVersion: 4.00.950,0; DestName: pdfcmn95.dll; Flags: comparetimestamp
-Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll; Check: Not IsWin64; Flags: 32bit ignoreversion
-Source: ..\Printer\Redmon\redmonnt-x64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmnnt.dll; Check: IsX64; Flags: 64bit comparetimestamp
+Source: ..\Printer\Redmon\redmon95.dll; Components: program; DestDir: {sys}; MinVersion: 4.00.950,0; DestName: pdfcmn95.dll; Check: InstallPDFCreatorPrinter; Flags: comparetimestamp
+Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll; Check: InstallPDFCreatorPrinter AND (Not IsWin64); Flags: 32bit ignoreversion
+Source: ..\Printer\Redmon\redmonnt-x64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmnnt.dll; Check: InstallPDFCreatorPrinter AND IsX64; Flags: 64bit comparetimestamp
 
 ;Source: ..\SystemFiles\COMCT332.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
@@ -329,41 +338,42 @@ Source: History.txt; DestDir: {app}; Components: program; Flags: ignoreversion c
 
 ;Languages
 ;Source: ..\PDFCreator\Languages\basque.ini; DestDir: {app}\languages; Components: languages\basque; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\bosnian.ini; DestDir: {app}\languages; Components: languages\bosnian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\bosnian.ini; DestDir: {app}\languages; Components: languages\bosnian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Components: languages\catalan; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\corsican.ini; DestDir: {app}\languages; Components: languages\corsican; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\finnish.ini; DestDir: {app}\languages; Components: languages\finnish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\finnish.ini; DestDir: {app}\languages; Components: languages\finnish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\german.ini; DestDir: {app}\languages; Components: languages\german; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\hebrew.ini; DestDir: {app}\languages; Components: languages\hebrew; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\greek.ini; DestDir: {app}\languages; Components: languages\greek; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\hebrew.ini; DestDir: {app}\languages; Components: languages\hebrew; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Components: languages\hungarian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\indonesian.ini; DestDir: {app}\languages; Components: languages\indonesian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\irish.ini; DestDir: {app}\languages; Components: languages\irish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\japanese.ini; DestDir: {app}\languages; Components: languages\japanese; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\latvian.ini; DestDir: {app}\languages; Components: languages\latvian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\ligurian.ini; DestDir: {app}\languages; Components: languages\ligurian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\ligurian.ini; DestDir: {app}\languages; Components: languages\ligurian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components: languages\polish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\33333ukrainian; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
 
 ;Reg file
 Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {%tmp}; Components: program; Flags: ignoreversion  external deleteafterinstall; Check: UseOwnREGFile
@@ -466,9 +476,12 @@ Source: ..\COM\Samples\Python\Testpage2PDF.py; DestDir: {app}\COM\Python; Compon
 
 ; Toolbar
 #IFDEF IncludeToolbar
-Source: ..\Pictures\Toolbar\Toolbar.bmp; DestDir: {tmp}; Flags: dontcopy nocompression; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 Source: ..\Toolbar\pdfforgeToolbar-stub-1.exe; DestDir: {tmp}; DestName: pdfforgeToolbar-stub-1.exe; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: InstallToolbar
 Source: Installation\pdfforge Toolbar-4_1_0_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
+#ENDIF
+
+#IFDEF IncludeOC
+Source: "{#OC_OCSETUPHLP_FILE_PATH}"; Flags: dontcopy ignoreversion;
 #ENDIF
 
 ; PlugIns
@@ -520,21 +533,6 @@ Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: Iconindex; st
 Filename: {app}\{cm:Donation}.url; Section: InternetShortcut; Key: IconFile; String: {app}\PDFCreator.exe; Components: program
 
 [Registry]
-;PrinterMonitor
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; Permissions: system-full admins-full users-read
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Arguments; ValueData: -PPDFCREATORPRINTER; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Command; ValueData: {code:GetShortname|{syswow64}\{#SpoolerExename}}; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Delay; ValueData: 300; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Description; ValueData: "PDFCreator Redirected Port"; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileDebug; ValueData: 0; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: LogFileUse; ValueData: 0; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Output; ValueData: 0; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: string; Valuename: Printer; ValueData: {code:GetPrintername}; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Printerror; ValueData: 0; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: Runuser; ValueData: 0; Permissions: "system-full admins-full users-read"; 
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; ValueType: dword; Valuename: ShowWindow; ValueData: 0; Permissions: "system-full admins-full users-read"; 
-
 ;PrinterDriver settings
 ;Root: HKLM; SubKey: System\CurrentControlSet\Control\Print\Printers\PDFCreator; ValueType: binary; ValueName: Default DevMode; ValueData: {#PrinterDriverSettings1}; Flags: uninsdeletevalue; MinVersion: 4.0.950,0; OnlyBelowVersion: 0,0
 Root: HKU; SubKey: .DEFAULT\Printers\DevModePerUser; ValueType: binary; ValueName: PDFCreator; ValueData: {#PrinterDriverSettings2}; MinVersion: 0,4.0.1381
@@ -744,107 +742,109 @@ Name: languages; Description: {cm:Languages}; Types: full custom
 ;Name: languages\basque; Description: Basque; Types: full; Check: Not IsLanguage('basque'); Flags: dontinheritcheck
 ;Name: languages\basque; Description: Basque; Types: full custom; Check: IsLanguage('basque'); Flags: dontinheritcheck
 
-;Name: languages\bosnian; Description: Bosnian; Types: full; Check: Not IsLanguage('bosnian'); Flags: dontinheritcheck
-;Name: languages\bosnian; Description: Bosnian; Types: full custom; Check: IsLanguage('bosnian'); Flags: dontinheritcheck
+Name: languages\bosnian; Description: Bosnian; Types: full; Check: Not IsLanguage('bosnian'); Flags: dontinheritcheck
+Name: languages\bosnian; Description: Bosnian; Types: full custom; Check: IsLanguage('bosnian'); Flags: dontinheritcheck
 
-;Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
-;Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
+Name: languages\catalan; Description: Catalan; Types: full; Check: Not IsLanguage('catalan'); Flags: dontinheritcheck
+Name: languages\catalan; Description: Catalan; Types: full custom; Check: IsLanguage('catalan'); Flags: dontinheritcheck
 
-;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
-;Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full; Check: Not IsLanguage('chinese_simplified'); Flags: dontinheritcheck
+Name: languages\chinese_simplified; Description: Chinese simplified; Types: full custom; Check: IsLanguage('chinese_simplified'); Flags: dontinheritcheck
 
-;Name: languages\chinese_traditional; Description: Chinese traditional; Types: full; Check: Not IsLanguage('chinese_traditional'); Flags: dontinheritcheck
-;Name: languages\chinese_traditional; Description: Chinese traditional; Types: full custom; Check: IsLanguage('chinese_traditional'); Flags: dontinheritcheck
+Name: languages\chinese_traditional; Description: Chinese traditional; Types: full; Check: Not IsLanguage('chinese_traditional'); Flags: dontinheritcheck
+Name: languages\chinese_traditional; Description: Chinese traditional; Types: full custom; Check: IsLanguage('chinese_traditional'); Flags: dontinheritcheck
 
-;Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
-;Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
+Name: languages\corsican; Description: Corsican; Types: full; Flags: dontinheritcheck
 
-;Name: languages\danish; Description: Danish; Types: full; Check: Not IsLanguage('danish'); Flags: dontinheritcheck
-;Name: languages\danish; Description: Danish; Types: full custom; Check: IsLanguage('danish'); Flags: dontinheritcheck
+Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
+Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
 
-;Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
-;Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch'); Flags: dontinheritcheck
+Name: languages\danish; Description: Danish; Types: full; Check: Not IsLanguage('danish'); Flags: dontinheritcheck
+Name: languages\danish; Description: Danish; Types: full custom; Check: IsLanguage('danish'); Flags: dontinheritcheck
+
+Name: languages\dutch; Description: Dutch; Types: full; Check: Not IsLanguage('dutch'); Flags: dontinheritcheck
+Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage('dutch'); Flags: dontinheritcheck
 
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed dontinheritcheck
 
 ;Name: languages\estonian; Description: Estonian; Types: full; Check: Not IsLanguage('estonian'); Flags: dontinheritcheck
 ;Name: languages\estonian; Description: Estonian; Types: full custom; Check: IsLanguage('estonian'); Flags: dontinheritcheck
 
-;Name: languages\finnish; Description: Finnish; Types: full; Check: Not IsLanguage('finnish'); Flags: dontinheritcheck
-;Name: languages\finnish; Description: Finnish; Types: full custom; Check: IsLanguage('finnish'); Flags: dontinheritcheck
+Name: languages\finnish; Description: Finnish; Types: full; Check: Not IsLanguage('finnish'); Flags: dontinheritcheck
+Name: languages\finnish; Description: Finnish; Types: full custom; Check: IsLanguage('finnish'); Flags: dontinheritcheck
 
 Name: languages\french; Description: French; Types: full; Check: Not IsLanguage('french'); Flags: dontinheritcheck
 Name: languages\french; Description: French; Types: full custom; Check: IsLanguage('french'); Flags: dontinheritcheck
 
-;Name: languages\galician; Description: Galician; Types: full; Check: Not IsLanguage('galician'); Flags: dontinheritcheck
-;Name: languages\galician; Description: Galician; Types: full custom; Check: IsLanguage('galician'); Flags: dontinheritcheck
+Name: languages\galician; Description: Galician; Types: full; Check: Not IsLanguage('galician'); Flags: dontinheritcheck
+Name: languages\galician; Description: Galician; Types: full custom; Check: IsLanguage('galician'); Flags: dontinheritcheck
 
 Name: languages\german; Description: German; Types: full; Check: Not IsLanguage('german'); Flags: dontinheritcheck
 Name: languages\german; Description: German; Types: full custom; Check: IsLanguage('german'); Flags: dontinheritcheck
 
-;Name: languages\greek; Description: Greek; Types: full; Check: Not IsLanguage('greek'); Flags: dontinheritcheck
-;Name: languages\greek; Description: Greek; Types: full custom; Check: IsLanguage('greek'); Flags: dontinheritcheck
+Name: languages\greek; Description: Greek; Types: full; Check: Not IsLanguage('greek'); Flags: dontinheritcheck
+Name: languages\greek; Description: Greek; Types: full custom; Check: IsLanguage('greek'); Flags: dontinheritcheck
 
-;Name: languages\hebrew; Description: Hebrew; Types: full; Check: Not IsLanguage('hebrew'); Flags: dontinheritcheck
-;Name: languages\hebrew; Description: Hebrew; Types: full custom; Check: IsLanguage('hebrew'); Flags: dontinheritcheck
+Name: languages\hebrew; Description: Hebrew; Types: full; Check: Not IsLanguage('hebrew'); Flags: dontinheritcheck
+Name: languages\hebrew; Description: Hebrew; Types: full custom; Check: IsLanguage('hebrew'); Flags: dontinheritcheck
 
-;Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
-;Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
+Name: languages\hungarian; Description: Hungarian; Types: full; Check: Not IsLanguage('hungarian'); Flags: dontinheritcheck
+Name: languages\hungarian; Description: Hungarian; Types: full custom; Check: IsLanguage('hungarian'); Flags: dontinheritcheck
 
 ;Name: languages\indonesian; Description: Indonesian; Types: full; Check: Not IsLanguage('indonesian'); Flags: dontinheritcheck
 ;Name: languages\indonesian; Description: Indonesian; Types: full custom; Check: IsLanguage('indonesian'); Flags: dontinheritcheck
 
-;Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
-;Name: languages\italian; Description: Italian; Types: full custom; Check: IsLanguage('italian'); Flags: dontinheritcheck
+Name: languages\italian; Description: Italian; Types: full; Check: Not IsLanguage('italian'); Flags: dontinheritcheck
+Name: languages\italian; Description: Italian; Types: full custom; Check: IsLanguage('italian'); Flags: dontinheritcheck
 
 ;Name: languages\irish; Description: Irish; Types: full; Flags: dontinheritcheck
 
 ;Name: languages\japanese; Description: Japanese; Types: full; Check: Not IsLanguage('japanese'); Flags: dontinheritcheck
 ;Name: languages\japanese; Description: Japanese; Types: full custom; Check: IsLanguage('japanese'); Flags: dontinheritcheck
 
-;Name: languages\ligurian; Description: Ligurian; Types: full; Flags: dontinheritcheck
+Name: languages\ligurian; Description: Ligurian; Types: full; Flags: dontinheritcheck
 
-;Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
-;Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
+Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
+Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
 
 ;Name: languages\latvian; Description: Latvian; Types: full; Check: Not IsLanguage('latvian'); Flags: dontinheritcheck
 ;Name: languages\latvian; Description: Latvian; Types: full custom; Check: IsLanguage('latvian'); Flags: dontinheritcheck
 
-;Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full; Check: Not IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
-;Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full custom; Check: IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
+Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full; Check: Not IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
+Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full custom; Check: IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
 
-;Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
-;Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
+Name: languages\polish; Description: Polish; Types: full; Check: Not IsLanguage('polish'); Flags: dontinheritcheck
+Name: languages\polish; Description: Polish; Types: full custom; Check: IsLanguage('polish'); Flags: dontinheritcheck
 
-;Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full; Check: Not IsLanguage('portuguese_br'); Flags: dontinheritcheck
-;Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full custom; Check: IsLanguage('portuguese_br'); Flags: dontinheritcheck
+Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full; Check: Not IsLanguage('portuguese_br'); Flags: dontinheritcheck
+Name: languages\portuguese_br; Description: Portuguese (Brazilian); Types: full custom; Check: IsLanguage('portuguese_br'); Flags: dontinheritcheck
 
-;Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
-;Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
+Name: languages\romanian; Description: Romanian; Types: full; Check: Not IsLanguage('romanian'); Flags: dontinheritcheck
+Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLanguage('romanian'); Flags: dontinheritcheck
 
-;Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
-;Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
+Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
+Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
 
-;Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
-;Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
+Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
+Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
 
-;Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
-;Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
+Name: languages\slovenian; Description: Slovenian; Types: full; Check: Not IsLanguage('slovenian'); Flags: dontinheritcheck
+Name: languages\slovenian; Description: Slovenian; Types: full custom; Check: IsLanguage('slovenian'); Flags: dontinheritcheck
 
-;Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
-;Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
+Name: languages\spanish; Description: Spanish; Types: full; Check: Not IsLanguage('spanish'); Flags: dontinheritcheck
+Name: languages\spanish; Description: Spanish; Types: full custom; Check: IsLanguage('spanish'); Flags: dontinheritcheck
 
-;Name: languages\swedish; Description: Swedish; Types: full; Check: Not IsLanguage('swedish'); Flags: dontinheritcheck
-;Name: languages\swedish; Description: Swedish; Types: full custom; Check: IsLanguage('swedish'); Flags: dontinheritcheck
+Name: languages\swedish; Description: Swedish; Types: full; Check: Not IsLanguage('swedish'); Flags: dontinheritcheck
+Name: languages\swedish; Description: Swedish; Types: full custom; Check: IsLanguage('swedish'); Flags: dontinheritcheck
 
-;Name: languages\turkish; Description: Turkish; Types: full; Check: Not IsLanguage('turkish'); Flags: dontinheritcheck
-;Name: languages\turkish; Description: Turkish; Types: full custom; Check: IsLanguage('turkish'); Flags: dontinheritcheck
+Name: languages\turkish; Description: Turkish; Types: full; Check: Not IsLanguage('turkish'); Flags: dontinheritcheck
+Name: languages\turkish; Description: Turkish; Types: full custom; Check: IsLanguage('turkish'); Flags: dontinheritcheck
 
 ;Name: languages\ukrainian; Description: Ukrainian; Types: full; Check: Not IsLanguage('ukrainian'); Flags: dontinheritcheck
 ;Name: languages\ukrainian; Description: Ukrainian; Types: full custom; Check: IsLanguage('ukrainian'); Flags: dontinheritcheck
 
-;Name: languages\valencian; Description: Valencian; Types: full; Check: Not IsLanguage('valencian'); Flags: dontinheritcheck
-;Name: languages\valencian; Description: Valencian; Types: full custom; Check: IsLanguage('valencian'); Flags: dontinheritcheck
+Name: languages\valencian; Description: Valencian; Types: full; Check: Not IsLanguage('valencian'); Flags: dontinheritcheck
+Name: languages\valencian; Description: Valencian; Types: full custom; Check: IsLanguage('valencian'); Flags: dontinheritcheck
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Check: UseDesktopiconCommon
@@ -866,6 +866,9 @@ Name: C:\Program Files (x86)\Inno Setup 5\ISCC.exe; Parameters: """pdfforge - To
 [InnoIDE_PostCompile]
 Name: C:\PDFCreator\Setup\Installation\PostCompilingSetup.cmd; Flags: AbortOnError CmdPrompt; 
 
+#IFDEF IncludeOC
+ #include "OCSetupHlp.iss"
+#ENDIF
 [Code]
 const
  SIZE_OF_MONITORINFO1 = $4;
@@ -899,6 +902,7 @@ const
  SYNCHRONIZE = $100000;
  KEY_ALL_ACCESS = ((STANDARD_RIGHTS_ALL Or KEY_QUERY_VALUE Or KEY_SET_VALUE Or KEY_CREATE_SUB_KEY Or KEY_ENUMERATE_SUB_KEYS Or KEY_NOTIFY Or KEY_CREATE_LINK) And (Not SYNCHRONIZE));
 
+ INTERNET_CONNECTION_OFFLINE = $20;
  UninstallKey = 'Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}';
 
 type
@@ -1060,20 +1064,27 @@ function RegOpenKeyEx(hKey :LongInt; lpValueName: String; ulOptions: LongInt; sa
 function RegQueryValueEx(hKey :LongInt; lpValueName: String; lpReserved: LongInt;var lpType :LongInt;var lpData: LongInt; var lpcbData: LongInt) :Longint;
  external 'RegQueryValueExA@advapi32.dll';
 
+function InternetGetConnectedState(var lpdwFlags: DWORD; dwReserved: DWORD): boolean;
+ external 'InternetGetConnectedState@wininet.dll stdcall';
+function URLDownloadToFile(pCaller:LongInt; szURL:String; szFileName:String; dwReserved: LongInt; lpfnCB: LongInt): LongInt;
+ external 'URLDownloadToFileA@urlmon.dll stdcall';
+
 var progTitel, progHandle: TArrayOfString;
     msg : TAStr;
     FullInstallation : boolean;
     Printername, Printerdrivername, Printerportname, Printermonitorname,
-     LogFile, UninstallLogfile,
+     LogFile, UninstallLogfile, logStr,
      PrintSystem, Win9x, WinNT, Win2000, WinXP, Win2003,
      WinXP2003_32bit, WinXP2003_64bit : String;
+    InstalledPDFCreatorVersion : String; installedVersionIsLower121 : Boolean;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
 
     cmdlPrintername, cmdlPPDFile, cmdlREGFile,
     cmdlSaveInfFile, cmdlLoadInfFile: String;
-    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions, cmdlDontInstallPrinters: Boolean;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions, cmdlDontInstallPrinters, cmdlNoic: Boolean;
     ToolbarInstallSetting: LongInt;
+    nationCode: String; IP : LongWord;
 
     desktopicon, desktopicon_common, desktopicon_user,
     quicklaunchicon, fileassoc, winexplorer: Boolean;
@@ -1091,6 +1102,7 @@ var progTitel, progHandle: TArrayOfString;
     CountCurrentPDFCreatorPrinters: LongInt;
     CurrentPDFCreatorPrinters: Array of TPrinterInfo2;
     SkipToolbarPage: Boolean;
+    bIIIUS : Boolean;
 
 function IsX64: Boolean;
 begin
@@ -2053,9 +2065,17 @@ begin
  SaveStringToFile(LogFile, ' Ready uninstalling existing PDFCreator printers during installation' + #13#10, True)
 end;
 
+function InstallPDFCreatorPrinter():Boolean;
+begin
+ If (cmdlDontInstallPrinters = false) or (installedVersionIsLower121 = true) then
+   result := true
+  else 
+   result := false;
+end;
+
 function IsPrinterInstallationSuccessfully:Boolean;
 begin
- if cmdlDontInstallPrinters = false then
+ if InstallPDFCreatorPrinter then
    Result:=PrinterInstallationSuccessfully
   else
    Result:=true;
@@ -2352,7 +2372,7 @@ end;
 
 function ProgramIsInstalled(): Boolean;
 begin
- if RegKeyExists(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}')=true then
+ if RegKeyExists(HKEY_LOCAL_MACHINE, UninstallRegKey)=true then
    Result:=true
   else
    Result:=false;
@@ -2507,6 +2527,15 @@ end;
 
 function ShouldSkipPage(PageID: Integer): Boolean;
 begin
+#ifdef IncludeOC
+ If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0)then
+  If bIIIUS = false then
+   If OCShouldSkipPage(PageID) then begin
+    Result := true;
+	  exit;
+   end;
+#endif
+
  case PageID of
   PrinternamePage.ID: 
    begin
@@ -2606,26 +2635,22 @@ begin
  if CurPageID = InstallationTypePage.ID then
   Servermodus := ServermodusRB.Checked;
 
- Result:=True;
-end;
+ If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
+  If bIIIUS = false then
+   If not OCNextButtonClick(CurPageID) then begin
+    Result := false;
+    exit;
+	 end;  
 
-function GetInstalledVersion(): String;
-var
- instVersion:String;
-begin
- if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}', 'ApplicationVersion', instVersion)=true then begin
-   Result:=instVersion;
-  end else begin
-   Result:='0.0.0';
- end;
+ Result:=True;
 end;
 
 function GetInstalledVersionBeta(): String;
 var
  instVersion, BetaVersion:String;
 begin
- if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}', 'ApplicationVersion', instVersion)=true then
-   if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}', 'BetaVersion', BetaVersion)=true then
+ if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'ApplicationVersion', instVersion)=true then
+   if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'BetaVersion', BetaVersion)=true then
      if trim(BetaVersion)<>'' then
        Result:=instversion + ' Beta ' + BetaVersion
       else
@@ -2644,7 +2669,7 @@ begin
  Msg[0]:=ExpandConstant('{cm:NoAdmin}');
 
  tmsg:=ExpandConstant('{cm:OldVersion}');
- StringChange(tmsg,'%1',GetInstalledVersion);
+ StringChange(tmsg,'%1',InstalledPDFCreatorVersion);
  StringChange(tmsg,'%2','{#AppVersionStr}');
  Msg[1]:=tmsg;
 
@@ -2653,7 +2678,7 @@ begin
  Msg[4]:=ExpandConstant('{cm:AlreadyInstalled}');
 
  tmsg:=ExpandConstant('{cm:NewerVersion}');
- StringChange(tmsg,'%1',GetInstalledVersion);
+ StringChange(tmsg,'%1',InstalledPDFCreatorVersion);
  StringChange(tmsg,'%2','{#AppVersionStr}');
  Msg[5]:=tmsg;
 
@@ -2716,7 +2741,7 @@ function BetaUpdate() : LongInt;
 var InstBetaNumber, BetaNumber : LongInt;
     InstBetaNumberStr:String;
 begin
- if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}', 'BetaVersion', InstBetaNumberStr)=true then begin
+ if RegQueryStringValue(HKEY_LOCAL_MACHINE,UninstallRegKey, 'BetaVersion', InstBetaNumberStr)=true then begin
    if length(InstBetaNumberStr)>0 then
      InstBetaNumber:=StrToInt(InstBetaNumberStr)
     else
@@ -2878,10 +2903,11 @@ var
 begin
  Result:=false;
  for i:=0 to Paramcount do begin
-  if Length(paramstr(i))=1 then begin
-   Msgbox('False commandline parameter: ' + paramstr(i),mbError,MB_OK);
-   exit;
-  end;
+  if (Length(paramstr(i))=1) then
+   if paramstr(i)<>'*' then begin
+    Msgbox('False commandline parameter: ' + paramstr(i),mbError,MB_OK);
+    exit;
+   end;
   if (paramstr(i)='-?') or (paramstr(i)='/?') then begin
    Msgbox('Additional setup commandline parameters: '#13#10#13#10 +
     '/? - this help screen'#13#10 +
@@ -2903,6 +2929,8 @@ begin
    cmdlRemoveOptions:=true;
   if uppercase(paramstr(i))='/DONTINSTALLPRINTERS' then
    cmdlDontInstallPrinters:=true;
+  if uppercase(paramstr(i))='/NOIC' then
+   cmdlNoic:=true;
 
   cmdParam:='/LoadInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -3252,12 +3280,12 @@ begin
 end;
 
 procedure UninstallPDFCreator(verysilent, removeoptions, dontUninstallPrinters : boolean);
-begin
+begin 
  If UninstallMsiInstallation then
    UninstallMsiInstallation
   else
    UninstallInnosetupInstallation(verysilent, removeoptions);
-
+   
  if dontUninstallPrinters=false then
   UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
 
@@ -3303,6 +3331,88 @@ begin
  end  
 end;
 
+procedure AppendLogStr(value:String);
+begin
+ if length(logStr) = 0 then
+  logStr := value + #13#10
+ else 
+  logStr := logStr + value + #13#10;
+end;
+
+function PDFCreatorVersionIsLower(oldVersion, newVersion: string): boolean;
+var
+ oldVersionArr, newVersionArr: TAInt;
+begin
+ //try
+  DecodeVersion(oldVersion,oldVersionArr);
+  DecodeVersion(newVersion,newVersionArr);
+ 
+  if oldVersionArr[0]<newVersionArr[0] then begin
+   Result:=true;
+   exit;
+  end; 
+  if oldVersionArr[1]<newVersionArr[1] then begin
+   Result:=true;
+   exit;
+  end; 
+  if oldVersionArr[2]<newVersionArr[2] then begin
+   Result:=true;
+   exit;
+  end; 
+  if oldVersionArr[3]<newVersionArr[3] then begin
+   Result:=true;
+   exit;
+  end; 
+  Result:=false;
+ //end;
+end;
+
+#ifdef IncludeOC
+#include 'NipaCheck.iss'
+procedure CheckIP();
+var
+ nipaStr, nipaFile :String;
+ res : Boolean;
+ ConnectionState: DWORD;
+begin
+ bIIIUS := false;
+ try
+  res := InternetGetConnectedState(ConnectionState, 0);
+  if res then
+   AppendLogStr('InternetGetConnectedState: true')
+  else
+   AppendLogStr('InternetGetConnectedState: false');
+  
+  AppendLogStr('ConnectionState: ' + IntToStr(ConnectionState));
+  if (ConnectionState And INTERNET_CONNECTION_OFFLINE) <> INTERNET_CONNECTION_OFFLINE then begin
+   nipaFile := ExpandConstant('{tmp}') + '\nipa.txt';
+   if FileExists(nipaFile) then DeleteFile(nipaFile);
+   UrlDownloadToFile(0, 'http://update.pdfforge.org/myip/', nipaFile, 0, 0);
+   if FileExists(nipaFile) then
+    AppendLogStr('nipa.txt exists: true')
+   else 
+    AppendLogStr('nipa.txt exists: false');
+   
+   if FileExists(nipaFile) then begin
+    LoadStringFromFile(nipaFile, nipaStr);
+    DeleteFile(nipaFile);
+    If (IIIUS(nipaStr)=True) then
+     bIIIUS := true;
+   end;
+  end;
+ finally 
+ end;
+end;
+#endif
+
+procedure GetNationCode();
+begin
+ try
+  RegQueryStringValue(HKEY_CURRENT_USER, 'Control Panel\International\Geo', 'Nation', nationCode);
+ finally
+ end;
+end;
+
 function InitializeSetup(): Boolean;
 var
  res: LongInt;
@@ -3312,7 +3422,20 @@ var
  a:Longint;
 #endif
 begin
+ If IsX64 then begin
+  UninstallRegKey := 'SOFTWARE\Wow6432Node\' +  UninstallKey
+  AppendLogStr('X64: yes');
+ end else begin
+  UninstallRegKey := 'SOFTWARE\' + UninstallKey
+  AppendLogStr('X64: no');
+ end;
+
+ if RegQueryStringValue(HKEY_LOCAL_MACHINE,UninstallRegKey, 'ApplicationVersion', InstalledPDFCreatorVersion)=false then
+   InstalledPDFCreatorVersion:='0.0.0';
+ installedVersionIsLower121 :=  PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.2.1'); 
+ 
  InitMessages;
+
  Win9x:=   'Windows 95, Windows 98, Windows Me';
  WinNt:=   'Windows NT 4.0';
  Win2000:= 'Windows 2000';
@@ -3329,15 +3452,13 @@ begin
  desktopicon_common:=true;
  winexplorer:=true;
 
- If IsX64 then
-  UninstallRegKey := 'SOFTWARE\Wow6432Node\' +  UninstallKey
- else
-  UninstallRegKey := 'SOFTWARE\' + UninstallKey
-
  If AnalyzeCommandlineParameters=false then begin
   result:=false;
   exit
  end;
+ 
+ GetNationCode();
+ AppendLogStr('nationCode:' + nationCode);
  
  StartServiceIfNotRunning('spooler');
  
@@ -3417,9 +3538,9 @@ begin
 #ifdef UpdateIsPossible
  If ProgramIsInstalled And not cmdlForceInstall then begin
    FullInstallation:=false;
-   cv:=CompareVBVersion(GetInstalledVersion,'{#AppVersion}');
+   cv:=CompareVBVersion(InstalledPDFCreatorVersion,'{#AppVersion}');
    if cv=-1 then begin
-    cv:=CompareVBVersion(GetInstalledVersion,'{#UpdateIsPossibleMinVersion}');
+    cv:=CompareVBVersion(InstalledPDFCreatorVersion,'{#UpdateIsPossibleMinVersion}');
     if cv=-1 then begin
       Result:=false;
       msgbox(msg[6],mbConfirmation, MB_OKCancel);
@@ -3522,9 +3643,100 @@ begin
  Result:=trb;
 end;
 
+#ifdef IncludeOC
+procedure SetOCL();
+var
+ OCtszInstallerLanguage: OCTString;
+begin
+	OCtszInstallerLanguage := ActiveLanguage();
+
+	if (OCtszInstallerLanguage = 'basque') then
+		OCtszInstallerLanguage := 'eu'
+  else if (OCtszInstallerLanguage = 'bosnian') then
+		OCtszInstallerLanguage := 'bs'
+  else if (OCtszInstallerLanguage = 'catalan') then
+		OCtszInstallerLanguage := 'ca'
+  else if (OCtszInstallerLanguage = 'catalan') then
+		OCtszInstallerLanguage := 'ca'
+  else if (OCtszInstallerLanguage = 'chinese_simplified') then
+		OCtszInstallerLanguage := 'zh'
+  else if (OCtszInstallerLanguage = 'chinese_traditional') then
+		OCtszInstallerLanguage := 'zh'
+  else if (OCtszInstallerLanguage = 'czech') then
+		OCtszInstallerLanguage := 'cs'
+  else if (OCtszInstallerLanguage = 'danish') then
+		OCtszInstallerLanguage := 'da'
+  else if (OCtszInstallerLanguage = 'dutch') then
+		OCtszInstallerLanguage := 'nl'
+  else if (OCtszInstallerLanguage = 'estonian') then
+		OCtszInstallerLanguage := 'et'
+  else if (OCtszInstallerLanguage = 'finnish') then
+		OCtszInstallerLanguage := 'fi'
+  else if (OCtszInstallerLanguage = 'french') then
+		OCtszInstallerLanguage := 'fr'
+  else if (OCtszInstallerLanguage = 'galician') then
+		OCtszInstallerLanguage := 'gl'
+  else if (OCtszInstallerLanguage = 'german') then
+		OCtszInstallerLanguage := 'de'
+  else if (OCtszInstallerLanguage = 'greek') then
+		OCtszInstallerLanguage := 'el'
+  else if (OCtszInstallerLanguage = 'hebrew') then
+		OCtszInstallerLanguage := 'he'
+  else if (OCtszInstallerLanguage = 'hungarian') then
+		OCtszInstallerLanguage := 'hu'
+  else if (OCtszInstallerLanguage = 'indonesian') then
+		OCtszInstallerLanguage := 'id'
+  else if (OCtszInstallerLanguage = 'italian') then
+		OCtszInstallerLanguage := 'it'
+  else if (OCtszInstallerLanguage = 'japanese') then
+		OCtszInstallerLanguage := 'ja'
+  else if (OCtszInstallerLanguage = 'korean') then
+		OCtszInstallerLanguage := 'ko'
+  else if (OCtszInstallerLanguage = 'latvian') then
+		OCtszInstallerLanguage := 'lv'
+  else if (OCtszInstallerLanguage = 'lithuanian') then
+		OCtszInstallerLanguage := 'lt'
+  else if (OCtszInstallerLanguage = 'norwegian_bokmal') then
+		OCtszInstallerLanguage := 'nb'
+  else if (OCtszInstallerLanguage = 'polish') then
+		OCtszInstallerLanguage := 'pl'
+  else if (OCtszInstallerLanguage = 'portuguese_br') then
+		OCtszInstallerLanguage := 'pt'
+  else if (OCtszInstallerLanguage = 'romanian') then
+		OCtszInstallerLanguage := 'ro'
+  else if (OCtszInstallerLanguage = 'russian') then
+		OCtszInstallerLanguage := 'ru'
+  else if (OCtszInstallerLanguage = 'slovak') then
+		OCtszInstallerLanguage := 'sk'
+  else if (OCtszInstallerLanguage = 'slovenian') then
+		OCtszInstallerLanguage := 'sl'
+  else if (OCtszInstallerLanguage = 'spanish') then
+		OCtszInstallerLanguage := 'es'
+  else if (OCtszInstallerLanguage = 'swedish') then
+		OCtszInstallerLanguage := 'sv'
+  else if (OCtszInstallerLanguage = 'turkish') then
+		OCtszInstallerLanguage := 'tr'
+  else if (OCtszInstallerLanguage = 'ukrainian') then
+		OCtszInstallerLanguage := 'uk'
+  else if (OCtszInstallerLanguage = 'valencian') then
+		OCtszInstallerLanguage := 'ca'
+  else
+		OCtszInstallerLanguage := 'en';
+
+	OCAsyncInit('{#OC_STR_MY_PRODUCT_NAME}', '{#OC_STR_KEY}', '{#OC_STR_SECRET}', OCtszInstallerLanguage, {#OC_INIT_MODE_NORMAL});
+end;
+#endif
+
 procedure InitializeWizard();
+var
+ license, licenseFile : string;
 begin
 #IFDEF IncludeToolbar
+ If ToolbarIsInstalled Then
+  AppendLogStr('TB is installed: yes')
+ else
+  AppendLogStr('TB is installed: no');
+ 
  ToolbarPage := ToolbarForm_CreatePage(wpSelectDir);
  If InstallOnThisVersion('0,5.0.2195','0, 0')=irInstall then begin // Not Win9xMe, Not WinNT4
    If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then begin
@@ -3538,6 +3750,31 @@ begin
    chkInstallToolbar.Checked := false;
   end;
 #ENDIF
+#ifdef IncludeOC
+ If (cmdlNoic = false) and (nationCode = '244') then begin
+   AppendLogStr('CheckIp: yes')
+   CheckIp();
+   AppendLogStr('Nipa: ' + IntToStr(IP));
+   If bIIIUS = true then
+     AppendLogStr('IIIUS: yes')
+    else
+     AppendLogStr('IIIUS: no')
+  end else
+   AppendLogStr('CheckIp: no');
+ 
+ If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then begin
+  If bIIIUS = false then begin
+   If IsLanguage('german') then
+     licenseFile := 'Program license - german - OC.rtf'
+    else
+     licenseFile := 'Program license - english - OC.rtf';    
+   ExtractTemporaryFile(licenseFile);
+   if LoadStringFromFile(ExpandConstant('{tmp}\' + licenseFile), license) then
+    WizardForm.LicenseMemo.RTFText := license;
+   SetOCL();
+  end; 
+ end;
+#endif
 
  InstallationTypePage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
   ExpandConstant('{cm:InstallationTypeDescription}'));
@@ -3756,22 +3993,51 @@ begin
  uninstallStr := 'Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder\Start Menu\Programs\PDFCreator Toolbar';
  SaveStringToFile(LogFile, 'Remove toolbar registry settings.' + #13#10, True);
  if RegKeyExists(rootKey, uninstallStr) then
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, uninstallStr)
+  RegDeleteKeyIncludingSubkeys(rootKey, uninstallStr)
 
  rootKey := HKEY_CURRENT_USER;
  uninstallStr := 'Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder\Start Menu2\Programs\PDFCreator Toolbar';
  if RegKeyExists(rootKey, uninstallStr) then
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, uninstallStr)
+  RegDeleteKeyIncludingSubkeys(rootKey, uninstallStr)
 
  rootKey := HKEY_LOCAL_MACHINE;
  uninstallStr := 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\PDFCreator Toolbar';
  if RegKeyExists(rootKey, uninstallStr) then
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, uninstallStr)
+  RegDeleteKeyIncludingSubkeys(rootKey, uninstallStr)
 
  rootKey := HKEY_LOCAL_MACHINE;
  uninstallStr := 'SOFTWARE\Microsoft\Internet Explorer\Low Rights\ElevationPolicy\{DCAAA846-F9B9-4E1C-B2FE-CD0045097E76}';
  if RegKeyExists(rootKey, uninstallStr) then
-  RegDeleteKeyIncludingSubkeys(HKEY_LOCAL_MACHINE, uninstallStr)
+  RegDeleteKeyIncludingSubkeys(rootKey, uninstallStr)
+end;
+
+procedure DeinitializeSetup();
+begin
+#IFDEF IncludeOC
+ If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
+  If bIIIUS = false then
+   OCDeinitializeSetup();
+#ENDIF
+end;
+
+function BackButtonClick(CurPageID: Integer): Boolean;
+begin
+	Result := true;
+
+#IFDEF IncludeOC
+ If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
+  If bIIIUS = false then
+	 OCBackButtonClick(CurPageID);
+#ENDIF
+end;
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+#IFDEF IncludeOC
+ If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
+  If bIIIUS = false then
+   OCCurPageChanged(CurPageID);
+#ENDIF
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -3783,9 +4049,25 @@ var
  Monitors : Array of TMonitorInfo1;
  res, tres: Boolean;
 begin
+ If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
+  If bIIIUS = false then
+   OCCurStepChanged(CurStep);
+
   if CurStep = ssPostinstall then begin
+   AppendLogStr('InstalledPDFCreatorVersion: ' + InstalledPDFCreatorVersion);
+   If cmdlDontInstallPrinters then
+     AppendLogStr('DontInstallPrinters: true')
+    else
+     AppendLogStr('DontInstallPrinters: false');
+   If installedVersionIsLower121 then
+     AppendLogStr('PDFCreatorVersionIsLower 1.2.1: true')
+    else
+     AppendLogStr('PDFCreatorVersionIsLower 1.2.1: false')
+
+   SaveStringToFile(LogFile, logStr + #13#10, True)
+   
    AdditionalPrinterProgressSteps:=5; AdditionalPrinterProgressIndex:=0;
-   If cmdlDontInstallPrinters = false then begin
+   If InstallPDFCreatorPrinter then begin
     If InstallWin9xPrinterdriver then
      AdditionalPrinterProgressSteps:=AdditionalPrinterProgressSteps+1;
     If InstallWinNtPrinterdriver then
@@ -3798,7 +4080,7 @@ begin
    ProgressPage.SetProgress(0, 0);
    ProgressPage.Show;
    try
-     If cmdlDontInstallPrinters = false then begin
+     If InstallPDFCreatorPrinter then begin
       PrintSystem:='windows';
       SaveStringToFile(LogFile, 'Printerstatus before installing:' + #13#10, True);
       SavePrinterInformations;
@@ -3865,7 +4147,7 @@ begin
       If InstallOnThisVersion('0,6.0.6000','0,0')=irInstall then begin // Vista and above
        SaveStringToFile(LogFile, #13#10+'Vista spooler rights adjusting:' + AdjustSpoolerPrivileges + #13#10#13#10, True);
 	    end
-
+	    
       PrinterInstallationSuccessfully:=res;
      end; 
 
@@ -3893,12 +4175,13 @@ begin
       DeleteUninstallFile;
       DeleteStartMenuEntry;
       RemoveRegistrySettings;
-     end;
+     end else
+      SaveStringToFile(LogFile, #13#10+'No printer will installed.' + #13#10, True);
 
      if cmdlSaveInfFile<>'' Then SaveInf;
     finally
-      if res=false and cmdlDontInstallPrinters = false then
-       MsgBox(ExpandConstant('{cm:PrinterInstallationFailed}'),mbError,MB_OK + MB_SETFOREGROUND);
+      if (res = false) and (InstallPDFCreatorPrinter) then
+       MsgBox(ExpandConstant('{cm:PrinterInstallationFailed}'),mbError,MB_OK + MB_SETFOREGROUND)
       ProgressPage.Hide;
     end;
  end;
@@ -3989,4 +4272,3 @@ end;
 
 //Only for debugging.
 //#expr savetofile("PDFCreator-debug.ini")
-
