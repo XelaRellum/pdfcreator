@@ -52,6 +52,7 @@ hebrew.PrinternameMessage=.בחר שם למדפסת
 hebrew.PrinternameValue=.postscript מפת סיביות, או קבצי ,PDF התכנית התקינה מדפסת במערכת. באמצעות מדפסת זו ניתן ליצור מכל יישום המסוגל להדפיס,  קבצי%n%n:שם המדפסת
 hebrew.ProgramFiles=Programfiles
 hebrew.ProgramIsRunning=.התכנית "%1" פועלת%n%n.נא סגור ראשית את התכנית%n
+hebrew.RequiresDotNet20=נדרש .Net 2.0
 hebrew.RestartAlreadyAskOverwrite=התוכנה כבר מותקנת. יש להסיר את ההתקנה הקיימת [גרסה %1] לפני התקנת גרסה זו [%2].%n%n?האם להסיר כעת את הגרסה הקיימת %1
 hebrew.RestartError=.נא אתחל את המערכת על מנת להמשיך בתכנית ההתקנה
 hebrew.ServerInstallation=התקנת שרת

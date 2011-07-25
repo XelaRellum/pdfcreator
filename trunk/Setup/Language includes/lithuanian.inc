@@ -52,6 +52,7 @@ lithuanian.PrinternameMessage=Praðome pasirinkti spausdintuvo pavadinimà.
 lithuanian.PrinternameValue=PDFCreator ádiegia jûsø kompiuteryje spausdintuvà. Su ðiuo spausdintuvu kiekviena programa galinti spausdinti, galës kurti PDF, bitmap ar postscript failus.%n%nSpausdintuvo pavadinimas:
 lithuanian.ProgramFiles=Programos failai
 lithuanian.ProgramIsRunning=Programa "%1" jau paleista.%n%nPraðome pirma uþdaryti programà.
+lithuanian.RequiresDotNet20=Reikia .Net 2.0
 lithuanian.RestartAlreadyAskOverwrite=PDFCreator jau ádiegtas. Prieð diegiant ðià programos versijà [versija %2] yra bûtina paðalinti esamà versijà [versija %1] .%n%nAr paðalinti esamà progamos versijà [versija %1] dabar?
 lithuanian.RestartError=Praðome pakartotinai ákrauti jûsø sistemà, o po to tæsti diegimà.
 lithuanian.ServerInstallation=Serverio ádiegimas

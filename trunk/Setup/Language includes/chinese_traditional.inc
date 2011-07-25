@@ -52,6 +52,7 @@ chinese_traditional.PrinternameMessage=請選擇一個印表機名稱。
 chinese_traditional.PrinternameValue=PDFCreator 會在您的電腦中安裝一台印表機。使用該印表機，任何能夠列印的程式都可以用來建立 PDF 檔、BMP 檔或 postscript 檔。%n%n印表機名稱：
 chinese_traditional.ProgramFiles=程式檔
 chinese_traditional.ProgramIsRunning=程式 %1 正在運行。%n%n請先將其關閉。
+chinese_traditional.RequiresDotNet20=需要 .Net 2.0
 chinese_traditional.RestartAlreadyAskOverwrite=PDFCreator 已經安裝。必須先移除現有安裝版本 [version %1] 後才能安裝此版本 [version %2].%n%n是否將現有版本 [version %1] 移除?
 chinese_traditional.RestartError=請重新啟動系統，以繼續安裝。
 chinese_traditional.ServerInstallation=伺服器模式安裝

@@ -696,7 +696,7 @@ On Error GoTo ErrPtnr_OnError
 50090   Else
 50100    cmdAsso.Enabled = False
 50110  End If
-50120  If FileExists(CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-14_0_170_setup.exe") And (Not ToolbarIsInstalled) Then
+50120  If FileExists(CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-4_4_0_setup.exe") And (Not ToolbarIsInstalled) Then
 50130    dmFraToolbar.Enabled = True
 50140    cmdInstallToolbar.Enabled = True
 50150   Else
@@ -858,7 +858,7 @@ Private Sub cmdInstallToolbar_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Shell """" & CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-14_0_170_setup"""
+50010  Shell """" & CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-4_4_0_setup.exe"""
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

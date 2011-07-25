@@ -1,6 +1,6 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.4.2a (with ISPP) and InnoIDE 1.0.0.0070
-; Installation script created by Frank Heindörfer
+; Setup created with Inno Setup QuickStart Pack 5.4.2a (with ISPP) and InnoIDE 1.0.0.0077
+; Installation script created by pdfforge GbR
 
 ;#define FastCompilation
 #define CompileHelp
@@ -343,11 +343,12 @@ Source: ..\PDFCreator\Languages\catalan.ini; DestDir: {app}\languages; Component
 Source: ..\PDFCreator\Languages\chinese_simplified.ini; DestDir: {app}\languages; Components: languages\chinese_simplified; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\chinese_traditional.ini; DestDir: {app}\languages; Components: languages\chinese_traditional; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\corsican.ini; DestDir: {app}\languages; Components: languages\corsican; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\croatian.ini; DestDir: {app}\languages; Components: languages\croatian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\czech.ini; DestDir: {app}\languages; Components: languages\czech; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\danish.ini; DestDir: {app}\languages; Components: languages\danish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\dutch.ini; DestDir: {app}\languages; Components: languages\dutch; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\english.ini; DestDir: {app}\languages; Components: languages\english; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\estonian.ini; DestDir: {app}\languages; Components: languages\estonian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\finnish.ini; DestDir: {app}\languages; Components: languages\finnish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\french.ini; DestDir: {app}\languages; Components: languages\french; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\galician.ini; DestDir: {app}\languages; Components: languages\galician; Flags: ignoreversion
@@ -359,7 +360,7 @@ Source: ..\PDFCreator\Languages\hungarian.ini; DestDir: {app}\languages; Compone
 Source: ..\PDFCreator\Languages\italian.ini; DestDir: {app}\languages; Components: languages\italian; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\irish.ini; DestDir: {app}\languages; Components: languages\irish; Flags: ignoreversion
 ;Source: ..\PDFCreator\Languages\japanese.ini; DestDir: {app}\languages; Components: languages\japanese; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\latvian.ini; DestDir: {app}\languages; Components: languages\latvian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\latvian.ini; DestDir: {app}\languages; Components: languages\latvian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\ligurian.ini; DestDir: {app}\languages; Components: languages\ligurian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\lithuanian.ini; DestDir: {app}\languages; Components: languages\lithuanian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\norwegian_bokmal.ini; DestDir: {app}\languages; Components: languages\norwegian_bokmal; Flags: ignoreversion
@@ -367,6 +368,7 @@ Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components
 Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\serbian_cyrillic.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
@@ -477,7 +479,7 @@ Source: ..\COM\Samples\Python\Testpage2PDF.py; DestDir: {app}\COM\Python; Compon
 ; Toolbar
 #IFDEF IncludeToolbar
 Source: ..\Toolbar\pdfforgeToolbar-stub-1.exe; DestDir: {tmp}; DestName: pdfforgeToolbar-stub-1.exe; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: InstallToolbar
-Source: Installation\pdfforge Toolbar-4_1_0_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
+Source: Installation\pdfforge Toolbar-4_4_0_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 
 #IFDEF IncludeOC
@@ -756,6 +758,9 @@ Name: languages\chinese_traditional; Description: Chinese traditional; Types: fu
 
 Name: languages\corsican; Description: Corsican; Types: full; Flags: dontinheritcheck
 
+Name: languages\croatian; Description: Croatian; Types: full; Check: Not IsLanguage('croatian'); Flags: dontinheritcheck
+Name: languages\croatian; Description: Croatian; Types: full custom; Check: IsLanguage('croatian'); Flags: dontinheritcheck
+
 Name: languages\czech; Description: Czech; Types: full; Check: Not IsLanguage('czech'); Flags: dontinheritcheck
 Name: languages\czech; Description: Czech; Types: full custom; Check: IsLanguage('czech'); Flags: dontinheritcheck
 
@@ -767,8 +772,8 @@ Name: languages\dutch; Description: Dutch; Types: full custom; Check: IsLanguage
 
 Name: languages\english; Description: English; Types: full compact custom; Flags: fixed dontinheritcheck
 
-;Name: languages\estonian; Description: Estonian; Types: full; Check: Not IsLanguage('estonian'); Flags: dontinheritcheck
-;Name: languages\estonian; Description: Estonian; Types: full custom; Check: IsLanguage('estonian'); Flags: dontinheritcheck
+Name: languages\estonian; Description: Estonian; Types: full; Check: Not IsLanguage('estonian'); Flags: dontinheritcheck
+Name: languages\estonian; Description: Estonian; Types: full custom; Check: IsLanguage('estonian'); Flags: dontinheritcheck
 
 Name: languages\finnish; Description: Finnish; Types: full; Check: Not IsLanguage('finnish'); Flags: dontinheritcheck
 Name: languages\finnish; Description: Finnish; Types: full custom; Check: IsLanguage('finnish'); Flags: dontinheritcheck
@@ -804,11 +809,11 @@ Name: languages\italian; Description: Italian; Types: full custom; Check: IsLang
 
 Name: languages\ligurian; Description: Ligurian; Types: full; Flags: dontinheritcheck
 
+Name: languages\latvian; Description: Latvian; Types: full; Check: Not IsLanguage('latvian'); Flags: dontinheritcheck
+Name: languages\latvian; Description: Latvian; Types: full custom; Check: IsLanguage('latvian'); Flags: dontinheritcheck
+
 Name: languages\lithuanian; Description: Lithuanian; Types: full; Check: Not IsLanguage('lithuanian'); Flags: dontinheritcheck
 Name: languages\lithuanian; Description: Lithuanian; Types: full custom; Check: IsLanguage('lithuanian'); Flags: dontinheritcheck
-
-;Name: languages\latvian; Description: Latvian; Types: full; Check: Not IsLanguage('latvian'); Flags: dontinheritcheck
-;Name: languages\latvian; Description: Latvian; Types: full custom; Check: IsLanguage('latvian'); Flags: dontinheritcheck
 
 Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full; Check: Not IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
 Name: languages\norwegian_bokmal; Description: Norwegian Bokmal; Types: full custom; Check: IsLanguage('norwegian_bokmal'); Flags: dontinheritcheck
@@ -824,6 +829,9 @@ Name: languages\romanian; Description: Romanian; Types: full custom; Check: IsLa
 
 Name: languages\russian; Description: Russian; Types: full; Check: Not IsLanguage('russian'); Flags: dontinheritcheck
 Name: languages\russian; Description: Russian; Types: full custom; Check: IsLanguage('russian'); Flags: dontinheritcheck
+
+Name: languages\serbian_cyrillic; Description: Serbian cyrillic; Types: full; Check: Not IsLanguage('serbian_cyrillic'); Flags: dontinheritcheck
+Name: languages\serbian_cyrillic; Description: Serbian cyrillic; Types: full custom; Check: IsLanguage('serbian_cyrillic'); Flags: dontinheritcheck
 
 Name: languages\slovak; Description: Slovak; Types: full; Check: Not IsLanguage('slovak'); Flags: dontinheritcheck
 Name: languages\slovak; Description: Slovak; Types: full custom; Check: IsLanguage('slovak'); Flags: dontinheritcheck
