@@ -52,6 +52,7 @@ turkish.PrinternameMessage=Lütfen yazýcý için bir ad seçin.
 turkish.PrinternameValue=PDFCreator, bilgisayarýnýzda bir yazýcý kurar. Bu yazýcýyla yazdýrma iþlemi yapabilen her uygulama, PDF dosyalarý, biteþlem dosyalarý yada postscript dosyalarý oluþturabilir.%n%nYazýcýnýn adý:
 turkish.ProgramFiles=Programfiles
 turkish.ProgramIsRunning="%1" programý çalýþýyor.%n%nLütfen önce programý kapatýn.
+turkish.RequiresDotNet20=.Net 2.0 Gerektirir
 turkish.RestartAlreadyAskOverwrite=PDFCreator zaten kurulu. Bu sürümü [version %2] kurmadan önce, var olan kurulumu [version %1] kaldýrmanýz gerekiyor.%n%nVar olan sürüm [version %1] þimdi kaldýrýlsýn mý?
 turkish.RestartError=Lütfen kura devam edebilmek için önce sisteminizi yeniden baþlatýn.
 turkish.ServerInstallation=Sunucu kurulumu

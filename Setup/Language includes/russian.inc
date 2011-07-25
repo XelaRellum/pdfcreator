@@ -52,6 +52,7 @@ russian.PrinternameMessage=Пожалуйста выберите имя принтера
 russian.PrinternameValue=PDFCreator устанавливает принтер на ваш компьютер. С помощью этого принтера любое приложение, имеющее функции печати, получает возможность создавать PDF файлы, BMP файлы или postscript файлы.%n%nИмя принтера:
 russian.ProgramFiles=Файлы программы
 russian.ProgramIsRunning=Выполняется программа "%1".%n%nПожалуйста сначала закройте программу.%n
+russian.RequiresDotNet20=Необходим .Net 2.0
 russian.RestartAlreadyAskOverwrite=PDFCreator уже установлен. Необходимо удалить установленную программу версии [version %1] прежде, чем установить эту версию [version %2].%n%nУдалить установленную программу версии [version %1]?
 russian.RestartError=Пожалуйста перезагрузите компьютер для продолжения установки.
 russian.ServerInstallation=Серверная установка

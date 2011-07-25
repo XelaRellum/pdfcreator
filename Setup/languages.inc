@@ -5,10 +5,11 @@ Name: bosnian;            MessagesFile: Innosetup languages files\Bosnian-1-5.1.
 Name: catalan;            MessagesFile: compiler:Languages\Catalan.isl
 Name: chinese_simplified; MessagesFile: Innosetup languages files\ChineseSimp-12-5.1.11.isl
 Name: chinese_traditional; MessagesFile: Innosetup languages files\ChineseTrad-2-5.1.11.isl
+Name: croatian;           MessagesFile: Innosetup languages files\Croatian-5-5.1.11.isl
 Name: czech;              MessagesFile: compiler:Languages\Czech.isl
 Name: danish;              MessagesFile: compiler:Languages\Danish.isl
 Name: dutch;              MessagesFile: compiler:Languages\Dutch.isl
-;Name: estonian;           MessagesFile: Innosetup languages files\Estonian-2-5.1.0.isl
+Name: estonian;           MessagesFile: Innosetup languages files\Estonian-3-5.1.11.isl
 Name: finnish;            MessagesFile: compiler:Languages\Finnish.isl
 Name: french;             MessagesFile: compiler:Languages\French.isl
 Name: galician;           MessagesFile: Innosetup languages files\Galician-2-5.1.11.isl
@@ -20,13 +21,14 @@ Name: hungarian;          MessagesFile: compiler:Languages\Hungarian.isl
 Name: italian;            MessagesFile: compiler:Languages\Italian.isl
 ;Name: japanese;           MessagesFile: compiler:Languages\Japanese.isl
 ;Name: korean;             MessagesFile: Innosetup languages files\Korean-5-5.1.11.isl
-;Name: latvian;            MessagesFile: Innosetup languages files\Latvian-1-5.1.11.isl
+Name: latvian;            MessagesFile: Innosetup languages files\Latvian-1-5.1.11.isl
 Name: lithuanian;         MessagesFile: Innosetup languages files\Lithuanian-4-5.1.11.isl
 Name: norwegian_bokmal;   MessagesFile: compiler:Languages\Norwegian.isl
 Name: polish;             MessagesFile: compiler:Languages\Polish.isl
 Name: portuguese_br;      MessagesFile: compiler:Languages\BrazilianPortuguese.isl
 Name: romanian;           MessagesFile: Innosetup languages files\Romanian-6-5.1.11.isl
 Name: russian;            MessagesFile: compiler:Languages\Russian.isl
+Name: serbian_cyrillic;   MessagesFile: Innosetup languages files\SerbianCyrillic-5.1.11.isl
 Name: slovak;             MessagesFile: compiler:Languages\Slovak.isl
 Name: slovenian;          MessagesFile: compiler:Languages\Slovenian.isl
 Name: spanish;            MessagesFile: compiler:Languages\Spanish.isl

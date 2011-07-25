@@ -52,6 +52,7 @@ swedish.PrinternameMessage=Välj ett namn på skrivaren.
 swedish.PrinternameValue=PDFCreator installerar en skrivare på din dator, med denna skrivare kan alla program med utskriftsmöjliget skapa PDF-filer, bildfiler eller postscript-filer.%n%nSkrivarens namn:
 swedish.ProgramFiles=Programfiler
 swedish.ProgramIsRunning=Programmet "%1" körs för tillfället.%n%nStäng av detta program först.%n%n
+swedish.RequiresDotNet20=Kräver .Net 2.0
 swedish.RestartAlreadyAskOverwrite=PDFCreator är redan installerad. Du måste avinstallera den nuvarande versionen [version %1] innan du installerar denna version [version %2],%n%nSka den nuvarande version [version %1] avinstalleras nu?
 swedish.RestartError=Du måste starta om din dator innan installationen kan fortsätta.
 swedish.ServerInstallation=Serverinstallation

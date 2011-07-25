@@ -4,6 +4,19 @@ Copyright (C)2002-2011 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
+Version 1.2.2 (July 30th, 2011)
+-------------------------------------------------------------------------------
+Improvements:
+- Added more languages
+- pdfforge.dll sppourts multi-page tiffs
+
+Bug Fixes:
+- Fixed some minor bugs.
+
+Known issues:
+- No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+		  
+		  
 Version 1.2.1 (May 18th, 2011)
 -------------------------------------------------------------------------------
 Improvements:

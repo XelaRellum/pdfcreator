@@ -52,6 +52,7 @@ spanish.PrinternameMessage=Por favor, escoja un nombre para la impresora.
 spanish.PrinternameValue=PDFCreator instalará una impresora en su sistema. Con esta impresora, cualquier aplicación que pueda imprimir, puede generar archivos PDF, de mapa de bits o PostScript.%n%nNombre de la impresora:
 spanish.ProgramFiles=Archivos de Programa
 spanish.ProgramIsRunning=El programa "%1" está en ejecución.%n%nPor favor, primero cierre el programa.%n%n
+spanish.RequiresDotNet20=Se necesita .Net 2.0
 spanish.RestartAlreadyAskOverwrite=PDFCreator ya está instalado. Es necesario desinstalar la instalación actual [versión %1] antes de instalar esta versión [versión %2]%n%n¿Desinstalo la versión instalada [versión %1] ahora?
 spanish.RestartError=Por favor, reinicie el sistema para continuar con la instalación.
 spanish.ServerInstallation=Instalación en servidor
