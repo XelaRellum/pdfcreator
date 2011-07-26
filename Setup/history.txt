@@ -8,7 +8,7 @@ Version 1.2.2 (July 30th, 2011)
 -------------------------------------------------------------------------------
 Improvements:
 - Added more languages
-- pdfforge.dll sppourts multi-page tiffs
+- pdfforge.dll supports multi-page tiffs
 
 Bug Fixes:
 - Fixed some minor bugs.
