@@ -4184,7 +4184,7 @@ begin
       DeleteStartMenuEntry;
       RemoveRegistrySettings;
      end else
-      SaveStringToFile(LogFile, #13#10+'No printer will installed.' + #13#10, True);
+      SaveStringToFile(LogFile, #13#10+'No printer will be installed.' + #13#10, True);
 
      if cmdlSaveInfFile<>'' Then SaveInf;
     finally
