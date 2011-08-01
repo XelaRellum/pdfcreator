@@ -129,20 +129,12 @@ On Error GoTo ErrPtnr_OnError
 50090     .Comment = Replace(Replace(.Comment, Chr$(&HA), ""), Chr$(&HD), "")
 50100    End If
 50110    .Comment = Trim$(.Comment)
-50120    If Len(.Comment) > 0 Then
-50130     If Mid$(.Comment, 1, 1) = "(" Then
-50140      .Comment = Mid(.Comment, 2)
-50150     End If
-50160     If Len(.Comment) > 0 Then
-50170      If Mid$(.Comment, Len(.Comment), 1) = ")" Then
-50180       .Comment = Mid(.Comment, 1, Len(.Comment) - 1)
-50190      End If
-50200     End If
-50210    End If
-50220    .Comment = ReplaceEncodingChars(.Comment)
-50230   End With
-50240  End If
-50250  GetPSComment = PSComment
+50120    If LenB(.Comment) > 0 Then
+50130     .Comment = ReplaceEncodingChars(.Comment)
+50140    End If
+50150   End With
+50160  End If
+50170  GetPSComment = PSComment
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
