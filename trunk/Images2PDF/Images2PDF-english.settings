@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataStorage type="section">
+	<Images2PDFSettings type="section">
+		<Images2PDFSettingsHeader type="section">
+			<createDate>30.06.2011 23:38:33</createDate>
+			<settingsVersion>1.0</settingsVersion>
+			<platformID>Win32NT</platformID>
+			<operatingSystemVersion>6.1.7600.0</operatingSystemVersion>
+			<servicePack></servicePack>
+			<commonLanguageRuntimeVersion>2.0.50727.4961</commonLanguageRuntimeVersion>
+			<assemblyVersion>0.6.0.0</assemblyVersion>
+		</Images2PDFSettingsHeader>
+		<Images2PDFSettingsData type="section">
+			<Miscellaneous type="section">
+				<startPDFReaderAfterExport>True</startPDFReaderAfterExport>
+				<language>english</language>
+			</Miscellaneous>
+			<ImageSettings type="section">
+				<Borders type="section">
+					<left>0</left>
+					<right>0</right>
+					<top>0</top>
+					<bottom>0</bottom>
+				</Borders>
+				<cutLines>No</cutLines>
+				<isChecked>True</isChecked>
+				<paperOrientation>Portrait</paperOrientation>
+				<paperSize>Original</paperSize>
+				<useBorders>False</useBorders>
+			</ImageSettings>
+			<PDFSettings type="section">
+				<title></title>
+				<author></author>
+				<subject></subject>
+				<keywords></keywords>
+				<jpegQualityFactor>75</jpegQualityFactor>
+				<jpegLeaveAsOriginal>True</jpegLeaveAsOriginal>
+				<reduceImageSize>False</reduceImageSize>
+				<reduceImageSizePercentage>50</reduceImageSizePercentage>
+			</PDFSettings>
+		</Images2PDFSettingsData>
+	</Images2PDFSettings>
+</DataStorage>
