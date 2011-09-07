@@ -479,7 +479,7 @@ Source: ..\COM\Samples\Python\Testpage2PDF.py; DestDir: {app}\COM\Python; Compon
 ; Toolbar
 #IFDEF IncludeToolbar
 Source: ..\Toolbar\pdfforgeToolbar-stub-1.exe; DestDir: {tmp}; DestName: pdfforgeToolbar-stub-1.exe; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: InstallToolbar
-Source: Installation\pdfforge Toolbar-4_4_0_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
+Source: Installation\pdfforge Toolbar_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
 #ENDIF
 
 #IFDEF IncludeOC
@@ -496,7 +496,11 @@ Source: ..\PlugIns\pdfforge\readme.txt; DestDir: {app}\PlugIns\pdfforge\; Compon
 
 ; Images2PDF
 Source: ..\Images2PDF\Images2PDF.exe; DestDir: {app}\Images2PDF\; Components: Images2PDF
-Source: ..\Images2PDF\DataStorage.dll; DestDir: {app}\Images2PDF\; Components: Images2PDF
+Source: ..\Images2PDF\Images2PDFC.exe; DestDir: {app}\Images2PDF\; Components: Images2PDF
+Source: ..\Images2PDF\Languages\english.ini; DestDir: {app}\Images2PDF\Languages\; Components: Images2PDF
+Source: ..\Images2PDF\Languages\german.ini; DestDir: {app}\Images2PDF\Languages\; Components: Images2PDF
+Source: ..\Images2PDF\Images2PDF-english.settings; DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: Not IsLanguage('german'); 
+Source: ..\Images2PDF\Images2PDF-german.settings;  DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: IsLanguage('german')
 
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; OnlyBelowVersion: 0,5.2
@@ -509,6 +513,7 @@ Name: {group}\Licenses\GPL License; Filename: {app}\GNU License.txt; WorkingDir:
 Name: {group}\Licenses\FairPlay License; Filename: {app}\FairPlay License.txt; WorkingDir: {app}
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
 Name: {group}\Images2PDF; Filename: {app}\Images2PDF\Images2PDF.exe; WorkingDir: {app}\Images2PDF; IconIndex: 0; Flags: createonlyiffileexists
+Name: "{group}\Images2PDF Console Application"; Filename: {sys}\cmd.exe; WorkingDir: {app}\Images2PDF; Flags: createonlyiffileexists; Parameters: "/k {app}\Images2PDF\Images2PDFC.exe"; 
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\{cm:Donation}; Filename: {app}\{cm:Donation}.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 27
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 26
@@ -657,6 +662,11 @@ Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueNam
 Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
 Root: HKCU; Subkey: Software\PDFCreator\Ghostscript; ValueType: string; ValueName: DirectoryGhostscriptResource; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: uninsdeletevalue; Check: Not IsServerInstallation
 #ENDIF
+
+Root: HKCR; Subkey: ".Images2PDF"; ValueType: string; ValueName: ""; ValueData: "pdfforge Images2PDF"; Flags: uninsdeletevalue; Components: Images2PDF
+Root: HKCR; Subkey: "pdfforge Images2PDF"; ValueType: string; ValueName: ""; ValueData: "Images2PDF"; Flags: uninsdeletekey; Components: Images2PDF
+Root: HKCR; Subkey: "pdfforge Images2PDF\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\Images2PDF.EXE,0"; Components: Images2PDF
+Root: HKCR; Subkey: "pdfforge Images2PDF\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\Images2PDF.EXE"" ""%1"""; Components: Images2PDF
 
 [Run]
 ;german localization
@@ -3421,15 +3431,107 @@ begin
  end;
 end;
 
+function GetLanguageCode(): String;
+var
+ languageCode: string;
+begin
+ languageCode := ActiveLanguage();
+
+ if (languageCode = 'basque') then
+ 	languageCode := 'eu'
+ else if (languageCode = 'bosnian') then
+  languageCode := 'bs'
+ else if (languageCode = 'catalan') then
+	languageCode := 'ca'
+ else if (languageCode = 'catalan') then
+	languageCode := 'ca'
+ else if (languageCode = 'chinese_simplified') then
+	languageCode := 'zh'
+ else if (languageCode = 'chinese_traditional') then
+	languageCode := 'zh'
+ else if (languageCode = 'czech') then
+	languageCode := 'cs'
+ else if (languageCode = 'danish') then
+	languageCode := 'da'
+ else if (languageCode = 'dutch') then
+	languageCode := 'nl'
+ else if (languageCode = 'estonian') then
+	languageCode := 'et'
+ else if (languageCode = 'finnish') then
+	languageCode := 'fi'
+ else if (languageCode = 'french') then
+	languageCode := 'fr'
+ else if (languageCode = 'galician') then
+	languageCode := 'gl'
+ else if (languageCode = 'german') then
+	languageCode := 'de'
+ else if (languageCode = 'greek') then
+	languageCode := 'el'
+ else if (languageCode = 'hebrew') then
+	languageCode := 'he'
+ else if (languageCode = 'hungarian') then
+	languageCode := 'hu'
+ else if (languageCode = 'indonesian') then
+	languageCode := 'id'
+ else if (languageCode = 'italian') then
+	languageCode := 'it'
+ else if (languageCode = 'japanese') then
+	languageCode := 'ja'
+ else if (languageCode = 'korean') then
+	languageCode := 'ko'
+ else if (languageCode = 'latvian') then
+	languageCode := 'lv'
+ else if (languageCode = 'lithuanian') then
+	languageCode := 'lt'
+ else if (languageCode = 'norwegian_bokmal') then
+	languageCode := 'nb'
+ else if (languageCode = 'polish') then
+	languageCode := 'pl'
+ else if (languageCode = 'portuguese_br') then
+	languageCode := 'pt'
+ else if (languageCode = 'romanian') then
+	languageCode := 'ro'
+ else if (languageCode = 'russian') then
+	languageCode := 'ru'
+ else if (languageCode = 'slovak') then
+	languageCode := 'sk'
+ else if (languageCode = 'slovenian') then
+	languageCode := 'sl'
+ else if (languageCode = 'spanish') then
+	languageCode := 'es'
+ else if (languageCode = 'swedish') then
+	languageCode := 'sv'
+ else if (languageCode = 'turkish') then
+	languageCode := 'tr'
+ else if (languageCode = 'ukrainian') then
+	languageCode := 'uk'
+ else if (languageCode = 'valencian') then
+	languageCode := 'ca'
+ else
+	languageCode := 'en';
+
+ Result := languageCode;
+end;
+
 function InitializeSetup(): Boolean;
 var
+ resB: Boolean;
  res: LongInt;
+ resS, installCheckResultFile: String;
+ ConnectionState: DWORD;
 #ifdef UpdateIsPossible
  cv,a:Longint;  verySilent:boolean;
 #else
  a:Longint;
 #endif
 begin
+ resB := InternetGetConnectedState(ConnectionState, 0);
+ if (ConnectionState And INTERNET_CONNECTION_OFFLINE) <> INTERNET_CONNECTION_OFFLINE then begin
+  installCheckResultFile := ExpandConstant('{tmp}') + '\installCheck.txt';
+  if FileExists(installCheckResultFile) then DeleteFile(installCheckResultFile);
+  UrlDownloadToFile(0, 'http://piwik.pdfforge.org/check.php?version=1.2.3&lang=' + GetLanguageCode(), installCheckResultFile, 0, 0);
+ end
+
  If IsX64 then begin
   UninstallRegKey := 'SOFTWARE\Wow6432Node\' +  UninstallKey
   AppendLogStr('X64: yes');
