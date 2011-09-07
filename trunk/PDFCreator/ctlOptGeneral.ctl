@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.OCX"
 Begin VB.UserControl ctlOptGeneral 
    ClientHeight    =   5850
    ClientLeft      =   0
@@ -858,7 +858,7 @@ Private Sub cmdInstallToolbar_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Shell """" & CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-4_4_0_setup.exe"""
+50010  Shell """" & CompletePath(App.Path) & "Toolbar\pdfforge Toolbar_setup.exe"""
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
