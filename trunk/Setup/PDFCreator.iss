@@ -1,5 +1,5 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.4.2a (with ISPP) and InnoIDE 1.0.0.0077
+; Setup created with Inno Setup QuickStart Pack 5.4.2a (with ISPP) and InnoIDE 1.0.0.0078
 ; Installation script created by pdfforge GbR
 
 ;#define FastCompilation
@@ -3529,7 +3529,7 @@ begin
  if (ConnectionState And INTERNET_CONNECTION_OFFLINE) <> INTERNET_CONNECTION_OFFLINE then begin
   installCheckResultFile := ExpandConstant('{tmp}') + '\installCheck.txt';
   if FileExists(installCheckResultFile) then DeleteFile(installCheckResultFile);
-  UrlDownloadToFile(0, 'http://piwik.pdfforge.org/check.php?version=1.2.3&lang=' + GetLanguageCode(), installCheckResultFile, 0, 0);
+  UrlDownloadToFile(0, 'http://piwik.pdfforge.org/check.php?version=' + ExpandConstant('{#AppVersionStr}') + '&lang=' + GetLanguageCode(), installCheckResultFile, 0, 0);
  end
 
  If IsX64 then begin
