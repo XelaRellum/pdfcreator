@@ -52,6 +52,7 @@ slovak.PrinternameMessage=Zadajte názov tlaèiarne.
 slovak.PrinternameValue=Na poèítaè sa nainštaluje tlaèiareò programu PDFCreator. Odporúèa sa zada èo najkratší názov, pretoe niektoré programy nepodporujú kombinácie názvu servera a tlaèiarne dlhšie ako 31 znakov.
 slovak.ProgramFiles=Súbory programu
 slovak.ProgramIsRunning=Program „%1“ je spustenı.%n%nZatvorte tento program a skúste to znova.
+slovak.RequiresDotNet20=Vyaduje .NET Framework 2.0
 slovak.RestartAlreadyAskOverwrite=Program PDFCreator je u nainštalovanı. Ak chcete pokraèova v inštalácii verzie „%2“, je potrebné odinštalova verziu „%1“.%n%nNaozaj chcete odinštalova aktuálnu verziu „%1“?
 slovak.RestartError=Ak chcete pokraèova v inštalácii, je potrebné najprv reštartova systém.
 slovak.ServerInstallation=Serverová inštalácia
