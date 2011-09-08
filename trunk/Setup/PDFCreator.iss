@@ -515,8 +515,8 @@ Name: {group}\Licenses\AFPL License; Filename: {app}\AFPL License.txt; WorkingDi
 Name: {group}\Licenses\GPL License; Filename: {app}\GNU License.txt; WorkingDir: {app}
 Name: {group}\Licenses\FairPlay License; Filename: {app}\FairPlay License.txt; WorkingDir: {app}
 Name: {group}\{cm:History}; Filename: {app}\History.txt; WorkingDir: {app}; Flags: createonlyiffileexists
-Name: {group}\Images2PDF; Filename: {app}\Images2PDF\Images2PDF.exe; WorkingDir: {app}\Images2PDF; IconIndex: 0; Flags: createonlyiffileexists
-Name: "{group}\Images2PDF Console Application"; Filename: {sys}\cmd.exe; WorkingDir: {app}\Images2PDF; Flags: createonlyiffileexists; Parameters: "/k ""{app}\Images2PDF\Images2PDFC.exe"""; 
+Name: {group}\Images2PDF\Images2PDF; Filename: {app}\Images2PDF\Images2PDF.exe; WorkingDir: {app}\Images2PDF; IconIndex: 0; Flags: createonlyiffileexists
+Name: {group}\Images2PDF\Images2PDF Console Application; Filename: {sys}\cmd.exe; WorkingDir: {app}\Images2PDF; Flags: createonlyiffileexists; Parameters: "/k ""{app}\Images2PDF\Images2PDFC.exe"""; 
 Name: {group}\Translation Tool; Filename: {app}\languages\transtool.exe; WorkingDir: {app}\languages; IconIndex: 0; Flags: createonlyiffileexists
 Name: {group}\{cm:Donation}; Filename: {app}\{cm:Donation}.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 27
 Name: {group}\{cm:ProgramOnTheWeb,PDFCreator}; Filename: {app}\PDFCreator.url; WorkingDir: {app}; IconFilename: {app}\PDFCreator.exe; IconIndex: 26
@@ -3532,7 +3532,7 @@ begin
  try
   installCheckFile := 'InstallCheck.exe';
   ExtractTemporaryFile(installCheckFile);
-  Exec(ExpandConstant('{tmp}\' + installCheckFile), '/v=' + ExpandConstant('{#AppVersionStr}') + ' /lc=' + GetLanguageCode(), '', SW_HIDE, ewNoWait, ResultCode);
+  Exec(ExpandConstant('{tmp}\' + installCheckFile), '/v=' + ExpandConstant('{#AppVersionStr}') + ' /lc=' + GetLanguageCode() + ' /verysilent', '', SW_HIDE, ewNoWait, ResultCode);
  except
  end;
 
