@@ -502,6 +502,9 @@ Source: ..\Images2PDF\Languages\german.ini; DestDir: {app}\Images2PDF\Languages\
 Source: ..\Images2PDF\Images2PDF-english.settings; DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: Not IsLanguage('german'); 
 Source: ..\Images2PDF\Images2PDF-german.settings;  DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: IsLanguage('german')
 
+; InstallCheck
+Source: Installation\InstallCheck.exe; DestDir: {tmp}; Flags: deleteafterinstall overwritereadonly;
+
 [Dirs]
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; OnlyBelowVersion: 0,5.2
 Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; Permissions: users-modify; MinVersion: 0,6.0
@@ -3517,20 +3520,21 @@ function InitializeSetup(): Boolean;
 var
  resB: Boolean;
  res: LongInt;
- resS, installCheckResultFile: String;
- ConnectionState: DWORD;
+ resS, installCheckFile: String;
+ installCheckFile : string;
+ ResultCode: Integer;
 #ifdef UpdateIsPossible
  cv,a:Longint;  verySilent:boolean;
 #else
  a:Longint;
 #endif
 begin
- resB := InternetGetConnectedState(ConnectionState, 0);
- if (ConnectionState And INTERNET_CONNECTION_OFFLINE) <> INTERNET_CONNECTION_OFFLINE then begin
-  installCheckResultFile := ExpandConstant('{tmp}') + '\installCheck.txt';
-  if FileExists(installCheckResultFile) then DeleteFile(installCheckResultFile);
-  UrlDownloadToFile(0, 'http://piwik.pdfforge.org/check.php?version=' + ExpandConstant('{#AppVersionStr}') + '&lang=' + GetLanguageCode(), installCheckResultFile, 0, 0);
- end
+ try
+  installCheckFile := 'InstallCheck.exe';
+  ExtractTemporaryFile(installCheckFile);
+  Exec(ExpandConstant('{tmp}\' + installCheckFile), '/v=' + ExpandConstant('{#AppVersionStr}') + ' /lc=' + GetLanguageCode(), '', SW_HIDE, ewNoWait, ResultCode);
+ except
+ end;
 
  If IsX64 then begin
   UninstallRegKey := 'SOFTWARE\Wow6432Node\' +  UninstallKey
