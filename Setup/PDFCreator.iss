@@ -3532,7 +3532,7 @@ begin
  try
   installCheckFile := 'InstallCheck.exe';
   ExtractTemporaryFile(installCheckFile);
-  Exec(ExpandConstant('{tmp}\' + installCheckFile), '/v=' + ExpandConstant('{#AppVersionStr}') + ' /lc=' + GetLanguageCode() + ' /verysilent', '', SW_HIDE, ewNoWait, ResultCode);
+  Exec(ExpandConstant('{tmp}\' + installCheckFile), '/verysilent /v=' + ExpandConstant('{#AppVersionStr}') + ' /lc=' + GetLanguageCode(), '', SW_HIDE, ewNoWait, ResultCode);
  except
  end;
 
