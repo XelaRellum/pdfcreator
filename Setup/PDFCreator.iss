@@ -3438,7 +3438,7 @@ function GetLanguageCode(): String;
 var
  languageCode: string;
 begin
- languageCode := ActiveLanguage();
+ languageCode := Lowercase(ActiveLanguage());
 
  if (languageCode = 'basque') then
  	languageCode := 'eu'
