@@ -368,7 +368,7 @@ On Error GoTo ErrPtnr_OnError
 50770   End If
 50780  End If
 50790
-50800  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50800  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50810   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50820  End If
 50830  AddParams "-sOutputFile=" & GSOutputFile
@@ -468,7 +468,7 @@ On Error GoTo ErrPtnr_OnError
 50440   End If
 50450   AddParams "-r" & Options.PNGResolution & "x" & Options.PNGResolution
 50460
-50470   If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490   End If
 50500   AddParams "-sOutputFile=" & GSOutputFile
@@ -542,7 +542,7 @@ On Error GoTo ErrPtnr_OnError
 50440   End If
 50450   AddParams "-r" & Options.JPEGResolution & "x" & Options.JPEGResolution
 50460
-50470   If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490   End If
 50500   AddParams "-sOutputFile=" & GSOutputFile
@@ -617,7 +617,7 @@ On Error GoTo ErrPtnr_OnError
 50450   AddParams "-r" & Options.BMPResolution & "x" & Options.BMPResolution
 50460  End If
 50470
-50480  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50490   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50500  End If
 50510  AddParams "-sOutputFile=" & GSOutputFile
@@ -690,7 +690,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-r" & Options.PCXResolution & "x" & Options.PCXResolution
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -763,7 +763,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-r" & Options.TIFFResolution & "x" & Options.TIFFResolution
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -836,7 +836,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -909,7 +909,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -1032,7 +1032,7 @@ On Error GoTo ErrPtnr_OnError
 50540  End If
 50550  tEnc = False
 50560
-50570  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50570  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50580   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50590  End If
 50600  AddParams "-sOutputFile=" & GSOutputFile
@@ -1136,7 +1136,7 @@ On Error GoTo ErrPtnr_OnError
 50490  End If
 50500  tEnc = False
 50510
-50520  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50520  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50530   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50540  End If
 50550  AddParams "-sOutputFile=" & GSOutputFile
@@ -1236,7 +1236,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-r" & Options.PSDResolution & "x" & Options.PSDResolution
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -1309,7 +1309,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-r" & Options.PCLResolution & "x" & Options.PCLResolution
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -1382,7 +1382,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-r" & Options.RAWResolution & "x" & Options.RAWResolution
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -1456,7 +1456,7 @@ On Error GoTo ErrPtnr_OnError
 50450   AddParams "-r" & Options.SVGResolution & "x" & Options.SVGResolution
 50460  End If
 50470
-50480  If Options.AllowSpecialGSCharsInFilenames = 1 Then
+50480  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
 50490   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50500  End If
 50510  AddParams "-sOutputFile=" & GSOutputFile
