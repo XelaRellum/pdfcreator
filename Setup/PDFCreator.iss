@@ -9,7 +9,7 @@
 #define IncludeOC
 #define Localization
 
-#define GhostscriptLicense "GPL"
+#define GhostscriptPath "C:\PDFCreator\gs"
 
 #ifdef FastCompilation
  #define Compression="none"
@@ -297,8 +297,8 @@ Source: ..\Printer\Adobe\WinXP2k3-x64\PSCRIPT.NTF; DestDir: {code:PrinterDriverD
 
 ;Ghostscript
 #IFDEF GhostscriptVersion
-Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
-Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
+Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
+Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
 #ENDIF
 
 ;Redmon files
@@ -383,9 +383,9 @@ Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {
 ;Ghostscript
 #IFDEF IncludeGhostscript
 ;The next line is only for Ghostscript version <= 8.62
-;Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\Fonts\*.*; DestDir: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
-;Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
-Source: C:\gs\{#GhostscriptLicense}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
+;Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Fonts\*.*; DestDir: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
+;Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
+Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
 #ENDIF
 
 ;ICC file
@@ -502,6 +502,16 @@ Source: ..\Images2PDF\Languages\german.ini; DestDir: {app}\Images2PDF\Languages\
 Source: ..\Images2PDF\Images2PDF-english.settings; DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: Not IsLanguage('german'); 
 Source: ..\Images2PDF\Images2PDF-german.settings;  DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: IsLanguage('german')
 
+; PDFArchitect
+Source: "..\PDFArchitect\PDFArchitect.exe"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp; Components: PDFArchitect
+Source: "..\PDFArchitect\PDFOne.net\CMaps\*.*"; DestDir: {app}\PDFArchitect\CMaps\; Components: PDFArchitect
+Source: "..\PDFArchitect\PDFOne.net\FreeType\FreeType32.dll"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp IgnoreVersion; DestName: FreeType.dll; Check: Not IsX64; Components: PDFArchitect
+Source: "..\PDFArchitect\PDFOne.net\FreeType\FreeType64.dll"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp IgnoreVersion; DestName: FreeType.dll; Check: IsX64; Components: PDFArchitect
+Source: "..\PDFArchitect\Languages\english.ini"; DestDir: {app}\PDFArchitect\Languages; Flags: comparetimestamp; Components: PDFArchitect
+Source: "..\PDFArchitect\Languages\german.ini"; DestDir: {app}\PDFArchitect\Languages; Flags: comparetimestamp; Components: PDFArchitect
+Source: "..\PDFArchitect\PDFArchitect-english.settings"; DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: Not IsLanguage('german'); Components: PDFArchitect
+Source: "..\PDFArchitect\PDFArchitect-german.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('german'); Components: PDFArchitect
+
 ; InstallCheck
 Source: Installation\InstallCheck.exe; DestDir: {tmp}; Flags: deleteafterinstall overwritereadonly;
 
@@ -532,6 +542,11 @@ Name: {userdesktop}\PDFCreator; Filename: {app}\PDFCreator.exe; WorkingDir: {app
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\PDFCreator; Filename: {app}\PDFCreator.exe; WorkingDir: {app}; IconIndex: 0; Tasks: quicklaunchicon
 
 Name: {commonstartup}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; IconFilename: {app}\{#AppExename}; IconIndex: 0; Flags: runminimized; Check: IsServerInstallation
+
+; PDFArchitect
+Name: {group}\PDFArchitect; Filename: {app}\PDFArchitect\PDFArchitect.exe; Components: PDFArchitect
+Name: {commondesktop}\PDFArchitect; Filename: {app}\PDFArchitect\PDFArchitect.exe; Tasks: desktopicon; Components: PDFArchitect
+Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\PDFArchitect; Filename: {app}}\PDFArchitect\PDFArchitect.exe; Tasks: quicklaunchicon; Components: PDFArchitect
 
 [INI]
 Filename: {app}\PDFCreator.url; Section: InternetShortcut; Key: URL; String: http://www.pdfforge.org; Components: program
@@ -595,7 +610,7 @@ Root: HKLM; Subkey: SOFTWARE\PDFCreator\Program; ValueType: string; ValueName: A
 Root: HKLM; Subkey: SOFTWARE\PDFCreator\PDFSpooler; ValueType: string; ValueName: ProcessWithLessPrivileges; Valuedata: "iexplore.exe|chrome.exe|acrord32.exe"; Flags: uninsdeletevalue
 
 #Ifdef GhostscriptVersion
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptCopyright; Valuedata: {#GhostscriptLicense}; Flags: uninsdeletevalue; Components: ghostscript
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptCopyright; Valuedata: GPL; Flags: uninsdeletevalue; Components: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptVersion; Valuedata: {#GhostscriptVersion}; Flags: uninsdeletevalue; Components: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryBinaries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Flags: uninsdeletevalue; Components: ghostscript
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptDirectoryLibraries; Valuedata: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Flags: uninsdeletevalue; Components: ghostscript
@@ -735,12 +750,15 @@ Name: compact; Description: {cm:CompactInstallation}
 [Components]
 Name: program; Description: {cm:Programfiles}; Types: full compact custom; Flags: fixed
 #Ifdef IncludeGhostscript
-Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Flags: fixed; Check: IsGhostscriptInstalled(true)
-Name: ghostscript; Description: {#GhostscriptLicense} Ghostscript {#GhostscriptVersion}; Types: full custom; Check: IsGhostscriptInstalled(false)
+Name: ghostscript; Description: GPL Ghostscript {#GhostscriptVersion}; Types: full custom; Flags: fixed; Check: IsGhostscriptInstalled(true)
+Name: ghostscript; Description: GPL Ghostscript {#GhostscriptVersion}; Types: full custom; Check: IsGhostscriptInstalled(false)
 #ENDIF
 
 Name: Images2PDF; Description: Images2PDF; Types: full custom; Check: IsDotNET20Installed
 Name: Images2PDF; Description: Images2PDF ({cm:RequiresDotNet20}); Flags: fixed; Check: Not IsDotNET20Installed
+
+Name: PDFArchitect; Description: PDFArchitect; Types: full custom; Check: IsDotNET20Installed
+Name: PDFArchitect; Description: PDFArchitect ({cm:RequiresDotNet20}); Flags: fixed; Check: Not IsDotNET20Installed
 
 Name: COMsamples; Description: {cm:COMsamples}; Types: full custom
 
