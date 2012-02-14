@@ -14,12 +14,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   8
       Top             =   480
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   4604
-      caption         =   "Document 2"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":0312
+      _ExtentX        =   10927
+      _ExtentY        =   4604
+      Caption         =   "Document 2"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkUseFixPaperSize 
          Appearance      =   0  '2D
          Caption         =   "Use a fix papersize"
@@ -98,12 +106,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   17
       Top             =   2880
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   4604
-      caption         =   "Stamp"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":033E
+      _ExtentX        =   10927
+      _ExtentY        =   4604
+      Caption         =   "Stamp"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtStampString 
          Appearance      =   0  '2D
          Height          =   315
@@ -195,12 +211,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   1
       Top             =   480
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   3969
-      caption         =   "Document 1"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":036A
+      _ExtentX        =   10927
+      _ExtentY        =   3969
+      Caption         =   "Document 1"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkUseCreationDateNow 
          Appearance      =   0  '2D
          Caption         =   "Use the current Date/Time for 'Creation Date'"
@@ -233,9 +257,9 @@ Begin VB.UserControl ctlOptDocument
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "ctlOptDocument.ctx":0396
+         ItemData        =   "ctlOptDocument.ctx":0312
          Left            =   3720
-         List            =   "ctlOptDocument.ctx":0398
+         List            =   "ctlOptDocument.ctx":0314
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
          Top             =   840
@@ -417,78 +441,77 @@ On Error GoTo ErrPtnr_OnError
 50310   .AddItem "<Title>"
 50320   .AddItem "<Username>"
 50330   .AddItem "<Counter>"
-50340   .AddItem "<REDMON_DOCNAME>"
-50350   .AddItem "<REDMON_DOCNAME_FILE>"
-50360   .AddItem "<REDMON_DOCNAME_PATH>"
-50370   .AddItem "<REDMON_JOB>"
-50380   .AddItem "<REDMON_MACHINE>"
-50390   .AddItem "<REDMON_PORT>"
-50400   .AddItem "<REDMON_PRINTER>"
-50410   .AddItem "<REDMON_SESSIONID>"
-50420   .AddItem "<REDMON_USER>"
-50430   .ListIndex = 0
-50440  End With
-50450  With cmbDocumentPapersizes
-50460   .AddItem "11x17"
-50470   .AddItem "ledger"
-50480   .AddItem "legal"
-50490   .AddItem "letter"
-50500   .AddItem "lettersmall"
-50510   .AddItem "archE"
-50520   .AddItem "archD"
-50530   .AddItem "archC"
-50540   .AddItem "archB"
-50550   .AddItem "archA"
-50560   .AddItem "a0"
-50570   .AddItem "a1"
-50580   .AddItem "a2"
-50590   .AddItem "a3"
-50600   .AddItem "a4"
-50610   .AddItem "a4small"
-50620   .AddItem "a5"
-50630   .AddItem "a6"
-50640   .AddItem "a7"
-50650   .AddItem "a8"
-50660   .AddItem "a9"
-50670   .AddItem "a10"
-50680   .AddItem "isob0"
-50690   .AddItem "isob1"
-50700   .AddItem "isob2"
-50710   .AddItem "isob3"
-50720   .AddItem "isob4"
-50730   .AddItem "isob5"
-50740   .AddItem "isob6"
-50750   .AddItem "c0"
-50760   .AddItem "c1"
-50770   .AddItem "c2"
-50780   .AddItem "c3"
-50790   .AddItem "c4"
-50800   .AddItem "c5"
-50810   .AddItem "c6"
-50820   .AddItem "jisb0"
-50830   .AddItem "jisb1"
-50840   .AddItem "jisb2"
-50850   .AddItem "jisb3"
-50860   .AddItem "jisb4"
-50870   .AddItem "jisb5"
-50880   .AddItem "jisb6"
-50890   .AddItem "b0"
-50900   .AddItem "b1"
-50910   .AddItem "b2"
-50920   .AddItem "b3"
-50930   .AddItem "b4"
-50940   .AddItem "b5"
-50950   .AddItem "flsa"
-50960   .AddItem "flse"
-50970   .AddItem "halfletter"
-50980   .ListIndex = 0
-50990  End With
-51000  tbstrProgDocument.ZOrder 1
-51010  tbstrProgDocument.Tabs(1).Selected = True
-51020
-51030  SetFrames Options.OptionsDesign
-51040
-51050  SetFont
+50340   .AddItem "<ClientUsername>"
+50350   .AddItem "<DocumentTitle>"
+50360   .AddItem "<JobID>"
+50370   .AddItem "<PrinterName>"
+50380   .AddItem "<SessionID>"
+50390   .AddItem "<SpoolFile>"
+50400   .AddItem "<SpoolFileName>"
+50410   .AddItem "<SpoolPath>"
+50420   .ListIndex = 0
+50430  End With
+50440  With cmbDocumentPapersizes
+50450   .AddItem "11x17"
+50460   .AddItem "ledger"
+50470   .AddItem "legal"
+50480   .AddItem "letter"
+50490   .AddItem "lettersmall"
+50500   .AddItem "archE"
+50510   .AddItem "archD"
+50520   .AddItem "archC"
+50530   .AddItem "archB"
+50540   .AddItem "archA"
+50550   .AddItem "a0"
+50560   .AddItem "a1"
+50570   .AddItem "a2"
+50580   .AddItem "a3"
+50590   .AddItem "a4"
+50600   .AddItem "a4small"
+50610   .AddItem "a5"
+50620   .AddItem "a6"
+50630   .AddItem "a7"
+50640   .AddItem "a8"
+50650   .AddItem "a9"
+50660   .AddItem "a10"
+50670   .AddItem "isob0"
+50680   .AddItem "isob1"
+50690   .AddItem "isob2"
+50700   .AddItem "isob3"
+50710   .AddItem "isob4"
+50720   .AddItem "isob5"
+50730   .AddItem "isob6"
+50740   .AddItem "c0"
+50750   .AddItem "c1"
+50760   .AddItem "c2"
+50770   .AddItem "c3"
+50780   .AddItem "c4"
+50790   .AddItem "c5"
+50800   .AddItem "c6"
+50810   .AddItem "jisb0"
+50820   .AddItem "jisb1"
+50830   .AddItem "jisb2"
+50840   .AddItem "jisb3"
+50850   .AddItem "jisb4"
+50860   .AddItem "jisb5"
+50870   .AddItem "jisb6"
+50880   .AddItem "b0"
+50890   .AddItem "b1"
+50900   .AddItem "b2"
+50910   .AddItem "b3"
+50920   .AddItem "b4"
+50930   .AddItem "b5"
+50940   .AddItem "flsa"
+50950   .AddItem "flse"
+50960   .AddItem "halfletter"
+50970   .ListIndex = 0
+50980  End With
+50990  tbstrProgDocument.ZOrder 1
+51000  tbstrProgDocument.Tabs(1).Selected = True
+51010
+51020  SetFrames Options.OptionsDesign
+51030
+51040  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

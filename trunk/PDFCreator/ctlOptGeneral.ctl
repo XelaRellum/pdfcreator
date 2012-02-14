@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "Mscomctl.OCX"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.UserControl ctlOptGeneral 
    ClientHeight    =   5850
    ClientLeft      =   0
@@ -11,8 +11,8 @@ Begin VB.UserControl ctlOptGeneral
    Begin PDFCreator.dmFrame dmFraCheckUpdate 
       Height          =   1065
       Left            =   6720
-      TabIndex        =   23
-      Top             =   4560
+      TabIndex        =   21
+      Top             =   3240
       Visible         =   0   'False
       Width           =   6195
       _ExtentX        =   10927
@@ -35,7 +35,7 @@ Begin VB.UserControl ctlOptGeneral
          Caption         =   "Check now"
          Height          =   315
          Left            =   4200
-         TabIndex        =   26
+         TabIndex        =   24
          Top             =   600
          Width           =   1695
       End
@@ -45,7 +45,7 @@ Begin VB.UserControl ctlOptGeneral
          Left            =   120
          List            =   "ctlOptGeneral.ctx":0319
          Style           =   2  'Dropdown-Liste
-         TabIndex        =   24
+         TabIndex        =   22
          Top             =   600
          Width           =   3870
       End
@@ -54,41 +54,9 @@ Begin VB.UserControl ctlOptGeneral
          Caption         =   "Update interval"
          Height          =   195
          Left            =   120
-         TabIndex        =   25
+         TabIndex        =   23
          Top             =   360
          Width           =   1080
-      End
-   End
-   Begin PDFCreator.dmFrame dmFraToolbar 
-      Height          =   1185
-      Left            =   6720
-      TabIndex        =   21
-      Top             =   3240
-      Width           =   6195
-      _ExtentX        =   10927
-      _ExtentY        =   2090
-      Caption         =   "Browser Add On"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
-      Begin VB.CommandButton cmdInstallToolbar 
-         Caption         =   "&Install Browser Add On"
-         Enabled         =   0   'False
-         Height          =   495
-         Left            =   120
-         TabIndex        =   22
-         Top             =   480
-         Width           =   2580
       End
    End
    Begin PDFCreator.dmFrame dmFraShellIntegration 
@@ -395,20 +363,18 @@ On Error GoTo ErrPtnr_OnError
 50150  cmdShellintegration(1).Enabled = value
 50160  cmdAsso.Enabled = value
 50170  lblOptionsDesign.Enabled = value
-50180  cmdInstallToolbar.Enabled = value
-50190  lblUpdateInterval.Enabled = value
-50200  cmdCheckNow.Enabled = value
-50210
-50220  If value = True Then
-50230    SetProgramOptions
-50240    tbstrProgGeneral_Click
-50250   Else
-50260    dmFraProgGeneral1.Enabled = False
-50270    dmFraToolbar.Enabled = False
-50280    dmFraProgGeneral2.Enabled = False
-50290    dmFraShellIntegration.Enabled = False
-50300    dmFraCheckUpdate.Enabled = False
-50310  End If
+50180  lblUpdateInterval.Enabled = value
+50190  cmdCheckNow.Enabled = value
+50200
+50210  If value = True Then
+50220    SetProgramOptions
+50230    tbstrProgGeneral_Click
+50240   Else
+50250    dmFraProgGeneral1.Enabled = False
+50260    dmFraProgGeneral2.Enabled = False
+50270    dmFraShellIntegration.Enabled = False
+50280    dmFraCheckUpdate.Enabled = False
+50290  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -449,7 +415,7 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  tbstrProgGeneral.Left = 0
 50040  tbstrProgGeneral.Top = 0
-50050  tbstrProgGeneral.Height = dmFraProgGeneral1.Height + dmFraToolbar.Height + 500
+50050  tbstrProgGeneral.Height = dmFraProgGeneral2.Height + dmFraShellIntegration.Height + dmFraCheckUpdate.Height + 600
 50060  UserControl.Height = tbstrProgGeneral.Height + 100
 50070
 50080  With tbstrProgGeneral
@@ -577,23 +543,19 @@ On Error GoTo ErrPtnr_OnError
 50030   .Top = tbstrProgGeneral.ClientTop + 50
 50040   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
 50050  End With
-50060  With dmFraToolbar
-50070   .Top = dmFraProgGeneral1.Top + dmFraProgGeneral1.Height + 50
-50080   .Left = dmFraProgGeneral1.Left
+50060  With dmFraProgGeneral2
+50070   .Top = tbstrProgGeneral.ClientTop + 50
+50080   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
 50090  End With
-50100  With dmFraProgGeneral2
-50110   .Top = tbstrProgGeneral.ClientTop + 50
+50100  With dmFraShellIntegration
+50110   .Top = dmFraProgGeneral2.Top + dmFraProgGeneral2.Height + 50
 50120   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
 50130  End With
-50140  With dmFraShellIntegration
-50150   .Top = dmFraProgGeneral2.Top + dmFraProgGeneral2.Height + 50
+50140  With dmFraCheckUpdate
+50150   .Top = dmFraShellIntegration.Top + dmFraShellIntegration.Height + 50
 50160   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
 50170  End With
-50180  With dmFraCheckUpdate
-50190   .Top = dmFraShellIntegration.Top + dmFraShellIntegration.Height + 50
-50200   .Left = tbstrProgGeneral.Left + (tbstrProgGeneral.Width - .Width) / 2
-50210  End With
-50220
+50180
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -634,16 +596,14 @@ On Error GoTo ErrPtnr_OnError
 50220   cmdTestpage.Caption = .OptionsPrintTestpage
 50230   lblProcessPriority.Caption = .OptionsProcesspriority
 50240   cmdAsso.Caption = .OptionsAssociatePSFiles
-50250   dmFraToolbar.Caption = .OptionsToolbar
-50260   cmdInstallToolbar.Caption = .OptionsToolbarInstall
-50270   dmFraCheckUpdate.Caption = .OptionsCheckUpdateDescription
-50280   lblUpdateInterval.Caption = .OptionsCheckUpdateInterval
-50290   cmbUpdateInterval.List(0) = .OptionsCheckUpdateInterval01
-50300   cmbUpdateInterval.List(1) = .OptionsCheckUpdateInterval02
-50310   cmbUpdateInterval.List(2) = .OptionsCheckUpdateInterval03
-50320   cmbUpdateInterval.List(3) = .OptionsCheckUpdateInterval04
-50330   cmdCheckNow.Caption = .OptionsCheckUpdateNow
-50340  End With
+50250   dmFraCheckUpdate.Caption = .OptionsCheckUpdateDescription
+50260   lblUpdateInterval.Caption = .OptionsCheckUpdateInterval
+50270   cmbUpdateInterval.List(0) = .OptionsCheckUpdateInterval01
+50280   cmbUpdateInterval.List(1) = .OptionsCheckUpdateInterval02
+50290   cmbUpdateInterval.List(2) = .OptionsCheckUpdateInterval03
+50300   cmbUpdateInterval.List(3) = .OptionsCheckUpdateInterval04
+50310   cmdCheckNow.Caption = .OptionsCheckUpdateNow
+50320  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -696,13 +656,6 @@ On Error GoTo ErrPtnr_OnError
 50090   Else
 50100    cmdAsso.Enabled = False
 50110  End If
-50120  If FileExists(CompletePath(App.Path) & "Toolbar\pdfforge Toolbar-4_4_0_setup.exe") And (Not ToolbarIsInstalled) Then
-50130    dmFraToolbar.Enabled = True
-50140    cmdInstallToolbar.Enabled = True
-50150   Else
-50160    dmFraToolbar.Enabled = False
-50170    cmdInstallToolbar.Enabled = False
-50180  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -759,25 +712,21 @@ On Error GoTo ErrPtnr_OnError
 50070    dmFraCheckUpdate.Enabled = False
 50080    dmFraCheckUpdate.Visible = False
 50090    dmFraProgGeneral1.Visible = True
-50100    dmFraToolbar.Visible = True
-50110    If ControlsEnabled Then
-50120     dmFraProgGeneral1.Enabled = True
-50130     dmFraToolbar.Enabled = True
-50140    End If
-50150   Case 2
-50160    dmFraProgGeneral1.Enabled = False
-50170    dmFraProgGeneral1.Visible = False
-50180    dmFraToolbar.Enabled = False
-50190    dmFraToolbar.Visible = False
-50200    dmFraProgGeneral2.Visible = True
-50210    dmFraShellIntegration.Visible = True
-50220    dmFraCheckUpdate.Visible = True
-50230    If ControlsEnabled Then
-50240     dmFraProgGeneral2.Enabled = True
-50250     dmFraShellIntegration.Enabled = True
-50260     dmFraCheckUpdate.Enabled = True
-50270    End If
-50280  End Select
+50100    If ControlsEnabled Then
+50110     dmFraProgGeneral1.Enabled = True
+50120    End If
+50130   Case 2
+50140    dmFraProgGeneral1.Enabled = False
+50150    dmFraProgGeneral1.Visible = False
+50160    dmFraProgGeneral2.Visible = True
+50170    dmFraShellIntegration.Visible = True
+50180    dmFraCheckUpdate.Visible = True
+50190    If ControlsEnabled Then
+50200     dmFraProgGeneral2.Enabled = True
+50210     dmFraShellIntegration.Enabled = True
+50220     dmFraCheckUpdate.Enabled = True
+50230    End If
+50240  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -846,23 +795,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptGeneral", "cmdShellintegration_Click")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Private Sub cmdInstallToolbar_Click()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Shell """" & CompletePath(App.Path) & "Toolbar\pdfforge Toolbar_setup.exe"""
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptGeneral", "cmdInstallToolbar_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

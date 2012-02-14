@@ -203,7 +203,7 @@ On Error GoTo ErrPtnr_OnError
 50060   .AddWindowsFontpath = "1"
 50070   .AllowSpecialGSCharsInFilenames = "1"
 50080   If InstalledAsServer Then
-50090     .AutosaveDirectory = "C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"
+50090     .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 50100    Else
 50110     .AutosaveDirectory = "<MyFiles>"
 50120   End If
@@ -230,7 +230,7 @@ On Error GoTo ErrPtnr_OnError
 50330   .JPEGResolution = "150"
 50340   .Language = "english"
 50350   If InstalledAsServer Then
-50360     .LastSaveDirectory = "C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"
+50360     .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 50370    Else
 50380     .LastSaveDirectory = "<MyFiles>"
 50390   End If
@@ -533,7 +533,7 @@ On Error GoTo ErrPtnr_OnError
 50610    Else
 50620     If UseStandard Then
 50630      If InstalledAsServer Then
-50640        .AutosaveDirectory = "C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"
+50640        .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 50650       Else
 50660        .AutosaveDirectory = "<MyFiles>"
 50670      End If
@@ -814,7 +814,7 @@ On Error GoTo ErrPtnr_OnError
 53420    Else
 53430     If UseStandard Then
 53440      If InstalledAsServer Then
-53450        .LastSaveDirectory = "C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"
+53450        .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 53460       Else
 53470        .LastSaveDirectory = "<MyFiles>"
 53480      End If
@@ -5008,7 +5008,7 @@ On Error GoTo ErrPtnr_OnError
 66310    Else
 66320     If UseStandard Then
 66330      If InstalledAsServer Then
-66340        .AutosaveDirectory = "C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"
+66340        .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 66350       Else
 66360        .AutosaveDirectory = "<MyFiles>"
 66370      End If
@@ -5128,7 +5128,7 @@ On Error GoTo ErrPtnr_OnError
 67510    Else
 67520     If UseStandard Then
 67530      If InstalledAsServer Then
-67540        .LastSaveDirectory = "C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>"
+67540        .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 67550       Else
 67560        .LastSaveDirectory = "<MyFiles>"
 67570      End If

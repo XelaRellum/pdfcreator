@@ -128,7 +128,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetPrinterDefaultProfile(Printername As String) As String
+Public Function GetPrinterDefaultProfile(PrinterName As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -142,7 +142,7 @@ On Error GoTo ErrPtnr_OnError
 50080  End If
 50090  Set PrinterProfiles = reg.EnumRegistryValues(reg.hkey, "Software\PDFCreator\Printers\")
 50100  For i = 1 To PrinterProfiles.Count
-50110   If UCase$(Trim$(PrinterProfiles(i)(0))) = UCase$(Trim$(Printername)) Then
+50110   If UCase$(Trim$(PrinterProfiles(i)(0))) = UCase$(Trim$(PrinterName)) Then
 50120    GetPrinterDefaultProfile = PrinterProfiles(i)(1)
 50130    Exit For
 50140   End If

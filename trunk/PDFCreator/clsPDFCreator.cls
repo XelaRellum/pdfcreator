@@ -83,21 +83,21 @@ End Sub
 ' --- Class subroutines - end ---
 
 ' --- Public properties - begin ---
-Public Property Get cPrinterProfile(ByVal Printername As String) As String
+Public Property Get cPrinterProfile(ByVal PrinterName As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim PrinterProfiles As Collection, i As Long
-50020  If Not PrinterIsInstalled(Printername) Then
+50020  If Not PrinterIsInstalled(PrinterName) Then
 50030   mError.Number = 15
-50040   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50040   mError.Description = Replace$(ErrDescr16, "%1", PrinterName)
 50050   RaiseEvent eError
 50060   Exit Property
 50070  End If
 50080
 50090  Set PrinterProfiles = GetPrinterProfiles
 50100  For i = 1 To PrinterProfiles.Count
-50110   If StrComp(Printername, PrinterProfiles(i)(0)) = 0 Then
+50110   If StrComp(PrinterName, PrinterProfiles(i)(0)) = 0 Then
 50120    cPrinterProfile = PrinterProfiles(i)(1)
 50130   End If
 50140  Next i
@@ -113,16 +113,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Let cPrinterProfile(ByVal Printername As String, ByVal ProfileName As String)
+Public Property Let cPrinterProfile(ByVal PrinterName As String, ByVal ProfileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim PrinterProfiles As Collection, PrinterProfiles2 As Collection, i As Long, sa(1) As String, _
   foundPrinter As Boolean
 50030
-50040  If Not PrinterIsInstalled(Printername) Then
+50040  If Not PrinterIsInstalled(PrinterName) Then
 50050   mError.Number = 15
-50060   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50060   mError.Description = Replace$(ErrDescr16, "%1", PrinterName)
 50070   RaiseEvent eError
 50080   Exit Property
 50090  End If
@@ -140,7 +140,7 @@ On Error GoTo ErrPtnr_OnError
 50210  foundPrinter = False
 50220  For i = 1 To PrinterProfiles.Count
 50230   sa(0) = PrinterProfiles(i)(0)
-50240   If StrComp(sa(0), Printername) = 0 Then
+50240   If StrComp(sa(0), PrinterName) = 0 Then
 50250     sa(1) = ProfileName
 50260     foundPrinter = True
 50270    Else
@@ -149,7 +149,7 @@ On Error GoTo ErrPtnr_OnError
 50300   PrinterProfiles2.Add sa
 50310  Next i
 50320  If foundPrinter = False Then
-50330   sa(0) = Printername
+50330   sa(0) = PrinterName
 50340   sa(1) = ProfileName
 50350   PrinterProfiles2.Add sa
 50360  End If
@@ -1048,48 +1048,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If CheckForRunningProgramErrors Then
-50020   RaiseEvent eError
-50030   Exit Property
-50040  End If
-50050  Set cPrintjobInfos = cGetInfoSpoolfile(ReadInfoSpoolfile(PrintjobFilename))
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Property
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintjobInfos [GET]")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Property
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Property
-
-Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If CheckForRunningProgramErrors Then
-50020   RaiseEvent eError
-50030   Exit Property
-50040  End If
-50050  cPrintjobInfo = cGetPrintjobInfoFromPrintjobInfos(PropertyName, ReadInfoSpoolfile(PrintjobFilename), "cPrintjobInfo")
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Property
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cPrintjobInfo [GET]")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Property
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Property
-
 Public Property Get cCountOfPrintjobs() As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1159,7 +1117,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Let cDefaultPrinter(ByVal Printername As String)
+Public Property Let cDefaultPrinter(ByVal PrinterName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1167,7 +1125,7 @@ On Error GoTo ErrPtnr_OnError
 50020   RaiseEvent eError
 50030   Exit Property
 50040  End If
-50050  SetDefaultprinterInProg Printername
+50050  SetDefaultprinterInProg PrinterName
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -1334,11 +1292,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function cPrinterIsInstalled(ByVal Printername As String) As Boolean
+Public Function cPrinterIsInstalled(ByVal PrinterName As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If PrinterIsInstalled(Printername) = True Then
+50010  If PrinterIsInstalled(PrinterName) = True Then
 50020    cPrinterIsInstalled = True
 50030   Else
 50040    cPrinterIsInstalled = False
@@ -1355,7 +1313,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function cAddPDFCreatorPrinter(ByVal Printername As String, Optional ByVal ProfileName As String = "") As Boolean
+Public Function cAddPDFCreatorPrinter(ByVal PrinterName As String, Optional ByVal ProfileName As String = "") As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1365,9 +1323,9 @@ On Error GoTo ErrPtnr_OnError
 50040   RaiseEvent eError
 50050   Exit Function
 50060  End If
-50070  If PrinterIsInstalled(Printername) = True Then
+50070  If PrinterIsInstalled(PrinterName) = True Then
 50080   mError.Number = 16
-50090   mError.Description = Replace$(ErrDescr17, "%1", Printername)
+50090   mError.Description = Replace$(ErrDescr17, "%1", PrinterName)
 50100   RaiseEvent eError
 50110   Exit Function
 50120  End If
@@ -1380,9 +1338,9 @@ On Error GoTo ErrPtnr_OnError
 50190    Exit Function
 50200   End If
 50210  End If
-50220  cAddPDFCreatorPrinter = InstallPrinter(Printername, "PDFCreator", "PDFCreator:", "")
+50220  cAddPDFCreatorPrinter = InstallPrinter(PrinterName, "PDFCreator", "PDFCreator:", "")
 50230  If LenB(ProfileName) > 0 Then
-50240   cPrinterProfile(Printername) = ProfileName
+50240   cPrinterProfile(PrinterName) = ProfileName
 50250  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -1413,7 +1371,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function cDeletePDFCreatorPrinter(ByVal Printername As String) As Boolean
+Public Function cDeletePDFCreatorPrinter(ByVal PrinterName As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1424,16 +1382,16 @@ On Error GoTo ErrPtnr_OnError
 50050   RaiseEvent eError
 50060   Exit Function
 50070  End If
-50080  If Not PrinterIsInstalled(Printername) Then
+50080  If Not PrinterIsInstalled(PrinterName) Then
 50090   mError.Number = 15
-50100   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50100   mError.Description = Replace$(ErrDescr16, "%1", PrinterName)
 50110   RaiseEvent eError
 50120   Exit Function
 50130  End If
 50140  Set PDFCreatorPrinters = GetPDFCreatorPrinters()
 50150
 50160  For i = 1 To PDFCreatorPrinters.Count
-50170   If StrComp(PDFCreatorPrinters(i), Printername, vbTextCompare) = 0 Then
+50170   If StrComp(PDFCreatorPrinters(i), PrinterName, vbTextCompare) = 0 Then
 50180    Exit For
 50190   End If
 50200  Next i
@@ -1443,7 +1401,7 @@ On Error GoTo ErrPtnr_OnError
 50240   RaiseEvent eError
 50250   Exit Function
 50260  End If
-50270  cDeletePDFCreatorPrinter = UnInstallPrinter(Printername, "")
+50270  cDeletePDFCreatorPrinter = UnInstallPrinter(PrinterName, "")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1818,34 +1776,25 @@ On Error GoTo ErrPtnr_OnError
 50110  cVisible = False
 50120  cClose = False
 50130
-50140 'MsgBox "1"
-50150 '50140  eActionTimer.Enabled = False
-50160 '50150  i = 0
-50170 '50160  Do
-50180 '50170   i = i + 1
-50190 '50180   Sleep 10
-50200 '50190   DoEvents
-50210 '50200  Loop Until In_eActionTimer = False
-50220  Set eActionTimer = Nothing
-50230 'MsgBox "2"
+50140  Set eActionTimer = Nothing
+50150
+50160  For Each f In Forms
+50170   If Not f Is Nothing Then
+50180    If UCase$(f.Name) <> "FRMMAIN" Then
+50190     Unload f
+50200     cClose = True
+50210    End If
+50220   End If
+50230  Next f
 50240
-50250  For Each f In Forms
-50260   If Not f Is Nothing Then
-50270    If UCase$(f.Name) <> "FRMMAIN" Then
-50280     Unload f
-50290     cClose = True
-50300    End If
-50310   End If
-50320  Next f
-50330
-50340  If Not mForm Is Nothing Then
-50350   Unload mForm
-50360   Set mForm = Nothing
-50370  End If
-50380  ProgramIsStarted = False
-50390  cClose = True
-50400
-50410  Set mError = Nothing
+50250  If Not mForm Is Nothing Then
+50260   Unload mForm
+50270   Set mForm = Nothing
+50280  End If
+50290  ProgramIsStarted = False
+50300  cClose = True
+50310
+50320  Set mError = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1872,18 +1821,14 @@ On Error GoTo ErrPtnr_OnError
 50080   Exit Function
 50090  End If
 50100
-50110  'While Forms.Count > 0
-50120  ' DoEvents
-50130  ' Sleep 100
-50140  'Wend
-50150
-50160  mProgramIsRunning = False
-50170  StartProgram Params
-50180  Set mForm = frmMain
-50190  Set eActionTimer = mForm.Timer3: eActionTimer.Interval = 10
-50200  eActionTimer.Enabled = True
-50210  cStart = True
-50220  cVisible = ProgramIsVisible
+50110  mProgramIsRunning = False
+50120  StartProgram Params
+50130  Set mForm = frmMain
+50140  Set eActionTimer = mForm.Timer3
+50150  eActionTimer.Interval = 10
+50160  eActionTimer.Enabled = True
+50170  cStart = True
+50180  cVisible = ProgramIsVisible
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2118,7 +2063,7 @@ On Error GoTo ErrPtnr_OnError
 50030   Exit Sub
 50040  End If
 50050  If Not mForm Is Nothing Then
-50060   mForm.DocumentCombineAll
+50060   mForm.DocumentCombine True
 50070  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2278,21 +2223,21 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub cPrintPrinterTestpage(Optional ByVal Printername As String)
+Public Sub cPrintPrinterTestpage(Optional ByVal PrinterName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tPrintername As String
-50020  If Not PrinterIsInstalled(Printername) Then
+50020  If Not PrinterIsInstalled(PrinterName) Then
 50030   mError.Number = 15
-50040   mError.Description = Replace$(ErrDescr16, "%1", Printername)
+50040   mError.Description = Replace$(ErrDescr16, "%1", PrinterName)
 50050   RaiseEvent eError
 50060   Exit Sub
 50070  End If
-50080  If LenB(Printername) = 0 Then
+50080  If LenB(PrinterName) = 0 Then
 50090    tPrintername = cDefaultPrinter
 50100   Else
-50110    tPrintername = Printername
+50110    tPrintername = PrinterName
 50120  End If
 50130  ShellAndWait 0, "open", "RUNDLL32.EXE", "PRINTUI.DLL,PrintUIEntry /n """ & tPrintername & """ /k", PDFCreatorApplicationPath, wNormal, WCNone
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2547,40 +2492,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function cGetPrintjobInfoFromPrintjobInfos(PropertyName As String, sInfo As InfoSpoolFile, FunctionName As String) As Variant
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50011  Select Case UCase$(PropertyName)
-        Case "COMPUTER": cGetPrintjobInfoFromPrintjobInfos = sInfo.Computer
-50030   Case "CREATED": cGetPrintjobInfoFromPrintjobInfos = sInfo.Created
-50040   Case "REDMON_DOCNAME": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_DOCNAME
-50050   Case "REDMON_FILENAME": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_FILENAME
-50060   Case "REDMON_JOB": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_JOB
-50070   Case "REDMON_MACHINE": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_MACHINE
-50080   Case "REDMON_PORT": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_PORT
-50090   Case "REDMON_PRINTER": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_PRINTER
-50100   Case "REDMON_SESSIONID": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_SESSIONID
-50110   Case "REDMON_USER": cGetPrintjobInfoFromPrintjobInfos = sInfo.REDMON_USER
-50120   Case "SPOOLERACCOUNT": cGetPrintjobInfoFromPrintjobInfos = sInfo.SpoolerAccount
-50130   Case "SPOOLFILENAME": cGetPrintjobInfoFromPrintjobInfos = sInfo.SpoolFilename
-50140   Case Else:
-50150    mError.Number = 3
-50160    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in " & FunctionName)
-50170    RaiseEvent eError
-50180  End Select
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cGetPrintjobInfoFromPrintjobInfos")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
 Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions) As Variant
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -2772,37 +2683,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("clsPDFCreator", "cGetOptionFromOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Private Function cGetInfoSpoolfile(sInfos As InfoSpoolFile) As clsPDFCreatorInfoSpoolFile
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Set cGetInfoSpoolfile = New clsPDFCreatorInfoSpoolFile
-50020  With cGetInfoSpoolfile
-50030   .Computer = sInfos.Computer
-50040   .Created = sInfos.Created
-50050   .REDMON_DOCNAME = sInfos.REDMON_DOCNAME
-50060   .REDMON_FILENAME = sInfos.REDMON_FILENAME
-50070   .REDMON_JOB = sInfos.REDMON_JOB
-50080   .REDMON_MACHINE = sInfos.REDMON_MACHINE
-50090   .REDMON_PORT = sInfos.REDMON_PORT
-50100   .REDMON_PRINTER = sInfos.REDMON_PRINTER
-50110   .REDMON_SESSIONID = sInfos.REDMON_SESSIONID
-50120   .REDMON_USER = sInfos.REDMON_USER
-50130   .SpoolerAccount = sInfos.SpoolerAccount
-50140   .SpoolFilename = sInfos.SpoolFilename
-50150  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsPDFCreator", "cGetInfoSpoolfile")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

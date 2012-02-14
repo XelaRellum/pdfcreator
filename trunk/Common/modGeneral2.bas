@@ -219,60 +219,79 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim TestPSPage As String, fn As Long, filename As String, tStr As String, _
   c As Collection
-50030  If Not f Is Nothing Then
-50040   f.Timer1.Enabled = False
-50050  End If
-50060  TestPSPage = GetTestpageFromRessource
-50070  TestPSPage = Replace(TestPSPage, "[INFOTITLE]", LanguageStrings.OptionsTestpage, , 1, vbTextCompare)
-50080  TestPSPage = Replace(TestPSPage, "[INFORELEASE]", App.title & " " & GetProgramReleaseStr, , 1, vbTextCompare)
-50090  TestPSPage = Replace(TestPSPage, "[INFODATE]", Now, , 1, vbTextCompare)
-50100  TestPSPage = Replace(TestPSPage, "[INFOAUTHORS]", "Philip Chinery, Frank Heind\224rfer", , 1, vbTextCompare)
-50110  TestPSPage = Replace(TestPSPage, "[INFOHOMEPAGE]", Homepage, , 1, vbTextCompare)
-50120  tStr = PDFCreatorApplicationPath & "PDFCreator.exe"
-50130  If FileExists(tStr) = True Then
-50140    Set c = GetFileVersion(tStr)
-50150    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50160   Else
-50170    tStr = ""
-50180  End If
-50190  TestPSPage = Replace(TestPSPage, "[INFOPDFCREATOR]", tStr, , 1, vbTextCompare)
-50200
-50210  tStr = PDFCreatorApplicationPath & "PDFSpooler.exe"
-50220  If FileExists(tStr) = True Then
-50230    Set c = GetFileVersion(tStr)
-50240    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50250   Else
-50260    tStr = ""
-50270  End If
-50280  TestPSPage = Replace(TestPSPage, "[INFOPDFSPOOLER]", tStr, , 1, vbTextCompare)
-50290
-50300  tStr = PDFCreatorApplicationPath & "Languages\Transtool.exe"
-50310  If FileExists(tStr) = True Then
-50320    Set c = GetFileVersion(tStr)
-50330    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50340   Else
-50350    tStr = ""
-50360  End If
-50370  TestPSPage = Replace(TestPSPage, "[INFOTRANSTOOL]", tStr, , 1, vbTextCompare)
-50380
-50390  TestPSPage = Replace(TestPSPage, "[INFOCOMPUTER]", GetComputerName, , 1, vbTextCompare)
-50400  tStr = GetWinVersionStr
-50410  TestPSPage = Replace(TestPSPage, "[INFOWINDOWS]", _
+50030  Dim Path As String, File As String, ini As clsINI, title As String, TestPSFileName As String
+50040  If Not f Is Nothing Then
+50050   f.Timer1.Enabled = False
+50060  End If
+50070  TestPSPage = GetTestpageFromRessource
+50080  TestPSPage = Replace(TestPSPage, "[INFOTITLE]", LanguageStrings.OptionsTestpage, , 1, vbTextCompare)
+50090  TestPSPage = Replace(TestPSPage, "[INFORELEASE]", App.title & " " & GetProgramReleaseStr, , 1, vbTextCompare)
+50100  TestPSPage = Replace(TestPSPage, "[INFODATE]", Now, , 1, vbTextCompare)
+50110  TestPSPage = Replace(TestPSPage, "[INFOAUTHORS]", "Philip Chinery, Frank Heind\224rfer", , 1, vbTextCompare)
+50120  TestPSPage = Replace(TestPSPage, "[INFOHOMEPAGE]", Homepage, , 1, vbTextCompare)
+50130  tStr = PDFCreatorApplicationPath & "PDFCreator.exe"
+50140  If FileExists(tStr) = True Then
+50150    Set c = GetFileVersion(tStr)
+50160    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50170   Else
+50180    tStr = ""
+50190  End If
+50200  TestPSPage = Replace(TestPSPage, "[INFOPDFCREATOR]", tStr, , 1, vbTextCompare)
+50210
+50220  tStr = PDFCreatorApplicationPath & "PDFSpooler.exe"
+50230  If FileExists(tStr) = True Then
+50240    Set c = GetFileVersion(tStr)
+50250    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50260   Else
+50270    tStr = ""
+50280  End If
+50290  TestPSPage = Replace(TestPSPage, "[INFOPDFSPOOLER]", tStr, , 1, vbTextCompare)
+50300
+50310  tStr = PDFCreatorApplicationPath & "Languages\Transtool.exe"
+50320  If FileExists(tStr) = True Then
+50330    Set c = GetFileVersion(tStr)
+50340    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50350   Else
+50360    tStr = ""
+50370  End If
+50380  TestPSPage = Replace(TestPSPage, "[INFOTRANSTOOL]", tStr, , 1, vbTextCompare)
+50390
+50400  TestPSPage = Replace(TestPSPage, "[INFOCOMPUTER]", GetComputerName, , 1, vbTextCompare)
+50410  tStr = GetWinVersionStr
+50420  TestPSPage = Replace(TestPSPage, "[INFOWINDOWS]", _
   Mid(tStr, 1, IIf(InStr(1, tStr, "[") > 0, InStr(1, tStr, "[") - 1, Len(tStr))), 1, vbTextCompare)
-50430
-50440  fn = FreeFile
+50440
 50450  tStr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
 50460  If DirExists(tStr) = False Then
 50470   MakePath tStr
 50480  End If
-50490  filename = GetTempFile(tStr, "~PS")
-50500  Open filename For Output As fn
-50510  Print #fn, TestPSPage
-50520  Close #fn
-50530  If Not f Is Nothing Then
-50540   f.CheckPrintJobs
-50550   f.Timer1.Enabled = True
-50560  End If
+50490  filename = GetTempFile(tStr, "PDF")
+50500  fn = FreeFile
+50510  Open filename For Output As fn
+50520  Print #fn, TestPSPage
+50530  Close #fn
+50540
+50550  SplitPath filename, , Path, , File
+50560  TestPSFileName = CompletePath(Path) & File & ".ps"
+50570  Name filename As TestPSFileName
+50580
+50590  Set ini = New clsINI
+50600  ini.filename = CompletePath(Path) & File & ".tmp"
+50610  ini.Section = "1"
+50620  title = GetPSTitleFromPSString(TestPSPage)
+50630  ini.SaveKey GetComputerName, "ClientComputer"
+50640  ini.SaveKey title, "DocumentTitle"
+50650  ini.SaveKey "0", "JobId"
+50660  ini.SaveKey "", "Printername"
+50670  ini.SaveKey "", "SessionID"
+50680  ini.SaveKey TestPSFileName, "SpoolFilename"
+50690  ini.SaveKey GetUsername, "UserName"
+50700  ini.SaveKey Environ$("SESSIONNAME"), "WinStation"
+50710
+50720  If Not f Is Nothing Then
+50730   f.CheckPrintJobs
+50740   f.Timer1.Enabled = True
+50750  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -422,3 +441,119 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+' ---
+Public Sub KillInfoSpoolFiles(InfoSpoolFileName As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long, Path As String, File As String, PDFInfoFileName As String, StampFileName As String
+50020  Set isf = New clsInfoSpoolFile
+50030  isf.ReadInfoFile InfoSpoolFileName
+50040  For i = 1 To isf.InfoFiles.Count
+50050   Set isfi = isf.InfoFiles(i)
+50060   KillFile isfi.SpoolFileName
+50070  Next i
+50080
+50090  KillFile InfoSpoolFileName
+50100
+50110  SplitPath InfoSpoolFileName, , Path, , File
+50120  PDFInfoFileName = CompletePath(Path) & File & ".inf"
+50130  KillFile PDFInfoFileName
+50140  StampFileName = CompletePath(Path) & File & ".stm"
+50150  KillFile StampFileName
+50160
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral2", "KillInfoSpoolFiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub CreateInfoSpoolFiles(SpoolFileName As String, Optional InfoSpoolFileName, Optional ClientComputer, Optional DocumentTitle, _
+ Optional JobID, Optional PrinterName, Optional SessionID, Optional UserName, Optional WinStation)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010
+50020  Dim ini As clsINI, Path As String, File As String
+50030
+50040  Set ini = New clsINI
+50050  ini.Section = "1"
+50060
+50070  If Not IsMissing(InfoSpoolFileName) Then
+50080    ini.filename = CStr(InfoSpoolFileName)
+50090   Else
+50100    SplitPath SpoolFileName, , Path, , File
+50110    ini.filename = CompletePath(Path) & File & ".tmp"
+50120  End If
+50130
+50140  If Not IsMissing(ClientComputer) Then
+50150    ini.SaveKey CStr(ClientComputer), "ClientComputer"
+50160   Else
+50170    ini.SaveKey GetComputerName, "ClientComputer"
+50180  End If
+50190  If Not IsMissing(DocumentTitle) Then
+50200    ini.SaveKey CStr(DocumentTitle), "DocumentTitle"
+50210   Else
+50220    ini.SaveKey GetPSTitle(SpoolFileName), "DocumentTitle"
+50230  End If
+50240  If Not IsMissing(JobID) Then
+50250    ini.SaveKey CStr(JobID), "JobID"
+50260   Else
+50270    ini.SaveKey "0", "JobID"
+50280  End If
+50290  If Not IsMissing(PrinterName) Then
+50300    ini.SaveKey CStr(PrinterName), "PrinterName"
+50310   Else
+50320    ini.SaveKey "", "PrinterName"
+50330  End If
+50340  If Not IsMissing(SessionID) Then
+50350    ini.SaveKey CStr(SessionID), "SessionID"
+50360   Else
+50370    ini.SaveKey "", "SessionID"
+50380  End If
+50390  ini.SaveKey SpoolFileName, "SpoolFileName"
+50400  If Not IsMissing(UserName) Then
+50410    ini.SaveKey CStr(UserName), "UserName"
+50420   Else
+50430    ini.SaveKey GetUsername, "UserName"
+50440  End If
+50450  If Not IsMissing(WinStation) Then
+50460    ini.SaveKey CStr(WinStation), "WinStation"
+50470   Else
+50480    ini.SaveKey Environ$("SESSIONNAME"), "WinStation"
+50490  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral2", "CreateInfoSpoolFiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function ReadInfoSpoolfile(PostscriptFile As String) As clsInfoSpoolFile
+ Dim Path As String, File As String, isfiFileName As String, isf As clsInfoSpoolFile
+ Set isf = New clsInfoSpoolFile
+ If FileExists(PostscriptFile) = False Then
+  Exit Function
+ End If
+ 
+ SplitPath PostscriptFile, , Path, , File
+ isfiFileName = CompletePath(Path) & File & ".tmp"
+
+ If FileExists(PostscriptFile) = False Then
+  Exit Function
+ End If
+ 
+ isf.ReadInfoFile isfiFileName
+ Set ReadInfoSpoolfile = isf
+End Function
