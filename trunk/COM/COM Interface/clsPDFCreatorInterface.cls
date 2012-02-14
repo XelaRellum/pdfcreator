@@ -107,12 +107,6 @@ End Property
 Public Property Get cPostscriptInfo(ByVal PostscriptFilename As String, ByVal PropertyName As String) As String
 End Property
 
-Public Property Get cPrintjobInfos(ByVal PrintjobFilename As String) As clsPDFCreatorInfoSpoolFile
-End Property
-
-Public Property Get cPrintjobInfo(ByVal PrintjobFilename As String, ByVal PropertyName As String) As String
-End Property
-
 Public Property Get cCountOfPrintjobs() As Long
 End Property
 
@@ -246,13 +240,7 @@ End Sub
 Private Function CheckForRunningProgramErrors() As Boolean
 End Function
 
-Private Function cGetPrintjobInfoFromPrintjobInfos(PropertyName As String, sInfo As InfoSpoolFile, FunctionName As String) As Variant
-End Function
-
 Private Function cGetOptionFromOptions(PropertyName As String, Options As tOptions) As Variant
-End Function
-
-Private Function cGetInfoSpoolfile(sInfos As InfoSpoolFile) As clsPDFCreatorInfoSpoolFile
 End Function
 
 Private Function cGetOptions(sOptions As tOptions) As clsPDFCreatorOptions
