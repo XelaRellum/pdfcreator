@@ -322,10 +322,6 @@
 				<param name="Local" value="html\gnu-general-public-license.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Aladdin Free Public License">
-				<param name="Local" value="html\aladdin-free-public-license.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="FairPlay License">
 				<param name="Local" value="html\fairplay-license.html">
 				</OBJECT>
