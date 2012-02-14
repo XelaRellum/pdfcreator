@@ -123,7 +123,7 @@ On Error GoTo ErrPtnr_OnError
 50780
 50790  If bUninstallWindowsPrinter Then
 50800   If PrinterIsInstalled(UnInstallPrinterName) Then
-50810     Call UnInstallWindowsPrinter("PDFCreator", "PDFCreator:", "PDFCreator", InstallPrinterName, SetupLogFile)
+50810     Call UnInstallWindowsPrinter("pdfcmon", "pdfcmon", "PDFCreator", InstallPrinterName, SetupLogFile)
 50820    Else
 50830     IfLoggingWriteLogfile "Printer '" & UnInstallPrinterName & "' isn't installed!"
 50840     If bNoMsg = False Then
@@ -160,72 +160,73 @@ On Error GoTo ErrPtnr_OnError
 51150
 51160  If PDFCreatorPrinter = False Then
 51170   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
-51180     filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
+51180     filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "PDF")
 51190     KillFile filename
 51200     If IsValidGraphicFile(InputFilename) Then
 51210       Call Image2PS(InputFilename, filename)
 51220      Else
 51230       FileCopy InputFilename, filename
 51240     End If
-51250     If FileExists(InputFilename) And DeleteIF Then
-51260      KillFile InputFilename
-51270     End If
-51280    Else
-51290     If IsValidGraphicFile(InputFilename) Then
-51300       filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "~PS")
-51310       Call Image2PS(InputFilename, filename)
-51320       ConvertFile filename, OutputFilename, OutputSubFormat
-51330       If FileExists(filename) Then
-51340        KillFile filename
-51350       End If
-51360      Else
-51370       ConvertFile InputFilename, OutputFilename, OutputSubFormat
-51380     End If
-51390     If FileExists(InputFilename) And DeleteIF Then
-51400      KillFile InputFilename
-51410     End If
-51420     If FileExists(OutputFilename) And OpenOF Then
-51430      OpenDocument OutputFilename
-51440     End If
-51450   End If
-51460  End If
-51470
-51480  If NoStart Then
-51490   InstanceCounter = InstanceCounter - 1
-51500   Exit Sub
-51510  End If
-51520
-51530  If mutexLocal Is Nothing Then
-51540   Set mutexLocal = New clsMutex
-51550  End If
-51560  If mutexGlobal Is Nothing Then
-51570   Set mutexGlobal = New clsMutex
-51580  End If
-51590  If ProgramIsRunning(PDFCreator_GUID) Then
-51600    ' There is a local running instance
-51610    If Not NoAbortIfRunning Then
-51620     InstanceCounter = InstanceCounter - 1
-51630     Exit Sub
-51640    End If
-51650   Else
-51660  ' Create a mutex
-51670    mutexLocal.CreateMutex PDFCreator_GUID
-51680    ' Check for a global running instance
-51690    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-51700     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-51710    End If
-51720  End If
-51730
-51740 If IsFrmMainLoaded Then
-51750  Exit Sub
-51760 End If
-51770
+51250     CreateInfoSpoolFiles filename
+51260     If FileExists(InputFilename) And DeleteIF Then
+51270      KillFile InputFilename
+51280     End If
+51290    Else
+51300     If IsValidGraphicFile(InputFilename) Then
+51310       filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "PDF")
+51320       Call Image2PS(InputFilename, filename)
+51330       ConvertFile filename, OutputFilename, OutputSubFormat
+51340       If FileExists(filename) Then
+51350        KillFile filename
+51360       End If
+51370      Else
+51380       ConvertFile InputFilename, OutputFilename, OutputSubFormat
+51390     End If
+51400     If FileExists(InputFilename) And DeleteIF Then
+51410      KillFile InputFilename
+51420     End If
+51430     If FileExists(OutputFilename) And OpenOF Then
+51440      OpenDocument OutputFilename
+51450     End If
+51460   End If
+51470  End If
+51480
+51490  If NoStart Then
+51500   InstanceCounter = InstanceCounter - 1
+51510   Exit Sub
+51520  End If
+51530
+51540  If mutexLocal Is Nothing Then
+51550   Set mutexLocal = New clsMutex
+51560  End If
+51570  If mutexGlobal Is Nothing Then
+51580   Set mutexGlobal = New clsMutex
+51590  End If
+51600  If ProgramIsRunning(PDFCreator_GUID) Then
+51610    ' There is a local running instance
+51620    If Not NoAbortIfRunning Then
+51630     InstanceCounter = InstanceCounter - 1
+51640     Exit Sub
+51650    End If
+51660   Else
+51670  ' Create a mutex
+51680    mutexLocal.CreateMutex PDFCreator_GUID
+51690    ' Check for a global running instance
+51700    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+51710     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+51720    End If
+51730  End If
+51740
+51750 If IsFrmMainLoaded Then
+51760  Exit Sub
+51770 End If
 51780
-51790  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-51800   InitCommonControls
-51810  End If
-51820
-51830  Load frmMain
+51790
+51800  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+51810   InitCommonControls
+51820  End If
+51830
+51840  Load frmMain
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -335,73 +336,85 @@ On Error GoTo ErrPtnr_OnError
 50910     CheckInstance = False
 50920   End If
 50930
-50940   PrintFilename = CommandSwitch("PF", True)
-50950   InputFilename = CommandSwitch("IF", True)
-50960   OutputFilename = CommandSwitch("OF", True)
-50970   OutputSubFormat = CommandSwitch("OutputSubFormat", True)
-50980
-50990   ' Check delete inputfile after converting
-51000   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
-51010     DeleteIF = True
-51020    Else
-51030     DeleteIF = False
-51040   End If
+50940   PrinterInfFilename = CommandSwitch("PIF", True)
+50950 '  If LenB(PrinterInfFilename) <> 0 Then
+50960 '    If FileExists(PrinterInfFilename) Then
+50970 '      MsgBox PrinterInfFilename & " exists."
+50980 '     Else
+50990 '      MsgBox PrinterInfFilename & " doesn't exist!"
+51000 '    End If
+51010 '   Else
+51020 '    MsgBox "PrinterInfFilename: >" & PrinterInfFilename & "<"
+51030 '  End If
+51040 '  End
 51050
-51060   ' Open the outputfile after converting
-51070   If UCase$(CommandSwitch("Open", False)) = "OF" Then
-51080     OpenOF = True
-51090    Else
-51100     OpenOF = False
-51110   End If
-51120
-51130   ' SetupLogFile
-51140   cSwitch = Trim$(CommandSwitch("SETUPLOGFILE", True))
-51150   If LenB(cSwitch) > 0 Then
-51160    SetupLogFile = cSwitch
-51170   End If
-51180
-51190   ' UnInstallPrinter
-51200   cSwitch = Trim$(CommandSwitch("UNINSTALLPRINTER", True))
-51210   If LenB(cSwitch) > 0 Then
-51220    bUninstallPrinter = True
-51230    UnInstallPrinterName = cSwitch
-51240   End If
-51250   ' InstallPrinter
-51260   cSwitch = Trim$(CommandSwitch("INSTALLPRINTER", True))
+51060   PrintFilename = CommandSwitch("PF", True)
+51070   InputFilename = CommandSwitch("IF", True)
+51080   OutputFilename = CommandSwitch("OF", True)
+51090   OutputSubFormat = CommandSwitch("OutputSubFormat", True)
+51100
+51110   ' Check delete inputfile after converting
+51120   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
+51130     DeleteIF = True
+51140    Else
+51150     DeleteIF = False
+51160   End If
+51170
+51180   ' Open the outputfile after converting
+51190   If UCase$(CommandSwitch("Open", False)) = "OF" Then
+51200     OpenOF = True
+51210    Else
+51220     OpenOF = False
+51230   End If
+51240
+51250   ' SetupLogFile
+51260   cSwitch = Trim$(CommandSwitch("SETUPLOGFILE", True))
 51270   If LenB(cSwitch) > 0 Then
-51280    bInstallPrinter = True
-51290    InstallPrinterName = cSwitch
-51300   End If
-51310   ' UnInstallWindowsPrinter
-51320   cSwitch = Trim$(CommandSwitch("UNINSTALLWINDOWSPRINTER", True))
+51280    SetupLogFile = cSwitch
+51290   End If
+51300
+51310   ' UnInstallPrinter
+51320   cSwitch = Trim$(CommandSwitch("UNINSTALLPRINTER", True))
 51330   If LenB(cSwitch) > 0 Then
-51340    bUninstallWindowsPrinter = True
+51340    bUninstallPrinter = True
 51350    UnInstallPrinterName = cSwitch
 51360   End If
-51370   ' InstallWindowsPrinter
-51380   cSwitch = Trim$(CommandSwitch("INSTALLWINDOWSPRINTER", True))
+51370   ' InstallPrinter
+51380   cSwitch = Trim$(CommandSwitch("INSTALLPRINTER", True))
 51390   If LenB(cSwitch) > 0 Then
-51400    bInstallWindowsPrinter = True
+51400    bInstallPrinter = True
 51410    InstallPrinterName = cSwitch
 51420   End If
-51430
-51440   cSwitch = CommandSwitch("OPTIONSFILE", True)
+51430   ' UnInstallWindowsPrinter
+51440   cSwitch = Trim$(CommandSwitch("UNINSTALLWINDOWSPRINTER", True))
 51450   If LenB(cSwitch) > 0 Then
-51460    If FileExists(cSwitch) = True Then
-51470     Optionsfile = cSwitch
-51480    End If
-51490   End If
-51500   If UCase$(CommandSwitch("NO", False)) = "START" Then
-51510     NoStart = True
-51520    Else
-51530     NoStart = False
+51460    bUninstallWindowsPrinter = True
+51470    UnInstallPrinterName = cSwitch
+51480   End If
+51490   ' InstallWindowsPrinter
+51500   cSwitch = Trim$(CommandSwitch("INSTALLWINDOWSPRINTER", True))
+51510   If LenB(cSwitch) > 0 Then
+51520    bInstallWindowsPrinter = True
+51530    InstallPrinterName = cSwitch
 51540   End If
-51550   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
-51560     NoPSCheck = True
-51570    Else
-51580     NoPSCheck = False
-51590   End If
-51600  End If
+51550
+51560   cSwitch = CommandSwitch("OPTIONSFILE", True)
+51570   If LenB(cSwitch) > 0 Then
+51580    If FileExists(cSwitch) = True Then
+51590     Optionsfile = cSwitch
+51600    End If
+51610   End If
+51620   If UCase$(CommandSwitch("NO", False)) = "START" Then
+51630     NoStart = True
+51640    Else
+51650     NoStart = False
+51660   End If
+51670   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
+51680     NoPSCheck = True
+51690    Else
+51700     NoPSCheck = False
+51710   End If
+51720  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

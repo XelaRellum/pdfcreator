@@ -31,11 +31,11 @@ End Select
 End Sub
 
 Public Function ExactTimer_Value() As Currency
-50010  On Error GoTo ErrorHandler
-50020  QueryPerformanceCounter ExactTimer_Value
-50030  ExactTimer_Value = ExactTimer_Value / i_Frequency
-50040  Exit Function
+ On Error GoTo ErrorHandler
+ QueryPerformanceCounter ExactTimer_Value
+ ExactTimer_Value = ExactTimer_Value / i_Frequency
+ Exit Function
 ErrorHandler:
-50060  ExactTimer_Value = 0
-50070  IfLoggingWriteLogfile "Error in ""ExactTimer_Value (modPerformance)"": ExactTimer_Value = " & ExactTimer_Value & ", i_Frequency = " & i_Frequency
+ ExactTimer_Value = 0
+ IfLoggingWriteLogfile "Error in ""ExactTimer_Value (modPerformance)"": ExactTimer_Value = " & ExactTimer_Value & ", i_Frequency = " & i_Frequency
 End Function

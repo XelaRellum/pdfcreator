@@ -12,21 +12,6 @@ Public Enum eSortModeFiles
  SortedByName = 2
 End Enum
 
-Public Type InfoSpoolFile
- REDMON_PORT As String
- REDMON_JOB As String
- REDMON_PRINTER As String
- REDMON_MACHINE As String
- REDMON_USER As String
- REDMON_DOCNAME As String
- REDMON_FILENAME As String
- REDMON_SESSIONID As String
- SpoolFilename As String
- SpoolerAccount As String
- Computer As String
- Created As String
-End Type
-
 Public Enum RelativePathErrors
  rpErrTooManySteps = 50001
  rpErrDifferentRoot = 50011
@@ -701,21 +686,17 @@ On Error GoTo ErrPtnr_OnError
 50070   Else
 50080    If IsWinNT4 = True Then
 50090      TempDir = GetMyAppData
-50100      If LenB(Environ$("Redmon_User")) > 0 Then
-50110        TempDir = CompletePath(TempDir) & "PDFCreator\" & Environ$("Redmon_User")
-50120       Else
-50130        TempDir = CompletePath(TempDir) & "PDFCreator\" & GetUsername
-50140      End If
-50150     Else
-50160      TempDir = GetMyLocalAppData
-50170      TempDir = Left(TempDir, InStrRev(TempDir, "\")) & "Temp\PDFCreator\"
-50180    End If
-50190  End If
-50200  If Trim$(TempDir) = vbNullString Then
-50210   TempDir = PDFCreatorApplicationPath & "Temp\"
-50220  End If
-50230
-50240  GetTempPath = CompletePath(TempDir)
+50100      TempDir = CompletePath(TempDir) & "PDFCreator\" & GetUsername
+50110     Else
+50120      TempDir = CompletePath(GetMyLocalAppData)
+50130      TempDir = Left(TempDir, InStrRev(TempDir, "\")) & "Temp\PDFCreator\"
+50140    End If
+50150  End If
+50160  If Trim$(TempDir) = vbNullString Then
+50170   TempDir = PDFCreatorApplicationPath & "Temp\"
+50180  End If
+50190
+50200  GetTempPath = CompletePath(TempDir)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -750,17 +731,13 @@ On Error GoTo ErrPtnr_OnError
 50160     Else
 50170      If IsWinNT4 = True Then
 50180       tStr = CompletePath(GetTempPathApi)
-50190       If LenB(Environ$("Redmon_User")) > 0 Then
-50200         tStr = tStr & Environ$("Redmon_User")
-50210        Else
-50220         tStr = tStr & GetUsername
-50230       End If
-50240      End If
-50250    End If
-50260   Else
-50270    tStr = CompletePath(tStr) & "Temp\"
-50280  End If
-50290  GetTempPathReg = tStr
+50190       tStr = tStr & GetUsername
+50200      End If
+50210    End If
+50220   Else
+50230    tStr = CompletePath(tStr) & "Temp\"
+50240  End If
+50250  GetTempPathReg = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1780,58 +1757,6 @@ Public Sub DrawBorder3D(ByVal obj As Object, Index As Integer, BorderWidth As Lo
  End With
 End Sub
 
-Public Sub WriteInfoSpoolfile(SpoolFilename As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim isf As InfoSpoolFile, fn As Long, Path As String, File As String, _
-  infFile As String
-50030
-50040  With isf
-50050   .REDMON_PORT = Environ$("REDMON_PORT")
-50060   .REDMON_JOB = Environ$("REDMON_JOB")
-50070   .REDMON_PRINTER = Environ$("REDMON_PRINTER")
-50080   .REDMON_MACHINE = Environ$("REDMON_MACHINE")
-50090   .REDMON_USER = Environ$("REDMON_USER")
-50100   .REDMON_DOCNAME = Environ$("REDMON_DOCNAME")
-50110   .REDMON_FILENAME = Environ$("REDMON_FILENAME")
-50120   .REDMON_SESSIONID = Environ$("REDMON_SESSIONID")
-50130   .SpoolFilename = SpoolFilename
-50140   .SpoolerAccount = GetUsername
-50150   .Computer = GetComputerName
-50160   .Created = Now
-50170  End With
-50180  fn = FreeFile
-50190  SplitPath SpoolFilename, , Path, , File
-50200  infFile = CompletePath(Path) & File & ".inf"
-50210  Open infFile For Binary As #fn
-50220  Put #fn, , isf
-50230  Close #fn
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "WriteInfoSpoolfile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Public Function ReadInfoSpoolfile(SpoolFilename As String) As InfoSpoolFile
- On Error Resume Next
- Dim fn As Long, infFile As String, Path As String, File As String
- SplitPath SpoolFilename, , Path, , File
- infFile = CompletePath(Path) & File & ".inf"
- If FileExists(infFile) And Not FileInUse(infFile) Then
-  fn = FreeFile
-  Open infFile For Binary As #fn
-  Get #fn, , ReadInfoSpoolfile
-  Close #fn
- End If
-End Function
-
 Public Function IsInIDE() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1849,12 +1774,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub KillInfoSpoolfile(SpoolFilename As String)
+Public Sub KillInfoSpoolfile(SpoolFileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim infFile As String, Path As String, File As String
-50020  SplitPath SpoolFilename, , Path, , File
+50020  SplitPath SpoolFileName, , Path, , File
 50030  infFile = CompletePath(Path) & File & ".inf"
 50040  KillFile infFile
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2323,7 +2248,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "DotNet1_1Installed")
+Select Case ErrPtnr.OnError("modGeneral", "DotNet11Installed")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2340,7 +2265,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "DotNet2_0Installed")
+Select Case ErrPtnr.OnError("modGeneral", "DotNet20Installed")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2402,7 +2327,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "BrowserAddOnIsInstalled")
+Select Case ErrPtnr.OnError("modGeneral", "ToolbarIsInstalled")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -2485,6 +2410,4 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
-
 

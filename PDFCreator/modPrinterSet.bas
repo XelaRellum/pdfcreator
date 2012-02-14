@@ -1,7 +1,7 @@
 Attribute VB_Name = "modPrinterSet"
 Option Explicit
 
-Public Sub SetDefaultprinterInProg(Printername As String)
+Public Sub SetDefaultprinterInProg(PrinterName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -11,9 +11,9 @@ On Error GoTo ErrPtnr_OnError
 50040  Call GetVersionEx(os)
 50051  Select Case os.PlatformID
         Case VER_PLATFORM_WIN32_WINDOWS
-50070    Call DefaultPrinterSet9x(Printername)
+50070    Call DefaultPrinterSet9x(PrinterName)
 50080   Case VER_PLATFORM_WIN32_NT
-50090    Call DefaultPrinterSetNT(os.dwVerMajor, Printername)
+50090    Call DefaultPrinterSetNT(os.dwVerMajor, PrinterName)
 50100  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -27,14 +27,14 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub DefaultPrinterSet9x(Printername As String)
+Private Sub DefaultPrinterSet9x(PrinterName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim hPrn As Long, BytesNeeded As Long, buffer() As Byte, BytesUsed As Long, _
   Attributes As Long, pd As PRINTER_DEFAULTS
 50030
-50040  Call OpenPrinter(Printername, hPrn, pd)
+50040  Call OpenPrinter(PrinterName, hPrn, pd)
 50050  If hPrn <> 0 Then
 50060   Call GetPrinter(hPrn, 2, ByVal 0&, 0, BytesNeeded)
 50070   If Err.LastDllError = ERROR_INSUFFICIENT_BUFFER Then
@@ -63,23 +63,23 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub DefaultPrinterSetNT(ByVal MajorVersion As Long, Printername As String)
+Private Sub DefaultPrinterSetNT(ByVal MajorVersion As Long, PrinterName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim os As OSVERSIONINFO, BufSize As Long, pPrinterName As Long, Result As String, _
   comma As Long
 50030  If MajorVersion >= 5 Then
-50040    Call SetDefaultprinter(Printername)
+50040    Call SetDefaultprinter(PrinterName)
 50050   Else
 50060    BufSize = 1024
 50070    Result = Space$(BufSize)
-50080    If GetProfileString("PrinterPorts", ByVal Printername, "", Result, BufSize) Then
+50080    If GetProfileString("PrinterPorts", ByVal PrinterName, "", Result, BufSize) Then
 50090     comma = InStr(Result, ",")
 50100     comma = InStr(comma + 1, Result, ",")
 50110     If comma <> 0 Then
 50120      Result = Left$(Result, comma - 1)
-50130      Result = Printername & "," & Result
+50130      Result = PrinterName & "," & Result
 50140      Call WriteProfileString("Windows", "device", Result)
 50150      Call SettingChangeAlert(500)
 50160     End If

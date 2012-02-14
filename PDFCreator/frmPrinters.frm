@@ -21,20 +21,12 @@ Begin VB.Form frmPrinters
       TabIndex        =   2
       Top             =   120
       Width           =   6495
-      _ExtentX        =   11456
-      _ExtentY        =   8281
-      Caption         =   "Printers"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11456
+      _extenty        =   8281
+      caption         =   "Printers"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "frmPrinters.frx":27A2
       Begin VB.TextBox txtNewPrinter 
          Appearance      =   0  '2D
          Height          =   285
@@ -56,7 +48,7 @@ Begin VB.Form frmPrinters
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   1
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPrinters.frx":27A2
+               Picture         =   "frmPrinters.frx":27CE
                Key             =   ""
             EndProperty
          EndProperty
@@ -217,21 +209,21 @@ Private Sub AddPrinter()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Printername As String, c As Long, lItem As ListItem
+50010  Dim PrinterName As String, c As Long, lItem As ListItem
 50020
 50030  txtNewPrinter.Text = Trim$(txtNewPrinter.Text)
-50040  Printername = txtNewPrinter.Text
+50040  PrinterName = txtNewPrinter.Text
 50050
-50060  If Printername <> vbNullString Then
-50070   If LenB(Printername) > 0 Then
-50080    If PrinterIsInstalled(Printername) Then
+50060  If PrinterName <> vbNullString Then
+50070   If LenB(PrinterName) > 0 Then
+50080    If PrinterIsInstalled(PrinterName) Then
 50090      MsgBox LanguageStrings.MessagesMsg40
 50100      Exit Sub
 50110     Else
 50120      c = Printers.Count
-50130      Call InstallWindowsPrinter("PDFCreator", "PDFCreator:", "PDFCreator", Printername, "", App.Path)
+50130      Call InstallWindowsPrinter("pdfcmon", "pdfcmon", "PDFCreator", PrinterName, "", App.Path)
 50140      If (Printers.Count > c) Then
-50150       Set lItem = lsvPrinters.ListItems.Add(, "K" & Printername, Printername, , 1)
+50150       Set lItem = lsvPrinters.ListItems.Add(, "K" & PrinterName, PrinterName, , 1)
 50160       lItem.SubItems(1) = LanguageStrings.OptionsProfileDefaultName
 50170       lItem.Selected = True
 50180       If lsvPrinters.ListItems.Count > 1 And cmdDelPrinter.Enabled = False Then
@@ -301,7 +293,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Count = lsvPrinters.ListItems.Count
 50030  If lsvPrinters.ListItems.Count > 0 Then
 50040   c = Printers.Count
-50050   UnInstallWindowsPrinter "PDFCreator", "PDFCreator:", "PDFCreator", lsvPrinters.SelectedItem.Text, "", True
+50050   UnInstallWindowsPrinter "PDFCreator", "pdfcmon", "pdfcmon", lsvPrinters.SelectedItem.Text, "", True
 50060   If c > Printers.Count Then
 50070    cmbProfile.Visible = False
 50080    lsvPrinters.ListItems.Remove lsvPrinters.SelectedItem.Index
@@ -525,13 +517,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Function PrinterExists(Printername As String)
+Private Function PrinterExists(PrinterName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim p As Printer
 50020  For Each p In Printers
-50030   If StrComp(p.DeviceName, Printername, vbTextCompare) = 0 Then
+50030   If StrComp(p.DeviceName, PrinterName, vbTextCompare) = 0 Then
 50040    PrinterExists = True
 50050    Exit Function
 50060   End If

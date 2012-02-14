@@ -28,12 +28,20 @@ Begin VB.Form frmPassword
       TabIndex        =   3
       Top             =   1320
       Width           =   4335
-      _extentx        =   7646
-      _extenty        =   1931
-      caption         =   "Owner password"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "frmPassword.frx":000C
+      _ExtentX        =   7646
+      _ExtentY        =   1931
+      Caption         =   "Owner password"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkShowOwnerPasswordChars 
          Caption         =   "Show password"
          Height          =   195
@@ -68,12 +76,20 @@ Begin VB.Form frmPassword
       TabIndex        =   0
       Top             =   120
       Width           =   4335
-      _extentx        =   7646
-      _extenty        =   1931
-      caption         =   "User password"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "frmPassword.frx":0038
+      _ExtentX        =   7646
+      _ExtentY        =   1931
+      Caption         =   "User password"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkShowUserPasswordChars 
          Caption         =   "Show password"
          Height          =   195

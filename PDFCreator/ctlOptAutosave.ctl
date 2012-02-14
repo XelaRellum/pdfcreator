@@ -248,22 +248,21 @@ On Error GoTo ErrPtnr_OnError
 50300   .AddItem "<Title>"
 50310   .AddItem "<Username>"
 50320   .AddItem "<Counter>"
-50330   .AddItem "<REDMON_DOCNAME>"
-50340   .AddItem "<REDMON_DOCNAME_FILE>"
-50350   .AddItem "<REDMON_DOCNAME_PATH>"
-50360   .AddItem "<REDMON_JOB>"
-50370   .AddItem "<REDMON_MACHINE>"
-50380   .AddItem "<REDMON_PORT>"
-50390   .AddItem "<REDMON_PRINTER>"
-50400   .AddItem "<REDMON_SESSIONID>"
-50410   .AddItem "<REDMON_USER>"
-50420   .ListIndex = 0
-50430  End With
-50440
-50450  ControlsEnabled = True
-50460  SetFrames Options.OptionsDesign
-50470
-50480  SetFont
+50330   .AddItem "<ClientUsername>"
+50340   .AddItem "<DocumentTitle>"
+50350   .AddItem "<JobID>"
+50360   .AddItem "<PrinterName>"
+50370   .AddItem "<SessionID>"
+50380   .AddItem "<SpoolFile>"
+50390   .AddItem "<SpoolFileName>"
+50400   .AddItem "<SpoolPath>"
+50410   .ListIndex = 0
+50420  End With
+50430
+50440  ControlsEnabled = True
+50450  SetFrames Options.OptionsDesign
+50460
+50470  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

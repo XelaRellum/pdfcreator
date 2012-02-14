@@ -13,7 +13,7 @@ Public Const Homepage = "http://www.pdfforge.org/"
 Public Const Sourceforge = "http://www.sourceforge.net/projects/pdfcreator"
 Public Const UpdateURL = "http://update.pdfforge.org/pdfcreator/update.txt"
 Public Const PDFCreatorLogfile = "PDFCreator.log"
-Public Const PDFCreatorSpoolDirectory = "PDFCreatorSpool"
+Public Const PDFCreatorSpoolDirectory = "Spool"
 Public Const PDFSpoolerExe = "PDFSpool.exe"
 Public Const CompatibleLanguageVersion = "1.2.0"
 
@@ -70,6 +70,7 @@ Public InstalledAsServer As Boolean
 Public PrinterTemppath As String
 Public pdfforgeDllInstalled As Boolean
 Public PDFCreatorApplicationPath As String
+Public PrinterInfFilename As String
 
 Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
