@@ -1,9 +1,8 @@
 Type=OleExe
 Class=clsPDFCreator; clsPDFCreatorInterface.cls
-Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\WINDOWS\system32\STDOLE2.TLB#OLE Automation
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\Windows\SysWOW64\stdole2.tlb#OLE Automation
 Class=clsPDFCreatorOptions; ..\..\PDFCreator\clsPDFCreatorOptions.cls
 Class=clsPDFCreatorError; ..\..\PDFCreator\clsPDFCreatorError.cls
-Class=clsPDFCreatorInfoSpoolFile; ..\..\PDFCreator\clsPDFCreatorInfoSpoolFile.cls
 Module=modOptions; modOptions.bas
 Module=modGeneral; modGeneral.bas
 Startup="(None)"
