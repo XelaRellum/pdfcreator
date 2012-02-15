@@ -1099,8 +1099,8 @@ var progTitel, progHandle: TArrayOfString;
     cmdlSaveInfFile, cmdlLoadInfFile: String;
     cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions, cmdlDontInstallPrinters, cmdlNoic: Boolean;
     ToolbarInstallSetting: LongInt;
-    nationCode: String; IP : LongWord;
-
+    nationCode: String;
+    
     desktopicon, desktopicon_common, desktopicon_user,
     quicklaunchicon, fileassoc, winexplorer: Boolean;
 
@@ -1542,7 +1542,7 @@ end;
 function GetPDFCreatorPrinters(var PDFCreatorPrinters : Array of TPrinterInfo2) : LongInt;
 var
  Printers: Array of TPrinterInfo2;
- i, j, cP, c: LongInt;
+ i, cP, c: LongInt;
 begin
  Result:=0;
  cP:=GetPrinters(Printers);
@@ -3371,10 +3371,8 @@ end;
 
 function InitializeSetup(): Boolean;
 var
- resB: Boolean;
  res: LongInt;
- resS, installCheckFile: String;
- installCheckFile : string;
+ installCheckFile: String;
  ResultCode: Integer;
 #ifdef UpdateIsPossible
  cv,a:Longint;  verySilent:boolean;
