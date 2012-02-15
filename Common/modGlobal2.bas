@@ -179,136 +179,150 @@ Public Function GetDocDate(Optional StandardDate As String = "", Optional Standa
 End Function
 
 Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String, Optional InfoSpooleFileName As String, Optional hkey1 As hkey = HKEY_CURRENT_USER) As String
- Dim DateTime As String, Author As String, ClientComputer As String, UserName As String, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim DateTime As String, Author As String, ClientComputer As String, ClientUsername As String, UserName As String, _
   Computername As String, MyFiles As String, MyDesktop As String, filename As String, _
   title As String, tStr As String, FilePath As String
- Dim isf As clsInfoSpoolFile
-
- If Len(TokenFilename) = 0 Then
-  Exit Function
- End If
-
- Set isf = New clsInfoSpoolFile
- If LenB(InfoSpooleFileName) > 0 Then
-  isf.ReadInfoFile InfoSpooleFileName
- End If
-
- DateTime = GetDocDate("", Options.StandardDateformat, CStr(Now))
- If Preview Then
-  Author = "'Preview Author'"
-  ClientComputer = "'Preview ClientComputer'"
- End If
-
- UserName = GetDocUsername("", True)
-
- Computername = GetComputerName
- MyFiles = GetMyFiles
- MyDesktop = GetDesktop
-
- ClientComputer = GetComputerName
-
- filename = TokenFilename
- filename = Replace(filename, "<DateTime>", DateTime, , , vbTextCompare)
- filename = Replace(filename, "<Computername>", Computername, , , vbTextCompare)
-
- filename = Replace(filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
- filename = Replace(filename, "<Username>", UserName, , , vbTextCompare)
- filename = Replace(filename, "<Title>", title, , , vbTextCompare)
-
- filename = Replace(filename, "<Author>", Author, , , vbTextCompare)
-
- filename = Replace(filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
- filename = Replace(filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
-
- If Options.Counter = 922337203685477@ Then
-  Options.Counter = 0
- End If
- Options.Counter = Round(Options.Counter)
-
- filename = Replace(filename, "<Counter>", Format$(Options.Counter + 1, String(15, "0")), , , vbTextCompare)
-
- If LenB(Temppath) > 0 Then
-   filename = Replace(filename, "<Temp>", CompletePath(Temppath), , , vbTextCompare)
-  Else
-   filename = Replace(filename, "<Temp>", CompletePath(GetTempPathReg(hkey1)), , , vbTextCompare)
- End If
-
- tStr = "DocumentTitle"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstDocumentTitle) > 0 Then
-    filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstDocumentTitle), , , vbTextCompare)
-   End If
- End If
- tStr = "SpoolFile"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstDocumentTitle) > 0 Then
-    SplitPath ReplaceForbiddenChars(isf.FirstDocumentTitle), , , , FilePath
-   End If
-   filename = Replace(filename, "<" & tStr & ">", FilePath, , , vbTextCompare)
- End If
- tStr = "SpoolPath"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstDocumentTitle) > 0 Then
-    SplitPath ReplaceForbiddenChars(isf.FirstDocumentTitle), , FilePath
-   End If
-   filename = Replace(filename, "<" & tStr & ">", FilePath, , , vbTextCompare)
- End If
- tStr = "JobID"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstJobID) > 0 Then
-    filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstJobID), , , vbTextCompare)
-   End If
- End If
- tStr = "ClientComputer"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstClientComputer) > 0 Then
-    filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(Replace$(isf.FirstClientComputer, "\\", "")), , , vbTextCompare)
-   End If
- End If
- tStr = "PrinterName"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstPrinterName) > 0 Then
-     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstPrinterName), , , vbTextCompare)
-   End If
- End If
- tStr = "SessionID"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstSessionID) > 0 Then
-    filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstSessionID), , , vbTextCompare)
-   End If
- End If
- tStr = "UserName"
- If Preview Then
-   filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
-  Else
-   If LenB(isf.FirstUserName) > 0 Then
-    filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstUserName), , , vbTextCompare)
-   End If
- End If
-
- If Options.RemoveSpaces = 1 Then
-  filename = Trim$(filename)
- End If
- If Len(filename) >= 4 Then
-  If InStr(2, filename, "\\") > 0 Then
-   filename = Mid$(filename, 1, 1) & Replace$(Mid(filename, 2), "\\", "\")
-  End If
- End If
- GetSubstFilename2 = filename
+50040  Dim isf As clsInfoSpoolFile
+50050
+50060  If Len(TokenFilename) = 0 Then
+50070   Exit Function
+50080  End If
+50090
+50100  Set isf = New clsInfoSpoolFile
+50110  If LenB(InfoSpooleFileName) > 0 Then
+50120   isf.ReadInfoFile InfoSpooleFileName
+50130  End If
+50140
+50150  DateTime = GetDocDate("", Options.StandardDateformat, CStr(Now))
+50160  If Preview Then
+50170    Author = "'Preview Author'"
+50180   Else
+50190
+50200  End If
+50210
+50220  UserName = GetDocUsername("", True)
+50230
+50240  Computername = GetComputerName
+50250  MyFiles = GetMyFiles
+50260  MyDesktop = GetDesktop
+50270
+50280  ClientComputer = GetComputerName
+50290
+50300  filename = TokenFilename
+50310  filename = Replace(filename, "<DateTime>", DateTime, , , vbTextCompare)
+50320  filename = Replace(filename, "<Computername>", Computername, , , vbTextCompare)
+50330
+50340  filename = Replace(filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
+50350  filename = Replace(filename, "<Username>", UserName, , , vbTextCompare)
+50360  filename = Replace(filename, "<Title>", title, , , vbTextCompare)
+50370
+50380  filename = Replace(filename, "<Author>", Author, , , vbTextCompare)
+50390
+50400  filename = Replace(filename, "<MyFiles>", CompletePath(MyFiles), , , vbTextCompare)
+50410  filename = Replace(filename, "<MyDesktop>", CompletePath(MyDesktop), , , vbTextCompare)
+50420
+50430  If Options.Counter = 922337203685477@ Then
+50440   Options.Counter = 0
+50450  End If
+50460  Options.Counter = Round(Options.Counter)
+50470
+50480  filename = Replace(filename, "<Counter>", Format$(Options.Counter + 1, String(15, "0")), , , vbTextCompare)
+50490
+50500  If LenB(Temppath) > 0 Then
+50510    filename = Replace(filename, "<Temp>", CompletePath(Temppath), , , vbTextCompare)
+50520   Else
+50530    filename = Replace(filename, "<Temp>", CompletePath(GetTempPathReg(hkey1)), , , vbTextCompare)
+50540  End If
+50550
+50560  tStr = "DocumentTitle"
+50570  If Preview Then
+50580    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+50590   Else
+50600    If LenB(isf.FirstDocumentTitle) > 0 Then
+50610     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstDocumentTitle), , , vbTextCompare)
+50620    End If
+50630  End If
+50640  tStr = "SpoolFile"
+50650  If Preview Then
+50660    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+50670   Else
+50680    If LenB(isf.FirstDocumentTitle) > 0 Then
+50690     SplitPath ReplaceForbiddenChars(isf.FirstDocumentTitle), , , , FilePath
+50700    End If
+50710    filename = Replace(filename, "<" & tStr & ">", FilePath, , , vbTextCompare)
+50720  End If
+50730  tStr = "SpoolPath"
+50740  If Preview Then
+50750    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+50760   Else
+50770    If LenB(isf.FirstDocumentTitle) > 0 Then
+50780     SplitPath ReplaceForbiddenChars(isf.FirstDocumentTitle), , FilePath
+50790    End If
+50800    filename = Replace(filename, "<" & tStr & ">", FilePath, , , vbTextCompare)
+50810  End If
+50820  tStr = "JobID"
+50830  If Preview Then
+50840    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+50850   Else
+50860    If LenB(isf.FirstJobID) > 0 Then
+50870     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstJobID), , , vbTextCompare)
+50880    End If
+50890  End If
+50900  tStr = "ClientComputer"
+50910  If Preview Then
+50920    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+50930   Else
+50940    If LenB(isf.FirstClientComputer) > 0 Then
+50950     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(Replace$(isf.FirstClientComputer, "\\", "")), , , vbTextCompare)
+50960    End If
+50970  End If
+50980  tStr = "PrinterName"
+50990  If Preview Then
+51000    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+51010   Else
+51020    If LenB(isf.FirstPrinterName) > 0 Then
+51030      filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstPrinterName), , , vbTextCompare)
+51040    End If
+51050  End If
+51060  tStr = "SessionID"
+51070  If Preview Then
+51080    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+51090   Else
+51100    If LenB(isf.FirstSessionID) > 0 Then
+51110     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstSessionID), , , vbTextCompare)
+51120    End If
+51130  End If
+51140  tStr = "ClientUsername"
+51150  If Preview Then
+51160    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
+51170   Else
+51180    If LenB(isf.FirstUserName) > 0 Then
+51190     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstUserName), , , vbTextCompare)
+51200    End If
+51210  End If
+51220
+51230  If Options.RemoveSpaces = 1 Then
+51240   filename = Trim$(filename)
+51250  End If
+51260  If Len(filename) >= 4 Then
+51270   If InStr(2, filename, "\\") > 0 Then
+51280    filename = Mid$(filename, 1, 1) & Replace$(Mid(filename, 2), "\\", "\")
+51290   End If
+51300  End If
+51310  GetSubstFilename2 = filename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal2", "GetSubstFilename2")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Public Sub SavePrinterProfiles(PrinterProfiles As Collection)
