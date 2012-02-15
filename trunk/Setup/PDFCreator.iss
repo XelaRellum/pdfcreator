@@ -1091,7 +1091,7 @@ var progTitel, progHandle: TArrayOfString;
      LogFile, UninstallLogfile, logStr,
      PrintSystem, Win9x, WinNT, Win2000, WinXP, Win2003,
      WinXP2003_32bit, WinXP2003_64bit : String;
-    InstalledPDFCreatorVersion : String; installedVersionIsLower121 : Boolean;
+    InstalledPDFCreatorVersion : String; installedVersionIsLower130 : Boolean;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
 
@@ -2042,7 +2042,7 @@ end;
 
 function InstallPDFCreatorPrinter():Boolean;
 begin
- If (cmdlDontInstallPrinters = false) or (installedVersionIsLower121 = true) then
+ If (cmdlDontInstallPrinters = false) or (installedVersionIsLower130 = true) then
    result := true
   else 
    result := false;
@@ -3169,8 +3169,9 @@ begin
    parameter := '/silent';
  if removeoptions = true then
    parameter := parameter + ' /removeoptions';
-
- parameter := parameter + ' /dontuninstallprinters';
+ 
+ if installedVersionIsLower130 = false then
+  parameter := parameter + ' /dontuninstallprinters';
 
  RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString);
  if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString) then
@@ -3195,7 +3196,10 @@ begin
    UninstallInnosetupInstallation(verysilent, removeoptions);
    
  if dontUninstallPrinters=false then
-  UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
+  if installedVersionIsLower130 = true then
+    UninstallCompletePrinterDuringInstall('PDFCreator', 'PDFCreator:', PrinterDrivername, Printername, LogFile)
+   else
+    UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
 
  RemovePDFCreatorUninstallKey;
 end;
@@ -3395,7 +3399,7 @@ begin
 
  if RegQueryStringValue(HKEY_LOCAL_MACHINE,UninstallRegKey, 'ApplicationVersion', InstalledPDFCreatorVersion)=false then
    InstalledPDFCreatorVersion:='0.0.0';
- installedVersionIsLower121 :=  PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.2.1'); 
+ installedVersionIsLower130:=PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.3.0'); 
  
  InitMessages;
 
@@ -3427,7 +3431,10 @@ begin
  
  res := 0;
  if IsPDFCreatorInstalled then begin
-  cmdlDontInstallPrinters := true;
+  if installedVersionIsLower130 = true then
+    cmdlDontInstallPrinters := false
+   else
+    cmdlDontInstallPrinters := true;
   if cmdlVerySilent=true then begin
     UninstallPDFCreator(true, cmdlRemoveOptions, cmdlDontInstallPrinters);
    end else begin 
@@ -4064,10 +4071,10 @@ begin
      AppendLogStr('DontInstallPrinters: true')
     else
      AppendLogStr('DontInstallPrinters: false');
-   If installedVersionIsLower121 then
-     AppendLogStr('PDFCreatorVersionIsLower 1.2.1: true')
+   If installedVersionIsLower130 then
+     AppendLogStr('PDFCreatorVersionIsLower 1.3.0: true')
     else
-     AppendLogStr('PDFCreatorVersionIsLower 1.2.1: false')
+     AppendLogStr('PDFCreatorVersionIsLower 1.3.0: false')
 
    SaveStringToFile(LogFile, logStr + #13#10, True)
    
