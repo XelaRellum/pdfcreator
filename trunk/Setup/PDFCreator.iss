@@ -1,15 +1,17 @@
 ; PDFCreator Installation
-; Setup created with Inno Setup QuickStart Pack 5.4.2a (with ISPP) and InnoIDE 1.0.0.0078
 ; Installation script created by pdfforge GbR
 
 ;#define FastCompilation
+;#define Test
+
 #define CompileHelp
 #define IncludeGhostscript
-#define IncludeToolbar
 #define IncludeOC
+#define IncludeIM
+#define OCEndDate "2012-04-01"
 #define Localization
 
-#define GhostscriptPath "C:\PDFCreator\gs"
+#define GhostscriptPath "..\GhostScript"
 
 #ifdef FastCompilation
  #define Compression="none"
@@ -24,11 +26,12 @@
  #define GhostscriptSetupString "GPLGhostscript"
 #ENDIF
 
+#ifdef Test
+  #undef CompileHelp
+#endif
+
 #if (fileexists("..\PDFCreator\PDFCreator.exe")==0)
  #error Compile PDFCreator first!
-#endif
-#if (fileexists("..\PDFSpooler\PDFSpool.exe")==0)
- #error Compile PDFSpooler first!
 #endif
 #if (fileexists("..\TransTool\TransTool.exe")==0)
  #error Compile TransTool first!
@@ -41,7 +44,6 @@
    #error Please install the IPDK!
   #endif
   #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
-  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFSpooler\PDFSpool.exe * 0x409 ~ 0x0",".\")
   #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
  #endif
 #endif
@@ -52,7 +54,6 @@
   #error Compile ManifestManager first!
  #endif
  #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreator\PDFCreator.exe""","..\ManifestManager\")
- #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFSpooler\PDFSpool.exe""","..\ManifestManager\")
  #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\TransTool\TransTool.exe""","..\ManifestManager\")
 #endif
 
@@ -73,13 +74,11 @@
 #define WelcomePage          "http://www.pdfforge.org/pdfcreator/welcome"
 #define Appname              "PDFCreator"
 #define AppExename           "PDFCreator.exe"
-#define SpoolerExename       "PDFSpool.exe"
 
 #define AppVersion           GetFileVersionVBExe("..\PDFCreator\PDFCreator.exe")
 
 #define PDFCreatorVersion    GetFileVersionVBExe("..\PDFCreator\PDFCreator.exe")
 #define SetupAppVersion      GetFileVersionVBExeLine("..\PDFCreator\PDFCreator.exe")
-#define PDFSpoolerVersion    GetFileVersionVBExe("..\PDFSpooler\PDFSpool.exe")
 #define TransToolVersion     GetFileVersionVBExe("..\Transtool\Transtool.exe")
 
 #define ReleaseCandidate     ""
@@ -106,8 +105,6 @@
 #define PDFCreatorExeIDstr   "{" + PDFCreatorExeID
 #define TransToolExeID       "{B7BCA0D2-7305-4318-BA7A-01B028D910EB}"
 #define TransToolExeIDStr    "{" + TransToolExeID
-#define PDFSpoolerExeID      "{C387A397-047A-4354-AE89-F75B1B550257}"
-#define PDFSpoolerExeIDStr   "{" + PDFSpoolerExeID
 #define UninstallID          AppID
 #define UninstallIDreg       AppIDreg
 #define UninstallIDStr       "{"+ UninstallID
@@ -119,8 +116,8 @@
 #define PrintReg             "System\CurrentControlSet\Control\Print\"
 #define PrintRegMon          "System\CurrentControlSet\Control\Print\Monitors\"
 
-#define DefaultPrinterMonitorname   "PDFCreator"
-#define DefaultPrinterPortname      "PDFCreator:"
+#define DefaultPrinterMonitorname   "pdfcmon"
+#define DefaultPrinterPortname      "pdfcmon"
 #define DefaultPrinterDrivername    "PDFCreator"
 #define DefaultPrintername          "PDFCreator"
 
@@ -133,11 +130,9 @@
  #include "OCpre.iss"
 #ENDIF
 
-#define ChannelID 827316
-
-#define ToolbarID        "{B8B0FC8B-E69B-4215-AF1A-4BDFF20D794B}"
-#IFDEF IncludeToolbar
- #include "ToolbarForm.isd"
+#IFDEF IncludeIM
+ #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
+ #include ITDRoot+'\it_download.iss'
 #ENDIF
 
 [Setup]
@@ -159,7 +154,7 @@ Compression={#Compression}
 CreateUninstallRegKey=false
 DefaultDirName={reg:HKLM\{#UninstallRegStr2},Inno Setup: App Path|{pf}\{#AppName}}
 DefaultGroupName={#AppName}
-DisableDirPage=false
+DisableDirPage=true
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
 InternalCompressLevel={#InternalCompressLevel}
@@ -301,10 +296,9 @@ Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Bin\gsdll32.dll; DestDir: {ap
 Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Bin; Components: ghostscript; Flags: ignoreversion
 #ENDIF
 
-;Redmon files
-Source: ..\Printer\Redmon\redmon95.dll; Components: program; DestDir: {sys}; MinVersion: 4.00.950,0; DestName: pdfcmn95.dll; Check: InstallPDFCreatorPrinter; Flags: comparetimestamp
-Source: ..\Printer\Redmon\redmonnt.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmnnt.dll; Check: InstallPDFCreatorPrinter AND (Not IsWin64); Flags: 32bit ignoreversion
-Source: ..\Printer\Redmon\redmonnt-x64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmnnt.dll; Check: InstallPDFCreatorPrinter AND IsX64; Flags: 64bit comparetimestamp
+;Monitor files
+Source: ..\Printer\Monitor\pdfcmon32.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmon.dll; Check: InstallPDFCreatorPrinter AND (Not IsWin64); Flags: 32bit ignoreversion
+Source: ..\Printer\Monitor\pdfcmon64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmon.dll; Check: InstallPDFCreatorPrinter AND IsX64; Flags: 64bit comparetimestamp
 
 ;Source: ..\SystemFiles\COMCT332.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
@@ -316,7 +310,6 @@ Source: ..\SystemFiles\STDOLE2.TLB; DestDir: {sys}; Components: program; Flags: 
 ;Program files
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Components: program; Flags: comparetimestamp
-Source: ..\PDFSpooler\PDFSpool.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
 
 ;vblocal.exe from IPDK
 Source: C:\IPDK\vblocal.exe; DestDir: {app}; Components: program; Flags: deleteafterinstall overwritereadonly onlyifdoesntexist ignoreversion
@@ -450,7 +443,6 @@ Source: ..\COM\Samples\Windows Scripting Host\VBScript\PS2PDF.vbs; DestDir: {app
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\SaveOptionsToFile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowLogfile.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowOptions.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
-Source: ..\COM\Samples\Windows Scripting Host\VBScript\ShowPrintjobInfos.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression1.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression2.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Windows Scripting Host\VBScript\TestCompression3.vbs; DestDir: {app}\COM\Windows Scripting Host\VBScripts; Components: COMsamples; Flags: ignoreversion
@@ -475,12 +467,6 @@ Source: ..\COM\Samples\Python\Convert2PDF.py; DestDir: {app}\COM\Python; Compone
 Source: ..\COM\Samples\Python\SaveOptionsToFile.py; DestDir: {app}\COM\Python; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Python\TestEvents.py; DestDir: {app}\COM\Python; Components: COMsamples; Flags: ignoreversion
 Source: ..\COM\Samples\Python\Testpage2PDF.py; DestDir: {app}\COM\Python; Components: COMsamples; Flags: ignoreversion
-
-; Toolbar
-#IFDEF IncludeToolbar
-Source: ..\Toolbar\pdfforgeToolbar-stub-1.exe; DestDir: {tmp}; DestName: pdfforgeToolbar-stub-1.exe; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: InstallToolbar
-Source: Installation\pdfforge Toolbar_setup.exe; DestDir: {app}\Toolbar; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0
-#ENDIF
 
 #IFDEF IncludeOC
 Source: "{#OC_OCSETUPHLP_FILE_PATH}"; Flags: dontcopy ignoreversion;
@@ -569,7 +555,6 @@ Root: HKCU; SubKey: Printers\DevModes2; ValueType: binary; ValueName: PDFCreator
 Root: HKLM; Subkey: {#PrintReg}Printers\{code:GetPrintername}; Flags: dontcreatekey
 Root: HKLM; Subkey: {#PrintReg}Environments\Windows 4.0\Drivers\{code:GetPrinterdrivername}; Flags: dontcreatekey; MinVersion: 4.00.950,0
 Root: HKLM; Subkey: {#PrintReg}Environments\Windows NT x86\Drivers\{code:GetPrinterdrivername}; Flags: dontcreatekey; MinVersion: 0,4.00.1381
-Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}\Ports\{code:GetPrinterportname}; Flags: dontcreatekey
 Root: HKLM; Subkey: {#PrintRegMon}{code:GetPrintermonitorname}; Flags: dontcreatekey
 
 ;File-Assoc
@@ -602,12 +587,10 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: ReleaseCan
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PatchLevel; Valuedata: ; Flags: uninsdeletevalue
 
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFCreatorVersion; Valuedata: {#PDFCreatorVersion}; Flags: uninsdeletevalue
-Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFSpoolerVersion; Valuedata: {#PDFSpoolerVersion}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: TranstoolVersion; Valuedata: {#TranstoolVersion}; Flags: uninsdeletevalue
 
 ;PDFCreator HKLM
 Root: HKLM; Subkey: SOFTWARE\PDFCreator\Program; ValueType: string; ValueName: ApplicationVersion; Valuedata: {#AppVersion}; Flags: uninsdeletevalue
-Root: HKLM; Subkey: SOFTWARE\PDFCreator\PDFSpooler; ValueType: string; ValueName: ProcessWithLessPrivileges; Valuedata: "iexplore.exe|chrome.exe|acrord32.exe"; Flags: uninsdeletevalue
 
 #Ifdef GhostscriptVersion
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: GhostscriptCopyright; Valuedata: GPL; Flags: uninsdeletevalue; Components: ghostscript
@@ -688,15 +671,12 @@ Root: HKCR; Subkey: "pdfforge Images2PDF\shell\open\command"; ValueType: string;
 
 [Run]
 ;german localization
-Filename: {app}\vblocal.Exe; WorkingDir: {syswow64}; Parameters: pdfspool.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6de.dll 0x407 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('german')
 ;italian localization
-Filename: {app}\vblocal.Exe; WorkingDir: {syswow64}; Parameters: pdfspool.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6it.dll 0x410 * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('italian')
 ;french localization
-Filename: {app}\vblocal.Exe; WorkingDir: {syswow64}; Parameters: pdfspool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}; Parameters: pdfcreator.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
 Filename: {app}\vblocal.Exe; WorkingDir: {app}\Languages; Parameters: transtool.exe vb6fr.dll 0x40C * 0x409; Flags: runhidden; Components: program; Check: IsLanguage('french')
 
@@ -709,11 +689,6 @@ Filename: {#WelcomePage}; Description: {cm:ShowHelpAfterSetup}; Flags: postinsta
 Filename: regedit.exe; WorkingDir: {%tmp}; Parameters: /s {%tmp}\PDFCreator-external.reg; Components: program; Flags: runhidden; Check: UseOwnREGFile
 
 Filename: {code:GetDotNet20RegAsm}; WorkingDir: {app}\PlugIns\pdfforge; Parameters: """{app}\PlugIns\pdfforge\pdfforge.dll"" /codebase"; Components: program; Flags: runhidden; Check: IsDotNET20Installed
-
-#IFDEF IncludeToolbar
-Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=1"" /UM""http://download.mybrowserbar.com/vkits/dlv1/{#ChannelID}/pdfforgeToolbar.msi"""; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: (Not DontUseYahooSearch) AND InstallToolbar
-Filename: {tmp}\pdfforgeToolbar-stub-1.exe; Parameters: "/S /V""/qn CHANNEL_ID={#ChannelID} D_WSD=0"" /UM""http://download.mybrowserbar.com/vkits/dlv1/{#ChannelID}/pdfforgeToolbar.msi"""; MinVersion: 0,5.0.2195; OnlyBelowVersion: 0,0; Check: DontUseYahooSearch AND InstallToolbar
-#ENDIF
 
 [UninstallRun]
 Filename: {app}\PDFCreator.exe; Parameters: /UnRegServer; Flags: skipifdoesntexist runhidden
@@ -899,9 +874,6 @@ Name: fileassoc; Description: {cm:AssocFileExtension,PDFCreator,.ps}; GroupDescr
 Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:OtherTasks}; Check: UseWinExplorer
 Name: winexplorer; Description: {cm:WinexplorerEntry}; GroupDescription: {cm:OtherTasks}; Flags: unchecked; Check: Not UseWinExplorer
 
-[InnoIDE_PreCompile]
-Name: C:\Program Files (x86)\Inno Setup 5\ISCC.exe; Parameters: """pdfforge - Toolbar.iss"""; Flags: AbortOnError;
-
 [InnoIDE_PostCompile]
 Name: C:\PDFCreator\Setup\Installation\PostCompilingSetup.cmd; Flags: AbortOnError CmdPrompt; 
 
@@ -943,6 +915,10 @@ const
 
  INTERNET_CONNECTION_OFFLINE = $20;
  UninstallKey = 'Microsoft\Windows\CurrentVersion\Uninstall\{#UninstallID}';
+ 
+ SCR_NONE = 0;
+ SCR_OC = 1;
+ SCR_IM = 2;
 
 type
  TAInt = Array of Integer; TAStr = Array of String;
@@ -1140,25 +1116,12 @@ var progTitel, progHandle: TArrayOfString;
 
     CountCurrentPDFCreatorPrinters: LongInt;
     CurrentPDFCreatorPrinters: Array of TPrinterInfo2;
-    SkipToolbarPage: Boolean;
-    bIIIUS : Boolean;
+    OfferScreen: Integer;
 
 function IsX64: Boolean;
 begin
  Result:=(ProcessorArchitecture=paX64);
 end;
-
-#IFDEF IncludeToolbar
-function DontUseYahooSearch:Boolean;
-begin
- Result:= Not chkUseYahoo.Checked;
-end;
-
-function InstallToolbar:Boolean;
-begin
- Result:=chkInstallToolbar.Checked;
-end;
-#ENDIF
 
 function GetDateString(Default:String):String;
 begin
@@ -1579,31 +1542,23 @@ end;
 function GetPDFCreatorPrinters(var PDFCreatorPrinters : Array of TPrinterInfo2) : LongInt;
 var
  Printers: Array of TPrinterInfo2;
- SubKeys: TArrayOfString;
  i, j, cP, c: LongInt;
 begin
- SetArrayLength(PDFCreatorPrinters, 0);
  Result:=0;
  cP:=GetPrinters(Printers);
- if RegGetSubkeyNames(HKLM, 'SYSTEM\CurrentControlSet\Control\Print\Monitors\PDFCreator\Ports', SubKeys) then
-  begin
-   c:=0;
-   for i:=0 to cP-1 do
-    for j:=0 to GetArrayLength(SubKeys)-1 do
-     if Uppercase(SubKeys[j])=Uppercase(Printers[i].pPortName) then
-      c:=c+1;
-   if c>0 then begin
-    SetArrayLength(PDFCreatorPrinters, c);
-    c:=0;
-    for i:=0 to cP-1 do
-     for j:=0 to GetArrayLength(SubKeys)-1 do
-      if Uppercase(SubKeys[j])=Uppercase(Printers[i].pPortName) then begin
-       PDFCreatorPrinters[c]:=Printers[i];
-       c:=c+1;
-      end;
-   end;
-   Result:=c;
-  end;
+ c := 0; 
+ for i:=0 to cP-1 do
+  if 'pdfcmon' = Lowercase(Printers[i].pPortName) then
+   c := c + 1;
+ SetArrayLength(PDFCreatorPrinters, c);
+ c := 0; 
+ for i:=0 to cP-1 do
+  if 'pdfcmon' = Lowercase(Printers[i].pPortName) then begin
+   PDFCreatorPrinters[c]:=Printers[i];
+   c := c + 1;
+  end 
+   
+ Result:=c;
 end;
 
 function InstallMonitor(MonitorName: String):Boolean;
@@ -1615,10 +1570,10 @@ begin
      M2.pEnvironment:='Windows x64'
     else
      M2.pEnvironment:='Windows NT x86';
-   M2.pDLLName:='pdfcmnnt.dll'
+   M2.pDLLName:='pdfcmon.dll'
   end else Begin
    M2.pEnvironment:='Windows 4.0';
-   M2.pDLLName:='pdfcmn95.dll'
+   M2.pDLLName:='pdfcmon.dll'
  end;
 
  SaveStringToFile(LogFile, 'InstallMonitor:' + #13#10, True)
@@ -1643,29 +1598,10 @@ begin
  SaveStringToFile(LogFile, 'Install printerport:' + #13#10, True)
  SaveStringToFile(LogFile, ' Portname : ' + GetPrinterportname('')  + #13#10, True)
  SubKeyName:='{#PrintRegMon}'+GetPrintermonitorname('');
- SubKeyName:=SubKeyName+'\Ports\'+GetPrinterportname('');
  res:=true;
- tres:=RegWriteStringValue(HKLM,SubKeyName,'Arguments','-PPDFCREATORPRINTER');
+ tres:=RegWriteStringValue(HKLM,SubKeyName,'PdfCreator',GetShortname(ExpandConstant('{app}')+'\{#AppExename}'));
  res:=res and tres;
- tres:=RegWriteStringValue(HKLM,SubKeyName,'Command',GetShortname(ExpandConstant('{app}')+'\{#SpoolerExename}'));
- res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'Delay',300);
- res:=res and tres;
- tres:=RegWriteStringValue(HKLM,SubKeyName,'Description','PDFCreator Redirected Port');
- res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'LogFileDebug',0);
- res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'LogFileUse',0);
- res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'Output',0);
- res:=res and tres;
- tres:=RegWriteStringValue(HKLM,SubKeyName,'Printer',GetPrintername(''));
- res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'PrintError',0);
- res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'RunUser',0);
- res:=res and tres;
- tres:=RegWriteDWordValue(HKLM,SubKeyName,'ShowWindow',0);
+ tres:=RegWriteStringValue(HKLM,SubKeyName,'Port','pdfcmon');
  res:=res and tres;
  if res=false then begin
    SaveStringToFile(LogFile, ' Result: Error ' + #13#10#13#10, True)
@@ -2155,54 +2091,6 @@ begin
 	end;
 end;
 
-function AdjustSpoolerPrivileges:String;
-var
- key, valueName, value, value2, resStr : string;
- resB : Boolean;
-begin
- key := 'SYSTEM\CurrentControlSet\Services\Spooler';
- valueName := 'RequiredPrivileges';
- if RegValueExists(HKLM, key, valueName) then begin
-  if RegQueryMultiStringValue(HKLM, key, valueName, value) then begin
-   value2 := value;
-   if Pos('sebackupprivilege', LowerCase(value2)) = 0 then begin
-    value := value + 'SeBackupPrivilege'
-    RegWriteMultiStringValue(HKLM, key, valueName, value);
-    resStr := ' b';
-   end
-   RegQueryMultiStringValue(HKLM, key, valueName, value);
-   value2 := value;
-   StringChangeEx(value2, #0, ' ', True);
-   if Pos('serestoreprivilege', LowerCase(value2)) = 0 then begin
-    value := value + 'SeRestorePrivilege'
-    RegWriteMultiStringValue(HKLM, key, valueName, value);
-    if length(resStr) > 0 then
-     resStr := resStr + ', ';
-    resStr := resStr + 'r';
-   end
-   if length(resStr) > 0 then begin
-    if IsServiceRunning('Spooler') then begin
-     resB := StopService('Spooler');
-     resStr := resStr + '; Result-StopService = '
-     if resB then
-       resStr := resStr + 'true'
-      else
-       resStr := resStr + 'false';
-     Sleep(4000);
-     resB := StartService('Spooler')
-     resStr := resStr + '; Result-StartService = '
-     if resB then
-       resStr := resStr + 'true'
-      else
-       resStr := resStr + 'false';
-    end else
-     resStr := 'Spooler service down';
-   end
-  end else resStr := 'Can''t read "RequiredPrivileges"';
- end else resStr := 'Can''t find "RequiredPrivileges"';
- result := resStr;
-end;
-
 function IsServerInstallation: Boolean;
 begin
  if Servermodus then
@@ -2566,15 +2454,6 @@ end;
 
 function ShouldSkipPage(PageID: Integer): Boolean;
 begin
-#ifdef IncludeOC
- If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0)then
-  If bIIIUS = false then
-   If OCShouldSkipPage(PageID) then begin
-    Result := true;
-	  exit;
-   end;
-#endif
-
  case PageID of
   PrinternamePage.ID: 
    begin
@@ -2596,15 +2475,13 @@ begin
       Result := False
      else
       Result := True
-   end;
-   ToolbarPage.ID:
-    if SkipToolbarPage then   
-      Result := True
-     else
-      Result := False
+   end
   else
    Result := False
  end;
+ 
+ if OCShouldSkipPage(PageID) then
+		Result := true;
 end;
 
 function CheckMonitorname(MonitornameStr: String): Boolean;
@@ -2674,8 +2551,7 @@ begin
  if CurPageID = InstallationTypePage.ID then
   Servermodus := ServermodusRB.Checked;
 
- If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
-  If bIIIUS = false then
+ If OfferScreen = SCR_OC then
    If not OCNextButtonClick(CurPageID) then begin
     Result := false;
     exit;
@@ -3180,13 +3056,6 @@ begin
    tasks:=copy(tasks,2,length(tasks)-1);
   res:=SetIniString('Setup', 'Tasks', tasks, cmdlSaveInfFile)
  end
-
- if Not InstallToolbar then
-   res:=SetIniString('Setup', 'Toolbar', '0', cmdlSaveInfFile)
-  else if DontUseYahooSearch then
-     res:=SetIniString('Setup', 'Toolbar', '1', cmdlSaveInfFile)
-   else
-     res:=SetIniString('Setup', 'Toolbar', '2', cmdlSaveInfFile);
 end;
 
 function RestartNecessary(): Boolean;
@@ -3406,44 +3275,6 @@ begin
  //end;
 end;
 
-#ifdef IncludeOC
-#include 'NipaCheck.iss'
-procedure CheckIP();
-var
- nipaStr, nipaFile :String;
- res : Boolean;
- ConnectionState: DWORD;
-begin
- bIIIUS := false;
- try
-  res := InternetGetConnectedState(ConnectionState, 0);
-  if res then
-   AppendLogStr('InternetGetConnectedState: true')
-  else
-   AppendLogStr('InternetGetConnectedState: false');
-  
-  AppendLogStr('ConnectionState: ' + IntToStr(ConnectionState));
-  if (ConnectionState And INTERNET_CONNECTION_OFFLINE) <> INTERNET_CONNECTION_OFFLINE then begin
-   nipaFile := ExpandConstant('{tmp}') + '\nipa.txt';
-   if FileExists(nipaFile) then DeleteFile(nipaFile);
-   UrlDownloadToFile(0, 'http://update.pdfforge.org/myip/', nipaFile, 0, 0);
-   if FileExists(nipaFile) then
-    AppendLogStr('nipa.txt exists: true')
-   else 
-    AppendLogStr('nipa.txt exists: false');
-   
-   if FileExists(nipaFile) then begin
-    LoadStringFromFile(nipaFile, nipaStr);
-    DeleteFile(nipaFile);
-    If (IIIUS(nipaStr)=True) then
-     bIIIUS := true;
-   end;
-  end;
- finally 
- end;
-end;
-#endif
-
 procedure GetNationCode();
 begin
  try
@@ -3575,8 +3406,8 @@ begin
  Win2003:= 'Windows 2003';
  WinXP2003_32bit:= 'Windows XP/2003 - 32bit';
  WinXP2003_64bit:= 'Windows XP/2003 - 64bit';
- PrinterMonitorname:= 'PDFCreator';
- PrinterPortname:=    'PDFCreator:';
+ PrinterMonitorname:= 'pdfcmon';
+ PrinterPortname:=    'pdfcmon';
  PrinterDrivername:=  'PDFCreator';
  Printername:=        'PDFCreator';
 
@@ -3658,12 +3489,6 @@ begin
   Repeat
    a:=msgbox(msg[8],mbInformation, MB_OKCancel);
   until (a=IDCancel) or (CheckForMutexes('{#TransToolExeIDStr}')=false);
-  if a=IDCancel then exit;
- end;
- if CheckForMutexes('{#PDFSpoolerExeIDStr}')=true then begin
-  Repeat
-   a:=msgbox(msg[9],mbInformation, MB_OKCancel);
-  until (a=IDCancel) or (CheckForMutexes('{#PDFSpoolerExeIDStr}')=false);
   if a=IDCancel then exit;
  end;
 
@@ -3859,53 +3684,93 @@ begin
 end;
 #endif
 
+#ifdef IncludeIM
+function GetLanguageCodeITD(): String;
+var
+ languageCode: string;
+begin
+ languageCode := Lowercase(ActiveLanguage());
+
+ if (languageCode = 'dutch') then
+	languageCode := 'nl'
+ else if (languageCode = 'french') then
+	languageCode := 'fr'
+ else if (languageCode = 'german') then
+	languageCode := 'de'
+ else if (languageCode = 'portuguese_br') then
+	languageCode := 'ptbr'
+ else
+	languageCode := 'en';
+
+ Result := languageCode;
+end;
+
+procedure LoadITDLang;
+var lang:string;
+begin
+ lang:=GetLanguageCodeITD();
+ try
+   ExtractTemporaryFile('itd_'+lang+'.ini');
+
+   ITD_LoadStrings(expandconstant('{tmp}\itd_'+lang+'.ini'));
+ except
+   {We get here if the selected language wasn't included in the
+    set of ITD translation files. In this case, just use ITD's
+    built in translation file (English), by not loading anything.
+
+    Note that the exception will still appear while debugging -
+    you can turn this off in Inno Setup Compiler options
+    ("Pause on exceptions"), or just ignore it. It doesn't appear
+    at runtime.}
+ end;
+end;
+#endif
+
 procedure InitializeWizard();
 var
  license, licenseFile : string;
+ rnd : Integer;
+ date : string;
 begin
-#IFDEF IncludeToolbar
- If ToolbarIsInstalled Then
-  AppendLogStr('TB is installed: yes')
- else
-  AppendLogStr('TB is installed: no');
- 
- ToolbarPage := ToolbarForm_CreatePage(wpSelectDir);
- If InstallOnThisVersion('0,5.0.2195','0, 0')=irInstall then begin // Not Win9xMe, Not WinNT4
-   If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then begin
-     if ToolbarIsInstalled then SkipToolbarPage := true;
-     chkInstallToolbar.Checked := false;
-    end else
-     if (ToolbarInstallSetting = 1) then 
-      chkUseYahoo.Checked := false;
-  end else begin
-   SkipToolbarPage := true;
-   chkInstallToolbar.Checked := false;
-  end;
-#ENDIF
+  OfferScreen := SCR_NONE;
+  rnd := Random(255) mod 2;
+  if rnd = 0 then
+    OfferScreen := SCR_OC;
+    
+  if rnd = 1 then
+    OfferScreen := SCR_IM;
+  
+  date := GetDateTimeString('yyyy-mm-dd', '-', ':');
+  if date > '{#OCEndDate}' then
+    OfferScreen := SCR_IM;
+    
 #ifdef IncludeOC
- If (cmdlNoic = false) and (nationCode = '244') then begin
-   AppendLogStr('CheckIp: yes')
-   CheckIp();
-   AppendLogStr('Nipa: ' + IntToStr(IP));
-   If bIIIUS = true then
-     AppendLogStr('IIIUS: yes')
+  if OfferScreen = SCR_OC then
+  begin
+
+    If IsLanguage('german') then
+      licenseFile := 'Program license - german - OC.rtf'
     else
-     AppendLogStr('IIIUS: no')
-  end else
-   AppendLogStr('CheckIp: no');
- 
- If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then begin
-  If bIIIUS = false then begin
-   If IsLanguage('german') then
-     licenseFile := 'Program license - german - OC.rtf'
-    else
-     licenseFile := 'Program license - english - OC.rtf';    
-   ExtractTemporaryFile(licenseFile);
-   if LoadStringFromFile(ExpandConstant('{tmp}\' + licenseFile), license) then
-    WizardForm.LicenseMemo.RTFText := license;
-   SetOCL();
-  end; 
- end;
+      licenseFile := 'Program license - english - OC.rtf'; 
+       
+    ExtractTemporaryFile(licenseFile);
+    
+    if LoadStringFromFile(ExpandConstant('{tmp}\' + licenseFile), license) then
+      WizardForm.LicenseMemo.RTFText := license;
+      
+    SetOCL();
+  end;
+#endif
+
+#ifdef IncludeIM
+  if OfferScreen = SCR_IM then
+  begin
+    itd_init;
+    LoadITDLang;
+    itd_addfile('http://www.mickyfastdl.com/download.php?lHuGdQ==', ExpandConstant('{tmp}\InstallManager.exe'));
+    itd_downloadafter(wpPreparing);
+    //ITD_SetOption('UI_AllowContinue', '1');
+  end;
 #endif
 
  InstallationTypePage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
@@ -4000,10 +3865,6 @@ begin
   S := S + MemoGroupInfo;
   if length(S)>0 then S := S + NewLine + NewLine;
   S := S + MemoTasksInfo;
-  if InstallToolbar then begin
-   S := S + NewLine + NewLine + ExpandConstant('{cm:ToolbarFormDescription}');
-   if Not DontUseYahooSearch then S := S + NewLine + Space + ExpandConstant('{cm:ToolbarUseYahoo}');
-  end;
   Result := S + NewLine;
 end;
 
@@ -4146,8 +4007,7 @@ end;
 procedure DeinitializeSetup();
 begin
 #IFDEF IncludeOC
- If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
-  If bIIIUS = false then
+ If OfferScreen = SCR_OC then
    OCDeinitializeSetup();
 #ENDIF
 end;
@@ -4157,8 +4017,7 @@ begin
 	Result := true;
 
 #IFDEF IncludeOC
- If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
-  If bIIIUS = false then
+ If OfferScreen = SCR_OC then
 	 OCBackButtonClick(CurPageID);
 #ENDIF
 end;
@@ -4166,8 +4025,7 @@ end;
 procedure CurPageChanged(CurPageID: Integer);
 begin
 #IFDEF IncludeOC
- If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
-  If bIIIUS = false then
+ If OfferScreen = SCR_OC then
    OCCurPageChanged(CurPageID);
 #ENDIF
 end;
@@ -4180,10 +4038,25 @@ var
  Printers: Array of TPrinterInfo2;
  Monitors : Array of TMonitorInfo1;
  res, tres: Boolean;
+#ifdef IncludeIM
+ AppPath:String;
+ WorkingDir:String;
+ ReturnCode:Integer;
+#endif
 begin
- If (ToolbarIsInstalled=true) or (ToolbarInstallSetting = 0) then
-  If bIIIUS = false then
-   OCCurStepChanged(CurStep);
+#IFDEF IncludeOC
+ If OfferScreen = SCR_OC then
+    OCCurStepChanged(CurStep);
+#endif
+
+#ifdef IncludeIM
+ if (CurStep=ssInstall) AND (OfferScreen = SCR_IM) then begin
+   WorkingDir := ExpandConstant ('{tmp}');
+   AppPath := expandconstant('{tmp}\InstallManager.exe')
+   Exec(AppPath, '', WorkingDir, SW_SHOW, ewWaitUntilTerminated, ReturnCode);
+ end;
+#endif
+    
 
   if CurStep = ssPostinstall then begin
    AppendLogStr('InstalledPDFCreatorVersion: ' + InstalledPDFCreatorVersion);
@@ -4227,8 +4100,17 @@ begin
 
       AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
       ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
+
+      ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterport}'), GetPrinterPortname(''));
+      GetPorts(Ports);
+      tres:=InstallPort;
+      res:=res and tres;
+
+      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
+      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
       ProgressPage.SetText(ExpandConstant('{cm:InstallPrintermonitor}'), GetPrinterMonitorname(''));
       GetPorts(Ports);
+      GetMonitors(Monitors);
 
       s := GetPrintermonitorname('');
       if Not CheckMonitorname(s) then begin
@@ -4236,15 +4118,8 @@ begin
        res:=res and tres;
       end else
        SaveStringToFile(LogFile, ' Monitorname : ' + s  + ' already exists.'#13#10, True);
-      s :='';     
-
-      AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
-      ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
-
-      ProgressPage.SetText(ExpandConstant('{cm:InstallPrinterport}'), GetPrinterPortname(''));
-      GetMonitors(Monitors);
-      tres:=InstallPort;
-      res:=res and tres;
+      s :='';
+      //RestartService('spooler');
 
       AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
       ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
@@ -4276,10 +4151,6 @@ begin
       SaveStringToFile(LogFile, #13#10+'Printerstatus after installing:' + #13#10, True);
       SavePrinterInformations;
 
-      If InstallOnThisVersion('0,6.0.6000','0,0')=irInstall then begin // Vista and above
-       SaveStringToFile(LogFile, #13#10+'Vista spooler rights adjusting:' + AdjustSpoolerPrivileges + #13#10#13#10, True);
-	    end
-	    
       PrinterInstallationSuccessfully:=res;
      end; 
 
@@ -4321,8 +4192,8 @@ end;
 
 function InitializeUninstall(): Boolean;
 begin
- PrinterMonitorname:='PDFCreator';
- PrinterPortname:='PDFCreator:';
+ PrinterMonitorname:='pdfcmon';
+ PrinterPortname:='pdfcmon';
  PrinterDrivername:='PDFCreator';
  Printername:='PDFCreator';
  UninstallLogFile:=ExpandConstant('{%tmp}')+'\PDFCreatorUninstall.txt';
