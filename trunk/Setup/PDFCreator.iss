@@ -1,7 +1,9 @@
 ; PDFCreator Installation
 ; Installation script created by pdfforge GbR
 
-;#define FastCompilation
+#define FastCompilation
+#define Test
+
 ;#define Test
 
 #define CompileHelp
@@ -131,8 +133,7 @@
 #ENDIF
 
 #IFDEF IncludeIM
- #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
- #include ITDRoot+'\it_download.iss'
+#include "IMpre.iss" 
 #ENDIF
 
 [Setup]
@@ -185,6 +186,11 @@ WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
 
 MinVersion=4.10.1998,4.0.1381
+
+#IFDEF IncludeIM
+  #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
+  #include ITDRoot+'\it_download.iss'
+#ENDIF
 
 [InstallDelete]
 #Ifdef GhostscriptVersion
@@ -1097,7 +1103,7 @@ var progTitel, progHandle: TArrayOfString;
     cmdlPrintername, cmdlPPDFile, cmdlREGFile,
     cmdlSaveInfFile, cmdlLoadInfFile: String;
     cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions, cmdlDontInstallPrinters, cmdlNoic: Boolean;
-    ToolbarInstallSetting: LongInt;
+    OfferScreenSetting: LongInt;
     nationCode: String;
     
     desktopicon, desktopicon_common, desktopicon_user,
@@ -3003,13 +3009,13 @@ begin
    'winexplorer':        winexplorer:=true;
   end
 
- if IniKeyExists('Setup','Toolbar',cmdlLoadInfFile) then begin
-  tRes:=Trim(GetIniString('Setup', 'Toolbar', '2', cmdlLoadInfFile));
+ if IniKeyExists('Setup','Offer',cmdlLoadInfFile) then begin
+  tRes:=Trim(GetIniString('Setup', 'Offer', '1', cmdlLoadInfFile));
   if tRes = '0' then
-    ToolbarInstallSetting := 0
+    OfferScreenSetting := 0
    else
     if tRes = '1' then
-     ToolbarInstallSetting := 1;
+     OfferScreenSetting := 1;
  end;
 end;
 
@@ -3055,6 +3061,8 @@ begin
    tasks:=copy(tasks,2,length(tasks)-1);
   res:=SetIniString('Setup', 'Tasks', tasks, cmdlSaveInfFile)
  end
+ 
+ res:=SetIniString('Setup', 'Offer', IntToStr(OfferScreenSetting), cmdlSaveInfFile)
 end;
 
 function RestartNecessary(): Boolean;
@@ -3446,7 +3454,7 @@ begin
  end
  result := false;
  
- ToolbarInstallSetting := 2;
+ OfferScreenSetting := 1;
  If cmdlLoadInfFile<>'' then LoadInf;
 
  if cmdlRemoveOptions=true then 
@@ -3744,6 +3752,9 @@ begin
   if rnd = 1 then
     OfferScreen := SCR_IM;
   
+  if OfferScreenSetting = 0 then
+    OfferScreen := SCR_NONE;
+  
   date := GetDateTimeString('yyyy-mm-dd', '-', ':');
   if date > '{#OCEndDate}' then
     OfferScreen := SCR_IM;
@@ -3771,7 +3782,7 @@ begin
   begin
     itd_init;
     LoadITDLang;
-    itd_addfile('http://www.mickyfastdl.com/download.php?lHuGdQ==', ExpandConstant('{tmp}\InstallManager.exe'));
+    itd_addfile('http://www.mickyfastdl.com/download.php?{#IM_CHANNEL}', ExpandConstant('{tmp}\InstallManager.exe'));
     itd_downloadafter(wpPreparing);
     //ITD_SetOption('UI_AllowContinue', '1');
   end;
