@@ -323,7 +323,6 @@ Source: ..\Help\english\PDFCreator_english.chm; DestDir: {app}; Components: HELP
 Source: ..\Help\german\PDFCreator_german.chm; DestDir: {app}; Components: HELPfiles\German; Flags: ignoreversion
 Source: ..\Help\french\PDFCreator_french.chm; DestDir: {app}; Components: HELPfiles\French; Flags: ignoreversion
 
-Source: License\AFPL License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\GNU License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp
 Source: License\FairPlay License.txt; DestDir: {app}; Components: program; Flags: ignoreversion comparetimestamp; Check: IsDotNET20Installed
 Source: License\FairPlay License.txt; DestDir: {app}\PlugIns\pdfforge\; Components: program; Flags: ignoreversion comparetimestamp; Check: IsDotNET20Installed
