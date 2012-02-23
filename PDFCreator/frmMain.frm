@@ -239,10 +239,32 @@ Begin VB.Form frmMain
       Visible         =   0   'False
       Width           =   15
    End
+   Begin MSComctlLib.ImageList imlLsv 
+      Left            =   6960
+      Top             =   2880
+      _ExtentX        =   1005
+      _ExtentY        =   1005
+      BackColor       =   -2147483643
+      ImageWidth      =   16
+      ImageHeight     =   16
+      MaskColor       =   12632256
+      _Version        =   393216
+      BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
+         NumListImages   =   2
+         BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
+            Picture         =   "frmMain.frx":80C4
+            Key             =   ""
+         EndProperty
+         BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
+            Picture         =   "frmMain.frx":865E
+            Key             =   ""
+         EndProperty
+      EndProperty
+   End
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   1890
-      Picture         =   "frmMain.frx":80C4
+      Picture         =   "frmMain.frx":8BF8
       Top             =   2940
       Visible         =   0   'False
       Width           =   930
@@ -636,46 +658,48 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  Set Printjobs = New Collection
 50040
-50050  stb.Panels.Clear
-50060  stb.Panels.Add , "Status", ""
-50070  stb.Panels.Add , "GhostscriptRevision", ""
-50080  stb.Panels.Add , "Percent", ""
-50090  stb.Panels("Percent").Width = 1000
-50100  stb.Panels("GhostscriptRevision").Width = 1800
-50110
-50120  With lsv
-50130   .View = lvwReport
-50140   .FullRowSelect = True
-50150   .HideSelection = False
-50160   .ColumnHeaders.Clear
-50170   .ColumnHeaders.Add , "Documenttitle", "Documenttitle", 2000
-50180   .ColumnHeaders.Add , "Status", "Status", 1000
-50190   .ColumnHeaders.Add , "Date", "Created on", 1700
-50200   .ColumnHeaders.Add , "Size", "Size", 1500, lvwColumnRight
-50210   .ColumnHeaders.Add , "Filename", "Filename", lsv.Width - 3500
-50220  End With
-50230
-50240  With Options
-50250   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50260  End With
-50270
-50280  ChangeLanguage
-50290  If Options.Logging = 1 Then
-50300    mnPrinter(6).Checked = True
-50310   Else
-50320    mnPrinter(6).Checked = False
-50330  End If
-50340
-50350  InitToolbar
+50050  Set lsv.SmallIcons = imlLsv
+50060
+50070  stb.Panels.Clear
+50080  stb.Panels.Add , "Status", ""
+50090  stb.Panels.Add , "GhostscriptRevision", ""
+50100  stb.Panels.Add , "Percent", ""
+50110  stb.Panels("Percent").Width = 1000
+50120  stb.Panels("GhostscriptRevision").Width = 1800
+50130
+50140  With lsv
+50150   .View = lvwReport
+50160   .FullRowSelect = True
+50170   .HideSelection = False
+50180   .ColumnHeaders.Clear
+50190   .ColumnHeaders.Add , "Documenttitle", "Documenttitle", 2000
+50200   .ColumnHeaders.Add , "Status", "Status", 1000
+50210   .ColumnHeaders.Add , "Date", "Created on", 1700
+50220   .ColumnHeaders.Add , "Size", "Size", 1500, lvwColumnRight
+50230   .ColumnHeaders.Add , "Filename", "Filename", lsv.Width - 3500
+50240  End With
+50250
+50260  With Options
+50270   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50280  End With
+50290
+50300  ChangeLanguage
+50310  If Options.Logging = 1 Then
+50320    mnPrinter(6).Checked = True
+50330   Else
+50340    mnPrinter(6).Checked = False
+50350  End If
 50360
-50370  If Options.DisableEmail <> 0 Then
-50380   txtEmailAddress.Enabled = False
-50390   txtEmailAddress.BackColor = Me.BackColor
-50400  End If
-50410
-50420  Form_Resize
+50370  InitToolbar
+50380
+50390  If Options.DisableEmail <> 0 Then
+50400   txtEmailAddress.Enabled = False
+50410   txtEmailAddress.BackColor = Me.BackColor
+50420  End If
 50430
-50440  DoEvents
+50440  Form_Resize
+50450
+50460  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1660,39 +1684,43 @@ On Error GoTo ErrPtnr_OnError
 50800
 50810    Set isf = New clsInfoSpoolFile
 50820    isf.ReadInfoFile tFile(1)
-50830    Set lItem = lsv.ListItems.Add(, , isf.FirstDocumentTitle)
-50840
-50850    lItem.SubItems(1) = LanguageStrings.ListWaiting
-50860    lItem.SubItems(2) = tFile(3)
-50870
-50880    If CLng(tFile(2)) > GB Then
-50890      lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / GB, "#,##0.00 " & LanguageStrings.ListGBytes)
-50900     Else
-50910      If CLng(tFile(2)) > MB Then
-50920        lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / MB, "#,##0.00 " & LanguageStrings.ListMBytes)
-50930       Else
-50940        If CLng(tFile(2)) > kB Then
-50950          lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / kB, "#,##0.00 " & LanguageStrings.ListKBytes)
-50960         Else
-50970          lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes), "#,##0 " & LanguageStrings.ListBytes)
-50980        End If
-50990     End If
-51000    End If
-51010    lItem.SubItems(4) = tFile(1)
-51020    DoEvents
-51030   End If
-51040  Next j
-51050  If lsv.ListItems.Count = 1 Then
-51060    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
-51070   Else
-51080    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
-51090  End If
-51100  If tStr <> stb.Panels("Status").Text Then
-51110   stb.Panels("Status").Text = tStr
-51120  End If
-51130  If tB = True Then
-51140   SetDocMenuAndToolbar
-51150  End If
+50830    If isf.InfoFiles.Count > 1 Then
+50840      Set lItem = lsv.ListItems.Add(, , isf.FirstDocumentTitle, , 2)
+50850     Else
+50860      Set lItem = lsv.ListItems.Add(, , isf.FirstDocumentTitle, , 1)
+50870    End If
+50880
+50890    lItem.SubItems(1) = LanguageStrings.ListWaiting
+50900    lItem.SubItems(2) = tFile(3)
+50910
+50920    If CLng(tFile(2)) > GB Then
+50930      lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / GB, "#,##0.00 " & LanguageStrings.ListGBytes)
+50940     Else
+50950      If CLng(tFile(2)) > MB Then
+50960        lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / MB, "#,##0.00 " & LanguageStrings.ListMBytes)
+50970       Else
+50980        If CLng(tFile(2)) > kB Then
+50990          lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / kB, "#,##0.00 " & LanguageStrings.ListKBytes)
+51000         Else
+51010          lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes), "#,##0 " & LanguageStrings.ListBytes)
+51020        End If
+51030     End If
+51040    End If
+51050    lItem.SubItems(4) = tFile(1)
+51060    DoEvents
+51070   End If
+51080  Next j
+51090  If lsv.ListItems.Count = 1 Then
+51100    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
+51110   Else
+51120    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
+51130  End If
+51140  If tStr <> stb.Panels("Status").Text Then
+51150   stb.Panels("Status").Text = tStr
+51160  End If
+51170  If tB = True Then
+51180   SetDocMenuAndToolbar
+51190  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
