@@ -35,6 +35,7 @@ Public DirectoryGhostscriptLibraries As String
 Public DirectoryGhostscriptResource As String
 Public DisableEmail As Long
 Public DontUseDocumentSettings As Long
+Public EditWithPDFArchitect As Long
 Public EPSLanguageLevel As Long
 Public FilenameSubstitutions As String
 Public FilenameSubstitutionsOnlyInTitle As Long
@@ -46,10 +47,12 @@ Public LastSaveDirectory As String
 Public LastUpdateCheck As String
 Public Logging As Long
 Public LogLines As Long
+Public MaximumCountOfPDFArchitectToolTip As Long
 Public NoConfirmMessageSwitchingDefaultprinter As Long
 Public NoProcessingAtStartup As Long
 Public NoPSCheck As Long
 Public OnePagePerFile As Long
+Public OpenOutputFile As Long
 Public OptionsDesign As Long
 Public OptionsEnabled As Long
 Public OptionsVisible As Long
@@ -144,7 +147,6 @@ Public PrintAfterSavingPrinter As String
 Public PrintAfterSavingQueryUser As Long
 Public PrintAfterSavingTumble As Long
 Public PrinterStop As Long
-Public PrinterTemppath As String
 Public ProcessPriority As Long
 Public ProgramFont As String
 Public ProgramFontCharset As Long
@@ -184,7 +186,6 @@ Public StandardModifydate As String
 Public StandardSaveformat As Long
 Public StandardSubject As String
 Public StandardTitle As String
-Public StartStandardProgram As Long
 Public SVGResolution As Long
 Public TIFFColorscount As Long
 Public TIFFResolution As Long

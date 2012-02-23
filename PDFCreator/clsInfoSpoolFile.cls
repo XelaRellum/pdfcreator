@@ -21,7 +21,7 @@ Public FirstJobID As String
 Public FirstSessionID As String
 Public FirstUserName As String
 
-Public SumFileSizes As Long
+Public sumFileSizes As Long
 Public InfoFiles As Collection
 
 Private Sub Class_Initialize()
@@ -32,7 +32,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsInfoSpoolFiles", "Class_Initialize")
+Select Case ErrPtnr.OnError("clsInfoSpoolFile", "Class_Initialize")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -49,7 +49,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsInfoSpoolFiles", "Class_Terminate")
+Select Case ErrPtnr.OnError("clsInfoSpoolFile", "Class_Terminate")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -58,7 +58,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function ReadInfoFile(ByVal InfoFileName As String)
+Public Function ReadInfoFile(ByVal InfoFileName As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -83,7 +83,7 @@ On Error GoTo ErrPtnr_OnError
 50190   isfi.JobID = ini.GetKeyFromSection("JobId", sections(i))
 50200   isfi.DocumentTitle = ini.GetKeyFromSection("DocumentTitle", sections(i))
 50210   If FileExists(isfi.SpoolFileName) Then
-50220    SumFileSizes = SumFileSizes + FileLen(isfi.SpoolFileName)
+50220    sumFileSizes = sumFileSizes + FileLen(isfi.SpoolFileName)
 50230    InfoFiles.Add isfi
 50240    If InfoFiles.Count = 1 Then
 50250     FirstDocumentTitle = isfi.DocumentTitle
@@ -100,7 +100,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("clsInfoSpoolFiles", "ReadInfoFile")
+Select Case ErrPtnr.OnError("clsInfoSpoolFile", "ReadInfoFile")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function

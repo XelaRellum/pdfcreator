@@ -1,10 +1,10 @@
 VERSION 5.00
-Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomctl.ocx"
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
-   ClientLeft      =   165
+   ClientLeft      =   225
    ClientTop       =   855
    ClientWidth     =   12930
    Icon            =   "frmMain.frx":0000
@@ -1159,12 +1159,6 @@ Private Sub CreateModOptions()
 '    Print #fn, "  Set reg = Nothing"
    Case UCase$("DirectoryJava")
     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(GetSpecialFolder(ssfSYSTEM))"
-   Case UCase$("Printertemppath")
-    Print #fn, "  If InstalledAsServer Then"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = completepath(GetPDFCreatorApplicationPath) & ""Temp\"""
-    Print #fn, "   Else"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<Temp>PDFCreator\"""
-    Print #fn, "  End If"
    Case UCase$("AutoSaveDirectory"), UCase$("LastSaveDirectory")
     Print #fn, "  If InstalledAsServer Then"
     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<ClientMachine>\<UserName>"""
@@ -1542,9 +1536,6 @@ Private Sub CreateModOptions()
  Print #fn, " Options.PrinterTemppath = Trim$(Options.PrinterTemppath)"
  Print #fn, " If LenB(Options.AutosaveDirectory) = 0 Then"
  Print #fn, "  Options.AutosaveDirectory = ""<MyFiles>\"""
- Print #fn, " End If"
- Print #fn, " If LenB(Options.PrinterTemppath) = 0 Then"
- Print #fn, "  Options.PrinterTemppath = ""<Temp>PDFCreator\"""
  Print #fn, " End If"
  Print #fn, "End Sub"
  Print #fn, ""
@@ -2470,7 +2461,7 @@ Private Sub LoadFileInTextbox(filename As String, txt As TextBox)
  Dim fn As Long
  fn = FreeFile
  Open filename For Input As #fn
- Call SendMessage(txt.hwnd, WM_SETTEXT, 0&, ByVal CStr(Input(LOF(fn), #fn)))
+ Call SendMessage(txt.hWnd, WM_SETTEXT, 0&, ByVal CStr(Input(LOF(fn), #fn)))
  Close #fn
 End Sub
 
@@ -2491,7 +2482,7 @@ Private Sub lsvOptions_DblClick()
  ShowOption
 End Sub
 
-Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
  With lsvOptions
   If .FullRowSelect Then
    .Refresh
@@ -3002,6 +2993,7 @@ Private Sub CreateSpecialStrings()
   .Add "PSDResolution"
   .Add "PCLResolution"
   .Add "RAWResolution"
+  .Add "MaximumCountOfPDFArchitectToolTip"
  End With
 End Sub
 

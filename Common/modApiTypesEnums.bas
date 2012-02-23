@@ -2,7 +2,7 @@ Attribute VB_Name = "modApiTypesEnums"
 Option Explicit
 
 Public Type SHFILEOPSTRUCT
- hwnd As Long
+ hWnd As Long
  wFunc As Long
  pFrom As String
  pTo As String
@@ -270,7 +270,7 @@ End Type
 Public Type SHELLEXECUTEINFO
  cbSize As Long
  fMask As Long
- hwnd As Long
+ hWnd As Long
  lpVerb As String
  lpFile As String
  lpParameters As String
@@ -298,7 +298,7 @@ Public Enum ShowConstants
  wMin = 6
 End Enum
 
-Public Type Rect
+Public Type RECT
  Left As Long
  Top As Long
  Right As Long
@@ -346,7 +346,7 @@ Public Enum OpenSaveFlags
 End Enum
 
 Public Type POINTAPI
- x As Long
+ X As Long
  Y As Long
 End Type
 
@@ -380,8 +380,8 @@ Public Type PAGESETUPDLG
  hDevNames As Long
  Flags As Long
  ptPaperSize As POINTAPI
- rtMinMargin As Rect
- rtMargin As Rect
+ rtMinMargin As RECT
+ rtMargin As RECT
  hInstance As Long
  lCustData As Long
  lpfnPageSetupHook As Long
@@ -500,10 +500,10 @@ End Type
 
 Public Type APPBARDATA
  cbSize As Long
- hwnd As Long
+ hWnd As Long
  uCallbackMessage As Long
  uEdge As Long
- rc As Rect
+ rc As RECT
  lParam As Long
 End Type
 
@@ -738,7 +738,7 @@ End Type
 
 Public Type NOTIFYICONDATAA
  cbSize As Long
- hwnd As Long
+ hWnd As Long
  uID As Long
  uFlags As Long
  uCallbackMessage As Long
@@ -755,7 +755,7 @@ End Type
 
 Public Type NOTIFYICONDATAW
  cbSize As Long
- hwnd As Long
+ hWnd As Long
  uID As Long
  uFlags As Long
  uCallbackMessage As Long
@@ -848,3 +848,9 @@ Public Enum eServiceState
  SERVICE_STATE_ALL = SERVICE_ACTIVE Or SERVICE_INACTIVE
 End Enum
 
+Public Type GUID
+ Data1 As Long
+ Data2 As Integer
+ Data3 As Integer
+ Data4(7) As Byte
+End Type

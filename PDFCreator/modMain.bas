@@ -43,190 +43,198 @@ Public Sub StartProgram(Optional Params As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim filename As String, res As Boolean
-50020
-50030  ' Reduce the working size of used memory
-50040  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
-50050
-50060  AnalyzeCommandlineParameters Params
-50070
-50080  If CheckInstance Then
-50090   CheckProgramInstances
-50100  End If
-50110
-50120  InitProgram
-50130
-50140  IfLoggingWriteLogfile "PDFCreator Program Start"
-50150  IfLoggingWriteLogfile "Windowsversion: " & GetWinVersionStr
-50160  If InstalledAsServer Then
-50170    IfLoggingWriteLogfile "InstalledAsServer: True"
-50180   Else
-50190    IfLoggingWriteLogfile "InstalledAsServer: False"
-50200  End If
-50210  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
-50220
-50230  If UnLoadFile Then
-50240   CreateUnloadFile
-50250   InstanceCounter = InstanceCounter - 1
-50260   Exit Sub
-50270  End If
-50280
-50290  CheckForUpdateAutomatically False, False, 2000
-50300
-50310  If AddWindowsExplorerIntegration = True And RemoveWindowsExplorerIntegration = False Then
-50320   AddExplorerIntegration
-50330  End If
-50340  If AddWindowsExplorerIntegration = False And RemoveWindowsExplorerIntegration = True Then
-50350   RemoveExplorerIntegration
-50360  End If
-50370
-50380  If ClearCacheDir Then
-50390   ClearCache
-50400  End If
-50410
-50420  If InitSettings Then
-50430   SaveOptions Options 'Initialize the default settings
-50440  End If
-50450
-50460  If LenB(Trim(SetupLogFile)) = 0 Then
-50470   SetupLogFile = CompletePath(App.Path) & "SetupLog.txt"
-50480  End If
-50490
-50500  If bUninstallPrinter Then
-50510   If Not IsAdmin Then
-50520    MsgBox LanguageStrings.PrintersAdminNotice
-50530    Exit Sub
-50540   End If
-50550   If PrinterIsInstalled(UnInstallPrinterName) Then
-50560     res = UnInstallPrinter(UnInstallPrinterName, "")
-50570    Else
-50580     IfLoggingWriteLogfile "Printer '" & UnInstallPrinterName & "' isn't installed!"
-50590     If bNoMsg = True Then
-50600      MsgBox "Printer '" & UnInstallPrinterName & "' isn't installed!", vbOKOnly + vbExclamation
-50610     End If
-50620   End If
-50630  End If
-50640  If bInstallPrinter Then
-50650   If Not IsAdmin Then
-50660    MsgBox LanguageStrings.PrintersAdminNotice
-50670    Exit Sub
-50680   End If
-50690   If PrinterIsInstalled(InstallPrinterName) Then
-50700     IfLoggingWriteLogfile "Printer '" & InstallPrinterName & "' is already installed!"
-50710     If bNoMsg = True Then
-50720      MsgBox "Printer '" & InstallPrinterName & "' is already installed!", vbOKOnly + vbExclamation
-50730     End If
-50740    Else
-50750     res = InstallPrinter(InstallPrinterName, "PDFCreator", "PDFCreator:", "")
-50760   End If
-50770  End If
-50780
-50790  If bUninstallWindowsPrinter Then
-50800   If PrinterIsInstalled(UnInstallPrinterName) Then
-50810     Call UnInstallWindowsPrinter("pdfcmon", "pdfcmon", "PDFCreator", InstallPrinterName, SetupLogFile)
-50820    Else
-50830     IfLoggingWriteLogfile "Printer '" & UnInstallPrinterName & "' isn't installed!"
-50840     If bNoMsg = False Then
-50850      MsgBox "Printer '" & UnInstallPrinterName & "' isn't installed!", vbOKOnly + vbExclamation
-50860     End If
-50870   End If
-50880  End If
-50890  If bInstallWindowsPrinter Then
-50900   If PrinterIsInstalled(InstallPrinterName) Then
-50910     IfLoggingWriteLogfile "Printer '" & InstallPrinterName & "' is already installed!"
-50920     If bNoMsg = False Then
-50930      MsgBox "Printer '" & InstallPrinterName & "' is already installed!", vbOKOnly + vbExclamation
-50940     End If
-50950    Else
-50960     Call InstallWindowsPrinter("PDFCreator", "PDFCreator:", "PDFCreator", InstallPrinterName, SetupLogFile, App.Path)
-50970   End If
-50980  End If
-50990
-51000  PrintFiles
-51010
-51020  If ShowOnlyOptions Then
-51030   frmOptions.Show vbModal
-51040   InstanceCounter = InstanceCounter - 1
-51050   Exit Sub
-51060  End If
-51070
-51080  If ShowOnlyLogfile Then
-51090   frmLog.Show vbModal
-51100   InstanceCounter = InstanceCounter - 1
-51110   Exit Sub
-51120  End If
-51130
-51140  LoadGhostscriptDLL
-51150
-51160  If PDFCreatorPrinter = False Then
-51170   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
-51180     filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "PDF")
-51190     KillFile filename
-51200     If IsValidGraphicFile(InputFilename) Then
-51210       Call Image2PS(InputFilename, filename)
-51220      Else
-51230       FileCopy InputFilename, filename
-51240     End If
-51250     CreateInfoSpoolFiles filename
-51260     If FileExists(InputFilename) And DeleteIF Then
-51270      KillFile InputFilename
-51280     End If
-51290    Else
-51300     If IsValidGraphicFile(InputFilename) Then
-51310       filename = GetTempFile(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory, "PDF")
-51320       Call Image2PS(InputFilename, filename)
-51330       ConvertFile filename, OutputFilename, OutputSubFormat
-51340       If FileExists(filename) Then
-51350        KillFile filename
-51360       End If
-51370      Else
-51380       ConvertFile InputFilename, OutputFilename, OutputSubFormat
-51390     End If
-51400     If FileExists(InputFilename) And DeleteIF Then
-51410      KillFile InputFilename
-51420     End If
-51430     If FileExists(OutputFilename) And OpenOF Then
-51440      OpenDocument OutputFilename
-51450     End If
-51460   End If
-51470  End If
-51480
-51490  If NoStart Then
-51500   InstanceCounter = InstanceCounter - 1
-51510   Exit Sub
-51520  End If
-51530
-51540  If mutexLocal Is Nothing Then
-51550   Set mutexLocal = New clsMutex
-51560  End If
-51570  If mutexGlobal Is Nothing Then
-51580   Set mutexGlobal = New clsMutex
-51590  End If
-51600  If ProgramIsRunning(PDFCreator_GUID) Then
-51610    ' There is a local running instance
-51620    If Not NoAbortIfRunning Then
-51630     InstanceCounter = InstanceCounter - 1
-51640     Exit Sub
-51650    End If
-51660   Else
-51670  ' Create a mutex
-51680    mutexLocal.CreateMutex PDFCreator_GUID
-51690    ' Check for a global running instance
-51700    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-51710     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
-51720    End If
-51730  End If
-51740
-51750 If IsFrmMainLoaded Then
-51760  Exit Sub
-51770 End If
-51780
-51790
-51800  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
-51810   InitCommonControls
-51820  End If
-51830
-51840  Load frmMain
+50010  Dim filename As String, res As Boolean, Path As String, File As String, psFileName As String, _
+  InfoSpoolFileName As String, strGUID As String, spoolDirectory As String
+50030
+50040  ' Reduce the working size of used memory
+50050  Call SetProcessWorkingSetSize(GetCurrentProcess(), -1, -1)
+50060
+50070  AnalyzeCommandlineParameters Params
+50080
+50090  If CheckInstance Then
+50100   CheckProgramInstances
+50110  End If
+50120
+50130  InitProgram
+50140
+50150  IfLoggingWriteLogfile "PDFCreator Program Start"
+50160  IfLoggingWriteLogfile "Windowsversion: " & GetWinVersionStr
+50170  If InstalledAsServer Then
+50180    IfLoggingWriteLogfile "InstalledAsServer: True"
+50190   Else
+50200    IfLoggingWriteLogfile "InstalledAsServer: False"
+50210  End If
+50220  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
+50230
+50240  If UnLoadFile Then
+50250   CreateUnloadFile
+50260   InstanceCounter = InstanceCounter - 1
+50270   Exit Sub
+50280  End If
+50290
+50300  CheckForUpdateAutomatically False, False, 2000
+50310
+50320  If AddWindowsExplorerIntegration = True And RemoveWindowsExplorerIntegration = False Then
+50330   AddExplorerIntegration
+50340  End If
+50350  If AddWindowsExplorerIntegration = False And RemoveWindowsExplorerIntegration = True Then
+50360   RemoveExplorerIntegration
+50370  End If
+50380
+50390  If ClearCacheDir Then
+50400   ClearCache
+50410  End If
+50420
+50430  If InitSettings Then
+50440   SaveOptions Options 'Initialize the default settings
+50450  End If
+50460
+50470  If LenB(Trim(SetupLogFile)) = 0 Then
+50480   SetupLogFile = CompletePath(App.Path) & "SetupLog.txt"
+50490  End If
+50500
+50510  If bUninstallPrinter Then
+50520   If Not IsAdmin Then
+50530    MsgBox LanguageStrings.PrintersAdminNotice
+50540    Exit Sub
+50550   End If
+50560   If PrinterIsInstalled(UnInstallPrinterName) Then
+50570     res = UnInstallPrinter(UnInstallPrinterName, "")
+50580    Else
+50590     IfLoggingWriteLogfile "Printer '" & UnInstallPrinterName & "' isn't installed!"
+50600     If bNoMsg = True Then
+50610      MsgBox "Printer '" & UnInstallPrinterName & "' isn't installed!", vbOKOnly + vbExclamation
+50620     End If
+50630   End If
+50640  End If
+50650  If bInstallPrinter Then
+50660   If Not IsAdmin Then
+50670    MsgBox LanguageStrings.PrintersAdminNotice
+50680    Exit Sub
+50690   End If
+50700   If PrinterIsInstalled(InstallPrinterName) Then
+50710     IfLoggingWriteLogfile "Printer '" & InstallPrinterName & "' is already installed!"
+50720     If bNoMsg = True Then
+50730      MsgBox "Printer '" & InstallPrinterName & "' is already installed!", vbOKOnly + vbExclamation
+50740     End If
+50750    Else
+50760     res = InstallPrinter(InstallPrinterName, "PDFCreator", "PDFCreator:", "")
+50770   End If
+50780  End If
+50790
+50800  If bUninstallWindowsPrinter Then
+50810   If PrinterIsInstalled(UnInstallPrinterName) Then
+50820     Call UnInstallWindowsPrinter("pdfcmon", "pdfcmon", "PDFCreator", InstallPrinterName, SetupLogFile)
+50830    Else
+50840     IfLoggingWriteLogfile "Printer '" & UnInstallPrinterName & "' isn't installed!"
+50850     If bNoMsg = False Then
+50860      MsgBox "Printer '" & UnInstallPrinterName & "' isn't installed!", vbOKOnly + vbExclamation
+50870     End If
+50880   End If
+50890  End If
+50900  If bInstallWindowsPrinter Then
+50910   If PrinterIsInstalled(InstallPrinterName) Then
+50920     IfLoggingWriteLogfile "Printer '" & InstallPrinterName & "' is already installed!"
+50930     If bNoMsg = False Then
+50940      MsgBox "Printer '" & InstallPrinterName & "' is already installed!", vbOKOnly + vbExclamation
+50950     End If
+50960    Else
+50970     Call InstallWindowsPrinter("pdfcmon", "pdfcmon", "PDFCreator", InstallPrinterName, SetupLogFile, App.Path)
+50980   End If
+50990  End If
+51000
+51010  PrintFiles
+51020
+51030  If ShowOnlyOptions Then
+51040   frmOptions.Show vbModal
+51050   InstanceCounter = InstanceCounter - 1
+51060   Exit Sub
+51070  End If
+51080
+51090  If ShowOnlyLogfile Then
+51100   frmLog.Show vbModal
+51110   InstanceCounter = InstanceCounter - 1
+51120   Exit Sub
+51130  End If
+51140
+51150  LoadGhostscriptDLL
+51160
+51170  spoolDirectory = GetPDFCreatorSpoolDirectory
+51180  If DirExists(spoolDirectory) = False Then
+51190   MakePath spoolDirectory
+51200  End If
+51210
+51220  If PDFCreatorPrinter = False Then
+51230   If FileExists(InputFilename) = True And LenB(OutputFilename) = 0 Then
+51240     strGUID = GetGUID
+51250     psFileName = spoolDirectory & strGUID & ".ps"
+51260     If IsValidGraphicFile(InputFilename) Then
+51270       Call Image2PS(InputFilename, psFileName)
+51280      Else
+51290       FileCopy InputFilename, psFileName
+51300     End If
+51310     InfoSpoolFileName = CreateInfoSpoolFile(psFileName)
+51320     If FileExists(InputFilename) And DeleteIF Then
+51330      KillFile InputFilename
+51340     End If
+51350    Else
+51360     If IsValidGraphicFile(InputFilename) Then
+51370       strGUID = GetGUID
+51380       psFileName = spoolDirectory & strGUID & ".ps"
+51390       psFileName = CompletePath(Path) & File & ".ps"
+51400       Call Image2PS(InputFilename, psFileName)
+51410       ConvertFile psFileName, OutputFilename, OutputSubFormat
+51420       If FileExists(psFileName) Then
+51430        KillFile psFileName
+51440       End If
+51450      Else
+51460       ConvertFile InputFilename, OutputFilename, OutputSubFormat
+51470     End If
+51480     If FileExists(InputFilename) And DeleteIF Then
+51490      KillFile InputFilename
+51500     End If
+51510     If FileExists(OutputFilename) And OpenOF Then
+51520      OpenDocument OutputFilename
+51530     End If
+51540   End If
+51550  End If
+51560
+51570  If NoStart Then
+51580   InstanceCounter = InstanceCounter - 1
+51590   Exit Sub
+51600  End If
+51610
+51620  If mutexLocal Is Nothing Then
+51630   Set mutexLocal = New clsMutex
+51640  End If
+51650  If mutexGlobal Is Nothing Then
+51660   Set mutexGlobal = New clsMutex
+51670  End If
+51680  If ProgramIsRunning(PDFCreator_GUID) Then
+51690    ' There is a local running instance
+51700    If Not NoAbortIfRunning Then
+51710     InstanceCounter = InstanceCounter - 1
+51720     Exit Sub
+51730    End If
+51740   Else
+51750  ' Create a mutex
+51760    mutexLocal.CreateMutex PDFCreator_GUID
+51770    ' Check for a global running instance
+51780    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
+51790     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+51800    End If
+51810  End If
+51820
+51830 If IsFrmMainLoaded Then
+51840  Exit Sub
+51850 End If
+51860
+51870
+51880  If IsWin9xMe = False And IsWinNT4 = False And IsWin2000 = False Then
+51890   InitCommonControls
+51900  End If
+51910
+51920  Load frmMain
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -462,7 +470,7 @@ On Error GoTo ErrPtnr_OnError
 50080  ShowAnimationWindow = False
 50090  Init_ExactTimer
 50100
-50110  PDFCreatorLogfilePath = CompletePath(GetTempPath) & "PDFCreator\"
+50110  PDFCreatorLogfilePath = CompletePath(GetTempPathApi) & "PDFCreator\"
 50120  ErrPtnr.SetProgInfo App.EXEName & " " & GetProgramReleaseStr
 50130
 50140  InitLanguagesStrings
@@ -489,7 +497,7 @@ On Error GoTo ErrPtnr_OnError
 50350  End If
 50360
 50370  Options = ReadOptions
-50380  PrinterTemppath = Options.PrinterTemppath
+50380  PrinterTemppath = GetTempPathApi
 50390  If LenB(Optionsfile) > 0 Then
 50400   Options = ReadOptionsINI(Options, Optionsfile, False, False)
 50410  End If
@@ -507,7 +515,7 @@ On Error GoTo ErrPtnr_OnError
 50530   End Select
 50540  End If
 50550
-50560  CreatePDFCreatorTempfolder
+50560  'CreatePDFCreatorTempfolder
 50570  ComputerScreenResolution = ScreenResolution
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

@@ -14,8 +14,8 @@ Public Const Sourceforge = "http://www.sourceforge.net/projects/pdfcreator"
 Public Const UpdateURL = "http://update.pdfforge.org/pdfcreator/update.txt"
 Public Const PDFCreatorLogfile = "PDFCreator.log"
 Public Const PDFCreatorSpoolDirectory = "Spool"
-Public Const PDFSpoolerExe = "PDFSpool.exe"
-Public Const CompatibleLanguageVersion = "1.2.0"
+Public Const PDFCreatorRestartExe = "PDFCreatorRestart.exe"
+Public Const CompatibleLanguageVersion = "1.3.0"
 
 Public CancelPrintfiles As Boolean
 Public ChangeDefaultprinter As Boolean
@@ -137,7 +137,7 @@ On Error GoTo ErrPtnr_OnError
 50030  With reg
 50040   .hkey = HKEY_LOCAL_MACHINE
 50050   .KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" & Uninstall_GUID
-50060   tStr = .GetRegistryValue("Inno Setup: App Path")
+50060   tStr = .GetRegistryValue("AppPath")
 50070  End With
 50080  If LenB(LTrim$(tStr)) = 0 Then
 50090   tStr = App.Path
@@ -155,26 +155,4 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
-
-'Public Sub Log2File(Optional value As String = "", Optional filename As String = "C:\PDFCreator_cClose.txt")
-''---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-'On Error GoTo ErrPtnr_OnError
-''---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-'50010  Dim ff As Long
-'50020  ff = FreeFile
-'50030  Open filename For Append As #ff
-'50040  Print #ff, Now2 & ": " & value
-'50050  Close #ff
-''---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-'Exit Sub
-'ErrPtnr_OnError:
-'Select Case ErrPtnr.OnError("modGlobal1", "Log2File")
-'Case 0: Resume
-'Case 1: Resume Next
-'Case 2: Exit Sub
-'Case 3: End
-'End Select
-''---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-'End Sub
-
 

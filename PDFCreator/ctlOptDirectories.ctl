@@ -247,45 +247,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub SetOptions()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options1
-50020   txtTemppath.Text = .PrinterTemppath
-50030  End With
-50040  txtTemppath.ToolTipText = ResolveEnvironment(GetSubstFilename2(txtTemppath.Text))
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptDirectories", "SetOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
-Public Sub GetOptions()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With Options1
-50020   .PrinterTemppath = txtTemppath.Text
-50030  End With
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("ctlOptDirectories", "GetOptions")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Public Property Let ScaleMode(value As Long)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -320,11 +281,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Property Get hwnd() As Long
+Public Property Get hWnd() As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  hwnd = UserControl.hwnd
+50010  hWnd = UserControl.hWnd
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -342,7 +303,7 @@ Private Sub cmdGetTemppath_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim strFolder As String
-50020  strFolder = BrowseForFolderFiles(Me.hwnd, LanguageStrings.OptionsPrintertempDirectoryPrompt)
+50020  strFolder = BrowseForFolderFiles(Me.hWnd, LanguageStrings.OptionsPrintertempDirectoryPrompt)
 50030  If Len(strFolder) = 0 Then Exit Sub
 50040  strFolder = CompletePath(strFolder)
 50050  With txtTemppath

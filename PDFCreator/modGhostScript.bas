@@ -399,28 +399,32 @@ On Error GoTo ErrPtnr_OnError
 51080  End If
 51090
 51100  AddParams "-f"
-51110  If FileExists(StampFile) Then
-51120   AddParams StampFile
-51130  End If
-51140  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-51150  Set isf = New clsInfoSpoolFile
-51160  isf.ReadInfoFile InfoSpoolFileName
-51170  For i = 1 To isf.InfoFiles.Count
-51180   Set isfi = isf.InfoFiles(i)
-51190   If FileExists(isfi.SpoolFileName) Then
-51200    AddParams isfi.SpoolFileName
-51210   End If
-51220  Next i
-51230  If FileExists(PDFDocInfoFile) Then
-51240   AddParams PDFDocInfoFile
-51250  End If
-51260
-51270  ShowParams
-51280  If tEnc = True Then
-51290    CallGhostscript "PDF with encryption"
-51300   Else
-51310    CallGhostscript "PDF without encryption"
-51320  End If
+51110  If LenB(StampFile) > 0 Then
+51120   If FileExists(StampFile) Then
+51130    AddParams StampFile
+51140   End If
+51150  End If
+51160  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+51170  Set isf = New clsInfoSpoolFile
+51180  isf.ReadInfoFile InfoSpoolFileName
+51190  For i = 1 To isf.InfoFiles.Count
+51200   Set isfi = isf.InfoFiles(i)
+51210   If FileExists(isfi.SpoolFileName) Then
+51220    AddParams isfi.SpoolFileName
+51230   End If
+51240  Next i
+51250  If LenB(PDFDocInfoFile) > 0 Then
+51260   If FileExists(PDFDocInfoFile) Then
+51270    AddParams PDFDocInfoFile
+51280   End If
+51290  End If
+51300
+51310  ShowParams
+51320  If tEnc = True Then
+51330    CallGhostscript "PDF with encryption"
+51340   Else
+51350    CallGhostscript "PDF without encryption"
+51360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -492,24 +496,28 @@ On Error GoTo ErrPtnr_OnError
 50530  AddAdditionalGhostscriptParameters
 50540
 50550  AddParams "-f"
-50560  If FileExists(StampFile) Then
-50570   AddParams StampFile
-50580  End If
-50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50600  Set isf = New clsInfoSpoolFile
-50610  isf.ReadInfoFile InfoSpoolFileName
-50620  For i = 1 To isf.InfoFiles.Count
-50630   Set isfi = isf.InfoFiles(i)
-50640   If FileExists(isfi.SpoolFileName) Then
-50650    AddParams isfi.SpoolFileName
-50660   End If
-50670  Next i
-50680  If FileExists(PDFDocInfoFile) Then
-50690   AddParams PDFDocInfoFile
-50700  End If
-50710
-50720  ShowParams
-50730  CallGhostscript "PNG"
+50560  If LenB(StampFile) > 0 Then
+50570   If FileExists(StampFile) Then
+50580    AddParams StampFile
+50590   End If
+50600  End If
+50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50620  Set isf = New clsInfoSpoolFile
+50630  isf.ReadInfoFile InfoSpoolFileName
+50640  For i = 1 To isf.InfoFiles.Count
+50650   Set isfi = isf.InfoFiles(i)
+50660   If FileExists(isfi.SpoolFileName) Then
+50670    AddParams isfi.SpoolFileName
+50680   End If
+50690  Next i
+50700  If LenB(PDFDocInfoFile) > 0 Then
+50710   If FileExists(PDFDocInfoFile) Then
+50720    AddParams PDFDocInfoFile
+50730   End If
+50740  End If
+50750
+50760  ShowParams
+50770  CallGhostscript "PNG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -581,24 +589,28 @@ On Error GoTo ErrPtnr_OnError
 50530  AddAdditionalGhostscriptParameters
 50540
 50550  AddParams "-f"
-50560  If FileExists(StampFile) Then
-50570   AddParams StampFile
-50580  End If
-50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50600  Set isf = New clsInfoSpoolFile
-50610  isf.ReadInfoFile InfoSpoolFileName
-50620  For i = 1 To isf.InfoFiles.Count
-50630   Set isfi = isf.InfoFiles(i)
-50640   If FileExists(isfi.SpoolFileName) Then
-50650    AddParams isfi.SpoolFileName
-50660   End If
-50670  Next i
-50680  If FileExists(PDFDocInfoFile) Then
-50690   AddParams PDFDocInfoFile
-50700  End If
-50710
-50720  ShowParams
-50730  CallGhostscript "JPEG"
+50560  If LenB(StampFile) > 0 Then
+50570   If FileExists(StampFile) Then
+50580    AddParams StampFile
+50590   End If
+50600  End If
+50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50620  Set isf = New clsInfoSpoolFile
+50630  isf.ReadInfoFile InfoSpoolFileName
+50640  For i = 1 To isf.InfoFiles.Count
+50650   Set isfi = isf.InfoFiles(i)
+50660   If FileExists(isfi.SpoolFileName) Then
+50670    AddParams isfi.SpoolFileName
+50680   End If
+50690  Next i
+50700  If LenB(PDFDocInfoFile) > 0 Then
+50710   If FileExists(PDFDocInfoFile) Then
+50720    AddParams PDFDocInfoFile
+50730   End If
+50740  End If
+50750
+50760  ShowParams
+50770  CallGhostscript "JPEG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -670,24 +682,28 @@ On Error GoTo ErrPtnr_OnError
 50530  AddAdditionalGhostscriptParameters
 50540
 50550  AddParams "-f"
-50560  If FileExists(StampFile) Then
-50570   AddParams StampFile
-50580  End If
-50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50600  Set isf = New clsInfoSpoolFile
-50610  isf.ReadInfoFile InfoSpoolFileName
-50620  For i = 1 To isf.InfoFiles.Count
-50630   Set isfi = isf.InfoFiles(i)
-50640   If FileExists(isfi.SpoolFileName) Then
-50650    AddParams isfi.SpoolFileName
-50660   End If
-50670  Next i
-50680  If FileExists(PDFDocInfoFile) Then
-50690   AddParams PDFDocInfoFile
-50700  End If
-50710
-50720  ShowParams
-50730  CallGhostscript "BMP"
+50560  If LenB(StampFile) > 0 Then
+50570   If FileExists(StampFile) Then
+50580    AddParams StampFile
+50590   End If
+50600  End If
+50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50620  Set isf = New clsInfoSpoolFile
+50630  isf.ReadInfoFile InfoSpoolFileName
+50640  For i = 1 To isf.InfoFiles.Count
+50650   Set isfi = isf.InfoFiles(i)
+50660   If FileExists(isfi.SpoolFileName) Then
+50670    AddParams isfi.SpoolFileName
+50680   End If
+50690  Next i
+50700  If LenB(PDFDocInfoFile) > 0 Then
+50710   If FileExists(PDFDocInfoFile) Then
+50720    AddParams PDFDocInfoFile
+50730   End If
+50740  End If
+50750
+50760  ShowParams
+50770  CallGhostscript "BMP"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -758,24 +774,28 @@ On Error GoTo ErrPtnr_OnError
 50520  AddAdditionalGhostscriptParameters
 50530
 50540  AddParams "-f"
-50550  If FileExists(StampFile) Then
-50560   AddParams StampFile
-50570  End If
-50580  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50590  Set isf = New clsInfoSpoolFile
-50600  isf.ReadInfoFile InfoSpoolFileName
-50610  For i = 1 To isf.InfoFiles.Count
-50620   Set isfi = isf.InfoFiles(i)
-50630   If FileExists(isfi.SpoolFileName) Then
-50640    AddParams isfi.SpoolFileName
-50650   End If
-50660  Next i
-50670  If FileExists(PDFDocInfoFile) Then
-50680   AddParams PDFDocInfoFile
-50690  End If
-50700
-50710  ShowParams
-50720  CallGhostscript "PCX"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "PCX"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -846,24 +866,28 @@ On Error GoTo ErrPtnr_OnError
 50520  AddAdditionalGhostscriptParameters
 50530
 50540  AddParams "-f"
-50550  If FileExists(StampFile) Then
-50560   AddParams StampFile
-50570  End If
-50580  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50590  Set isf = New clsInfoSpoolFile
-50600  isf.ReadInfoFile InfoSpoolFileName
-50610  For i = 1 To isf.InfoFiles.Count
-50620   Set isfi = isf.InfoFiles(i)
-50630   If FileExists(isfi.SpoolFileName) Then
-50640    AddParams isfi.SpoolFileName
-50650   End If
-50660  Next i
-50670  If FileExists(PDFDocInfoFile) Then
-50680   AddParams PDFDocInfoFile
-50690  End If
-50700
-50710  ShowParams
-50720  CallGhostscript "TIFF"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "TIFF"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -934,24 +958,28 @@ On Error GoTo ErrPtnr_OnError
 50520  AddAdditionalGhostscriptParameters
 50530
 50540  AddParams "-f"
-50550  If FileExists(StampFile) Then
-50560   AddParams StampFile
-50570  End If
-50580  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50590  Set isf = New clsInfoSpoolFile
-50600  isf.ReadInfoFile InfoSpoolFileName
-50610  For i = 1 To isf.InfoFiles.Count
-50620   Set isfi = isf.InfoFiles(i)
-50630   If FileExists(isfi.SpoolFileName) Then
-50640    AddParams isfi.SpoolFileName
-50650   End If
-50660  Next i
-50670  If FileExists(PDFDocInfoFile) Then
-50680   AddParams PDFDocInfoFile
-50690  End If
-50700
-50710  ShowParams
-50720  CallGhostscript "PS"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "PS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1022,24 +1050,28 @@ On Error GoTo ErrPtnr_OnError
 50520  AddAdditionalGhostscriptParameters
 50530
 50540  AddParams "-f"
-50550  If FileExists(StampFile) Then
-50560   AddParams StampFile
-50570  End If
-50580  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50590  Set isf = New clsInfoSpoolFile
-50600  isf.ReadInfoFile InfoSpoolFileName
-50610  For i = 1 To isf.InfoFiles.Count
-50620   Set isfi = isf.InfoFiles(i)
-50630   If FileExists(isfi.SpoolFileName) Then
-50640    AddParams isfi.SpoolFileName
-50650   End If
-50660  Next i
-50670  If FileExists(PDFDocInfoFile) Then
-50680   AddParams PDFDocInfoFile
-50690  End If
-50700
-50710  ShowParams
-50720  CallGhostscript "EPS"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "EPS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1078,25 +1110,29 @@ On Error GoTo ErrPtnr_OnError
 50200  AddParams "-dSIMPLE"
 50210  AddParams "ps2ascii.ps"
 50220
-50230  ' TODO: testen
-50240  If FileExists(StampFile) Then
-50250   AddParams StampFile
-50260  End If
-50270  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50280  Set isf = New clsInfoSpoolFile
-50290  isf.ReadInfoFile InfoSpoolFileName
-50300  For i = 1 To isf.InfoFiles.Count
-50310   Set isfi = isf.InfoFiles(i)
-50320   If FileExists(isfi.SpoolFileName) Then
-50330    AddParams isfi.SpoolFileName
-50340   End If
-50350  Next i
-50360  If FileExists(PDFDocInfoFile) Then
-50370   AddParams PDFDocInfoFile
-50380  End If
-50390
-50400  ShowParams
-50410  CallGhostscript "TXT"
+50230  ' TODO: Testen
+50240  If LenB(StampFile) > 0 Then
+50250   If FileExists(StampFile) Then
+50260    AddParams StampFile
+50270   End If
+50280  End If
+50290  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50300  Set isf = New clsInfoSpoolFile
+50310  isf.ReadInfoFile InfoSpoolFileName
+50320  For i = 1 To isf.InfoFiles.Count
+50330   Set isfi = isf.InfoFiles(i)
+50340   If FileExists(isfi.SpoolFileName) Then
+50350    AddParams isfi.SpoolFileName
+50360   End If
+50370  Next i
+50380  If LenB(PDFDocInfoFile) > 0 Then
+50390   If FileExists(PDFDocInfoFile) Then
+50400    AddParams PDFDocInfoFile
+50410   End If
+50420  End If
+50430
+50440  ShowParams
+50450  CallGhostscript "TXT"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1203,24 +1239,28 @@ On Error GoTo ErrPtnr_OnError
 50880  End If
 50890
 50900  AddParams "-f"
-50910  If FileExists(StampFile) Then
-50920   AddParams StampFile
-50930  End If
-50940  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50950  Set isf = New clsInfoSpoolFile
-50960  isf.ReadInfoFile InfoSpoolFileName
-50970  For i = 1 To isf.InfoFiles.Count
-50980   Set isfi = isf.InfoFiles(i)
-50990   If FileExists(isfi.SpoolFileName) Then
-51000    AddParams isfi.SpoolFileName
-51010   End If
-51020  Next i
-51030  If FileExists(PDFDocInfoFile) Then
-51040   AddParams PDFDocInfoFile
-51050  End If
-51060
-51070  ShowParams
-51080  CallGhostscript "PDF/A (without encryption)"
+50910  If LenB(StampFile) > 0 Then
+50920   If FileExists(StampFile) Then
+50930    AddParams StampFile
+50940   End If
+50950  End If
+50960  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50970  Set isf = New clsInfoSpoolFile
+50980  isf.ReadInfoFile InfoSpoolFileName
+50990  For i = 1 To isf.InfoFiles.Count
+51000   Set isfi = isf.InfoFiles(i)
+51010   If FileExists(isfi.SpoolFileName) Then
+51020    AddParams isfi.SpoolFileName
+51030   End If
+51040  Next i
+51050  If LenB(PDFDocInfoFile) > 0 Then
+51060   If FileExists(PDFDocInfoFile) Then
+51070    AddParams PDFDocInfoFile
+51080   End If
+51090  End If
+51100
+51110  ShowParams
+51120  CallGhostscript "PDF/A (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1323,24 +1363,28 @@ On Error GoTo ErrPtnr_OnError
 50840  End If
 50850
 50860  AddParams "-f"
-50870  If FileExists(StampFile) Then
-50880   AddParams StampFile
-50890  End If
-50900  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50910  Set isf = New clsInfoSpoolFile
-50920  isf.ReadInfoFile InfoSpoolFileName
-50930  For i = 1 To isf.InfoFiles.Count
-50940   Set isfi = isf.InfoFiles(i)
-50950   If FileExists(isfi.SpoolFileName) Then
-50960    AddParams isfi.SpoolFileName
-50970   End If
-50980  Next i
-50990  If FileExists(PDFDocInfoFile) Then
-51000   AddParams PDFDocInfoFile
-51010  End If
-51020
-51030  ShowParams
-51040  CallGhostscript "PDF/X (without encryption)"
+50870  If LenB(StampFile) > 0 Then
+50880   If FileExists(StampFile) Then
+50890    AddParams StampFile
+50900   End If
+50910  End If
+50920  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50930  Set isf = New clsInfoSpoolFile
+50940  isf.ReadInfoFile InfoSpoolFileName
+50950  For i = 1 To isf.InfoFiles.Count
+50960   Set isfi = isf.InfoFiles(i)
+50970   If FileExists(isfi.SpoolFileName) Then
+50980    AddParams isfi.SpoolFileName
+50990   End If
+51000  Next i
+51010  If LenB(PDFDocInfoFile) > 0 Then
+51020   If FileExists(PDFDocInfoFile) Then
+51030    AddParams PDFDocInfoFile
+51040   End If
+51050  End If
+51060
+51070  ShowParams
+51080  CallGhostscript "PDF/X (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1411,24 +1455,28 @@ On Error GoTo ErrPtnr_OnError
 50520  AddAdditionalGhostscriptParameters
 50530
 50540  AddParams "-f"
-50550  If FileExists(StampFile) Then
-50560   AddParams StampFile
-50570  End If
-50580  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50590  Set isf = New clsInfoSpoolFile
-50600  isf.ReadInfoFile InfoSpoolFileName
-50610  For i = 1 To isf.InfoFiles.Count
-50620   Set isfi = isf.InfoFiles(i)
-50630   If FileExists(isfi.SpoolFileName) Then
-50640    AddParams isfi.SpoolFileName
-50650   End If
-50660  Next i
-50670  If FileExists(PDFDocInfoFile) Then
-50680   AddParams PDFDocInfoFile
-50690  End If
-50700
-50710  ShowParams
-50720  CallGhostscript "PSD"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "PSD"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1499,24 +1547,28 @@ On Error GoTo ErrPtnr_OnError
 50520  AddAdditionalGhostscriptParameters
 50530
 50540  AddParams "-f"
-50550  If FileExists(StampFile) Then
-50560   AddParams StampFile
-50570  End If
-50580  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50590  Set isf = New clsInfoSpoolFile
-50600  isf.ReadInfoFile InfoSpoolFileName
-50610  For i = 1 To isf.InfoFiles.Count
-50620   Set isfi = isf.InfoFiles(i)
-50630   If FileExists(isfi.SpoolFileName) Then
-50640    AddParams isfi.SpoolFileName
-50650   End If
-50660  Next i
-50670  If FileExists(PDFDocInfoFile) Then
-50680   AddParams PDFDocInfoFile
-50690  End If
-50700
-50710  ShowParams
-50720  CallGhostscript "PCL"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "PCL"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1587,24 +1639,28 @@ On Error GoTo ErrPtnr_OnError
 50520  AddAdditionalGhostscriptParameters
 50530
 50540  AddParams "-f"
-50550  If FileExists(StampFile) Then
-50560   AddParams StampFile
-50570  End If
-50580  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50590  Set isf = New clsInfoSpoolFile
-50600  isf.ReadInfoFile InfoSpoolFileName
-50610  For i = 1 To isf.InfoFiles.Count
-50620   Set isfi = isf.InfoFiles(i)
-50630   If FileExists(isfi.SpoolFileName) Then
-50640    AddParams isfi.SpoolFileName
-50650   End If
-50660  Next i
-50670  If FileExists(PDFDocInfoFile) Then
-50680   AddParams PDFDocInfoFile
-50690  End If
-50700
-50710  ShowParams
-50720  CallGhostscript "RAW"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "RAW"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1676,24 +1732,28 @@ On Error GoTo ErrPtnr_OnError
 50530  AddAdditionalGhostscriptParameters
 50540
 50550  AddParams "-f"
-50560  If FileExists(StampFile) Then
-50570   AddParams StampFile
-50580  End If
-50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50600  Set isf = New clsInfoSpoolFile
-50610  isf.ReadInfoFile InfoSpoolFileName
-50620  For i = 1 To isf.InfoFiles.Count
-50630   Set isfi = isf.InfoFiles(i)
-50640   If FileExists(isfi.SpoolFileName) Then
-50650    AddParams isfi.SpoolFileName
-50660   End If
-50670  Next i
-50680  If FileExists(PDFDocInfoFile) Then
-50690   AddParams PDFDocInfoFile
-50700  End If
-50710
-50720  ShowParams
-50730  CallGhostscript "SVG"
+50560  If LenB(StampFile) > 0 Then
+50570   If FileExists(StampFile) Then
+50580    AddParams StampFile
+50590   End If
+50600  End If
+50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50620  Set isf = New clsInfoSpoolFile
+50630  isf.ReadInfoFile InfoSpoolFileName
+50640  For i = 1 To isf.InfoFiles.Count
+50650   Set isfi = isf.InfoFiles(i)
+50660   If FileExists(isfi.SpoolFileName) Then
+50670    AddParams isfi.SpoolFileName
+50680   End If
+50690  Next i
+50700  If LenB(PDFDocInfoFile) > 0 Then
+50710   If FileExists(PDFDocInfoFile) Then
+50720    AddParams PDFDocInfoFile
+50730   End If
+50740  End If
+50750
+50760  ShowParams
+50770  CallGhostscript "SVG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1719,7 +1779,7 @@ On Error GoTo ErrPtnr_OnError
         Case 0: 'PDF
 50070    With Options
 50080     If .PDFOptimize = 1 And .PDFUseSecurity = 0 Then
-50090       Tempfile = GetTempFile(GetTempPath, "~CP")
+50090       Tempfile = GetTempFile(GetTempPathApi, "~CP")
 50100       KillFile Tempfile
 50110       CreatePDF GSInfoSpoolFile, Tempfile, Options, PDFDocInfoFile, StampFile
 50120       OptimizePDF Tempfile, GSOutputFile
@@ -1729,7 +1789,7 @@ On Error GoTo ErrPtnr_OnError
 50160         If pdfforgeDllInstalled And .PDFAes128Encryption = 1 Then
 50170           enc = SetEncryptionParams(encPDF, GSInfoSpoolFile, GSOutputFile)
 50180           If enc = True Then
-50190            Tempfile = GetTempFile(GetTempPath, "~CP")
+50190            Tempfile = GetTempFile(GetTempPathApi, "~CP")
 50200            KillFile Tempfile
 50210            currentOwnerPassword = encPDF.OwnerPass
 50220            CreatePDF GSInfoSpoolFile, Tempfile, Options, PDFDocInfoFile, StampFile
@@ -1758,7 +1818,7 @@ On Error GoTo ErrPtnr_OnError
 50450       If .PDFUpdateMetadata = 2 Or _
        (.PDFUpdateMetadata = 1 And (InStr(1, .AdditionalGhostscriptParameters, "dpdfa", vbTextCompare) > 0)) Then
 50470        Set m = CreateObject("pdfForge.pdf.pdf")
-50480        Tempfile = GetTempFile(GetTempPath, "~MP")
+50480        Tempfile = GetTempFile(GetTempPathApi, "~MP")
 50490        KillFile Tempfile
 50500        Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
 50510        If FileExists(Tempfile) Then
@@ -1799,7 +1859,7 @@ On Error GoTo ErrPtnr_OnError
 50860     If DotNet20Installed And pdfforgeDllInstalled Then
 50870      If .PDFUpdateMetadata > 0 Then
 50880       Set m = CreateObject("pdfForge.pdf.pdf")
-50890       Tempfile = GetTempFile(GetTempPath, "~MP")
+50890       Tempfile = GetTempFile(GetTempPathApi, "~MP")
 50900       KillFile Tempfile
 50910       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
 50920       If FileExists(Tempfile) Then
@@ -1874,7 +1934,7 @@ On Error GoTo ErrPtnr_OnError
 50250    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
 50260    Exit Sub
 50270   End If
-50280   Tempfile = GetTempFile(GetTempPath, "~MP")
+50280   Tempfile = GetTempFile(GetTempPathApi, "~MP")
 50290   KillFile Tempfile
 50300   If .PDFSigningSignatureVisible = 0 Then
 50310     signatureVisible = False
@@ -2709,81 +2769,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CheckForStamping(filename As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim StampPage As String, tStr As String, R As String, G As String, b As String, _
-  StampFile As String, Path As String, ff As Long, files As Collection, _
-  StampString As String, StampFontsize As Double, _
-  StampOutlineFontthickness As Double
-50050  StampString = RemoveLeadingAndTrailingQuotes(Trim$(Options.StampString))
-50060  If Len(StampString) > 0 Then
-50070   StampPage = StrConv(LoadResData(101, "STAMPPAGE"), vbUnicode)
-50080   StampPage = Replace(StampPage, vbCrLf, vbCr, , , vbBinaryCompare)
-50090   StampPage = Replace(StampPage, "[STAMPSTRING]", EncodeCharsOctal(StampString), , , vbTextCompare)
-50100   StampPage = Replace(StampPage, "[FONTNAME]", Replace(Trim$(Options.StampFontname), " ", ""), , , vbTextCompare)
-50110   StampFontsize = 48
-50120   If IsNumeric(Options.StampFontsize) = True Then
-50130    If CDbl(Options.StampFontsize) > 0 Then
-50140     StampFontsize = CDbl(Options.StampFontsize)
-50150    End If
-50160   End If
-50170   StampPage = Replace(StampPage, "[FONTSIZE]", StampFontsize, , , vbTextCompare)
-50180   StampOutlineFontthickness = 0
-50190   If IsNumeric(Options.StampOutlineFontthickness) = True Then
-50200    If CDbl(Options.StampOutlineFontthickness) >= 0 Then
-50210     StampOutlineFontthickness = CDbl(Options.StampOutlineFontthickness)
-50220    End If
-50230   End If
-50240   StampPage = Replace(StampPage, "[STAMPOUTLINEFONTTHICKNESS]", StampOutlineFontthickness, , , vbTextCompare)
-50250   If Options.StampUseOutlineFont <> 1 Then
-50260     StampPage = Replace(StampPage, "[USEOUTLINEFONT]", "show", , , vbTextCompare)
-50270    Else
-50280     StampPage = Replace(StampPage, "[USEOUTLINEFONT]", "true charpath stroke", , , vbTextCompare)
-50290   End If
-50300   If Len(Options.StampFontColor) > 0 Then
-50310     tStr = Replace$(Options.StampFontColor, "#", "&H")
-50320     If IsNumeric(tStr) = True Then
-50330       R = Replace$(Format(CDbl((CLng(tStr) And CLng("&HFF0000")) / 65536) / 255#, "0.00"), ",", ".", , 1)
-50340       G = Replace$(Format(CDbl((CLng(tStr) And CLng("&H00FF00")) / 256) / 255#, "0.00"), ",", ".", , 1)
-50350       b = Replace$(Format(CDbl(CLng(tStr) And CLng("&H0000FF")) / 255#, "0.00"), ",", ".", , 1)
-50360       StampPage = Replace(StampPage, "[FONTCOLOR]", R & " " & G & " " & b, , , vbTextCompare)
-50370      Else
-50380       StampPage = Replace(StampPage, "[FONTCOLOR]", "1 0 0", , , vbTextCompare)
-50390     End If
-50400    Else
-50410     StampPage = Replace(StampPage, "[FONTCOLOR]", "1 0 0", , , vbTextCompare)
-50420   End If
-50430   Path = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory & "\" & GetUsername
-50440   If DirExists(Path) = False Then
-50450    MakePath Path
-50460   End If
-50470   StampFile = GetTempFile(Path, "~ST")
-50480   ff = FreeFile
-50490   Open StampFile For Output As #ff
-50500   Print #ff, StampPage
-50510   Close #ff
-50520   Set files = New Collection
-50530   files.Add StampFile
-50540   files.Add filename
-50550   StampFile = GetTempFile(Path, "~ST")
-50560   KillFile StampFile
-50570   CombineFiles StampFile, files
-50580   Name StampFile As filename
-50590  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGhostScript", "CheckForStamping")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Public Function CreateStampFile(filename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -2831,18 +2816,14 @@ On Error GoTo ErrPtnr_OnError
 50410    Else
 50420     StampPage = Replace(StampPage, "[FONTCOLOR]", "1 0 0", , , vbTextCompare)
 50430   End If
-50440   Path = CompletePath(CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory) '& GetUsername
-50450   If DirExists(Path) = False Then
-50460    MakePath Path
-50470   End If
-50480   SplitPath filename, , Path, , File
-50490   StampFile = CompletePath(Path) & File & ".stm"
-50500   ff = FreeFile
-50510   Open StampFile For Output As #ff
-50520   Print #ff, StampPage
-50530   Close #ff
-50540   CreateStampFile = StampFile
-50550  End If
+50440   SplitPath filename, , Path, , File
+50450   StampFile = CompletePath(Path) & File & ".stm"
+50460   ff = FreeFile
+50470   Open StampFile For Output As #ff
+50480   Print #ff, StampPage
+50490   Close #ff
+50500   CreateStampFile = StampFile
+50510  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -3026,96 +3007,136 @@ Public Sub ConvertFile(InputFilename As String, OutputFilename As String, Option
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Ext As String, Tempfile As String, ivgf As Boolean, inFile As String
-50020  IFIsPS = False
-50030  If LenB(InputFilename) = 0 Then
-50040   Exit Sub
-50050  End If
-50060  If FileExists(InputFilename) = False Then
-50070   If LenB(InputFilename) > 0 Then
-50080    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
+50010  Dim Ext As String, Tempfile As String, ivgf As Boolean, inFile As String, Path As String, File As String, psFileName As String
+50020  Dim InfoSpoolFileName As String, PDFDocInfoFile As String, StampFile As String, PDFDocInfo As tPDFDocInfo, tDate As Date
+50030  Dim PSHeader As tPSHeader, tStr As String, strGUID As String
+50040
+50050  IFIsPS = False
+50060  If LenB(InputFilename) = 0 Then
+50070   Exit Sub
+50080  End If
+50090  If FileExists(InputFilename) = False Then
+50100   If LenB(InputFilename) > 0 Then
+50110    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
     "InputFile -IF" & vbCrLf & ">" & InputFilename & "<", vbExclamation + vbOKOnly
-50100   End If
-50110   Exit Sub
-50120  End If
-50130  ivgf = IsValidGraphicFile(InputFilename)
-50140  If LenB(OutputFilename) > 0 Then
-50150    If IsPostscriptFile(InputFilename) = True Or ivgf Or IsPDFFile(InputFilename) Then
-50160     If GsDllLoaded = 0 Then
-50170      Exit Sub
-50180     End If
-50190     GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
-50200     If GsDllLoaded = 0 Then
-50210      MsgBox LanguageStrings.MessagesMsg08
-50220     End If
-50230     inFile = InputFilename
-50240     If ivgf Then
-50250      Tempfile = GetTempFile(GetTempPath, "~p")
-50260      Kill Tempfile
-50270      If Image2PS(InputFilename, Tempfile) Then
-50280        inFile = Tempfile
-50290       Else
-50300        IfLoggingWriteLogfile "ConvertFile: There is a problem converting '" & InputFilename & "'!"
-50310        Exit Sub
-50320      End If
-50330     End If
-50340     SplitPath OutputFilename, , , , , Ext
-50350     'TODO
-50360 '    Select Case UCase$(Ext)
-50370 '     Case "PDF"
-50380 '      Select Case UCase(SubFormat)
-50390 '       Case "PDF/A-1B"
-50400 '        CallGScript inFile, OutputFilename, Options, PDFAWriter
-50410 '       Case "PDF/X"
-50420 '        CallGScript inFile, OutputFilename, Options, PDFXWriter
-50430 '       Case Else
-50440 '        CallGScript inFile, OutputFilename, Options, PDFWriter
-50450 '      End Select
-50460 '     Case "PNG"
-50470 '      CallGScript inFile, OutputFilename, Options, PNGWriter
-50480 '     Case "JPG"
-50490 '      CallGScript inFile, OutputFilename, Options, JPEGWriter
-50500 '     Case "BMP"
-50510 '      CallGScript inFile, OutputFilename, Options, BMPWriter
-50520 '     Case "PCX"
-50530 '      CallGScript inFile, OutputFilename, Options, PCXWriter
-50540 '     Case "TIF"
-50550 '      CallGScript inFile, OutputFilename, Options, TIFFWriter
-50560 '     Case "PS"
-50570 '      CallGScript inFile, OutputFilename, Options, PSWriter
-50580 '     Case "EPS"
-50590 '      CallGScript inFile, OutputFilename, Options, EPSWriter
-50600 '     Case "TXT"
-50610 '      CallGScript inFile, OutputFilename, Options, TXTWriter
-50620 '     Case "PCL"
-50630 '      CallGScript inFile, OutputFilename, Options, PCLWriter
-50640 '     Case "PSD"
-50650 '      CallGScript inFile, OutputFilename, Options, PSDWriter
-50660 '     Case "RAW"
-50670 '      CallGScript inFile, OutputFilename, Options, RAWWriter
-50680 '     Case "SVG"
-50690 '      CallGScript inFile, OutputFilename, Options, SVGWriter
-50700 '    End Select
-50710     If ivgf Then
-50720      KillFile Tempfile
-50730     End If
-50740    End If
-50750 '   If GsDllLoaded <> 0 Then
-50760 '    UnloadDLLComplete GsDllLoaded
-50770 '   End If
-50780    ConvertedOutputFilename = OutputFilename
-50790    ReadyConverting = True
-50800    Exit Sub
-50810   Else
-50820    If FileExists(InputFilename) = True Then
-50830     If IsPostscriptFile(InputFilename) = True Then
-50840       IFIsPS = True
-50850      Else
-50860       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
-50870     End If
-50880    End If
-50890  End If
-50900  DoEvents
+50130   End If
+50140   Exit Sub
+50150  End If
+50160  ivgf = IsValidGraphicFile(InputFilename)
+50170  If LenB(OutputFilename) > 0 Then
+50180    If IsPostscriptFile(InputFilename) = True Or ivgf Or IsPDFFile(InputFilename) Then
+50190     If GsDllLoaded = 0 Then
+50200      Exit Sub
+50210     End If
+50220     GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+50230     If GsDllLoaded = 0 Then
+50240      MsgBox LanguageStrings.MessagesMsg08
+50250     End If
+50260     inFile = InputFilename
+50270     strGUID = GetGUID
+50280     File = GetPDFCreatorSpoolDirectory & strGUID
+50290     If ivgf Then
+50300      psFileName = File & ".ps"
+50310      If Image2PS(InputFilename, psFileName) Then
+50320        inFile = psFileName
+50330       Else
+50340        IfLoggingWriteLogfile "ConvertFile: There is a problem converting '" & InputFilename & "'!"
+50350        Exit Sub
+50360      End If
+50370     End If
+50380
+50390     InfoSpoolFileName = CreateInfoSpoolFile(inFile, File & ".inf")
+50400     SplitPath OutputFilename, , , , , Ext
+50410
+50420     With PDFDocInfo
+50430      If Len(Trim$(Options.StandardTitle)) > 0 Then
+50440        .Author = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50450       Else
+50460        .Author = GetSubstFilename(inFile, Options.SaveFilename, , , True)
+50470      End If
+50480      If Options.UseStandardAuthor = 1 Then
+50490        .Creator = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50500       Else
+50510        .Creator = GetDocUsernameFromPostScriptFile(inFile, False)
+50520      End If
+50530      If Len(Trim$(Options.StandardKeywords)) > 0 Then
+50540       .Keywords = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50550      End If
+50560      If Len(Trim$(Options.StandardSubject)) > 0 Then
+50570       .Subject = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50580      End If
+50590      tDate = Now
+50600      PSHeader = GetPSHeader(inFile)
+50610
+50620      If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50630        tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50640       Else
+50650        tStr = CStr(tDate)
+50660      End If
+50670      .CreationDate = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
+50680      .ModifyDate = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
+50690      .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+50700     End With
+50710
+50720     PDFDocInfoFile = CreatePDFDocInfoFile(inFile, PDFDocInfo)
+50730     StampFile = CreateStampFile(inFile)
+50740
+50751     Select Case UCase$(Ext)
+           Case "PDF"
+50771       Select Case UCase(SubFormat)
+             Case "PDF/A-1B"
+50790         CallGScript InfoSpoolFileName, OutputFilename, Options, PDFAWriter, PDFDocInfoFile, StampFile
+50800        Case "PDF/X"
+50810         CallGScript InfoSpoolFileName, OutputFilename, Options, PDFXWriter, PDFDocInfoFile, StampFile
+50820        Case Else
+50830         CallGScript InfoSpoolFileName, OutputFilename, Options, PDFWriter, PDFDocInfoFile, StampFile
+50840       End Select
+50850      Case "PNG"
+50860       CallGScript InfoSpoolFileName, OutputFilename, Options, PNGWriter, PDFDocInfoFile, StampFile
+50870      Case "JPG"
+50880       CallGScript InfoSpoolFileName, OutputFilename, Options, JPEGWriter, PDFDocInfoFile, StampFile
+50890      Case "BMP"
+50900       CallGScript InfoSpoolFileName, OutputFilename, Options, BMPWriter, PDFDocInfoFile, StampFile
+50910      Case "PCX"
+50920       CallGScript InfoSpoolFileName, OutputFilename, Options, PCXWriter, PDFDocInfoFile, StampFile
+50930      Case "TIF"
+50940       CallGScript InfoSpoolFileName, OutputFilename, Options, TIFFWriter, PDFDocInfoFile, StampFile
+50950      Case "PS"
+50960       CallGScript InfoSpoolFileName, OutputFilename, Options, PSWriter, PDFDocInfoFile, StampFile
+50970      Case "EPS"
+50980       CallGScript InfoSpoolFileName, OutputFilename, Options, EPSWriter, PDFDocInfoFile, StampFile
+50990      Case "TXT"
+51000       CallGScript InfoSpoolFileName, OutputFilename, Options, TXTWriter, PDFDocInfoFile, StampFile
+51010      Case "PCL"
+51020       CallGScript InfoSpoolFileName, OutputFilename, Options, PCLWriter, PDFDocInfoFile, StampFile
+51030      Case "PSD"
+51040       CallGScript InfoSpoolFileName, OutputFilename, Options, PSDWriter, PDFDocInfoFile, StampFile
+51050      Case "RAW"
+51060       CallGScript InfoSpoolFileName, OutputFilename, Options, RAWWriter, PDFDocInfoFile, StampFile
+51070      Case "SVG"
+51080       CallGScript InfoSpoolFileName, OutputFilename, Options, SVGWriter, PDFDocInfoFile, StampFile
+51090     End Select
+51100
+51110     KillFile InfoSpoolFileName
+51120     KillFile PDFDocInfoFile
+51130     KillFile StampFile
+51140    End If
+51150 '   If GsDllLoaded <> 0 Then
+51160 '    UnloadDLLComplete GsDllLoaded
+51170 '   End If
+51180    ConvertedOutputFilename = OutputFilename
+51190    ReadyConverting = True
+51200    Exit Sub
+51210   Else
+51220    If FileExists(InputFilename) = True Then
+51230     If IsPostscriptFile(InputFilename) = True Then
+51240       IFIsPS = True
+51250      Else
+51260       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
+51270     End If
+51280    End If
+51290  End If
+51300  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

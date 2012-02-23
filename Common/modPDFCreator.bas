@@ -182,31 +182,31 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub CreatePDFCreatorTempfolder()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim Temppath As String
-50020  If DirExists(GetPDFCreatorTempfolder) = False Then
-50030   MakePath GetPDFCreatorTempfolder
-50040  End If
-50050  If DirExists(GetPDFCreatorTempfolder) = False Then
-50060   Temppath = CompletePath(GetTempPath)
-50070   MakePath Temppath
-50080   Options.PrinterTemppath = Temppath
-50090   SaveOption Options, "PrinterTemppath"
-50100  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDFCreator", "CreatePDFCreatorTempfolder")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
+'Public Sub CreatePDFCreatorTempfolder()
+''---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+'On Error GoTo ErrPtnr_OnError
+''---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+'50010  Dim Temppath As String
+'50020  If DirExists(GetPDFCreatorTempfolder) = False Then
+'50030   MakePath GetPDFCreatorTempfolder
+'50040  End If
+'50050  If DirExists(GetPDFCreatorTempfolder) = False Then
+'50060   Temppath = CompletePath(GetTempPath)
+'50070   MakePath Temppath
+'50080   Options.PrinterTemppath = Temppath
+'50090   SaveOption Options, "PrinterTemppath"
+'50100  End If
+''---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+'Exit Sub
+'ErrPtnr_OnError:
+'Select Case ErrPtnr.OnError("modPDFCreator", "CreatePDFCreatorTempfolder")
+'Case 0: Resume
+'Case 1: Resume Next
+'Case 2: Exit Sub
+'Case 3: End
+'End Select
+''---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+'End Sub
 
 Public Sub PsAssociate()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -361,9 +361,9 @@ End Function
 Public Sub ClearCache()
  On Error Resume Next
  Dim cFiles As Collection, tStr As String, i As Long, tStrf() As String
- tStr = CompletePath(GetPDFCreatorTempfolder) & PDFCreatorSpoolDirectory
+ tStr = GetPDFCreatorSpoolDirectory
  If DirExists(tStr) = True Then
-  Call FindFiles(tStr, cFiles, "~P*.tmp", , True, True)
+  Call FindFiles(tStr, cFiles, "*.inf", , True, True)
   For i = 1 To cFiles.Count
    If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
     tStrf = Split(cFiles(i), "|")
@@ -374,7 +374,29 @@ Public Sub ClearCache()
     End If
    End If
   Next i
-  Call FindFiles(tStr, cFiles, "~P*.inf", , True, True)
+  Call FindFiles(tStr, cFiles, "*.ps", , True, True)
+  For i = 1 To cFiles.Count
+   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
+    tStrf = Split(cFiles(i), "|")
+    If UBound(tStrf) >= 1 Then
+     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
+      Kill tStrf(1)
+     End If
+    End If
+   End If
+  Next i
+  Call FindFiles(tStr, cFiles, "*.mtd", , True, True)
+  For i = 1 To cFiles.Count
+   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
+    tStrf = Split(cFiles(i), "|")
+    If UBound(tStrf) >= 1 Then
+     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
+      Kill tStrf(1)
+     End If
+    End If
+   End If
+  Next i
+  Call FindFiles(tStr, cFiles, "*.stm", , True, True)
   For i = 1 To cFiles.Count
    If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
     tStrf = Split(cFiles(i), "|")
