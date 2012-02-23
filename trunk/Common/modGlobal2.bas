@@ -32,16 +32,6 @@ On Error GoTo ErrPtnr_OnError
 50080   MakePath spoolDirectory
 50090  End If
 50100  GetPDFCreatorSpoolDirectory = CompletePath(spoolDirectory)
-50110 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-50120 Exit Function
-ErrPtnr_OnError:
-50141 Select Case ErrPtnr.OnError("modGlobal2", "GetPDFCreatorSpoolDirectory")
-      Case 0: Resume
-50160 Case 1: Resume Next
-50170 Case 2: Exit Function
-50180 Case 3: End
-50190 End Select
-50200 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
