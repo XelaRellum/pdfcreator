@@ -287,7 +287,7 @@ On Error GoTo ErrPtnr_OnError
 50040
 50050  cReg.hkey = HKEY_LOCAL_MACHINE
 50060  cReg.KeyRoot = "Software\Microsoft\Windows\CurrentVersion\Uninstall\Sylpheed-Claws_is1"
-50070  ExePath = cReg.GetRegistryValue("Inno Setup: App Path")
+50070  ExePath = cReg.GetRegistryValue("AppPath")
 50080  ExePath = CompletePath(ExePath) & "bin\sylpheed.exe"
 50090  If Dir(ExePath) <> vbNullString Then
 50100    Shell """" & ExePath & """ --attach """ & filename & """"

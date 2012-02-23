@@ -1,8 +1,8 @@
 ; PDFCreator Installation
 ; Installation script created by pdfforge GbR
 
-#define FastCompilation
-#define Test
+;#define FastCompilation
+;#define Test
 
 ;#define Test
 
@@ -26,6 +26,9 @@
 #Ifdef IncludeGhostscript
  #define GhostscriptVersion "9.04"
  #define GhostscriptSetupString "GPLGhostscript"
+ #if (fileexists("..\Ghostscript\gs" + GhostscriptVersion + "\bin\gsdll32.dll")==0)
+  #pragma error "Copy Ghostscript version '" + GhostscriptVersion + "' to the path 'Ghostcript' first!"
+ #endif
 #ENDIF
 
 #ifdef Test
@@ -34,6 +37,9 @@
 
 #if (fileexists("..\PDFCreator\PDFCreator.exe")==0)
  #error Compile PDFCreator first!
+#endif
+#if (fileexists("..\PDFCreatorRestart\PDFCreatorRestart.exe")==0)
+ #error Compile PDFCreatorRestart first!
 #endif
 #if (fileexists("..\TransTool\TransTool.exe")==0)
  #error Compile TransTool first!
@@ -46,6 +52,7 @@
    #error Please install the IPDK!
   #endif
   #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreator\PDFCreator.exe * 0x409 ~ 0x0",".\")
+  #expr Exec("C:\IPDK\VBLOCAL.EXE","..\PDFCreatorRestart\PDFCreatorRestart.exe * 0x409 ~ 0x0",".\")
   #expr Exec("C:\IPDK\VBLOCAL.EXE","..\TransTool\TransTool.exe * 0x409 ~ 0x0",".\")
  #endif
 #endif
@@ -56,6 +63,7 @@
   #error Compile ManifestManager first!
  #endif
  #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreator\PDFCreator.exe""","..\ManifestManager\")
+ #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\PDFCreatorRestart\PDFCreatorRestart.exe""","..\ManifestManager\")
  #expr Exec("..\ManifestManager\ManifestManager.exe","/ADD""..\TransTool\TransTool.exe""","..\ManifestManager\")
 #endif
 
@@ -82,6 +90,9 @@
 #define PDFCreatorVersion    GetFileVersionVBExe("..\PDFCreator\PDFCreator.exe")
 #define SetupAppVersion      GetFileVersionVBExeLine("..\PDFCreator\PDFCreator.exe")
 #define TransToolVersion     GetFileVersionVBExe("..\Transtool\Transtool.exe")
+#define PDFCreatorRestartVersion     GetFileVersionVBExe("..\PDFCreatorRestart\PDFCreatorRestart.exe")
+#define pdfcmonVersion32     GetFileVersion("..\Printer\Monitor\pdfcmon32.dll")
+#define pdfcmonVersion64     GetFileVersion("..\Printer\Monitor\pdfcmon64.dll")
 
 #define ReleaseCandidate     ""
 
@@ -303,8 +314,8 @@ Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {ap
 #ENDIF
 
 ;Monitor files
-Source: ..\Printer\Monitor\pdfcmon32.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmon.dll; Check: "InstallPDFCreatorPrinter AND (Not IsWin64)"; Flags: 32bit sortfilesbyextension; 
-Source: ..\Printer\Monitor\pdfcmon64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmon.dll; Check: "InstallPDFCreatorPrinter AND IsX64"; Flags: 64bit sortfilesbyextension; 
+Source: ..\Printer\Monitor\pdfcmon32.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmon.dll; Check: InstallPDFCreatorPrinter AND (Not IsWin64); Flags: 32bit sortfilesbyextension; 
+Source: ..\Printer\Monitor\pdfcmon64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmon.dll; Check: InstallPDFCreatorPrinter AND IsWin64; Flags: 64bit sortfilesbyextension; 
 
 ;Source: ..\SystemFiles\COMCT332.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
@@ -315,6 +326,7 @@ Source: ..\SystemFiles\STDOLE2.TLB; DestDir: {sys}; Components: program; Flags: 
 
 ;Program files
 Source: ..\PDFCreator\PDFCreator.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
+Source: ..\PDFCreatorRestart\PDFCreatorRestart.exe; DestDir: {app}; Components: program; Flags: comparetimestamp
 Source: ..\Transtool\TransTool.exe; DestDir: {app}\languages; Components: program; Flags: comparetimestamp
 
 ;vblocal.exe from IPDK
@@ -495,6 +507,10 @@ Source: ..\Images2PDF\Images2PDF-german.settings;  DestDir: {userappdata}\pdffor
 
 ; PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect.exe"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp; Components: PDFArchitect
+Source: "..\PDFArchitect\DataStorage.dll"; DestDir: {app}\PDFArchitect\; Components: PDFArchitect
+Source: "..\PDFArchitect\DynamicTranslator.dll"; DestDir: {app}\PDFArchitect\; Components: PDFArchitect
+Source: "..\PDFArchitect\PDFOne.net\Gnostice.PDFOne.dll"; DestDir: {app}\PDFArchitect\; Components: PDFArchitect
+Source: "..\PDFArchitect\PDFOne.net\Ionic.Zlib.dll"; DestDir: {app}\PDFArchitect\; Components: PDFArchitect
 Source: "..\PDFArchitect\PDFOne.net\CMaps\*.*"; DestDir: {app}\PDFArchitect\CMaps\; Components: PDFArchitect
 Source: "..\PDFArchitect\PDFOne.net\FreeType\FreeType32.dll"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp IgnoreVersion; DestName: FreeType.dll; Check: Not IsX64; Components: PDFArchitect
 Source: "..\PDFArchitect\PDFOne.net\FreeType\FreeType64.dll"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp IgnoreVersion; DestName: FreeType.dll; Check: IsX64; Components: PDFArchitect
@@ -593,6 +609,9 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PatchLevel
 
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFCreatorVersion; Valuedata: {#PDFCreatorVersion}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: TranstoolVersion; Valuedata: {#TranstoolVersion}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: PDFCreatorRestartVersion; Valuedata: {#PDFCreatorRestartVersion}; Flags: uninsdeletevalue
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: pdfcmonVersion32; Valuedata: {#pdfcmonVersion32}; Flags: uninsdeletevalue; Check: Not IsWin64
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: pdfcmonVersion64; Valuedata: {#pdfcmonVersion64}; Flags: uninsdeletevalue; Check: IsWin64
 
 ;PDFCreator HKLM
 Root: HKLM; Subkey: SOFTWARE\PDFCreator\Program; ValueType: string; ValueName: ApplicationVersion; Valuedata: {#AppVersion}; Flags: uninsdeletevalue
@@ -612,6 +631,7 @@ Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printerdri
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printerportname; Valuedata: {code:GetPrinterportname}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Printermonitorname; Valuedata: {code:GetPrintermonitorname}; Flags: uninsdeletevalue
 
+Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: AppPath; Valuedata: {app}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup: App Path; Valuedata: {app}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup: Components; Valuedata: {code:GetWizardSelectedComponents}; Flags: uninsdeletevalue
 Root: HKLM; Subkey: {#UninstallRegStr}; ValueType: string; ValueName: Inno Setup: Tasks; Valuedata: {code:GetWizardSelectedTasks}; Flags: uninsdeletevalue
@@ -1604,7 +1624,7 @@ begin
  SaveStringToFile(LogFile, ' Portname : ' + GetPrinterportname('')  + #13#10, True)
  SubKeyName:='{#PrintRegMon}'+GetPrintermonitorname('');
  res:=true;
- tres:=RegWriteStringValue(HKLM,SubKeyName,'PdfCreator',GetShortname(ExpandConstant('{app}')+'\{#AppExename}'));
+ tres:=RegWriteStringValue(HKLM,SubKeyName,'PdfCreator',ExpandConstant('{app}')+'\{#AppExename}');
  res:=res and tres;
  tres:=RegWriteStringValue(HKLM,SubKeyName,'Port','pdfcmon');
  res:=res and tres;
@@ -1866,6 +1886,41 @@ begin
  end
 end;
 
+function StartService(ServiceName: string) : boolean;
+var
+	hSCM	: HANDLE;
+	hService: HANDLE;
+begin
+	hSCM := OpenServiceManager();
+	Result := false;
+	if hSCM <> 0 then begin
+		hService := OpenService(hSCM,ServiceName,SERVICE_START);
+        if hService <> 0 then begin
+        	Result := StartNTService(hService,0,0);
+            CloseServiceHandle(hService)
+		end;
+        CloseServiceHandle(hSCM)
+	end;
+end;
+
+function StopService(ServiceName: string) : boolean;
+var
+	hSCM	: HANDLE;
+	hService: HANDLE;
+	Status	: SERVICE_STATUS;
+begin
+	hSCM := OpenServiceManager();
+	Result := false;
+	if hSCM <> 0 then begin
+		hService := OpenService(hSCM,ServiceName,SERVICE_STOP);
+        if hService <> 0 then begin
+        	Result := ControlService(hService,SERVICE_CONTROL_STOP,Status);
+            CloseServiceHandle(hService)
+		end;
+        CloseServiceHandle(hSCM)
+	end;
+end;
+
 function IsServiceRunning(ServiceName: string) : boolean;
 var
  hSCM, hService	: HANDLE;
@@ -1882,6 +1937,40 @@ begin
   end
   CloseServiceHandle(hSCM)
  end
+end;
+
+function IsServiceInstalled(ServiceName: string) : boolean;
+var
+	hSCM	: HANDLE;
+	hService: HANDLE;
+begin
+	hSCM := OpenServiceManager();
+	Result := false;
+	if hSCM <> 0 then begin
+		hService := OpenService(hSCM,ServiceName,SERVICE_QUERY_CONFIG);
+        if hService <> 0 then begin
+            Result := true;
+            CloseServiceHandle(hService)
+		end;
+        CloseServiceHandle(hSCM)
+	end
+end;
+
+procedure StartServiceIfNotRunning(serviceName: string);
+begin
+ if IsServiceInstalled(servicename) then
+  if Not IsServiceRunning(servicename) then
+   StartService(serviceName);
+end;
+
+procedure RestartService(serviceName: string);
+begin
+ if IsServiceInstalled(servicename) then
+  if IsServiceRunning(servicename) then begin
+   StopService(serviceName);
+   Sleep(4000);
+   StartService(serviceName);
+  end;
 end;
 
 procedure SaveSpoolerServiceInformation(LogFile : String);
@@ -1971,9 +2060,9 @@ end;
 
 procedure UninstallCompletePrinterDuringInstall(PrinterMonitorname:String; PrinterPortname: String; PrinterDrivername: String; Printername:String; LogFile: String);
 var
- res, c, i: LongInt;
+ res, c, i: LongInt; resB : Boolean;
  PDFCreatorPrinters: Array of TPrinterInfo2;
- Ports: TArrayofString; Environment: String;
+ Ports: TArrayofString; Environment, MonitorRegKey: String;
  Monitors: Array of TMonitorInfo1;
 begin
  SaveStringToFile(LogFile, #13#10, True)
@@ -2041,7 +2130,13 @@ begin
     else
      SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
   end;
+  MonitorRegKey := 'SYSTEM\CurrentControlSet\Control\Print\Monitors\pdfcmon';
+  if RegKeyExists(HKLM, MonitorRegKey) then begin
+   resB := RegDeleteKeyIncludingSubkeys(HKLM, MonitorRegKey);
+   RestartService('spooler'); 
+  end;
  end;
+ 
  SaveStringToFile(LogFile, ' Ready uninstalling existing PDFCreator printers during installation' + #13#10, True)
 end;
 
@@ -2059,41 +2154,6 @@ begin
    Result:=PrinterInstallationSuccessfully
   else
    Result:=true;
-end;
-
-function StartService(ServiceName: string) : boolean;
-var
-	hSCM	: HANDLE;
-	hService: HANDLE;
-begin
-	hSCM := OpenServiceManager();
-	Result := false;
-	if hSCM <> 0 then begin
-		hService := OpenService(hSCM,ServiceName,SERVICE_START);
-        if hService <> 0 then begin
-        	Result := StartNTService(hService,0,0);
-            CloseServiceHandle(hService)
-		end;
-        CloseServiceHandle(hSCM)
-	end;
-end;
-
-function StopService(ServiceName: string) : boolean;
-var
-	hSCM	: HANDLE;
-	hService: HANDLE;
-	Status	: SERVICE_STATUS;
-begin
-	hSCM := OpenServiceManager();
-	Result := false;
-	if hSCM <> 0 then begin
-		hService := OpenService(hSCM,ServiceName,SERVICE_STOP);
-        if hService <> 0 then begin
-        	Result := ControlService(hService,SERVICE_CONTROL_STOP,Status);
-            CloseServiceHandle(hService)
-		end;
-        CloseServiceHandle(hSCM)
-	end;
 end;
 
 function IsServerInstallation: Boolean;
@@ -3076,40 +3136,6 @@ begin
   RunOnceKey := 'SOFTWARE\' + RunOnceKey
 
  result := RegValueExists(HKEY_LOCAL_MACHINE, RunOnceKey, 'PDFCreatorRestart')
-end;
-
-function IsServiceInstalled(ServiceName: string) : boolean;
-var
-	hSCM	: HANDLE;
-	hService: HANDLE;
-begin
-	hSCM := OpenServiceManager();
-	Result := false;
-	if hSCM <> 0 then begin
-		hService := OpenService(hSCM,ServiceName,SERVICE_QUERY_CONFIG);
-        if hService <> 0 then begin
-            Result := true;
-            CloseServiceHandle(hService)
-		end;
-        CloseServiceHandle(hSCM)
-	end
-end;
-
-procedure StartServiceIfNotRunning(serviceName: string);
-begin
- if IsServiceInstalled(servicename) then
-  if Not IsServiceRunning(servicename) then
-   StartService(serviceName);
-end;
-
-procedure RestartService(serviceName: string);
-begin
- if IsServiceInstalled(servicename) then
-  if IsServiceRunning(servicename) then begin
-   StopService(serviceName);
-   Sleep(4000);
-   StartService(serviceName);
-  end;
 end;
 
 function RemovePDFCreatorUninstallKey(): Boolean;

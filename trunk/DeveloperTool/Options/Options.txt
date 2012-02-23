@@ -31,6 +31,7 @@ DirectoryGhostscriptResource|txtGSResource.Text|String|||
 ' <Program>
 DisableEmail||Boolean|0||
 DontUseDocumentSettings||Boolean|0||
+EditWithPDFArchitect|chkEditWithPDFArchitect.Value|Boolean|1||
 
 ' <Printing Formats PS LanguageLevel>
 EPSLanguageLevel|cmbEPSLanguageLevel.Listindex|Long|2|0|3
@@ -50,6 +51,7 @@ LastSaveDirectory|LastSaveDirectory|String|<MyFiles>||
 LastUpdateCheck||String|||
 Logging|Logging|Boolean|0||
 LogLines|LogLines|Long|100|100|1000
+MaximumCountOfPDFArchitectToolTip||Long|5|0|<
 NoConfirmMessageSwitchingDefaultprinter|chkNoConfirmMessageSwitchingDefaultprinter|Boolean|0||
 NoProcessingAtStartup|chkNoProcessingAtStartup|Boolean|0||
 NoPSCheck||Boolean|0||
@@ -58,6 +60,7 @@ NoPSCheck||Boolean|0||
 OnePagePerFile|chkOnePagePerFile.Value|Boolean|0||
 
 ' <Program>
+OpenOutputFile|chkOpenOutputFile.Value|Boolean|1||
 OptionsDesign|cmbOptionsDesign.Listindex|Long|0|0|1
 OptionsEnabled||Boolean|1||
 OptionsVisible||Boolean|1||
@@ -184,7 +187,6 @@ PrintAfterSavingPrinter|cmbPrintAfterSavingPrinter.Text|String|||
 PrintAfterSavingQueryUser|cmbPrintAfterSavingQueryUser.Listindex|Long|0|0|3
 PrintAfterSavingTumble|cmbPrintAfterSavingTumble.Listindex|Long|0|0|1
 PrinterStop|PrinterStop|Boolean|0||
-PrinterTemppath|txtTemppath.Text|String|<Temp>PDFCreator\||
 ProcessPriority|sldProcessPriority.Value|Long|1|0|3
 ProgramFont|cmbFonts.List(frm.cmbFonts.Listindex)|String|MS Sans Serif||
 ProgramFontCharset|cmbCharset.Text|Long|0|0|<
@@ -234,9 +236,6 @@ StandardModifydate||String|||
 StandardSaveformat|cmbStandardSaveformat.Listindex|Long|0|0|7
 StandardSubject||String|||
 StandardTitle||String|||
-
-' <Program>
-StartStandardProgram|chkStartStandardProgram.Value|Boolean|1||
 
 ' <Printing Formats Bitmap Colors>
 SVGResolution||Long|72|1|<

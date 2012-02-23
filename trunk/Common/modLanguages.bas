@@ -515,15 +515,19 @@ Public Type tLanguageStrings
  PrintingCollect As String
  PrintingCreationDate As String
  PrintingDocumentTitle As String
+ PrintingEditWithPDFArchitect As String
  PrintingEMail As String
  PrintingEPSFiles As String
  PrintingJPEGFiles As String
  PrintingKeywords As String
  PrintingModifyDate As String
  PrintingNow As String
+ PrintingOpenOutputFile As String
  PrintingPCLFiles As String
  PrintingPCXFiles As String
  PrintingPDFAFiles As String
+ PrintingPDFArchitectToolTipText As String
+ PrintingPDFArchitectToolTipTitle As String
  PrintingPDFFiles As String
  PrintingPDFXFiles As String
  PrintingPNGFiles As String
@@ -532,7 +536,6 @@ Public Type tLanguageStrings
  PrintingPSFiles As String
  PrintingRAWFiles As String
  PrintingSave As String
- PrintingStartStandardProgram As String
  PrintingStatus As String
  PrintingSubject As String
  PrintingSVGFiles As String
@@ -1235,32 +1238,35 @@ On Error GoTo ErrPtnr_OnError
 50070   .PrintingCollect = Replace$(hLang.Retrieve("Collect", .PrintingCollect), "/n", vbCrLf)
 50080   .PrintingCreationDate = Replace$(hLang.Retrieve("CreationDate", .PrintingCreationDate), "/n", vbCrLf)
 50090   .PrintingDocumentTitle = Replace$(hLang.Retrieve("DocumentTitle", .PrintingDocumentTitle), "/n", vbCrLf)
-50100   .PrintingEMail = Replace$(hLang.Retrieve("EMail", .PrintingEMail), "/n", vbCrLf)
-50110   .PrintingEPSFiles = Replace$(hLang.Retrieve("EPSFiles", .PrintingEPSFiles), "/n", vbCrLf)
-50120   .PrintingJPEGFiles = Replace$(hLang.Retrieve("JPEGFiles", .PrintingJPEGFiles), "/n", vbCrLf)
-50130   .PrintingKeywords = Replace$(hLang.Retrieve("Keywords", .PrintingKeywords), "/n", vbCrLf)
-50140   .PrintingModifyDate = Replace$(hLang.Retrieve("ModifyDate", .PrintingModifyDate), "/n", vbCrLf)
-50150   .PrintingNow = Replace$(hLang.Retrieve("Now", .PrintingNow), "/n", vbCrLf)
-50160   .PrintingPCLFiles = Replace$(hLang.Retrieve("PCLFiles", .PrintingPCLFiles), "/n", vbCrLf)
-50170   .PrintingPCXFiles = Replace$(hLang.Retrieve("PCXFiles", .PrintingPCXFiles), "/n", vbCrLf)
-50180   .PrintingPDFAFiles = Replace$(hLang.Retrieve("PDFAFiles", .PrintingPDFAFiles), "/n", vbCrLf)
-50190   .PrintingPDFFiles = Replace$(hLang.Retrieve("PDFFiles", .PrintingPDFFiles), "/n", vbCrLf)
-50200   .PrintingPDFXFiles = Replace$(hLang.Retrieve("PDFXFiles", .PrintingPDFXFiles), "/n", vbCrLf)
-50210   .PrintingPNGFiles = Replace$(hLang.Retrieve("PNGFiles", .PrintingPNGFiles), "/n", vbCrLf)
-50220   .PrintingProfile = Replace$(hLang.Retrieve("Profile", .PrintingProfile), "/n", vbCrLf)
-50230   .PrintingPSDFiles = Replace$(hLang.Retrieve("PSDFiles", .PrintingPSDFiles), "/n", vbCrLf)
-50240   .PrintingPSFiles = Replace$(hLang.Retrieve("PSFiles", .PrintingPSFiles), "/n", vbCrLf)
-50250   .PrintingRAWFiles = Replace$(hLang.Retrieve("RAWFiles", .PrintingRAWFiles), "/n", vbCrLf)
-50260   .PrintingSave = Replace$(hLang.Retrieve("Save", .PrintingSave), "/n", vbCrLf)
-50270   .PrintingStartStandardProgram = Replace$(hLang.Retrieve("StartStandardProgram", .PrintingStartStandardProgram), "/n", vbCrLf)
-50280   .PrintingStatus = Replace$(hLang.Retrieve("Status", .PrintingStatus), "/n", vbCrLf)
-50290   .PrintingSubject = Replace$(hLang.Retrieve("Subject", .PrintingSubject), "/n", vbCrLf)
-50300   .PrintingSVGFiles = Replace$(hLang.Retrieve("SVGFiles", .PrintingSVGFiles), "/n", vbCrLf)
-50310   .PrintingTIFFFiles = Replace$(hLang.Retrieve("TIFFFiles", .PrintingTIFFFiles), "/n", vbCrLf)
-50320   .PrintingTXTFiles = Replace$(hLang.Retrieve("TXTFiles", .PrintingTXTFiles), "/n", vbCrLf)
-50330   .PrintingXCFFiles = Replace$(hLang.Retrieve("XCFFiles", .PrintingXCFFiles), "/n", vbCrLf)
-50340  End With
-50350  Set hLang = Nothing
+50100   .PrintingEditWithPDFArchitect = Replace$(hLang.Retrieve("EditWithPDFArchitect", .PrintingEditWithPDFArchitect), "/n", vbCrLf)
+50110   .PrintingEMail = Replace$(hLang.Retrieve("EMail", .PrintingEMail), "/n", vbCrLf)
+50120   .PrintingEPSFiles = Replace$(hLang.Retrieve("EPSFiles", .PrintingEPSFiles), "/n", vbCrLf)
+50130   .PrintingJPEGFiles = Replace$(hLang.Retrieve("JPEGFiles", .PrintingJPEGFiles), "/n", vbCrLf)
+50140   .PrintingKeywords = Replace$(hLang.Retrieve("Keywords", .PrintingKeywords), "/n", vbCrLf)
+50150   .PrintingModifyDate = Replace$(hLang.Retrieve("ModifyDate", .PrintingModifyDate), "/n", vbCrLf)
+50160   .PrintingNow = Replace$(hLang.Retrieve("Now", .PrintingNow), "/n", vbCrLf)
+50170   .PrintingOpenOutputFile = Replace$(hLang.Retrieve("OpenOutputFile", .PrintingOpenOutputFile), "/n", vbCrLf)
+50180   .PrintingPCLFiles = Replace$(hLang.Retrieve("PCLFiles", .PrintingPCLFiles), "/n", vbCrLf)
+50190   .PrintingPCXFiles = Replace$(hLang.Retrieve("PCXFiles", .PrintingPCXFiles), "/n", vbCrLf)
+50200   .PrintingPDFAFiles = Replace$(hLang.Retrieve("PDFAFiles", .PrintingPDFAFiles), "/n", vbCrLf)
+50210   .PrintingPDFArchitectToolTipText = Replace$(hLang.Retrieve("PDFArchitectToolTipText", .PrintingPDFArchitectToolTipText), "/n", vbCrLf)
+50220   .PrintingPDFArchitectToolTipTitle = Replace$(hLang.Retrieve("PDFArchitectToolTipTitle", .PrintingPDFArchitectToolTipTitle), "/n", vbCrLf)
+50230   .PrintingPDFFiles = Replace$(hLang.Retrieve("PDFFiles", .PrintingPDFFiles), "/n", vbCrLf)
+50240   .PrintingPDFXFiles = Replace$(hLang.Retrieve("PDFXFiles", .PrintingPDFXFiles), "/n", vbCrLf)
+50250   .PrintingPNGFiles = Replace$(hLang.Retrieve("PNGFiles", .PrintingPNGFiles), "/n", vbCrLf)
+50260   .PrintingProfile = Replace$(hLang.Retrieve("Profile", .PrintingProfile), "/n", vbCrLf)
+50270   .PrintingPSDFiles = Replace$(hLang.Retrieve("PSDFiles", .PrintingPSDFiles), "/n", vbCrLf)
+50280   .PrintingPSFiles = Replace$(hLang.Retrieve("PSFiles", .PrintingPSFiles), "/n", vbCrLf)
+50290   .PrintingRAWFiles = Replace$(hLang.Retrieve("RAWFiles", .PrintingRAWFiles), "/n", vbCrLf)
+50300   .PrintingSave = Replace$(hLang.Retrieve("Save", .PrintingSave), "/n", vbCrLf)
+50310   .PrintingStatus = Replace$(hLang.Retrieve("Status", .PrintingStatus), "/n", vbCrLf)
+50320   .PrintingSubject = Replace$(hLang.Retrieve("Subject", .PrintingSubject), "/n", vbCrLf)
+50330   .PrintingSVGFiles = Replace$(hLang.Retrieve("SVGFiles", .PrintingSVGFiles), "/n", vbCrLf)
+50340   .PrintingTIFFFiles = Replace$(hLang.Retrieve("TIFFFiles", .PrintingTIFFFiles), "/n", vbCrLf)
+50350   .PrintingTXTFiles = Replace$(hLang.Retrieve("TXTFiles", .PrintingTXTFiles), "/n", vbCrLf)
+50360   .PrintingXCFFiles = Replace$(hLang.Retrieve("XCFFiles", .PrintingXCFFiles), "/n", vbCrLf)
+50370  End With
+50380  Set hLang = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1310,7 +1316,7 @@ On Error GoTo ErrPtnr_OnError
 50020   .CommonAuthor = "Philip Chinery, Frank Heindörfer"
 50030   .CommonLanguagename = "English"
 50040   .CommonTitle = "PDF Print monitor"
-50050   .CommonVersion = "1.1.0"
+50050   .CommonVersion = "1.3.0"
 50060
 50070   .DialogDocument = "&Document"
 50080   .DialogDocumentAdd = "Add"
@@ -1374,7 +1380,7 @@ On Error GoTo ErrPtnr_OnError
 50660   .MessagesMsg03 = "Do you wish to reset all settings?"
 50670   .MessagesMsg04 = "Error: Cannot send Email!"
 50680   .MessagesMsg05 = "File already exists. Do you want to overwrite it?"
-50690   .MessagesMsg06 = "This file does not seem to be a postscript file!"
+50690   .MessagesMsg06 = "This file does not seem to be a PostScript file!"
 50700   .MessagesMsg07 = "There is a problem when trying to access this drive or directory!"
 50710   .MessagesMsg08 = "Cannot find gsdll32.dll. Please check the ghostscript-program directory (see options)!"
 50720   .MessagesMsg09 = "The output path does not exist. Do you want to create it?"
@@ -1417,7 +1423,7 @@ On Error GoTo ErrPtnr_OnError
 51090   .OptionsAdditionalGhostscriptSearchpath = "Additional Ghostscript searchpath"
 51100   .OptionsAddWindowsFontpath = "Use Windows fonts"
 51110   .OptionsAllowSpecialGSCharsInFilenames = "Allow special Ghostscript chars in filename"
-51120   .OptionsAssociatePSFiles = "Associate PDFCreator with postscript files"
+51120   .OptionsAssociatePSFiles = "Associate PDFCreator with PostScript files"
 51130   .OptionsAutosaveDirectoryPrompt = "Select Autosave Directory"
 51140   .OptionsAutosaveFilename = "Filename"
 51150   .OptionsAutosaveFilenameTokens = "Add a Filename-Token"
@@ -1451,8 +1457,8 @@ On Error GoTo ErrPtnr_OnError
 51430   .OptionsDirectoriesTempPath = "Temporary Files"
 51440   .OptionsDocument = "Document"
 51450   .OptionsEnableNotice = "You can set these options in the default profile only."
-51460   .OptionsEPSDescription = "Encapsulated Postscript Format"
-51470   .OptionsEPSFiles = "Encapsulated Postscript-Files"
+51460   .OptionsEPSDescription = "Encapsulated PostScript Format"
+51470   .OptionsEPSFiles = "Encapsulated PostScript Files"
 51480   .OptionsEPSSymbol = "EPS"
 51490   .OptionsGhostscriptBinariesDirectoryPrompt = "Select Ghostscript Binaries Directory"
 51500   .OptionsGhostscriptFontsDirectoryPrompt = "Select Ghostscript Fonts Directory"
@@ -1474,7 +1480,7 @@ On Error GoTo ErrPtnr_OnError
 51660   .OptionsLanguagesTranslation = "Translation"
 51670   .OptionsLanguagesVersion = "Version"
 51680   .OptionsNothingToConfigure = "There is nothing to configure."
-51690   .OptionsOnePagePerFile = "One page per file (not for pdf and eps files)"
+51690   .OptionsOnePagePerFile = "One page per file (not for PDF and EPS files)"
 51700   .OptionsOwnerPass = "Owner Password"
 51710   .OptionsPassCancel = "Cancel"
 51720   .OptionsPassOK = "OK"
@@ -1636,7 +1642,7 @@ On Error GoTo ErrPtnr_OnError
 53280   .OptionsPNGColorscount05 = "Greyscale (8 Bit)"
 53290   .OptionsPNGColorscount06 = "4294967296 colors (32 Bit) with transparency"
 53300   .OptionsPNGDescription = "PNG Format. Please use only for single pages."
-53310   .OptionsPNGFiles = "Bitmap PNG-Files"
+53310   .OptionsPNGFiles = "Bitmap PNG Files"
 53320   .OptionsPNGSymbol = "PNG"
 53330   .OptionsPrintAfterSaving = "Print after saving"
 53340   .OptionsPrintAfterSavingBitsPerPixel = "Bits per pixel"
@@ -1732,9 +1738,9 @@ On Error GoTo ErrPtnr_OnError
 54240   .OptionsPSDColorsCount01 = "4294967296 colors (32 Bit) CMYK"
 54250   .OptionsPSDColorscount02 = "16777216 colors (24 Bit)"
 54260   .OptionsPSDDescription = "Photoshop Format"
-54270   .OptionsPSDescription = "Postscript Format"
+54270   .OptionsPSDescription = "PostScript Format"
 54280   .OptionsPSDSymbol = "PSD"
-54290   .OptionsPSFiles = "Postscript-Files"
+54290   .OptionsPSFiles = "PostScript Files"
 54300   .OptionsPSLanguageLevel = "Language Level:"
 54310   .OptionsPSSymbol = "PS"
 54320   .OptionsRAWColorsCount01 = "4294967296 colors (32 Bit) CMYK"
@@ -1811,46 +1817,49 @@ On Error GoTo ErrPtnr_OnError
 55030   .PrintersSave = "Save"
 55040
 55050   .PrintingAuthor = "A&uthor:"
-55060   .PrintingBMPFiles = "BMP-Files"
+55060   .PrintingBMPFiles = "BMP Files"
 55070   .PrintingCancel = "&Cancel"
 55080   .PrintingCollect = "&Wait - Collect"
 55090   .PrintingCreationDate = "Creation &Date:"
 55100   .PrintingDocumentTitle = "Document &Title:"
-55110   .PrintingEMail = "&eMail"
-55120   .PrintingEPSFiles = "Encapsulated Postscript-Files"
-55130   .PrintingJPEGFiles = "JPEG-Files"
-55140   .PrintingKeywords = "&Keywords:"
-55150   .PrintingModifyDate = "&Modify Date:"
-55160   .PrintingNow = "Now"
-55170   .PrintingPCLFiles = "PCL (HP PCL-XL)-Files"
-55180   .PrintingPCXFiles = "PCX-Files"
-55190   .PrintingPDFAFiles = "PDF/A-1b-Files"
-55200   .PrintingPDFFiles = "PDF-Files"
-55210   .PrintingPDFXFiles = "PDF/X-Files"
-55220   .PrintingPNGFiles = "PNG-Files"
-55230   .PrintingProfile = "Profile"
-55240   .PrintingPSDFiles = "PSD (Adobe Photoshop)-Files"
-55250   .PrintingPSFiles = "Postscript-Files"
-55260   .PrintingRAWFiles = "RAW (binary format)-Files"
-55270   .PrintingSave = "&Save"
-55280   .PrintingStartStandardProgram = "&After saving open the document with the default program."
-55290   .PrintingStatus = "Creating file..."
-55300   .PrintingSubject = "Su&bject:"
-55310   .PrintingSVGFiles = "SVG-Files"
-55320   .PrintingTIFFFiles = "TIFF-Files"
-55330   .PrintingTXTFiles = "Text-Files"
-55340   .PrintingXCFFiles = "XCF (Gimp)-Files"
-55350
-55360   .SaveOpenAttributes = "Attributes"
-55370   .SaveOpenCancel = "Cancel"
-55380   .SaveOpenFilename = "Filename"
-55390   .SaveOpenOpen = "Open"
-55400   .SaveOpenOpenTitle = "Open"
-55410   .SaveOpenSave = "Save"
-55420   .SaveOpenSaveTitle = "Save as"
-55430   .SaveOpenSize = "Size"
-55440
-55450  End With
+55110   .PrintingEditWithPDFArchitect = "Edit PDF files with PDFArchitect"
+55120   .PrintingEMail = "&eMail"
+55130   .PrintingEPSFiles = "Encapsulated PostScript Files"
+55140   .PrintingJPEGFiles = "JPEG Files"
+55150   .PrintingKeywords = "&Keywords:"
+55160   .PrintingModifyDate = "&Modify Date:"
+55170   .PrintingNow = "Now"
+55180   .PrintingOpenOutputFile = "After saving &open output file"
+55190   .PrintingPCLFiles = "PCL (HP PCL-XL) Files"
+55200   .PrintingPCXFiles = "PCX Files"
+55210   .PrintingPDFAFiles = "PDF/A-1b Files"
+55220   .PrintingPDFArchitectToolTipText = "Edit the created PDF file with PDFArchitect.%n%nThis note will be shown %1 more times."
+55230   .PrintingPDFArchitectToolTipTitle = "New: PDFArchitect"
+55240   .PrintingPDFFiles = "PDF Files"
+55250   .PrintingPDFXFiles = "PDF/X Files"
+55260   .PrintingPNGFiles = "PNG Files"
+55270   .PrintingProfile = "Profile"
+55280   .PrintingPSDFiles = "PSD (Adobe Photoshop) Files"
+55290   .PrintingPSFiles = "PostScript Files"
+55300   .PrintingRAWFiles = "RAW (binary format) Files"
+55310   .PrintingSave = "&Save"
+55320   .PrintingStatus = "Creating file..."
+55330   .PrintingSubject = "Su&bject:"
+55340   .PrintingSVGFiles = "SVG Files"
+55350   .PrintingTIFFFiles = "TIFF Files"
+55360   .PrintingTXTFiles = "Text Files"
+55370   .PrintingXCFFiles = "XCF (Gimp) Files"
+55380
+55390   .SaveOpenAttributes = "Attributes"
+55400   .SaveOpenCancel = "Cancel"
+55410   .SaveOpenFilename = "Filename"
+55420   .SaveOpenOpen = "Open"
+55430   .SaveOpenOpenTitle = "Open"
+55440   .SaveOpenSave = "Save"
+55450   .SaveOpenSaveTitle = "Save as"
+55460   .SaveOpenSize = "Size"
+55470
+55480  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

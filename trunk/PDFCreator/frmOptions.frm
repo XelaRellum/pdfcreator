@@ -578,7 +578,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim FilterIndex As Long, files As Collection, dummyOptions As tOptions, tempOptions As tOptions
 50020  FilterIndex = OpenFileDialog(files, cmbProfile.List(cmbProfile.ListIndex), _
    "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", GetMyFiles, _
-   App.ProductName, OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, Me.hwnd)
+   App.ProductName, OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, Me.hWnd)
 50050  If FilterIndex > 0 Then
 50060   tempOptions = ReadOptionsINI(dummyOptions, files(1), 0, True, True)
 50070   ProfileOptions(cmbProfile.ListIndex) = tempOptions
@@ -634,7 +634,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim FName As String, res As Long, tempOptions As tOptions
 50020  res = SaveFileDialog(FName, cmbProfile.List(cmbProfile.ListIndex), "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", _
-  GetMyFiles, App.ProductName, OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + OFN_OVERWRITEPROMPT, Me.hwnd)
+  GetMyFiles, App.ProductName, OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + OFN_OVERWRITEPROMPT, Me.hWnd)
 50040  If res > 0 Then
 50050   tempOptions = GetOptionsFromUserControls(ProfileOptions(cmbProfile.ListIndex))   ' Get the current settings settings
 50060   SaveOptionsINI tempOptions, FName
@@ -1034,38 +1034,37 @@ On Error GoTo ErrPtnr_OnError
 50300  ' Add all new/renamed profiles
 50310  For i = 1 To cmbProfile.ListCount - 1
 50320   ProfileOptions(i).LastUpdateCheck = Options.LastUpdateCheck
-50330   ProfileOptions(i).PrinterTemppath = PrinterTemppath
-50340   SaveOptions ProfileOptions(i), cmbProfile.List(i)
-50350  Next i
-50360  ' Ready profiles saving
-50370
-50380  Set PrinterProfiles = New Collection
-50390  For i = 1 To TempPrinterProfiles.Count
-50400   sa(0) = TempPrinterProfiles(i)(0)
-50410   sa(1) = TempPrinterProfiles(i)(2)
-50420   PrinterProfiles.Add sa
-50430  Next i
-50440
-50450  SavePrinterProfiles PrinterProfiles
-50460
-50470  SetHelpfile
-50480
-50490  If IsWin9xMe = False Then
-50501   Select Case Options.ProcessPriority
+50330   SaveOptions ProfileOptions(i), cmbProfile.List(i)
+50340  Next i
+50350  ' Ready profiles saving
+50360
+50370  Set PrinterProfiles = New Collection
+50380  For i = 1 To TempPrinterProfiles.Count
+50390   sa(0) = TempPrinterProfiles(i)(0)
+50400   sa(1) = TempPrinterProfiles(i)(2)
+50410   PrinterProfiles.Add sa
+50420  Next i
+50430
+50440  SavePrinterProfiles PrinterProfiles
+50450
+50460  SetHelpfile
+50470
+50480  If IsWin9xMe = False Then
+50491   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50520     SetProcessPriority Idle
-50530    Case 1: 'Normal
-50540     SetProcessPriority Normal
-50550    Case 2: 'High
-50560     SetProcessPriority High
-50570    Case 3: 'Realtime
-50580     SetProcessPriority RealTime
-50590   End Select
-50600  End If
-50610  If tRestart = True Then
-50620   Restart = True
-50630  End If
-50640  Unload Me
+50510     SetProcessPriority Idle
+50520    Case 1: 'Normal
+50530     SetProcessPriority Normal
+50540    Case 2: 'High
+50550     SetProcessPriority High
+50560    Case 3: 'Realtime
+50570     SetProcessPriority RealTime
+50580   End Select
+50590  End If
+50600  If tRestart = True Then
+50610   Restart = True
+50620  End If
+50630  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

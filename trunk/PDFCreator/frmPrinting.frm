@@ -15,6 +15,28 @@ Begin VB.Form frmPrinting
    ScaleWidth      =   7815
    ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
+   Begin VB.Timer Timer2 
+      Enabled         =   0   'False
+      Interval        =   10000
+      Left            =   7080
+      Top             =   720
+   End
+   Begin VB.Timer Timer1 
+      Enabled         =   0   'False
+      Interval        =   1000
+      Left            =   6480
+      Top             =   720
+   End
+   Begin VB.CheckBox chkEditWithPDFArchitect 
+      Appearance      =   0  '2D
+      Caption         =   "Edit pdf files with PDFArchitect"
+      ForeColor       =   &H80000008&
+      Height          =   255
+      Left            =   360
+      TabIndex        =   25
+      Top             =   5640
+      Width           =   7215
+   End
    Begin VB.Frame fraProfile 
       Caption         =   "Profile"
       Height          =   735
@@ -37,7 +59,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   105
       TabIndex        =   15
-      Top             =   5880
+      Top             =   6000
       Width           =   1350
    End
    Begin VB.CommandButton cmdCollect 
@@ -45,7 +67,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   1680
       TabIndex        =   16
-      Top             =   5880
+      Top             =   6000
       Width           =   1350
    End
    Begin VB.CommandButton cmdNow 
@@ -112,14 +134,14 @@ Begin VB.Form frmPrinting
       Top             =   1080
       Width           =   6240
    End
-   Begin VB.CheckBox chkStartStandardProgram 
+   Begin VB.CheckBox chkOpenOutputFile 
       Appearance      =   0  '2D
-      Caption         =   "After saving open the document with the standardprogram."
+      Caption         =   "After saving open the document"
       ForeColor       =   &H80000008&
-      Height          =   615
-      Left            =   105
+      Height          =   255
+      Left            =   120
       TabIndex        =   14
-      Top             =   5160
+      Top             =   5280
       Width           =   7620
    End
    Begin VB.TextBox txtTitle 
@@ -153,7 +175,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   3255
       TabIndex        =   17
-      Top             =   5880
+      Top             =   6000
       Width           =   1350
    End
    Begin VB.CommandButton cmdEMail 
@@ -161,7 +183,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   4830
       TabIndex        =   18
-      Top             =   5880
+      Top             =   6000
       Width           =   1350
    End
    Begin VB.CommandButton cmdSave 
@@ -170,7 +192,7 @@ Begin VB.Form frmPrinting
       Height          =   495
       Left            =   6375
       TabIndex        =   19
-      Top             =   5880
+      Top             =   6000
       Width           =   1350
    End
    Begin VB.Label lblKeywords 
@@ -247,28 +269,63 @@ Option Explicit
 
 Private SaveFilename As String, SaveFilterIndex As Long
 
+Private OutputFileIsPDFFile As Boolean
 Private PSHeader As tPSHeader
 Private OldProfile As Long
+Private PDFArchitectToolTip As clsToolTip
 Public PrinterProfile As String
+Private timerCounter As Long
 
-Private Sub chkStartStandardProgram_Click()
+Private Sub chkEditWithPDFArchitect_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If chkStartStandardProgram.value = 1 Then
-50020    Options.StartStandardProgram = 1
+50010  If chkEditWithPDFArchitect.value = 1 Then
+50020    Options.EditWithPDFArchitect = 1
 50030   Else
-50040    Options.StartStandardProgram = 0
+50040    Options.EditWithPDFArchitect = 0
 50050  End If
 50060  If cmbProfile.ListIndex = 0 Then
-50070    SaveOption Options, "StartStandardProgram"
+50070    SaveOption Options, "EditWithPDFArchitect"
 50080   Else
-50090    SaveOption Options, "StartStandardProgram", cmbProfile.List(cmbProfile.ListIndex)
+50090    SaveOption Options, "EditWithPDFArchitect", cmbProfile.List(cmbProfile.ListIndex)
 50100  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "chkStartStandardProgram_Click")
+Select Case ErrPtnr.OnError("frmPrinting", "chkEditWithPDFArchitect_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub chkOpenOutputFile_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If chkOpenOutputFile.value = 1 Then
+50020    Options.OpenOutputFile = 1
+50030    If IsPDFArchitectInstalled Then
+50040      chkEditWithPDFArchitect.Enabled = True
+50050     Else
+50060      chkEditWithPDFArchitect.Enabled = False
+50070    End If
+50080   Else
+50090    Options.OpenOutputFile = 0
+50100    chkEditWithPDFArchitect.Enabled = False
+50110  End If
+50120  If cmbProfile.ListIndex = 0 Then
+50130    SaveOption Options, "OpenOutputFile"
+50140   Else
+50150    SaveOption Options, "OpenOutputFile", cmbProfile.List(cmbProfile.ListIndex)
+50160  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "chkOpenOutputFile_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -348,7 +405,7 @@ On Error GoTo ErrPtnr_OnError
 50150
 50160  If Len(PDFFile) > 0 And FileExists(PDFFile) = True Then
 50170   If Options.RunProgramAfterSaving = 1 Then
-50180    RunProgramAfterSaving Me.hwnd, PDFFile, _
+50180    RunProgramAfterSaving Me.hWnd, PDFFile, _
    Options.RunProgramAfterSavingProgramParameters, _
    Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50210   End If
@@ -453,7 +510,7 @@ On Error GoTo ErrPtnr_OnError
 50040   .Visible = True
 50050   SetTopMost frmMain, True, True
 50060   SetTopMost frmMain, False, True
-50070   SetActiveWindow .hwnd
+50070   SetActiveWindow .hWnd
 50080  End With
 50090  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -499,14 +556,32 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub Form_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  PDFArchitectToolTip.Destroy
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "Form_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If KeyCode = vbKeyF1 Then
-50020   KeyCode = 0
-50030   Call HTMLHelp_ShowTopic("html\pdfcreator-user-manual.html")
-50040  End If
+50020   PDFArchitectToolTip.Destroy
+50030   KeyCode = 0
+50040   Call HTMLHelp_ShowTopic("html\pdfcreator-user-manual.html")
+50050  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -526,37 +601,71 @@ On Error GoTo ErrPtnr_OnError
 50010  Me.Icon = LoadResPicture(2120, vbResIcon)
 50020  Me.KeyPreview = True
 50030  Caption = App.EXEName
-50040  Caption = App.title & " " & GetProgramReleaseStr
+50040  Caption = App.Title & " " & GetProgramReleaseStr
 50050  Printing = True
-50060
-50070  With anmProcess
-50080   .Top = 0
-50090   .Left = 0
-50100   .Width = 260 * Screen.TwipsPerPixelX
-50110   .Height = 66 * Screen.TwipsPerPixelY
-50120  End With
-50130
-50140  If frmMain.Visible = False Then
-50150   FormInTaskbar Me, True, True
-50160  End If
-50170
-50180  ChangeLanguage
-50190
-50200  InitForm
-50210
-50220  UpdateProfiles
-50230
-50240  With Options
-50250   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50260  End With
-50270
-50280  ShowAcceleratorsInForm Me, True
-50290  SetTopMost Me, True, True
-50300  SetTopMost Me, False, True
+50060  OutputFileIsPDFFile = False
+50070
+50080  With anmProcess
+50090   .Top = 0
+50100   .Left = 0
+50110   .Width = 260 * Screen.TwipsPerPixelX
+50120   .Height = 66 * Screen.TwipsPerPixelY
+50130  End With
+50140
+50150  If frmMain.Visible = False Then
+50160   FormInTaskbar Me, True, True
+50170  End If
+50180
+50190  ChangeLanguage
+50200
+50210  InitForm
+50220
+50230  UpdateProfiles
+50240
+50250  With Options
+50260   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50270  End With
+50280
+50290  ShowAcceleratorsInForm Me, True
+50300  SetTopMost Me, True, True
+50310  SetTopMost Me, False, True
+50320
+50330  Set PDFArchitectToolTip = New clsToolTip
+50340  With PDFArchitectToolTip
+50350   .DelayTime = 1000
+50360   .VisibleTime = 1000
+50370   .Style = TTBalloon
+50380   .Icon = TTIconInfo
+50390   .Title = LanguageStrings.PrintingPDFArchitectToolTipTitle
+50400   .PopupOnDemand = True
+50410   .CreateToolTip chkEditWithPDFArchitect.hWnd
+50420  End With
+50430  ShowPDFArchitectToolTip
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "Form_Load")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub ShowPDFArchitectToolTip()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Options.MaximumCountOfPDFArchitectToolTip > 0 And chkEditWithPDFArchitect.Enabled = True Then
+50020   Options.MaximumCountOfPDFArchitectToolTip = Options.MaximumCountOfPDFArchitectToolTip - 1
+50030   SaveOption Options, "MaximumCountOfPDFArchitectToolTip"
+50040   Timer1.Enabled = True
+50050  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "ShowPDFArchitectToolTip")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -570,55 +679,66 @@ Private Sub InitForm()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim tDate As Date, tStr As String
-50020  If Options.StartStandardProgram = 1 Then
-50030    chkStartStandardProgram.value = 1
+50020  If Options.EditWithPDFArchitect = 1 Then
+50030    chkEditWithPDFArchitect.value = 1
 50040   Else
-50050    chkStartStandardProgram.value = 0
+50050    chkEditWithPDFArchitect.value = 0
 50060  End If
-50070  PSHeader = GetPSHeader(PDFSpoolfile)
-50080  With PSHeader
-50090   If Len(Trim$(Options.StandardTitle)) > 0 Then
-50100     txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, _
+50070  If IsPDFArchitectInstalled Then
+50080    chkEditWithPDFArchitect.Enabled = True
+50090   Else
+50100    chkEditWithPDFArchitect.Enabled = False
+50110  End If
+50120  If Options.OpenOutputFile = 1 Then
+50130    chkOpenOutputFile.value = 1
+50140   Else
+50150    chkOpenOutputFile.value = 0
+50160  End If
+50170  PSHeader = GetPSHeader(PDFSpoolfile)
+50180  With PSHeader
+50190   If Len(Trim$(Options.StandardTitle)) > 0 Then
+50200     txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, _
      RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
-50120    Else
-50130     txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, Options.SaveFilename, , , True)
-50140   End If
-50150   If Options.UseStandardAuthor = 1 Then
-50160     txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
-50170    Else
-50180     txtCreateFor.Text = GetDocUsername(CurrentInfoSpoolFile, False)
-50190   End If
-50200   If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50210    txtKeywords.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
-50220   End If
-50230   If Len(Trim$(Options.StandardSubject)) > 0 Then
-50240    txtSubject.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
-50250   End If
-50260
-50270   tDate = Now
-50280   If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50290     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
-50300    Else
-50310     tStr = CStr(tDate)
+50220    Else
+50230     txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, Options.SaveFilename, , , True)
+50240   End If
+50250   If Options.UseStandardAuthor = 1 Then
+50260     txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50270    Else
+50280     txtCreateFor.Text = GetDocUsernameFromInfoSpoolFile(CurrentInfoSpoolFile)
+50290   End If
+50300   If Len(Trim$(Options.StandardKeywords)) > 0 Then
+50310    txtKeywords.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
 50320   End If
-50330   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
-50340
-50350   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
-50360  End With
-50370  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
-50380   cmdOptions.Enabled = False
-50390  End If
-50400  If Options.OptionsVisible = 0 Then
-50410   cmdOptions.Visible = False
-50420  End If
-50430  If Options.DisableEmail = 1 Then
-50440   cmdEMail.Enabled = False
-50450  End If
-50460  Height = cmdCollect.Top + cmdCollect.Height + (Height - ScaleHeight) + 100
-50470  With txtTitle
-50480   .SelStart = 0
-50490   .SelLength = Len(.Text)
-50500  End With
+50330   If Len(Trim$(Options.StandardSubject)) > 0 Then
+50340    txtSubject.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50350   End If
+50360
+50370   tDate = Now
+50380   If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50390     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50400    Else
+50410     tStr = CStr(tDate)
+50420   End If
+50430   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
+50440
+50450   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
+50460  End With
+50470
+50480  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
+50490   cmdOptions.Enabled = False
+50500  End If
+50510  If Options.OptionsVisible = 0 Then
+50520   cmdOptions.Visible = False
+50530  End If
+50540  If Options.DisableEmail = 1 Then
+50550   cmdEMail.Enabled = False
+50560  End If
+50570  Height = cmdCollect.Top + cmdCollect.Height + (Height - ScaleHeight) + 100
+50580  With txtTitle
+50590   .SelStart = 0
+50600   .SelLength = Len(.Text)
+50610  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -656,10 +776,60 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  SetTopMost frmMain, False, False
 50020  Printing = False
+50030  PDFArchitectToolTip.Destroy
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("frmPrinting", "Form_Unload")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Timer1_Timer()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tStr As String, lines() As String
+50020  Timer1.Enabled = False
+50030
+50040  tStr = LanguageStrings.PrintingPDFArchitectToolTipText
+50050  If Options.MaximumCountOfPDFArchitectToolTip = 0 Then
+50060    If InStr(LanguageStrings.PrintingPDFArchitectToolTipText, "%n") Then
+50070     lines = Split(LanguageStrings.PrintingPDFArchitectToolTipText, "%n")
+50080     tStr = lines(0)
+50090    End If
+50100   Else
+50110    tStr = Replace(Replace(tStr, "%1", Options.MaximumCountOfPDFArchitectToolTip), "%n", vbCrLf)
+50120  End If
+50130  PDFArchitectToolTip.TipText = tStr
+50140  PDFArchitectToolTip.Show chkEditWithPDFArchitect.hWnd, 6, chkEditWithPDFArchitect.Height / Screen.TwipsPerPixelX - 1     '//In Pixel only
+50150  Timer2.Enabled = True
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "Timer1_Timer")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub Timer2_Timer()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Timer2.Enabled = False
+50020  PDFArchitectToolTip.Destroy
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "Timer2_Timer")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -825,7 +995,7 @@ On Error GoTo ErrPtnr_OnError
 50190     PDFFile = Replace$(PDFFile, "%d", "1", , , vbTextCompare)
 50200    End If
 50210    If Options.RunProgramAfterSaving = 1 Then
-50220     RunProgramAfterSaving Me.hwnd, PDFFile, _
+50220     RunProgramAfterSaving Me.hWnd, PDFFile, _
      Options.RunProgramAfterSavingProgramParameters, _
      Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50250    End If
@@ -840,16 +1010,24 @@ On Error GoTo ErrPtnr_OnError
 50340     SaveOption tOpt, "Counter", cmbProfile.List(cmbProfile.ListIndex)
 50350   End If
 50360
-50370   If chkStartStandardProgram.value = 1 Then
+50370   If chkOpenOutputFile.value = 1 Then
 50380    If Options.OnePagePerFile = 1 Then
-50390      OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
-50400     Else
-50410      OpenDocument PDFFile
-50420    End If
-50430   End If
-50440   IsConverted = True
-50450   KillInfoSpoolFiles CurrentInfoSpoolFile
-50460  End If
+50390      If OutputFileIsPDFFile And IsPDFArchitectInstalled And chkEditWithPDFArchitect.value = 1 Then
+50400        OpenPDFFileWithPDFArchitect Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50410       Else
+50420        OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50430      End If
+50440     Else
+50450      If OutputFileIsPDFFile And IsPDFArchitectInstalled And chkEditWithPDFArchitect.value = 1 Then
+50460        OpenPDFFileWithPDFArchitect PDFFile
+50470       Else
+50480        OpenDocument PDFFile
+50490      End If
+50500    End If
+50510   End If
+50520   IsConverted = True
+50530   KillInfoSpoolFiles CurrentInfoSpoolFile
+50540  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -863,30 +1041,27 @@ End Select
 End Function
 
 Private Function Create_eDoc() As String
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  On Error GoTo ErrorHandler
-50020  Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
+ On Error GoTo ErrorHandler
+ Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
   tErrNumber As Long, FilterIndex As Long, Cancel As Boolean, _
   PDFDocInfo As tPDFDocInfo, files As Collection, Extf(12) As String
-50050  Dim PDFDocInfoFile As String, StampFile As String
-50060
-50070  Extf(0) = "*.pdf"
-50080  Extf(1) = "*.png"
-50090  Extf(2) = "*.jpg"
-50100  Extf(3) = "*.bmp"
-50110  Extf(4) = "*.pcx"
-50120  Extf(5) = "*.tif"
-50130  Extf(6) = "*.ps"
-50140  Extf(7) = "*.eps"
-50150  Extf(8) = "*.txt"
-50160  Extf(9) = "*.psd"
-50170  Extf(10) = "*.pcl"
-50180  Extf(11) = "*.raw"
-50190  Extf(12) = "*.svg"
-50200  With LanguageStrings
-50210   Filter = .ListPDFFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
+ Dim PDFDocInfoFile As String, StampFile As String
+
+ Extf(0) = "*.pdf"
+ Extf(1) = "*.png"
+ Extf(2) = "*.jpg"
+ Extf(3) = "*.bmp"
+ Extf(4) = "*.pcx"
+ Extf(5) = "*.tif"
+ Extf(6) = "*.ps"
+ Extf(7) = "*.eps"
+ Extf(8) = "*.txt"
+ Extf(9) = "*.psd"
+ Extf(10) = "*.pcl"
+ Extf(11) = "*.raw"
+ Extf(12) = "*.svg"
+ With LanguageStrings
+  Filter = .ListPDFFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPDFAFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPDFXFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPNGFiles & " (" & Extf(1) & ")|" & Extf(1) & "|" & _
@@ -901,149 +1076,139 @@ On Error GoTo ErrPtnr_OnError
    .PrintingPCLFiles & " (" & Extf(10) & ")|" & Extf(10) & "|" & _
    .PrintingRAWFiles & " (" & Extf(11) & ")|" & Extf(11) & "|" & _
    .PrintingSVGFiles & " (" & Extf(12) & ")|" & Extf(12)
-50360  End With
-50370
-50380  FilterIndex = Options.StandardSaveformat + 1
-50390  With LanguageStrings
-50400   PSHeader = GetPSHeader(PDFSpoolfile)
-50410   If Len(txtTitle.Text) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
-50420     SaveFilename = ReplaceForbiddenChars(RemoveAllKnownFileExtensions(txtTitle.Text))
-50430    Else
-50440     SaveFilename = ReplaceForbiddenChars(txtTitle.Text)
-50450   End If
-50460   Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
-50470   If SaveOpenCancel = True Then
-50480    Exit Function
-50490   End If
-50500   If files.Count <> 1 Then
-50510    Exit Function
-50520   End If
-50530   SaveFilterIndex = FilterIndex
-50540   SaveFilename = files.Item(1)
-50550   If FileExists(files.Item(1)) = True Then
-50560    If FileInUse(files.Item(1)) = True Then
-50570     MsgBox LanguageStrings.MessagesMsg34
-50580     Exit Function
-50590    End If
-50600   End If
-50610  End With
-50620
-50630  Screen.MousePointer = vbHourglass
-50640  DoEvents
-50650
-50660  Options.StartStandardProgram = chkStartStandardProgram.value
-50670  OutputFile = Trim$(SaveFilename)
-50680  SplitPath OutputFile, , Path
-50690  Options.LastSaveDirectory = Path
-50700  If cmbProfile.ListIndex = 0 Then
-50710    SaveOption Options, "LastSaveDirectory"
-50720   Else
-50730    SaveOption Options, "LastSaveDirectory", cmbProfile.List(cmbProfile.ListIndex)
-50740  End If
-50750  frmMain.SetSystrayIcon 3
-50760  If Options.ShowAnimation = 1 Then
-50770    ShowAnimation True
-50780   Else
-50790    Me.Visible = False
-50800  End If
-50810  DoEvents
-50820
-50830  PSHeader.CreateFor.Comment = txtCreateFor.Text
-50840  PSHeader.CreationDate.Comment = txtCreationDate.Text
-50850  PSHeader.Creator.Comment = App.EXEName & _
+ End With
+
+ FilterIndex = Options.StandardSaveformat + 1
+ With LanguageStrings
+  PSHeader = GetPSHeader(PDFSpoolfile)
+  If Len(txtTitle.Text) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
+    SaveFilename = ReplaceForbiddenChars(RemoveAllKnownFileExtensions(txtTitle.Text))
+   Else
+    SaveFilename = ReplaceForbiddenChars(txtTitle.Text)
+  End If
+  Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
+  If SaveOpenCancel = True Then
+   Exit Function
+  End If
+  If files.Count <> 1 Then
+   Exit Function
+  End If
+  SaveFilterIndex = FilterIndex
+  SaveFilename = files.Item(1)
+  If FileExists(files.Item(1)) = True Then
+   If FileInUse(files.Item(1)) = True Then
+    MsgBox LanguageStrings.MessagesMsg34
+    Exit Function
+   End If
+  End If
+ End With
+
+ Screen.MousePointer = vbHourglass
+ DoEvents
+
+ Options.OpenOutputFile = chkOpenOutputFile.value
+ OutputFile = Trim$(SaveFilename)
+ SplitPath OutputFile, , Path
+ Options.LastSaveDirectory = Path
+ If cmbProfile.ListIndex = 0 Then
+   SaveOption Options, "LastSaveDirectory"
+  Else
+   SaveOption Options, "LastSaveDirectory", cmbProfile.List(cmbProfile.ListIndex)
+ End If
+ frmMain.SetSystrayIcon 3
+ If Options.ShowAnimation = 1 Then
+   ShowAnimation True
+  Else
+   Me.Visible = False
+ End If
+ DoEvents
+
+ PSHeader.CreateFor.Comment = txtCreateFor.Text
+ PSHeader.CreationDate.Comment = txtCreationDate.Text
+ PSHeader.Creator.Comment = App.EXEName & _
   " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50870  PSHeader.title.Comment = txtTitle.Text
-50880
-50890  With PDFDocInfo
-50900   .Author = txtCreateFor.Text
-50910   .CreationDate = txtCreationDate.Text
-50920   .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50930   .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , True)
-50940   .ModifyDate = txtModifyDate.Text
-50950   .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , True)
-50960   .title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , True)
-50970  End With
-50980
-50990  PDFDocInfoFile = CreatePDFDocInfoFile(CurrentInfoSpoolFile, PDFDocInfo)
-51000  'AppendPDFDocInfo PDFSpoolfile, PDFDocInfo
-51010
-51020  StampFile = CreateStampFile(CurrentInfoSpoolFile)
-51030  'CheckForStamping PDFSpoolfile
-51040
-51050
-51060  If Options.RunProgramBeforeSaving = 1 Then
-51070   RunProgramBeforeSaving Me.hwnd, PDFSpoolfile, _
+ PSHeader.Title.Comment = txtTitle.Text
+
+ With PDFDocInfo
+  .Author = txtCreateFor.Text
+  .CreationDate = txtCreationDate.Text
+  .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+  .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , True)
+  .ModifyDate = txtModifyDate.Text
+  .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , True)
+  .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , True)
+ End With
+
+ PDFDocInfoFile = CreatePDFDocInfoFile(CurrentInfoSpoolFile, PDFDocInfo)
+
+ StampFile = CreateStampFile(CurrentInfoSpoolFile)
+ 
+ If Options.RunProgramBeforeSaving = 1 Then
+  RunProgramBeforeSaving Me.hWnd, PDFSpoolfile, _
   Options.RunProgramBeforeSavingProgramParameters, _
   Options.RunProgramBeforeSavingWindowstyle
-51100  End If
-51111  Select Case SaveFilterIndex
-        Case 1:
-51130    'CallGScript PDFSpoolfile, OutputFile, Options, PDFWriter
-51140    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFWriter, PDFDocInfoFile, StampFile
-51150   Case 2:
-51160    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFAWriter, PDFDocInfoFile, StampFile
-51170   Case 3:
-51180    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFXWriter, PDFDocInfoFile, StampFile
-51190   Case 4:
-51200    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PNGWriter, PDFDocInfoFile, StampFile
-51210   Case 5:
-51220    CallGScript CurrentInfoSpoolFile, OutputFile, Options, JPEGWriter, PDFDocInfoFile, StampFile
-51230   Case 6:
-51240    CallGScript CurrentInfoSpoolFile, OutputFile, Options, BMPWriter, PDFDocInfoFile, StampFile
-51250   Case 7:
-51260    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCXWriter, PDFDocInfoFile, StampFile
-51270   Case 8:
-51280    CallGScript CurrentInfoSpoolFile, OutputFile, Options, TIFFWriter, PDFDocInfoFile, StampFile
-51290   Case 9:
-51300    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSWriter, PDFDocInfoFile, StampFile
-51310   Case 10:
-51320    CallGScript CurrentInfoSpoolFile, OutputFile, Options, EPSWriter, PDFDocInfoFile, StampFile
-51330   Case 11:
-51340    CallGScript CurrentInfoSpoolFile, OutputFile, Options, TXTWriter, PDFDocInfoFile, StampFile
-51350   Case 12:
-51360    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSDWriter, PDFDocInfoFile, StampFile
-51370   Case 13:
-51380    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCLWriter, PDFDocInfoFile, StampFile
-51390   Case 14:
-51400    CallGScript CurrentInfoSpoolFile, OutputFile, Options, RAWWriter, PDFDocInfoFile, StampFile
-51410   Case 15:
-51420    CallGScript CurrentInfoSpoolFile, OutputFile, Options, SVGWriter, PDFDocInfoFile, StampFile
-51430  End Select
-51440  Create_eDoc = OutputFile
-51450  CheckForPrintingAfterSaving CurrentInfoSpoolFile, Options
-51460  Screen.MousePointer = vbNormal
-51470  Me.Visible = False
-51480  If Options.ShowAnimation = 1 Then
-51490   ShowAnimation False
-51500  End If
-51510  ConvertedOutputFilename = OutputFile
-51520
-51530  ReadyConverting = True
-51540  frmMain.SetSystrayIcon 2
-51550  Exit Function
+ End If
+ Select Case SaveFilterIndex
+  Case 1:
+   'CallGScript PDFSpoolfile, OutputFile, Options, PDFWriter
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFWriter, PDFDocInfoFile, StampFile
+   OutputFileIsPDFFile = True
+  Case 2:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFAWriter, PDFDocInfoFile, StampFile
+   OutputFileIsPDFFile = True
+  Case 3:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFXWriter, PDFDocInfoFile, StampFile
+   OutputFileIsPDFFile = True
+  Case 4:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PNGWriter, PDFDocInfoFile, StampFile
+  Case 5:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, JPEGWriter, PDFDocInfoFile, StampFile
+  Case 6:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, BMPWriter, PDFDocInfoFile, StampFile
+  Case 7:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCXWriter, PDFDocInfoFile, StampFile
+  Case 8:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TIFFWriter, PDFDocInfoFile, StampFile
+  Case 9:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSWriter, PDFDocInfoFile, StampFile
+  Case 10:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, EPSWriter, PDFDocInfoFile, StampFile
+  Case 11:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TXTWriter, PDFDocInfoFile, StampFile
+  Case 12:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSDWriter, PDFDocInfoFile, StampFile
+  Case 13:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCLWriter, PDFDocInfoFile, StampFile
+  Case 14:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, RAWWriter, PDFDocInfoFile, StampFile
+  Case 15:
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, SVGWriter, PDFDocInfoFile, StampFile
+ End Select
+ Create_eDoc = OutputFile
+ CheckForPrintingAfterSaving CurrentInfoSpoolFile, Options
+ Screen.MousePointer = vbNormal
+ Me.Visible = False
+ If Options.ShowAnimation = 1 Then
+  ShowAnimation False
+ End If
+ ConvertedOutputFilename = OutputFile
+
+ ReadyConverting = True
+ frmMain.SetSystrayIcon 2
+ Exit Function
 ErrorHandler:
-51570  Screen.MousePointer = vbNormal
-51580  tErrNumber = Err.Number
-51590  tStr = "Methode ""Create_eDoc"": " & Err.Number & ", " & Err.Description
-51600  On Error GoTo ErrPtnr_OnError
-51610  On Error Resume Next
-51620  Me.Hide
-51630  If tErrNumber <> 32755 Then
-51640   KillFile PDFSpoolfile
-51650   IfLoggingWriteLogfile "Error: " & tStr
-51660   IfLoggingShowLogfile frmLog, frmMain
-51670  End If
-51680  Unload Me
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmPrinting", "Create_eDoc")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Screen.MousePointer = vbNormal
+ tErrNumber = Err.Number
+ tStr = "Methode ""Create_eDoc"": " & Err.Number & ", " & Err.Description
+ On Error GoTo 0
+ On Error Resume Next
+ Me.Hide
+ If tErrNumber <> 32755 Then
+  KillFile PDFSpoolfile
+  IfLoggingWriteLogfile "Error: " & tStr
+  IfLoggingShowLogfile frmLog, frmMain
+ End If
+ Unload Me
 End Function
 
 Private Sub ShowAnimation(Show As Boolean)
@@ -1062,7 +1227,7 @@ On Error GoTo ErrPtnr_OnError
 50100  cmdCollect.Visible = Not Show
 50110  cmdEMail.Visible = Not Show
 50120  cmdSave.Visible = Not Show
-50130  chkStartStandardProgram.Visible = Not Show
+50130  chkOpenOutputFile.Visible = Not Show
 50140  cmdNow(0).Visible = Not Show
 50150  cmdNow(1).Visible = Not Show
 50160  anmProcess.Visible = Show
@@ -1116,20 +1281,21 @@ On Error GoTo ErrPtnr_OnError
 50060   lblModifyDate.Caption = .PrintingModifyDate
 50070   lblSubject.Caption = .PrintingSubject
 50080   lblKeywords.Caption = .PrintingKeywords
-50090   chkStartStandardProgram.Caption = .PrintingStartStandardProgram
-50100   cmdCollect.Caption = .PrintingCollect
-50110   cmdOptions.Caption = .DialogPrinterOptions
-50120   cmdEMail.Caption = .PrintingEMail
-50130   cmdSave.Caption = .PrintingSave
-50140   cmdNow(0).Caption = .PrintingNow
-50150   cmdNow(1).Caption = .PrintingNow
-50160   If LenB(.PrintingCancel) = 0 Then
-50170     cmdCancel.Caption = .OptionsCancel
-50180    Else
-50190     cmdCancel.Caption = .PrintingCancel
-50200   End If
-50210   fraProfile.Caption = .PrintingProfile
-50220  End With
+50090   chkOpenOutputFile.Caption = .PrintingOpenOutputFile
+50100   chkEditWithPDFArchitect.Caption = .PrintingEditWithPDFArchitect
+50110   cmdCollect.Caption = .PrintingCollect
+50120   cmdOptions.Caption = .DialogPrinterOptions
+50130   cmdEMail.Caption = .PrintingEMail
+50140   cmdSave.Caption = .PrintingSave
+50150   cmdNow(0).Caption = .PrintingNow
+50160   cmdNow(1).Caption = .PrintingNow
+50170   If LenB(.PrintingCancel) = 0 Then
+50180     cmdCancel.Caption = .OptionsCancel
+50190    Else
+50200     cmdCancel.Caption = .PrintingCancel
+50210   End If
+50220   fraProfile.Caption = .PrintingProfile
+50230  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

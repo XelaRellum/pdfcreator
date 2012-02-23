@@ -5,11 +5,47 @@ Public Function GetPDFCreatorTempfolder(Optional Preview As Boolean = False, Opt
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  GetPDFCreatorTempfolder = ResolveEnvironment(GetSubstFilename2(PrinterTemppath, Preview, Temppath))
+50010  GetPDFCreatorTempfolder = CompletePath(GetTempPathApi)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGlobal2", "GetPDFCreatorTempfolder")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetPDFCreatorSpoolDirectory()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim spoolDirectory As String
+50020  If InstalledAsServer Then
+50030    spoolDirectory = GetPDFCreatorApplicationPath & PDFCreatorSpoolDirectory
+50040   Else
+50050    spoolDirectory = GetPDFCreatorTempfolder & PDFCreatorSpoolDirectory
+50060  End If
+50070  If DirExists(spoolDirectory) = False Then
+50080   MakePath spoolDirectory
+50090  End If
+50100  GetPDFCreatorSpoolDirectory = CompletePath(spoolDirectory)
+50110 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+50120 Exit Function
+ErrPtnr_OnError:
+50141 Select Case ErrPtnr.OnError("modGlobal2", "GetPDFCreatorSpoolDirectory")
+      Case 0: Resume
+50160 Case 1: Resume Next
+50170 Case 2: Exit Function
+50180 Case 3: End
+50190 End Select
+50200 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal2", "GetPDFCreatorSpoolDirectory")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -37,26 +73,6 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGlobal2", "CheckInstalledAsServer")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Public Function ProgramIsRunning(GUIDStr As String) As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim mutex As clsMutex
-50020  Set mutex = New clsMutex
-50030  ProgramIsRunning = mutex.CheckMutex(GUIDStr)
-50040  Set mutex = Nothing
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGlobal2", "ProgramIsRunning")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -178,13 +194,13 @@ Public Function GetDocDate(Optional StandardDate As String = "", Optional Standa
  GetDocDate = tStr
 End Function
 
-Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String, Optional InfoSpooleFileName As String, Optional hkey1 As hkey = HKEY_CURRENT_USER) As String
+Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String, Optional InfoSpoolFileName As String, Optional hkey1 As hkey = HKEY_CURRENT_USER) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim DateTime As String, Author As String, ClientComputer As String, ClientUsername As String, UserName As String, _
   Computername As String, MyFiles As String, MyDesktop As String, filename As String, _
-  title As String, tStr As String, FilePath As String
+  Title As String, tStr As String, FilePath As String
 50040  Dim isf As clsInfoSpoolFile
 50050
 50060  If Len(TokenFilename) = 0 Then
@@ -192,18 +208,18 @@ On Error GoTo ErrPtnr_OnError
 50080  End If
 50090
 50100  Set isf = New clsInfoSpoolFile
-50110  If LenB(InfoSpooleFileName) > 0 Then
-50120   isf.ReadInfoFile InfoSpooleFileName
+50110  If LenB(InfoSpoolFileName) > 0 Then
+50120   isf.ReadInfoFile InfoSpoolFileName
 50130  End If
 50140
 50150  DateTime = GetDocDate("", Options.StandardDateformat, CStr(Now))
 50160  If Preview Then
 50170    Author = "'Preview Author'"
 50180   Else
-50190
+50190    Author = isf.FirstUserName
 50200  End If
 50210
-50220  UserName = GetDocUsername("", True)
+50220  UserName = GetDocUsernameFromInfoSpoolFile(InfoSpoolFileName)
 50230
 50240  Computername = GetComputerName
 50250  MyFiles = GetMyFiles
@@ -217,7 +233,7 @@ On Error GoTo ErrPtnr_OnError
 50330
 50340  filename = Replace(filename, "<ClientComputer>", ClientComputer, , , vbTextCompare)
 50350  filename = Replace(filename, "<Username>", UserName, , , vbTextCompare)
-50360  filename = Replace(filename, "<Title>", title, , , vbTextCompare)
+50360  filename = Replace(filename, "<Title>", Title, , , vbTextCompare)
 50370
 50380  filename = Replace(filename, "<Author>", Author, , , vbTextCompare)
 50390
@@ -234,7 +250,7 @@ On Error GoTo ErrPtnr_OnError
 50500  If LenB(Temppath) > 0 Then
 50510    filename = Replace(filename, "<Temp>", CompletePath(Temppath), , , vbTextCompare)
 50520   Else
-50530    filename = Replace(filename, "<Temp>", CompletePath(GetTempPathReg(hkey1)), , , vbTextCompare)
+50530    filename = Replace(filename, "<Temp>", CompletePath(GetTempPathApi), , , vbTextCompare)
 50540  End If
 50550
 50560  tStr = "DocumentTitle"
@@ -367,4 +383,36 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Function GetGUID() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim udtGUID As GUID
+50020
+50030  If (CoCreateGuid(udtGUID) = 0) Then
+50040   GetGUID = _
+   String(8 - Len(Hex$(udtGUID.Data1)), "0") & Hex$(udtGUID.Data1) & _
+   String(4 - Len(Hex$(udtGUID.Data2)), "0") & Hex$(udtGUID.Data2) & _
+   String(4 - Len(Hex$(udtGUID.Data3)), "0") & Hex$(udtGUID.Data3) & _
+   IIf((udtGUID.Data4(0) < &H10), "0", "") & Hex$(udtGUID.Data4(0)) & _
+   IIf((udtGUID.Data4(1) < &H10), "0", "") & Hex$(udtGUID.Data4(1)) & _
+   IIf((udtGUID.Data4(2) < &H10), "0", "") & Hex$(udtGUID.Data4(2)) & _
+   IIf((udtGUID.Data4(3) < &H10), "0", "") & Hex$(udtGUID.Data4(3)) & _
+   IIf((udtGUID.Data4(4) < &H10), "0", "") & Hex$(udtGUID.Data4(4)) & _
+   IIf((udtGUID.Data4(5) < &H10), "0", "") & Hex$(udtGUID.Data4(5)) & _
+   IIf((udtGUID.Data4(6) < &H10), "0", "") & Hex$(udtGUID.Data4(6)) & _
+   IIf((udtGUID.Data4(7) < &H10), "0", "") & Hex$(udtGUID.Data4(7))
+50160  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGlobal2", "GetGUID")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
 
