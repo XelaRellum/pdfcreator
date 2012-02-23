@@ -4,8 +4,6 @@
 ;#define FastCompilation
 ;#define Test
 
-;#define Test
-
 #define CompileHelp
 #define IncludeGhostscript
 #define IncludeOC
@@ -14,6 +12,11 @@
 #define Localization
 
 #define GhostscriptPath "..\GhostScript"
+
+#ifdef Test
+  #undef CompileHelp
+  #define FastCompilation
+#endif
 
 #ifdef FastCompilation
  #define Compression="none"
@@ -30,10 +33,6 @@
   #pragma error "Copy Ghostscript version '" + GhostscriptVersion + "' to the path 'Ghostcript' first!"
  #endif
 #ENDIF
-
-#ifdef Test
-  #undef CompileHelp
-#endif
 
 #if (fileexists("..\PDFCreator\PDFCreator.exe")==0)
  #error Compile PDFCreator first!
@@ -78,6 +77,7 @@
 
 #define GetFileVersionVBExe(str S)     Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + Local[3] + Local[4]
 #define GetFileVersionVBExeLine(str S) Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])-1), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])-1), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + '_' + Local[3] + '_'  + Local[4]
+#define GetFileVersionCompact(str S)   Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])-1), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])-1), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + Local[3] + Local[4]
 
 #define Homepage             "http://www.pdfforge.org"
 #define SourceforgeHomepage  "http://www.sf.net/projects/pdfcreator"
@@ -3208,7 +3208,7 @@ begin
 
  RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString);
  if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString) then
-  if Exec(UninstallString, parameter, '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
+  if Exec(UninstallString, parameter, '{#IM_SUBCHANNEL}', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
     res := 0;
    end else begin
     res := ResultCode;
@@ -4094,7 +4094,8 @@ begin
  if (CurStep=ssInstall) AND (OfferScreen = SCR_IM) then begin
    WorkingDir := ExpandConstant ('{tmp}');
    AppPath := expandconstant('{tmp}\InstallManager.exe')
-   Exec(AppPath, '', WorkingDir, SW_SHOW, ewWaitUntilTerminated, ReturnCode);
+   Exec(AppPath, '{#IM_SUBCHANNEL}', WorkingDir, SW_SHOW, ewWaitUntilTerminated, ReturnCode);
+   AppendLogStr('Channel: {#IM_SUBCHANNEL}');
  end;
 #endif
     
