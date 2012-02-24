@@ -3,8 +3,8 @@ Option Explicit
 Const HTMLFile = "COM interface - documentation.htm"
 
 Dim fso, tStrf, i, ma1, ma2
-Dim f,  s,  p,  e, erc, opc, inc
-Dim fc, sc, pc, ec, ercc, opcc, incc
+Dim f,  s,  p,  e, erc, opc ', inc
+Dim fc, sc, pc, ec, ercc, opcc ', incc
 
 Set s = CreateObject("Scripting.Dictionary") ' Subroutines
 Set f = CreateObject("Scripting.Dictionary") ' Functions
@@ -12,7 +12,7 @@ Set p = CreateObject("Scripting.Dictionary") ' Properties
 Set e = CreateObject("Scripting.Dictionary") ' Events
 
 Set erc = CreateObject("Scripting.Dictionary") ' clsPDFCreatorError
-Set inc = CreateObject("Scripting.Dictionary") ' clsPDFCreatorInfoSpoolFile
+' Set inc = CreateObject("Scripting.Dictionary") ' clsPDFCreatorInfoSpoolFile
 Set opc = CreateObject("Scripting.Dictionary") ' clsPDFCreatorOptions
 
 tStrf = Split(ReadContent("..\PDFCreator\clsPDFCreator.cls"), vbcrlf)
@@ -46,14 +46,14 @@ For i=LBound(tStrf) to Ubound(tStrf)
  End If
 Next
 
-tStrf = Split(ReadContent("..\PDFCreator\clsPDFCreatorInfoSpoolFile.cls"), vbcrlf)
-incc = 0
-For i=LBound(tStrf) to Ubound(tStrf)
- If Instr(ucase(Trim(tStrf(i))),"PUBLIC") = 1 Then
-  incc = incc +1
-  inc.add incc, trim(tStrf(i)) & "<br>"
- End If
-Next
+' tStrf = Split(ReadContent("..\PDFCreator\clsPDFCreatorInfoSpoolFile.cls"), vbcrlf)
+' incc = 0
+' For i=LBound(tStrf) to Ubound(tStrf)
+'  If Instr(ucase(Trim(tStrf(i))),"PUBLIC") = 1 Then
+'   incc = incc +1
+'   inc.add incc, trim(tStrf(i)) & "<br>"
+'  End If
+' Next
 
 tStrf = Split(ReadContent("..\PDFCreator\clsPDFCreatorOptions.cls"), vbcrlf)
 opcc = 0
@@ -167,17 +167,17 @@ Private Function CreateDocu
   tStr = tStr & "</td></tr></table></p>" & vbcrlf
  end if
 
- Set inc = Sort(inc,1,1)
- if inc.count> 0 then
-  a = inc.Items
-  tStr = tStr & "<p>" & vbcrlf
-  tStr = tStr & "<table border=""1"" cellpadding=""4"" style=""border-collapse:collapse;empty-cells:show;"">" & vbcrlf
-  tStr = tStr & "<tr><th>clsPDFCreatorInfoSpoolFile</th></tr><tr><td nowrap>" & vbcrlf
-  For i = 0 To inc.Count -1
-   tStr = tStr & a(i) & vbcrlf
-  Next
-  tStr = tStr & "</td></tr></table></p>"
- end if
+' Set inc = Sort(inc,1,1)
+' if inc.count> 0 then
+'  a = inc.Items
+'  tStr = tStr & "<p>" & vbcrlf
+'  tStr = tStr & "<table border=""1"" cellpadding=""4"" style=""border-collapse:collapse;empty-cells:show;"">" & vbcrlf
+'  tStr = tStr & "<tr><th>clsPDFCreatorInfoSpoolFile</th></tr><tr><td nowrap>" & vbcrlf
+'  For i = 0 To inc.Count -1
+'   tStr = tStr & a(i) & vbcrlf
+'  Next
+'  tStr = tStr & "</td></tr></table></p>"
+' end if
 
  Set opc = Sort(opc,1,1)
  if opc.count> 0 then
