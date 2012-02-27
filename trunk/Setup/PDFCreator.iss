@@ -67,7 +67,7 @@
 #endif
 
 #ifdef CompileHelp
- #if (fileexists("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE")==0)
+ #if (fileexists("C:\Programme\HTML Help Workshop\HHC.EXE")==0)
   #error Please install the "HTML Help Workshop" first!
  #endif
  #expr Exec("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
