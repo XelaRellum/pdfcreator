@@ -27,7 +27,7 @@
 #endif
 
 #Ifdef IncludeGhostscript
- #define GhostscriptVersion "9.04"
+ #define GhostscriptVersion "9.05"
  #define GhostscriptSetupString "GPLGhostscript"
  #if (fileexists("..\Ghostscript\gs" + GhostscriptVersion + "\bin\gsdll32.dll")==0)
   #pragma error "Copy Ghostscript version '" + GhostscriptVersion + "' to the path 'Ghostcript' first!"
