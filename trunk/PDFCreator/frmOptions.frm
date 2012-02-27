@@ -580,7 +580,7 @@ On Error GoTo ErrPtnr_OnError
    "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", GetMyFiles, _
    App.ProductName, OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, Me.hWnd)
 50050  If FilterIndex > 0 Then
-50060   tempOptions = ReadOptionsINI(dummyOptions, files(1), 0, True, True)
+50060   tempOptions = ReadOptionsINI(dummyOptions, files(1), True)
 50070   ProfileOptions(cmbProfile.ListIndex) = tempOptions
 50080   Options1 = ProfileOptions(cmbProfile.ListIndex)
 50090   Options1.Language = CurrentLanguage

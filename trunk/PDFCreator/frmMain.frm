@@ -4,7 +4,7 @@ Begin VB.Form frmMain
    AutoRedraw      =   -1  'True
    Caption         =   "PDFCreator"
    ClientHeight    =   3765
-   ClientLeft      =   225
+   ClientLeft      =   165
    ClientTop       =   855
    ClientWidth     =   9510
    Icon            =   "frmMain.frx":0000
@@ -926,9 +926,9 @@ Private Sub lsv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As S
 End Sub
 
 Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Button As Integer, Shift As Integer, X As Single, Y As Single)
- Dim tFilename As String, i As Long, aLen As Double, tLen As Double, aw As Long, _
-  DefaultPrintername As String, OnlyPsAndValidGraphicFiles As Boolean, Ext As String, ivgf As Boolean
- Dim Path As String, File As String, psFileName As String, spoolDirectory As String, strGUID As String
+ Dim i As Long, aLen As Double, tLen As Double, aw As Long, Ext As String, _
+  DefaultPrintername As String, OnlyPsAndValidGraphicFiles As Boolean, ivgf As Boolean
+ Dim File As String, psFileName As String, spoolDirectory As String, strGUID As String
  On Error Resume Next
  If Data.GetFormat(vbCFFiles) Then
   DefaultPrintername = ""

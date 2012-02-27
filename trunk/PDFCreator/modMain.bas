@@ -499,7 +499,7 @@ On Error GoTo ErrPtnr_OnError
 50370  Options = ReadOptions
 50380  PrinterTemppath = GetTempPathApi
 50390  If LenB(Optionsfile) > 0 Then
-50400   Options = ReadOptionsINI(Options, Optionsfile, False, False)
+50400   Options = ReadOptionsINI(Options, Optionsfile, False)
 50410  End If
 50420
 50430  If IsWin9xMe = False Then

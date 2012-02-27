@@ -274,7 +274,6 @@ Private PSHeader As tPSHeader
 Private OldProfile As Long
 Private PDFArchitectToolTip As clsToolTip
 Public PrinterProfile As String
-Private timerCounter As Long
 
 Private Sub chkEditWithPDFArchitect_Click()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

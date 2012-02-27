@@ -1489,8 +1489,8 @@ On Error GoTo ErrPtnr_OnError
 50140   Exit Function
 50150  End If
 50160  If StrComp(OldProfileName, NewProfileName, vbTextCompare) = 0 Then
-50170   mError.Number = 14
-50180   mError.Description = Replace$(Replace$(ErrDescr14, "%1", OldProfileName), "%2", NewProfileName)
+50170   mError.Number = 15
+50180   mError.Description = Replace$(Replace$(ErrDescr15, "%1", OldProfileName), "%2", NewProfileName)
 50190   RaiseEvent eError
 50200   Exit Function
 50210  End If
@@ -1533,8 +1533,8 @@ On Error GoTo ErrPtnr_OnError
 50120   RaiseEvent eError
 50130   Exit Function
 50140  End If
-50150  errStr = ErrDescr14
-50160
+50150
+50160  errStr = ErrDescr14
 50170  sProfileAssociatedPrinters = ProfileAssociatedPrinters(ProfileName)
 50180  If LenB(sProfileAssociatedPrinters) > 0 Then
 50190   mError.Number = 14
@@ -2339,7 +2339,7 @@ On Error GoTo ErrPtnr_OnError
 50150   RaiseEvent eError
 50160   Exit Function
 50170  End If
-50180  Set cReadOptionsFromFile = cGetOptions(ReadOptionsINI(dummyOptions, INIFilename, 0, True, True))
+50180  Set cReadOptionsFromFile = cGetOptions(ReadOptionsINI(dummyOptions, INIFilename, True))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
