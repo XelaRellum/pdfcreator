@@ -1,7 +1,7 @@
 Attribute VB_Name = "modGlobal2"
 Option Explicit
 
-Public Function GetPDFCreatorTempfolder(Optional Preview As Boolean = False, Optional Temppath As String) As String
+Public Function GetPDFCreatorTempfolder() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -184,7 +184,7 @@ Public Function GetDocDate(Optional StandardDate As String = "", Optional Standa
  GetDocDate = tStr
 End Function
 
-Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String, Optional InfoSpoolFileName As String, Optional hkey1 As hkey = HKEY_CURRENT_USER) As String
+Public Function GetSubstFilename2(TokenFilename As String, Optional Preview As Boolean = True, Optional Temppath As String, Optional InfoSpoolFileName As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
