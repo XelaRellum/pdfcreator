@@ -2544,9 +2544,10 @@ begin
   else
    Result := False
  end;
- 
+#IFDEF IncludeOC
  if OCShouldSkipPage(PageID) then
 		Result := true;
+#ENDIF
 end;
 
 function CheckMonitorname(MonitornameStr: String): Boolean;
@@ -2616,11 +2617,13 @@ begin
  if CurPageID = InstallationTypePage.ID then
   Servermodus := ServermodusRB.Checked;
 
+#IFDEF IncludeOC
  If OfferScreen = SCR_OC then
    If not OCNextButtonClick(CurPageID) then begin
     Result := false;
     exit;
 	 end;  
+#ENDIF
 
  Result:=True;
 end;
@@ -3804,7 +3807,7 @@ begin
 #endif
 
 #ifdef IncludeIM
-  if OfferScreen = SCR_IM then
+  if (OfferScreen = SCR_IM) and (not WizardSilent) then
   begin
     itd_init;
     LoadITDLang;
@@ -4091,7 +4094,7 @@ begin
 #endif
 
 #ifdef IncludeIM
- if (CurStep=ssInstall) AND (OfferScreen = SCR_IM) then begin
+ if (CurStep=ssInstall) AND (OfferScreen = SCR_IM) and (not WizardSilent) then begin
    WorkingDir := ExpandConstant ('{tmp}');
    AppPath := expandconstant('{tmp}\InstallManager.exe')
    Exec(AppPath, '{#IM_SUBCHANNEL}', WorkingDir, SW_SHOW, ewWaitUntilTerminated, ReturnCode);
