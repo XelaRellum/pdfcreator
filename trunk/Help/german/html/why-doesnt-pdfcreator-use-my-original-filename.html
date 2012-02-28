@@ -18,7 +18,7 @@
   </tr>
   <tr>
     <td class="main"><p class="header">Warum wird beim Speichern nicht der Original-Dateiname angezeigt?</p>
-<p>PDFCreator erzeugt PDF-Dateien über einen von der jeweiligen Anwendung über den Drucker PDFCreator ausgelösten Druckvorgang. Zum Drucken ist jedoch nicht immer eine Datei nötig. In diesem Fall gibt es keine Informationen über irgendeinen Dateinamen. Unter Umständen gibt es Anwendungen (IrfanView und andere), die während des Druckens in der DocInfo-Struktur des Druckprozesses den Dateinamen mit übergeben. In diesem Fall kann man den Token &lt;REDMON_FILENAME&gt; verwenden, um den Ausgabedateinamen dem Eingabedateinamen anzupassen. Ansonsten kann man nur über eine komplette Steuerung des Druckvorganges z.B. über ein Skript (Beispiel: Convert2PDF.vbs) die Ausgabe kontrollieren.</p>
+<p>PDFCreator erzeugt PDF-Dateien über einen von der jeweiligen Anwendung über den Drucker PDFCreator ausgelösten Druckvorgang. Zum Drucken ist jedoch nicht immer eine Datei nötig. In diesem Fall gibt es keine Informationen über irgendeinen Dateinamen. Unter Umständen gibt es Anwendungen (IrfanView und andere), die während des Druckens in der DocInfo-Struktur des Druckprozesses den Dateinamen mit übergeben. In diesem Fall kann man den Token &lt;DocumentTitle&gt; verwenden, um den Ausgabedateinamen dem Eingabedateinamen anzupassen. Ansonsten kann man nur über eine komplette Steuerung des Druckvorganges z.B. über ein Skript (Beispiel: Convert2PDF.vbs) die Ausgabe kontrollieren.</p>
     </td>
   </tr>
 </table>

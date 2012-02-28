@@ -286,10 +286,6 @@
 				<param name="Local" value="html\clspdfcreatorerror.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="clsPDFCreatorInfoSpoolFile">
-				<param name="Local" value="html\clspdfcreatorinfospoolfile.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="clsPDFCreatorOptions">
 				<param name="Local" value="html\clspdfcreatoroptions.html">
 				</OBJECT>
