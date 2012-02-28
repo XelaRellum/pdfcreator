@@ -236,6 +236,10 @@
 				<param name="Local" value="html\my-antivirus-program-says-that-pdfcreator-contains-a-virus-dont-you-check-your-files.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Pourquoi PDFCreator n'utilise pas le nom d'origine de mon fichier ?">
+				<param name="Local" value="html\why-doesnt-pdfcreator-use-my-original-filename.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Setup Command Line Parameters">
 				<param name="Local" value="html\setup-command-line-parameters.html">
 				</OBJECT>
@@ -260,10 +264,6 @@
 				<param name="Local" value="html\why-does-black-text-appear-to-be-slightly-grey.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Pourquoi PDFCreator n'utilise pas le nom d'origine de mon fichier ?">
-				<param name="Local" value="html\why-doesnt-pdfcreator-use-my-original-filename.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Les documents Word avec un format de page personnalis&eacute; sont convertis &#224; la taille standard par d&eacute;faut">
 				<param name="Local" value="html\word-documents-with-custom-page-size-are-converted-in-default-size.html">
 				</OBJECT>
@@ -280,10 +280,6 @@
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="clsPDFCreatorError">
 				<param name="Local" value="html\clspdfcreatorerror.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="clsPDFCreatorInfoSpoolFile">
-				<param name="Local" value="html\clspdfcreatorinfospoolfile.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="clsPDFCreatorOptions">
