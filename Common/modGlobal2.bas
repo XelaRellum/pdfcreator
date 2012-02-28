@@ -24,7 +24,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim spoolDirectory As String
 50020  If InstalledAsServer Then
-50030    spoolDirectory = CompletePath(GetWindowsDirectory) & "Temp\" & PDFCreatorSpoolDirectory
+50030    spoolDirectory = CompletePath(GetWindowsDirectory) & "Temp\PDFCreator\" & PDFCreatorSpoolDirectory
 50040   Else
 50050    spoolDirectory = GetPDFCreatorTempfolder & PDFCreatorSpoolDirectory
 50060  End If
