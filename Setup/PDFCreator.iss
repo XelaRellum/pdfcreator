@@ -67,12 +67,13 @@
 #endif
 
 #ifdef CompileHelp
- #if (fileexists("C:\Programme\HTML Help Workshop\HHC.EXE")==0)
+#define HHWPath "C:\Programme\HTML Help Workshop"
+ #if (fileexists(HHWPath + "\HHC.EXE")==0)
   #error Please install the "HTML Help Workshop" first!
  #endif
- #expr Exec("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
- #expr Exec("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
- #expr Exec("C:\Program Files (x86)\HTML Help Workshop\HHC.EXE", "..\Help\french\PDFCreator.hhp" ,".\")
+ #expr Exec(HHWPath + "\HHC.EXE", "..\Help\english\PDFCreator.hhp",".\")
+ #expr Exec(HHWPath + "\HHC.EXE", "..\Help\german\PDFCreator.hhp" ,".\")
+ #expr Exec(HHWPath + "\HHC.EXE", "..\Help\french\PDFCreator.hhp" ,".\")
 #endif
 
 #define GetFileVersionVBExe(str S)     Local[0]=GetFileVersion(S), Local[1]=Copy(Local[0],1,Pos(".",Local[0])), Local[2]=Copy(Local[0],Pos(".",Local[0])+1,Len(Local[0])-Pos(".",Local[0])), Local[3]=Copy(Local[2],1,Pos(".",Local[2])), Local[4]=Copy(Local[0],RPos(".",Local[0])+1,Len(Local[0])-RPos(".",Local[0])), S = Local[1] + Local[3] + Local[4]
@@ -3211,7 +3212,7 @@ begin
 
  RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString);
  if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString) then
-  if Exec(UninstallString, parameter, '{#IM_SUBCHANNEL}', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
+  if Exec(UninstallString, parameter, '', SW_SHOW, ewWaitUntilTerminated, ResultCode) then begin
     res := 0;
    end else begin
     res := ResultCode;
@@ -3774,13 +3775,26 @@ var
  date : string;
 begin
   OfferScreen := SCR_NONE;
+  
+#ifdef IncludeOC
+  OfferScreen := SCR_OC;
+#endif
+
+#ifdef IncludeIM
+  OfferScreen := SCR_IM;
+#endif
+
+#ifdef IncludeOC
+#ifdef IncludeIM
   rnd := Random(255) mod 2;
   if rnd = 0 then
     OfferScreen := SCR_OC;
     
   if rnd = 1 then
     OfferScreen := SCR_IM;
-  
+#endif
+#endif
+
   if OfferScreenSetting = 0 then
     OfferScreen := SCR_NONE;
   
