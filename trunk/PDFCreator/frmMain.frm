@@ -2416,9 +2416,9 @@ On Error GoTo ErrPtnr_OnError
 50120  For i = 1 To lsv.ListItems.Count
 50130   If all = True Or lsv.ListItems(i).Selected = True Then
 50140    isf.ReadInfoFile lsv.ListItems(i).SubItems(4)
-50150    ini.Section = CStr(c)
-50160    For j = 1 To isf.InfoFiles.Count
-50170     Set isfi = isf.InfoFiles(j)
+50150    For j = 1 To isf.InfoFiles.Count
+50160     Set isfi = isf.InfoFiles(j)
+50170     ini.Section = CStr(c)
 50180     ini.SaveKey isfi.ClientComputer, "ClientComputer"
 50190     ini.SaveKey isfi.DocumentTitle, "DocumentTitle"
 50200     ini.SaveKey isfi.JobID, "JobId"
@@ -2427,8 +2427,8 @@ On Error GoTo ErrPtnr_OnError
 50230     ini.SaveKey isfi.SpoolFileName, "SpoolFilename"
 50240     ini.SaveKey isfi.UserName, "UserName"
 50250     ini.SaveKey isfi.WinStation, "WinStation"
-50260    Next j
-50270    c = c + 1
+50260     c = c + 1
+50270    Next j
 50280    KillFile lsv.ListItems(i).SubItems(4)
 50290   End If
 50300  Next i
