@@ -163,14 +163,11 @@ AppUpdatesURL={#Homepage}
 AppVersion={#AppVersion}
 ArchitecturesAllowed=x86 x64
 ChangesAssociations=true
-Compression={#Compression}
 CreateUninstallRegKey=false
 DefaultDirName={reg:HKLM\{#UninstallRegStr2},Inno Setup: App Path|{pf}\{#AppName}}
 DefaultGroupName={#AppName}
-DisableDirPage=true
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
-InternalCompressLevel={#InternalCompressLevel}
 LanguageDetectionMethod=locale
 LicenseFile=.\License\Program license - english.rtf
 LZMAUseSeparateProcess=yes
@@ -181,24 +178,19 @@ OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_setup_WithoutGhostscript
 #ENDIF
 OutputDir=Installation
 RestartIfNeededByRun=true
-ShowLanguageDialog=true
 ShowTasksTreeLines=false
 ShowUndisplayableLanguages=true
 SolidCompression=true
 UsePreviousAppDir=true
-
 VersionInfoVersion={#AppVersion}
 VersionInfoCompany=Frank Heindörfer, Philip Chinery
 VersionInfoDescription=PDFCreator is the easy way of creating PDFs.
 VersionInfoProductName={#AppName}
 VersionInfoProductVersion={#AppVersion}
 VersionInfoTextVersion={#AppVersion}
-
 WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
-
-MinVersion=4.10.1998,4.0.1381
-
+MinVersion=0,4.0.1381
 #IFDEF IncludeIM
   #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
   #include ITDRoot+'\it_download.iss'
@@ -1128,11 +1120,14 @@ var progTitel, progHandle: TArrayOfString;
     nationCode: String;
     
     desktopicon, desktopicon_common, desktopicon_user,
-    quicklaunchicon, fileassoc, winexplorer: Boolean;
+     quicklaunchicon, fileassoc, winexplorer: Boolean;
 
 	  InstallationTypePage:TWizardPage;
     PrinternamePage: TInputQueryWizardpage;
-    PrinterdriverPage : TInputOptionWizardPage;
+    PrinterdriverPage : TWizardPage;
+    chkWin9xMePrinterDriver, chkWinNtPrinterDriver, 
+     chkWin2kXP2k3PrinterDriver32bit, chkWin2kXP2k3PrinterDriver64bit: TNewCheckBox;
+
     StandardmodusRB, ServermodusRB: TRadioButton;
     StandardmodusLabel: TLabel;
     ServerDescriptionPage: TOutputMsgWizardPage;
@@ -1334,8 +1329,8 @@ begin
  Result:=False;
  If (InstallOnThisVersion('4.00.950,0','0,0')=irInstall) then
   Result:=True;
- If InstallOnThisVersion('0,4.0.1381','0,0')=irInstall then
-  If PrinterdriverPage.Values[0] then begin
+ If InstallOnThisVersion('0,4.0.1381','0,6.0.6000')=irInstall then
+  If chkWin9xMePrinterDriver.Checked = true then begin
    Win9xPrinterdriver:=True;
    Result:=True
   end;
@@ -1346,7 +1341,7 @@ begin
  Result:=False;
  If (InstallOnThisVersion('0,4.0.1381','0,5.0.2195')=irInstall) then
   Result:=True;
- If (InstallOnThisVersion('0,5.0.2195','0,0')=irInstall) and PrinterdriverPage.Values[1] then begin
+ If (InstallOnThisVersion('0,5.0.2195','0,6.0.6000')=irInstall) and chkWinNtPrinterDriver.Checked = true then begin
   WinNtPrinterdriver:=True;
   Result:=True
  end;
@@ -1358,7 +1353,7 @@ begin
  If (InstallOnThisVersion('0,5.0.2195','0,0')=irInstall) and Not IsWin64 then //win2000
   Result:=True;
  If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and
-  IsWin64 and PrinterdriverPage.Values[2] then //Win XP
+  IsWin64 and chkWin2kXP2k3PrinterDriver32bit.Checked = true then //Win XP
   Result:=True
 end;
 
@@ -1368,7 +1363,7 @@ begin
  If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and IsWin64 then
   Result:=True
  If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and
-  Not IsWin64 and PrinterdriverPage.Values[2] then
+  Not IsWin64 and chkWin2kXP2k3PrinterDriver32bit.Checked = true then
   Result:=True
 end;
 
@@ -3642,6 +3637,23 @@ begin
  Result:=trb;
 end;
 
+function CreateCheckBox(ALeft, ATop, AWidth, AHeight: Integer; ACaption: String; AChecked: Boolean; Page: TWizardPage):TNewCheckBox;
+var
+ trb: TNewCheckBox;
+begin
+ trb:=TNewCheckBox.Create(WizardForm);
+ with trb do begin
+  Caption := ACaption;
+  Checked := AChecked;
+  Height:=AHeight;
+  Left:=ALeft;
+  Top:=ATop;
+  Width:=AWidth;
+  Parent := Page.Surface;
+ end;
+ Result:=trb;
+end;
+
 #ifdef IncludeOC
 procedure SetOCL();
 var
@@ -3773,6 +3785,7 @@ var
  license, licenseFile : string;
  rnd : Integer;
  date : string;
+ yOffs : LongInt;
 begin
   OfferScreen := SCR_NONE;
   
@@ -3852,28 +3865,38 @@ begin
  PrinternamePage.Add(ExpandConstant('{cm:PrinternameValue}'), False);
  PrinternamePage.Values[0]:=Printername;
 
- PrinterdriverPage := CreateInputOptionPage(PrinternamePage.ID,
+ PrinterdriverPage := CreateCustomPage(PrinternamePage.ID,
   ExpandConstant('{cm:AdditionalPrinterdriver}'),
-  ExpandConstant('{cm:AdditionalPrinterdriverDescription}'),
-  ExpandConstant('{cm:AdditionalPrinterdriverMessage}'), False, False);
- PrinterdriverPage.Add('Windows 95, Windows 98, Windows Me');
- if Win9xPrinterdriver then
-  PrinterdriverPage.Values[0] := true;
- if InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then begin // Win2000
-  PrinterdriverPage.Add('Windows NT 4.0');
+  ExpandConstant('{cm:AdditionalPrinterdriverDescription}'));
+
+ CreateLabel(0,10,410,75,ExpandConstant('{cm:AdditionalPrinterdriverMessage}'),clWindowText,PrinterdriverPage);
+
+ yOffs := 80;
+ if InstallOnThisVersion('4.0.950,5.0.2195','0,6.0.6000')=irInstall then begin
+  chkWin9xMePrinterDriver := CreateCheckBox(0,yoffs,450,15,'Windows 95, Windows 98, Windows Me', false, PrinterdriverPage);
+  if Win9xPrinterdriver then
+   chkWin9xMePrinterDriver.Checked := true;
+  yoffs := yoffs + 30
+ end
+ if InstallOnThisVersion('0,4.0.1381','0,6.0.6000')=irInstall then begin
+  chkWinNtPrinterDriver := CreateCheckBox(0,yoffs,450,15,'Windows NT 4.0', false, PrinterdriverPage);
   if WinNtPrinterdriver then
-   PrinterdriverPage.Values[1] := true;
-  if Not IsWin64 then begin
-   PrinterdriverPage.Add('Windows 2000/XP/2003 - 64bit');
-   if Win2k64bitPrinterdriver then
-    PrinterdriverPage.Values[2] := true;
-  end;
- end;
- if IsWin64 then begin
-  PrinterdriverPage.Add('Windows 2000/XP/2003 - 32bit');
-  if Win2k32bitPrinterdriver then
-   PrinterdriverPage.Values[2] := true;
- end;
+   chkWinNtPrinterDriver.Checked := true;
+  yoffs := yoffs + 30
+ end
+
+ if InstallOnThisVersion('0,5.1.2600','0,0')=irInstall then begin
+  if IsWin64 then begin
+    chkWin2kXP2k3PrinterDriver32bit := CreateCheckBox(0,yoffs,450,15,'Windows 2000/XP/2003 - 32bit', false, PrinterdriverPage);
+    if Win2k32bitPrinterdriver then
+     chkWin2kXP2k3PrinterDriver32bit.Checked := true;
+   end else begin
+    chkWin2kXP2k3PrinterDriver64bit := CreateCheckBox(0,yoffs,450,15,'Windows 2000/XP/2003 - 64bit', false, PrinterdriverPage);
+    if Win2k64bitPrinterdriver then
+     chkWin2kXP2k3PrinterDriver64bit.Checked := true;
+  end  
+ end
+
  ProgressPage := CreateOutputProgressPage(ExpandConstant('{cm:InstallPrinter}'),
   ExpandConstant('{cm:InstallPrinterDescription}'));
 end;
@@ -3892,30 +3915,30 @@ begin
   if length(S)>0 then S := S + NewLine + NewLine;
   ShowAdditionPrinterdriversInMemo:=False;
   If InstallOnThisVersion('0,4.0.1381','0,0,5.0.2195')=irInstall then
-   If PrinterdriverPage.Values[0] then
+   If chkWin9xMePrinterDriver.Checked = true then
     ShowAdditionPrinterdriversInMemo:=True
   If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
-   If PrinterdriverPage.Values[0] Or PrinterdriverPage.Values[1] then
+   If chkWin9xMePrinterDriver.Checked = true Or chkWinNtPrinterDriver.Checked = true then
     ShowAdditionPrinterdriversInMemo:=True
   If ShowAdditionPrinterdriversInMemo Then begin
    S := S + ExpandConstant('{cm:AdditionalPrinterdriverCaption}');
    S := S + NewLine;
    If InstallOnThisVersion('0,4.0.1381','0,5.0.2195')=irInstall then
-    If PrinterdriverPage.Values[0] then
+    If chkWin9xMePrinterDriver.Checked = true then
      S := S + Space + Win9x + NewLine;
    If InstallOnThisVersion('0,5.0.2195','0,5.01.2600,0')=irInstall then begin
-    If PrinterdriverPage.Values[0] then
+    If chkWin9xMePrinterDriver.Checked = true then
      S := S + Space + Win9x + NewLine;
-    If PrinterdriverPage.Values[1] then
+    If chkWinNtPrinterDriver.Checked = true then
      S := S + Space + WinNt + NewLine;
    end
    If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) then begin
-    If PrinterdriverPage.Values[0] then
+    If chkWin9xMePrinterDriver.Checked = true then
      S := S + Space + Win9x + NewLine;
-    If PrinterdriverPage.Values[1] then
+    If chkWinNtPrinterDriver.Checked = true then
      S := S + Space + WinNt + NewLine;
     If IsWin64 then
-     If PrinterdriverPage.Values[2] then
+     If chkWin2kXP2k3PrinterDriver32bit.Checked = true then
       S := S + Space + WinXP2003_32bit + NewLine;
    end
    S := S + NewLine;
