@@ -1,5 +1,4 @@
-In this directory you find the printer drivers and the redmon-dll-files.
+In this directory you find the printer drivers and the PDFCreator Monitor-DLL files.
 
 Adobe:  Adobe postscript printer files
-Redmon: Redmon-DLL-Files
-
+Monitor: PDFCreator Monitor-DLL

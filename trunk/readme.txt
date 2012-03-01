@@ -1,8 +1,8 @@
-Title: PDFCreator Version 1.2.3
+Title: PDFCreator Version 1.3.0
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: September 9th,  2011
+Releasedate: March 12th,  2012
 
-Look at the readme.txt-Files in 'Setup', 'Printer', 'Printer\Redmon'.
+Look at the readme.txt-Files in 'Setup', 'Printer'.
 
 Necessary additional files:
 
@@ -17,9 +17,3 @@ Systemfiles:
 Ghostscript Files:
 	Download GPL Ghostscript 9.04
 	Install Ghostscript in the standard directory c:\gs\gpl\gs9.04
-
-Redmon Files:
-	Download the Redmon-Files from http://www.cs.wisc.edu/~ghost/redmon/ (ftp://mirror.cs.wisc.edu/pub/mirrors/ghost/ghostgum/redmon17.zip)
-	Extract the archive in Printer\Redmon
-	You need only redmon95.dll and redmonnt.dll.
-	Download the 64bit version of RedMon from http://www.winimage.com/misc/redmon/
