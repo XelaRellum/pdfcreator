@@ -388,10 +388,12 @@ Begin VB.Form frmMain
          Caption         =   "Save"
          Index           =   14
          Shortcut        =   ^S
+         Visible         =   0   'False
       End
       Begin VB.Menu mnDocument 
          Caption         =   "-"
          Index           =   15
+         Visible         =   0   'False
       End
       Begin VB.Menu mnDocument 
          Caption         =   "Combine all and send"
