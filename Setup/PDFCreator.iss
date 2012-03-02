@@ -1333,7 +1333,7 @@ begin
   If chkWin9xMePrinterDriver.Checked = true then begin
    Win9xPrinterdriver:=True;
    Result:=True
-  end;
+  end
 end;
 
 function InstallWinNtPrinterdriver(): Boolean;
@@ -1344,7 +1344,7 @@ begin
  If (InstallOnThisVersion('0,5.0.2195','0,6.0.6000')=irInstall) and chkWinNtPrinterDriver.Checked = true then begin
   WinNtPrinterdriver:=True;
   Result:=True
- end;
+ end
 end;
 
 function InstallWin2kXP2k3Printerdriver32bit(): Boolean;
@@ -1352,9 +1352,9 @@ begin
  Result:=False;
  If (InstallOnThisVersion('0,5.0.2195','0,0')=irInstall) and Not IsWin64 then //win2000
   Result:=True;
- If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and
-  IsWin64 and chkWin2kXP2k3PrinterDriver32bit.Checked = true then //Win XP
-  Result:=True
+ If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and IsWin64 then
+  if chkWin2kXP2k3PrinterDriver32bit.Checked = true then //Win XP
+   Result:=True
 end;
 
 function InstallWinXP2k3Printerdriver64bit(): Boolean;
@@ -1362,9 +1362,9 @@ begin
  Result:=False;
  If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and IsWin64 then
   Result:=True
- If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and
-  Not IsWin64 and chkWin2kXP2k3PrinterDriver32bit.Checked = true then
-  Result:=True
+ If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) and  Not IsWin64 then
+  if chkWin2kXP2k3PrinterDriver64bit.Checked = true then
+   Result:=True
 end;
 
 function GetPrintermonitorname(Default:String): String;
