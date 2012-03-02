@@ -1959,13 +1959,16 @@ begin
    StartService(serviceName);
 end;
 
-procedure RestartService(serviceName: string);
+procedure RestartService(serviceName: string; waitAfterStopMilliSeconds, waitAfterStartMilliSeconds: LongInt);
 begin
  if IsServiceInstalled(servicename) then
   if IsServiceRunning(servicename) then begin
    StopService(serviceName);
-   Sleep(4000);
+   if waitAfterStopMilliSeconds > 0 then
+    Sleep(waitAfterStopMilliSeconds);
    StartService(serviceName);
+   if waitAfterStartMilliSeconds > 0 then
+    Sleep(waitAfterStartMilliSeconds);
   end;
 end;
 
@@ -1978,54 +1981,64 @@ begin
     SaveStringToFile(LogFile, 'Spooler service: is NOT running'#13#10, True)
 end;
 
+function UninstallPrinterDriver(Environment, PrinterDrivername, Comment, LogFile: String):LongInt;
+var
+ res, resUI : LongInt;
+begin
+ resUI := 0;
+ SaveStringToFile(LogFile, Comment, True);
+ SaveStringToFile(LogFile, '  Drivername: ' + PrinterDrivername + #13#10, True);
+ If IsPrinterdriverInstalled(PrinterdriverName, Environment) then begin
+  res:=DeletePrinterDriver('',Environment, PrinterDrivername);
+  if res=0 then begin
+    SaveStringToFile(LogFile, '  Result: Error (1): ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10, True);
+    RestartService('spooler', 4000, 4000);
+    SaveStringToFile(LogFile, '  Spooler service restarted.' + #13#10, True);
+    res:=DeletePrinterDriver('', Environment, PrinterDrivername);
+    if res = 0 then begin
+      resUI := 1;
+      SaveStringToFile(LogFile, '  Result: Error (2): ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True);
+     end else
+      SaveStringToFile(LogFile, '  Result: Success (2): ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True);
+   end else
+    SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
+ end else
+  SaveStringToFile(LogFile, '  The driver wasn''t installed!' + #13#10#13#10, True);
+ 
+ result := resUI;
+end;
+
 procedure UninstallCompletePrinter(PrinterMonitorname:String; PrinterPortname: String; PrinterDrivername: String; Printername:String; LogFile: String);
 var
+ deletionSuccces : boolean;
  res, resUI, c, i: LongInt;
  PDFCreatorPrinters: Array of TPrinterInfo2;
  Ports: TArrayofString; Environment: String;
 begin
  SaveStringToFile(LogFile, #13#10, True)
 
+ deletionSuccces := true;
  SaveSpoolerServiceInformation(LogFile);
  c:=GetPDFCreatorPrinters(PDFCreatorPrinters);
- For i:=0 to c-1 do
+ For i:=0 to c-1 do begin
   resUI:=DeleteWindowsPrinter(PDFCreatorPrinters[i].pPrinterName, UninstallLogfile);
-
- SaveStringToFile(LogFile, ' Uninstall printer driver for Win95/98/Me:' + #13#10, True)
- SaveStringToFile(LogFile, '  Drivername : ' + PrinterDrivername + #13#10, True)
- Environment:='Windows 4.0';
- If IsPrinterdriverInstalled(PrinterdriverName, Environment) then begin
-  res:=DeletePrinterDriver('',Environment, PrinterDrivername);
-  if res=0 then begin
-    resUI:=resUI+1;
-    SaveStringToFile(LogFile, '  Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
-   end else
-    SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
+  if resUI <> 0 then
+   deletionSuccces := false;
  end;
+ if deletionSuccces = false then begin
+  RestartService('spooler', 4000, 2000);
+  SaveStringToFile(LogFile, ' Spooler service restarted.' + #13#10, True)
+  c:=GetPDFCreatorPrinters(PDFCreatorPrinters);
+  For i:=0 to c-1 do
+   resUI:=DeleteWindowsPrinter(PDFCreatorPrinters[i].pPrinterName, UninstallLogfile);
+ end
 
- SaveStringToFile(LogFile, ' Uninstall printerdriver for WinNT/Win2000/WinXP/Win2003 32bit:' + #13#10, True)
- SaveStringToFile(LogFile, '  Drivername : ' + PrinterDrivername + #13#10, True)
- Environment:='Windows NT x86';
- If IsPrinterdriverInstalled(PrinterdriverName, Environment) then begin
-  res:=DeletePrinterDriver('',Environment, PrinterDrivername);
-  if res=0 then begin
-    resUI:=resUI+1;
-    SaveStringToFile(LogFile, '  Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
-   end else
-    SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
- end;
-
- SaveStringToFile(LogFile, ' Uninstall printerdriver for WinNT/Win2000/WinXP/Win2003 64bit:' + #13#10, True)
- SaveStringToFile(LogFile, '  Drivername : ' + PrinterDrivername + #13#10, True)
- Environment:='Windows x64';
- If IsPrinterdriverInstalled(PrinterdriverName, Environment) then begin
-  res:=DeletePrinterDriver('',Environment, PrinterDrivername);
-  if res=0 then begin
-    resUI:=resUI+1;
-    SaveStringToFile(LogFile, '  Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
-   end else
-    SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
- end;
+ resUI := resUI + 
+  UninstallPrinterDriver('Windows 4.0', PrinterDrivername, ' Uninstall printer driver for Win95/98/Me:' + #13#10, LogFile);
+ resUI := resUI + 
+  UninstallPrinterDriver('Windows NT x86', PrinterDrivername, ' Uninstall printerdriver for WinNT/Win2000/WinXP/Win2003 32bit:' + #13#10, LogFile);
+ resUI := resUI + 
+  UninstallPrinterDriver('Windows x64', PrinterDrivername, ' Uninstall printerdriver for WinNT/Win2000/WinXP/Win2003 64bit:' + #13#10, LogFile);
 
  SaveStringToFile(LogFile, ' Uninstall printer ports:' + #13#10, True)
  c:=GetPorts2(Ports, PrinterPortname);
@@ -2044,7 +2057,14 @@ begin
  res:=DeleteMonitor('','',PrinterMonitorname);
  if res=0 then begin
    resUI:=resUI+1;
-   SaveStringToFile(LogFile, '  Result: Error ' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
+   SaveStringToFile(LogFile, '  Result: Error (1)' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
+   RestartService('spooler', 4000, 4000);
+   SaveStringToFile(LogFile, ' Spooler service restarted.' + #13#10, True)
+   res:=DeleteMonitor('','',PrinterMonitorname);
+   if res=0 then
+    SaveStringToFile(LogFile, '  Result: Error (2)' + IntToStr(GetLastError()) + ' = ' + SysErrorMessage(GetLastError()) + #13#10#13#10, True)
+   else
+    SaveStringToFile(LogFile, '  Result: Success (2)' + #13#10#13#10, True);
   end else
    SaveStringToFile(LogFile, '  Result: Success' + #13#10#13#10, True);
  if resUI>0 then begin
@@ -2129,7 +2149,7 @@ begin
   MonitorRegKey := 'SYSTEM\CurrentControlSet\Control\Print\Monitors\pdfcmon';
   if RegKeyExists(HKLM, MonitorRegKey) then begin
    resB := RegDeleteKeyIncludingSubkeys(HKLM, MonitorRegKey);
-   RestartService('spooler'); 
+   RestartService('spooler', 4000, 2000); 
   end;
  end;
  
@@ -3215,7 +3235,7 @@ begin
   end;
 
  if (res <> 0) or (RestartNecessary) then begin
-  RestartService('spooler');
+  RestartService('spooler', 4000, 2000);
   if RestartNecessary then RemovePDFCreatorRestart();
  end
 end;
@@ -4201,7 +4221,6 @@ begin
       end else
        SaveStringToFile(LogFile, ' Monitorname : ' + s  + ' already exists.'#13#10, True);
       s :='';
-      //RestartService('spooler');
 
       AdditionalPrinterProgressIndex:=AdditionalPrinterProgressIndex+1;
       ProgressPage.SetProgress(AdditionalPrinterProgressIndex, AdditionalPrinterProgressSteps);
