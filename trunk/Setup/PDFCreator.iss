@@ -3923,7 +3923,7 @@ end;
 
 function UpdateReadyMemo(Space, NewLine, MemoUserInfoInfo, MemoDirInfo, MemoTypeInfo, MemoComponentsInfo, MemoGroupInfo, MemoTasksInfo: String): String;
 var
-  S: String; ShowAdditionPrinterdriversInMemo : Boolean;
+  S, S2: String; ShowAdditionPrinterdriversInMemo : Boolean;
 begin
   S := MemoUserInfoInfo;
   if length(S)>0 then S := S + NewLine + NewLine;
@@ -3934,35 +3934,36 @@ begin
   S := S + MemoComponentsInfo;
   if length(S)>0 then S := S + NewLine + NewLine;
   ShowAdditionPrinterdriversInMemo:=False;
-  If InstallOnThisVersion('0,4.0.1381','0,0,5.0.2195')=irInstall then
-   If chkWin9xMePrinterDriver.Checked = true then
-    ShowAdditionPrinterdriversInMemo:=True
-  If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then
-   If chkWin9xMePrinterDriver.Checked = true Or chkWinNtPrinterDriver.Checked = true then
-    ShowAdditionPrinterdriversInMemo:=True
-  If ShowAdditionPrinterdriversInMemo Then begin
-   S := S + ExpandConstant('{cm:AdditionalPrinterdriverCaption}');
-   S := S + NewLine;
-   If InstallOnThisVersion('0,4.0.1381','0,5.0.2195')=irInstall then
-    If chkWin9xMePrinterDriver.Checked = true then
-     S := S + Space + Win9x + NewLine;
-   If InstallOnThisVersion('0,5.0.2195','0,5.01.2600,0')=irInstall then begin
-    If chkWin9xMePrinterDriver.Checked = true then
-     S := S + Space + Win9x + NewLine;
-    If chkWinNtPrinterDriver.Checked = true then
-     S := S + Space + WinNt + NewLine;
-   end
-   If (InstallOnThisVersion('0,5.01.2600','0,0')=irInstall) then begin
-    If chkWin9xMePrinterDriver.Checked = true then
-     S := S + Space + Win9x + NewLine;
-    If chkWinNtPrinterDriver.Checked = true then
-     S := S + Space + WinNt + NewLine;
-    If IsWin64 then
-     If chkWin2kXP2k3PrinterDriver32bit.Checked = true then
-      S := S + Space + WinXP2003_32bit + NewLine;
-   end
-   S := S + NewLine;
-  end;
+
+  S2 := ExpandConstant('{cm:AdditionalPrinterdriverCaption}');
+  S2 := S2 + NewLine;
+  if InstallOnThisVersion('4.0.950,5.0.2195','0,6.0.6000')=irInstall then
+   if chkWin9xMePrinterDriver.Checked = true then begin
+    ShowAdditionPrinterdriversInMemo:=True;
+    S2 := S2 + Space + Win9x + NewLine;
+   end;
+  if InstallOnThisVersion('0,4.0.1381','0,6.0.6000')=irInstall then
+   if chkWinNtPrinterDriver.Checked = true then begin
+    ShowAdditionPrinterdriversInMemo:=True;
+    S2 := S2 + Space + WinNt + NewLine;
+   end;
+  if InstallOnThisVersion('0,5.1.2600','0,0')=irInstall then begin
+   if IsWin64 then begin
+     if chkWin2kXP2k3PrinterDriver32bit.Checked = true then begin
+      ShowAdditionPrinterdriversInMemo:=True;
+      S2 := S2 + Space + WinXP2003_32bit + NewLine;
+ 	   end 
+   end else begin
+    if chkWin2kXP2k3PrinterDriver64bit.Checked = true then begin
+     ShowAdditionPrinterdriversInMemo:=True;
+     S2 := S2 + Space + WinXP2003_64bit + NewLine;
+	  end 
+   end  
+  end
+  S2 := S2 + NewLine;
+  if ShowAdditionPrinterdriversInMemo = True then
+   S := S + S2;
+  
   S := S + MemoGroupInfo;
   if length(S)>0 then S := S + NewLine + NewLine;
   S := S + MemoTasksInfo;
