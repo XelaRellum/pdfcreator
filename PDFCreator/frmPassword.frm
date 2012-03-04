@@ -233,23 +233,22 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Me.Icon = LoadResPicture(2120, vbResIcon)
-50020  oldMousePointer = Screen.MousePointer
-50030  Me.KeyPreview = True
-50040  Screen.MousePointer = vbNormal
-50050  ChangeLanguage
-50060  With Options
-50070   dmFraUserPass.Enabled = .PDFUserPass
-50080   dmFraOwnerPass.Enabled = .PDFOwnerPass
-50090  End With
-50100  bSuccess = False
-50110  bFinished = False
-50120
-50130  With Options
-50140   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50150  End With
-50160
-50170  ShowAcceleratorsInForm Me, True
+50010  oldMousePointer = Screen.MousePointer
+50020  Me.KeyPreview = True
+50030  Screen.MousePointer = vbNormal
+50040  ChangeLanguage
+50050  With Options
+50060   dmFraUserPass.Enabled = .PDFUserPass
+50070   dmFraOwnerPass.Enabled = .PDFOwnerPass
+50080  End With
+50090  bSuccess = False
+50100  bFinished = False
+50110
+50120  With Options
+50130   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50140  End With
+50150
+50160  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

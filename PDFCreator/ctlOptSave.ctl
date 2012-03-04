@@ -200,7 +200,7 @@ Begin VB.UserControl ctlOptSave
          Height          =   435
          Index           =   0
          Left            =   120
-         Picture         =   "ctlOptSave.ctx":06A4
+         Picture         =   "ctlOptSave.ctx":08A4
          Style           =   1  'Grafisch
          TabIndex        =   13
          Top             =   915

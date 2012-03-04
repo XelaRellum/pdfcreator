@@ -240,7 +240,7 @@ On Error GoTo ErrPtnr_OnError
 50210  End If
 50220  TestPSPage = Replace(TestPSPage, "[INFOPDFCREATOR]", tStr, , 1, vbTextCompare)
 50230
-50240  tStr = ""
+50240 ' tStr = ""
 50250 ' Set reg = New clsRegistry
 50260 ' With reg
 50270 '  .hkey = HKEY_LOCAL_MACHINE
@@ -254,70 +254,69 @@ On Error GoTo ErrPtnr_OnError
 50350 '  End If
 50360 ' End With
 50370 ' Set reg = Nothing
-50380  Wow64FsRedirection True
-50390  tStr = CompletePath(GetSystemDirectory) & "pdfcmon.dll"
-50400  Wow64FsRedirection False
-50410
-50420  If FileExists(tStr) = True Then
-50430    Set c = GetFileVersion(tStr)
-50440    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50450   Else
-50460    tStr = ""
-50470  End If
-50480
-50490
-50500
-50510  TestPSPage = Replace(TestPSPage, "[INFOPDFMONITOR]", tStr, , 1, vbTextCompare)
-50520
-50530  tStr = PDFCreatorApplicationPath & "Languages\Transtool.exe"
-50540  If FileExists(tStr) = True Then
-50550    Set c = GetFileVersion(tStr)
-50560    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
-50570   Else
-50580    tStr = ""
-50590  End If
-50600  TestPSPage = Replace(TestPSPage, "[INFOTRANSTOOL]", tStr, , 1, vbTextCompare)
-50610
-50620  TestPSPage = Replace(TestPSPage, "[INFOCOMPUTER]", GetComputerName, , 1, vbTextCompare)
-50630  tStr = GetWinVersionStr
-50640  TestPSPage = Replace(TestPSPage, "[INFOWINDOWS]", _
+50380
+50390 ' Wow64FsRedirection True
+50400 ' tStr = CompletePath(GetSystemDirectory) & "pdfcmon.dll"
+50410 ' Wow64FsRedirection False
+50420
+50430 ' If FileExists(tStr) = True Then
+50440 '   Set c = GetFileVersion(tStr)
+50450 '   tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50460 '  Else
+50470 '   tStr = ""
+50480 ' End If
+50490 '
+50500 ' TestPSPage = Replace(TestPSPage, "[INFOPDFMONITOR]", tStr, , 1, vbTextCompare)
+50510
+50520  tStr = PDFCreatorApplicationPath & "Languages\Transtool.exe"
+50530  If FileExists(tStr) = True Then
+50540    Set c = GetFileVersion(tStr)
+50550    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50560   Else
+50570    tStr = ""
+50580  End If
+50590  TestPSPage = Replace(TestPSPage, "[INFOTRANSTOOL]", tStr, , 1, vbTextCompare)
+50600
+50610  TestPSPage = Replace(TestPSPage, "[INFOCOMPUTER]", GetComputerName, , 1, vbTextCompare)
+50620  tStr = GetWinVersionStr
+50630  TestPSPage = Replace(TestPSPage, "[INFOWINDOWS]", _
   Mid(tStr, 1, IIf(InStr(1, tStr, "[") > 0, InStr(1, tStr, "[") - 1, Len(tStr))), 1, vbTextCompare)
-50660
-50670  If IsWin64 Then
-50680    TestPSPage = Replace(TestPSPage, "[INFO64BIT]", "true", , 1, vbTextCompare)
-50690   Else
-50700    TestPSPage = Replace(TestPSPage, "[INFO64BIT]", "false", , 1, vbTextCompare)
-50710  End If
-50720
-50730  tStr = GetPDFCreatorSpoolDirectory
-50740  strGUID = GetGUID
-50750  File = CompletePath(tStr) & strGUID
-50760  filename = File & ".inf"
-50770  fn = FreeFile
-50780  Open filename For Output As fn
-50790  Print #fn, TestPSPage
-50800  Close #fn
-50810
-50820  TestPSFileName = File & ".ps"
-50830  Name filename As TestPSFileName
-50840
-50850  Set ini = New clsINI
-50860  ini.filename = CompletePath(Path) & File & ".inf"
-50870  ini.Section = "1"
-50880  Title = GetPSTitleFromPSString(TestPSPage)
-50890  ini.SaveKey GetComputerName, "ClientComputer"
-50900  ini.SaveKey Title, "DocumentTitle"
-50910  ini.SaveKey "0", "JobId"
-50920  ini.SaveKey "", "Printername"
-50930  ini.SaveKey "", "SessionID"
-50940  ini.SaveKey TestPSFileName, "SpoolFilename"
-50950  ini.SaveKey GetUsername, "UserName"
-50960  ini.SaveKey Environ$("SESSIONNAME"), "WinStation"
-50970
-50980  If Not f Is Nothing Then
-50990   f.CheckPrintJobs
-51000   f.Timer1.Enabled = True
-51010  End If
+50650
+50660  If IsWin64 Then
+50670    TestPSPage = Replace(TestPSPage, "[INFO64BIT]", "true", , 1, vbTextCompare)
+50680   Else
+50690    TestPSPage = Replace(TestPSPage, "[INFO64BIT]", "false", , 1, vbTextCompare)
+50700  End If
+50710
+50720  tStr = GetPDFCreatorSpoolDirectory
+50730  strGUID = GetGUID
+50740  File = CompletePath(tStr) & strGUID
+50750  filename = File & ".inf"
+50760  fn = FreeFile
+50770  Open filename For Output As fn
+50780  Print #fn, TestPSPage
+50790  Close #fn
+50800
+50810  TestPSFileName = File & ".ps"
+50820  Name filename As TestPSFileName
+50830
+50840  Set ini = New clsINI
+50850  ini.filename = CompletePath(Path) & File & ".inf"
+50860  ini.Section = "1"
+50870  Title = GetPSTitleFromPSString(TestPSPage)
+50880  ini.SaveKey GetComputerName, "ClientComputer"
+50890  ini.SaveKey Title, "DocumentTitle"
+50900  ini.SaveKey "0", "JobId"
+50910  ini.SaveKey "", "Printername"
+50920  ini.SaveKey "", "SessionID"
+50930  ini.SaveKey TestPSFileName, "SpoolFilename"
+50940  ini.SaveKey GetUsername, "UserName"
+50950  ini.SaveKey Environ$("SESSIONNAME"), "WinStation"
+50960
+50970  If Not f Is Nothing Then
+50980   f.CheckPrintJobs
+50990   f.Timer1.Enabled = True
+51000  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

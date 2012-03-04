@@ -208,7 +208,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Public Function AddMenuItem(ByVal sCaption As String, Optional ByVal sKey As String = "", Optional ByVal bDefault As Boolean = False) As Long
+Public Function AddMenuItem(ByVal sCaption As String, Optional ByVal sKey As String = "", Optional ByVal bDefault As Boolean = False, Optional ByVal bChecked As Boolean = False) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -223,10 +223,11 @@ On Error GoTo ErrPtnr_OnError
 50090  mnuSysTray(iIndex).Visible = True
 50100  mnuSysTray(iIndex).Tag = sKey
 50110  mnuSysTray(iIndex).Caption = sCaption
-50120  If bDefault Then
-50130   m_iDefaultIndex = iIndex
-50140  End If
-50150  AddMenuItem = iIndex
+50120  mnuSysTray(iIndex).Checked = bChecked
+50130  If bDefault Then
+50140   m_iDefaultIndex = iIndex
+50150  End If
+50160  AddMenuItem = iIndex
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -346,7 +347,7 @@ Public Function ShowMenu()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  SetForegroundWindow Me.hwnd
+50010  SetForegroundWindow Me.hWnd
 50020  If m_iDefaultIndex > -1 Then
 50030    Me.PopupMenu mnuPopup, 0, , , mnuSysTray(m_iDefaultIndex)
 50040   Else
@@ -383,7 +384,7 @@ On Error GoTo ErrPtnr_OnError
 50130    'Add the icon to the system tray...
 50140  If m_bUseUnicode Then
 50150    With nfIconDataW
-50160     .hwnd = Me.hwnd
+50160     .hWnd = Me.hWnd
 50170     .uID = Me.Icon
 50180     .uFlags = NIF_ICON Or NIF_MESSAGE Or NIF_TIP
 50190     .uCallbackMessage = WM_MOUSEMOVE
@@ -400,7 +401,7 @@ On Error GoTo ErrPtnr_OnError
 50300    End If
 50310   Else
 50320    With nfIconDataA
-50330     .hwnd = Me.hwnd
+50330     .hWnd = Me.hWnd
 50340     .uID = Me.Icon
 50350     .uFlags = NIF_ICON Or NIF_MESSAGE Or NIF_TIP
 50360     .uCallbackMessage = WM_MOUSEMOVE
@@ -457,6 +458,7 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
 Private Function unicodeSize(ByVal lSize As Long) As Long
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -507,7 +509,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Property
 
-Private Sub Form_MouseMove(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub Form_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -515,7 +517,7 @@ On Error GoTo ErrPtnr_OnError
 50020  ' VB manipulates the x value according to scale mode:
 50030  ' we must remove this before we can interpret the
 50040  ' message windows was trying to send to us:
-50050  lx = ScaleX(x, Me.ScaleMode, vbPixels)
+50050  lx = ScaleX(X, Me.ScaleMode, vbPixels)
 50061  Select Case lx
         Case WM_MOUSEMOVE
 50080    RaiseEvent SysTrayMouseMove

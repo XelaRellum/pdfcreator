@@ -27,7 +27,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "Please donate to support us"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -45,7 +45,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "Your Translation is done by: "
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -71,7 +71,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "www.activevb.de"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -90,7 +90,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "www.vb-hellfire.de"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -109,7 +109,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "vbnet.mvps.org"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -128,7 +128,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "www.planet-source-code.com"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -165,7 +165,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "www.aboutvb.de"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -184,7 +184,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "For Tutorials and Help"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   14.25
          Charset         =   0
          Weight          =   400
@@ -202,7 +202,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "All translators, who help you to understand PDFCreator"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -220,7 +220,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "The testers, who help us to find and solve bugs"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400
@@ -238,7 +238,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "Authors"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   14.25
          Charset         =   0
          Weight          =   400
@@ -256,7 +256,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "Special Thanks to"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   14.25
          Charset         =   0
          Weight          =   400
@@ -274,7 +274,7 @@ Begin VB.Form frmAbout
       BackColor       =   &H00FFFFFF&
       Caption         =   "Philip Chinery && Frank Heindörfer - www.pdfforge.org"
       BeginProperty Font 
-         Name            =   "Arial Rounded MT Bold"
+         Name            =   "Arial"
          Size            =   9.75
          Charset         =   0
          Weight          =   400

@@ -172,42 +172,41 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Me.Icon = LoadResPicture(2120, vbResIcon)
-50020  KeyPreview = True
-50030  With Options
-50040   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50050  End With
-50060  ChangeLanguage
-50070  If Options.Logging = 1 Then
-50080    chkLogging.value = 1
-50090   Else
-50100    chkLogging.value = 0
-50110  End If
-50120  chkLogging.Visible = ShowOnlyLogfile
-50130  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
-50140  If Len(txtLog.Text) = 0 Then
-50150    cmdSave.Enabled = False
-50160    cmdClear.Enabled = False
-50170   Else
-50180    If InStr(txtLog.Text, vbCrLf) > 0 Then
-50190     txtLog.SelStart = Len(txtLog.Text) - InStrRev(txtLog.Text, vbCrLf)
-50200    End If
-50210  End If
-50220  If ShowOnlyLogfile = True Then
-50230   FormInTaskbar Me, True, True
-50240  End If
-50250  With Screen
-50260   Height = 0.75 * .Height
-50270   Width = 0.75 * .Width
-50280   Move (.Width - Width) / 2, (.Height - Height) / 2
-50290  End With
-50300
-50310  With Options
-50320   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50330  End With
-50340
-50350  ShowAcceleratorsInForm Me, True
-50360  Timer1.Enabled = True
+50010  KeyPreview = True
+50020  With Options
+50030   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50040  End With
+50050  ChangeLanguage
+50060  If Options.Logging = 1 Then
+50070    chkLogging.value = 1
+50080   Else
+50090    chkLogging.value = 0
+50100  End If
+50110  chkLogging.Visible = ShowOnlyLogfile
+50120  Call SendMessage(txtLog.hWnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
+50130  If Len(txtLog.Text) = 0 Then
+50140    cmdSave.Enabled = False
+50150    cmdClear.Enabled = False
+50160   Else
+50170    If InStr(txtLog.Text, vbCrLf) > 0 Then
+50180     txtLog.SelStart = Len(txtLog.Text) - InStrRev(txtLog.Text, vbCrLf)
+50190    End If
+50200  End If
+50210  If ShowOnlyLogfile = True Then
+50220   FormInTaskbar Me, True, True
+50230  End If
+50240  With Screen
+50250   Height = 0.75 * .Height
+50260   Width = 0.75 * .Width
+50270   Move (.Width - Width) / 2, (.Height - Height) / 2
+50280  End With
+50290
+50300  With Options
+50310   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50320  End With
+50330
+50340  ShowAcceleratorsInForm Me, True
+50350  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
