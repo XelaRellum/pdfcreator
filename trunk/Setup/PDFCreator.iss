@@ -166,6 +166,8 @@ ChangesAssociations=true
 CreateUninstallRegKey=false
 DefaultDirName={reg:HKLM\{#UninstallRegStr2},Inno Setup: App Path|{pf}\{#AppName}}
 DefaultGroupName={#AppName}
+DisableDirPage=true
+DisableProgramGroupPage=true
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
 LanguageDetectionMethod=locale
@@ -371,13 +373,13 @@ Source: ..\PDFCreator\Languages\polish.ini; DestDir: {app}\languages; Components
 Source: ..\PDFCreator\Languages\portuguese_br.ini; DestDir: {app}\languages; Components: languages\portuguese_br; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\romanian.ini; DestDir: {app}\languages; Components: languages\romanian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\russian.ini; DestDir: {app}\languages; Components: languages\russian; Flags: ignoreversion
-Source: ..\PDFCreator\Languages\serbian_cyrillic.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
+Source: ..\PDFCreator\Languages\serbian_cyrillic.ini; DestDir: {app}\languages; Components: languages\serbian_cyrillic; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovak.ini; DestDir: {app}\languages; Components: languages\slovak; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\slovenian.ini; DestDir: {app}\languages; Components: languages\slovenian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\spanish.ini; DestDir: {app}\languages; Components: languages\spanish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\swedish.ini; DestDir: {app}\languages; Components: languages\swedish; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\turkish.ini; DestDir: {app}\languages; Components: languages\turkish; Flags: ignoreversion
-;Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\33333ukrainian; Flags: ignoreversion
+;Source: ..\PDFCreator\Languages\ukrainian.ini; DestDir: {app}\languages; Components: languages\ukrainian; Flags: ignoreversion
 Source: ..\PDFCreator\Languages\valencian.ini; DestDir: {app}\languages; Components: languages\valencian; Flags: ignoreversion
 
 ;Reg file
