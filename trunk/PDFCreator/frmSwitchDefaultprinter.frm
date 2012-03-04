@@ -109,30 +109,16 @@ End Select
 End Sub
 
 Private Sub Form_Load()
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Me.Icon = LoadResPicture(2120, vbResIcon)
-50020  Caption = App.EXEName
-50030  ChangeDefaultprinter = False
-50040  ChangeLanguage
-50050  chkAskAgain.value = Options.NoConfirmMessageSwitchingDefaultprinter
-50060
-50070  With Options
-50080   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50090  End With
-50100
-50110  ShowAcceleratorsInForm Me, True
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmSwitchDefaultprinter", "Form_Load")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+ Caption = App.EXEName
+ ChangeDefaultprinter = False
+ ChangeLanguage
+ chkAskAgain.value = Options.NoConfirmMessageSwitchingDefaultprinter
+
+ With Options
+  SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+ End With
+
+ ShowAcceleratorsInForm Me, True
 End Sub
 
 Public Sub ChangeLanguage()

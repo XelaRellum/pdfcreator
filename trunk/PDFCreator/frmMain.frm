@@ -9,6 +9,7 @@ Begin VB.Form frmMain
    ClientWidth     =   9510
    Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
+   Picture         =   "frmMain.frx":27A2
    ScaleHeight     =   3765
    ScaleWidth      =   9510
    StartUpPosition =   3  'Windows-Standard
@@ -32,15 +33,15 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   3
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":27A2
+            Picture         =   "frmMain.frx":2D2C
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":2D3C
+            Picture         =   "frmMain.frx":32C6
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":32D6
+            Picture         =   "frmMain.frx":3860
             Key             =   ""
          EndProperty
       EndProperty
@@ -66,75 +67,75 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   18
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":3870
+            Picture         =   "frmMain.frx":3DFA
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":3E0A
+            Picture         =   "frmMain.frx":4394
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":43A4
+            Picture         =   "frmMain.frx":492E
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":493E
+            Picture         =   "frmMain.frx":4EC8
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":4A98
+            Picture         =   "frmMain.frx":5462
             Key             =   ""
          EndProperty
          BeginProperty ListImage6 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5032
+            Picture         =   "frmMain.frx":59FC
             Key             =   ""
          EndProperty
          BeginProperty ListImage7 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":55CC
+            Picture         =   "frmMain.frx":5F96
             Key             =   ""
          EndProperty
          BeginProperty ListImage8 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5B66
+            Picture         =   "frmMain.frx":6530
             Key             =   ""
          EndProperty
          BeginProperty ListImage9 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":5F00
+            Picture         =   "frmMain.frx":6ACA
             Key             =   ""
          EndProperty
          BeginProperty ListImage10 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":629A
+            Picture         =   "frmMain.frx":7064
             Key             =   ""
          EndProperty
          BeginProperty ListImage11 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6634
+            Picture         =   "frmMain.frx":75FE
             Key             =   ""
          EndProperty
          BeginProperty ListImage12 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":69CE
+            Picture         =   "frmMain.frx":7B98
             Key             =   ""
          EndProperty
          BeginProperty ListImage13 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":6D68
+            Picture         =   "frmMain.frx":7F32
             Key             =   ""
          EndProperty
          BeginProperty ListImage14 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":7102
+            Picture         =   "frmMain.frx":82CC
             Key             =   ""
          EndProperty
          BeginProperty ListImage15 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":749C
+            Picture         =   "frmMain.frx":8666
             Key             =   ""
          EndProperty
          BeginProperty ListImage16 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":7836
+            Picture         =   "frmMain.frx":8A00
             Key             =   ""
          EndProperty
          BeginProperty ListImage17 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":7BD0
+            Picture         =   "frmMain.frx":8D9A
             Key             =   ""
          EndProperty
          BeginProperty ListImage18 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":7F6A
+            Picture         =   "frmMain.frx":9134
             Key             =   ""
          EndProperty
       EndProperty
@@ -252,11 +253,11 @@ Begin VB.Form frmMain
       BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
          NumListImages   =   2
          BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":80C4
+            Picture         =   "frmMain.frx":96CE
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmMain.frx":865E
+            Picture         =   "frmMain.frx":9C68
             Key             =   ""
          EndProperty
       EndProperty
@@ -264,7 +265,7 @@ Begin VB.Form frmMain
    Begin VB.Image imgPaypal 
       Height          =   465
       Left            =   1890
-      Picture         =   "frmMain.frx":8BF8
+      Picture         =   "frmMain.frx":A202
       Top             =   2940
       Visible         =   0   'False
       Width           =   930
@@ -514,7 +515,7 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010 IsFrmMainLoaded = True
+50010  IsFrmMainLoaded = True
 50020  Me.KeyPreview = True
 50030
 50040  If App.StartMode = vbSModeAutomation Then
@@ -2191,7 +2192,7 @@ On Error GoTo ErrPtnr_OnError
 50020  If Clipboard.GetFormat(vbCFBitmap) = True Then
 50030   File = GetPDFCreatorSpoolDirectory & GetGUID
 50040   ConvertStandardImageFromPicture Clipboard.GetData(2), File & ".ps", "Screenshot"
-50050   CreateInfoSpoolFile File & ".inf"
+50050   CreateInfoSpoolFile File & ".ps", File & ".inf"
 50060  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -2821,10 +2822,10 @@ On Error GoTo ErrPtnr_OnError
 50080     .AddMenuItem mnPrinter(i).Caption
 50090    Next i
 50100    If mnPrinter(6).Checked = True Then
-50110     .mnuSysTray(6).Checked = True
+50110     .mnuSysTray(8).Checked = True
 50120    End If
 50130    If mnPrinter(2).Checked = True Then
-50140     .mnuSysTray(2).Checked = True
+50140     .mnuSysTray(4).Checked = True
 50150    End If
 50160    .ToolTip = Me.Caption
 50170   End With

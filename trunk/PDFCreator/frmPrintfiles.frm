@@ -136,29 +136,28 @@ Private Sub Form_Load()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim files As Collection
-50020  Me.Icon = LoadResPicture(2120, vbResIcon)
-50030  CancelPrintfiles = False
-50040  Caption = App.title & " " & GetProgramReleaseStr
-50050  RemoveX Me
-50060  Set files = GetFiles(PrintFilename, "")
-50070  If files.Count > 1 Then
-50080   Visible = True
-50090  End If
-50100  With xpPgb
-50110   .Min = 1
-50120   .Max = files.Count
-50130   .Color = vbGreen
-50140   .Font.Bold = True
-50150   .ShowText = True
-50160  End With
-50170  ChangeLanguage
-50180
-50190  With Options
-50200   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50210  End With
-50220
-50230  ShowAcceleratorsInForm Me, True
-50240  Timer1.Enabled = True
+50020  CancelPrintfiles = False
+50030  Caption = App.Title & " " & GetProgramReleaseStr
+50040  RemoveX Me
+50050  Set files = GetFiles(PrintFilename, "")
+50060  If files.Count > 1 Then
+50070   Visible = True
+50080  End If
+50090  With xpPgb
+50100   .Min = 1
+50110   .Max = files.Count
+50120   .Color = vbGreen
+50130   .Font.Bold = True
+50140   .ShowText = True
+50150  End With
+50160  ChangeLanguage
+50170
+50180  With Options
+50190   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50200  End With
+50210
+50220  ShowAcceleratorsInForm Me, True
+50230  Timer1.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

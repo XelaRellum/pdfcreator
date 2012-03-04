@@ -76,7 +76,7 @@ Begin VB.Form frmCertificatePassword
       Begin VB.Image imgValidCertificatePassword 
          Height          =   240
          Left            =   4440
-         Picture         =   "frmCertificatePassword.frx":27A2
+         Picture         =   "frmCertificatePassword.frx":014A
          Top             =   720
          Visible         =   0   'False
          Width           =   240
@@ -84,7 +84,7 @@ Begin VB.Form frmCertificatePassword
       Begin VB.Image imgInvalidCertificatePassword 
          Height          =   240
          Left            =   4320
-         Picture         =   "frmCertificatePassword.frx":2D2C
+         Picture         =   "frmCertificatePassword.frx":06D4
          Top             =   505
          Width           =   240
       End

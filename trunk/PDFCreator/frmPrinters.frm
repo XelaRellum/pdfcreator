@@ -21,12 +21,20 @@ Begin VB.Form frmPrinters
       TabIndex        =   2
       Top             =   120
       Width           =   6495
-      _extentx        =   11456
-      _extenty        =   8281
-      caption         =   "Printers"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "frmPrinters.frx":27A2
+      _ExtentX        =   11456
+      _ExtentY        =   8281
+      Caption         =   "Printers"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtNewPrinter 
          Appearance      =   0  '2D
          Height          =   285
@@ -48,7 +56,7 @@ Begin VB.Form frmPrinters
          BeginProperty Images {2C247F25-8591-11D1-B16A-00C0F0283628} 
             NumListImages   =   1
             BeginProperty ListImage1 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-               Picture         =   "frmPrinters.frx":27CE
+               Picture         =   "frmPrinters.frx":014A
                Key             =   ""
             EndProperty
          EndProperty

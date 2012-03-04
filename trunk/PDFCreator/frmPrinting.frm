@@ -1,19 +1,15 @@
 VERSION 5.00
 Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Begin VB.Form frmPrinting 
-   BorderStyle     =   1  'Fest Einfach
    Caption         =   "PDFCreator"
    ClientHeight    =   6555
-   ClientLeft      =   45
-   ClientTop       =   330
+   ClientLeft      =   60
+   ClientTop       =   345
    ClientWidth     =   7815
    Icon            =   "frmPrinting.frx":0000
    LinkTopic       =   "Form1"
-   MaxButton       =   0   'False
-   MinButton       =   0   'False
    ScaleHeight     =   6555
    ScaleWidth      =   7815
-   ShowInTaskbar   =   0   'False
    StartUpPosition =   2  'Bildschirmmitte
    Begin VB.Timer Timer2 
       Enabled         =   0   'False
@@ -597,49 +593,48 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Me.Icon = LoadResPicture(2120, vbResIcon)
-50020  Me.KeyPreview = True
-50030  Caption = App.EXEName
-50040  Caption = App.Title & " " & GetProgramReleaseStr
-50050  Printing = True
-50060  OutputFileIsPDFFile = False
-50070
-50080  With anmProcess
-50090   .Top = 0
-50100   .Left = 0
-50110   .Width = 260 * Screen.TwipsPerPixelX
-50120   .Height = 66 * Screen.TwipsPerPixelY
-50130  End With
-50140
-50150  If frmMain.Visible = False Then
-50160   FormInTaskbar Me, True, True
-50170  End If
-50180
-50190  ChangeLanguage
-50200
-50210  InitForm
-50220
-50230  UpdateProfiles
-50240
-50250  With Options
-50260   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50270  End With
-50280
-50290  ShowAcceleratorsInForm Me, True
-50300  SetTopMost Me, True, True
-50310  SetTopMost Me, False, True
-50320
-50330  Set PDFArchitectToolTip = New clsToolTip
-50340  With PDFArchitectToolTip
-50350   .DelayTime = 1000
-50360   .VisibleTime = 1000
-50370   .Style = TTBalloon
-50380   .Icon = TTIconInfo
-50390   .Title = LanguageStrings.PrintingPDFArchitectToolTipTitle
-50400   .PopupOnDemand = True
-50410   .CreateToolTip chkEditWithPDFArchitect.hWnd
-50420  End With
-50430  ShowPDFArchitectToolTip
+50010  Me.KeyPreview = True
+50020  Caption = App.EXEName
+50030  Caption = App.Title & " " & GetProgramReleaseStr
+50040  Printing = True
+50050  OutputFileIsPDFFile = False
+50060
+50070  With anmProcess
+50080   .Top = 0
+50090   .Left = 0
+50100   .Width = 260 * Screen.TwipsPerPixelX
+50110   .Height = 66 * Screen.TwipsPerPixelY
+50120  End With
+50130
+50140  If frmMain.Visible = False Then
+50150   FormInTaskbar Me, True, True
+50160  End If
+50170
+50180  ChangeLanguage
+50190
+50200  InitForm
+50210
+50220  UpdateProfiles
+50230
+50240  With Options
+50250   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
+50260  End With
+50270
+50280  ShowAcceleratorsInForm Me, True
+50290  SetTopMost Me, True, True
+50300  SetTopMost Me, False, True
+50310
+50320  Set PDFArchitectToolTip = New clsToolTip
+50330  With PDFArchitectToolTip
+50340   .DelayTime = 1000
+50350   .VisibleTime = 1000
+50360   .Style = TTBalloon
+50370   .Icon = TTIconInfo
+50380   .Title = LanguageStrings.PrintingPDFArchitectToolTipTitle
+50390   .PopupOnDemand = True
+50400   .CreateToolTip chkEditWithPDFArchitect.hWnd
+50410  End With
+50420  ShowPDFArchitectToolTip
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
