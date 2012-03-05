@@ -647,8 +647,8 @@ Root: HKCU; Subkey: Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder
 Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueName: UninstallOptions; Valuedata: {cm:UninstallOptions}; Flags: uninsdeletevalue
 
 ; Application
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Check: IsServerInstallation; Flags: createvalueifdoesntexist
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: C:\PDFs\<REDMON_MACHINE>\<REDMON_USER>; Flags: createvalueifdoesntexist; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: C:\PDFs\<ClientComputer>\<UserName>; Check: IsServerInstallation; Flags: createvalueifdoesntexist
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: C:\PDFs\<ClientComputer>\<UserName>; Flags: createvalueifdoesntexist; Check: IsServerInstallation
 Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Check: IsServerInstallation
 Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: {app}\Temp\; Flags: createvalueifdoesntexist; Check: IsServerInstallation
 
