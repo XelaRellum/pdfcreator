@@ -719,13 +719,12 @@ Name: {app}\SetupLog.txt; Type: files
 Name: {app}\Unload.tmp; Type: files
 Name: {app}\PDFCreator.url; Type: files
 Name: {app}\{cm:Donation}.url; Type: files
-Name: {app}\PDFCreatorSpool; Type: filesandordirs
-Name: {app}\Temp; Type: filesandordirs
 Name: {app}\languages; Type: filesandordirs
 Name: {app}; Type: dirifempty
+Name: {win}\Temp\PdfCreator; Type: filesandordirs
 ;User temp directories
 Name: {%tmp}\{#Appname}; Type: filesandordirs
-Name: {%tmp}\PDFCreatorSpool; Type: filesandordirs
+Name: {%tmp}\PDFCreator\Spool; Type: filesandordirs
 
 [Messages]
 ;Remove the 'StatusRunProgram' message
