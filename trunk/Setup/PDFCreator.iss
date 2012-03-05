@@ -513,13 +513,8 @@ Source: "..\PDFArchitect\Languages\english.ini"; DestDir: {app}\PDFArchitect\Lan
 Source: "..\PDFArchitect\Languages\german.ini"; DestDir: {app}\PDFArchitect\Languages; Flags: comparetimestamp; Components: PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect-english.settings"; DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: Not IsLanguage('german'); Components: PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect-german.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('german'); Components: PDFArchitect
-
 ; InstallCheck
 Source: Installation\InstallCheck.exe; DestDir: {tmp}; Flags: deleteafterinstall overwritereadonly;
-
-[Dirs]
-Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; OnlyBelowVersion: 0,5.2
-Name: {code:GetPrinterTemppath}; Flags: uninsalwaysuninstall; Permissions: users-modify; MinVersion: 0,6.0
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; IconFilename: {app}\{#AppExename}; IconIndex: 0; Flags: createonlyiffileexists
@@ -1232,33 +1227,10 @@ begin
  end;
 end;
 
-function GetPrinterTemppath(Default:string): String;
-var
- TempDir: String;
-begin
- If (InstallOnThisVersion('4.00.950,0','0,0')=irInstall) then     // Win9xMe
-  TempDir:=ExpandConstant('{%tmp}');
- If InstallOnThisVersion('0,4.0.1381','5.0.2195,0')=irInstall then // WinNt
-  TempDir:=ExpandConstant('{userappdata}')+ '\PDFCreator\' + ExpandConstant('{username}');
- If InstallOnThisVersion('0,5.0.2195','0,0')=irInstall then // Win2k and above
-  TempDir:=ExpandConstant('{%tmp}')+ '\PDFCreator';
- If (Length(TempDir) = 0) or (Servermodus = true) Then
-  TempDir := ExpandConstant('{app}') + '\Temp';
- Result:=TempDir;
-end;
-
 function IsLanguage(LangName: String): Boolean;
 begin
  If LowerCase(LangName)=Lowercase(ActiveLanguage) then
   Result:=True;
-end;
-
-function IsServerMode(): Boolean;
-begin
- If Servermodus = true then
-   Result:=True
-  Else
-   Result:=False
 end;
 
 procedure SetDummyRunOnce;
@@ -1953,6 +1925,19 @@ begin
 	end
 end;
 
+procedure AdjustServerAutoSaveSettings();
+var
+ s, subKey : string;
+begin
+ subKey := 'Software\PDFCreator\Program';
+ if RegValueExists(HKEY_LOCAL_MACHINE, subKey, 'AutosaveDirectory') then
+  if RegQueryStringValue(HKEY_LOCAL_MACHINE, subKey, 'AutosaveDirectory', s) then begin
+   StringChangeEx(s, '<REDMON_MACHINE>', '<ClientComputer>', true);
+   StringChangeEx(s, '<REDMON_USER>', '<ClientUsername>', true);
+   RegWriteStringValue(HKEY_LOCAL_MACHINE, subKey, 'AutosaveDirectory', s);
+  end
+end;
+
 procedure StartServiceIfNotRunning(serviceName: string);
 begin
  if IsServiceInstalled(servicename) then
@@ -2014,7 +1999,7 @@ var
  deletionSuccces : boolean;
  res, resUI, c, i: LongInt;
  PDFCreatorPrinters: Array of TPrinterInfo2;
- Ports: TArrayofString; Environment: String;
+ Ports: TArrayofString;
 begin
  SaveStringToFile(LogFile, #13#10, True)
 
@@ -2179,6 +2164,17 @@ begin
    Result:=true
   else
    Result:=false;
+end;
+
+function IsPdfServerIntalled(): Boolean;
+var
+ s : string;
+begin
+ result:=false;
+ if RegValueExists(HKEY_LOCAL_MACHINE, UninstallRegKey, 'PDFserver') then
+  if RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'PDFServer', s) then
+   if s='1' then
+    result := true;
 end;
 
 procedure IntegrateWinexplorer;
@@ -3500,6 +3496,9 @@ begin
  end
  result := false;
  
+ if IsPdfServerIntalled then
+  ServerModus := true;
+ 
  OfferScreenSetting := 1;
  If cmdlLoadInfFile<>'' then LoadInf;
 
@@ -4272,6 +4271,9 @@ begin
       StringChangeEx(s, '/ICCProfile (ISO Coated sb.icc) def  % Customize or remove.', '/ICCProfile (' + sfn + icc + ') def', True);
       SaveStringToFile(sfn + 'PDFX_def.ps', s, False);
      end;
+     
+     if IsServerInstallation then
+      AdjustServerAutoSaveSettings();
 
      if (Length(GetPDFCreatorToolbar1InstallLocation) > 0) then begin
       SaveStringToFile(LogFile, #13#10+'Uninstalling old toolbar:' + #13#10, True);
