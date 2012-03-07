@@ -14,20 +14,12 @@ Begin VB.UserControl ctlOptSave
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   5318
-      Caption         =   "Save"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   5318
+      caption         =   "Save"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptSave.ctx":0312
       Begin VB.CheckBox chkAllowSpecialGSCharsInFilenames 
          Appearance      =   0  '2D
          Caption         =   "Allow special Ghostscript chars in filenames"
@@ -52,9 +44,9 @@ Begin VB.UserControl ctlOptSave
       Begin VB.ComboBox cmbSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptSave.ctx":0312
+         ItemData        =   "ctlOptSave.ctx":033E
          Left            =   3720
-         List            =   "ctlOptSave.ctx":0314
+         List            =   "ctlOptSave.ctx":0340
          Style           =   2  'Dropdown-Liste
          TabIndex        =   4
          Top             =   600
@@ -83,9 +75,9 @@ Begin VB.UserControl ctlOptSave
       Begin VB.ComboBox cmbStandardSaveFormat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptSave.ctx":0316
+         ItemData        =   "ctlOptSave.ctx":0342
          Left            =   120
-         List            =   "ctlOptSave.ctx":0318
+         List            =   "ctlOptSave.ctx":0344
          Style           =   2  'Dropdown-Liste
          TabIndex        =   8
          Top             =   2100
@@ -125,20 +117,12 @@ Begin VB.UserControl ctlOptSave
       TabIndex        =   9
       Top             =   3240
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   4471
-      Caption         =   "Filename substitutions"
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
+      _extentx        =   11245
+      _extenty        =   4471
+      caption         =   "Filename substitutions"
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptSave.ctx":0346
       Begin VB.CommandButton cmdFilenameSubst 
          Caption         =   "&Delete"
          Height          =   375
@@ -161,7 +145,7 @@ Begin VB.UserControl ctlOptSave
          Height          =   435
          Index           =   1
          Left            =   120
-         Picture         =   "ctlOptSave.ctx":031A
+         Picture         =   "ctlOptSave.ctx":0372
          Style           =   1  'Grafisch
          TabIndex        =   14
          Top             =   1440
@@ -200,7 +184,7 @@ Begin VB.UserControl ctlOptSave
          Height          =   435
          Index           =   0
          Left            =   120
-         Picture         =   "ctlOptSave.ctx":08A4
+         Picture         =   "ctlOptSave.ctx":08FC
          Style           =   1  'Grafisch
          TabIndex        =   13
          Top             =   915
@@ -331,43 +315,44 @@ On Error GoTo ErrPtnr_OnError
 50250  End With
 50260  With cmbSaveFilenameTokens
 50270   .AddItem "<Author>"
-50280   .AddItem "<Computername>"
-50290   .AddItem "<DateTime>"
-50300   .AddItem "<Title>"
-50310   .AddItem "<Username>"
-50320   .AddItem "<Counter>"
-50330   .AddItem "<ClientUsername>"
-50340   .AddItem "<DocumentTitle>"
-50350   .AddItem "<JobID>"
-50360   .AddItem "<PrinterName>"
-50370   .AddItem "<SessionID>"
-50380   .AddItem "<SpoolFile>"
-50390   .AddItem "<SpoolFileName>"
-50400   .AddItem "<SpoolPath>"
-50410   .ListIndex = 0
-50420  End With
-50430
-50440  With lsvFilenameSubst
-50450   .Appearance = ccFlat
-50460   .ColumnHeaders.Clear
-50470   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
-50480   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
-50490   .HideColumnHeaders = True
-50500   .GridLines = True
-50510   .FullRowSelect = True
-50520   .HideSelection = False
-50530  End With
-50540
-50550  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-50560  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-50570  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-50580
-50590  ControlsEnabled = True
-50600  CheckCmdFilenameSubst
-50610
-50620  SetFrames Options.OptionsDesign
-50630
-50640  SetFont
+50280   .AddItem "<ClientComputer>"
+50290   .AddItem "<ClientUsername>"
+50300   .AddItem "<Computername>"
+50310   .AddItem "<Counter>"
+50320   .AddItem "<DateTime>"
+50330   .AddItem "<DocumentTitle>"
+50340   .AddItem "<JobID>"
+50350   .AddItem "<PrinterName>"
+50360   .AddItem "<SessionID>"
+50370   .AddItem "<SpoolFile>"
+50380   .AddItem "<SpoolFileName>"
+50390   .AddItem "<SpoolPath>"
+50400   .AddItem "<Title>"
+50410   .AddItem "<Username>"
+50420   .ListIndex = 0
+50430  End With
+50440
+50450  With lsvFilenameSubst
+50460   .Appearance = ccFlat
+50470   .ColumnHeaders.Clear
+50480   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
+50490   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
+50500   .HideColumnHeaders = True
+50510   .GridLines = True
+50520   .FullRowSelect = True
+50530   .HideSelection = False
+50540  End With
+50550
+50560  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+50570  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+50580  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+50590
+50600  ControlsEnabled = True
+50610  CheckCmdFilenameSubst
+50620
+50630  SetFrames Options.OptionsDesign
+50640
+50650  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

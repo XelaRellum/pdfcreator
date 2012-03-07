@@ -13,22 +13,14 @@ Begin VB.UserControl ctlOptAutosave
       TabIndex        =   0
       Top             =   120
       Width           =   6375
-      _ExtentX        =   11245
-      _ExtentY        =   8969
-      Caption         =   "Autosave"
-      Caption3D       =   2
-      BarColorFrom    =   16744576
-      BarColorTo      =   4194304
-      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
-         Name            =   "MS Sans Serif"
-         Size            =   8.25
-         Charset         =   0
-         Weight          =   400
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      TextShaddowColor=   12582912
+      _extentx        =   11245
+      _extenty        =   8969
+      caption         =   "Autosave"
+      caption3d       =   2
+      barcolorfrom    =   16744576
+      barcolorto      =   4194304
+      font            =   "ctlOptAutosave.ctx":0312
+      textshaddowcolor=   12582912
       Begin VB.TextBox txtAutoSaveDirectoryPreview 
          Appearance      =   0  '2D
          BackColor       =   &H8000000F&
@@ -91,9 +83,9 @@ Begin VB.UserControl ctlOptAutosave
       Begin VB.ComboBox cmbAutoSaveFilenameTokens 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptAutosave.ctx":0312
+         ItemData        =   "ctlOptAutosave.ctx":033E
          Left            =   3690
-         List            =   "ctlOptAutosave.ctx":0314
+         List            =   "ctlOptAutosave.ctx":0340
          Style           =   2  'Dropdown-Liste
          TabIndex        =   7
          Top             =   1785
@@ -242,20 +234,20 @@ On Error GoTo ErrPtnr_OnError
 50240  With cmbAutoSaveFilenameTokens
 50250   .Clear
 50260   .AddItem "<Author>"
-50270   .AddItem "<Computername>"
-50280   .AddItem "<ClientComputer>"
-50290   .AddItem "<DateTime>"
-50300   .AddItem "<Title>"
-50310   .AddItem "<Username>"
-50320   .AddItem "<Counter>"
-50330   .AddItem "<ClientUsername>"
-50340   .AddItem "<DocumentTitle>"
-50350   .AddItem "<JobID>"
-50360   .AddItem "<PrinterName>"
-50370   .AddItem "<SessionID>"
-50380   .AddItem "<SpoolFile>"
-50390   .AddItem "<SpoolFileName>"
-50400   .AddItem "<SpoolPath>"
+50270   .AddItem "<ClientComputer>"
+50280   .AddItem "<ClientUsername>"
+50290   .AddItem "<Computername>"
+50300   .AddItem "<Counter>"
+50310   .AddItem "<DateTime>"
+50320   .AddItem "<DocumentTitle>"
+50330   .AddItem "<JobID>"
+50340   .AddItem "<PrinterName>"
+50350   .AddItem "<SessionID>"
+50360   .AddItem "<SpoolFile>"
+50370   .AddItem "<SpoolFileName>"
+50380   .AddItem "<SpoolPath>"
+50390   .AddItem "<Title>"
+50400   .AddItem "<Username>"
 50410   .ListIndex = 0
 50420  End With
 50430
@@ -665,7 +657,7 @@ Private Sub cmdGetAutosaveDirectory_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim strFolder As String
-50020  strFolder = BrowseForFolderFiles(UserControl.Parent.hwnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
+50020  strFolder = BrowseForFolderFiles(UserControl.Parent.hWnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
 50030  If Len(strFolder) = 0 Then
 50040   Exit Sub
 50050  End If

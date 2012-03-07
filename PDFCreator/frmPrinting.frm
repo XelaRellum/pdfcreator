@@ -1138,7 +1138,7 @@ Private Function Create_eDoc() As String
  StampFile = CreateStampFile(CurrentInfoSpoolFile)
  
  If Options.RunProgramBeforeSaving = 1 Then
-  RunProgramBeforeSaving Me.hWnd, PDFSpoolfile, _
+  RunProgramBeforeSaving Me.hWnd, CurrentInfoSpoolFile, _
   Options.RunProgramBeforeSavingProgramParameters, _
   Options.RunProgramBeforeSavingWindowstyle
  End If
