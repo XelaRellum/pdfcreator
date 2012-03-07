@@ -1,10 +1,10 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
-Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
+Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "COMDLG32.OCX"
 Begin VB.Form frmMain 
    Caption         =   "PDFCreator Developer Tools"
    ClientHeight    =   6390
-   ClientLeft      =   225
+   ClientLeft      =   165
    ClientTop       =   855
    ClientWidth     =   12930
    Icon            =   "frmMain.frx":0000
@@ -1161,7 +1161,7 @@ Private Sub CreateModOptions()
     Print #fn, "  ." & lsvOptions.ListItems(i).SubItems(1) & " = CompletePath(GetSpecialFolder(ssfSYSTEM))"
    Case UCase$("AutoSaveDirectory"), UCase$("LastSaveDirectory")
     Print #fn, "  If InstalledAsServer Then"
-    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<ClientMachine>\<UserName>"""
+    Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<ClientComputer>\<UserName>"""
     Print #fn, "   Else"
     Print #fn, "    ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<MyFiles>"""
     Print #fn, "  End If"
@@ -1361,7 +1361,7 @@ Private Sub CreateModOptions()
      Print #fn, "   Else"
      Print #fn, "    If UseStandard Then"
      Print #fn, "     If InstalledAsServer Then"
-     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<ClientMachine>\<UserName>"""
+     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<ClientComputer>\<UserName>"""
      Print #fn, "      Else"
      Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<MyFiles>"""
      Print #fn, "     End If"
@@ -1744,7 +1744,7 @@ Private Sub CreateModOptions()
      Print #fn, "   Else"
      Print #fn, "    If UseStandard Then"
      Print #fn, "     If InstalledAsServer Then"
-     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<ClientMachine>\<UserName>"""
+     Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""C:\PDFs\<ClientComputer>\<UserName>"""
      Print #fn, "      Else"
      Print #fn, "       ." & lsvOptions.ListItems(i).SubItems(1) & " = ""<MyFiles>"""
      Print #fn, "     End If"

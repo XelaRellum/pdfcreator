@@ -204,7 +204,7 @@ On Error GoTo ErrPtnr_OnError
 50060   .AddWindowsFontpath = "1"
 50070   .AllowSpecialGSCharsInFilenames = "1"
 50080   If InstalledAsServer Then
-50090     .AutosaveDirectory = "C:\PDFs\<ClientMachine>\<UserName>"
+50090     .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 50100    Else
 50110     .AutosaveDirectory = "<MyFiles>"
 50120   End If
@@ -232,7 +232,7 @@ On Error GoTo ErrPtnr_OnError
 50340   .JPEGResolution = "150"
 50350   .Language = "english"
 50360   If InstalledAsServer Then
-50370     .LastSaveDirectory = "C:\PDFs\<ClientMachine>\<UserName>"
+50370     .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 50380    Else
 50390     .LastSaveDirectory = "<MyFiles>"
 50400   End If
@@ -531,7 +531,7 @@ On Error GoTo ErrPtnr_OnError
 50610    Else
 50620     If UseStandard Then
 50630      If InstalledAsServer Then
-50640        .AutosaveDirectory = "C:\PDFs\<ClientMachine>\<UserName>"
+50640        .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 50650       Else
 50660        .AutosaveDirectory = "<MyFiles>"
 50670      End If
@@ -826,7 +826,7 @@ On Error GoTo ErrPtnr_OnError
 53560    Else
 53570     If UseStandard Then
 53580      If InstalledAsServer Then
-53590        .LastSaveDirectory = "C:\PDFs\<ClientMachine>\<UserName>"
+53590        .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 53600       Else
 53610        .LastSaveDirectory = "<MyFiles>"
 53620      End If
@@ -4996,7 +4996,7 @@ On Error GoTo ErrPtnr_OnError
 66310    Else
 66320     If UseStandard Then
 66330      If InstalledAsServer Then
-66340        .AutosaveDirectory = "C:\PDFs\<ClientMachine>\<UserName>"
+66340        .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 66350       Else
 66360        .AutosaveDirectory = "<MyFiles>"
 66370      End If
@@ -5130,7 +5130,7 @@ On Error GoTo ErrPtnr_OnError
 67650    Else
 67660     If UseStandard Then
 67670      If InstalledAsServer Then
-67680        .LastSaveDirectory = "C:\PDFs\<ClientMachine>\<UserName>"
+67680        .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
 67690       Else
 67700        .LastSaveDirectory = "<MyFiles>"
 67710      End If
