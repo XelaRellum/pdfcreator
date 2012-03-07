@@ -57,8 +57,8 @@ type OCTString = OCAString;
 #define OC_CANDY_DISABLED 1
 
 // Offer types returned by OCGetOfferType() API
-# define OC_OFFER_TYPE_NORMAL   1
-# define OC_OFFER_TYPE_EMBEDDED 2
+#define OC_OFFER_TYPE_NORMAL   1
+#define OC_OFFER_TYPE_EMBEDDED 2
 
 // Values returned by OCGetBannerInfo() API
 #define OC_OFFER_BANNER_FOUNDNEITHER     0
@@ -158,84 +158,93 @@ var
 //-----------------------------------------
 
 procedure _OCDLL_OCStartDLMgr2Download();
-external 'OCPRD565StartDLMgr2Download@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68StartDLMgr2Download@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCLoadOpenCandyDLL():Integer;
-external 'OCPRD565LoadOpenCandyDLL@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68LoadOpenCandyDLL@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCInit(szPubId, szProdId, szSecret, szInstallLang:OCAString; bAsyncMode:Boolean; iMaxWait, iRemnant:Integer):Integer;
-external 'OCPRD565Init2A@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68Init2A@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 #ifdef UNICODE
 function _OCDLL_OCInitW(wszPubId, wszProdId, wszSecret, wszInstallLang:OCWString; bAsyncMode:Boolean; iMaxWait, iRemnant:Integer):Integer;
-external 'OCPRD565Init2W@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68Init2W@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 #endif
 
 function _OCDLL_OCGetBannerInfo(szTitle, szDesc:OCAString):Integer;
-external 'OCPRD565GetBannerInfo@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68GetBannerInfo@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 #ifdef UNICODE
 function _OCDLL_OCGetBannerInfoW(wszTitle, wszDesc:OCWString):Integer;
-external 'OCPRD565GetBannerInfoW@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68GetBannerInfoW@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 #endif
 
 function _OCDLL_OCRunDialog(iHwnd:Integer): Integer;
-external 'OCPRD565RunDialog@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68RunDialog@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCAdjustPage(iHwnd, iX, iY, iW, iH:Integer):Integer;
-external 'OCPRD565InnoAdjust@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68InnoAdjust@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCRestorePage(iHwnd:Integer):Integer;
-external 'OCPRD565InnoRestore@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68InnoRestore@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCGetOfferState():Integer;
-external 'OCPRD565GetOfferState@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68GetOfferState@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCGetOfferType():Integer;
-external 'OCPRD565GetOfferType@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68GetOfferType@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCPrepareDownload():Integer;
-external 'OCPRD565PrepareDownload@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68PrepareDownload@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCShutdown():Integer;
-external 'OCPRD565Shutdown@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68Shutdown@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCDetach():Integer;
-external 'OCPRD565Detach@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68Detach@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCSignalProductInstalled():Integer;
-external 'OCPRD565SignalProductInstalled@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68SignalProductInstalled@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCSignalProductFailed():Integer;
-external 'OCPRD565SignalProductFailed@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68SignalProductFailed@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCGetAsyncOfferStatus(bWantToShowOffer:Boolean):Integer;
-external 'OCPRD565GetAsyncOfferStatus@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68GetAsyncOfferStatus@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCCanLeaveOfferPage():Integer;
-external 'OCPRD565CanLeaveOfferPage@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68CanLeaveOfferPage@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 function _OCDLL_OCSetCmdLineValues(szValue:OCAString):Integer;
-external 'OCPRD565SetCmdLineValues@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68SetCmdLineValues@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 #ifdef UNICODE
 function _OCDLL_OCSetCmdLineValuesW(wszValue:OCWString):Integer;
-external 'OCPRD565SetCmdLineValuesW@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68SetCmdLineValuesW@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 #endif
 
 function _OCDLL_OCGetNoCandy():Integer;
-external 'OCPRD565GetNoCandy@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68GetNoCandy@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 procedure _OCDLL_SetOCOfferEnabled(bEnabled:Boolean);
-external 'OCPRD565SetOCOfferEnabled@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68SetOCOfferEnabled@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 procedure _OCDLL_LogDevModeMessage(szMessage:OCAString; iError, iFaqID:Integer);
-external 'OCPRD565LogDevModeMessage@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68LogDevModeMessage@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 
 #ifdef UNICODE
 procedure _OCDLL_LogDevModeMessageW(wszMessage:OCWString; iError, iFaqID:Integer);
-external 'OCPRD565LogDevModeMessageW@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+external 'OCPRD68LogDevModeMessageW@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
 #endif
+
+procedure _OCDLL_SetClientAdvancedOptions(szOptions:OCAString);
+external 'OCPRD68SetClientAdvancedOptions@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+
+#ifdef UNICODE
+procedure _OCDLL_SetClientAdvancedOptionsW(szOptions:OCWString);
+external 'OCPRD68SetClientAdvancedOptionsW@files:OCSetupHlp.dll cdecl loadwithalteredsearchpath delayload';
+#endif
+
 
 
 //-------------------------------------------
@@ -354,6 +363,16 @@ begin
 
 		if not gl_OC_bNoCandy then
 		begin
+			// Pass advanced options to client
+			#ifdef OC_ADV_OPTIONS
+				#ifdef UNICODE
+				_OCDLL_SetClientAdvancedOptionsW('{#OC_ADV_OPTIONS}');
+				#else
+				_OCDLL_SetClientAdvancedOptions('{#OC_ADV_OPTIONS}');
+				#endif
+			#endif
+		
+			// Initialize OpenCandy client
 			#ifdef UNICODE
 			if {#OC_INIT_SUCCESS} = _OCDLL_OCInitW(tszPublisher, tszKey, tszSecret, tszLanguage, bUseAsyncMode, {#OC_MAX_INIT_TIME}, iInitMode) then
 			#else
@@ -422,7 +441,7 @@ begin
 		_OpenCandyInitInternal(tszPublisher, tszKey, tszSecret, tszLanguage, true, iInitMode);
 end;
 
-procedure OpenCandyInit(tszPublisher, tszKey, tszSecret, tszLanguage:OCTString; iInitMode:Integer);
+procedure OCInit(tszPublisher, tszKey, tszSecret, tszLanguage:OCTString; iInitMode:Integer);
 begin
 	if not (gl_OC_bNoCandy or gl_OC_bHasBeenInitialized) then
 		_OpenCandyInitInternal(tszPublisher, tszKey, tszSecret, tszLanguage, false, iInitMode);
