@@ -204,6 +204,10 @@
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Adobe Reader stays open when a script is used to combine PDFs.">
+				<param name="Local" value="html\adobe-reader-stays-open-when-a-script-is-used-to-combine-pdfs.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="After installing PDFCreator I get an Error "Exception EInOutError in module is-XXXXX.exe at 0000631C. File not found".">
 				<param name="Local" value="html\after-installing-pdfcreator-i-get-an-error-exception-einouterror-in-module-isxxxxxexe-at-0000631c-file-not-found.html">
 				</OBJECT>

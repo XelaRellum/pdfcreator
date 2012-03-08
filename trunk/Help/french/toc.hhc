@@ -208,6 +208,10 @@
 				<param name="Local" value="html\i-have-net-3x-installed-but-there-is-no-pdfforgedll.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Adobe Reader stays open when a script is used to combine PDFs.">
+				<param name="Local" value="html\adobe-reader-stays-open-when-a-script-is-used-to-combine-pdfs.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Apr&egrave;s l'installation de PDFCreator, une fen&ecirc;tre de l'installateur MSI appara&#238;t.">
 				<param name="Local" value="html\after-installing-pdfcreator-a-msi-installer-shows-up.html">
 				</OBJECT>
