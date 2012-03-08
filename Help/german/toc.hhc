@@ -204,6 +204,10 @@
 			</OBJECT>
 		<UL>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Beim Zusammenf&uuml;hren von PDFs &ouml;ffnet sich ungewollt Adobe Reader">
+				<param name="Local" value="html\adobe-reader-stays-open-when-a-script-is-used-to-combine-pdfs.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Das Gradzeichen ragt in nachfolgende Zeichen hinein.">
 				<param name="Local" value="html\the-degree-symbol-overlaps-the-following-character.html">
 				</OBJECT>
