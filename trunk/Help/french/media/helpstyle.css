@@ -10,15 +10,15 @@ body, table {
 	margin-top: 0px 
 }
 td.title {
+	background-color: #222;
 	color: #FFFFFF;
 	font-size: 18pt;
 	font-weight: bold;
-	padding-left: 3px;
-	padding-bottom: 3px;
-	padding-top: 3px
+	padding: 12px;
+	padding-left: 18px;
 }
 td.main {
-	padding-left: 5px;
+	padding-left: 18px;
 	padding-right: 5px;
 	padding-bottom: 5px;
 	padding-top: 5px;
