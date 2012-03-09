@@ -3347,12 +3347,12 @@ begin
   languageCode := 'bs'
  else if (languageCode = 'catalan') then
 	languageCode := 'ca'
- else if (languageCode = 'catalan') then
-	languageCode := 'ca'
  else if (languageCode = 'chinese_simplified') then
 	languageCode := 'zh'
  else if (languageCode = 'chinese_traditional') then
 	languageCode := 'zh'
+ else if (languageCode = 'croatian') then
+	languageCode := 'hr'
  else if (languageCode = 'czech') then
 	languageCode := 'cs'
  else if (languageCode = 'danish') then
