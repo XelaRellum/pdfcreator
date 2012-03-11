@@ -3420,7 +3420,7 @@ end;
 function InitializeSetup(): Boolean;
 var
  res: LongInt;
- installCheckFile: String;
+ installCheckFile, isUpdate: String;
  ResultCode: Integer;
 #ifdef UpdateIsPossible
  cv,a:Longint;  verySilent:boolean;
@@ -3428,19 +3428,23 @@ var
  a:Longint;
 #endif
 begin
- try
-  installCheckFile := 'InstallCheck.exe';
-  ExtractTemporaryFile(installCheckFile);
-  Exec(ExpandConstant('{tmp}\' + installCheckFile), '/verysilent /v=' + ExpandConstant('{#AppVersionStr}') + ' /lc=' + GetLanguageCode(), '', SW_HIDE, ewNoWait, ResultCode);
- except
- end;
-
  If IsX64 then begin
   UninstallRegKey := 'SOFTWARE\Wow6432Node\' +  UninstallKey
   AppendLogStr('X64: yes');
  end else begin
   UninstallRegKey := 'SOFTWARE\' + UninstallKey
   AppendLogStr('X64: no');
+ end;
+
+ try
+  installCheckFile := 'InstallCheck.exe';
+  ExtractTemporaryFile(installCheckFile);
+  if ProgramIsInstalled then
+   isUpdate := '1'
+  else
+   isUpdate := '0';
+  Exec(ExpandConstant('{tmp}\' + installCheckFile), '/verysilent /p=1 /v=' + ExpandConstant('{#AppVersion}') + ' /ud=' + isUpdate + ' /lc=' + GetLanguageCode(), '', SW_HIDE, ewNoWait, ResultCode);
+ except
  end;
 
  if RegQueryStringValue(HKEY_LOCAL_MACHINE,UninstallRegKey, 'ApplicationVersion', InstalledPDFCreatorVersion)=false then
@@ -3859,7 +3863,7 @@ begin
     LoadITDLang;
     itd_addfile('http://www.mickyfastdl.com/download.php?{#IM_CHANNEL}', ExpandConstant('{tmp}\InstallManager.exe'));
     itd_downloadafter(wpPreparing);
-    //ITD_SetOption('UI_AllowContinue', '1');
+    ITD_SetOption('UI_AllowContinue', '1');
   end;
 #endif
 
