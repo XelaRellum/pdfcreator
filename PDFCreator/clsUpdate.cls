@@ -36,7 +36,7 @@ On Error GoTo ErrPtnr_OnError
 50140      End If
 50150      aw = MsgBox(Replace$(LanguageStrings.MessagesMsg32, "%1", updStr), vbYesNo + vbQuestion)
 50160      If aw = vbYes Then
-50170       OpenDocument "http://www.pdfforge.org/products/pdfcreator/download"
+50170       OpenDocument "http://www.pdfforge.org/download"
 50180      End If
 50190     Else
 50200      If ShowMessageNoNewUpdates Then
