@@ -3466,8 +3466,17 @@ begin
 
  if RegQueryStringValue(HKEY_LOCAL_MACHINE,UninstallRegKey, 'ApplicationVersion', InstalledPDFCreatorVersion)=false then
    InstalledPDFCreatorVersion:='0.0.0';
- installedVersionIsLower131:=PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.3.0'); 
- 
+
+ installedVersionIsLower131:=PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.3.1'); 
+ if installedVersionIsLower131 then
+   SaveStringToFile(LogFile, 'installedVersionIsLower131 = true'#13#10, True)
+  else
+   SaveStringToFile(LogFile, 'installedVersionIsLower131 = false'#13#10, True);
+ if InstallPDFcreatorPrinter then
+   SaveStringToFile(LogFile, 'InstallPDFcreatorPrinter = true'#13#10, True)
+  else
+   SaveStringToFile(LogFile, 'InstallPDFcreatorPrinter = false'#13#10, True);
+  
  InitMessages;
 
  Win9x:=   'Windows 95, Windows 98, Windows Me';
