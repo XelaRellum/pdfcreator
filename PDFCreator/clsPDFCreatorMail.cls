@@ -55,14 +55,16 @@ On Error GoTo ErrPtnr_OnError
 50150      Send = FoxEmail(filename, Subject)
 50160     Case "SYLPHEED"
 50170      Send = SylpheedClaws(filename, Subject)
-50180     Case "OUTLOOK EXPRESS", "MOZILLA THUNDERBIRD", "MOZILLA"
-50190      Send = VBMapiEmail(filename, Subject, EmailAddress)
-50200     Case "LOTUS NOTES"
-50210      Send = SendNotesMail(filename, Subject, EmailAddress)
-50220     Case Else
-50230      Send = SendToMailRecipientViaSendmailDll(filename)
-50240    End Select
-50250  End Select
+50180     Case "MOZILLA THUNDERBIRD"
+50190      Send = ThunderbirdEmail(filename, Subject, EmailAddress)
+50200     Case "OUTLOOK EXPRESS", "MOZILLA THUNDERBIRD", "MOZILLA"
+50210      Send = VBMapiEmail(filename, Subject, EmailAddress)
+50220     Case "LOTUS NOTES"
+50230      Send = SendNotesMail(filename, Subject, EmailAddress)
+50240     Case Else
+50250      Send = SendToMailRecipientViaSendmailDll(filename)
+50260    End Select
+50270  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -211,6 +213,61 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("clsPDFCreatorMail", "PegasusEmail")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Function ThunderbirdEmail(filename As String, Optional Subject As String = "", Optional EmailAddress As String) As Long
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim cReg As clsRegistry, tbVersions As Collection, KeyRoot As String, i As Long
+50020  Dim PathToExe As String, attachmentParam As String, subjectParam As String, tbParam As String
+50030
+50040  ThunderbirdEmail = -1
+50050
+50060  Set cReg = New clsRegistry
+50070  cReg.hkey = HKEY_LOCAL_MACHINE
+50080
+50090  KeyRoot = "SOFTWARE\Mozilla\Mozilla Thunderbird"
+50100  Set tbVersions = cReg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, KeyRoot)
+50110  If tbVersions.Count > 0 Then
+50120   cReg.KeyRoot = KeyRoot & "\" & tbVersions.Item(1) & "\Main"
+50130   PathToExe = cReg.GetRegistryValue("PathToExe", "")
+50140   If FileExists(PathToExe) Then
+50150    If LenB(EmailAddress) > 0 Then
+50160     tbParam = "to='" & EmailAddress & "'"
+50170    End If
+50180    If LenB(Subject) > 0 Then
+50190     subjectParam = "subject='" & Subject & "'"
+50200     If LenB(tbParam) > 0 Then
+50210       tbParam = tbParam & "," & subjectParam
+50220      Else
+50230       tbParam = subjectParam
+50240     End If
+50250    End If
+50260    If LenB(filename) > 0 Then
+50270     If FileExists(filename) Then
+50280      attachmentParam = "attachment='" & filename & "'"
+50290      If LenB(tbParam) > 0 Then
+50300        tbParam = tbParam & "," & attachmentParam
+50310       Else
+50320        tbParam = attachmentParam
+50330      End If
+50340     End If
+50350    End If
+50360    Shell """" & PathToExe & """" & " -compose " & tbParam, vbNormalFocus
+50370    ThunderbirdEmail = 0
+50380   End If
+50390  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("clsPDFCreatorMail", "ThunderbirdEmail")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
