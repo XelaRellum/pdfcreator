@@ -166,8 +166,6 @@ ChangesAssociations=true
 CreateUninstallRegKey=false
 DefaultDirName={reg:HKLM\{#UninstallRegStr2},Inno Setup: App Path|{pf}\{#AppName}}
 DefaultGroupName={#AppName}
-DisableDirPage=true
-DisableProgramGroupPage=true
 DisableStartupPrompt=true
 ExtraDiskSpaceRequired=10303775
 LanguageDetectionMethod=locale
@@ -180,6 +178,7 @@ OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_setup_WithoutGhostscript
 #ENDIF
 OutputDir=Installation
 RestartIfNeededByRun=true
+SetupIconFile=..\Pictures\Setup\PDFCreator-Setup.ico
 ShowTasksTreeLines=false
 ShowUndisplayableLanguages=true
 SolidCompression=true
@@ -494,8 +493,7 @@ Source: ..\PlugIns\pdfforge\readme.txt; DestDir: {app}\PlugIns\pdfforge\; Compon
 ; Images2PDF
 Source: ..\Images2PDF\Images2PDF.exe; DestDir: {app}\Images2PDF\; Components: Images2PDF
 Source: ..\Images2PDF\Images2PDFC.exe; DestDir: {app}\Images2PDF\; Components: Images2PDF
-Source: ..\Images2PDF\Languages\english.ini; DestDir: {app}\Images2PDF\Languages\; Components: Images2PDF
-Source: ..\Images2PDF\Languages\german.ini; DestDir: {app}\Images2PDF\Languages\; Components: Images2PDF
+Source: ..\Images2PDF\Languages\*.ini; DestDir: {app}\Images2PDF\Languages\; Components: Images2PDF
 Source: ..\Images2PDF\Images2PDF-english.settings; DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: Not IsLanguage('german'); 
 Source: ..\Images2PDF\Images2PDF-german.settings;  DestDir: {userappdata}\pdfforge\Images2PDF; DestName: Images2PDF.settings; Flags: ignoreversion; Check: IsLanguage('german')
 
@@ -508,10 +506,10 @@ Source: "..\PDFArchitect\PDFOne.net\Ionic.Zlib.dll"; DestDir: {app}\PDFArchitect
 Source: "..\PDFArchitect\PDFOne.net\CMaps\*.*"; DestDir: {app}\PDFArchitect\CMaps\; Components: PDFArchitect
 Source: "..\PDFArchitect\PDFOne.net\FreeType\FreeType32.dll"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp IgnoreVersion; DestName: FreeType.dll; Check: Not IsX64; Components: PDFArchitect
 Source: "..\PDFArchitect\PDFOne.net\FreeType\FreeType64.dll"; DestDir: {app}\PDFArchitect\; Flags: comparetimestamp IgnoreVersion; DestName: FreeType.dll; Check: IsX64; Components: PDFArchitect
-Source: "..\PDFArchitect\Languages\english.ini"; DestDir: {app}\PDFArchitect\Languages; Flags: comparetimestamp; Components: PDFArchitect
-Source: "..\PDFArchitect\Languages\german.ini"; DestDir: {app}\PDFArchitect\Languages; Flags: comparetimestamp; Components: PDFArchitect
-Source: "..\PDFArchitect\PDFArchitect-english.settings"; DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: Not IsLanguage('german'); Components: PDFArchitect
+Source: "..\PDFArchitect\Languages\*.ini"; DestDir: {app}\PDFArchitect\Languages; Flags: comparetimestamp; Components: PDFArchitect
+Source: "..\PDFArchitect\PDFArchitect-english.settings"; DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: Not(IsLanguage('german') OR IsLanguage('polish')); Components: PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect-german.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('german'); Components: PDFArchitect
+Source: "..\PDFArchitect\PDFArchitect-polish.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('polish'); Components: PDFArchitect
 ; InstallCheck
 Source: Installation\InstallCheck.exe; DestDir: {tmp}; Flags: deleteafterinstall overwritereadonly;
 
@@ -1104,13 +1102,13 @@ var progTitel, progHandle: TArrayOfString;
      LogFile, UninstallLogfile, logStr,
      PrintSystem, Win9x, WinNT, Win2000, WinXP, Win2003,
      WinXP2003_32bit, WinXP2003_64bit : String;
-    InstalledPDFCreatorVersion : String; installedVersionIsLower130 : Boolean;
+    InstalledPDFCreatorVersion : String; installedVersionIsLower131 : Boolean;
     AdditionalPrinterProgressSteps, AdditionalPrinterProgressIndex: LongInt;
     ProgressPage: TOutputProgressWizardPage;
 
     cmdlPrintername, cmdlPPDFile, cmdlREGFile,
     cmdlSaveInfFile, cmdlLoadInfFile: String;
-    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions, cmdlDontInstallPrinters, cmdlNoic: Boolean;
+    cmdlSilent, cmdlVerysilent, cmdlForceInstall, cmdlRemoveOptions, cmdlDontInstallPrinters, cmdlExpert: Boolean;
     OfferScreenSetting: LongInt;
     nationCode: String;
     
@@ -2143,7 +2141,7 @@ end;
 
 function InstallPDFCreatorPrinter():Boolean;
 begin
- If (cmdlDontInstallPrinters = false) or (installedVersionIsLower130 = true) then
+ If (cmdlDontInstallPrinters = false) or (installedVersionIsLower131 = true) then
    result := true
   else 
    result := false;
@@ -2532,6 +2530,16 @@ end;
 function ShouldSkipPage(PageID: Integer): Boolean;
 begin
  case PageID of
+  wpSelectTasks:
+   begin
+    if cmdlExpert=false then
+     Result := true;
+   end; 
+  wpSelectDir:
+   begin
+    if cmdlExpert=false then
+     Result := true;
+   end; 
   PrinternamePage.ID: 
    begin
     if (CountCurrentPDFCreatorPrinters > 0) then
@@ -2541,10 +2549,13 @@ begin
    end;
   InstallationTypePage.ID:
    begin
-    if InstallOnThisVersion('0,4.0.1381','0,0')=irInstall then
-     Result := False
-    else
-     Result := True
+    if InstallOnThisVersion('0,4.0.1381','0,0')=irInstall then begin
+     if cmdlExpert=false then
+      Result := true
+     else
+      Result := False
+    end else
+     Result := true;
    end;
   ServerDescriptionPage.ID, PrinterdriverPage.ID:
    begin
@@ -2909,7 +2920,8 @@ begin
     '/ForceInstall - force the installation'#13#10 +
     '/Printername=<PrinterName> - set a different printername'#13#10 +
     '/PPDFile=<PPDFile> - use an own ppd-file'#13#10 +
-    '/REGFile=<REGFile> - use an own registry-file'
+    '/REGFile=<REGFile> - use an own registry-file'#13#10 +
+    '/Expert - show expert dialogs'
     ,mbInformation,MB_OK);
    exit;
   end;
@@ -2924,8 +2936,8 @@ begin
    cmdlRemoveOptions:=true;
   if uppercase(paramstr(i))='/DONTINSTALLPRINTERS' then
    cmdlDontInstallPrinters:=true;
-  if uppercase(paramstr(i))='/NOIC' then
-   cmdlNoic:=true;
+  if uppercase(paramstr(i))='/EXPERT' then
+   cmdlExpert:=true;
 
   cmdParam:='/LoadInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -3218,7 +3230,7 @@ begin
  if removeoptions = true then
    parameter := parameter + ' /removeoptions';
  
- if installedVersionIsLower130 = false then
+ if installedVersionIsLower131 = false then
   parameter := parameter + ' /dontuninstallprinters';
 
  RegQueryStringValue(HKEY_LOCAL_MACHINE, UninstallRegKey, 'UninstallString', UninstallString);
@@ -3244,7 +3256,7 @@ begin
    UninstallInnosetupInstallation(verysilent, removeoptions);
    
  if dontUninstallPrinters=false then
-  if installedVersionIsLower130 = true then
+  if installedVersionIsLower131 = true then
     UninstallCompletePrinterDuringInstall('PDFCreator', 'PDFCreator:', PrinterDrivername, Printername, LogFile)
    else
     UninstallCompletePrinterDuringInstall(PrinterMonitorname, PrinterPortname, PrinterDrivername, Printername, LogFile);
@@ -3449,7 +3461,7 @@ begin
 
  if RegQueryStringValue(HKEY_LOCAL_MACHINE,UninstallRegKey, 'ApplicationVersion', InstalledPDFCreatorVersion)=false then
    InstalledPDFCreatorVersion:='0.0.0';
- installedVersionIsLower130:=PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.3.0'); 
+ installedVersionIsLower131:=PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.3.0'); 
  
  InitMessages;
 
@@ -3481,7 +3493,7 @@ begin
  
  res := 0;
  if IsPDFCreatorInstalled then begin
-  if installedVersionIsLower130 = true then
+  if installedVersionIsLower131 = true then
     cmdlDontInstallPrinters := false
    else
     cmdlDontInstallPrinters := true;
@@ -4170,10 +4182,10 @@ begin
      AppendLogStr('DontInstallPrinters: true')
     else
      AppendLogStr('DontInstallPrinters: false');
-   If installedVersionIsLower130 then
-     AppendLogStr('PDFCreatorVersionIsLower 1.3.0: true')
+   If installedVersionIsLower131 then
+     AppendLogStr('PDFCreatorVersionIsLower 1.3.1: true')
     else
-     AppendLogStr('PDFCreatorVersionIsLower 1.3.0: false')
+     AppendLogStr('PDFCreatorVersionIsLower 1.3.1: false')
 
    SaveStringToFile(LogFile, logStr + #13#10, True)
    
