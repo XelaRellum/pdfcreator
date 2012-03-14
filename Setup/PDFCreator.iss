@@ -308,8 +308,8 @@ Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Bin\gsdll32.lib; DestDir: {ap
 #ENDIF
 
 ;Monitor files
-Source: ..\Printer\Monitor\pdfcmon32.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmon.dll; Check: InstallPDFCreatorPrinter AND (Not IsWin64); Flags: 32bit sortfilesbyextension; 
-Source: ..\Printer\Monitor\pdfcmon64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmon.dll; Check: InstallPDFCreatorPrinter AND IsWin64; Flags: 64bit sortfilesbyextension; 
+Source: ..\Printer\Monitor\pdfcmon32.dll; Components: program; DestDir: {sys}; MinVersion: 0,4.00.1381; DestName: pdfcmon.dll; Check: "InstallPDFCreatorPrinter AND (Not IsWin64)"; Flags: 32bit sortfilesbyextension comparetimestamp; 
+Source: ..\Printer\Monitor\pdfcmon64.dll; Components: program; DestDir: {sys}; MinVersion: 0,5.02.3790; DestName: pdfcmon.dll; Check: "InstallPDFCreatorPrinter AND IsWin64"; Flags: 64bit sortfilesbyextension comparetimestamp; 
 
 ;Source: ..\SystemFiles\COMCT332.OCX; DestDir: {sys}; Components: program; Flags: sharedfile uninsnosharedfileprompt regserver
 Source: ..\SystemFiles\MSCOMCT2.OCX; DestDir: {sys}; Components: program; Flags: 32bit sharedfile uninsnosharedfileprompt regserver
@@ -2530,6 +2530,11 @@ end;
 function ShouldSkipPage(PageID: Integer): Boolean;
 begin
  case PageID of
+  wpSelectProgramGroup:
+   begin
+    if cmdlExpert=false then
+     Result := true;
+   end; 
   wpSelectTasks:
    begin
     if cmdlExpert=false then
