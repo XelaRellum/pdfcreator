@@ -178,7 +178,6 @@ OutputBaseFilename={#AppName}-{#SetupAppVersionStr}_setup_WithoutGhostscript
 #ENDIF
 OutputDir=Installation
 RestartIfNeededByRun=true
-SetupIconFile=..\Pictures\Setup\PDFCreator-Setup.ico
 ShowTasksTreeLines=false
 ShowUndisplayableLanguages=true
 SolidCompression=true
