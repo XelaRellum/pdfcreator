@@ -142,7 +142,7 @@ Private Function GetPSComment(ByRef bufStr As String, Comment As String) As tPSC
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim PSComment As tPSComment
+50010  Dim PSComment As tPSComment, tStr As String
 50020  PSComment.StartByte = -1
 50030  If InStr(UCase$(bufStr), UCase$(Comment)) > 0 Then
 50040   With PSComment
@@ -154,11 +154,16 @@ On Error GoTo ErrPtnr_OnError
 50100    End If
 50110    .Comment = Trim$(.Comment)
 50120    If LenB(.Comment) > 0 Then
-50130     .Comment = ReplaceEncodingChars(.Comment)
-50140    End If
-50150   End With
-50160  End If
-50170  GetPSComment = PSComment
+50130      tStr = ReplaceEncodingChars(.Comment)
+50140      If tStr <> .Comment Then
+50150        .Comment = RemoveEncodedPostscriptChars(RemoveLeadingAndTrailingBrackets(tStr))
+50160       Else
+50170        .Comment = tStr
+50180      End If
+50190    End If
+50200   End With
+50210  End If
+50220  GetPSComment = PSComment
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -660,7 +665,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function ReplaceEncodingChars(Str1 As String) As String
+Public Function ReplaceEncodingChars(ByVal Str1 As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -895,6 +900,33 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modPDF", "EncodeChars")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function RemoveEncodedPostscriptChars(ByVal Str1 As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If LenB(Str1) = 0 Then
+50020   RemoveEncodedPostscriptChars = ""
+50030  End If
+50040  Str1 = Replace(Str1, "\\", "\")
+50050  Str1 = Replace(Str1, "\{", "{")
+50060  Str1 = Replace(Str1, "\}", "}")
+50070  Str1 = Replace(Str1, "\[", "[")
+50080  Str1 = Replace(Str1, "\]", "]")
+50090  Str1 = Replace(Str1, "\(", "(")
+50100  Str1 = Replace(Str1, "\)", ")")
+50110  RemoveEncodedPostscriptChars = Str1
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modPDF", "RemoveEncodedPostscriptChars")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
