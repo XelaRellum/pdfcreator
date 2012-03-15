@@ -2549,8 +2549,12 @@ begin
    begin
     if (CountCurrentPDFCreatorPrinters > 0) then
      Result := True
-    else
-     Result := False
+    else begin
+    if cmdlExpert=false then
+      Result := True
+     else
+      Result := False
+    end 
    end;
   InstallationTypePage.ID:
    begin
