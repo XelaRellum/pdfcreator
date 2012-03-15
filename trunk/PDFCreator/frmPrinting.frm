@@ -400,7 +400,7 @@ On Error GoTo ErrPtnr_OnError
 50150
 50160  If Len(PDFFile) > 0 And FileExists(PDFFile) = True Then
 50170   If Options.RunProgramAfterSaving = 1 Then
-50180    RunProgramAfterSaving Me.hWnd, PDFFile, _
+50180    RunProgramAfterSaving Me.hwnd, PDFFile, _
    Options.RunProgramAfterSavingProgramParameters, _
    Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50210   End If
@@ -505,7 +505,7 @@ On Error GoTo ErrPtnr_OnError
 50040   .Visible = True
 50050   SetTopMost frmMain, True, True
 50060   SetTopMost frmMain, False, True
-50070   SetActiveWindow .hWnd
+50070   SetActiveWindow .hwnd
 50080  End With
 50090  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -632,7 +632,7 @@ On Error GoTo ErrPtnr_OnError
 50370   .Icon = TTIconInfo
 50380   .Title = LanguageStrings.PrintingPDFArchitectToolTipTitle
 50390   .PopupOnDemand = True
-50400   .CreateToolTip chkEditWithPDFArchitect.hWnd
+50400   .CreateToolTip chkEditWithPDFArchitect.hwnd
 50410  End With
 50420  ShowPDFArchitectToolTip
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -678,7 +678,7 @@ On Error GoTo ErrPtnr_OnError
 50040   Else
 50050    chkEditWithPDFArchitect.value = 0
 50060  End If
-50070  If IsPDFArchitectInstalled Then
+50070  If IsPDFArchitectInstalled And Options.OpenOutputFile = 1 Then
 50080    chkEditWithPDFArchitect.Enabled = True
 50090   Else
 50100    chkEditWithPDFArchitect.Enabled = False
@@ -800,7 +800,7 @@ On Error GoTo ErrPtnr_OnError
 50110    tStr = Replace(Replace(tStr, "%1", Options.MaximumCountOfPDFArchitectToolTip), "%n", vbCrLf)
 50120  End If
 50130  PDFArchitectToolTip.TipText = tStr
-50140  PDFArchitectToolTip.Show chkEditWithPDFArchitect.hWnd, 6, chkEditWithPDFArchitect.Height / Screen.TwipsPerPixelX - 1     '//In Pixel only
+50140  PDFArchitectToolTip.Show chkEditWithPDFArchitect.hwnd, 6, chkEditWithPDFArchitect.Height / Screen.TwipsPerPixelX - 1     '//In Pixel only
 50150  Timer2.Enabled = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -989,7 +989,7 @@ On Error GoTo ErrPtnr_OnError
 50190     PDFFile = Replace$(PDFFile, "%d", "1", , , vbTextCompare)
 50200    End If
 50210    If Options.RunProgramAfterSaving = 1 Then
-50220     RunProgramAfterSaving Me.hWnd, PDFFile, _
+50220     RunProgramAfterSaving Me.hwnd, PDFFile, _
      Options.RunProgramAfterSavingProgramParameters, _
      Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
 50250    End If
@@ -1138,7 +1138,7 @@ Private Function Create_eDoc() As String
  StampFile = CreateStampFile(CurrentInfoSpoolFile)
  
  If Options.RunProgramBeforeSaving = 1 Then
-  RunProgramBeforeSaving Me.hWnd, CurrentInfoSpoolFile, _
+  RunProgramBeforeSaving Me.hwnd, CurrentInfoSpoolFile, _
   Options.RunProgramBeforeSavingProgramParameters, _
   Options.RunProgramBeforeSavingWindowstyle
  End If

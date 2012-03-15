@@ -92,7 +92,7 @@ On Error GoTo ErrPtnr_OnError
 50160     nFixWidth = nFixWidth + .Parent.ScaleX(15, vbPixels, nScaleMode)
 50170    End If
 50180   End If
-50190   SendMessage .hWnd, CB_SETDROPPEDWIDTH, .Parent.ScaleX(nFixWidth, nScaleMode, vbPixels), 0&
+50190   SendMessage .hwnd, CB_SETDROPPEDWIDTH, .Parent.ScaleX(nFixWidth, nScaleMode, vbPixels), 0&
 50200  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1042,12 +1042,12 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim hMenu As Long, nPosition As Long
 50020
-50030  hMenu = GetSystemMenu(frm.hWnd, 0)
+50030  hMenu = GetSystemMenu(frm.hwnd, 0)
 50040  If hMenu <> 0 Then
 50050   nPosition = GetMenuItemCount(hMenu)
 50060   Call RemoveMenu(hMenu, nPosition - 1, MF_REMOVE Or MF_BYPOSITION)
 50070   Call RemoveMenu(hMenu, nPosition - 2, MF_REMOVE Or MF_BYPOSITION)
-50080   Call DrawMenuBar(frm.hWnd)
+50080   Call DrawMenuBar(frm.hwnd)
 50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1203,15 +1203,15 @@ Public Sub MoveMouseToCommandButton(cmdButton As Object)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim pt As POINTAPI, cRect As RECT
+50010  Dim pt As POINTAPI, cRect As Rect
 50020  GetCursorPos pt
-50030  GetWindowRect cmdButton.hWnd, cRect
+50030  GetWindowRect cmdButton.hwnd, cRect
 50040  With cRect
-50050   pt.X = (.Left + .Right) / 2
+50050   pt.x = (.Left + .Right) / 2
 50060   pt.Y = (.Top + .Bottom) / 2
 50070  End With
 50080  ScreenToAbsolute pt
-50090  mouse_event MOUSEEVENTF_ABSOLUTE Or MOUSEEVENTF_MOVE, pt.X, pt.Y, 0, GetMessageExtraInfo()
+50090  mouse_event MOUSEEVENTF_ABSOLUTE Or MOUSEEVENTF_MOVE, pt.x, pt.Y, 0, GetMessageExtraInfo()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1306,14 +1306,14 @@ On Error GoTo ErrPtnr_OnError
 50060    LockWindowUpdate GetDesktopWindow()
 50070   End If
 50080   .Visible = False
-50090   nStyle = GetWindowLong(.hWnd, GWL_EXSTYLE)
+50090   nStyle = GetWindowLong(.hwnd, GWL_EXSTYLE)
 50101   Select Case ShowInTaskBar
          Case True
 50120     nStyle = nStyle Or WS_EX_APPWINDOW
 50130    Case False
 50140     nStyle = nStyle And Not WS_EX_APPWINDOW
 50150   End Select
-50160   SetWindowLong .hWnd, GWL_EXSTYLE, nStyle
+50160   SetWindowLong .hwnd, GWL_EXSTYLE, nStyle
 50170   .Refresh
 50180   If SetVisible Then
 50190    .Visible = nVisible
@@ -1408,11 +1408,38 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Function RemoveLeadingAndTrailingBrackets(tStr As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Len(tStr) > 0 Then
+50020   If Mid$(tStr, 1, 1) = "(" Then
+50030    tStr = Mid$(tStr, 2)
+50040   End If
+50050   If Len(tStr) > 0 Then
+50060    If Mid$(tStr, Len(tStr), 1) = ")" Then
+50070     tStr = Mid$(tStr, 1, Len(tStr) - 1)
+50080    End If
+50090   End If
+50100  End If
+50110  RemoveLeadingAndTrailingBrackets = tStr
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "RemoveLeadingAndTrailingBrackets")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Sub ScreenToAbsolute(lpPoint As POINTAPI)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  lpPoint.X = lpPoint.X * (&HFFFF& / GetSystemMetrics(SM_CXSCREEN))
+50010  lpPoint.x = lpPoint.x * (&HFFFF& / GetSystemMetrics(SM_CXSCREEN))
 50020  lpPoint.Y = lpPoint.Y * (&HFFFF& / GetSystemMetrics(SM_CYSCREEN))
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -1430,18 +1457,18 @@ Public Sub SetOptimalComboboxHeigth(cmb As ComboBox, ParentForm As Object)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim pt As POINTAPI, rc As RECT, cWidth As Long, OldScaleMode As Long
+50010  Dim pt As POINTAPI, rc As Rect, cWidth As Long, OldScaleMode As Long
 50020
 50030  OldScaleMode = ParentForm.ScaleMode
 50040  ParentForm.ScaleMode = vbPixels
 50050
 50060  cWidth = cmb.Width
-50070  Call GetWindowRect(cmb.hWnd, rc)
-50080  pt.X = rc.Left
+50070  Call GetWindowRect(cmb.hwnd, rc)
+50080  pt.x = rc.Left
 50090  pt.Y = rc.Top
-50100  Call ScreenToClient(ParentForm.hWnd, pt)
-50110  Call MoveWindow(cmb.hWnd, pt.X, pt.Y, cmb.Width, _
-  SendMessage(cmb.hWnd, CB_GETITEMHEIGHT, 0, ByVal 0) * (cmb.ListCount + 2), _
+50100  Call ScreenToClient(ParentForm.hwnd, pt)
+50110  Call MoveWindow(cmb.hwnd, pt.x, pt.Y, cmb.Width, _
+  SendMessage(cmb.hwnd, CB_GETITEMHEIGHT, 0, ByVal 0) * (cmb.ListCount + 2), _
   True)
 50140  ParentForm.ScaleMode = OldScaleMode
 50150  cmb.Width = cWidth
@@ -1673,7 +1700,7 @@ End Select
 End Function
 
 Public Sub DrawBorder3D(ByVal obj As Object, Index As Integer, BorderWidth As Long)
- Dim R As RECT, DrawObj As Object, tRedraw As Boolean, tDrawwidth As Integer, _
+ Dim R As Rect, DrawObj As Object, tRedraw As Boolean, tDrawwidth As Integer, _
   tScalemode As Long, RectType As Long, RectStyle As Long
 
  On Error Resume Next
@@ -1822,7 +1849,7 @@ Public Function FormIsModal(f As Form) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  FormIsModal = (GetWindowLong(f.hWnd, GWL_EXSTYLE) And WS_EX_DLGMODALFRAME) = WS_EX_DLGMODALFRAME
+50010  FormIsModal = (GetWindowLong(f.hwnd, GWL_EXSTYLE) And WS_EX_DLGMODALFRAME) = WS_EX_DLGMODALFRAME
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2038,7 +2065,7 @@ Public Sub ShowAcceleratorsInForm(ByRef f As Form, ByVal newValue As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Call SendMessageByNum(f.hWnd, WM_CHANGEUISTATE, _
+50010  Call SendMessageByNum(f.hwnd, WM_CHANGEUISTATE, _
   MakeLong(IIf(newValue, UIS_CLEAR, UIS_SET), UISF_HIDEACCEL), 0&)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

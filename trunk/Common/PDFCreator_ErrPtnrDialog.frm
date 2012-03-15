@@ -352,7 +352,7 @@ Const ErrPtnr_fram_Comment% = 1
 
 ' We need this declaration/function to open a URL from
 ' within the error dialog.
-Private Declare Function ShellExecute Lib "shell32" Alias "ShellExecuteA" (ByVal hWnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
+Private Declare Function ShellExecute Lib "shell32" Alias "ShellExecuteA" (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
 
 ' We need this declaration/function to identify the current
 ' Windows version.
@@ -593,13 +593,13 @@ Case 2  ' send the protocoll by email
     MsgBox z$
     Clipboard.Clear
     Clipboard.SetText Prot$, 1
-    Call ShellExecute(hWnd, "Open", "mailto:" + Trim$(ErrPtnr_EMail$), "", "", 1)
+    Call ShellExecute(hwnd, "Open", "mailto:" + Trim$(ErrPtnr_EMail$), "", "", 1)
 '--------------------------
 Case 3  ' open a url
 '--------------------------
     Clipboard.Clear
     Clipboard.SetText Prot$, 1
-    Call ShellExecute(hWnd, "Open", ErrPtnr_WWW$, "", "", 1)
+    Call ShellExecute(hwnd, "Open", ErrPtnr_WWW$, "", "", 1)
 '--------------------------
 End Select
 

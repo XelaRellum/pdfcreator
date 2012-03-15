@@ -271,7 +271,7 @@ On Error GoTo ErrPtnr_OnError
 50810    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50820   Else
 50830    If LenB(isf.FirstSpoolFileName) > 0 Then
-50840     SplitPath ReplaceForbiddenChars(isf.FirstSpoolFileName), , FilePath
+50840     SplitPath isf.FirstSpoolFileName, , FilePath
 50850    End If
 50860    filename = Replace(filename, "<" & tStr & ">", FilePath, , , vbTextCompare)
 50870  End If
