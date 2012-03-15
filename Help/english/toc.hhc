@@ -228,6 +228,10 @@
 				<param name="Local" value="html\i-have-net-3x-installed-but-there-is-no-pdfforgedll.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Installation on a Terminal Server">
+				<param name="Local" value="html\installation-on-a-terminal-server.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Is PDFCreator really free?">
 				<param name="Local" value="html\is-pdfcreator-really-free.html">
 				</OBJECT>

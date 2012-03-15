@@ -228,6 +228,10 @@
 				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Installation on a Terminal Server">
+				<param name="Local" value="html\installation-on-a-terminal-server.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="PDFCreator est-il r&eacute;ellement gratuit ?">
 				<param name="Local" value="html\is-pdfcreator-really-free.html">
 				</OBJECT>
