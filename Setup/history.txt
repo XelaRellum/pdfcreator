@@ -4,6 +4,22 @@ Copyright (C)2002-2012 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
+Version 1.3.1 March 16th, 2012)
+-------------------------------------------------------------------------------
+Improvements:
+- This is a bugfix release 
+- Added some new translations (Catalan, Dutch, Italian, Romanian, Spanish, Swedish) 
+
+Bug Fixes:
+- Print monitor Window is not opened when printing to PDFCreator 
+- pdfcmon.dll does not crash on Terminal Servers anymore 
+- PDFArchitect does not crash with english translation anymore 
+- bracket problem with documents containing special chars is solved 
+- Reworked setup. Command line parameter /Expert now allows to set install path 
+
+Known issues:
+- No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 Version 1.3.0 March 12th, 2012)
 -------------------------------------------------------------------------------
 Improvements:
