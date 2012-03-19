@@ -1408,7 +1408,7 @@ On Error GoTo ErrPtnr_OnError
 50170  If Not NoProcessing Then
 50180   CheckForPrinting
 50190  End If
-50200  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("IF", True)) > 0 And ShellAndWaitingIsRunning = False Then
+50200  If lsv.ListItems.Count = 0 And LenB(CommandSwitch("PIF", True)) > 0 And ShellAndWaitingIsRunning = False Then
 50210   InTimer1 = False
 50220   Unload Me
 50230   Exit Sub
@@ -1929,7 +1929,7 @@ On Error GoTo ErrPtnr_OnError
 50410       tDate = Now
 50420       With PDFDocInfo
 50430        If Options.UseStandardAuthor = 1 Then
-50440          .Author = GetSubstFilename(isf.FirstSpoolFileName, _
+50440          .Author = GetSubstFilename(tFile(1), _
           RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
 50460         Else
 50470          .Author = isf.FirstUserName
@@ -1944,11 +1944,11 @@ On Error GoTo ErrPtnr_OnError
 50560        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
 50570        'tStr = CStr(tDate)
 50580        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50590        .Subject = GetSubstFilename(isf.FirstSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50590        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
 50600        If Len(Options.StandardTitle) > 0 Then
-50610          .Title = GetSubstFilename(isf.FirstSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50610          .Title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
 50620         Else
-50630          .Title = GetSubstFilename(isf.FirstSpoolFileName, Options.SaveFilename, , , True)
+50630          .Title = GetSubstFilename(tFile(1), Options.SaveFilename, , , True)
 50640        End If
 50650       End With
 50660
