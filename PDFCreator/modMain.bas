@@ -345,84 +345,74 @@ On Error GoTo ErrPtnr_OnError
 50920   End If
 50930
 50940   PrinterInfFilename = CommandSwitch("PIF", True)
-50950 '  If LenB(PrinterInfFilename) <> 0 Then
-50960 '    If FileExists(PrinterInfFilename) Then
-50970 '      MsgBox PrinterInfFilename & " exists."
-50980 '     Else
-50990 '      MsgBox PrinterInfFilename & " doesn't exist!"
-51000 '    End If
-51010 '   Else
-51020 '    MsgBox "PrinterInfFilename: >" & PrinterInfFilename & "<"
-51030 '  End If
-51040 '  End
-51050
-51060   PrintFilename = CommandSwitch("PF", True)
-51070   InputFilename = CommandSwitch("IF", True)
-51080   OutputFilename = CommandSwitch("OF", True)
-51090   OutputSubFormat = CommandSwitch("OutputSubFormat", True)
-51100
-51110   ' Check delete inputfile after converting
-51120   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
-51130     DeleteIF = True
-51140    Else
-51150     DeleteIF = False
-51160   End If
-51170
-51180   ' Open the outputfile after converting
-51190   If UCase$(CommandSwitch("Open", False)) = "OF" Then
-51200     OpenOF = True
-51210    Else
-51220     OpenOF = False
-51230   End If
-51240
-51250   ' SetupLogFile
-51260   cSwitch = Trim$(CommandSwitch("SETUPLOGFILE", True))
-51270   If LenB(cSwitch) > 0 Then
-51280    SetupLogFile = cSwitch
-51290   End If
-51300
-51310   ' UnInstallPrinter
-51320   cSwitch = Trim$(CommandSwitch("UNINSTALLPRINTER", True))
-51330   If LenB(cSwitch) > 0 Then
-51340    bUninstallPrinter = True
-51350    UnInstallPrinterName = cSwitch
-51360   End If
-51370   ' InstallPrinter
-51380   cSwitch = Trim$(CommandSwitch("INSTALLPRINTER", True))
-51390   If LenB(cSwitch) > 0 Then
-51400    bInstallPrinter = True
-51410    InstallPrinterName = cSwitch
-51420   End If
-51430   ' UnInstallWindowsPrinter
-51440   cSwitch = Trim$(CommandSwitch("UNINSTALLWINDOWSPRINTER", True))
-51450   If LenB(cSwitch) > 0 Then
-51460    bUninstallWindowsPrinter = True
-51470    UnInstallPrinterName = cSwitch
-51480   End If
-51490   ' InstallWindowsPrinter
-51500   cSwitch = Trim$(CommandSwitch("INSTALLWINDOWSPRINTER", True))
-51510   If LenB(cSwitch) > 0 Then
-51520    bInstallWindowsPrinter = True
-51530    InstallPrinterName = cSwitch
-51540   End If
-51550
-51560   cSwitch = CommandSwitch("OPTIONSFILE", True)
-51570   If LenB(cSwitch) > 0 Then
-51580    If FileExists(cSwitch) = True Then
-51590     Optionsfile = cSwitch
-51600    End If
+50950
+50960   PrintFilename = CommandSwitch("PF", True)
+50970   InputFilename = CommandSwitch("IF", True)
+50980   OutputFilename = CommandSwitch("OF", True)
+50990   OutputSubFormat = CommandSwitch("OutputSubFormat", True)
+51000
+51010   ' Check delete inputfile after converting
+51020   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
+51030     DeleteIF = True
+51040    Else
+51050     DeleteIF = False
+51060   End If
+51070
+51080   ' Open the outputfile after converting
+51090   If UCase$(CommandSwitch("Open", False)) = "OF" Then
+51100     OpenOF = True
+51110    Else
+51120     OpenOF = False
+51130   End If
+51140
+51150   ' SetupLogFile
+51160   cSwitch = Trim$(CommandSwitch("SETUPLOGFILE", True))
+51170   If LenB(cSwitch) > 0 Then
+51180    SetupLogFile = cSwitch
+51190   End If
+51200
+51210   ' UnInstallPrinter
+51220   cSwitch = Trim$(CommandSwitch("UNINSTALLPRINTER", True))
+51230   If LenB(cSwitch) > 0 Then
+51240    bUninstallPrinter = True
+51250    UnInstallPrinterName = cSwitch
+51260   End If
+51270   ' InstallPrinter
+51280   cSwitch = Trim$(CommandSwitch("INSTALLPRINTER", True))
+51290   If LenB(cSwitch) > 0 Then
+51300    bInstallPrinter = True
+51310    InstallPrinterName = cSwitch
+51320   End If
+51330   ' UnInstallWindowsPrinter
+51340   cSwitch = Trim$(CommandSwitch("UNINSTALLWINDOWSPRINTER", True))
+51350   If LenB(cSwitch) > 0 Then
+51360    bUninstallWindowsPrinter = True
+51370    UnInstallPrinterName = cSwitch
+51380   End If
+51390   ' InstallWindowsPrinter
+51400   cSwitch = Trim$(CommandSwitch("INSTALLWINDOWSPRINTER", True))
+51410   If LenB(cSwitch) > 0 Then
+51420    bInstallWindowsPrinter = True
+51430    InstallPrinterName = cSwitch
+51440   End If
+51450
+51460   cSwitch = CommandSwitch("OPTIONSFILE", True)
+51470   If LenB(cSwitch) > 0 Then
+51480    If FileExists(cSwitch) = True Then
+51490     Optionsfile = cSwitch
+51500    End If
+51510   End If
+51520   If UCase$(CommandSwitch("NO", False)) = "START" Then
+51530     NoStart = True
+51540    Else
+51550     NoStart = False
+51560   End If
+51570   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
+51580     NoPSCheck = True
+51590    Else
+51600     NoPSCheck = False
 51610   End If
-51620   If UCase$(CommandSwitch("NO", False)) = "START" Then
-51630     NoStart = True
-51640    Else
-51650     NoStart = False
-51660   End If
-51670   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
-51680     NoPSCheck = True
-51690    Else
-51700     NoPSCheck = False
-51710   End If
-51720  End If
+51620  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
