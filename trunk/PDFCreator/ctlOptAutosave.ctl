@@ -235,26 +235,21 @@ On Error GoTo ErrPtnr_OnError
 50250   .Clear
 50260   .AddItem "<Author>"
 50270   .AddItem "<ClientComputer>"
-50280   .AddItem "<ClientUsername>"
-50290   .AddItem "<Computername>"
-50300   .AddItem "<Counter>"
-50310   .AddItem "<DateTime>"
-50320   .AddItem "<DocumentTitle>"
-50330   .AddItem "<JobID>"
-50340   .AddItem "<PrinterName>"
-50350   .AddItem "<SessionID>"
-50360   .AddItem "<SpoolFile>"
-50370   .AddItem "<SpoolFileName>"
-50380   .AddItem "<SpoolPath>"
-50390   .AddItem "<Title>"
-50400   .AddItem "<Username>"
-50410   .ListIndex = 0
-50420  End With
-50430
-50440  ControlsEnabled = True
-50450  SetFrames Options.OptionsDesign
-50460
-50470  SetFont
+50280   .AddItem "<Computername>"
+50290   .AddItem "<Counter>"
+50300   .AddItem "<DateTime>"
+50310   .AddItem "<JobID>"
+50320   .AddItem "<PrinterName>"
+50330   .AddItem "<SessionID>"
+50340   .AddItem "<Title>"
+50350   .AddItem "<Username>"
+50360   .ListIndex = 0
+50370  End With
+50380
+50390  ControlsEnabled = True
+50400  SetFrames Options.OptionsDesign
+50410
+50420  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -657,7 +652,7 @@ Private Sub cmdGetAutosaveDirectory_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim strFolder As String
-50020  strFolder = BrowseForFolderFiles(UserControl.Parent.hWnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
+50020  strFolder = BrowseForFolderFiles(UserControl.Parent.hwnd, LanguageStrings.OptionsAutosaveDirectoryPrompt)
 50030  If Len(strFolder) = 0 Then
 50040   Exit Sub
 50050  End If

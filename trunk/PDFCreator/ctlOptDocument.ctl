@@ -14,12 +14,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   8
       Top             =   480
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   4604
-      caption         =   "Document 2"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":0312
+      _ExtentX        =   10927
+      _ExtentY        =   4604
+      Caption         =   "Document 2"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkUseFixPaperSize 
          Appearance      =   0  '2D
          Caption         =   "Use a fix papersize"
@@ -98,12 +106,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   17
       Top             =   2880
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   4604
-      caption         =   "Stamp"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":033E
+      _ExtentX        =   10927
+      _ExtentY        =   4604
+      Caption         =   "Stamp"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.TextBox txtStampString 
          Appearance      =   0  '2D
          Height          =   315
@@ -195,12 +211,20 @@ Begin VB.UserControl ctlOptDocument
       TabIndex        =   1
       Top             =   480
       Width           =   6195
-      _extentx        =   10927
-      _extenty        =   3969
-      caption         =   "Document 1"
-      barcolorfrom    =   16744576
-      barcolorto      =   4194304
-      font            =   "ctlOptDocument.ctx":036A
+      _ExtentX        =   10927
+      _ExtentY        =   3969
+      Caption         =   "Document 1"
+      BarColorFrom    =   16744576
+      BarColorTo      =   4194304
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       Begin VB.CheckBox chkUseCreationDateNow 
          Appearance      =   0  '2D
          Caption         =   "Use the current Date/Time for 'Creation Date'"
@@ -233,9 +257,9 @@ Begin VB.UserControl ctlOptDocument
          Appearance      =   0  '2D
          Enabled         =   0   'False
          Height          =   315
-         ItemData        =   "ctlOptDocument.ctx":0396
+         ItemData        =   "ctlOptDocument.ctx":0312
          Left            =   3720
-         List            =   "ctlOptDocument.ctx":0398
+         List            =   "ctlOptDocument.ctx":0314
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
          Top             =   840
@@ -412,82 +436,77 @@ On Error GoTo ErrPtnr_OnError
 50260  End With
 50270  With cmbAuthorTokens
 50280   .AddItem "<ClientComputer>"
-50290   .AddItem "<ClientUsername>"
-50300   .AddItem "<Computername>"
-50310   .AddItem "<Counter>"
-50320   .AddItem "<DateTime>"
-50330   .AddItem "<DocumentTitle>"
-50340   .AddItem "<JobID>"
-50350   .AddItem "<PrinterName>"
-50360   .AddItem "<SessionID>"
-50370   .AddItem "<SpoolFile>"
-50380   .AddItem "<SpoolFileName>"
-50390   .AddItem "<SpoolPath>"
-50400   .AddItem "<Title>"
-50410   .AddItem "<Username>"
-50420   .ListIndex = 0
-50430  End With
-50440  With cmbDocumentPapersizes
-50450   .AddItem "11x17"
-50460   .AddItem "ledger"
-50470   .AddItem "legal"
-50480   .AddItem "letter"
-50490   .AddItem "lettersmall"
-50500   .AddItem "archE"
-50510   .AddItem "archD"
-50520   .AddItem "archC"
-50530   .AddItem "archB"
-50540   .AddItem "archA"
-50550   .AddItem "a0"
-50560   .AddItem "a1"
-50570   .AddItem "a2"
-50580   .AddItem "a3"
-50590   .AddItem "a4"
-50600   .AddItem "a4small"
-50610   .AddItem "a5"
-50620   .AddItem "a6"
-50630   .AddItem "a7"
-50640   .AddItem "a8"
-50650   .AddItem "a9"
-50660   .AddItem "a10"
-50670   .AddItem "isob0"
-50680   .AddItem "isob1"
-50690   .AddItem "isob2"
-50700   .AddItem "isob3"
-50710   .AddItem "isob4"
-50720   .AddItem "isob5"
-50730   .AddItem "isob6"
-50740   .AddItem "c0"
-50750   .AddItem "c1"
-50760   .AddItem "c2"
-50770   .AddItem "c3"
-50780   .AddItem "c4"
-50790   .AddItem "c5"
-50800   .AddItem "c6"
-50810   .AddItem "jisb0"
-50820   .AddItem "jisb1"
-50830   .AddItem "jisb2"
-50840   .AddItem "jisb3"
-50850   .AddItem "jisb4"
-50860   .AddItem "jisb5"
-50870   .AddItem "jisb6"
-50880   .AddItem "b0"
-50890   .AddItem "b1"
-50900   .AddItem "b2"
-50910   .AddItem "b3"
-50920   .AddItem "b4"
-50930   .AddItem "b5"
-50940   .AddItem "flsa"
-50950   .AddItem "flse"
-50960   .AddItem "halfletter"
-50970   .ListIndex = 0
-50980  End With
-50990  tbstrProgDocument.ZOrder 1
-51000  tbstrProgDocument.Tabs(1).Selected = True
-51010
-51020  SetFrames Options.OptionsDesign
-51030
-51040  SetFont
+50290   .AddItem "<Computername>"
+50300   .AddItem "<Counter>"
+50310   .AddItem "<DateTime>"
+50320   .AddItem "<JobID>"
+50330   .AddItem "<PrinterName>"
+50340   .AddItem "<SessionID>"
+50350   .AddItem "<Title>"
+50360   .AddItem "<Username>"
+50370   .ListIndex = 0
+50380  End With
+50390  With cmbDocumentPapersizes
+50400   .AddItem "11x17"
+50410   .AddItem "ledger"
+50420   .AddItem "legal"
+50430   .AddItem "letter"
+50440   .AddItem "lettersmall"
+50450   .AddItem "archE"
+50460   .AddItem "archD"
+50470   .AddItem "archC"
+50480   .AddItem "archB"
+50490   .AddItem "archA"
+50500   .AddItem "a0"
+50510   .AddItem "a1"
+50520   .AddItem "a2"
+50530   .AddItem "a3"
+50540   .AddItem "a4"
+50550   .AddItem "a4small"
+50560   .AddItem "a5"
+50570   .AddItem "a6"
+50580   .AddItem "a7"
+50590   .AddItem "a8"
+50600   .AddItem "a9"
+50610   .AddItem "a10"
+50620   .AddItem "isob0"
+50630   .AddItem "isob1"
+50640   .AddItem "isob2"
+50650   .AddItem "isob3"
+50660   .AddItem "isob4"
+50670   .AddItem "isob5"
+50680   .AddItem "isob6"
+50690   .AddItem "c0"
+50700   .AddItem "c1"
+50710   .AddItem "c2"
+50720   .AddItem "c3"
+50730   .AddItem "c4"
+50740   .AddItem "c5"
+50750   .AddItem "c6"
+50760   .AddItem "jisb0"
+50770   .AddItem "jisb1"
+50780   .AddItem "jisb2"
+50790   .AddItem "jisb3"
+50800   .AddItem "jisb4"
+50810   .AddItem "jisb5"
+50820   .AddItem "jisb6"
+50830   .AddItem "b0"
+50840   .AddItem "b1"
+50850   .AddItem "b2"
+50860   .AddItem "b3"
+50870   .AddItem "b4"
+50880   .AddItem "b5"
+50890   .AddItem "flsa"
+50900   .AddItem "flse"
+50910   .AddItem "halfletter"
+50920   .ListIndex = 0
+50930  End With
+50940  tbstrProgDocument.ZOrder 1
+50950  tbstrProgDocument.Tabs(1).Selected = True
+50960
+50970  SetFrames Options.OptionsDesign
+50980
+50990  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -943,7 +962,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim res As Long, Font As tFont
 50020  Font.Name = Options.StampFontname
 50030  Font.Size = Options.StampFontsize
-50040  If OpenFontDialog(Font, UserControl.Parent.hWnd) > 0 Then
+50040  If OpenFontDialog(Font, UserControl.Parent.hwnd) > 0 Then
 50050   StampFont.Name = Font.Name
 50060   StampFont.Size = Font.Size
 50070   lblFontNameSize.Caption = Font.Name & ", " & Font.Size
@@ -965,7 +984,7 @@ Private Sub picStampFontColor_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim c As OLE_COLOR
-50020  If OpenColorDialog(c, UserControl.Parent.hWnd) = 1 Then
+50020  If OpenColorDialog(c, UserControl.Parent.hwnd) = 1 Then
 50030   picStampFontColor.BackColor = c
 50040   Options.StampFontColor = OleColorToHTMLColor(c)
 50050  End If

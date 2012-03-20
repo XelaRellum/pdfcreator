@@ -638,8 +638,8 @@ Root: HKCU; Subkey: Software\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder
 Root: HKLM; Subkey: {#UninstallRegStr}\CustomMessages; ValueType: string; ValueName: UninstallOptions; Valuedata: {cm:UninstallOptions}; Flags: uninsdeletevalue
 
 ; Application
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: C:\PDFs\<ClientComputer>\<UserName>; Check: IsServerInstallation; Flags: createvalueifdoesntexist
-Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: C:\PDFs\<ClientComputer>\<UserName>; Flags: createvalueifdoesntexist; Check: IsServerInstallation
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: AutosaveDirectory; Valuedata: C:\PDFs\<ClientComputer>\<Author>; Check: IsServerInstallation; Flags: createvalueifdoesntexist
+Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: LastsaveDirectory; Valuedata: C:\PDFs\<ClientComputer>\<Author>; Flags: createvalueifdoesntexist; Check: IsServerInstallation
 Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: Language; Valuedata: {code:GetActiveLanguage}; Check: IsServerInstallation
 Root: HKLM; Subkey: Software\PDFCreator\Program; ValueType: string; ValueName: PrinterTemppath; Valuedata: {app}\Temp\; Flags: createvalueifdoesntexist; Check: IsServerInstallation
 
@@ -1929,7 +1929,9 @@ begin
  if RegValueExists(HKEY_LOCAL_MACHINE, subKey, 'AutosaveDirectory') then
   if RegQueryStringValue(HKEY_LOCAL_MACHINE, subKey, 'AutosaveDirectory', s) then begin
    StringChangeEx(s, '<REDMON_MACHINE>', '<ClientComputer>', true);
-   StringChangeEx(s, '<REDMON_USER>', '<ClientUsername>', true);
+   StringChangeEx(s, '<REDMON_USER>', '<Author>', true);
+   StringChangeEx(s, '<ClientUsername>', '<Author>', true);
+   StringChangeEx(s, '<Username>', '<Author>', true);
    RegWriteStringValue(HKEY_LOCAL_MACHINE, subKey, 'AutosaveDirectory', s);
   end
 end;
@@ -3509,6 +3511,12 @@ begin
  StartServiceIfNotRunning('spooler');
  
  res := 0;
+
+ if IsPdfServerIntalled then begin
+  ServerModus := true;
+  cmdlExpert := true;
+ end; 
+
  if IsPDFCreatorInstalled then begin
   if installedVersionIsLower131 = true then
     cmdlDontInstallPrinters := false
@@ -3527,9 +3535,6 @@ begin
    end
  end
  result := false;
- 
- if IsPdfServerIntalled then
-  ServerModus := true;
  
  OfferScreenSetting := 1;
  If cmdlLoadInfFile<>'' then LoadInf;
