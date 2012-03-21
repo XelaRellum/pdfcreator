@@ -407,6 +407,7 @@ Source: ..\Scripts\RunProgramAfterSaving\PopUpMessage.vbs; DestDir: {app}\Script
 Source: ..\Scripts\RunProgramAfterSaving\SayIt.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
 Source: ..\Scripts\RunProgramAfterSaving\MSAgent.vbs; DestDir: {app}\Scripts\RunProgramAfterSaving; Components: program; Flags: ignoreversion
 ; Scripts: RunProgramBeforSaving
+Source: ..\Scripts\RunProgramBeforeSaving\AddBookmarks.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
 Source: ..\Scripts\RunProgramBeforeSaving\PopUpMessage.vbs; DestDir: {app}\Scripts\RunProgramBeforeSaving; Components: program; Flags: ignoreversion
 ; Samples: Com
 Source: ..\COM\Samples\VB6\Sample1\Form1.frm; DestDir: {app}\COM\VB6\Sample1; Components: COMsamples; Flags: ignoreversion
