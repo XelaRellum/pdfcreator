@@ -6,7 +6,7 @@ Attribute VB_Name = "modTransBlt"
 '  © Copyright 2000-2001 by ActiveVB.de
 '    Geschrieben von Herfried K. Wagner     02/02/01
 '
-'  Ich übernehmen keine Haftung für Schäden, die durch die
+'  Ich übernehme keine Haftung für Schäden, die durch die
 '  Verwendung dieses Codes verursacht wurden. Wenn Sie Fehler
 '  im Code entdecken, Verbesserungsvorschläge haben, eine
 '  interessante Weiterentwicklung gemacht haben, die Sie der
