@@ -1131,6 +1131,8 @@ var progTitel, progHandle: TArrayOfString;
     CountCurrentPDFCreatorPrinters: LongInt;
     CurrentPDFCreatorPrinters: Array of TPrinterInfo2;
     OfferScreen: Integer;
+    
+    installerDirectory : string;
 
 function IsX64: Boolean;
 begin
@@ -1224,6 +1226,14 @@ begin
  end;
 end;
 
+function CompletePath(Path: String): String;
+begin
+ if Copy(Path,Length(Path),1)<>'\' then
+   result:=Path + '\'
+  else
+   result:=Path;
+end;
+
 function IsLanguage(LangName: String): Boolean;
 begin
  If LowerCase(LangName)=Lowercase(ActiveLanguage) then
@@ -1253,11 +1263,17 @@ end;
 
 function GetExternalREGFile(Default:string): String;
 begin
+ if Length(ExtractFilePath(cmdlLoadInfFile))=0 then
+  cmdlREGFile := CompletePath(installerDirectory) + cmdlREGFile;
+
  Result:=cmdlREGFile
 end;
 
 function GetExternalPPDFile(Default:string): String;
 begin
+ if Length(ExtractFilePath(cmdlPPDFile))=0 then
+  cmdlPPDFile := CompletePath(installerDirectory) + cmdlPPDFile;
+
  Result:=cmdlPPDFile
 end;
 
@@ -2906,14 +2922,6 @@ begin
  Result:=RegValueExists(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'PDFCreatorRestart')
 end;
 
-function CompletePath(Path: String): String;
-begin
- if Copy(Path,Length(Path),1)<>'\' then
-   result:=Path + '\'
-  else
-   result:=Path;
-end;
-
 function AnalyzeCommandlineParameters:Boolean;
 var
  i:Longint; cmdParam, pStr: String;
@@ -3451,6 +3459,9 @@ var
  a:Longint;
 #endif
 begin
+ installerDirectory := GetCurrentDir;
+ AppendLogStr('InstallerDirectory: ' + InstallerDirectory);
+
  If IsX64 then begin
   UninstallRegKey := 'SOFTWARE\Wow6432Node\' +  UninstallKey
   AppendLogStr('X64: yes');
