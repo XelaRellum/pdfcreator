@@ -10,9 +10,9 @@ On Error GoTo ErrPtnr_OnError
 50030  End If
 50040  Path = Trim$(Path)
 50050  If Right$(Path, 1) = "\" Then
-50060    CompletePath = LTrim$(Path)
+50060    CompletePath = Path
 50070   Else
-50080    CompletePath = LTrim$(Path) & "\"
+50080    CompletePath = Path & "\"
 50090  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
