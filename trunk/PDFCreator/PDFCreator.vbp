@@ -79,7 +79,6 @@ Module=modRunProgram; modRunProgram.bas
 Module=modServices; ..\Common\modServices.bas
 Module=modShell; modShell.bas
 Module=modTopMost; modTopMost.bas
-Module=modTransBlt; modTransBlt.bas
 Module=modWindowsVersion; ..\Common\modWindowsVersion.bas
 RelatedDoc=comments.txt
 RelatedDoc=..\TLBs\Edanmo\Edanmo - olelib.tlb - readme.txt
