@@ -74,7 +74,6 @@ Module=modPrinter; modPrinter.bas
 Module=modPrinterEnums; modPrinterEnums.bas
 Module=modPrinterSet; modPrinterSet.bas
 Module=modProfiles; ..\Common\modProfiles.bas
-Module=modRegionFromBitmap; modRegionFromBitmap.bas
 Module=modResAVI; modResAVI.bas
 Module=modRunProgram; modRunProgram.bas
 Module=modServices; ..\Common\modServices.bas
