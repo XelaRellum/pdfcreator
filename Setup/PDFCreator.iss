@@ -1263,17 +1263,11 @@ end;
 
 function GetExternalREGFile(Default:string): String;
 begin
- if Length(ExtractFilePath(cmdlLoadInfFile))=0 then
-  cmdlREGFile := CompletePath(installerDirectory) + cmdlREGFile;
-
  Result:=cmdlREGFile
 end;
 
 function GetExternalPPDFile(Default:string): String;
 begin
- if Length(ExtractFilePath(cmdlPPDFile))=0 then
-  cmdlPPDFile := CompletePath(installerDirectory) + cmdlPPDFile;
-
  Result:=cmdlPPDFile
 end;
 
@@ -2452,7 +2446,7 @@ end;
 procedure SaveInstallInformations;
 var fdPath, fdName : String;
 begin
- SaveStringToFile(LogFile, '--------------------------------------'#13#10#13#10, True);
+ SaveStringToFile(LogFile, #13#10'--- Systeminformation - Start ---'#13#10, True);
  SaveStringToFile(LogFile, 'Windowsversion: '+GetWindowsVersionString+#13#10, True);
  SaveStringToFile(LogFile, 'WinDir: '+GetWinDir+#13#10, True);
  If IsWin64 then
@@ -2497,7 +2491,10 @@ begin
    else
     SaveStringToFile(LogFile, fdName + ': found NOT in path'+#13#10, True)
  end;
- SaveStringToFile(LogFile, 'Environment:'#13#10 + GetEnvironment, True)
+ SaveStringToFile(LogFile, '--- Systeminformation - End ---'#13#10, True);
+ SaveStringToFile(LogFile, #13#10'--- Environment - Start ---'#13#10, True);
+ SaveStringToFile(LogFile, GetEnvironment, True)
+ SaveStringToFile(LogFile, #13#10'--- Environment - End ---'#13#10, True);
 end;
 
 procedure SavePrinterdriverInformations(Environment :String);
@@ -2922,10 +2919,19 @@ begin
  Result:=RegValueExists(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce', 'PDFCreatorRestart')
 end;
 
+procedure AppendLogStr(value:String);
+begin
+ if length(logStr) = 0 then
+  logStr := value + #13#10
+ else 
+  logStr := logStr + value + #13#10;
+end;
+
 function AnalyzeCommandlineParameters:Boolean;
 var
  i:Longint; cmdParam, pStr: String;
 begin
+ AppendLogStr(#13#10'Start AnalyzeCommandlineParameters')
  Result:=false;
  for i:=0 to Paramcount do begin
   if (Length(paramstr(i))=1) then
@@ -2948,7 +2954,7 @@ begin
   if uppercase(paramstr(i))='/VERYSILENT' then
    cmdlVerySilent:=true;
   if uppercase(paramstr(i))='/SILENT' then
-   cmdlSilent:=true;
+    cmdlSilent:=true;
   if uppercase(paramstr(i))='/FORCEINSTALL' then
    cmdlForceInstall:=true;
   if uppercase(paramstr(i))='/REMOVEOPTIONS' then
@@ -2957,7 +2963,7 @@ begin
    cmdlDontInstallPrinters:=true;
   if uppercase(paramstr(i))='/EXPERT' then
    cmdlExpert:=true;
-
+  
   cmdParam:='/LoadInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
   if uppercase(pstr)=uppercase(cmdParam) then begin
@@ -2966,9 +2972,6 @@ begin
     else
      cmdlLoadInfFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
   end;
-  if Length(cmdlLoadInfFile)>0 then
-   if Length(ExtractFilePath(cmdlLoadInfFile))=0 then
-    cmdlLoadInfFile:=CompletePath(GetCurrentDir) + cmdlLoadInfFile;
 
   cmdParam:='/SaveInf';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -2978,9 +2981,6 @@ begin
     else
      cmdlSaveInfFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
   end;
-  if Length(cmdlSaveInfFile)>0 then
-   if Length(ExtractFilePath(cmdlSaveInfFile))=0 then
-    cmdlSaveInfFile:=CompletePath(GetCurrentDir) + cmdlSaveInfFile;
 
   cmdParam:='/REGFile';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
@@ -2999,6 +2999,7 @@ begin
     else
      cmdlPPDFile:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
   end;
+  
   cmdParam:='/Printername';
   pStr:=Copy(paramstr(i),1,Length(cmdParam));
   if uppercase(pstr)=uppercase(cmdParam) then begin
@@ -3008,24 +3009,91 @@ begin
      cmdlPrintername:=Copy(paramstr(i),Length(cmdParam)+1,Length(paramstr(i)));
   end;
  end;
- If Length(cmdlPrintername)>0 then begin
-  If CheckPrintername(cmdlPrintername, Not cmdlVerySilent)=False then begin
-   Result:=False
-   exit;
-  end;
-  Printername:=cmdlPrintername;
- end;
-
- if Length(cmdlPPDFile)>0 then
+ 
+ if cmdlVerySilent then
+  AppendLogStr(' Parameter /VERYSILENT: true')
+ else
+  AppendLogStr(' Parameter /VERYSILENT: false');
+ if cmdlSilent then
+  AppendLogStr(' Parameter /SILENT: true')
+ else
+  AppendLogStr(' Parameter /SILENT: false');
+ if cmdlForceInstall then
+  AppendLogStr(' Parameter /FORCEINSTALL: true')
+ else
+  AppendLogStr(' Parameter /FORCEINSTALL: false');
+ if cmdlRemoveOptions then
+  AppendLogStr(' Parameter /REMOVEOPTIONS: true')
+ else
+  AppendLogStr(' Parameter /REMOVEOPTIONS: false');
+ if cmdlDontInstallPrinters then
+  AppendLogStr(' Parameter /DONTINSTALLPRINTERS: true')
+ else
+  AppendLogStr(' Parameter /DONTINSTALLPRINTERS: false');
+ if cmdlExpert then
+  AppendLogStr(' Parameter /EXPERT: true')
+ else
+  AppendLogStr(' Parameter /EXPERT: false');
+  
+ if Length(cmdlLoadInfFile)>0 then begin
+  AppendLogStr(' Parameter /LoadInf: ' + cmdlLoadInfFile);
+  if Length(ExtractFilePath(cmdlLoadInfFile))=0 then begin
+   cmdlLoadInfFile:=CompletePath(GetCurrentDir) + cmdlLoadInfFile;
+   AppendLogStr('  Adjusted parameter /LoadInf: ' + cmdlLoadInfFile);
+  end 
+ end else  
+  AppendLogStr(' No Parameter /LoadInf');
+ 
+ if Length(cmdlSaveInfFile)>0 then begin
+  AppendLogStr(' Parameter /SaveInf: ' + cmdlSaveInfFile);
+  if Length(ExtractFilePath(cmdlSaveInfFile))=0 then begin
+   cmdlSaveInfFile:=CompletePath(GetCurrentDir) + cmdlSaveInfFile;
+   AppendLogStr('  Adjusted parameter /SaveInf: ' + cmdlSaveInfFile);
+  end 
+ end else  
+  AppendLogStr(' No Parameter /SaveInf');
+ 
+ if Length(cmdlREGFile)>0 then begin
+  AppendLogStr(' Parameter /REGFile: ' + cmdlREGFile);
+  if Length(ExtractFilePath(cmdlREGFile))=0 then begin
+   cmdlREGFile:=CompletePath(GetCurrentDir) + cmdlREGFile;
+   AppendLogStr('  Adjusted parameter /REGFile: ' + cmdlREGFile);
+  end 
+ end else  
+ AppendLogStr(' No Parameter /REGFile');
+ 
+ if Length(cmdlPPDFile)>0 then begin
+  AppendLogStr(' Parameter /PPDFile: ' + cmdlPPDFile);
+  if Length(ExtractFilePath(cmdlPPDFile))=0 then begin
+   cmdlPPDFile:=CompletePath(GetCurrentDir) + cmdlPPDFile;
+   AppendLogStr('  Adjusted parameter /PPDFile: ' + cmdlPPDFile);
+  end; 
   if FileExists(cmdlPPDFile)=False then begin
+   AppendLogStr(' PPDFile "' + cmdlPPDFile +'" doesn''t exists!"');
    pStr:=SetupMessage(msgSourceDoesntExist);
    StringChange(pStr,'%1',cmdlPPDFile);
    if cmdlVerySilent=false then
     msgbox(pStr,mbCriticalError, MB_OK);
    Result:=False
    exit;
+  end else
+   AppendLogStr('  PPDFile "' + cmdlPPDFile +'" exists."');
+ end else  
+  AppendLogStr(' No Parameter /PPDFile');
+
+ If Length(cmdlPrintername)>0 then begin
+  AppendLogStr(' Parameter /Printername: ' + cmdlPrintername);
+  If CheckPrintername(cmdlPrintername, Not cmdlVerySilent)=False then begin
+   AppendLogStr('  Parameter /Printername: CheckPrintername() failed!');
+   Result:=False
+   exit;
   end;
+  Printername:=cmdlPrintername;
+ end else  
+  AppendLogStr(' No Parameter /Printername');
+
  Result:=true;
+ AppendLogStr('End AnalyzeCommandlineParameters'#13#10)
 end;
 
 function UseDesktopIcon: boolean;
@@ -3322,14 +3390,6 @@ begin
  end  
 end;
 
-procedure AppendLogStr(value:String);
-begin
- if length(logStr) = 0 then
-  logStr := value + #13#10
- else 
-  logStr := logStr + value + #13#10;
-end;
-
 function PDFCreatorVersionIsLower(oldVersion, newVersion: string): boolean;
 var
  oldVersionArr, newVersionArr: TAInt;
@@ -3459,6 +3519,7 @@ var
  a:Longint;
 #endif
 begin
+ AppendLogStr('----- Setup - Start: ' + GetDateTimeString('yyyy/mm/dd hh:nn:ss', '-', ':') + ' -----');
  installerDirectory := GetCurrentDir;
  AppendLogStr('InstallerDirectory: ' + InstallerDirectory);
 
@@ -3486,9 +3547,9 @@ begin
 
  installedVersionIsLower131:=PDFCreatorVersionIsLower(InstalledPDFCreatorVersion, '1.3.1'); 
  if installedVersionIsLower131 then
-   SaveStringToFile(LogFile, 'installedVersionIsLower131 = true'#13#10, True)
+   SaveStringToFile(LogFile, 'installedVersionIsLower131 (Insatlled PDFCreator version is lower 1.3.1) = true'#13#10, True)
   else
-   SaveStringToFile(LogFile, 'installedVersionIsLower131 = false'#13#10, True);
+   SaveStringToFile(LogFile, 'installedVersionIsLower131 (Insatlled PDFCreator version is lower 1.3.1) = false'#13#10, True);
  if InstallPDFcreatorPrinter then
    SaveStringToFile(LogFile, 'InstallPDFcreatorPrinter = true'#13#10, True)
   else
@@ -4161,6 +4222,7 @@ begin
  If OfferScreen = SCR_OC then
    OCDeinitializeSetup();
 #ENDIF
+ SaveStringToFile(LogFile,  #13#10'----- Setup - End:   ' + GetDateTimeString('yyyy/mm/dd hh:nn:ss', '-', ':') + ' -----', true);
 end;
 
 function BackButtonClick(CurPageID: Integer): Boolean;
@@ -4209,7 +4271,6 @@ begin
  end;
 #endif
     
-
   if CurStep = ssPostinstall then begin
    AppendLogStr('InstalledPDFCreatorVersion: ' + InstalledPDFCreatorVersion);
    If cmdlDontInstallPrinters then
@@ -4217,9 +4278,9 @@ begin
     else
      AppendLogStr('DontInstallPrinters: false');
    If installedVersionIsLower131 then
-     AppendLogStr('PDFCreatorVersionIsLower 1.3.1: true')
+     AppendLogStr('Installed PDFCreator version is lower 1.3.1: true')
     else
-     AppendLogStr('PDFCreatorVersionIsLower 1.3.1: false')
+     AppendLogStr('Installed PDFCreator version is lower 1.3.1: false')
 
    SaveStringToFile(LogFile, logStr + #13#10, True)
    
@@ -4333,7 +4394,7 @@ begin
       DeleteStartMenuEntry;
       RemoveRegistrySettings;
      end else
-      SaveStringToFile(LogFile, #13#10+'No printer will be installed.' + #13#10, True);
+      SaveStringToFile(LogFile, 'No printer will be installed.' + #13#10, True);
 
      if cmdlSaveInfFile<>'' Then SaveInf;
     finally
