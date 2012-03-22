@@ -639,8 +639,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  TerminateProgram
 50020  ShutDown = False
-50030 IsFrmMainLoaded = False
-50040
+50030  IsFrmMainLoaded = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1552,43 +1551,42 @@ On Error GoTo ErrPtnr_OnError
 50270     If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListPrinting Then
 50280      lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting
 50290     End If
-50300     ' PDFSpoolfile = lsv.ListItems(1).SubItems(4)
-50310     CurrentInfoSpoolFile = lsv.ListItems(1).SubItems(4)
-50320     If PrinterStop = False Then
-50330      If IsFormLoaded(frmPrinting) = False Then
-50340       Set isf = New clsInfoSpoolFile
-50350       isf.ReadInfoFile CurrentInfoSpoolFile
-50360       PrinterDefaultProfile = Trim$(GetPrinterDefaultProfile(isf.FirstPrinterName))
-50370       If LenB(PrinterDefaultProfile) > 0 Then
-50380         opt = ReadOptions(True, , PrinterDefaultProfile)
-50390        Else
-50400         opt = Options
-50410       End If
-50420       If opt.UseAutosave = 1 Then
-50430         opt2 = Options
-50440         Options = opt
-50450         Autosave CurrentInfoSpoolFile
-50460         SaveOption Options, "Counter", PrinterDefaultProfile
-50470         opt2.Counter = Options.Counter
-50480         Options = opt2
-50490        Else
-50500         If LenB(isf.FirstPrinterName) > 0 And UCase$(OldPrinter) <> UCase$(isf.FirstPrinterName) Then
-50510          OldPrinter = isf.FirstPrinterName
-50520         End If
-50530         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.FirstPrinterName)
-50540         frmPrinting.Show , Me
-50550       End If
-50560      End If
-50570     End If
-50580     If PrinterStop = False And NoProcessing = False Then
-50590       mnPrinter(2).Checked = False
-50600       tlb(0).Buttons(1).Image = 1
-50610      Else
-50620       mnPrinter(2).Checked = True
-50630       tlb(0).Buttons(1).Image = 2
-50640     End If
-50650   End If
-50660  End If
+50300     CurrentInfoSpoolFile = lsv.ListItems(1).SubItems(4)
+50310     If PrinterStop = False Then
+50320      If IsFormLoaded(frmPrinting) = False Then
+50330       Set isf = New clsInfoSpoolFile
+50340       isf.ReadInfoFile CurrentInfoSpoolFile
+50350       PrinterDefaultProfile = Trim$(GetPrinterDefaultProfile(isf.FirstPrinterName))
+50360       If LenB(PrinterDefaultProfile) > 0 Then
+50370         opt = ReadOptions(True, , PrinterDefaultProfile)
+50380        Else
+50390         opt = Options
+50400       End If
+50410       If opt.UseAutosave = 1 Then
+50420         opt2 = Options
+50430         Options = opt
+50440         Autosave CurrentInfoSpoolFile
+50450         SaveOption Options, "Counter", PrinterDefaultProfile
+50460         opt2.Counter = Options.Counter
+50470         Options = opt2
+50480        Else
+50490         If LenB(isf.FirstPrinterName) > 0 And UCase$(OldPrinter) <> UCase$(isf.FirstPrinterName) Then
+50500          OldPrinter = isf.FirstPrinterName
+50510         End If
+50520         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.FirstPrinterName)
+50530         frmPrinting.Show , Me
+50540       End If
+50550      End If
+50560     End If
+50570     If PrinterStop = False And NoProcessing = False Then
+50580       mnPrinter(2).Checked = False
+50590       tlb(0).Buttons(1).Image = 1
+50600      Else
+50610       mnPrinter(2).Checked = True
+50620       tlb(0).Buttons(1).Image = 2
+50630     End If
+50640   End If
+50650  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2519,27 +2517,30 @@ Private Sub SetLanguageToolbar()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With tlb(0)
-50020   .Buttons(1).ToolTipText = LanguageStrings.DialogPrinterPrinterStop
-50030   .Buttons(2).ToolTipText = LanguageStrings.DialogPrinterOptions
-50040   .Buttons(3).ToolTipText = LanguageStrings.DialogPrinterLogfile
-50050   .Buttons(5).ToolTipText = LanguageStrings.DialogDocumentPrint
-50060   .Buttons(6).ToolTipText = LanguageStrings.DialogDocumentAdd
-50070   .Buttons(7).ToolTipText = LanguageStrings.DialogDocumentAddFromClipboard
-50080   .Buttons(8).ToolTipText = LanguageStrings.DialogDocumentDelete
-50090   .Buttons(9).ToolTipText = LanguageStrings.DialogDocumentTop
-50100   .Buttons(10).ToolTipText = LanguageStrings.DialogDocumentUp
-50110   .Buttons(11).ToolTipText = LanguageStrings.DialogDocumentDown
-50120   .Buttons(12).ToolTipText = LanguageStrings.DialogDocumentBottom
-50130   .Buttons(13).ToolTipText = LanguageStrings.DialogDocumentCombine
-50140   .Buttons(14).ToolTipText = LanguageStrings.DialogDocumentCombineAll
-50150   .Buttons(15).ToolTipText = LanguageStrings.DialogDocumentSave
-50160   .Buttons(17).ToolTipText = "?"
-50170  End With
-50180  With tlb(1)
-50190   .Buttons(1).ToolTipText = LanguageStrings.DialogDocumentCombineAllSend
-50200   .Buttons(2).ToolTipText = LanguageStrings.DialogDocumentSend
-50210  End With
+50010  If tlb(0).Buttons.Count = 0 Then
+50020   Exit Sub
+50030  End If
+50040  With tlb(0)
+50050   .Buttons(1).ToolTipText = LanguageStrings.DialogPrinterPrinterStop
+50060   .Buttons(2).ToolTipText = LanguageStrings.DialogPrinterOptions
+50070   .Buttons(3).ToolTipText = LanguageStrings.DialogPrinterLogfile
+50080   .Buttons(5).ToolTipText = LanguageStrings.DialogDocumentPrint
+50090   .Buttons(6).ToolTipText = LanguageStrings.DialogDocumentAdd
+50100   .Buttons(7).ToolTipText = LanguageStrings.DialogDocumentAddFromClipboard
+50110   .Buttons(8).ToolTipText = LanguageStrings.DialogDocumentDelete
+50120   .Buttons(9).ToolTipText = LanguageStrings.DialogDocumentTop
+50130   .Buttons(10).ToolTipText = LanguageStrings.DialogDocumentUp
+50140   .Buttons(11).ToolTipText = LanguageStrings.DialogDocumentDown
+50150   .Buttons(12).ToolTipText = LanguageStrings.DialogDocumentBottom
+50160   .Buttons(13).ToolTipText = LanguageStrings.DialogDocumentCombine
+50170   .Buttons(14).ToolTipText = LanguageStrings.DialogDocumentCombineAll
+50180   .Buttons(15).ToolTipText = LanguageStrings.DialogDocumentSave
+50190   .Buttons(17).ToolTipText = "?"
+50200  End With
+50210  With tlb(1)
+50220   .Buttons(1).ToolTipText = LanguageStrings.DialogDocumentCombineAllSend
+50230   .Buttons(2).ToolTipText = LanguageStrings.DialogDocumentSend
+50240  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2933,7 +2934,7 @@ Public Sub ChangeLanguage()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  SetLanguageMenu
-50020 ' SetLanguageToolbar
+50020  SetLanguageToolbar
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
