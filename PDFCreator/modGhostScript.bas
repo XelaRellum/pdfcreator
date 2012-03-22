@@ -302,129 +302,128 @@ On Error GoTo ErrPtnr_OnError
 50110  AddParams "-I" & tStr
 50120  AddParams "-q"
 50130  AddParams "-dNOPAUSE"
-50140  'AddParams "-dSAFER"
-50150  AddParams "-dBATCH"
-50160  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50170   AddParams "-sFONTPATH=" & GetFontsDirectory
-50180  End If
-50190  AddParams "-sDEVICE=pdfwrite"
-50200  If Options.DontUseDocumentSettings = 0 Then
-50210   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
-50220   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
-50230   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
-50240   AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
-50250   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
-50260   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
-50270   AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
-50280   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
-50290   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
-50300   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50310
-50320   If Options.UseFixPapersize <> 0 Then
-50330    If Options.UseCustomPaperSize = 0 Then
-50340      If LenB(Trim$(Options.Papersize)) > 0 Then
-50350       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50360       AddParams "-dFIXEDMEDIA"
-50370       AddParams "-dNORANGEPAGESIZE"
-50380      End If
-50390     Else
-50400      If Options.DeviceWidthPoints >= 1 Then
-50410       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50420      End If
-50430      If Options.DeviceHeightPoints >= 1 Then
-50440       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50450      End If
-50460    End If
-50470   End If
-50480  End If
-50490  tEnc = False
-50500  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True Then
-50510   If Options.PDFAes128Encryption = 0 Then
-50520    If SetEncryptionParams(encPDF, "", "") = True Then
-50530     tEnc = True
-50540     If Len(encPDF.OwnerPass) > 0 Then
-50550       AddParams "-sOwnerPassword=" & encPDF.OwnerPass: currentOwnerPassword = encPDF.OwnerPass
-50560      Else
-50570       If Len(encPDF.UserPass) > 0 Then
-50580        AddParams "-sOwnerPassword=" & encPDF.UserPass: currentOwnerPassword = encPDF.OwnerPass
-50590       End If
-50600     End If
-50610     If Len(encPDF.UserPass) > 0 Then
-50620      AddParams "-sUserPassword=" & encPDF.UserPass
-50630     End If
-50640     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50650     If GS_COMPATIBILITY = "1.4" Or GS_COMPATIBILITY = "1.5" Then
-50660       AddParams "-dEncryptionR=3"
-50670       AddParams "-dKeyLength=128"
-50680      Else
-50690       AddParams "-dEncryptionR=2"
-50700       AddParams "-dKeyLength=40"
-50710     End If
-50720    Else
-50730     If Options.UseAutosave = 0 Then
-50740      MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50750     End If
-50760    End If
-50770   End If
-50780  End If
-50790
-50800  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50810   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50820  End If
-50830  AddParams "-sOutputFile=" & GSOutputFile
-50840
-50850  If Options.DontUseDocumentSettings = 0 Then
-50860   SetColorParams
-50870   SetGreyParams
-50880   SetMonoParams
-50890
-50900   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50910   AddParams "-dUCRandBGInfo=/Preserve"
-50920   AddParams "-dUseFlateCompression=true"
-50930   AddParams "-dParseDSCCommentsForDocInfo=true"
-50940   AddParams "-dParseDSCComments=true"
-50950   AddParams "-dOPM=" & GS_OVERPRINT
-50960   AddParams "-dOffOptimizations=0"
-50970   AddParams "-dLockDistillerParams=false"
-50980   AddParams "-dGrayImageDepth=-1"
-50990   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-51000   AddParams "-dDefaultRenderingIntent=/Default"
-51010   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-51020   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-51030   AddParams "-dDetectBlends=true"
-51040
-51050   AddAdditionalGhostscriptParameters
-51060
-51070   AddParamCommands
-51080  End If
-51090
-51100  AddParams "-f"
-51110  If LenB(StampFile) > 0 Then
-51120   If FileExists(StampFile) Then
-51130    AddParams StampFile
-51140   End If
-51150  End If
-51160  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-51170  Set isf = New clsInfoSpoolFile
-51180  isf.ReadInfoFile InfoSpoolFileName
-51190  For i = 1 To isf.InfoFiles.Count
-51200   Set isfi = isf.InfoFiles(i)
-51210   If FileExists(isfi.SpoolFileName) Then
-51220    AddParams isfi.SpoolFileName
-51230   End If
-51240  Next i
-51250  If LenB(PDFDocInfoFile) > 0 Then
-51260   If FileExists(PDFDocInfoFile) Then
-51270    AddParams PDFDocInfoFile
-51280   End If
-51290  End If
-51300
-51310  ShowParams
-51320  If tEnc = True Then
-51330    CallGhostscript "PDF with encryption"
-51340   Else
-51350    CallGhostscript "PDF without encryption"
-51360  End If
+50140  AddParams "-dBATCH"
+50150  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50160   AddParams "-sFONTPATH=" & GetFontsDirectory
+50170  End If
+50180  AddParams "-sDEVICE=pdfwrite"
+50190  If Options.DontUseDocumentSettings = 0 Then
+50200   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
+50210   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+50220   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+50230   AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
+50240   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+50250   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+50260   AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
+50270   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+50280   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
+50290   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50300
+50310   If Options.UseFixPapersize <> 0 Then
+50320    If Options.UseCustomPaperSize = 0 Then
+50330      If LenB(Trim$(Options.Papersize)) > 0 Then
+50340       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50350       AddParams "-dFIXEDMEDIA"
+50360       AddParams "-dNORANGEPAGESIZE"
+50370      End If
+50380     Else
+50390      If Options.DeviceWidthPoints >= 1 Then
+50400       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50410      End If
+50420      If Options.DeviceHeightPoints >= 1 Then
+50430       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50440      End If
+50450    End If
+50460   End If
+50470  End If
+50480  tEnc = False
+50490  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True Then
+50500   If Options.PDFAes128Encryption = 0 Then
+50510    If SetEncryptionParams(encPDF, "", "") = True Then
+50520     tEnc = True
+50530     If Len(encPDF.OwnerPass) > 0 Then
+50540       AddParams "-sOwnerPassword=" & encPDF.OwnerPass: currentOwnerPassword = encPDF.OwnerPass
+50550      Else
+50560       If Len(encPDF.UserPass) > 0 Then
+50570        AddParams "-sOwnerPassword=" & encPDF.UserPass: currentOwnerPassword = encPDF.OwnerPass
+50580       End If
+50590     End If
+50600     If Len(encPDF.UserPass) > 0 Then
+50610      AddParams "-sUserPassword=" & encPDF.UserPass
+50620     End If
+50630     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
+50640     If GS_COMPATIBILITY = "1.4" Or GS_COMPATIBILITY = "1.5" Then
+50650       AddParams "-dEncryptionR=3"
+50660       AddParams "-dKeyLength=128"
+50670      Else
+50680       AddParams "-dEncryptionR=2"
+50690       AddParams "-dKeyLength=40"
+50700     End If
+50710    Else
+50720     If Options.UseAutosave = 0 Then
+50730      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50740     End If
+50750    End If
+50760   End If
+50770  End If
+50780
+50790  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50800   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50810  End If
+50820  AddParams "-sOutputFile=" & GSOutputFile
+50830
+50840  If Options.DontUseDocumentSettings = 0 Then
+50850   SetColorParams
+50860   SetGreyParams
+50870   SetMonoParams
+50880
+50890   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50900   AddParams "-dUCRandBGInfo=/Preserve"
+50910   AddParams "-dUseFlateCompression=true"
+50920   AddParams "-dParseDSCCommentsForDocInfo=true"
+50930   AddParams "-dParseDSCComments=true"
+50940   AddParams "-dOPM=" & GS_OVERPRINT
+50950   AddParams "-dOffOptimizations=0"
+50960   AddParams "-dLockDistillerParams=false"
+50970   AddParams "-dGrayImageDepth=-1"
+50980   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50990   AddParams "-dDefaultRenderingIntent=/Default"
+51000   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+51010   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+51020   AddParams "-dDetectBlends=true"
+51030
+51040   AddAdditionalGhostscriptParameters
+51050
+51060   AddParamCommands
+51070  End If
+51080
+51090  AddParams "-f"
+51100  If LenB(StampFile) > 0 Then
+51110   If FileExists(StampFile) Then
+51120    AddParams StampFile
+51130   End If
+51140  End If
+51150  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+51160  Set isf = New clsInfoSpoolFile
+51170  isf.ReadInfoFile InfoSpoolFileName
+51180  For i = 1 To isf.InfoFiles.Count
+51190   Set isfi = isf.InfoFiles(i)
+51200   If FileExists(isfi.SpoolFileName) Then
+51210    AddParams isfi.SpoolFileName
+51220   End If
+51230  Next i
+51240  If LenB(PDFDocInfoFile) > 0 Then
+51250   If FileExists(PDFDocInfoFile) Then
+51260    AddParams PDFDocInfoFile
+51270   End If
+51280  End If
+51290
+51300  ShowParams
+51310  If tEnc = True Then
+51320    CallGhostscript "PDF with encryption"
+51330   Else
+51340    CallGhostscript "PDF without encryption"
+51350  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -460,64 +459,63 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_PNGColorscount
-50270
-50280  If Options.DontUseDocumentSettings = 0 Then
-50290   If Options.UseFixPapersize <> 0 Then
-50300    If Options.UseCustomPaperSize = 0 Then
-50310      If LenB(Trim$(Options.Papersize)) > 0 Then
-50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50330       AddParams "-dFIXEDMEDIA"
-50340       AddParams "-dNORANGEPAGESIZE"
-50350      End If
-50360     Else
-50370      If Options.DeviceWidthPoints >= 1 Then
-50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50390      End If
-50400      If Options.DeviceHeightPoints >= 1 Then
-50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50420      End If
-50430    End If
-50440   End If
-50450   AddParams "-r" & Options.PNGResolution & "x" & Options.PNGResolution
-50460
-50470   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490   End If
-50500   AddParams "-sOutputFile=" & GSOutputFile
-50510  End If
-50520
-50530  AddAdditionalGhostscriptParameters
-50540
-50550  AddParams "-f"
-50560  If LenB(StampFile) > 0 Then
-50570   If FileExists(StampFile) Then
-50580    AddParams StampFile
-50590   End If
-50600  End If
-50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50620  Set isf = New clsInfoSpoolFile
-50630  isf.ReadInfoFile InfoSpoolFileName
-50640  For i = 1 To isf.InfoFiles.Count
-50650   Set isfi = isf.InfoFiles(i)
-50660   If FileExists(isfi.SpoolFileName) Then
-50670    AddParams isfi.SpoolFileName
-50680   End If
-50690  Next i
-50700  If LenB(PDFDocInfoFile) > 0 Then
-50710   If FileExists(PDFDocInfoFile) Then
-50720    AddParams PDFDocInfoFile
-50730   End If
-50740  End If
-50750
-50760  ShowParams
-50770  CallGhostscript "PNG"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_PNGColorscount
+50260
+50270  If Options.DontUseDocumentSettings = 0 Then
+50280   If Options.UseFixPapersize <> 0 Then
+50290    If Options.UseCustomPaperSize = 0 Then
+50300      If LenB(Trim$(Options.Papersize)) > 0 Then
+50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50320       AddParams "-dFIXEDMEDIA"
+50330       AddParams "-dNORANGEPAGESIZE"
+50340      End If
+50350     Else
+50360      If Options.DeviceWidthPoints >= 1 Then
+50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50380      End If
+50390      If Options.DeviceHeightPoints >= 1 Then
+50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50410      End If
+50420    End If
+50430   End If
+50440   AddParams "-r" & Options.PNGResolution & "x" & Options.PNGResolution
+50450
+50460   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480   End If
+50490   AddParams "-sOutputFile=" & GSOutputFile
+50500  End If
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "PNG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -553,64 +551,63 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_JPEGColorscount
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   AddParams "-dJPEGQ=" & GS_JPEGQuality
-50290   If Options.UseFixPapersize <> 0 Then
-50300    If Options.UseCustomPaperSize = 0 Then
-50310      If LenB(Trim$(Options.Papersize)) > 0 Then
-50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50330       AddParams "-dFIXEDMEDIA"
-50340       AddParams "-dNORANGEPAGESIZE"
-50350      End If
-50360     Else
-50370      If Options.DeviceWidthPoints >= 1 Then
-50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50390      End If
-50400      If Options.DeviceHeightPoints >= 1 Then
-50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50420      End If
-50430    End If
-50440   End If
-50450   AddParams "-r" & Options.JPEGResolution & "x" & Options.JPEGResolution
-50460
-50470   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490   End If
-50500   AddParams "-sOutputFile=" & GSOutputFile
-50510  End If
-50520
-50530  AddAdditionalGhostscriptParameters
-50540
-50550  AddParams "-f"
-50560  If LenB(StampFile) > 0 Then
-50570   If FileExists(StampFile) Then
-50580    AddParams StampFile
-50590   End If
-50600  End If
-50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50620  Set isf = New clsInfoSpoolFile
-50630  isf.ReadInfoFile InfoSpoolFileName
-50640  For i = 1 To isf.InfoFiles.Count
-50650   Set isfi = isf.InfoFiles(i)
-50660   If FileExists(isfi.SpoolFileName) Then
-50670    AddParams isfi.SpoolFileName
-50680   End If
-50690  Next i
-50700  If LenB(PDFDocInfoFile) > 0 Then
-50710   If FileExists(PDFDocInfoFile) Then
-50720    AddParams PDFDocInfoFile
-50730   End If
-50740  End If
-50750
-50760  ShowParams
-50770  CallGhostscript "JPEG"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_JPEGColorscount
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   AddParams "-dJPEGQ=" & GS_JPEGQuality
+50280   If Options.UseFixPapersize <> 0 Then
+50290    If Options.UseCustomPaperSize = 0 Then
+50300      If LenB(Trim$(Options.Papersize)) > 0 Then
+50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50320       AddParams "-dFIXEDMEDIA"
+50330       AddParams "-dNORANGEPAGESIZE"
+50340      End If
+50350     Else
+50360      If Options.DeviceWidthPoints >= 1 Then
+50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50380      End If
+50390      If Options.DeviceHeightPoints >= 1 Then
+50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50410      End If
+50420    End If
+50430   End If
+50440   AddParams "-r" & Options.JPEGResolution & "x" & Options.JPEGResolution
+50450
+50460   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480   End If
+50490   AddParams "-sOutputFile=" & GSOutputFile
+50500  End If
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "JPEG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -646,64 +643,63 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_BMPColorscount
-50270
-50280  If Options.DontUseDocumentSettings = 0 Then
-50290   If Options.UseFixPapersize <> 0 Then
-50300    If Options.UseCustomPaperSize = 0 Then
-50310      If LenB(Trim$(Options.Papersize)) > 0 Then
-50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50330       AddParams "-dFIXEDMEDIA"
-50340       AddParams "-dNORANGEPAGESIZE"
-50350      End If
-50360     Else
-50370      If Options.DeviceWidthPoints >= 1 Then
-50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50390      End If
-50400      If Options.DeviceHeightPoints >= 1 Then
-50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50420      End If
-50430    End If
-50440   End If
-50450   AddParams "-r" & Options.BMPResolution & "x" & Options.BMPResolution
-50460  End If
-50470
-50480  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50490   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50500  End If
-50510  AddParams "-sOutputFile=" & GSOutputFile
-50520
-50530  AddAdditionalGhostscriptParameters
-50540
-50550  AddParams "-f"
-50560  If LenB(StampFile) > 0 Then
-50570   If FileExists(StampFile) Then
-50580    AddParams StampFile
-50590   End If
-50600  End If
-50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50620  Set isf = New clsInfoSpoolFile
-50630  isf.ReadInfoFile InfoSpoolFileName
-50640  For i = 1 To isf.InfoFiles.Count
-50650   Set isfi = isf.InfoFiles(i)
-50660   If FileExists(isfi.SpoolFileName) Then
-50670    AddParams isfi.SpoolFileName
-50680   End If
-50690  Next i
-50700  If LenB(PDFDocInfoFile) > 0 Then
-50710   If FileExists(PDFDocInfoFile) Then
-50720    AddParams PDFDocInfoFile
-50730   End If
-50740  End If
-50750
-50760  ShowParams
-50770  CallGhostscript "BMP"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_BMPColorscount
+50260
+50270  If Options.DontUseDocumentSettings = 0 Then
+50280   If Options.UseFixPapersize <> 0 Then
+50290    If Options.UseCustomPaperSize = 0 Then
+50300      If LenB(Trim$(Options.Papersize)) > 0 Then
+50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50320       AddParams "-dFIXEDMEDIA"
+50330       AddParams "-dNORANGEPAGESIZE"
+50340      End If
+50350     Else
+50360      If Options.DeviceWidthPoints >= 1 Then
+50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50380      End If
+50390      If Options.DeviceHeightPoints >= 1 Then
+50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50410      End If
+50420    End If
+50430   End If
+50440   AddParams "-r" & Options.BMPResolution & "x" & Options.BMPResolution
+50450  End If
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "BMP"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -739,63 +735,62 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_PCXColorscount
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   If Options.UseFixPapersize <> 0 Then
-50290    If Options.UseCustomPaperSize = 0 Then
-50300      If LenB(Trim$(Options.Papersize)) > 0 Then
-50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50320       AddParams "-dFIXEDMEDIA"
-50330       AddParams "-dNORANGEPAGESIZE"
-50340      End If
-50350     Else
-50360      If Options.DeviceWidthPoints >= 1 Then
-50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50380      End If
-50390      If Options.DeviceHeightPoints >= 1 Then
-50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50410      End If
-50420    End If
-50430   End If
-50440   AddParams "-r" & Options.PCXResolution & "x" & Options.PCXResolution
-50450  End If
-50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490  End If
-50500  AddParams "-sOutputFile=" & GSOutputFile
-50510
-50520  AddAdditionalGhostscriptParameters
-50530
-50540  AddParams "-f"
-50550  If LenB(StampFile) > 0 Then
-50560   If FileExists(StampFile) Then
-50570    AddParams StampFile
-50580   End If
-50590  End If
-50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50610  Set isf = New clsInfoSpoolFile
-50620  isf.ReadInfoFile InfoSpoolFileName
-50630  For i = 1 To isf.InfoFiles.Count
-50640   Set isfi = isf.InfoFiles(i)
-50650   If FileExists(isfi.SpoolFileName) Then
-50660    AddParams isfi.SpoolFileName
-50670   End If
-50680  Next i
-50690  If LenB(PDFDocInfoFile) > 0 Then
-50700   If FileExists(PDFDocInfoFile) Then
-50710    AddParams PDFDocInfoFile
-50720   End If
-50730  End If
-50740
-50750  ShowParams
-50760  CallGhostscript "PCX"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_PCXColorscount
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   If Options.UseFixPapersize <> 0 Then
+50280    If Options.UseCustomPaperSize = 0 Then
+50290      If LenB(Trim$(Options.Papersize)) > 0 Then
+50300       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310       AddParams "-dFIXEDMEDIA"
+50320       AddParams "-dNORANGEPAGESIZE"
+50330      End If
+50340     Else
+50350      If Options.DeviceWidthPoints >= 1 Then
+50360       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370      End If
+50380      If Options.DeviceHeightPoints >= 1 Then
+50390       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400      End If
+50410    End If
+50420   End If
+50430   AddParams "-r" & Options.PCXResolution & "x" & Options.PCXResolution
+50440  End If
+50450
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480  End If
+50490  AddParams "-sOutputFile=" & GSOutputFile
+50500
+50510  AddAdditionalGhostscriptParameters
+50520
+50530  AddParams "-f"
+50540  If LenB(StampFile) > 0 Then
+50550   If FileExists(StampFile) Then
+50560    AddParams StampFile
+50570   End If
+50580  End If
+50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50600  Set isf = New clsInfoSpoolFile
+50610  isf.ReadInfoFile InfoSpoolFileName
+50620  For i = 1 To isf.InfoFiles.Count
+50630   Set isfi = isf.InfoFiles(i)
+50640   If FileExists(isfi.SpoolFileName) Then
+50650    AddParams isfi.SpoolFileName
+50660   End If
+50670  Next i
+50680  If LenB(PDFDocInfoFile) > 0 Then
+50690   If FileExists(PDFDocInfoFile) Then
+50700    AddParams PDFDocInfoFile
+50710   End If
+50720  End If
+50730
+50740  ShowParams
+50750  CallGhostscript "PCX"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -831,63 +826,62 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_TIFFColorscount
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   If Options.UseFixPapersize <> 0 Then
-50290    If Options.UseCustomPaperSize = 0 Then
-50300      If LenB(Trim$(Options.Papersize)) > 0 Then
-50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50320       AddParams "-dFIXEDMEDIA"
-50330       AddParams "-dNORANGEPAGESIZE"
-50340      End If
-50350     Else
-50360      If Options.DeviceWidthPoints >= 1 Then
-50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50380      End If
-50390      If Options.DeviceHeightPoints >= 1 Then
-50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50410      End If
-50420    End If
-50430   End If
-50440   AddParams "-r" & Options.TIFFResolution & "x" & Options.TIFFResolution
-50450  End If
-50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490  End If
-50500  AddParams "-sOutputFile=" & GSOutputFile
-50510
-50520  AddAdditionalGhostscriptParameters
-50530
-50540  AddParams "-f"
-50550  If LenB(StampFile) > 0 Then
-50560   If FileExists(StampFile) Then
-50570    AddParams StampFile
-50580   End If
-50590  End If
-50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50610  Set isf = New clsInfoSpoolFile
-50620  isf.ReadInfoFile InfoSpoolFileName
-50630  For i = 1 To isf.InfoFiles.Count
-50640   Set isfi = isf.InfoFiles(i)
-50650   If FileExists(isfi.SpoolFileName) Then
-50660    AddParams isfi.SpoolFileName
-50670   End If
-50680  Next i
-50690  If LenB(PDFDocInfoFile) > 0 Then
-50700   If FileExists(PDFDocInfoFile) Then
-50710    AddParams PDFDocInfoFile
-50720   End If
-50730  End If
-50740
-50750  ShowParams
-50760  CallGhostscript "TIFF"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_TIFFColorscount
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   If Options.UseFixPapersize <> 0 Then
+50280    If Options.UseCustomPaperSize = 0 Then
+50290      If LenB(Trim$(Options.Papersize)) > 0 Then
+50300       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310       AddParams "-dFIXEDMEDIA"
+50320       AddParams "-dNORANGEPAGESIZE"
+50330      End If
+50340     Else
+50350      If Options.DeviceWidthPoints >= 1 Then
+50360       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370      End If
+50380      If Options.DeviceHeightPoints >= 1 Then
+50390       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400      End If
+50410    End If
+50420   End If
+50430   AddParams "-r" & Options.TIFFResolution & "x" & Options.TIFFResolution
+50440  End If
+50450
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480  End If
+50490  AddParams "-sOutputFile=" & GSOutputFile
+50500
+50510  AddAdditionalGhostscriptParameters
+50520
+50530  AddParams "-f"
+50540  If LenB(StampFile) > 0 Then
+50550   If FileExists(StampFile) Then
+50560    AddParams StampFile
+50570   End If
+50580  End If
+50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50600  Set isf = New clsInfoSpoolFile
+50610  isf.ReadInfoFile InfoSpoolFileName
+50620  For i = 1 To isf.InfoFiles.Count
+50630   Set isfi = isf.InfoFiles(i)
+50640   If FileExists(isfi.SpoolFileName) Then
+50650    AddParams isfi.SpoolFileName
+50660   End If
+50670  Next i
+50680  If LenB(PDFDocInfoFile) > 0 Then
+50690   If FileExists(PDFDocInfoFile) Then
+50700    AddParams PDFDocInfoFile
+50710   End If
+50720  End If
+50730
+50740  ShowParams
+50750  CallGhostscript "TIFF"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -923,63 +917,62 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=pswrite"
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   If Options.UseFixPapersize <> 0 Then
-50290    If Options.UseCustomPaperSize = 0 Then
-50300      If LenB(Trim$(Options.Papersize)) > 0 Then
-50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50320       AddParams "-dFIXEDMEDIA"
-50330       AddParams "-dNORANGEPAGESIZE"
-50340      End If
-50350     Else
-50360      If Options.DeviceWidthPoints >= 1 Then
-50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50380      End If
-50390      If Options.DeviceHeightPoints >= 1 Then
-50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50410      End If
-50420    End If
-50430   End If
-50440   AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
-50450  End If
-50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490  End If
-50500  AddParams "-sOutputFile=" & GSOutputFile
-50510
-50520  AddAdditionalGhostscriptParameters
-50530
-50540  AddParams "-f"
-50550  If LenB(StampFile) > 0 Then
-50560   If FileExists(StampFile) Then
-50570    AddParams StampFile
-50580   End If
-50590  End If
-50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50610  Set isf = New clsInfoSpoolFile
-50620  isf.ReadInfoFile InfoSpoolFileName
-50630  For i = 1 To isf.InfoFiles.Count
-50640   Set isfi = isf.InfoFiles(i)
-50650   If FileExists(isfi.SpoolFileName) Then
-50660    AddParams isfi.SpoolFileName
-50670   End If
-50680  Next i
-50690  If LenB(PDFDocInfoFile) > 0 Then
-50700   If FileExists(PDFDocInfoFile) Then
-50710    AddParams PDFDocInfoFile
-50720   End If
-50730  End If
-50740
-50750  ShowParams
-50760  CallGhostscript "PS"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=pswrite"
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   If Options.UseFixPapersize <> 0 Then
+50280    If Options.UseCustomPaperSize = 0 Then
+50290      If LenB(Trim$(Options.Papersize)) > 0 Then
+50300       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310       AddParams "-dFIXEDMEDIA"
+50320       AddParams "-dNORANGEPAGESIZE"
+50330      End If
+50340     Else
+50350      If Options.DeviceWidthPoints >= 1 Then
+50360       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370      End If
+50380      If Options.DeviceHeightPoints >= 1 Then
+50390       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400      End If
+50410    End If
+50420   End If
+50430   AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
+50440  End If
+50450
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480  End If
+50490  AddParams "-sOutputFile=" & GSOutputFile
+50500
+50510  AddAdditionalGhostscriptParameters
+50520
+50530  AddParams "-f"
+50540  If LenB(StampFile) > 0 Then
+50550   If FileExists(StampFile) Then
+50560    AddParams StampFile
+50570   End If
+50580  End If
+50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50600  Set isf = New clsInfoSpoolFile
+50610  isf.ReadInfoFile InfoSpoolFileName
+50620  For i = 1 To isf.InfoFiles.Count
+50630   Set isfi = isf.InfoFiles(i)
+50640   If FileExists(isfi.SpoolFileName) Then
+50650    AddParams isfi.SpoolFileName
+50660   End If
+50670  Next i
+50680  If LenB(PDFDocInfoFile) > 0 Then
+50690   If FileExists(PDFDocInfoFile) Then
+50700    AddParams PDFDocInfoFile
+50710   End If
+50720  End If
+50730
+50740  ShowParams
+50750  CallGhostscript "PS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1015,63 +1008,62 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=epswrite"
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   If Options.UseFixPapersize <> 0 Then
-50290    If Options.UseCustomPaperSize = 0 Then
-50300      If LenB(Trim$(Options.Papersize)) > 0 Then
-50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50320       AddParams "-dFIXEDMEDIA"
-50330       AddParams "-dNORANGEPAGESIZE"
-50340      End If
-50350     Else
-50360      If Options.DeviceWidthPoints >= 1 Then
-50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50380      End If
-50390      If Options.DeviceHeightPoints >= 1 Then
-50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50410      End If
-50420    End If
-50430   End If
-50440   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
-50450  End If
-50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490  End If
-50500  AddParams "-sOutputFile=" & GSOutputFile
-50510
-50520  AddAdditionalGhostscriptParameters
-50530
-50540  AddParams "-f"
-50550  If LenB(StampFile) > 0 Then
-50560   If FileExists(StampFile) Then
-50570    AddParams StampFile
-50580   End If
-50590  End If
-50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50610  Set isf = New clsInfoSpoolFile
-50620  isf.ReadInfoFile InfoSpoolFileName
-50630  For i = 1 To isf.InfoFiles.Count
-50640   Set isfi = isf.InfoFiles(i)
-50650   If FileExists(isfi.SpoolFileName) Then
-50660    AddParams isfi.SpoolFileName
-50670   End If
-50680  Next i
-50690  If LenB(PDFDocInfoFile) > 0 Then
-50700   If FileExists(PDFDocInfoFile) Then
-50710    AddParams PDFDocInfoFile
-50720   End If
-50730  End If
-50740
-50750  ShowParams
-50760  CallGhostscript "EPS"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=epswrite"
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   If Options.UseFixPapersize <> 0 Then
+50280    If Options.UseCustomPaperSize = 0 Then
+50290      If LenB(Trim$(Options.Papersize)) > 0 Then
+50300       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310       AddParams "-dFIXEDMEDIA"
+50320       AddParams "-dNORANGEPAGESIZE"
+50330      End If
+50340     Else
+50350      If Options.DeviceWidthPoints >= 1 Then
+50360       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370      End If
+50380      If Options.DeviceHeightPoints >= 1 Then
+50390       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400      End If
+50410    End If
+50420   End If
+50430   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
+50440  End If
+50450
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480  End If
+50490  AddParams "-sOutputFile=" & GSOutputFile
+50500
+50510  AddAdditionalGhostscriptParameters
+50520
+50530  AddParams "-f"
+50540  If LenB(StampFile) > 0 Then
+50550   If FileExists(StampFile) Then
+50560    AddParams StampFile
+50570   End If
+50580  End If
+50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50600  Set isf = New clsInfoSpoolFile
+50610  isf.ReadInfoFile InfoSpoolFileName
+50620  For i = 1 To isf.InfoFiles.Count
+50630   Set isfi = isf.InfoFiles(i)
+50640   If FileExists(isfi.SpoolFileName) Then
+50650    AddParams isfi.SpoolFileName
+50660   End If
+50670  Next i
+50680  If LenB(PDFDocInfoFile) > 0 Then
+50690   If FileExists(PDFDocInfoFile) Then
+50700    AddParams PDFDocInfoFile
+50710   End If
+50720  End If
+50730
+50740  ShowParams
+50750  CallGhostscript "EPS"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1102,37 +1094,35 @@ On Error GoTo ErrPtnr_OnError
 50120  AddParams "-I" & tStr
 50130  AddParams "-q"
 50140  AddParams "-dNOPAUSE"
-50150  'AddParams "-dSAFER"
-50160  AddParams "-dBATCH"
-50170  AddParams "-dNODISPLAY"
-50180  AddParams "-dDELAYBIND"
-50190  AddParams "-dWRITESYSTEMDICT"
-50200  AddParams "-dSIMPLE"
-50210  AddParams "ps2ascii.ps"
-50220
-50230  ' TODO: Testen
-50240  If LenB(StampFile) > 0 Then
-50250   If FileExists(StampFile) Then
-50260    AddParams StampFile
-50270   End If
-50280  End If
-50290  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50300  Set isf = New clsInfoSpoolFile
-50310  isf.ReadInfoFile InfoSpoolFileName
-50320  For i = 1 To isf.InfoFiles.Count
-50330   Set isfi = isf.InfoFiles(i)
-50340   If FileExists(isfi.SpoolFileName) Then
-50350    AddParams isfi.SpoolFileName
-50360   End If
-50370  Next i
-50380  If LenB(PDFDocInfoFile) > 0 Then
-50390   If FileExists(PDFDocInfoFile) Then
-50400    AddParams PDFDocInfoFile
-50410   End If
-50420  End If
-50430
-50440  ShowParams
-50450  CallGhostscript "TXT"
+50150  AddParams "-dBATCH"
+50160  AddParams "-dNODISPLAY"
+50170  AddParams "-dDELAYBIND"
+50180  AddParams "-dWRITESYSTEMDICT"
+50190  AddParams "-dSIMPLE"
+50200  AddParams "ps2ascii.ps"
+50210
+50220  If LenB(StampFile) > 0 Then
+50230   If FileExists(StampFile) Then
+50240    AddParams StampFile
+50250   End If
+50260  End If
+50270  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50280  Set isf = New clsInfoSpoolFile
+50290  isf.ReadInfoFile InfoSpoolFileName
+50300  For i = 1 To isf.InfoFiles.Count
+50310   Set isfi = isf.InfoFiles(i)
+50320   If FileExists(isfi.SpoolFileName) Then
+50330    AddParams isfi.SpoolFileName
+50340   End If
+50350  Next i
+50360  If LenB(PDFDocInfoFile) > 0 Then
+50370   If FileExists(PDFDocInfoFile) Then
+50380    AddParams PDFDocInfoFile
+50390   End If
+50400  End If
+50410
+50420  ShowParams
+50430  CallGhostscript "TXT"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1165,102 +1155,101 @@ On Error GoTo ErrPtnr_OnError
 50140  AddParams "-dPDFA"
 50150  AddParams "-q"
 50160  AddParams "-dNOPAUSE"
-50170  'AddParams "-dSAFER"
-50180  AddParams "-dBATCH"
-50190  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50200   AddParams "-sFONTPATH=" & GetFontsDirectory
-50210  End If
-50220  AddParams "-sDEVICE=pdfwrite"
-50230  If Options.DontUseDocumentSettings = 0 Then
-50240   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
-50250   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
-50260   AddParams "-dNOOUTERSAVE"
-50270   AddParams "-dUseCIEColor"
-50280   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
-50290   AddParams "-sProcessColorModel=Device" & GS_COLORMODEL
-50300   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
-50310   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
-50320   AddParams "-dEmbedAllFonts=true"
-50330   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
-50340   AddParams "-dMaxSubsetPct=100"
-50350   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50360
-50370   If Options.UseFixPapersize <> 0 Then
-50380    If Options.UseCustomPaperSize = 0 Then
-50390      If LenB(Trim$(Options.Papersize)) > 0 Then
-50400       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50410       AddParams "-dFIXEDMEDIA"
-50420       AddParams "-dNORANGEPAGESIZE"
-50430      End If
-50440     Else
-50450      If Options.DeviceWidthPoints >= 1 Then
-50460       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50470      End If
-50480      If Options.DeviceHeightPoints >= 1 Then
-50490       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50500      End If
-50510    End If
-50520   End If
-50530
-50540  End If
-50550  tEnc = False
-50560
-50570  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50580   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50590  End If
-50600  AddParams "-sOutputFile=" & GSOutputFile
-50610
-50620  If Options.DontUseDocumentSettings = 0 Then
-50630   SetColorParams
-50640   SetGreyParams
-50650   SetMonoParams
-50660
-50670   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50680   AddParams "-dUCRandBGInfo=/Preserve"
-50690   AddParams "-dUseFlateCompression=true"
-50700   AddParams "-dParseDSCCommentsForDocInfo=true"
-50710   AddParams "-dParseDSCComments=true"
-50720   AddParams "-dOPM=1" '& GS_OVERPRINT
-50730   AddParams "-dOffOptimizations=0"
-50740   AddParams "-dLockDistillerParams=false"
-50750   AddParams "-dGrayImageDepth=-1"
-50760   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50770   AddParams "-dDefaultRenderingIntent=/Default"
-50780   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50790   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50800   AddParams "-dDetectBlends=true"
-50810
-50820   AddAdditionalGhostscriptParameters
-50830
-50840   AddParams "-f"
-50850   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfa_def.ps"
-50860
-50870   AddParamCommands
-50880  End If
-50890
-50900  AddParams "-f"
-50910  If LenB(StampFile) > 0 Then
-50920   If FileExists(StampFile) Then
-50930    AddParams StampFile
-50940   End If
-50950  End If
-50960  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50970  Set isf = New clsInfoSpoolFile
-50980  isf.ReadInfoFile InfoSpoolFileName
-50990  For i = 1 To isf.InfoFiles.Count
-51000   Set isfi = isf.InfoFiles(i)
-51010   If FileExists(isfi.SpoolFileName) Then
-51020    AddParams isfi.SpoolFileName
-51030   End If
-51040  Next i
-51050  If LenB(PDFDocInfoFile) > 0 Then
-51060   If FileExists(PDFDocInfoFile) Then
-51070    AddParams PDFDocInfoFile
-51080   End If
-51090  End If
-51100
-51110  ShowParams
-51120  CallGhostscript "PDF/A (without encryption)"
+50170  AddParams "-dBATCH"
+50180  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50190   AddParams "-sFONTPATH=" & GetFontsDirectory
+50200  End If
+50210  AddParams "-sDEVICE=pdfwrite"
+50220  If Options.DontUseDocumentSettings = 0 Then
+50230   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
+50240   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+50250   AddParams "-dNOOUTERSAVE"
+50260   AddParams "-dUseCIEColor"
+50270   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+50280   AddParams "-sProcessColorModel=Device" & GS_COLORMODEL
+50290   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+50300   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+50310   AddParams "-dEmbedAllFonts=true"
+50320   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+50330   AddParams "-dMaxSubsetPct=100"
+50340   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50350
+50360   If Options.UseFixPapersize <> 0 Then
+50370    If Options.UseCustomPaperSize = 0 Then
+50380      If LenB(Trim$(Options.Papersize)) > 0 Then
+50390       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50400       AddParams "-dFIXEDMEDIA"
+50410       AddParams "-dNORANGEPAGESIZE"
+50420      End If
+50430     Else
+50440      If Options.DeviceWidthPoints >= 1 Then
+50450       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50460      End If
+50470      If Options.DeviceHeightPoints >= 1 Then
+50480       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50490      End If
+50500    End If
+50510   End If
+50520
+50530  End If
+50540  tEnc = False
+50550
+50560  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50570   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50580  End If
+50590  AddParams "-sOutputFile=" & GSOutputFile
+50600
+50610  If Options.DontUseDocumentSettings = 0 Then
+50620   SetColorParams
+50630   SetGreyParams
+50640   SetMonoParams
+50650
+50660   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50670   AddParams "-dUCRandBGInfo=/Preserve"
+50680   AddParams "-dUseFlateCompression=true"
+50690   AddParams "-dParseDSCCommentsForDocInfo=true"
+50700   AddParams "-dParseDSCComments=true"
+50710   AddParams "-dOPM=1" '& GS_OVERPRINT
+50720   AddParams "-dOffOptimizations=0"
+50730   AddParams "-dLockDistillerParams=false"
+50740   AddParams "-dGrayImageDepth=-1"
+50750   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50760   AddParams "-dDefaultRenderingIntent=/Default"
+50770   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50780   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50790   AddParams "-dDetectBlends=true"
+50800
+50810   AddAdditionalGhostscriptParameters
+50820
+50830   AddParams "-f"
+50840   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfa_def.ps"
+50850
+50860   AddParamCommands
+50870  End If
+50880
+50890  AddParams "-f"
+50900  If LenB(StampFile) > 0 Then
+50910   If FileExists(StampFile) Then
+50920    AddParams StampFile
+50930   End If
+50940  End If
+50950  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50960  Set isf = New clsInfoSpoolFile
+50970  isf.ReadInfoFile InfoSpoolFileName
+50980  For i = 1 To isf.InfoFiles.Count
+50990   Set isfi = isf.InfoFiles(i)
+51000   If FileExists(isfi.SpoolFileName) Then
+51010    AddParams isfi.SpoolFileName
+51020   End If
+51030  Next i
+51040  If LenB(PDFDocInfoFile) > 0 Then
+51050   If FileExists(PDFDocInfoFile) Then
+51060    AddParams PDFDocInfoFile
+51070   End If
+51080  End If
+51090
+51100  ShowParams
+51110  CallGhostscript "PDF/A (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1290,101 +1279,100 @@ On Error GoTo ErrPtnr_OnError
 50110  AddParams "-I" & tStr
 50120  AddParams "-q"
 50130  AddParams "-dNOPAUSE"
-50140  'AddParams "-dSAFER"
-50150  AddParams "-dBATCH"
-50160  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50170   AddParams "-sFONTPATH=" & GetFontsDirectory
-50180  End If
-50190  AddParams "-sDEVICE=pdfwrite"
-50200  If Options.DontUseDocumentSettings = 0 Then
-50210   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
-50220   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
-50230   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
-50240   AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
-50250   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
-50260   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
-50270   AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
-50280   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
-50290   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
-50300   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
-50310
-50320   If Options.UseFixPapersize <> 0 Then
-50330    If Options.UseCustomPaperSize = 0 Then
-50340      If LenB(Trim$(Options.Papersize)) > 0 Then
-50350       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50360       AddParams "-dFIXEDMEDIA"
-50370       AddParams "-dNORANGEPAGESIZE"
-50380      End If
-50390     Else
-50400      If Options.DeviceWidthPoints >= 1 Then
-50410       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50420      End If
-50430      If Options.DeviceHeightPoints >= 1 Then
-50440       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50450      End If
-50460    End If
-50470   End If
-50480
-50490  End If
-50500  tEnc = False
-50510
-50520  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50530   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50540  End If
-50550  AddParams "-sOutputFile=" & GSOutputFile
-50560
-50570  If Options.DontUseDocumentSettings = 0 Then
-50580   SetColorParams
-50590   SetGreyParams
-50600   SetMonoParams
-50610
-50620   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50630   AddParams "-dUCRandBGInfo=/Preserve"
-50640   AddParams "-dUseFlateCompression=true"
-50650   AddParams "-dParseDSCCommentsForDocInfo=true"
-50660   AddParams "-dParseDSCComments=true"
-50670   AddParams "-dOPM=" & GS_OVERPRINT
-50680   AddParams "-dOffOptimizations=0"
-50690   AddParams "-dLockDistillerParams=false"
-50700   AddParams "-dGrayImageDepth=-1"
-50710   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50720   AddParams "-dDefaultRenderingIntent=/Default"
-50730   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-50740   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-50750   AddParams "-dDetectBlends=true"
-50760
-50770   AddAdditionalGhostscriptParameters
-50780
-50790   AddParams "-dPDFX"
-50800   AddParams "-f"
-50810   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfx_def.ps"
-50820
-50830   AddParamCommands
-50840  End If
-50850
-50860  AddParams "-f"
-50870  If LenB(StampFile) > 0 Then
-50880   If FileExists(StampFile) Then
-50890    AddParams StampFile
-50900   End If
-50910  End If
-50920  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50930  Set isf = New clsInfoSpoolFile
-50940  isf.ReadInfoFile InfoSpoolFileName
-50950  For i = 1 To isf.InfoFiles.Count
-50960   Set isfi = isf.InfoFiles(i)
-50970   If FileExists(isfi.SpoolFileName) Then
-50980    AddParams isfi.SpoolFileName
-50990   End If
-51000  Next i
-51010  If LenB(PDFDocInfoFile) > 0 Then
-51020   If FileExists(PDFDocInfoFile) Then
-51030    AddParams PDFDocInfoFile
-51040   End If
-51050  End If
-51060
-51070  ShowParams
-51080  CallGhostscript "PDF/X (without encryption)"
+50140  AddParams "-dBATCH"
+50150  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50160   AddParams "-sFONTPATH=" & GetFontsDirectory
+50170  End If
+50180  AddParams "-sDEVICE=pdfwrite"
+50190  If Options.DontUseDocumentSettings = 0 Then
+50200   AddParams "-dPDFSETTINGS=/" & GS_PDFDEFAULT
+50210   AddParams "-dCompatibilityLevel=" & GS_COMPATIBILITY
+50220   AddParams "-r" & GS_RESOLUTION & "x" & GS_RESOLUTION
+50230   AddParams "-dProcessColorModel=/Device" & GS_COLORMODEL
+50240   AddParams "-dAutoRotatePages=/" & GS_AUTOROTATE
+50250   AddParams "-dCompressPages=" & GS_COMPRESSPAGES
+50260   AddParams "-dEmbedAllFonts=" & GS_EMBEDALLFONTS
+50270   AddParams "-dSubsetFonts=" & GS_SUBSETFONTS
+50280   AddParams "-dMaxSubsetPct=" & GS_SUBSETFONTPERC
+50290   AddParams "-dConvertCMYKImagesToRGB=" & GS_CMYKTORGB
+50300
+50310   If Options.UseFixPapersize <> 0 Then
+50320    If Options.UseCustomPaperSize = 0 Then
+50330      If LenB(Trim$(Options.Papersize)) > 0 Then
+50340       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50350       AddParams "-dFIXEDMEDIA"
+50360       AddParams "-dNORANGEPAGESIZE"
+50370      End If
+50380     Else
+50390      If Options.DeviceWidthPoints >= 1 Then
+50400       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50410      End If
+50420      If Options.DeviceHeightPoints >= 1 Then
+50430       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50440      End If
+50450    End If
+50460   End If
+50470
+50480  End If
+50490  tEnc = False
+50500
+50510  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50520   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50530  End If
+50540  AddParams "-sOutputFile=" & GSOutputFile
+50550
+50560  If Options.DontUseDocumentSettings = 0 Then
+50570   SetColorParams
+50580   SetGreyParams
+50590   SetMonoParams
+50600
+50610   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50620   AddParams "-dUCRandBGInfo=/Preserve"
+50630   AddParams "-dUseFlateCompression=true"
+50640   AddParams "-dParseDSCCommentsForDocInfo=true"
+50650   AddParams "-dParseDSCComments=true"
+50660   AddParams "-dOPM=" & GS_OVERPRINT
+50670   AddParams "-dOffOptimizations=0"
+50680   AddParams "-dLockDistillerParams=false"
+50690   AddParams "-dGrayImageDepth=-1"
+50700   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+50710   AddParams "-dDefaultRenderingIntent=/Default"
+50720   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+50730   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+50740   AddParams "-dDetectBlends=true"
+50750
+50760   AddAdditionalGhostscriptParameters
+50770
+50780   AddParams "-dPDFX"
+50790   AddParams "-f"
+50800   AddParams CompletePath(Options.DirectoryGhostscriptLibraries) + "pdfx_def.ps"
+50810
+50820   AddParamCommands
+50830  End If
+50840
+50850  AddParams "-f"
+50860  If LenB(StampFile) > 0 Then
+50870   If FileExists(StampFile) Then
+50880    AddParams StampFile
+50890   End If
+50900  End If
+50910  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50920  Set isf = New clsInfoSpoolFile
+50930  isf.ReadInfoFile InfoSpoolFileName
+50940  For i = 1 To isf.InfoFiles.Count
+50950   Set isfi = isf.InfoFiles(i)
+50960   If FileExists(isfi.SpoolFileName) Then
+50970    AddParams isfi.SpoolFileName
+50980   End If
+50990  Next i
+51000  If LenB(PDFDocInfoFile) > 0 Then
+51010   If FileExists(PDFDocInfoFile) Then
+51020    AddParams PDFDocInfoFile
+51030   End If
+51040  End If
+51050
+51060  ShowParams
+51070  CallGhostscript "PDF/X (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1420,63 +1408,62 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_PSDColorscount
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   If Options.UseFixPapersize <> 0 Then
-50290    If Options.UseCustomPaperSize = 0 Then
-50300      If LenB(Trim$(Options.Papersize)) > 0 Then
-50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50320       AddParams "-dFIXEDMEDIA"
-50330       AddParams "-dNORANGEPAGESIZE"
-50340      End If
-50350     Else
-50360      If Options.DeviceWidthPoints >= 1 Then
-50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50380      End If
-50390      If Options.DeviceHeightPoints >= 1 Then
-50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50410      End If
-50420    End If
-50430   End If
-50440   AddParams "-r" & Options.PSDResolution & "x" & Options.PSDResolution
-50450  End If
-50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490  End If
-50500  AddParams "-sOutputFile=" & GSOutputFile
-50510
-50520  AddAdditionalGhostscriptParameters
-50530
-50540  AddParams "-f"
-50550  If LenB(StampFile) > 0 Then
-50560   If FileExists(StampFile) Then
-50570    AddParams StampFile
-50580   End If
-50590  End If
-50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50610  Set isf = New clsInfoSpoolFile
-50620  isf.ReadInfoFile InfoSpoolFileName
-50630  For i = 1 To isf.InfoFiles.Count
-50640   Set isfi = isf.InfoFiles(i)
-50650   If FileExists(isfi.SpoolFileName) Then
-50660    AddParams isfi.SpoolFileName
-50670   End If
-50680  Next i
-50690  If LenB(PDFDocInfoFile) > 0 Then
-50700   If FileExists(PDFDocInfoFile) Then
-50710    AddParams PDFDocInfoFile
-50720   End If
-50730  End If
-50740
-50750  ShowParams
-50760  CallGhostscript "PSD"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_PSDColorscount
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   If Options.UseFixPapersize <> 0 Then
+50280    If Options.UseCustomPaperSize = 0 Then
+50290      If LenB(Trim$(Options.Papersize)) > 0 Then
+50300       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310       AddParams "-dFIXEDMEDIA"
+50320       AddParams "-dNORANGEPAGESIZE"
+50330      End If
+50340     Else
+50350      If Options.DeviceWidthPoints >= 1 Then
+50360       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370      End If
+50380      If Options.DeviceHeightPoints >= 1 Then
+50390       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400      End If
+50410    End If
+50420   End If
+50430   AddParams "-r" & Options.PSDResolution & "x" & Options.PSDResolution
+50440  End If
+50450
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480  End If
+50490  AddParams "-sOutputFile=" & GSOutputFile
+50500
+50510  AddAdditionalGhostscriptParameters
+50520
+50530  AddParams "-f"
+50540  If LenB(StampFile) > 0 Then
+50550   If FileExists(StampFile) Then
+50560    AddParams StampFile
+50570   End If
+50580  End If
+50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50600  Set isf = New clsInfoSpoolFile
+50610  isf.ReadInfoFile InfoSpoolFileName
+50620  For i = 1 To isf.InfoFiles.Count
+50630   Set isfi = isf.InfoFiles(i)
+50640   If FileExists(isfi.SpoolFileName) Then
+50650    AddParams isfi.SpoolFileName
+50660   End If
+50670  Next i
+50680  If LenB(PDFDocInfoFile) > 0 Then
+50690   If FileExists(PDFDocInfoFile) Then
+50700    AddParams PDFDocInfoFile
+50710   End If
+50720  End If
+50730
+50740  ShowParams
+50750  CallGhostscript "PSD"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1512,63 +1499,62 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_PCLColorscount
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   If Options.UseFixPapersize <> 0 Then
-50290    If Options.UseCustomPaperSize = 0 Then
-50300      If LenB(Trim$(Options.Papersize)) > 0 Then
-50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50320       AddParams "-dFIXEDMEDIA"
-50330       AddParams "-dNORANGEPAGESIZE"
-50340      End If
-50350     Else
-50360      If Options.DeviceWidthPoints >= 1 Then
-50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50380      End If
-50390      If Options.DeviceHeightPoints >= 1 Then
-50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50410      End If
-50420    End If
-50430   End If
-50440   AddParams "-r" & Options.PCLResolution & "x" & Options.PCLResolution
-50450  End If
-50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490  End If
-50500  AddParams "-sOutputFile=" & GSOutputFile
-50510
-50520  AddAdditionalGhostscriptParameters
-50530
-50540  AddParams "-f"
-50550  If LenB(StampFile) > 0 Then
-50560   If FileExists(StampFile) Then
-50570    AddParams StampFile
-50580   End If
-50590  End If
-50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50610  Set isf = New clsInfoSpoolFile
-50620  isf.ReadInfoFile InfoSpoolFileName
-50630  For i = 1 To isf.InfoFiles.Count
-50640   Set isfi = isf.InfoFiles(i)
-50650   If FileExists(isfi.SpoolFileName) Then
-50660    AddParams isfi.SpoolFileName
-50670   End If
-50680  Next i
-50690  If LenB(PDFDocInfoFile) > 0 Then
-50700   If FileExists(PDFDocInfoFile) Then
-50710    AddParams PDFDocInfoFile
-50720   End If
-50730  End If
-50740
-50750  ShowParams
-50760  CallGhostscript "PCL"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_PCLColorscount
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   If Options.UseFixPapersize <> 0 Then
+50280    If Options.UseCustomPaperSize = 0 Then
+50290      If LenB(Trim$(Options.Papersize)) > 0 Then
+50300       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310       AddParams "-dFIXEDMEDIA"
+50320       AddParams "-dNORANGEPAGESIZE"
+50330      End If
+50340     Else
+50350      If Options.DeviceWidthPoints >= 1 Then
+50360       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370      End If
+50380      If Options.DeviceHeightPoints >= 1 Then
+50390       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400      End If
+50410    End If
+50420   End If
+50430   AddParams "-r" & Options.PCLResolution & "x" & Options.PCLResolution
+50440  End If
+50450
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480  End If
+50490  AddParams "-sOutputFile=" & GSOutputFile
+50500
+50510  AddAdditionalGhostscriptParameters
+50520
+50530  AddParams "-f"
+50540  If LenB(StampFile) > 0 Then
+50550   If FileExists(StampFile) Then
+50560    AddParams StampFile
+50570   End If
+50580  End If
+50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50600  Set isf = New clsInfoSpoolFile
+50610  isf.ReadInfoFile InfoSpoolFileName
+50620  For i = 1 To isf.InfoFiles.Count
+50630   Set isfi = isf.InfoFiles(i)
+50640   If FileExists(isfi.SpoolFileName) Then
+50650    AddParams isfi.SpoolFileName
+50660   End If
+50670  Next i
+50680  If LenB(PDFDocInfoFile) > 0 Then
+50690   If FileExists(PDFDocInfoFile) Then
+50700    AddParams PDFDocInfoFile
+50710   End If
+50720  End If
+50730
+50740  ShowParams
+50750  CallGhostscript "PCL"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1604,63 +1590,62 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50230   AddParams "-sFONTPATH=" & GetFontsDirectory
-50240  End If
-50250
-50260  AddParams "-sDEVICE=" & GS_RAWColorscount
-50270  If Options.DontUseDocumentSettings = 0 Then
-50280   If Options.UseFixPapersize <> 0 Then
-50290    If Options.UseCustomPaperSize = 0 Then
-50300      If LenB(Trim$(Options.Papersize)) > 0 Then
-50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50320       AddParams "-dFIXEDMEDIA"
-50330       AddParams "-dNORANGEPAGESIZE"
-50340      End If
-50350     Else
-50360      If Options.DeviceWidthPoints >= 1 Then
-50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50380      End If
-50390      If Options.DeviceHeightPoints >= 1 Then
-50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50410      End If
-50420    End If
-50430   End If
-50440   AddParams "-r" & Options.RAWResolution & "x" & Options.RAWResolution
-50450  End If
-50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50490  End If
-50500  AddParams "-sOutputFile=" & GSOutputFile
-50510
-50520  AddAdditionalGhostscriptParameters
-50530
-50540  AddParams "-f"
-50550  If LenB(StampFile) > 0 Then
-50560   If FileExists(StampFile) Then
-50570    AddParams StampFile
-50580   End If
-50590  End If
-50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50610  Set isf = New clsInfoSpoolFile
-50620  isf.ReadInfoFile InfoSpoolFileName
-50630  For i = 1 To isf.InfoFiles.Count
-50640   Set isfi = isf.InfoFiles(i)
-50650   If FileExists(isfi.SpoolFileName) Then
-50660    AddParams isfi.SpoolFileName
-50670   End If
-50680  Next i
-50690  If LenB(PDFDocInfoFile) > 0 Then
-50700   If FileExists(PDFDocInfoFile) Then
-50710    AddParams PDFDocInfoFile
-50720   End If
-50730  End If
-50740
-50750  ShowParams
-50760  CallGhostscript "RAW"
+50200  AddParams "-dBATCH"
+50210  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50220   AddParams "-sFONTPATH=" & GetFontsDirectory
+50230  End If
+50240
+50250  AddParams "-sDEVICE=" & GS_RAWColorscount
+50260  If Options.DontUseDocumentSettings = 0 Then
+50270   If Options.UseFixPapersize <> 0 Then
+50280    If Options.UseCustomPaperSize = 0 Then
+50290      If LenB(Trim$(Options.Papersize)) > 0 Then
+50300       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50310       AddParams "-dFIXEDMEDIA"
+50320       AddParams "-dNORANGEPAGESIZE"
+50330      End If
+50340     Else
+50350      If Options.DeviceWidthPoints >= 1 Then
+50360       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50370      End If
+50380      If Options.DeviceHeightPoints >= 1 Then
+50390       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50400      End If
+50410    End If
+50420   End If
+50430   AddParams "-r" & Options.RAWResolution & "x" & Options.RAWResolution
+50440  End If
+50450
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50480  End If
+50490  AddParams "-sOutputFile=" & GSOutputFile
+50500
+50510  AddAdditionalGhostscriptParameters
+50520
+50530  AddParams "-f"
+50540  If LenB(StampFile) > 0 Then
+50550   If FileExists(StampFile) Then
+50560    AddParams StampFile
+50570   End If
+50580  End If
+50590  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50600  Set isf = New clsInfoSpoolFile
+50610  isf.ReadInfoFile InfoSpoolFileName
+50620  For i = 1 To isf.InfoFiles.Count
+50630   Set isfi = isf.InfoFiles(i)
+50640   If FileExists(isfi.SpoolFileName) Then
+50650    AddParams isfi.SpoolFileName
+50660   End If
+50670  Next i
+50680  If LenB(PDFDocInfoFile) > 0 Then
+50690   If FileExists(PDFDocInfoFile) Then
+50700    AddParams PDFDocInfoFile
+50710   End If
+50720  End If
+50730
+50740  ShowParams
+50750  CallGhostscript "RAW"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1696,64 +1681,63 @@ On Error GoTo ErrPtnr_OnError
 50170  AddParams "-I" & tStr
 50180  AddParams "-q"
 50190  AddParams "-dNOPAUSE"
-50200  'AddParams "-dSAFER"
-50210  AddParams "-dBATCH"
-50220  AddParams "-q"
-50230  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
-50240   AddParams "-sFONTPATH=" & GetFontsDirectory
-50250  End If
-50260
-50270  AddParams "-sDEVICE=svg"
-50280  If Options.DontUseDocumentSettings = 0 Then
-50290   If Options.UseFixPapersize <> 0 Then
-50300    If Options.UseCustomPaperSize = 0 Then
-50310      If LenB(Trim$(Options.Papersize)) > 0 Then
-50320       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
-50330       AddParams "-dFIXEDMEDIA"
-50340       AddParams "-dNORANGEPAGESIZE"
-50350      End If
-50360     Else
-50370      If Options.DeviceWidthPoints >= 1 Then
-50380       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
-50390      End If
-50400      If Options.DeviceHeightPoints >= 1 Then
-50410       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
-50420      End If
-50430    End If
-50440   End If
-50450   AddParams "-r" & Options.SVGResolution & "x" & Options.SVGResolution
-50460  End If
-50470
-50480  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50490   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50500  End If
-50510  AddParams "-sOutputFile=" & GSOutputFile
-50520
-50530  AddAdditionalGhostscriptParameters
-50540
-50550  AddParams "-f"
-50560  If LenB(StampFile) > 0 Then
-50570   If FileExists(StampFile) Then
-50580    AddParams StampFile
-50590   End If
-50600  End If
-50610  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-50620  Set isf = New clsInfoSpoolFile
-50630  isf.ReadInfoFile InfoSpoolFileName
-50640  For i = 1 To isf.InfoFiles.Count
-50650   Set isfi = isf.InfoFiles(i)
-50660   If FileExists(isfi.SpoolFileName) Then
-50670    AddParams isfi.SpoolFileName
-50680   End If
-50690  Next i
-50700  If LenB(PDFDocInfoFile) > 0 Then
-50710   If FileExists(PDFDocInfoFile) Then
-50720    AddParams PDFDocInfoFile
-50730   End If
-50740  End If
-50750
-50760  ShowParams
-50770  CallGhostscript "SVG"
+50200  AddParams "-dBATCH"
+50210  AddParams "-q"
+50220  If LenB(GetFontsDirectory) > 0 And Options.AddWindowsFontpath = 1 Then
+50230   AddParams "-sFONTPATH=" & GetFontsDirectory
+50240  End If
+50250
+50260  AddParams "-sDEVICE=svg"
+50270  If Options.DontUseDocumentSettings = 0 Then
+50280   If Options.UseFixPapersize <> 0 Then
+50290    If Options.UseCustomPaperSize = 0 Then
+50300      If LenB(Trim$(Options.Papersize)) > 0 Then
+50310       AddParams "-sPAPERSIZE=" & LCase$(Trim$(Options.Papersize))
+50320       AddParams "-dFIXEDMEDIA"
+50330       AddParams "-dNORANGEPAGESIZE"
+50340      End If
+50350     Else
+50360      If Options.DeviceWidthPoints >= 1 Then
+50370       AddParams "-dDEVICEWIDTHPOINTS=" & Options.DeviceWidthPoints
+50380      End If
+50390      If Options.DeviceHeightPoints >= 1 Then
+50400       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
+50410      End If
+50420    End If
+50430   End If
+50440   AddParams "-r" & Options.SVGResolution & "x" & Options.SVGResolution
+50450  End If
+50460
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50490  End If
+50500  AddParams "-sOutputFile=" & GSOutputFile
+50510
+50520  AddAdditionalGhostscriptParameters
+50530
+50540  AddParams "-f"
+50550  If LenB(StampFile) > 0 Then
+50560   If FileExists(StampFile) Then
+50570    AddParams StampFile
+50580   End If
+50590  End If
+50600  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+50610  Set isf = New clsInfoSpoolFile
+50620  isf.ReadInfoFile InfoSpoolFileName
+50630  For i = 1 To isf.InfoFiles.Count
+50640   Set isfi = isf.InfoFiles(i)
+50650   If FileExists(isfi.SpoolFileName) Then
+50660    AddParams isfi.SpoolFileName
+50670   End If
+50680  Next i
+50690  If LenB(PDFDocInfoFile) > 0 Then
+50700   If FileExists(PDFDocInfoFile) Then
+50710    AddParams PDFDocInfoFile
+50720   End If
+50730  End If
+50740
+50750  ShowParams
+50760  CallGhostscript "SVG"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1850,47 +1834,46 @@ On Error GoTo ErrPtnr_OnError
 50770   Case 7: 'EPS
 50780    CreateEPS GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
 50790   Case 8: 'TXT
-50800    ' TODO
-50810    ' CreateTXT GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
-50820    ' CreateTextFile GSOutputFile, GS_OutStr
-50830   Case 9: 'PDFA
-50840    CreatePDFA GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
-50850    With Options
-50860     If DotNet20Installed And pdfforgeDllInstalled Then
-50870      If .PDFUpdateMetadata > 0 Then
-50880       Set m = CreateObject("pdfForge.pdf.pdf")
-50890       Tempfile = GetTempFile(GetTempPathApi, "~MP")
-50900       KillFile Tempfile
-50910       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
-50920       If FileExists(Tempfile) Then
-50930        If KillFile(GSOutputFile) Then
-50940         Name Tempfile As GSOutputFile
-50950        End If
-50960       End If
-50970      End If
-50980      If .PDFSigningSignPDF = 1 Then
-50990       SignPDF GSOutputFile
-51000      End If
-51010     End If
-51020    End With
-51030   Case 10: 'PDFX
-51040    CreatePDFX GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
-51050    With Options
-51060     If DotNet20Installed And pdfforgeDllInstalled Then
-51070      If .PDFSigningSignPDF = 1 Then
-51080       SignPDF GSOutputFile
-51090      End If
-51100     End If
-51110    End With
-51120   Case 11: 'PSD
-51130    CreatePSD GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
-51140   Case 12: 'PCL
-51150    CreatePCL GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
-51160   Case 13: 'RAW
-51170    CreateRAW GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
-51180   Case 14: 'SVG
-51190    CreateSVG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
-51200  End Select
+50800    CreateTXT GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50810    CreateTextFile GSOutputFile, GS_OutStr
+50820   Case 9: 'PDFA
+50830    CreatePDFA GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50840    With Options
+50850     If DotNet20Installed And pdfforgeDllInstalled Then
+50860      If .PDFUpdateMetadata > 0 Then
+50870       Set m = CreateObject("pdfForge.pdf.pdf")
+50880       Tempfile = GetTempFile(GetTempPathApi, "~MP")
+50890       KillFile Tempfile
+50900       Call m.UpdateXMPMetadata(GSOutputFile, Tempfile)
+50910       If FileExists(Tempfile) Then
+50920        If KillFile(GSOutputFile) Then
+50930         Name Tempfile As GSOutputFile
+50940        End If
+50950       End If
+50960      End If
+50970      If .PDFSigningSignPDF = 1 Then
+50980       SignPDF GSOutputFile
+50990      End If
+51000     End If
+51010    End With
+51020   Case 10: 'PDFX
+51030    CreatePDFX GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51040    With Options
+51050     If DotNet20Installed And pdfforgeDllInstalled Then
+51060      If .PDFSigningSignPDF = 1 Then
+51070       SignPDF GSOutputFile
+51080      End If
+51090     End If
+51100    End With
+51110   Case 11: 'PSD
+51120    CreatePSD GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51130   Case 12: 'PCL
+51140    CreatePCL GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51150   Case 13: 'RAW
+51160    CreateRAW GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51170   Case 14: 'SVG
+51180    CreateSVG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51190  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
