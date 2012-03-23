@@ -238,18 +238,20 @@ On Error GoTo ErrPtnr_OnError
 50280   .AddItem "<Computername>"
 50290   .AddItem "<Counter>"
 50300   .AddItem "<DateTime>"
-50310   .AddItem "<JobID>"
-50320   .AddItem "<PrinterName>"
-50330   .AddItem "<SessionID>"
-50340   .AddItem "<Title>"
-50350   .AddItem "<Username>"
-50360   .ListIndex = 0
-50370  End With
-50380
-50390  ControlsEnabled = True
-50400  SetFrames Options.OptionsDesign
-50410
-50420  SetFont
+50310   .AddItem "<DocumentFilename>"
+50320   .AddItem "<DocumentPath>"
+50330   .AddItem "<JobID>"
+50340   .AddItem "<PrinterName>"
+50350   .AddItem "<SessionID>"
+50360   .AddItem "<Title>"
+50370   .AddItem "<Username>"
+50380   .ListIndex = 0
+50390  End With
+50400
+50410  ControlsEnabled = True
+50420  SetFrames Options.OptionsDesign
+50430
+50440  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -675,7 +677,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  txtAutosaveDirectory.ToolTipText = txtAutosaveDirectory.Text
 50020  With txtAutoSaveDirectoryPreview
-50030   .Text = GetSubstFilename2(txtAutosaveDirectory.Text)
+50030   .Text = GetSubstFilename2(txtAutosaveDirectory.Text, , , , False)
 50040   .ToolTipText = .Text
 50050   If IsValidPath(.Text) = False Then
 50060     .ForeColor = vbRed

@@ -335,35 +335,37 @@ On Error GoTo ErrPtnr_OnError
 50290   .AddItem "<Computername>"
 50300   .AddItem "<Counter>"
 50310   .AddItem "<DateTime>"
-50320   .AddItem "<JobID>"
-50330   .AddItem "<PrinterName>"
-50340   .AddItem "<SessionID>"
-50350   .AddItem "<Title>"
-50360   .AddItem "<Username>"
-50370   .ListIndex = 0
-50380  End With
-50390
-50400  With lsvFilenameSubst
-50410   .Appearance = ccFlat
-50420   .ColumnHeaders.Clear
-50430   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
-50440   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
-50450   .HideColumnHeaders = True
-50460   .GridLines = True
-50470   .FullRowSelect = True
-50480   .HideSelection = False
-50490  End With
-50500
-50510  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
-50520  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
-50530  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
-50540
-50550  ControlsEnabled = True
-50560  CheckCmdFilenameSubst
-50570
-50580  SetFrames Options.OptionsDesign
+50320   .AddItem "<DocumentFilename>"
+50330   .AddItem "<DocumentPath>"
+50340   .AddItem "<JobID>"
+50350   .AddItem "<PrinterName>"
+50360   .AddItem "<SessionID>"
+50370   .AddItem "<Title>"
+50380   .AddItem "<Username>"
+50390   .ListIndex = 0
+50400  End With
+50410
+50420  With lsvFilenameSubst
+50430   .Appearance = ccFlat
+50440   .ColumnHeaders.Clear
+50450   .ColumnHeaders.Add , "Str1", "", lsvFilenameSubst.Width / 2 - 140
+50460   .ColumnHeaders.Add , "Str2", "", lsvFilenameSubst.Width / 2 - 140
+50470   .HideColumnHeaders = True
+50480   .GridLines = True
+50490   .FullRowSelect = True
+50500   .HideSelection = False
+50510  End With
+50520
+50530  cmdFilenameSubst(0).Top = lsvFilenameSubst.Top
+50540  cmdFilenameSubst(1).Top = lsvFilenameSubst.Top + (lsvFilenameSubst.Height - cmdFilenameSubst(1).Height) / 2
+50550  cmdFilenameSubst(2).Top = lsvFilenameSubst.Top + lsvFilenameSubst.Height - cmdFilenameSubst(2).Height
+50560
+50570  ControlsEnabled = True
+50580  CheckCmdFilenameSubst
 50590
-50600  SetFont
+50600  SetFrames Options.OptionsDesign
+50610
+50620  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
