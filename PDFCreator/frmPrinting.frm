@@ -691,20 +691,20 @@ On Error GoTo ErrPtnr_OnError
 50170
 50180  If Len(Trim$(Options.StandardTitle)) > 0 Then
 50190    txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, _
-   RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+   RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , False)
 50210   Else
-50220    txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, Options.SaveFilename, , , True)
+50220    txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, Options.SaveFilename, , , False)
 50230  End If
 50240  If Options.UseStandardAuthor = 1 Then
-50250    txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50250    txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , False)
 50260   Else
 50270    txtCreateFor.Text = GetDocUsernameFromInfoSpoolFile(CurrentInfoSpoolFile)
 50280  End If
 50290  If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50300   txtKeywords.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50300   txtKeywords.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , False)
 50310  End If
 50320  If Len(Trim$(Options.StandardSubject)) > 0 Then
-50330   txtSubject.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50330   txtSubject.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , False)
 50340  End If
 50350
 50360  tDate = Now
@@ -1072,7 +1072,6 @@ Private Function Create_eDoc() As String
 
  FilterIndex = Options.StandardSaveformat + 1
  With LanguageStrings
-  PSHeader = GetPSHeader(PDFSpoolfile)
   If Len(txtTitle.Text) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
     SaveFilename = ReplaceForbiddenChars(RemoveAllKnownFileExtensions(txtTitle.Text))
    Else
