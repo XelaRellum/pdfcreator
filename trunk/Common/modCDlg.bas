@@ -127,10 +127,11 @@ On Error GoTo ErrPtnr_OnError
 50410    If Len(buff) > 3 Then
 50420     filename = buff
 50430    End If
-50440    SaveFileDialog = ofn.nFilterIndex
-50450   Else
-50460    SaveFileDialog = -1
-50470  End If
+50440    filename = Replace$(filename, "?", "_", , , vbTextCompare)
+50450    SaveFileDialog = ofn.nFilterIndex
+50460   Else
+50470    SaveFileDialog = -1
+50480  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
