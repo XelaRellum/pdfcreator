@@ -566,7 +566,7 @@ On Error GoTo ErrPtnr_OnError
 50490    Visible = True
 50500    SetTopMost frmMain, True, True
 50510    SetTopMost frmMain, False, True
-50520    SetActiveWindow frmMain.hWnd
+50520    SetActiveWindow frmMain.hwnd
 50530   End If
 50540  End If
 50550
@@ -915,11 +915,11 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Private Sub lsv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lsv_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
  On Error Resume Next
  SetDocMenuAndToolbar
  If Button = 2 Then
-  PopupMenu mnDocumentMain, , X, Y
+  PopupMenu mnDocumentMain, , x, Y
  End If
  If Shift = 4 Then
   frmFileinfo.InfoSpoolFileName = lsv.SelectedItem.SubItems(4)
@@ -927,7 +927,7 @@ Private Sub lsv_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As S
  End If
 End Sub
 
-Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Button As Integer, Shift As Integer, x As Single, Y As Single)
  Dim i As Long, aLen As Double, tLen As Double, aw As Long, Ext As String, _
   DefaultPrintername As String, OnlyPsAndValidGraphicFiles As Boolean, ivgf As Boolean
  Dim File As String, psFileName As String, spoolDirectory As String, strGUID As String
@@ -963,7 +963,7 @@ Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Butt
       End If
       DefaultPrintername = Printer.DeviceName
       SetDefaultprinterInProg GetPDFCreatorPrintername
-      ShellAndWait Me.hWnd, "print", Data.files.Item(1), "", vbNullChar, wHidden, WCTermination, 60000, True
+      ShellAndWait Me.hwnd, "print", Data.files.Item(1), "", vbNullChar, wHidden, WCTermination, 60000, True
       If DefaultPrintername <> vbNullString Then
        SetDefaultprinterInProg DefaultPrintername
       End If
@@ -1010,7 +1010,7 @@ Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Butt
       Else
        DoEvents
 '       PrintDocument data.Files.item(i)
-       ShellAndWait Me.hWnd, "print", Data.files.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
+       ShellAndWait Me.hwnd, "print", Data.files.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
        DoEvents
      End If
      tLen = tLen + FileLen(Data.files.Item(i))
@@ -1025,7 +1025,7 @@ Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Butt
  End If
 End Sub
 
-Private Sub lsv_OLEDragOver(Data As MSComctlLib.DataObject, Effect As Long, Button As Integer, Shift As Integer, X As Single, Y As Single, State As Integer)
+Private Sub lsv_OLEDragOver(Data As MSComctlLib.DataObject, Effect As Long, Button As Integer, Shift As Integer, x As Single, Y As Single, State As Integer)
  Dim i As Long, Ext As String
  On Error Resume Next
  If Data.GetFormat(vbCFFiles) Then
@@ -1954,7 +1954,7 @@ On Error GoTo ErrPtnr_OnError
 50680       StampFile = CreateStampFile(tFile(1))
 50690
 50700       If Options.RunProgramBeforeSaving = 1 Then
-50710        RunProgramBeforeSaving Me.hWnd, tFile(1), _
+50710        RunProgramBeforeSaving Me.hwnd, tFile(1), _
         Options.RunProgramBeforeSavingProgramParameters, _
         Options.RunProgramBeforeSavingWindowstyle
 50740       End If
@@ -1966,7 +1966,7 @@ On Error GoTo ErrPtnr_OnError
 50800         IfLoggingWriteLogfile tStr
 50810         WriteToSpecialLogfile tStr
 50820         If Options.RunProgramAfterSaving = 1 Then
-50830          RunProgramAfterSaving Me.hWnd, OutputFilename, _
+50830          RunProgramAfterSaving Me.hwnd, OutputFilename, _
          Options.RunProgramAfterSavingProgramParameters, _
          Options.RunProgramAfterSavingWindowstyle, tFile(1)
 50860         End If
@@ -2021,7 +2021,7 @@ Private Sub ShowPaypalMenuimage()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim h1 As Long, h2 As Long, com As Long
-50020  h1 = GetMenu(Me.hWnd): h2 = GetSubMenu(h1, 4)
+50020  h1 = GetMenu(Me.hwnd): h2 = GetSubMenu(h1, 4)
 50030  com = GetMenuItemID(h2, 2)
 50040  ModifyMenu h2, com, MF_BYCOMMAND Or MF_BITMAP, com, CLng(imgPaypal.Picture)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -2261,7 +2261,7 @@ On Error GoTo ErrPtnr_OnError
 50510     CreateInfoSpoolFile psFileName, tFilename
 50520    Else
 50530     DoEvents
-50540     ShellAndWait Me.hWnd, "print", cFiles.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
+50540     ShellAndWait Me.hwnd, "print", cFiles.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
 50550   End If
 50560   DoEvents
 50570   tLen = tLen + FileLen(cFiles.Item(i))
@@ -2407,7 +2407,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, c As Long, ini As clsINI, j As Long
 50030
 50040  Screen.MousePointer = vbHourglass
-50050  LockWindowUpdate lsv.hWnd
+50050  LockWindowUpdate lsv.hwnd
 50060
 50070  c = 1
 50080  tFilename = GetPDFCreatorSpoolDirectory & GetGUID & ".inf"
@@ -2592,14 +2592,14 @@ On Error GoTo ErrPtnr_OnError
 50080    OutputFilename = CompletePath(GetPDFCreatorTempfolder) & txtEmailAddress.Text & ".pdf"
 50090
 50100    If Options.RunProgramBeforeSaving = 1 Then
-50110     RunProgramBeforeSaving Me.hWnd, GetShortName(InputFilename), _
+50110     RunProgramBeforeSaving Me.hwnd, GetShortName(InputFilename), _
     Options.RunProgramBeforeSavingProgramParameters, _
     Options.RunProgramBeforeSavingWindowstyle
 50140    End If
 50150    ConvertFile InputFilename, OutputFilename
 50160    If Len(OutputFilename) > 0 And FileExists(OutputFilename) = True Then
 50170     If Options.RunProgramAfterSaving = 1 Then
-50180      RunProgramAfterSaving Me.hWnd, OutputFilename, _
+50180      RunProgramAfterSaving Me.hwnd, OutputFilename, _
       Options.RunProgramAfterSavingProgramParameters, _
       Options.RunProgramAfterSavingWindowstyle, InputFilename
 50210     End If
