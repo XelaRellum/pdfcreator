@@ -8,7 +8,7 @@
 #define IncludeGhostscript
 #define IncludeOC
 #define IncludeIM
-#define OCEndDate "2012-04-01"
+#define OCEndDate "2012-04-15"
 #define Localization
 
 #define GhostscriptPath "..\GhostScript"
