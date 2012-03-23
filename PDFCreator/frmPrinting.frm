@@ -402,7 +402,7 @@ On Error GoTo ErrPtnr_OnError
 50170   If Options.RunProgramAfterSaving = 1 Then
 50180    RunProgramAfterSaving Me.hwnd, PDFFile, _
    Options.RunProgramAfterSavingProgramParameters, _
-   Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
+   Options.RunProgramAfterSavingWindowstyle, CurrentInfoSpoolFile
 50210   End If
 50220   Set mail = New clsPDFCreatorMail
 50230   If mail.Send(PDFFile, txtSubject.Text, Options.SendMailMethod) <> 0 Then
@@ -688,51 +688,49 @@ On Error GoTo ErrPtnr_OnError
 50140   Else
 50150    chkOpenOutputFile.value = 0
 50160  End If
-50170  PSHeader = GetPSHeader(PDFSpoolfile)
-50180  With PSHeader
-50190   If Len(Trim$(Options.StandardTitle)) > 0 Then
-50200     txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, _
-     RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
-50220    Else
-50230     txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, Options.SaveFilename, , , True)
-50240   End If
-50250   If Options.UseStandardAuthor = 1 Then
-50260     txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
-50270    Else
-50280     txtCreateFor.Text = GetDocUsernameFromInfoSpoolFile(CurrentInfoSpoolFile)
-50290   End If
-50300   If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50310    txtKeywords.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
-50320   End If
-50330   If Len(Trim$(Options.StandardSubject)) > 0 Then
-50340    txtSubject.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
-50350   End If
-50360
-50370   tDate = Now
-50380   If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50390     tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
-50400    Else
-50410     tStr = CStr(tDate)
-50420   End If
-50430   txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
-50440
-50450   txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
-50460  End With
-50470
-50480  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
-50490   cmdOptions.Enabled = False
-50500  End If
-50510  If Options.OptionsVisible = 0 Then
-50520   cmdOptions.Visible = False
-50530  End If
-50540  If Options.DisableEmail = 1 Then
-50550   cmdEMail.Enabled = False
-50560  End If
-50570  Height = cmdCollect.Top + cmdCollect.Height + (Height - ScaleHeight) + 100
-50580  With txtTitle
-50590   .SelStart = 0
-50600   .SelLength = Len(.Text)
-50610  End With
+50170
+50180  If Len(Trim$(Options.StandardTitle)) > 0 Then
+50190    txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, _
+   RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50210   Else
+50220    txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, Options.SaveFilename, , , True)
+50230  End If
+50240  If Options.UseStandardAuthor = 1 Then
+50250    txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50260   Else
+50270    txtCreateFor.Text = GetDocUsernameFromInfoSpoolFile(CurrentInfoSpoolFile)
+50280  End If
+50290  If Len(Trim$(Options.StandardKeywords)) > 0 Then
+50300   txtKeywords.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50310  End If
+50320  If Len(Trim$(Options.StandardSubject)) > 0 Then
+50330   txtSubject.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50340  End If
+50350
+50360  tDate = Now
+50370  If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50380    tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50390   Else
+50400    tStr = CStr(tDate)
+50410  End If
+50420  txtCreationDate.Text = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
+50430
+50440  txtModifyDate.Text = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
+50450
+50460  If Options.OptionsEnabled = 0 Or FormISLoaded("frmOptions") = True Then
+50470   cmdOptions.Enabled = False
+50480  End If
+50490  If Options.OptionsVisible = 0 Then
+50500   cmdOptions.Visible = False
+50510  End If
+50520  If Options.DisableEmail = 1 Then
+50530   cmdEMail.Enabled = False
+50540  End If
+50550  Height = cmdCollect.Top + cmdCollect.Height + (Height - ScaleHeight) + 100
+50560  With txtTitle
+50570   .SelStart = 0
+50580   .SelLength = Len(.Text)
+50590  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -991,7 +989,7 @@ On Error GoTo ErrPtnr_OnError
 50210    If Options.RunProgramAfterSaving = 1 Then
 50220     RunProgramAfterSaving Me.hwnd, PDFFile, _
      Options.RunProgramAfterSavingProgramParameters, _
-     Options.RunProgramAfterSavingWindowstyle, PDFSpoolfile
+     Options.RunProgramAfterSavingWindowstyle, CurrentInfoSpoolFile
 50250    End If
 50260   End If
 50270
