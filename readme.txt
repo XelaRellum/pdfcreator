@@ -1,6 +1,6 @@
-Title: PDFCreator Version 1.3.1
+Title: PDFCreator Version 1.3.2
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: March 16th,  2012
+Releasedate: March 26th,  2012
 
 Look at the readme.txt-Files in 'Setup', 'Printer'.
 
@@ -15,5 +15,5 @@ Systemfiles:
 	Run Win9x_CopySystemfiles.bat or WinNt_CopySystemfiles.bat from 'Additional files\Systemfiles' to copy the Systemfiles for the setup.
 
 Ghostscript Files:
-	Download GPL Ghostscript 9.04
-	Install Ghostscript in the standard directory c:\gs\gpl\gs9.04
+	Download GPL Ghostscript 9.05
+	Install Ghostscript in the standard directory PDFCreator\GhostScript\gs9.05
