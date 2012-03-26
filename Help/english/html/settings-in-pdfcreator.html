@@ -18,7 +18,29 @@
   </tr>
   <tr>
     <td class="main"><p class="header">Settings in PDFCreator</p>
-<p>Since version 0.8.1 RC8, PDFCreator saves all settings in the registry.           If you choose the &quot;Standard installation&quot; PDFCreator saves settings to           the following registry location: <em><strong>HKCU\Software\PDFCreator</strong></em></p><p>If your operating system is Windows 2000 and above, the setup saves some settings          for the default user in the following registry location:          <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em> <br />          <br />          In a &quot;Server installation&quot; of PDFcreator,  the settings are saved to the following          registry location: <em><strong>HKLM\Software\PDFCreator</strong></em> <br />          <br />          <strong>Procedure of reading the settings</strong></p><p>On Windows 2000 and above, PDFCreator reads the settings from the default user first. If there          are no settings, PDFCreator will use its internal default settings. Next, PDFCreator reads          the settings from the user. Only the user settings PDFCreator finds will overwrite the settings          from the default user. Finally, PDFCreator looks for machine settings in <br />          <em>HKLM\Software\PDFCreator</em> <br />          Only the machine settings PDFCreator finds will overwrite the settings from the user. With this          behaivour it is possible for administrators to define settings for all users.<br />          <br />          <strong>Procedure of saveing the settings </strong></p><p>If you choose the &quot;Standard installation&quot; of PDFCreator, settings are saved to either of the following: <br />          <em>HKCU\Software\PDFCreator</em> <br />          <br />          If you choose the &quot;Server installation&quot; of PDFCreator, settings are saved to either of the following: <br />          <em>HKLM\Software\PDFCreator </em></p><p><strong>Hint:</strong>&nbsp; If you need to use settings other than the default, use the /REGFile= parameter on the installation program. For more information on the parameters that can be used on installation program, use the /? parameter.<br /><span style="color: rgb(204, 0, 0);">Since version 0.9.9 the old ini mode is not supported anymore.</span></p>
+<p>Since version 0.8.1 RC8, PDFCreator saves all settings in the registry.           If you choose the &quot;Standard installation&quot; PDFCreator saves settings to           the following registry location: <em><strong>HKCU\Software\PDFCreator</strong></em></p>
+<p>If your operating system is Windows 2000 and above, the setup saves some settings          for the default user in the following registry location:          <em><strong>HKU\.DEFAULT\Software\PDFCreator</strong></em> <br />
+<br />
+In a &quot;Server installation&quot; of PDFcreator,  the settings are saved to the following          registry location: <em><strong>HKLM\Software\PDFCreator</strong></em>.<br />
+In 64 bit versions of Windows the key is: <em><strong>HKLM\Software\Wow6432Node\</strong></em><em><strong>PDFCreator</strong></em>.<br />
+<br />
+<strong>Procedure of reading the settings</strong></p>
+<p>On Windows 2000 and above, PDFCreator reads the settings from the default user first. If there          are no settings, PDFCreator will use its internal default settings. Next, PDFCreator reads          the settings from the user. Only values that are acutally set will override the settings from the default user. Finally, PDFCreator looks for machine settings in <br />
+<em>HKLM\Software\PDFCreator</em> <br />
+or<br />
+<em>HKLM\Software\Wow6432Node\PDFCreator</em>.</p>
+<p>Only values that are acutally set will override the settings from the user. With this behaivour it is possible for administrators to define or enforce settings for all users.<br />
+<br />
+<strong>Procedure of saveing the settings </strong></p>
+<p>If you choose the &quot;Standard installation&quot; of PDFCreator, settings are saved to: <br />
+<em>HKCU\Software\PDFCreator</em> <br />
+<br />
+If you choose the &quot;Server installation&quot; of PDFCreator, settings are saved to: <br />
+<em>HKLM\Software\PDFCreator<br />
+or</em><br />
+<em>HKLM\Software\</em><em>Wow6432Node\</em><em>PDFCreator</em></p>
+<p><strong>Hint:</strong>&nbsp; If you need to use settings other than the default, use the /REGFile= parameter on the installation program. For more information on the parameters that can be used on installation program, use the /? parameter.<br />
+<span style="color: rgb(204, 0, 0);">Since version 0.9.9 the old ini mode is not supported anymore.</span></p>
     </td>
   </tr>
 </table>
