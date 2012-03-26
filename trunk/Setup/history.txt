@@ -4,6 +4,24 @@ Copyright (C)2002-2012 Philip Chinery, Frank Heindörfer
 Homepage: http://www.pdfforge.org
           http://sourceforge.net/projects/pdfcreator
 
+Version 1.3.2 March 26th, 2012)
+-------------------------------------------------------------------------------
+Improvements: 
+- This is a bugfix release 
+- E-Mails from Thunderbird have been improved 
+- Added Tokens DocumentPath and DocumentFilename 
+- Chinese symbols in file names no longer break PDF generation 
+
+Bug Fixes:
+- PDFCreator was really slow with large files 
+- PDFCreator remained im Memory after printing 
+- Saving a document to txt did not work 
+- Problems with auto-save 
+- PDFArchitect crashed when cutting the only page in the document 
+
+Known issues:
+- No hyperlinks possible (Hyperlinks for MS Word are possible with the combination of PDF-T-Maker and PDFCreator.)
+
 Version 1.3.1 March 16th, 2012)
 -------------------------------------------------------------------------------
 Improvements:
