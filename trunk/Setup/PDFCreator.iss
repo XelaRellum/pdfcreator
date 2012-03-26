@@ -145,7 +145,8 @@
 #ENDIF
 
 #IFDEF IncludeIM
-#include "IMpre.iss" 
+ #include "IMpre.iss"
+ #define ITD
 #ENDIF
 
 [Setup]
@@ -191,9 +192,19 @@ VersionInfoTextVersion={#AppVersion}
 WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
 MinVersion=0,5.0.2195
-#IFDEF IncludeIM
-  #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
-  #include ITDRoot+'\it_download.iss'
+
+#IFDEF ITD
+ #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
+ #include ITDRoot+'\it_download.iss'
+ #define ITDLanguageGerman "itd_de.ini"
+ #define ITDLanguageGermanSource '.\ITD\' + ITDLanguageGerman
+ #define ITDLanguageGermanDestination ITDRoot + '\languages\' + ITDLanguageGerman
+ #if FileExists(ITDLanguageGermanSource)
+  #if FileExists(ITDLanguageGermanDestination) == 0
+   #pragma Message 'Copy ITD language file: ' + ITDLanguageGerman
+   #expr CopyFile('.\ITD\' + ITDLanguageGerman, ITDRoot + '\languages\' + ITDLanguageGerman)
+  #endif
+ #endif
 #ENDIF
 
 [InstallDelete]
@@ -510,8 +521,14 @@ Source: "..\PDFArchitect\Languages\*.ini"; DestDir: {app}\PDFArchitect\Languages
 Source: "..\PDFArchitect\PDFArchitect-english.settings"; DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: Not(IsLanguage('german') OR IsLanguage('polish')); Components: PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect-german.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('german'); Components: PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect-polish.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('polish'); Components: PDFArchitect
+
 ; InstallCheck
 Source: Installation\InstallCheck.exe; DestDir: {tmp}; Flags: deleteafterinstall overwritereadonly;
+
+; ITD
+#IFDEF IncludeIM
+Source: {#ITDRoot}\languages\*.ini; Flags: dontcopy
+#ENDIF
 
 [Icons]
 Name: {group}\{#Appname}; Filename: {app}\{#AppExename}; WorkingDir: {app}; IconFilename: {app}\{#AppExename}; IconIndex: 0; Flags: createonlyiffileexists
@@ -3868,7 +3885,7 @@ begin
 end;
 #endif
 
-#ifdef IncludeIM
+#ifdef ITD
 function GetLanguageCodeITD(): String;
 var
  languageCode: string;
