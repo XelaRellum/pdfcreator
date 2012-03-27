@@ -790,7 +790,8 @@ Name: languages\chinese_simplified; Description: Chinese simplified; Types: full
 Name: languages\chinese_traditional; Description: Chinese traditional; Types: full; Check: Not IsLanguage('chinese_traditional'); Flags: dontinheritcheck
 Name: languages\chinese_traditional; Description: Chinese traditional; Types: full custom; Check: IsLanguage('chinese_traditional'); Flags: dontinheritcheck
 
-Name: languages\corsican; Description: Corsican; Types: full; Flags: dontinheritcheck
+Name: languages\corsican; Description: Corsican; Types: full; Check: Not IsLanguage('corsican'); Flags: dontinheritcheck
+Name: languages\corsican; Description: Corsican; Types: full custom; Check: IsLanguage('corsican'); Flags: dontinheritcheck
 
 Name: languages\croatian; Description: Croatian; Types: full; Check: Not IsLanguage('croatian'); Flags: dontinheritcheck
 Name: languages\croatian; Description: Croatian; Types: full custom; Check: IsLanguage('croatian'); Flags: dontinheritcheck
