@@ -2,12 +2,12 @@
 ; Installation script created by pdfforge GbR
 
 ;#define FastCompilation
-;#define Test
+#define Test
 
 #define CompileHelp
 #define IncludeGhostscript
-#define IncludeOC
-#define IncludeIM
+;#define IncludeOC
+;#define IncludeIM
 #define OCEndDate "2012-04-15"
 #define Localization
 
@@ -400,11 +400,11 @@ Source: {code:GetExternalREGFile}; DestName: PDFCreator-external.reg; DestDir: {
 ;Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Fonts\*.*; DestDir: {app}\Gs{#GhostscriptVersion}\Fonts; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
 ;Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Resource; Components: ghostscript; Flags: ignoreversion sortfilesbyextension recursesubdirs
 Source: {#GhostscriptPath}\gs{#GhostscriptVersion}\Lib\*.*; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
-#ENDIF
 
 ;ICC file
 Source: ICC\ISOcoated_v2_300_eci.icc; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
 Source: ICC\eciRGB_v2.icc; DestDir: {app}\GS{#GhostscriptVersion}\gs{#GhostscriptVersion}\Lib; Components: ghostscript; Flags: ignoreversion sortfilesbyextension
+#ENDIF
 
 ; Scripts
 ; Scripts: RunProgramAfterSaving
@@ -1151,6 +1151,8 @@ var progTitel, progHandle: TArrayOfString;
     OfferScreen: Integer;
     
     installerDirectory : string;
+    chkExpert: TNewCheckBox;
+
 
 function IsX64: Boolean;
 begin
@@ -2565,17 +2567,17 @@ begin
  case PageID of
   wpSelectProgramGroup:
    begin
-    if cmdlExpert=false then
+    if chkExpert.Checked=false then
      Result := true;
    end; 
   wpSelectTasks:
    begin
-    if cmdlExpert=false then
+    if chkExpert.Checked=false then
      Result := true;
    end; 
   wpSelectDir:
    begin
-    if cmdlExpert=false then
+    if chkExpert.Checked=false then
      Result := true;
    end; 
   PrinternamePage.ID: 
@@ -2583,7 +2585,7 @@ begin
     if (CountCurrentPDFCreatorPrinters > 0) then
      Result := True
     else begin
-    if cmdlExpert=false then
+    if chkExpert.Checked=false then
       Result := True
      else
       Result := False
@@ -2592,7 +2594,7 @@ begin
   InstallationTypePage.ID:
    begin
     if InstallOnThisVersion('0,4.0.1381','0,0')=irInstall then begin
-     if cmdlExpert=false then
+     if chkExpert.Checked=false then
       Result := true
      else
       Result := False
@@ -3992,6 +3994,10 @@ begin
   end;
 #endif
 
+ chkExpert := CreateCheckBox(WizardForm.WELCOMELABEL2.Left,260,300,17,ExpandConstant('{cm:ExpertSettings}'), cmdlExpert, PageFromID(wpWelcome));
+ WizardForm.WELCOMELABEL2.height := 200;
+ CreateLabel(WizardForm.WELCOMELABEL2.Left + 16, 277, 300 - 16,34,ExpandConstant('{cm:ExpertSettingsDescription}'),clWindowText,PageFromID(wpWelcome));
+ 
  InstallationTypePage:=CreateCustomPage(wpLicense, ExpandConstant('{cm:InstallationType}'),
   ExpandConstant('{cm:InstallationTypeDescription}'));
 
