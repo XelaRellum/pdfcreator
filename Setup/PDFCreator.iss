@@ -191,8 +191,7 @@ VersionInfoProductVersion={#AppVersion}
 VersionInfoTextVersion={#AppVersion}
 WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
-MinVersion=0,5.0.2195
-
+MinVersion=0,5.1.2600
 #IFDEF ITD
  #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
  #include ITDRoot+'\it_download.iss'
