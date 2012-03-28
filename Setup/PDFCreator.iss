@@ -3787,7 +3787,7 @@ begin
  Result:=trb;
 end;
 
-function CreateCheckBox(ALeft, ATop, AWidth, AHeight: Integer; ACaption: String; AChecked: Boolean; Page: TWizardPage):TNewCheckBox;
+function CreateCheckBox(ALeft, ATop, AWidth, AHeight: Integer; ACaption: String; AChecked: Boolean; AFontStyle: TFontStyles; Page: TWizardPage):TNewCheckBox;
 var
  trb: TNewCheckBox;
 begin
@@ -3795,6 +3795,7 @@ begin
  with trb do begin
   Caption := ACaption;
   Checked := AChecked;
+  if AFontStyle <> [] then Font.Style := AFontStyle;
   Height:=AHeight;
   Left:=ALeft;
   Top:=ATop;
@@ -3994,7 +3995,7 @@ begin
   end;
 #endif
 
- chkExpert := CreateCheckBox(WizardForm.WELCOMELABEL2.Left,260,300,17,ExpandConstant('{cm:ExpertSettings}'), cmdlExpert, PageFromID(wpWelcome));
+ chkExpert := CreateCheckBox(WizardForm.WELCOMELABEL2.Left,260,300,17,ExpandConstant('{cm:ExpertSettings}'), cmdlExpert, [fsBold], PageFromID(wpWelcome));
  WizardForm.WELCOMELABEL2.height := 200;
  CreateLabel(WizardForm.WELCOMELABEL2.Left + 16, 277, 300 - 16,34,ExpandConstant('{cm:ExpertSettingsDescription}'),clWindowText,PageFromID(wpWelcome));
  
@@ -4027,13 +4028,13 @@ begin
 
  yOffs := 80;
  if InstallOnThisVersion('4.0.950,5.0.2195','0,6.0.6000')=irInstall then begin
-  chkWin9xMePrinterDriver := CreateCheckBox(0,yoffs,450,15,'Windows 95, Windows 98, Windows Me', false, PrinterdriverPage);
+  chkWin9xMePrinterDriver := CreateCheckBox(0,yoffs,450,15,'Windows 95, Windows 98, Windows Me', false, [], PrinterdriverPage);
   if Win9xPrinterdriver then
    chkWin9xMePrinterDriver.Checked := true;
   yoffs := yoffs + 30
  end
  if InstallOnThisVersion('0,4.0.1381','0,6.0.6000')=irInstall then begin
-  chkWinNtPrinterDriver := CreateCheckBox(0,yoffs,450,15,'Windows NT 4.0', false, PrinterdriverPage);
+  chkWinNtPrinterDriver := CreateCheckBox(0,yoffs,450,15,'Windows NT 4.0', false, [], PrinterdriverPage);
   if WinNtPrinterdriver then
    chkWinNtPrinterDriver.Checked := true;
   yoffs := yoffs + 30
@@ -4041,11 +4042,11 @@ begin
 
  if InstallOnThisVersion('0,5.1.2600','0,0')=irInstall then begin
   if IsWin64 then begin
-    chkWin2kXP2k3PrinterDriver32bit := CreateCheckBox(0,yoffs,450,15,'Windows 2000/XP/2003 - 32bit', false, PrinterdriverPage);
+    chkWin2kXP2k3PrinterDriver32bit := CreateCheckBox(0,yoffs,450,15,'Windows 2000/XP/2003 - 32bit', false, [], PrinterdriverPage);
     if Win2k32bitPrinterdriver then
      chkWin2kXP2k3PrinterDriver32bit.Checked := true;
    end else begin
-    chkWin2kXP2k3PrinterDriver64bit := CreateCheckBox(0,yoffs,450,15,'Windows 2000/XP/2003 - 64bit', false, PrinterdriverPage);
+    chkWin2kXP2k3PrinterDriver64bit := CreateCheckBox(0,yoffs,450,15,'Windows 2000/XP/2003 - 64bit', false, [], PrinterdriverPage);
     if Win2k64bitPrinterdriver then
      chkWin2kXP2k3PrinterDriver64bit.Checked := true;
   end  
