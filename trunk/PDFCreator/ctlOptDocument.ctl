@@ -663,7 +663,7 @@ On Error GoTo ErrPtnr_OnError
 50590      txtCustomPapersizeHeight.Enabled = True
 50600      txtCustomPapersizeHeight.BackColor = &H80000005
 50610      lblCustomPapersizeInfo.Enabled = True
-50620      cmbDocumentPapersizes.Enabled = True
+50620      cmbDocumentPapersizes.Enabled = False
 50630      lblCustomPapersizeInfo.Enabled = True
 50640     Else
 50650      cmbDocumentPapersizes.Enabled = True
