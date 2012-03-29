@@ -333,97 +333,100 @@ On Error GoTo ErrPtnr_OnError
 50420      If Options.DeviceHeightPoints >= 1 Then
 50430       AddParams "-dDEVICEHEIGHTPOINTS=" & Options.DeviceHeightPoints
 50440      End If
-50450    End If
-50460   End If
-50470  End If
-50480  tEnc = False
-50490  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True Then
-50500   If Options.PDFAes128Encryption = 0 Then
-50510    If SetEncryptionParams(encPDF, "", "") = True Then
-50520     tEnc = True
-50530     If Len(encPDF.OwnerPass) > 0 Then
-50540       AddParams "-sOwnerPassword=" & encPDF.OwnerPass: currentOwnerPassword = encPDF.OwnerPass
-50550      Else
-50560       If Len(encPDF.UserPass) > 0 Then
-50570        AddParams "-sOwnerPassword=" & encPDF.UserPass: currentOwnerPassword = encPDF.OwnerPass
-50580       End If
-50590     End If
-50600     If Len(encPDF.UserPass) > 0 Then
-50610      AddParams "-sUserPassword=" & encPDF.UserPass
+50450      If Options.DeviceWidthPoints >= 1 Or Options.DeviceHeightPoints >= 1 Then
+50460       AddParams "-dFIXEDMEDIA"
+50470      End If
+50480    End If
+50490   End If
+50500  End If
+50510  tEnc = False
+50520  If Options.PDFOptimize = 0 And Options.PDFUseSecurity <> 0 And SecurityIsPossible = True Then
+50530   If Options.PDFAes128Encryption = 0 Then
+50540    If SetEncryptionParams(encPDF, "", "") = True Then
+50550     tEnc = True
+50560     If Len(encPDF.OwnerPass) > 0 Then
+50570       AddParams "-sOwnerPassword=" & encPDF.OwnerPass: currentOwnerPassword = encPDF.OwnerPass
+50580      Else
+50590       If Len(encPDF.UserPass) > 0 Then
+50600        AddParams "-sOwnerPassword=" & encPDF.UserPass: currentOwnerPassword = encPDF.OwnerPass
+50610       End If
 50620     End If
-50630     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50640     If GS_COMPATIBILITY = "1.4" Or GS_COMPATIBILITY = "1.5" Then
-50650       AddParams "-dEncryptionR=3"
-50660       AddParams "-dKeyLength=128"
-50670      Else
-50680       AddParams "-dEncryptionR=2"
-50690       AddParams "-dKeyLength=40"
-50700     End If
-50710    Else
-50720     If Options.UseAutosave = 0 Then
-50730      MsgBox LanguageStrings.MessagesMsg23, vbCritical
-50740     End If
-50750    End If
-50760   End If
-50770  End If
-50780
-50790  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
-50800   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
-50810  End If
-50820  AddParams "-sOutputFile=" & GSOutputFile
-50830
-50840  If Options.DontUseDocumentSettings = 0 Then
-50850   SetColorParams
-50860   SetGreyParams
-50870   SetMonoParams
-50880
-50890   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
-50900   AddParams "-dUCRandBGInfo=/Preserve"
-50910   AddParams "-dUseFlateCompression=true"
-50920   AddParams "-dParseDSCCommentsForDocInfo=true"
-50930   AddParams "-dParseDSCComments=true"
-50940   AddParams "-dOPM=" & GS_OVERPRINT
-50950   AddParams "-dOffOptimizations=0"
-50960   AddParams "-dLockDistillerParams=false"
-50970   AddParams "-dGrayImageDepth=-1"
-50980   AddParams "-dASCII85EncodePages=" & GS_ASCII85
-50990   AddParams "-dDefaultRenderingIntent=/Default"
-51000   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
-51010   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
-51020   AddParams "-dDetectBlends=true"
-51030
-51040   AddAdditionalGhostscriptParameters
-51050
-51060   AddParamCommands
-51070  End If
+50630     If Len(encPDF.UserPass) > 0 Then
+50640      AddParams "-sUserPassword=" & encPDF.UserPass
+50650     End If
+50660     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
+50670     If GS_COMPATIBILITY = "1.4" Or GS_COMPATIBILITY = "1.5" Then
+50680       AddParams "-dEncryptionR=3"
+50690       AddParams "-dKeyLength=128"
+50700      Else
+50710       AddParams "-dEncryptionR=2"
+50720       AddParams "-dKeyLength=40"
+50730     End If
+50740    Else
+50750     If Options.UseAutosave = 0 Then
+50760      MsgBox LanguageStrings.MessagesMsg23, vbCritical
+50770     End If
+50780    End If
+50790   End If
+50800  End If
+50810
+50820  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50830   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
+50840  End If
+50850  AddParams "-sOutputFile=" & GSOutputFile
+50860
+50870  If Options.DontUseDocumentSettings = 0 Then
+50880   SetColorParams
+50890   SetGreyParams
+50900   SetMonoParams
+50910
+50920   AddParams "-dPreserveOverprintSettings=" & GS_PRESERVEOVERPRINT
+50930   AddParams "-dUCRandBGInfo=/Preserve"
+50940   AddParams "-dUseFlateCompression=true"
+50950   AddParams "-dParseDSCCommentsForDocInfo=true"
+50960   AddParams "-dParseDSCComments=true"
+50970   AddParams "-dOPM=" & GS_OVERPRINT
+50980   AddParams "-dOffOptimizations=0"
+50990   AddParams "-dLockDistillerParams=false"
+51000   AddParams "-dGrayImageDepth=-1"
+51010   AddParams "-dASCII85EncodePages=" & GS_ASCII85
+51020   AddParams "-dDefaultRenderingIntent=/Default"
+51030   AddParams "-dTransferFunctionInfo=/" & GS_TRANSFERFUNCTIONS
+51040   AddParams "-dPreserveHalftoneInfo=" & GS_HALFTONE
+51050   AddParams "-dDetectBlends=true"
+51060
+51070   AddAdditionalGhostscriptParameters
 51080
-51090  AddParams "-f"
-51100  If LenB(StampFile) > 0 Then
-51110   If FileExists(StampFile) Then
-51120    AddParams StampFile
-51130   End If
-51140  End If
-51150  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
-51160  Set isf = New clsInfoSpoolFile
-51170  isf.ReadInfoFile InfoSpoolFileName
-51180  For i = 1 To isf.InfoFiles.Count
-51190   Set isfi = isf.InfoFiles(i)
-51200   If FileExists(isfi.SpoolFileName) Then
-51210    AddParams isfi.SpoolFileName
-51220   End If
-51230  Next i
-51240  If LenB(PDFDocInfoFile) > 0 Then
-51250   If FileExists(PDFDocInfoFile) Then
-51260    AddParams PDFDocInfoFile
-51270   End If
-51280  End If
-51290
-51300  ShowParams
-51310  If tEnc = True Then
-51320    CallGhostscript "PDF with encryption"
-51330   Else
-51340    CallGhostscript "PDF without encryption"
-51350  End If
+51090   AddParamCommands
+51100  End If
+51110
+51120  AddParams "-f"
+51130  If LenB(StampFile) > 0 Then
+51140   If FileExists(StampFile) Then
+51150    AddParams StampFile
+51160   End If
+51170  End If
+51180  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long
+51190  Set isf = New clsInfoSpoolFile
+51200  isf.ReadInfoFile InfoSpoolFileName
+51210  For i = 1 To isf.InfoFiles.Count
+51220   Set isfi = isf.InfoFiles(i)
+51230   If FileExists(isfi.SpoolFileName) Then
+51240    AddParams isfi.SpoolFileName
+51250   End If
+51260  Next i
+51270  If LenB(PDFDocInfoFile) > 0 Then
+51280   If FileExists(PDFDocInfoFile) Then
+51290    AddParams PDFDocInfoFile
+51300   End If
+51310  End If
+51320
+51330  ShowParams
+51340  If tEnc = True Then
+51350    CallGhostscript "PDF with encryption"
+51360   Else
+51370    CallGhostscript "PDF without encryption"
+51380  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2159,7 +2162,7 @@ Private Sub ShowParams()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim i As Long, tStr As String
-50020  If Options.Logging <> 0 Then
+50020  If Logging Then
 50030   tStr = GSParams(LBound(GSParams))
 50040   For i = LBound(GSParams) + 1 To UBound(GSParams)
 50050    tStr = tStr & vbCrLf & GSParams(i)
