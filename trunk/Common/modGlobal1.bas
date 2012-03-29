@@ -71,6 +71,7 @@ Public PrinterTemppath As String
 Public pdfforgeDllInstalled As Boolean
 Public PDFCreatorApplicationPath As String
 Public PrinterInfFilename As String
+Public Logging As Boolean
 
 Public Sub CheckProgramInstances()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

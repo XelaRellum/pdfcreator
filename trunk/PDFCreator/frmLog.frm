@@ -105,12 +105,17 @@ Private Sub cmdClose_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If ShowOnlyLogfile Then
-50020   If chkLogging.value <> Options.Logging Then
+50020   If (chkLogging.value = 1 And Logging = False) Or (chkLogging.value = 0 And Logging = True) Then
 50030    Options.Logging = chkLogging.value
 50040    SaveOption Options, "Logging"
-50050   End If
-50060  End If
-50070  Unload Me
+50050    If chkLogging.value = 1 Then
+50060      Logging = True
+50070     Else
+50080      Logging = False
+50090    End If
+50100   End If
+50110  End If
+50120  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -177,13 +182,13 @@ On Error GoTo ErrPtnr_OnError
 50030   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
 50040  End With
 50050  ChangeLanguage
-50060  If Options.Logging = 1 Then
+50060  If Logging Then
 50070    chkLogging.value = 1
 50080   Else
 50090    chkLogging.value = 0
 50100  End If
 50110  chkLogging.Visible = ShowOnlyLogfile
-50120  Call SendMessage(txtLog.hWnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
+50120  Call SendMessage(txtLog.hwnd, WM_SETTEXT, 0&, ByVal CStr(ReadLogfile))
 50130  If Len(txtLog.Text) = 0 Then
 50140    cmdSave.Enabled = False
 50150    cmdClear.Enabled = False
