@@ -686,7 +686,7 @@ On Error GoTo ErrPtnr_OnError
 50280  End With
 50290
 50300  ChangeLanguage
-50310  If Options.Logging = 1 Then
+50310  If Logging Then
 50320    mnPrinter(6).Checked = True
 50330   Else
 50340    mnPrinter(6).Checked = False

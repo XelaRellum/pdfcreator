@@ -491,22 +491,27 @@ On Error GoTo ErrPtnr_OnError
 50390  If LenB(Optionsfile) > 0 Then
 50400   Options = ReadOptionsINI(Options, Optionsfile, False)
 50410  End If
-50420
-50430  If IsWin9xMe = False Then
-50441   Select Case Options.ProcessPriority
+50420  If Options.Logging = 1 Then
+50430    Logging = True
+50440   Else
+50450    Logging = False
+50460  End If
+50470
+50480  If IsWin9xMe = False Then
+50491   Select Case Options.ProcessPriority
          Case 0: 'Idle
-50460     SetProcessPriority Idle
-50470    Case 1: 'Normal
-50480     SetProcessPriority Normal
-50490    Case 2: 'High
-50500     SetProcessPriority High
-50510    Case 3: 'Realtime
-50520     SetProcessPriority RealTime
-50530   End Select
-50540  End If
-50550
-50560  'CreatePDFCreatorTempfolder
-50570  ComputerScreenResolution = ScreenResolution
+50510     SetProcessPriority Idle
+50520    Case 1: 'Normal
+50530     SetProcessPriority Normal
+50540    Case 2: 'High
+50550     SetProcessPriority High
+50560    Case 3: 'Realtime
+50570     SetProcessPriority RealTime
+50580   End Select
+50590  End If
+50600
+50610  'CreatePDFCreatorTempfolder
+50620  ComputerScreenResolution = ScreenResolution
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

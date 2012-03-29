@@ -7506,7 +7506,7 @@ Public Sub SetLogging(Logging As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If Logging = True Then
+50010  If Logging Then
 50020    Options.Logging = 1
 50030   Else
 50040    Options.Logging = 0

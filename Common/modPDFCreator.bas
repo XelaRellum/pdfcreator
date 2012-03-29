@@ -109,7 +109,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim fn As Long, i As Long, bufStr As String, s() As String, _
   tStr As String, tB As Boolean
 50030
-50040  If Options.Logging = 0 Then
+50040  If Logging = False Then
 50050   Exit Sub
 50060  End If
 50070
@@ -164,7 +164,7 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  Options = ReadOptions
 50040
-50050  If Options.Logging = 0 Then
+50050  If Logging = False Then
 50060   Exit Sub
 50070  End If
 50080  If IsMissing(frmLog) = False And IsMissing(frmMain) = False Then
