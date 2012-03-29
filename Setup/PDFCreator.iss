@@ -2,12 +2,12 @@
 ; Installation script created by pdfforge GbR
 
 ;#define FastCompilation
-#define Test
+;#define Test
 
 #define CompileHelp
 #define IncludeGhostscript
-;#define IncludeOC
-;#define IncludeIM
+#define IncludeOC
+#define IncludeIM
 #define OCEndDate "2012-04-15"
 #define Localization
 
