@@ -3937,7 +3937,7 @@ var
  date : string;
  yOffs : LongInt;
 begin
-  OfferScreen := SCR_NONE;
+ OfferScreen := SCR_NONE;
   
 #ifdef IncludeOC
   OfferScreen := SCR_OC;

@@ -1124,10 +1124,10 @@ Private Function Create_eDoc() As String
   .Author = txtCreateFor.Text
   .CreationDate = txtCreationDate.Text
   .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-  .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , True)
+  .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , False)
   .ModifyDate = txtModifyDate.Text
-  .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , True)
-  .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , True)
+  .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , False)
+  .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , False)
  End With
 
  PDFDocInfoFile = CreatePDFDocInfoFile(CurrentInfoSpoolFile, PDFDocInfo)
