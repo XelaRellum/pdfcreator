@@ -259,160 +259,149 @@ On Error GoTo ErrPtnr_OnError
 50060  End If
 50070  AnalyzeAdditionalParameters
 50080  If Len(CommandLine) > 0 Then
-50090   If UCase$(CommandSwitch("NO", False)) = "ABORTIFRUNNING" Then
-50100     NoAbortIfRunning = True
-50110    Else
-50120     NoAbortIfRunning = False
-50130   End If
-50140   If UCase$(CommandSwitch("NO", False)) = "PROCESSING" Then
-50150     NoProcessing = True
-50160    Else
-50170     NoProcessing = False
-50180   End If
-50190   If UCase$(CommandSwitch("NO", False)) = "PROCESSINGATSTARTUP" Then
-50200     NoProcessingAtStartup = True
-50210    Else
-50220     NoProcessingAtStartup = False
-50230   End If
-50240   If UCase$(CommandSwitch("L", False)) = "OG" Then
-50250     enableSpecialLogging = True
-50260    Else
-50270     enableSpecialLogging = False
-50280   End If
-50290   If UCase$(CommandSwitch("SHOW", False)) = "ONLYOPTIONS" Then
-50300     ShowOnlyOptions = True
-50310     NoAbortIfRunning = True
-50320     NoProcessing = True
-50330    Else
-50340     ShowOnlyOptions = False
-50350   End If
-50360   If UCase$(CommandSwitch("SHOW", False)) = "ONLYLOGFILE" Then
-50370     ShowOnlyLogfile = True
-50380     NoAbortIfRunning = True
-50390     NoProcessing = True
-50400    Else
-50410     ShowOnlyLogfile = False
-50420   End If
-50430   If UCase$(CommandSwitch("P", False)) = "PDFCREATORPRINTER" Then
-50440     PDFCreatorPrinter = True
-50450    Else
-50460     PDFCreatorPrinter = False
-50470   End If
-50480   ' Initialize unload running program
-50490   If UCase$(CommandSwitch("UL", False)) = "TRUE" Then
-50500     UnLoadFile = True
-50510    Else
-50520     UnLoadFile = False
-50530   End If
-50540
-50550   If UCase$(CommandSwitch("NO", False)) = "MSG" Then
-50560     bNoMsg = True
-50570    Else
-50580     bNoMsg = False
-50590   End If
-50600
-50610   ' Clear the cache
-50620   If UCase$(CommandSwitch("CLEAR", False)) = "CACHE" Then
-50630     ClearCacheDir = True
+50090   ' Windows-Explorer integration
+50100   If UCase$(CommandSwitch("ADD", False)) = "WINDOWSEXPLORERINTEGRATION" Then
+50110     AddWindowsExplorerIntegration = True
+50120    Else
+50130     AddWindowsExplorerIntegration = False
+50140   End If
+50150   ' Check running instance
+50160   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
+50170     CheckInstance = True
+50180    Else
+50190     CheckInstance = False
+50200   End If
+50210   ' Clear the cache
+50220   If UCase$(CommandSwitch("CLEAR", False)) = "CACHE" Then
+50230     ClearCacheDir = True
+50240    Else
+50250     ClearCacheDir = False
+50260   End If
+50270   ' Check delete inputfile after converting
+50280   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
+50290     DeleteIF = True
+50300    Else
+50310     DeleteIF = False
+50320   End If
+50330   InputFilename = CommandSwitch("IF", True)
+50340   ' Init settings
+50350   If UCase$(CommandSwitch("INI", False)) = "T" Then
+50360     InitSettings = True
+50370    Else
+50380     InitSettings = False
+50390   End If
+50400   ' InstallPrinter
+50410   cSwitch = Trim$(CommandSwitch("INSTALLPRINTER", True))
+50420   If LenB(cSwitch) > 0 Then
+50430    bInstallPrinter = True
+50440    InstallPrinterName = cSwitch
+50450   End If
+50460   ' InstallWindowsPrinter
+50470   cSwitch = Trim$(CommandSwitch("INSTALLWINDOWSPRINTER", True))
+50480   If LenB(cSwitch) > 0 Then
+50490    bInstallWindowsPrinter = True
+50500    InstallPrinterName = cSwitch
+50510   End If
+50520   If UCase$(CommandSwitch("L", False)) = "OG" Then
+50530     enableSpecialLogging = True
+50540    Else
+50550     enableSpecialLogging = False
+50560   End If
+50570   If UCase$(CommandSwitch("NOAB", False)) = "ORTIFRUNNING" Then
+50580     NoAbortIfRunning = True
+50590    Else
+50600     NoAbortIfRunning = False
+50610   End If
+50620   If UCase$(CommandSwitch("NOM", False)) = "SG" Then
+50630     bNoMsg = True
 50640    Else
-50650     ClearCacheDir = False
+50650     bNoMsg = False
 50660   End If
-50670
-50680   ' Init settings
-50690   If UCase$(CommandSwitch("IN", False)) = "IT" Then
-50700     InitSettings = True
-50710    Else
-50720     InitSettings = False
-50730   End If
-50740
-50750   ' Windows-Explorer integration
-50760   If UCase$(CommandSwitch("ADD", False)) = "WINDOWSEXPLORERINTEGRATION" Then
-50770     AddWindowsExplorerIntegration = True
-50780    Else
-50790     AddWindowsExplorerIntegration = False
-50800   End If
-50810   If UCase$(CommandSwitch("REMOVE", False)) = "WINDOWSEXPLORERINTEGRATION" Then
-50820     RemoveWindowsExplorerIntegration = True
-50830    Else
-50840     RemoveWindowsExplorerIntegration = False
-50850   End If
-50860
-50870   ' Check running instance
-50880   If UCase$(CommandSwitch("Check", False)) = "INSTANCE" Then
-50890     CheckInstance = True
-50900    Else
-50910     CheckInstance = False
-50920   End If
-50930
-50940   PrinterInfFilename = CommandSwitch("PIF", True)
-50950
-50960   PrintFilename = CommandSwitch("PF", True)
-50970   InputFilename = CommandSwitch("IF", True)
-50980   OutputFilename = CommandSwitch("OF", True)
-50990   OutputSubFormat = CommandSwitch("OutputSubFormat", True)
-51000
-51010   ' Check delete inputfile after converting
-51020   If UCase$(CommandSwitch("Delete", False)) = "IF" Then
-51030     DeleteIF = True
-51040    Else
-51050     DeleteIF = False
-51060   End If
-51070
-51080   ' Open the outputfile after converting
-51090   If UCase$(CommandSwitch("Open", False)) = "OF" Then
-51100     OpenOF = True
+50670   If UCase$(CommandSwitch("NOPR", False)) = "OCESSING" Then
+50680     NoProcessing = True
+50690    Else
+50700     NoProcessing = False
+50710   End If
+50720   If UCase$(CommandSwitch("NOPROCESSING", False)) = "ATSTARTUP" Then
+50730     NoProcessingAtStartup = True
+50740    Else
+50750     NoProcessingAtStartup = False
+50760   End If
+50770   If UCase$(CommandSwitch("NOPS", False)) = "CHECK" Then
+50780     NoPSCheck = True
+50790    Else
+50800     NoPSCheck = False
+50810   End If
+50820   If UCase$(CommandSwitch("NOST", False)) = "ART" Then
+50830     NoStart = True
+50840    Else
+50850     NoStart = False
+50860   End If
+50870   OutputFilename = CommandSwitch("OF", True)
+50880   ' Open the outputfile after converting
+50890   If UCase$(CommandSwitch("Open", False)) = "OF" Then
+50900     OpenOF = True
+50910    Else
+50920     OpenOF = False
+50930   End If
+50940   cSwitch = CommandSwitch("OPTIONSFILE", True)
+50950   If LenB(cSwitch) > 0 Then
+50960    If FileExists(cSwitch) = True Then
+50970     Optionsfile = cSwitch
+50980    End If
+50990   End If
+51000   OutputSubFormat = CommandSwitch("OutputSubFormat", True)
+51010   PrintFilename = CommandSwitch("PF", True)
+51020   PrinterInfFilename = CommandSwitch("PIF", True)
+51030   If UCase$(CommandSwitch("PP", False)) = "DFCREATORPRINTER" Then
+51040     PDFCreatorPrinter = True
+51050    Else
+51060     PDFCreatorPrinter = False
+51070   End If
+51080   ' Windows-Explorer integration
+51090   If UCase$(CommandSwitch("REMOVE", False)) = "WINDOWSEXPLORERINTEGRATION" Then
+51100     RemoveWindowsExplorerIntegration = True
 51110    Else
-51120     OpenOF = False
+51120     RemoveWindowsExplorerIntegration = False
 51130   End If
-51140
-51150   ' SetupLogFile
-51160   cSwitch = Trim$(CommandSwitch("SETUPLOGFILE", True))
-51170   If LenB(cSwitch) > 0 Then
-51180    SetupLogFile = cSwitch
-51190   End If
-51200
-51210   ' UnInstallPrinter
-51220   cSwitch = Trim$(CommandSwitch("UNINSTALLPRINTER", True))
-51230   If LenB(cSwitch) > 0 Then
-51240    bUninstallPrinter = True
-51250    UnInstallPrinterName = cSwitch
-51260   End If
-51270   ' InstallPrinter
-51280   cSwitch = Trim$(CommandSwitch("INSTALLPRINTER", True))
-51290   If LenB(cSwitch) > 0 Then
-51300    bInstallPrinter = True
-51310    InstallPrinterName = cSwitch
+51140   ' SetupLogFile
+51150   cSwitch = Trim$(CommandSwitch("SETUPLOGFILE", True))
+51160   If LenB(cSwitch) > 0 Then
+51170    SetupLogFile = cSwitch
+51180   End If
+51190   If UCase$(CommandSwitch("SHOWONLYO", False)) = "PTIONS" Then
+51200     ShowOnlyOptions = True
+51210     NoAbortIfRunning = True
+51220     NoProcessing = True
+51230    Else
+51240     ShowOnlyOptions = False
+51250   End If
+51260   If UCase$(CommandSwitch("SHOWONLYL", False)) = "OGFILE" Then
+51270     ShowOnlyLogfile = True
+51280     NoAbortIfRunning = True
+51290     NoProcessing = True
+51300    Else
+51310     ShowOnlyLogfile = False
 51320   End If
-51330   ' UnInstallWindowsPrinter
-51340   cSwitch = Trim$(CommandSwitch("UNINSTALLWINDOWSPRINTER", True))
+51330   ' UnInstallPrinter
+51340   cSwitch = Trim$(CommandSwitch("UNINSTALLPRINTER", True))
 51350   If LenB(cSwitch) > 0 Then
-51360    bUninstallWindowsPrinter = True
+51360    bUninstallPrinter = True
 51370    UnInstallPrinterName = cSwitch
 51380   End If
-51390   ' InstallWindowsPrinter
-51400   cSwitch = Trim$(CommandSwitch("INSTALLWINDOWSPRINTER", True))
+51390   ' UnInstallWindowsPrinter
+51400   cSwitch = Trim$(CommandSwitch("UNINSTALLWINDOWSPRINTER", True))
 51410   If LenB(cSwitch) > 0 Then
-51420    bInstallWindowsPrinter = True
-51430    InstallPrinterName = cSwitch
+51420    bUninstallWindowsPrinter = True
+51430    UnInstallPrinterName = cSwitch
 51440   End If
-51450
-51460   cSwitch = CommandSwitch("OPTIONSFILE", True)
-51470   If LenB(cSwitch) > 0 Then
-51480    If FileExists(cSwitch) = True Then
-51490     Optionsfile = cSwitch
-51500    End If
-51510   End If
-51520   If UCase$(CommandSwitch("NO", False)) = "START" Then
-51530     NoStart = True
-51540    Else
-51550     NoStart = False
-51560   End If
-51570   If UCase$(CommandSwitch("NO", False)) = "PSCHECK" Then
-51580     NoPSCheck = True
-51590    Else
-51600     NoPSCheck = False
-51610   End If
-51620  End If
+51450   ' Initialize unload running program
+51460   If UCase$(CommandSwitch("UL", False)) = "TRUE" Then
+51470     UnLoadFile = True
+51480    Else
+51490     UnLoadFile = False
+51500   End If
+51510  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
