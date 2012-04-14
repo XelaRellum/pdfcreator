@@ -3036,20 +3036,20 @@ On Error GoTo ErrPtnr_OnError
 50410
 50420     With PDFDocInfo
 50430      If Len(Trim$(Options.StandardTitle)) > 0 Then
-50440        .Author = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50440        .Author = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
 50450       Else
-50460        .Author = GetSubstFilename(inFile, Options.SaveFilename, , , True)
+50460        .Author = GetSubstFilename(InfoSpoolFileName, Options.SaveFilename, , , True)
 50470      End If
 50480      If Options.UseStandardAuthor = 1 Then
-50490        .Creator = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50490        .Creator = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
 50500       Else
 50510        .Creator = GetDocUsernameFromPostScriptFile(inFile, False)
 50520      End If
 50530      If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50540       .Keywords = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50540       .Keywords = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
 50550      End If
 50560      If Len(Trim$(Options.StandardSubject)) > 0 Then
-50570       .Subject = GetSubstFilename(inFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50570       .Subject = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
 50580      End If
 50590      tDate = Now
 50600      PSHeader = GetPSHeader(inFile)
