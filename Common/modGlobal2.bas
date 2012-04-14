@@ -210,7 +210,7 @@ On Error GoTo ErrPtnr_OnError
 50200
 50210  filename = TokenFilename
 50220  filename = Replace(filename, "<DateTime>", DateTime, , , vbTextCompare)
-50230  filename = Replace(filename, "<Computername>", Computername, , , vbTextCompare)
+50230  filename = Replace(filename, "<Computername>", Replace(Computername, "\\", ""), , , vbTextCompare)
 50240
 50250  filename = Replace(filename, "<Username>", GetUsername, , , vbTextCompare)
 50260
@@ -276,7 +276,7 @@ On Error GoTo ErrPtnr_OnError
 50860    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50870   Else
 50880    If LenB(isf.FirstClientComputer) > 0 Then
-50890     filename = Replace(filename, "<" & tStr & ">", isf.FirstClientComputer, , , vbTextCompare)
+50890     filename = Replace(filename, "<" & tStr & ">", Replace(isf.FirstClientComputer, "\\", ""), , , vbTextCompare)
 50900    End If
 50910  End If
 50920  tStr = "PrinterName"
