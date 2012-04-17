@@ -98,7 +98,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private ScreenMousePointer As Long
-Private m As Object
+Private x509 As Object
 Public certFilename As String
 
 Public Sub ChangeLanguage()
@@ -189,7 +189,7 @@ On Error GoTo ErrPtnr_OnError
 50010  ChangeLanguage
 50020  ScreenMousePointer = Screen.MousePointer
 50030  Screen.MousePointer = vbDefault
-50040  Set m = CreateObject("pdfforge.pdf.pdf")
+50040  Set x509 = CreateObject("pdfforge.X509.X509")
 50050  imgValidCertificatePassword.Left = imgInvalidCertificatePassword.Left
 50060  imgValidCertificatePassword.Top = imgInvalidCertificatePassword.Top
 50070
@@ -214,7 +214,7 @@ Private Sub Form_Unload(Cancel As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Set m = Nothing
+50010  Set x509 = Nothing
 50020  Screen.MousePointer = ScreenMousePointer
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
@@ -263,7 +263,7 @@ On Error GoTo ErrPtnr_OnError
 50020    cmdOk.Enabled = False
 50030    SetIcon False
 50040   Else
-50050    If m.IsValidCertificatePassword(certFilename, txtCertificatePassword.Text) Then
+50050    If x509.IsValidCertificatePassword(certFilename, txtCertificatePassword.Text) Then
 50060      cmdOk.Enabled = True
 50070      SetIcon True
 50080     Else
