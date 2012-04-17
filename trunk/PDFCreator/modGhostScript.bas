@@ -1889,61 +1889,87 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Sub SignPDF(filename As String, Optional ownerPasswd As String = "")
+Private Sub SignPDF(filename As String, Optional ownerPasswd As String = "", Optional userPasswd As String = "")
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim m As Object, signatureVisible As Boolean, multiSignatures As Boolean, Tempfile As String, tStr As String
-50020   Dim res As Long, files As Collection, certFilename As String
-50030  With Options
-50040   If LenB(.PDFSigningPFXFile) = 0 Then
-50050     res = OpenFileDialog(files, "", _
+50010  Dim pdf As Object, pxs As Object
+50020  Dim res As Long, files As Collection, Tempfile As String
+50030
+50040  Set pxs = CreateObject("pdfforge.PDF.PDF.X509.Signing")
+50050
+50060  With Options
+50070   If LenB(.PDFSigningPFXFile) = 0 Then
+50080     res = OpenFileDialog(files, "", _
      LanguageStrings.OptionsPDFSigningPfxP12Files & " (*.pfx,*.p12)|*.pfx;*.p12|" & _
      LanguageStrings.OptionsPDFSigningPfxFiles & " (*.pfx)|*pfx|" & _
      LanguageStrings.OptionsPDFSigningP12Files & " (*.p12|*.p12", _
      "*.pfx;*.p12", GetMyFiles, LanguageStrings.OptionsPDFSigningChooseCertifcateFile, _
      OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
-50110     If res > 0 Then
-50120      certFilename = files(1)
-50130     End If
-50140    Else
-50150     certFilename = .PDFSigningPFXFile
-50160   End If
-50170   If LenB(.PDFSigningPFXFilePassword) > 0 Then
-50180     PFXPassword = .PDFSigningPFXFilePassword
-50190    Else
-50200     'Ask for the password
-50210     frmCertificatePassword.certFilename = certFilename
-50220     frmCertificatePassword.Show vbModal
-50230   End If
-50240   If LenB(PFXPassword) = 0 Then
-50250    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
-50260    Exit Sub
-50270   End If
-50280   Tempfile = GetTempFile(GetTempPathApi, "~MP")
-50290   KillFile Tempfile
-50300   If .PDFSigningSignatureVisible = 0 Then
-50310     signatureVisible = False
-50320    Else
-50330     signatureVisible = True
-50340   End If
-50350   If .PDFSigningMultiSignature = 0 Then
-50360     multiSignatures = False
-50370    Else
-50380     multiSignatures = True
-50390   End If
-50400   If ownerPasswd = vbNullString Then
-50410    ownerPasswd = ""
-50420   End If
-50430   Set m = CreateObject("pdfforge.pdf.pdf")
-50440   Call m.SignPDFFile(filename, ownerPasswd, Tempfile, certFilename, PFXPassword, .PDFSigningSignatureReason, .PDFSigningSignatureContact, .PDFSigningSignatureLocation, _
-   signatureVisible, .PDFSigningSignatureOnPage, .PDFSigningSignatureLeftX, .PDFSigningSignatureLeftY, .PDFSigningSignatureRightX, .PDFSigningSignatureRightY, multiSignatures, Nothing)
-50460  End With
-50470  If FileExists(Tempfile) Then
-50480   If KillFile(filename) Then
-50490    Name Tempfile As filename
-50500   End If
-50510  End If
+50140     If res > 0 Then
+50150      pxs.certficateFilename = files(1)
+50160     End If
+50170    Else
+50180     pxs.certficateFilename = .PDFSigningPFXFile
+50190   End If
+50200   If LenB(.PDFSigningPFXFilePassword) > 0 Then
+50210     PFXPassword = .PDFSigningPFXFilePassword
+50220    Else
+50230     'Ask for the password
+50240     frmCertificatePassword.certFilename = pxs.certficateFilename
+50250     frmCertificatePassword.Show vbModal
+50260   End If
+50270   If LenB(PFXPassword) = 0 Then
+50280    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
+50290    Exit Sub
+50300   End If
+50310   pxs.certifcatePassword = PFXPassword
+50320   Tempfile = GetTempFile(GetTempPathApi, "~MP")
+50330   KillFile Tempfile
+50340   If .PDFSigningSignatureVisible = 0 Then
+50350     pxs.signatureVisible = False
+50360    Else
+50370     pxs.signatureVisible = True
+50380   End If
+50390   If .PDFSigningMultiSignature = 0 Then
+50400     pxs.multiSignatures = False
+50410    Else
+50420     pxs.multiSignatures = True
+50430   End If
+50440   If ownerPasswd = vbNullString Then
+50450    ownerPasswd = ""
+50460   End If
+50470   If userPasswd = vbNullString Then
+50480    userPasswd = ""
+50490   End If
+50500
+50510   Set pdf = CreateObject("pdfforge.PDF.PDF")
+50520   If pdf.IsEncrypted(filename) Then
+50530     Set pxs.PDFEncryptor = CreateObject("pdfforge.pdf.PDFEncryptor")
+50540     res = pdf.GetEncryptionSettings(filename, ownerPasswd, pxs.PDFEncryptor)
+50550     pxs.PDFEncryptor.OwnerPassword = ownerPasswd
+50560     pxs.PDFEncryptor.UserPassword = userPasswd
+50570    Else
+50580     Set pxs.PDFEncryptor = Nothing
+50590   End If
+50600   pxs.SignatureContact = .PDFSigningSignatureContact
+50610   pxs.SignatureLocation = .PDFSigningSignatureLocation
+50620   pxs.SignatureOnPage = .PDFSigningSignatureOnPage
+50630   pxs.SignaturePositionLowerLeftX = .PDFSigningSignatureLeftX
+50640   pxs.SignaturePositionLowerLeftY = .PDFSigningSignatureLeftY
+50650   pxs.SignaturePositionUpperRightX = .PDFSigningSignatureRightX
+50660   pxs.SignaturePositionUpperRightY = .PDFSigningSignatureRightY
+50670   pxs.SignatureReason = .PDFSigningSignatureReason
+50680   pxs.TimeServerURL = "http://timestamp.globalsign.com/scripts/timstamp.dll"
+50690   pxs.HashAlgorithm = "SHA512" ' MD2, MD5, SHA1, SHA256, SHA384, SHA512, RIPEMD160
+50700
+50710   Call pxs.SignPDFFile_2(filename, ownerPasswd, Tempfile)
+50720  End With
+50730  If FileExists(Tempfile) Then
+50740   If KillFile(filename) Then
+50750    Name Tempfile As filename
+50760   End If
+50770  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
