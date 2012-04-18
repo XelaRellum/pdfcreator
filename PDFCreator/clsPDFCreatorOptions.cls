@@ -131,6 +131,7 @@ Public PDFSigningSignatureRightX As Double
 Public PDFSigningSignatureRightY As Double
 Public PDFSigningSignatureVisible As Long
 Public PDFSigningSignPDF As Long
+Public PDFSigningTimeServerUrl As String
 Public PDFUpdateMetadata As Long
 Public PDFUserPass As Long
 Public PDFUserPasswordString As String

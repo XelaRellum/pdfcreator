@@ -1960,16 +1960,26 @@ On Error GoTo ErrPtnr_OnError
 50650   pxs.SignaturePositionUpperRightX = .PDFSigningSignatureRightX
 50660   pxs.SignaturePositionUpperRightY = .PDFSigningSignatureRightY
 50670   pxs.SignatureReason = .PDFSigningSignatureReason
-50680   pxs.TimeServerURL = "http://timestamp.globalsign.com/scripts/timstamp.dll"
+50680   pxs.TimeServerURL = .PDFSigningTimeServerUrl
 50690   pxs.HashAlgorithm = "SHA512" ' MD2, MD5, SHA1, SHA256, SHA384, SHA512, RIPEMD160
 50700
-50710   Call pxs.SignPDFFile_2(filename, ownerPasswd, Tempfile)
-50720  End With
-50730  If FileExists(Tempfile) Then
-50740   If KillFile(filename) Then
-50750    Name Tempfile As filename
-50760   End If
-50770  End If
+50710   On Error Resume Next
+50720   Call pxs.SignPDFFile_2(filename, ownerPasswd, Tempfile)
+50730   If Err.Number <> 0 Then
+50740     MsgBox LanguageStrings.MessagesMsg45 & vbCrLf & vbCrLf & Err.Number & ": " & Err.Description, vbExclamation
+50750     Err.Clear
+50760     On Error GoTo ErrPtnr_OnError
+50770     If FileExists(Tempfile) Then
+50780      KillFile Tempfile
+50790     End If
+50800    Else
+50810     If FileExists(Tempfile) Then
+50820      If KillFile(filename) Then
+50830       Name Tempfile As filename
+50840      End If
+50850     End If
+50860   End If
+50870  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

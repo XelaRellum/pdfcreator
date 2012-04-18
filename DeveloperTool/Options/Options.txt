@@ -163,6 +163,7 @@ PDFSigningSignatureRightX|txtRightX.Text|Double|200|0|<
 PDFSigningSignatureRightY|txtRightY.Text|Double|200|0|<
 PDFSigningSignatureVisible|chkSignatureVisible.Value|Boolean|0||
 PDFSigningSignPDF|chkSignPDF.Value|Boolean|0||
+PDFSigningTimeServerUrl|txtTimeServerUrl.txt|String|http://timestamp.globalsign.com/scripts/timstamp.dll||
 
 ' <Printing Formats PDF General>
 PDFUpdateMetadata||Long|1|0|2
