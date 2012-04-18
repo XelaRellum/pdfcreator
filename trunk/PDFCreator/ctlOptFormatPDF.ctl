@@ -29,6 +29,15 @@ Begin VB.UserControl ctlOptFormatPDF
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      Begin VB.TextBox txtTimeServerUrl 
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   99
+         Text            =   "http://timestamp.globalsign.com/scripts/timstamp.dll"
+         Top             =   2760
+         Width           =   5925
+      End
       Begin VB.CheckBox chkSignPDF 
          Caption         =   "Sign pdf file"
          Height          =   255
@@ -48,18 +57,18 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.TextBox txtSignatureLocation 
          Appearance      =   0  '2D
          Height          =   285
-         Left            =   120
+         Left            =   4200
          TabIndex        =   55
-         Top             =   2760
-         Width           =   5325
+         Top             =   2040
+         Width           =   1845
       End
       Begin VB.TextBox txtSignatureContact 
          Appearance      =   0  '2D
          Height          =   285
-         Left            =   3120
+         Left            =   2160
          TabIndex        =   53
          Top             =   2040
-         Width           =   2805
+         Width           =   1845
       End
       Begin VB.TextBox txtSignatureReason 
          Appearance      =   0  '2D
@@ -67,7 +76,7 @@ Begin VB.UserControl ctlOptFormatPDF
          Left            =   120
          TabIndex        =   51
          Top             =   2040
-         Width           =   2805
+         Width           =   1845
       End
       Begin VB.TextBox txtPFXFilePreview 
          Appearance      =   0  '2D
@@ -219,20 +228,29 @@ Begin VB.UserControl ctlOptFormatPDF
             Width           =   420
          End
       End
+      Begin VB.Label lblTimeServerUrl 
+         AutoSize        =   -1  'True
+         Caption         =   "Time server url"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   100
+         Top             =   2520
+         Width           =   1035
+      End
       Begin VB.Label lblSignatureLocation 
          AutoSize        =   -1  'True
          Caption         =   "Signature location"
          Height          =   195
-         Left            =   120
+         Left            =   4200
          TabIndex        =   54
-         Top             =   2520
+         Top             =   1800
          Width           =   1275
       End
       Begin VB.Label lblSignatureContact 
          AutoSize        =   -1  'True
          Caption         =   "Signature contact"
          Height          =   195
-         Left            =   3120
+         Left            =   2160
          TabIndex        =   52
          Top             =   1800
          Width           =   1260
@@ -1665,7 +1683,7 @@ On Error GoTo ErrPtnr_OnError
 50790   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
 50800   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
 50810   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
-50820         lblPDFGreyCompFac.Caption = .OptionsPDFCompressionGreyCompFac
+50820   lblPDFGreyCompFac.Caption = .OptionsPDFCompressionGreyCompFac
 50830   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
 50840   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
 50850   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
@@ -1710,15 +1728,16 @@ On Error GoTo ErrPtnr_OnError
 51240   lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
 51250   lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
 51260   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
-51270   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
-51280   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
-51290   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
-51300   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
-51310   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
-51320   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
-51330   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
-51340   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
-51350  End With
+51270   lblTimeServerUrl.Caption = .OptionsPDFSigningTimeServerUrl
+51280   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
+51290   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
+51300   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
+51310   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
+51320   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
+51330   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
+51340   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
+51350   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
+51360  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1786,40 +1805,41 @@ On Error GoTo ErrPtnr_OnError
 50490   txtSignatureReason.Text = .PDFSigningSignatureReason
 50500   txtSignatureContact.Text = .PDFSigningSignatureContact
 50510   txtSignatureLocation.Text = .PDFSigningSignatureLocation
-50520
-50530   chkSignatureVisible.value = .PDFSigningSignatureVisible
-50540   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
-50550   txtLeftX.Text = .PDFSigningSignatureLeftX
-50560   txtLeftY.Text = .PDFSigningSignatureLeftY
-50570   txtRightX.Text = .PDFSigningSignatureRightX
-50580   txtRightY.Text = .PDFSigningSignatureRightY
-50590   chkMultiSignature.value = .PDFSigningMultiSignature
-50600
-50610   If pdfforgeDllInstalled Then
-50620    optEncAes128.Enabled = True
-50630    If .PDFAes128Encryption = 1 Then
-50640     optEncAes128.value = True
-50650    ElseIf .PDFHighEncryption = 1 Then
-50660     optEncHigh.value = True
-50670    Else
-50680     optEncLow.value = True
-50690    End If
-50700   Else
-50710    optEncAes128.Enabled = False
-50720    If .PDFAes128Encryption = 1 Or .PDFHighEncryption = 1 Then
-50730     optEncHigh.value = True
-50740    Else
-50750     optEncLow.value = True
-50760    End If
-50770   End If
-50780  End With
-50790
-50800  If chkSignPDF.value = 1 Then
-50810    EnableControls True
-50820   Else
-50830    EnableControls False
-50840  End If
-50850  UpdateSecurityFields
+50520   txtTimeServerUrl.Text = .PDFSigningTimeServerUrl
+50530
+50540   chkSignatureVisible.value = .PDFSigningSignatureVisible
+50550   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
+50560   txtLeftX.Text = .PDFSigningSignatureLeftX
+50570   txtLeftY.Text = .PDFSigningSignatureLeftY
+50580   txtRightX.Text = .PDFSigningSignatureRightX
+50590   txtRightY.Text = .PDFSigningSignatureRightY
+50600   chkMultiSignature.value = .PDFSigningMultiSignature
+50610
+50620   If pdfforgeDllInstalled Then
+50630    optEncAes128.Enabled = True
+50640    If .PDFAes128Encryption = 1 Then
+50650     optEncAes128.value = True
+50660    ElseIf .PDFHighEncryption = 1 Then
+50670     optEncHigh.value = True
+50680    Else
+50690     optEncLow.value = True
+50700    End If
+50710   Else
+50720    optEncAes128.Enabled = False
+50730    If .PDFAes128Encryption = 1 Or .PDFHighEncryption = 1 Then
+50740     optEncHigh.value = True
+50750    Else
+50760     optEncLow.value = True
+50770    End If
+50780   End If
+50790  End With
+50800
+50810  If chkSignPDF.value = 1 Then
+50820    EnableControls True
+50830   Else
+50840    EnableControls False
+50850  End If
+50860  UpdateSecurityFields
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1931,25 +1951,26 @@ On Error GoTo ErrPtnr_OnError
 50930   .PDFSigningSignatureReason = txtSignatureReason.Text
 50940   .PDFSigningSignatureContact = txtSignatureContact.Text
 50950   .PDFSigningSignatureLocation = txtSignatureLocation.Text
-50960
-50970   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
-50980   If LenB(txtSignatureOnPage.Text) > 0 Then
-50990    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
-51000   End If
-51010   If LenB(txtLeftX.Text) > 0 Then
-51020    .PDFSigningSignatureLeftX = txtLeftX.Text
-51030   End If
-51040   If LenB(txtLeftY.Text) > 0 Then
-51050    .PDFSigningSignatureLeftY = txtLeftY.Text
-51060   End If
-51070   If LenB(txtRightX.Text) > 0 Then
-51080    .PDFSigningSignatureRightX = txtRightX.Text
-51090   End If
-51100   If LenB(txtRightY.Text) > 0 Then
-51110    .PDFSigningSignatureRightY = txtRightY.Text
-51120   End If
-51130   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
-51140  End With
+50960   .PDFSigningTimeServerUrl = txtTimeServerUrl.Text
+50970
+50980   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
+50990   If LenB(txtSignatureOnPage.Text) > 0 Then
+51000    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
+51010   End If
+51020   If LenB(txtLeftX.Text) > 0 Then
+51030    .PDFSigningSignatureLeftX = txtLeftX.Text
+51040   End If
+51050   If LenB(txtLeftY.Text) > 0 Then
+51060    .PDFSigningSignatureLeftY = txtLeftY.Text
+51070   End If
+51080   If LenB(txtRightX.Text) > 0 Then
+51090    .PDFSigningSignatureRightX = txtRightX.Text
+51100   End If
+51110   If LenB(txtRightY.Text) > 0 Then
+51120    .PDFSigningSignatureRightY = txtRightY.Text
+51130   End If
+51140   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
+51150  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2623,14 +2644,16 @@ On Error GoTo ErrPtnr_OnError
 50080  txtSignatureContact.Enabled = value
 50090  lblSignatureLocation.Enabled = value
 50100  txtSignatureLocation.Enabled = value
-50110  dmFraSignaturePosition.Enabled = value
-50120  chkSignatureVisible.Enabled = value
-50130  If chkSignatureVisible.value = 1 Then
-50140    EnableSignPositionControls True
-50150   Else
-50160    EnableSignPositionControls False
-50170  End If
-50180  chkMultiSignature.Enabled = value
+50110  lblTimeServerUrl.Enabled = value
+50120  txtTimeServerUrl.Enabled = value
+50130  dmFraSignaturePosition.Enabled = value
+50140  chkSignatureVisible.Enabled = value
+50150  If chkSignatureVisible.value = 1 Then
+50160    EnableSignPositionControls True
+50170   Else
+50180    EnableSignPositionControls False
+50190  End If
+50200  chkMultiSignature.Enabled = value
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
