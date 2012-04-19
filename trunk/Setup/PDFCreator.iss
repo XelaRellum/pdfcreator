@@ -193,17 +193,9 @@ WizardImageFile=..\Pictures\Setup\PDFCreatorBig.bmp
 WizardSmallImageFile=..\Pictures\Setup\PDFCreator.bmp
 MinVersion=0,5.1.2600
 #IFDEF ITD
- #define ITDRoot ReadReg(HKEY_LOCAL_MACHINE,'Software\Sherlock Software\InnoTools\Downloader','InstallPath','')
+ #define ITDRoot "ITD"
  #include ITDRoot+'\it_download.iss'
- #define ITDLanguageGerman "itd_de.ini"
- #define ITDLanguageGermanSource '.\ITD\' + ITDLanguageGerman
- #define ITDLanguageGermanDestination ITDRoot + '\languages\' + ITDLanguageGerman
- #if FileExists(ITDLanguageGermanSource)
-  #if FileExists(ITDLanguageGermanDestination) == 0
-   #pragma Message 'Copy ITD language file: ' + ITDLanguageGerman
-   #expr CopyFile('.\ITD\' + ITDLanguageGerman, ITDRoot + '\languages\' + ITDLanguageGerman)
-  #endif
- #endif
+
 #ENDIF
 
 [InstallDelete]
@@ -519,7 +511,7 @@ Source: "..\PDFArchitect\PDFOne.net\FreeType\FreeType64.dll"; DestDir: {app}\PDF
 Source: "..\PDFArchitect\Languages\*.ini"; DestDir: {app}\PDFArchitect\Languages; Flags: comparetimestamp; Components: PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect-english.settings"; DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: Not(IsLanguage('german') OR IsLanguage('polish')); Components: PDFArchitect
 Source: "..\PDFArchitect\PDFArchitect-german.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('german'); Components: PDFArchitect
-Source: "..\PDFArchitect\PDFArchitect-polish.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('polish'); Components: PDFArchitect
+;Source: "..\PDFArchitect\PDFArchitect-polish.settings";  DestDir: {userappdata}\pdfforge\PDFArchitect; DestName: PDFArchitect.settings; Flags: ignoreversion; Check: IsLanguage('polish'); Components: PDFArchitect
 
 ; InstallCheck
 Source: Installation\InstallCheck.exe; DestDir: {tmp}; Flags: deleteafterinstall overwritereadonly;
@@ -3991,6 +3983,7 @@ begin
     itd_addfile('http://www.mickyfastdl.com/download.php?{#IM_CHANNEL}', ExpandConstant('{tmp}\InstallManager.exe'));
     itd_downloadafter(wpPreparing);
     ITD_SetOption('UI_AllowContinue', '1');
+    ITD_SetOption('UI_AllowSilentFail', '1');
   end;
 #endif
 
