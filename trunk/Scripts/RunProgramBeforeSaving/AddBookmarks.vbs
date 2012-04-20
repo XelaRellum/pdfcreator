@@ -2,8 +2,8 @@
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
-' Version: 2.0.0.0
-' Date: March, 21. 2012
+' Version: 2.1.0.0
+' Date: April, 20. 2012
 ' Author: pdfforge GbR (www.pdfforge.org)
 ' Comment: This script adds bookmarks to a given inf spool file.
 
