@@ -132,7 +132,9 @@ Class IniFile
         intAsc1Chr = Asc(Stream.Read(1))
         intAsc2Chr = Asc(Stream.Read(1))
         Stream.Close
-        If intAsc1Chr = 255 And intAsc2Chr = 254 Then 
+		
+		' (255, 254 == FF, FE -> UniCode) Or (91, 0 == [ '\0' -> Widechar inf file from pdfcmon.dll)
+        If (intAsc1Chr = 255 And intAsc2Chr = 254) Or (intAsc1Chr = 91 And intAsc2Chr = 0) Then 
             OpenAsUnicode = True
         Else
             OpenAsUnicode = False
