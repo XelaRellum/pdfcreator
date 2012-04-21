@@ -1,4 +1,4 @@
-' AddBookmarks.vbs.vbs script
+' AddBookmarks.vbs script
 ' Part of PDFCreator
 ' License: GPL
 ' Homepage: http://www.sf.net/projects/pdfcreator
