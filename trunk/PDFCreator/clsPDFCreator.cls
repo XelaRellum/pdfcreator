@@ -1340,7 +1340,7 @@ On Error GoTo ErrPtnr_OnError
 50190    Exit Function
 50200   End If
 50210  End If
-50220  cAddPDFCreatorPrinter = InstallPrinter(PrinterName, "PDFCreator", "PDFCreator:", "")
+50220  cAddPDFCreatorPrinter = InstallPrinter(PrinterName, "PDFCreator", "pdfcmon", "")
 50230  If LenB(ProfileName) > 0 Then
 50240   cPrinterProfile(PrinterName) = ProfileName
 50250  End If
