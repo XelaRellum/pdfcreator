@@ -225,12 +225,12 @@ begin
         sender.caption := ITD_GetString(ITDS_DownloadFailed);
         sender.description := ITD_GetString(ITDS_MessageFailRetryContinue);
 		
-		if itd_allowsilentfail then begin
-			wizardform.nextbutton.onclick(nil);
-		end
-		else begin
+		    if itd_allowsilentfail then begin
+			    wizardform.nextbutton.onclick(nil);
+		    end
+		    else begin
           MsgBox(ITD_GetString(ITDS_MessageFailRetryContinue), mbError, MB_OK)
-		end
+		    end
       end else begin //Download failed, we must retry or exit setup
         sender.caption := ITD_GetString(ITDS_DownloadFailed);
         sender.description := ITD_GetString(ITDS_MessageFailRetry);
