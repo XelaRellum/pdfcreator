@@ -1077,6 +1077,9 @@ Private Function Create_eDoc() As String
    Else
     SaveFilename = ReplaceForbiddenChars(txtTitle.Text)
   End If
+  If SaveFilename = "." Or SaveFilename = ".." Then
+   SaveFilename = ""
+  End If
   Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
   If SaveOpenCancel = True Then
    Exit Function
