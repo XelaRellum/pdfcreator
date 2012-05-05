@@ -588,7 +588,7 @@ On Error GoTo ErrPtnr_OnError
 50360   .Add "NoConfirmMessageSwitchingDefaultprinter"
 50370   .Add "NoProcessingAtStartup"
 50380   .Add "NoPSCheck"
-50390   .Add "OnePagePerFile"
+50390   .Add "OneFilePerPage"
 50400   .Add "OpenOutputFile"
 50410   .Add "OptionsDesign"
 50420   .Add "OptionsEnabled"
@@ -2539,7 +2539,7 @@ On Error GoTo ErrPtnr_OnError
 50350   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": cGetOptionFromOptions = Options.NoConfirmMessageSwitchingDefaultprinter
 50360   Case "NOPROCESSINGATSTARTUP": cGetOptionFromOptions = Options.NoProcessingAtStartup
 50370   Case "NOPSCHECK": cGetOptionFromOptions = Options.NoPSCheck
-50380   Case "ONEPAGEPERFILE": cGetOptionFromOptions = Options.OnePagePerFile
+50380   Case "ONEFILEPERPAGE": cGetOptionFromOptions = Options.OneFilePerPage
 50390   Case "OPENOUTPUTFILE": cGetOptionFromOptions = Options.OpenOutputFile
 50400   Case "OPTIONSDESIGN": cGetOptionFromOptions = Options.OptionsDesign
 50410   Case "OPTIONSENABLED": cGetOptionFromOptions = Options.OptionsEnabled
@@ -2741,7 +2741,7 @@ On Error GoTo ErrPtnr_OnError
 50360   .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
 50370   .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
 50380   .NoPSCheck = sOptions.NoPSCheck
-50390   .OnePagePerFile = sOptions.OnePagePerFile
+50390   .OneFilePerPage = sOptions.OneFilePerPage
 50400   .OpenOutputFile = sOptions.OpenOutputFile
 50410   .OptionsDesign = sOptions.OptionsDesign
 50420   .OptionsEnabled = sOptions.OptionsEnabled
@@ -2942,7 +2942,7 @@ On Error GoTo ErrPtnr_OnError
 50350   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": Options1.NoConfirmMessageSwitchingDefaultprinter = value
 50360   Case "NOPROCESSINGATSTARTUP": Options1.NoProcessingAtStartup = value
 50370   Case "NOPSCHECK": Options1.NoPSCheck = value
-50380   Case "ONEPAGEPERFILE": Options1.OnePagePerFile = value
+50380   Case "ONEFILEPERPAGE": Options1.OneFilePerPage = value
 50390   Case "OPENOUTPUTFILE": Options1.OpenOutputFile = value
 50400   Case "OPTIONSDESIGN": Options1.OptionsDesign = value
 50410   Case "OPTIONSENABLED": Options1.OptionsEnabled = value
@@ -3152,7 +3152,7 @@ On Error GoTo ErrPtnr_OnError
 50350   .NoConfirmMessageSwitchingDefaultprinter = sOptions.NoConfirmMessageSwitchingDefaultprinter
 50360   .NoProcessingAtStartup = sOptions.NoProcessingAtStartup
 50370   .NoPSCheck = sOptions.NoPSCheck
-50380   .OnePagePerFile = sOptions.OnePagePerFile
+50380   .OneFilePerPage = sOptions.OneFilePerPage
 50390   .OpenOutputFile = sOptions.OpenOutputFile
 50400   .OptionsDesign = sOptions.OptionsDesign
 50410   .OptionsEnabled = sOptions.OptionsEnabled

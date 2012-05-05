@@ -265,7 +265,7 @@ Begin VB.UserControl ctlOptDocument
          Top             =   840
          Width           =   2415
       End
-      Begin VB.CheckBox chkOnePagePerFile 
+      Begin VB.CheckBox chkOneFilePerPage 
          Appearance      =   0  '2D
          Caption         =   "One page per file"
          ForeColor       =   &H80000008&
@@ -335,7 +335,7 @@ On Error GoTo ErrPtnr_OnError
 50160  End If
 50170
 50180  chkUseCreationDateNow.Enabled = value
-50190  chkOnePagePerFile.Enabled = value
+50190  chkOneFilePerPage.Enabled = value
 50200  dmFraProgDocument1.Enabled = value
 50210
 50220  lblStampString.Enabled = value
@@ -575,7 +575,7 @@ On Error GoTo ErrPtnr_OnError
 50070   chkUseStandardAuthor.Caption = .OptionsUseStandardauthor
 50080   lblAuthorTokens.Caption = .OptionsStandardAuthorToken
 50090   chkUseCreationDateNow.Caption = .OptionsUseCreationDateNow
-50100   chkOnePagePerFile.Caption = .OptionsOnePagePerFile
+50100   chkOneFilePerPage.Caption = .OptionsOneFilePerPage
 50110   lblStampString.Caption = .OptionsStampString
 50120   lblStampFontcolor.Caption = .OptionsStampFontColor
 50130   chkStampUseOutlineFont.Caption = .OptionsStampUseOutlineFont
@@ -607,7 +607,7 @@ On Error GoTo ErrPtnr_OnError
 50030   chkUseStandardAuthor.value = .UseStandardAuthor
 50040   txtStandardAuthor.Text = .StandardAuthor
 50050   chkUseCreationDateNow.value = .UseCreationDateNow
-50060   chkOnePagePerFile.value = .OnePagePerFile
+50060   chkOneFilePerPage.value = .OneFilePerPage
 50070   picStampFontColor.BackColor = HTMLColorToOleColor(.StampFontColor)
 50080   txtOutlineFontThickness.Text = .StampOutlineFontthickness
 50090   txtStampString.Text = .StampString
@@ -704,7 +704,7 @@ Public Sub GetOptions()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With Options1
-50020   .OnePagePerFile = Abs(chkOnePagePerFile.value)
+50020   .OneFilePerPage = Abs(chkOneFilePerPage.value)
 50030   .UseCreationDateNow = Abs(chkUseCreationDateNow.value)
 50040   .StandardAuthor = txtStandardAuthor.Text
 50050   .UseStandardAuthor = Abs(chkUseStandardAuthor.value)

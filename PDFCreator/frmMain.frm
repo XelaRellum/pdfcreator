@@ -1634,7 +1634,7 @@ On Error GoTo ErrPtnr_OnError
 50290   ind = 0
 50300   For i = 1 To files.Count
 50310    tFile = Split(files.Item(i), "|")
-50320    If UCase$(tFile(1)) = UCase$(lsv.ListItems(j).SubItems(4)) Then
+50320    If StrComp(tFile(1), lsv.ListItems(j).SubItems(4), vbTextCompare) = 0 Then
 50330     ind = i
 50340     Exit For
 50350    End If
@@ -1672,7 +1672,7 @@ On Error GoTo ErrPtnr_OnError
 50670   tFile = Split(files.Item(j), "|")
 50680   ind = 0
 50690   For i = 1 To lsv.ListItems.Count
-50700    If UCase$(tFile(1)) = UCase$(lsv.ListItems(i).SubItems(4)) Then
+50700    If StrComp(tFile(1), lsv.ListItems(i).SubItems(4), vbTextCompare) = 0 Then
 50710     ind = i
 50720     Exit For
 50730    End If
@@ -1979,7 +1979,7 @@ On Error GoTo ErrPtnr_OnError
 50930         End If
 50940         Options.Counter = Options.Counter + 1
 50950         If Options.AutosaveStartStandardProgram = 1 Then
-50960          If Options.OnePagePerFile = 1 Then
+50960          If Options.OneFilePerPage = 1 Then
 50970            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
 50980           Else
 50990            OpenDocument OutputFilename

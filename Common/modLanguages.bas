@@ -174,7 +174,7 @@ Public Type tLanguageStrings
  OptionsLanguagesTranslation As String
  OptionsLanguagesVersion As String
  OptionsNothingToConfigure As String
- OptionsOnePagePerFile As String
+ OptionsOneFilePerPage As String
  OptionsOwnerPass As String
  OptionsPassCancel As String
  OptionsPassOK As String
@@ -857,7 +857,7 @@ On Error GoTo ErrPtnr_OnError
 50620   .OptionsLanguagesTranslation = Replace$(hLang.Retrieve("LanguagesTranslation", .OptionsLanguagesTranslation), "/n", vbCrLf)
 50630   .OptionsLanguagesVersion = Replace$(hLang.Retrieve("LanguagesVersion", .OptionsLanguagesVersion), "/n", vbCrLf)
 50640   .OptionsNothingToConfigure = Replace$(hLang.Retrieve("NothingToConfigure", .OptionsNothingToConfigure), "/n", vbCrLf)
-50650   .OptionsOnePagePerFile = Replace$(hLang.Retrieve("OnePagePerFile", .OptionsOnePagePerFile), "/n", vbCrLf)
+50650   .OptionsOneFilePerPage = Replace$(hLang.Retrieve("OneFilePerPage", .OptionsOneFilePerPage), "/n", vbCrLf)
 50660   .OptionsOwnerPass = Replace$(hLang.Retrieve("OwnerPass", .OptionsOwnerPass), "/n", vbCrLf)
 50670   .OptionsPassCancel = Replace$(hLang.Retrieve("PassCancel", .OptionsPassCancel), "/n", vbCrLf)
 50680   .OptionsPassOK = Replace$(hLang.Retrieve("PassOK", .OptionsPassOK), "/n", vbCrLf)
@@ -1481,7 +1481,7 @@ On Error GoTo ErrPtnr_OnError
 51670   .OptionsLanguagesTranslation = "Translation"
 51680   .OptionsLanguagesVersion = "Version"
 51690   .OptionsNothingToConfigure = "There is nothing to configure."
-51700   .OptionsOnePagePerFile = "One page per file (not for PDF and EPS files)"
+51700   .OptionsOneFilePerPage = "One file per page (not for PDF and EPS files)"
 51710   .OptionsOwnerPass = "Owner Password"
 51720   .OptionsPassCancel = "Cancel"
 51730   .OptionsPassOK = "OK"

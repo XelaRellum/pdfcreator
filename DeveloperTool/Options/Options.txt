@@ -57,7 +57,7 @@ NoProcessingAtStartup|chkNoProcessingAtStartup|Boolean|0||
 NoPSCheck||Boolean|0||
 
 ' <Printing>
-OnePagePerFile|chkOnePagePerFile.Value|Boolean|0||
+OneFilePerPage|chkOneFilePerPage.Value|Boolean|0||
 
 ' <Program>
 OpenOutputFile|chkOpenOutputFile.Value|Boolean|1||
