@@ -51,7 +51,7 @@ Public MaximumCountOfPDFArchitectToolTip As Long
 Public NoConfirmMessageSwitchingDefaultprinter As Long
 Public NoProcessingAtStartup As Long
 Public NoPSCheck As Long
-Public OnePagePerFile As Long
+Public OneFilePerPage As Long
 Public OpenOutputFile As Long
 Public OptionsDesign As Long
 Public OptionsEnabled As Long

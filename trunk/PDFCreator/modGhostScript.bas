@@ -370,7 +370,7 @@ On Error GoTo ErrPtnr_OnError
 50790   End If
 50800  End If
 50810
-50820  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50820  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50830   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50840  End If
 50850  AddParams "-sOutputFile=" & GSOutputFile
@@ -449,7 +449,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -488,7 +488,7 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-r" & Options.PNGResolution & "x" & Options.PNGResolution
 50450
-50460   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480   End If
 50490   AddParams "-sOutputFile=" & GSOutputFile
@@ -541,7 +541,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -580,7 +580,7 @@ On Error GoTo ErrPtnr_OnError
 50430   End If
 50440   AddParams "-r" & Options.JPEGResolution & "x" & Options.JPEGResolution
 50450
-50460   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460   If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470    GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480   End If
 50490   AddParams "-sOutputFile=" & GSOutputFile
@@ -633,7 +633,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -673,7 +673,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-r" & Options.BMPResolution & "x" & Options.BMPResolution
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile
@@ -725,7 +725,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -764,7 +764,7 @@ On Error GoTo ErrPtnr_OnError
 50430   AddParams "-r" & Options.PCXResolution & "x" & Options.PCXResolution
 50440  End If
 50450
-50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480  End If
 50490  AddParams "-sOutputFile=" & GSOutputFile
@@ -816,7 +816,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -855,7 +855,7 @@ On Error GoTo ErrPtnr_OnError
 50430   AddParams "-r" & Options.TIFFResolution & "x" & Options.TIFFResolution
 50440  End If
 50450
-50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480  End If
 50490  AddParams "-sOutputFile=" & GSOutputFile
@@ -907,7 +907,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -946,7 +946,7 @@ On Error GoTo ErrPtnr_OnError
 50430   AddParams "-dLanguageLevel=" & GS_PSLanguageLevel
 50440  End If
 50450
-50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480  End If
 50490  AddParams "-sOutputFile=" & GSOutputFile
@@ -998,7 +998,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -1037,7 +1037,7 @@ On Error GoTo ErrPtnr_OnError
 50430   AddParams "-dLanguageLevel=" & GS_EPSLanguageLevel
 50440  End If
 50450
-50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480  End If
 50490  AddParams "-sOutputFile=" & GSOutputFile
@@ -1197,7 +1197,7 @@ On Error GoTo ErrPtnr_OnError
 50530  End If
 50540  tEnc = False
 50550
-50560  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50560  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50570   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50580  End If
 50590  AddParams "-sOutputFile=" & GSOutputFile
@@ -1319,7 +1319,7 @@ On Error GoTo ErrPtnr_OnError
 50480  End If
 50490  tEnc = False
 50500
-50510  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50510  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50520   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50530  End If
 50540  AddParams "-sOutputFile=" & GSOutputFile
@@ -1398,7 +1398,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -1437,7 +1437,7 @@ On Error GoTo ErrPtnr_OnError
 50430   AddParams "-r" & Options.PSDResolution & "x" & Options.PSDResolution
 50440  End If
 50450
-50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480  End If
 50490  AddParams "-sOutputFile=" & GSOutputFile
@@ -1489,7 +1489,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -1528,7 +1528,7 @@ On Error GoTo ErrPtnr_OnError
 50430   AddParams "-r" & Options.PCLResolution & "x" & Options.PCLResolution
 50440  End If
 50450
-50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480  End If
 50490  AddParams "-sOutputFile=" & GSOutputFile
@@ -1580,7 +1580,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -1619,7 +1619,7 @@ On Error GoTo ErrPtnr_OnError
 50430   AddParams "-r" & Options.RAWResolution & "x" & Options.RAWResolution
 50440  End If
 50450
-50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50460  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50470   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50480  End If
 50490  AddParams "-sOutputFile=" & GSOutputFile
@@ -1671,7 +1671,7 @@ On Error GoTo ErrPtnr_OnError
 50040  InitParams
 50050  Set ParamCommands = New Collection
 50060
-50070  If Options.OnePagePerFile = 1 Then
+50070  If Options.OneFilePerPage = 1 Then
 50080   SplitPath GSOutputFile, , Path, , FName, Ext
 50090   GSOutputFile = CompletePath(Path) & FName & "%d." & Ext
 50100  End If
@@ -1711,7 +1711,7 @@ On Error GoTo ErrPtnr_OnError
 50440   AddParams "-r" & Options.SVGResolution & "x" & Options.SVGResolution
 50450  End If
 50460
-50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OnePagePerFile <> 1 Then
+50470  If Options.AllowSpecialGSCharsInFilenames = 1 And Options.OneFilePerPage <> 1 Then
 50480   GSOutputFile = Replace$(GSOutputFile, "%", "%%")
 50490  End If
 50500  AddParams "-sOutputFile=" & GSOutputFile

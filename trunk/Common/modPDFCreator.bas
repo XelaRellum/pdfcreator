@@ -10,7 +10,7 @@ On Error GoTo ErrPtnr_OnError
 50030  If FileExists(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) = False Then
 50040   Exit Function
 50050  End If
-50060
+50060  If FileInUse(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) Then Exit Function
 50070  fn = FreeFile
 50080  Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Input As #fn
 50090  bufStr = vbNullString
@@ -61,89 +61,56 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub WriteLogfile(Logtext As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, i As Long, bufStr As String, s() As String, tB As Boolean
-50020
-50030  bufStr = ReadLogfile
-50040
-50050  If DirExists(PDFCreatorLogfilePath) = False Then
-50060    tB = MakePath(PDFCreatorLogfilePath)
-50070   Else
-50080    tB = True
-50090  End If
-50100
-50110  If tB = True Then
-50120   fn = FreeFile
-50130   Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
-50140
-50150   If Len(bufStr) > 0 Then
-50160     s = Split(bufStr, vbCrLf)
-50170     Print #fn, Now & ": " & Logtext
-50180     For i = LBound(s) To UBound(s)
-50190      Print #fn, Trim$(Replace(s(i), vbCrLf, ""))
-50200     Next i
-50210    Else
-50220     Print #fn, Now & ": " & Logtext
-50230   End If
-50240   Close #fn
-50250  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modPDFCreator", "WriteLogfile")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Public Sub IfLoggingWriteLogfile(Logtext As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long, i As Long, bufStr As String, s() As String, _
   tStr As String, tB As Boolean
-50030
-50040  If Logging = False Then
-50050   Exit Sub
-50060  End If
-50070
-50080  If DirExists(PDFCreatorLogfilePath) = False Then
-50090    tB = MakePath(PDFCreatorLogfilePath)
-50100   Else
-50110    tB = True
-50120  End If
-50130
-50140  If tB = True Then
-50150
-50160   bufStr = ReadLogfile
-50170
-50180   fn = FreeFile
-50190   Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
+50030  Static IsInMethod As Boolean
+50040
+50050  If Logging = False Then
+50060   Exit Sub
+50070  End If
+50080
+50090  If IsInMethod Then
+50100   Exit Sub
+50110  End If
+50120
+50130  IsInMethod = True
+50140
+50150  If DirExists(PDFCreatorLogfilePath) = False Then
+50160    tB = MakePath(PDFCreatorLogfilePath)
+50170   Else
+50180    tB = True
+50190  End If
 50200
-50210   If Len(bufStr) > 0 Then
-50220    s = Split(bufStr, vbCrLf)
-50230    If Options.LogLines < UBound(s) - 1 Then
-50240      For i = UBound(s) - Options.LogLines + 2 To UBound(s)
-50250       tStr = s(i - 2)
-50260       Print #fn, s(i - 2)
-50270      Next i
-50280     Else
-50290      Print #fn, bufStr
-50300 '     For i = LBound(s) To UBound(s)
-50310 '      tStr = s(i)
-50320 '      Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
-50330 '     Next i
-50340    End If
-50350   End If
-50360   Print #fn, Now & ": " & Logtext
-50370   Close #fn
-50380  End If
+50210  If tB = True Then
+50220   If FileInUse(CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile) Then Exit Sub
+50230   bufStr = ReadLogfile
+50240
+50250   fn = FreeFile
+50260   Open CompletePath(PDFCreatorLogfilePath) & PDFCreatorLogfile For Output As #fn
+50270
+50280   If Len(bufStr) > 0 Then
+50290    s = Split(bufStr, vbCrLf)
+50300    If Options.LogLines < UBound(s) - 1 Then
+50310      For i = UBound(s) - Options.LogLines + 2 To UBound(s)
+50320       tStr = s(i - 2)
+50330       Print #fn, s(i - 2)
+50340      Next i
+50350     Else
+50360      Print #fn, bufStr
+50370 '     For i = LBound(s) To UBound(s)
+50380 '      tStr = s(i)
+50390 '      Print #fn, Trim$(Replace$(s(i), vbCrLf, ""))
+50400 '     Next i
+50410    End If
+50420   End If
+50430   Print #fn, Now & ": " & Logtext
+50440   Close #fn
+50450  End If
+50460  IsInMethod = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

@@ -42,7 +42,7 @@ Public Type tOptions
  NoConfirmMessageSwitchingDefaultprinter As Long
  NoProcessingAtStartup As Long
  NoPSCheck As Long
- OnePagePerFile As Long
+ OneFilePerPage As Long
  OpenOutputFile As Long
  OptionsDesign As Long
  OptionsEnabled As Long
@@ -244,7 +244,7 @@ On Error GoTo ErrPtnr_OnError
 50450   .NoConfirmMessageSwitchingDefaultprinter = "0"
 50460   .NoProcessingAtStartup = "0"
 50470   .NoPSCheck = "0"
-50480   .OnePagePerFile = "0"
+50480   .OneFilePerPage = "0"
 50490   .OpenOutputFile = "1"
 50500   .OptionsDesign = "0"
 50510   .OptionsEnabled = "1"
@@ -926,18 +926,18 @@ On Error GoTo ErrPtnr_OnError
 54540      .NoPSCheck = 0
 54550     End If
 54560   End If
-54570   tStr = hOpt.Retrieve("OnePagePerFile")
+54570   tStr = hOpt.Retrieve("OneFilePerPage")
 54580   If IsNumeric(tStr) Then
 54590     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-54600       .OnePagePerFile = CLng(tStr)
+54600       .OneFilePerPage = CLng(tStr)
 54610      Else
 54620       If UseStandard Then
-54630        .OnePagePerFile = 0
+54630        .OneFilePerPage = 0
 54640       End If
 54650     End If
 54660    Else
 54670     If UseStandard Then
-54680      .OnePagePerFile = 0
+54680      .OneFilePerPage = 0
 54690     End If
 54700   End If
 54710   tStr = hOpt.Retrieve("OpenOutputFile")
@@ -2885,7 +2885,7 @@ Public Sub CorrectOptionsBeforeSaving()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Options.AutosaveDirectory = Trim$(Options.AutosaveDirectory)
-50020  ' Options.PrinterTemppath = Trim$(Options.PrinterTemppath)
+50020  'Options.PrinterTemppath = Trim$(Options.PrinterTemppath)
 50030  If LenB(Options.AutosaveDirectory) = 0 Then
 50040   Options.AutosaveDirectory = "<MyFiles>\"
 50050  End If
@@ -3001,7 +3001,7 @@ On Error GoTo ErrPtnr_OnError
 50430   Case "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER": ini.SaveKey CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), "NoConfirmMessageSwitchingDefaultprinter"
 50440   Case "NOPROCESSINGATSTARTUP": ini.SaveKey CStr(Abs(.NoProcessingAtStartup)), "NoProcessingAtStartup"
 50450   Case "NOPSCHECK": ini.SaveKey CStr(Abs(.NoPSCheck)), "NoPSCheck"
-50460   Case "ONEPAGEPERFILE": ini.SaveKey CStr(Abs(.OnePagePerFile)), "OnePagePerFile"
+50460   Case "ONEFILEPERPAGE": ini.SaveKey CStr(Abs(.OneFilePerPage)), "OneFilePerPage"
 50470   Case "OPENOUTPUTFILE": ini.SaveKey CStr(Abs(.OpenOutputFile)), "OpenOutputFile"
 50480   Case "OPTIONSDESIGN": ini.SaveKey CStr(.OptionsDesign), "OptionsDesign"
 50490   Case "OPTIONSENABLED": ini.SaveKey CStr(Abs(.OptionsEnabled)), "OptionsEnabled"
@@ -3211,7 +3211,7 @@ On Error GoTo ErrPtnr_OnError
 50420   ini.SaveKey CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), "NoConfirmMessageSwitchingDefaultprinter"
 50430   ini.SaveKey CStr(Abs(.NoProcessingAtStartup)), "NoProcessingAtStartup"
 50440   ini.SaveKey CStr(Abs(.NoPSCheck)), "NoPSCheck"
-50450   ini.SaveKey CStr(Abs(.OnePagePerFile)), "OnePagePerFile"
+50450   ini.SaveKey CStr(Abs(.OneFilePerPage)), "OneFilePerPage"
 50460   ini.SaveKey CStr(Abs(.OpenOutputFile)), "OpenOutputFile"
 50470   ini.SaveKey CStr(.OptionsDesign), "OptionsDesign"
 50480   ini.SaveKey CStr(Abs(.OptionsEnabled)), "OptionsEnabled"
@@ -3460,18 +3460,18 @@ On Error GoTo ErrPtnr_OnError
 50820      .DeviceWidthPoints = Replace$("595", ".", GetDecimalChar)
 50830     End If
 50840   End If
-50850   tStr = reg.GetRegistryValue("OnePagePerFile")
+50850   tStr = reg.GetRegistryValue("OneFilePerPage")
 50860   If IsNumeric(tStr) Then
 50870     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-50880       .OnePagePerFile = CLng(tStr)
+50880       .OneFilePerPage = CLng(tStr)
 50890      Else
 50900       If UseStandard Then
-50910        .OnePagePerFile = 0
+50910        .OneFilePerPage = 0
 50920       End If
 50930     End If
 50940    Else
 50950     If UseStandard Then
-50960      .OnePagePerFile = 0
+50960      .OneFilePerPage = 0
 50970     End If
 50980   End If
 50990   tStr = reg.GetRegistryValue("Papersize")
@@ -5815,11 +5815,11 @@ On Error GoTo ErrPtnr_OnError
 50690    Set reg = Nothing
 50700    Exit Sub
 50710   End If
-50720   If UCase$(OptionName) = "ONEPAGEPERFILE" Then
+50720   If UCase$(OptionName) = "ONEFILEPERPAGE" Then
 50730    If Not reg.KeyExists Then
 50740     reg.CreateKey
 50750    End If
-50760    reg.SetRegistryValue "OnePagePerFile", CStr(Abs(.OnePagePerFile)), REG_SZ
+50760    reg.SetRegistryValue "OneFilePerPage", CStr(Abs(.OneFilePerPage)), REG_SZ
 50770    Set reg = Nothing
 50780    Exit Sub
 50790   End If
@@ -7281,7 +7281,7 @@ On Error GoTo ErrPtnr_OnError
 50290   reg.SetRegistryValue "Counter", CStr(.Counter), REG_SZ
 50300   reg.SetRegistryValue "DeviceHeightPoints", Replace$(CStr(.DeviceHeightPoints), GetDecimalChar, "."), REG_SZ
 50310   reg.SetRegistryValue "DeviceWidthPoints", Replace$(CStr(.DeviceWidthPoints), GetDecimalChar, "."), REG_SZ
-50320   reg.SetRegistryValue "OnePagePerFile", CStr(Abs(.OnePagePerFile)), REG_SZ
+50320   reg.SetRegistryValue "OneFilePerPage", CStr(Abs(.OneFilePerPage)), REG_SZ
 50330   reg.SetRegistryValue "Papersize", CStr(.Papersize), REG_SZ
 50340   reg.SetRegistryValue "StampFontColor", CStr(.StampFontColor), REG_SZ
 50350   reg.SetRegistryValue "StampFontname", CStr(.StampFontname), REG_SZ

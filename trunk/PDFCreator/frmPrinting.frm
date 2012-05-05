@@ -983,7 +983,7 @@ On Error GoTo ErrPtnr_OnError
 50150  If PDFFile <> vbNullString Then
 50160   SaveEDoc = True
 50170   If Options.RunProgramAfterSaving = 1 Then
-50180    If Options.OnePagePerFile = 1 Then
+50180    If Options.OneFilePerPage = 1 Then
 50190     PDFFile = Replace$(PDFFile, "%d", "1", , , vbTextCompare)
 50200    End If
 50210    If Options.RunProgramAfterSaving = 1 Then
@@ -1003,7 +1003,7 @@ On Error GoTo ErrPtnr_OnError
 50350   End If
 50360
 50370   If chkOpenOutputFile.value = 1 Then
-50380    If Options.OnePagePerFile = 1 Then
+50380    If Options.OneFilePerPage = 1 Then
 50390      If OutputFileIsPDFFile And IsPDFArchitectInstalled And chkEditWithPDFArchitect.value = 1 Then
 50400        OpenPDFFileWithPDFArchitect Replace$(PDFFile, "%d", "1", , , vbTextCompare)
 50410       Else
