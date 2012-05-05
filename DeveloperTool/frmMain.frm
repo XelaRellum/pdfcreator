@@ -657,7 +657,7 @@ Private Sub cmdIncFile_Click(Index As Integer)
      cmdIncFile(1).Enabled = True
     End If
    End With
-   SaveFile App.Path & "\..\Setup\Language includes\" & LastIncFile & ".inc", txtIncFile.Text
+   SaveFile App.Path & "\..\..\Setup\Language includes\" & LastIncFile & ".inc", txtIncFile.Text
  End Select
  Exit Sub
 ErrorHandler:
