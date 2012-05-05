@@ -1,9 +1,0 @@
-Del  ..\PDFCreator\*.obj         /Q
-Del  ..\PDFCreator\*.exe         /Q
-Del  ..\PDFSpooler\*.exe         /Q
-Del  ..\PDFSpooler\*.obj         /Q
-Del  ..\TransTool\*.exe          /Q
-Del  ..\TransTool\*.obj          /Q
-Del  ..\DeveloperTool\*.exe      /Q
-Del  ..\DeveloperTool\*.obj      /Q
-Del  ..\Setup\Installation\PDFCreator*.exe /Q
