@@ -232,6 +232,10 @@
 				<param name="Local" value="html\is-pdfcreator-really-free.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Leere Seite, wenn Unicodezeichen im Dateinamen vorkommen">
+				<param name="Local" value="html\blank-page-with-unicode-characters-in-the-filename.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Mein Anti-Virus Programm meldet, dass PDFCreator einen Virus enth&auml;lt. Pr&uuml;ft ihr das nicht vorher?">
 				<param name="Local" value="html\my-antivirus-program-says-that-pdfcreator-contains-a-virus-dont-you-check-your-files.html">
 				</OBJECT>

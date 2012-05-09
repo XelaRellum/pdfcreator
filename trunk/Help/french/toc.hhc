@@ -224,6 +224,10 @@
 				<param name="Local" value="html\after-installing-pdfcreator-i-get-an-error-exception-einouterror-in-module-isxxxxxexe-at-0000631c-file-not-found.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Blank page with Unicode characters in the Filename">
+				<param name="Local" value="html\blank-page-with-unicode-characters-in-the-filename.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Comment puis-je traduire PDFCreator dans la langue de mon pays ?">
 				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
 				</OBJECT>
