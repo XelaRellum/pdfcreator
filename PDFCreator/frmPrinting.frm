@@ -696,7 +696,7 @@ On Error GoTo ErrPtnr_OnError
 50220    txtTitle.Text = GetSubstFilename(CurrentInfoSpoolFile, Options.SaveFilename, , , False)
 50230  End If
 50240  If Options.UseStandardAuthor = 1 Then
-50250    txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , False)
+50250    txtCreateFor.Text = GetSubstFilename(CurrentInfoSpoolFile, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), False, , False)
 50260   Else
 50270    txtCreateFor.Text = GetDocUsernameFromInfoSpoolFile(CurrentInfoSpoolFile)
 50280  End If
