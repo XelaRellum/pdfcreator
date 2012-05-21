@@ -185,7 +185,7 @@ On Error GoTo ErrPtnr_OnError
 50030  If Options.UseAutosaveDirectory = 1 Then
 50040    Pathname = GetSubstFilename2(Options.AutosaveDirectory, False, , InfoSpoolFileName, False)
 50050   Else
-50060    Pathname = GetSubstFilename2(Options.LastSaveDirectory, False, , , False)
+50060    Pathname = GetSubstFilename2(Options.LastSaveDirectory, False)
 50070  End If
 50080
 50090  filename = GetSubstFilename(InfoSpoolFileName, Options.AutosaveFilename)
