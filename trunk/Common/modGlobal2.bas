@@ -234,7 +234,7 @@ On Error GoTo ErrPtnr_OnError
 50440  If Preview = True Then
 50450    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50460   Else
-50470    filename = Replace(filename, "<" & tStr & ">", isf.FirstUserName, , , vbTextCompare)
+50470    filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstUserName), , , vbTextCompare)
 50480  End If
 50490
 50500  tStr = "Title"
@@ -242,7 +242,7 @@ On Error GoTo ErrPtnr_OnError
 50520    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50530   Else
 50540    If LenB(isf.FirstDocumentTitle) > 0 Then
-50550     filename = Replace(filename, "<" & tStr & ">", isf.FirstDocumentTitle, , , vbTextCompare)
+50550     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstDocumentTitle), , , vbTextCompare)
 50560    End If
 50570  End If
 50580  tStr = "DocumentFilename"
@@ -264,7 +264,7 @@ On Error GoTo ErrPtnr_OnError
 50740    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50750   Else
 50760    If LenB(isf.FirstJobID) > 0 Then
-50770     filename = Replace(filename, "<" & tStr & ">", isf.FirstJobID, , , vbTextCompare)
+50770     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstJobID), , , vbTextCompare)
 50780    End If
 50790  End If
 50800  tStr = "ClientComputer"
@@ -272,7 +272,7 @@ On Error GoTo ErrPtnr_OnError
 50820    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50830   Else
 50840    If LenB(isf.FirstClientComputer) > 0 Then
-50850     filename = Replace(filename, "<" & tStr & ">", Replace(isf.FirstClientComputer, "\\", ""), , , vbTextCompare)
+50850     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(Replace(isf.FirstClientComputer, "\\", "")), , , vbTextCompare)
 50860    End If
 50870  End If
 50880  tStr = "PrinterName"
@@ -280,7 +280,7 @@ On Error GoTo ErrPtnr_OnError
 50900    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50910   Else
 50920    If LenB(isf.FirstPrinterName) > 0 Then
-50930     filename = Replace(filename, "<" & tStr & ">", isf.FirstPrinterName, , , vbTextCompare)
+50930     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstPrinterName), , , vbTextCompare)
 50940    End If
 50950  End If
 50960  tStr = "SessionID"
@@ -288,7 +288,7 @@ On Error GoTo ErrPtnr_OnError
 50980    filename = Replace(filename, "<" & tStr & ">", "'Preview " & tStr & "'", , , vbTextCompare)
 50990   Else
 51000    If LenB(isf.FirstSessionID) > 0 Then
-51010     filename = Replace(filename, "<" & tStr & ">", isf.FirstSessionID, , , vbTextCompare)
+51010     filename = Replace(filename, "<" & tStr & ">", ReplaceForbiddenChars(isf.FirstSessionID), , , vbTextCompare)
 51020    End If
 51030  End If
 51040
