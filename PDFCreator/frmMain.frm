@@ -491,6 +491,8 @@ Public InTimer1 As Boolean
 Public InAutoSave As Boolean
 Public OldPrinter As String
 
+Private colInfoSpoolFiles As Collection
+
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -701,7 +703,9 @@ On Error GoTo ErrPtnr_OnError
 50430
 50440  Form_Resize
 50450
-50460  DoEvents
+50460  Set colInfoSpoolFiles = New Collection
+50470
+50480  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1518,6 +1522,76 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Function CollectionItemExists(ByVal key As Variant, ByRef col As Collection) As Boolean
+ 'Returns True if item with key exists in collection
+ On Error Resume Next
+ Const ERR_OBJECT_TYPE As Long = 438
+ Dim Item As Variant
+
+ 'Try reach item by key
+ Item = col.Item(key)
+
+ 'If no error occurred, key exists
+ If Err.Number = 0 Then
+   CollectionItemExists = True
+
+ 'In cases where error 438 is thrown, it is likely that
+ 'the item does exist, but is an object that cannot be Let
+  ElseIf Err.Number = ERR_OBJECT_TYPE Then
+
+    'Try reach object by key
+    Set Item = col.Item(key)
+
+    'If an object was found, the key exists
+    If Not Item Is Nothing Then
+     CollectionItemExists = True
+    End If
+ End If
+ Err.Clear
+End Function
+
+Private Function GetInfoSpoolFileObject(filename As String) As clsInfoSpoolFile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim isf As clsInfoSpoolFile
+50020  If CollectionItemExists(filename, colInfoSpoolFiles) = False Then
+50030    Set isf = New clsInfoSpoolFile
+50040    isf.ReadInfoFile filename
+50050    colInfoSpoolFiles.Add isf, filename
+50060    Set GetInfoSpoolFileObject = isf
+50070   Else
+50080    Set GetInfoSpoolFileObject = colInfoSpoolFiles(filename)
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "GetInfoSpoolFileObject")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Private Sub RemoveInfoSpoolFileObject(filename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  colInfoSpoolFiles.Remove filename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmMain", "RemoveInfoSpoolFileObject")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub CheckForPrinting()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1530,63 +1604,64 @@ On Error GoTo ErrPtnr_OnError
 50060       If lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting Then
 50070         'PDFSpoolfile = lsv.ListItems(1).SubItems(4)
 50080         CurrentInfoSpoolFile = lsv.ListItems(1).SubItems(4)
-50090         Set isf = New clsInfoSpoolFile
-50100         isf.ReadInfoFile CurrentInfoSpoolFile
-50110         DoEvents
-50120         If LenB(isf.FirstPrinterName) > 0 And UCase$(OldPrinter) <> UCase$(isf.FirstPrinterName) Then
-50130          OldPrinter = isf.FirstPrinterName
-50140          Options = ReadOptions(True, , GetPrinterDefaultProfile(isf.FirstPrinterName))
-50150         End If
-50160         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.FirstPrinterName)
-50170         frmPrinting.Show vbModal, Me
-50180        Else
-50190         PrintSelectedJobs = False
-50200       End If
-50210      Else
-50220       If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListWaiting Then
-50230        lsv.ListItems(1).SubItems(1) = LanguageStrings.ListWaiting
-50240       End If
-50250     End If
-50260    Else
-50270     If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListPrinting Then
-50280      lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting
-50290     End If
-50300     CurrentInfoSpoolFile = lsv.ListItems(1).SubItems(4)
-50310     If PrinterStop = False Then
-50320      If IsFormLoaded(frmPrinting) = False Then
-50330       Set isf = New clsInfoSpoolFile
-50340       isf.ReadInfoFile CurrentInfoSpoolFile
-50350       PrinterDefaultProfile = Trim$(GetPrinterDefaultProfile(isf.FirstPrinterName))
-50360       If LenB(PrinterDefaultProfile) > 0 Then
-50370         opt = ReadOptions(True, , PrinterDefaultProfile)
-50380        Else
-50390         opt = Options
-50400       End If
-50410       If opt.UseAutosave = 1 Then
-50420         opt2 = Options
-50430         Options = opt
-50440         Autosave CurrentInfoSpoolFile
-50450         SaveOption Options, "Counter", PrinterDefaultProfile
-50460         opt2.Counter = Options.Counter
-50470         Options = opt2
-50480        Else
-50490         If LenB(isf.FirstPrinterName) > 0 And UCase$(OldPrinter) <> UCase$(isf.FirstPrinterName) Then
-50500          OldPrinter = isf.FirstPrinterName
-50510         End If
-50520         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.FirstPrinterName)
-50530         frmPrinting.Show , Me
-50540       End If
-50550      End If
-50560     End If
-50570     If PrinterStop = False And NoProcessing = False Then
-50580       mnPrinter(2).Checked = False
-50590       tlb(0).Buttons(1).Image = 1
-50600      Else
-50610       mnPrinter(2).Checked = True
-50620       tlb(0).Buttons(1).Image = 2
-50630     End If
-50640   End If
-50650  End If
+50090         ' Set isf = New clsInfoSpoolFile
+50100         ' isf.ReadInfoFile CurrentInfoSpoolFile
+50110         Set isf = GetInfoSpoolFileObject(CurrentInfoSpoolFile)
+50120         DoEvents
+50130         If LenB(isf.FirstPrinterName) > 0 And UCase$(OldPrinter) <> UCase$(isf.FirstPrinterName) Then
+50140          OldPrinter = isf.FirstPrinterName
+50150          Options = ReadOptions(True, , GetPrinterDefaultProfile(isf.FirstPrinterName))
+50160         End If
+50170         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.FirstPrinterName)
+50180         frmPrinting.Show vbModal, Me
+50190        Else
+50200         PrintSelectedJobs = False
+50210       End If
+50220      Else
+50230       If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListWaiting Then
+50240        lsv.ListItems(1).SubItems(1) = LanguageStrings.ListWaiting
+50250       End If
+50260     End If
+50270    Else
+50280     If lsv.ListItems(1).SubItems(1) <> LanguageStrings.ListPrinting Then
+50290      lsv.ListItems(1).SubItems(1) = LanguageStrings.ListPrinting
+50300     End If
+50310     CurrentInfoSpoolFile = lsv.ListItems(1).SubItems(4)
+50320     If PrinterStop = False Then
+50330      If IsFormLoaded(frmPrinting) = False Then
+50340       Set isf = New clsInfoSpoolFile
+50350       isf.ReadInfoFile CurrentInfoSpoolFile
+50360       PrinterDefaultProfile = Trim$(GetPrinterDefaultProfile(isf.FirstPrinterName))
+50370       If LenB(PrinterDefaultProfile) > 0 Then
+50380         opt = ReadOptions(True, , PrinterDefaultProfile)
+50390        Else
+50400         opt = Options
+50410       End If
+50420       If opt.UseAutosave = 1 Then
+50430         opt2 = Options
+50440         Options = opt
+50450         Autosave CurrentInfoSpoolFile
+50460         SaveOption Options, "Counter", PrinterDefaultProfile
+50470         opt2.Counter = Options.Counter
+50480         Options = opt2
+50490        Else
+50500         If LenB(isf.FirstPrinterName) > 0 And UCase$(OldPrinter) <> UCase$(isf.FirstPrinterName) Then
+50510          OldPrinter = isf.FirstPrinterName
+50520         End If
+50530         frmPrinting.PrinterProfile = GetPrinterDefaultProfile(isf.FirstPrinterName)
+50540         frmPrinting.Show , Me
+50550       End If
+50560      End If
+50570     End If
+50580     If PrinterStop = False And NoProcessing = False Then
+50590       mnPrinter(2).Checked = False
+50600       tlb(0).Buttons(1).Image = 1
+50610      Else
+50620       mnPrinter(2).Checked = True
+50630       tlb(0).Buttons(1).Image = 2
+50640     End If
+50650   End If
+50660  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1605,18 +1680,18 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim lItem As ListItem, files As Collection, tColl As Collection, _
   tFile() As String, i As Long, j As Long, kB As Long, MB As Long, GB As Long, _
-  ind As Long, tStr As String, tB As Boolean
-50040  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo
+  ind As Long, tStr As String, tB As Boolean, spoolFile As clsSpoolFile
+50040  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, tCol As Collection
 50050  kB = 1024: MB = kB * 1024: GB = MB * 1024
 50060  Set files = New Collection
 50070
 50080  ' Get all files from spool directory
 50090  FindFiles GetPDFCreatorSpoolDirectory, files, "*.inf", , False, True
 50100
-50110  ' Remove all files with file length 0, possible in use
+50110  ' Remove all in use files
 50120  For i = files.Count To 1 Step -1
-50130   tFile = Split(files(i), "|")
-50140   If FileLen(tFile(1)) = 0 Then
+50130   Set spoolFile = files(i)
+50140   If spoolFile.FileLen = 0 Then
 50150    files.Remove i
 50160   End If
 50170  Next i
@@ -1627,101 +1702,77 @@ On Error GoTo ErrPtnr_OnError
 50220   Exit Sub
 50230  End If
 50240
-50250  tB = False
-50260
-50270  Set tColl = New Collection
-50280  For j = 1 To lsv.ListItems.Count
-50290   ind = 0
-50300   For i = 1 To files.Count
-50310    tFile = Split(files.Item(i), "|")
-50320    If StrComp(tFile(1), lsv.ListItems(j).SubItems(4), vbTextCompare) = 0 Then
-50330     ind = i
-50340     Exit For
-50350    End If
-50360   Next i
-50370   If ind = 0 Then
-50380    tColl.Add j
-50390   End If
-50400  Next j
-50410  If tColl.Count > 0 Then
-50420   tB = True
-50430  End If
-50440  For j = 1 To tColl.Count
-50450   lsv.ListItems.Remove tColl(j) - (j - 1)
+50250 ' --- Find listview items (files) which no longer exist and remove them ---
+50260  tB = False
+50270  For j = lsv.ListItems.Count To 1 Step -1
+50280   If CollectionItemExists(lsv.ListItems(j).SubItems(4), files) = False Then
+50290    tB = True
+50300    lsv.ListItems.Remove j
+50310   End If
+50320  Next j
+50330 ' ---
+50340
+50350 ' --- Find files which already exist in listview items collection and remove them ---
+50360  Set tCol = New Collection
+50370  For j = 1 To lsv.ListItems.Count
+50380   tCol.Add lsv.ListItems.Item(j).key, lsv.ListItems.Item(j).key
+50390  Next j
+50400  For j = files.Count To 1 Step -1
+50410   Set spoolFile = files(j)
+50420   If CollectionItemExists(spoolFile.FullFileName, tCol) = True Then
+50430    tB = True
+50440    files.Remove j
+50450   End If
 50460  Next j
-50470
-50480  Set tColl = New Collection
-50490  For j = 1 To files.Count
-50500   tFile = Split(files.Item(j), "|")
-50510   ind = 0
-50520   For i = 1 To lsv.ListItems.Count
-50530    If UCase$(tFile(1)) = UCase$(lsv.ListItems(i).SubItems(4)) Then
-50540     ind = i
-50550     Exit For
-50560    End If
-50570   Next i
-50580   If ind > 0 And ind < lsv.ListItems.Count + 1 Then
-50590    tColl.Add j
-50600   End If
-50610  Next j
-50620  For j = 1 To tColl.Count
-50630   files.Remove tColl(j) - (j - 1)
-50640  Next j
-50650
-50660  For j = 1 To files.Count
-50670   tFile = Split(files.Item(j), "|")
-50680   ind = 0
-50690   For i = 1 To lsv.ListItems.Count
-50700    If StrComp(tFile(1), lsv.ListItems(i).SubItems(4), vbTextCompare) = 0 Then
-50710     ind = i
-50720     Exit For
-50730    End If
-50740   Next i
-50750   If ind = 0 Then
-50760    tB = True
-50770    If FormISLoaded("frmOptions") = False And Me.Visible = True Then
-50780     Me.Show
-50790    End If
-50800
-50810    Set isf = New clsInfoSpoolFile
-50820    isf.ReadInfoFile tFile(1)
-50830    If isf.InfoFiles.Count > 1 Then
-50840      Set lItem = lsv.ListItems.Add(, , isf.FirstDocumentTitle, , 2)
-50850     Else
-50860      Set lItem = lsv.ListItems.Add(, , isf.FirstDocumentTitle, , 1)
-50870    End If
-50880
-50890    lItem.SubItems(1) = LanguageStrings.ListWaiting
-50900    lItem.SubItems(2) = tFile(3)
-50910
-50920    If CLng(tFile(2)) > GB Then
-50930      lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / GB, "#,##0.00 " & LanguageStrings.ListGBytes)
-50940     Else
-50950      If CLng(tFile(2)) > MB Then
-50960        lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / MB, "#,##0.00 " & LanguageStrings.ListMBytes)
-50970       Else
-50980        If CLng(tFile(2)) > kB Then
-50990          lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / kB, "#,##0.00 " & LanguageStrings.ListKBytes)
-51000         Else
-51010          lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes), "#,##0 " & LanguageStrings.ListBytes)
-51020        End If
-51030     End If
-51040    End If
-51050    lItem.SubItems(4) = tFile(1)
-51060    DoEvents
-51070   End If
-51080  Next j
-51090  If lsv.ListItems.Count = 1 Then
-51100    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
-51110   Else
-51120    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
-51130  End If
-51140  If tStr <> stb.Panels("Status").Text Then
-51150   stb.Panels("Status").Text = tStr
-51160  End If
-51170  If tB = True Then
-51180   SetDocMenuAndToolbar
-51190  End If
+50470 ' ---
+50480
+50490 ' --- Add new files to listview
+50500  If files.Count > 0 Then
+50510   tB = True
+50520   If FormISLoaded("frmOptions") = False And Me.Visible = True Then
+50530    Me.Show
+50540   End If
+50550  End If
+50560
+50570  For j = 1 To files.Count
+50580   Set spoolFile = files(j)
+50590   Set isf = GetInfoSpoolFileObject(spoolFile.FullFileName)
+50600
+50610   If isf.InfoFiles.Count > 1 Then
+50620     Set lItem = lsv.ListItems.Add(, spoolFile.FullFileName, isf.FirstDocumentTitle, , 2)
+50630    Else
+50640     Set lItem = lsv.ListItems.Add(, spoolFile.FullFileName, isf.FirstDocumentTitle, , 1)
+50650   End If
+50660
+50670   lItem.SubItems(1) = LanguageStrings.ListWaiting
+50680   lItem.SubItems(2) = spoolFile.FileDateTime
+50690
+50700   If spoolFile.FileLen > GB Then
+50710     lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / GB, "#,##0.00 " & LanguageStrings.ListGBytes)
+50720    ElseIf spoolFile.FileLen > MB Then
+50730     lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / MB, "#,##0.00 " & LanguageStrings.ListMBytes)
+50740    Else
+50750     If spoolFile.FileLen > kB Then
+50760       lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / kB, "#,##0.00 " & LanguageStrings.ListKBytes)
+50770      Else
+50780       lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes), "#,##0 " & LanguageStrings.ListBytes)
+50790     End If
+50800   End If
+50810   lItem.SubItems(4) = spoolFile.FullFileName
+50820   DoEvents
+50830  Next j
+50840
+50850  If lsv.ListItems.Count = 1 Then
+50860    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg01
+50870   Else
+50880    tStr = LanguageStrings.ListStatus & ": " & lsv.ListItems.Count & " " & LanguageStrings.MessagesMsg02
+50890  End If
+50900  If tStr <> stb.Panels("Status").Text Then
+50910   stb.Panels("Status").Text = tStr
+50920  End If
+50930  If tB = True Then
+50940   SetDocMenuAndToolbar
+50950  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1888,7 +1939,7 @@ On Error GoTo ErrPtnr_OnError
   OutputFilename As String, PDFDocInfo As tPDFDocInfo, tStr As String, _
   PSHeader As tPSHeader, tDate As Date, mail As clsPDFCreatorMail
 50040  Dim PSFile As String, isf As clsInfoSpoolFile
-50050  Dim PDFDocInfoFile As String, StampFile As String
+50050  Dim PDFDocInfoFile As String, StampFile As String, spoolFile As clsSpoolFile
 50060
 50070  InAutoSave = True
 50080  IsConverted = False
@@ -1897,113 +1948,116 @@ On Error GoTo ErrPtnr_OnError
 50110  If Len(InfoSpoolFileName) > 0 Then
 50120    If FileExists(InfoSpoolFileName) = True Then
 50130     SplitPath InfoSpoolFileName, , Pathname
-50140     tColl.Add Pathname & "|" & InfoSpoolFileName & "|" & FileLen(InfoSpoolFileName) & "|" & FileDateTime(InfoSpoolFileName)
-50150    End If
-50160   Else
-50170    FindFiles GetPDFCreatorSpoolDirectory, tColl, "*.inf", , True, True
-50180  End If
-50190
-50200  tStr = "Autosavemodus: " & tColl.Count & "files"
-50210  IfLoggingWriteLogfile tStr
-50220  WriteToSpecialLogfile tStr
-50230  Do While tColl.Count > 0
-50240   For i = 1 To tColl.Count
-50250    tFile = Split(tColl.Item(i), "|")
-50260    If FileExists(tFile(1)) And Not FileInUse(tFile(1)) Then
-50270     OutputFilename = GetAutosaveFilename(tFile(1))
-50280     SplitPath OutputFilename, , Pathname
-50290     If IsValidPath(Pathname) = True Then
-50300       If DirExists(Pathname) = False Then
-50310        MakePath (Pathname)
-50320       End If
-50330       tStr = "Autosavemodus: Create File '" & OutputFilename & "'"
-50340       IfLoggingWriteLogfile tStr
-50350       WriteToSpecialLogfile tStr
-50360
-50370       Set isf = New clsInfoSpoolFile
-50380       isf.ReadInfoFile tFile(1)
-50390
-50400       PSHeader = GetPSHeader(isf.FirstSpoolFileName)
-50410       tDate = Now
-50420       With PDFDocInfo
-50430        If Options.UseStandardAuthor = 1 Then
-50440          .Author = GetSubstFilename(tFile(1), _
-          RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
-50460         Else
-50470          .Author = isf.FirstUserName
-50480        End If
-50490        If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50500          tStr = PSHeader.CreationDate.Comment
-50510         Else
-50520          tStr = CStr(tDate)
-50530        End If
-50540        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50550        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50560        .Keywords = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
-50570        'tStr = CStr(tDate)
-50580        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50590        .Subject = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
-50600        If Len(Options.StandardTitle) > 0 Then
-50610          .Title = GetSubstFilename(tFile(1), RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
-50620         Else
-50630          .Title = GetSubstFilename(tFile(1), Options.SaveFilename, , , True)
-50640        End If
-50650       End With
-50660
-50670       PDFDocInfoFile = CreatePDFDocInfoFile(tFile(1), PDFDocInfo)
-50680       StampFile = CreateStampFile(tFile(1))
-50690
-50700       If Options.RunProgramBeforeSaving = 1 Then
-50710        RunProgramBeforeSaving Me.hwnd, tFile(1), _
+50140     Set spoolFile = New clsSpoolFile
+50150     spoolFile.Path = Pathname
+50160     spoolFile.FullFileName = InfoSpoolFileName
+50170     spoolFile.FileLen = FileLen(InfoSpoolFileName)
+50180     spoolFile.FileDateTime = FileDateTime(InfoSpoolFileName)
+50190     tColl.Add spoolFile, InfoSpoolFileName
+50200    End If
+50210   Else
+50220    FindFiles GetPDFCreatorSpoolDirectory, tColl, "*.inf", , False, True
+50230  End If
+50240
+50250  tStr = "Autosavemodus: " & tColl.Count & "files"
+50260  IfLoggingWriteLogfile tStr
+50270  WriteToSpecialLogfile tStr
+50280 ' Do While tColl.Count > 0
+50290   For i = 1 To tColl.Count
+50300    Set spoolFile = tColl.Item(i)
+50310    If FileExists(spoolFile.FullFileName) And Not FileInUse(spoolFile.FullFileName) Then
+50320     OutputFilename = GetAutosaveFilename(spoolFile.FullFileName)
+50330     SplitPath OutputFilename, , Pathname
+50340     If IsValidPath(Pathname) = True Then
+50350       If DirExists(Pathname) = False Then
+50360        MakePath (Pathname)
+50370       End If
+50380       tStr = "Autosavemodus: Create File '" & OutputFilename & "'"
+50390       IfLoggingWriteLogfile tStr
+50400       WriteToSpecialLogfile tStr
+50410
+50420       Set isf = GetInfoSpoolFileObject(spoolFile.FullFileName)
+50430       PSHeader = GetPSHeader(isf.FirstSpoolFileName)
+50440       tDate = Now
+50450       With PDFDocInfo
+50460        If Options.UseStandardAuthor = 1 Then
+50470          .Author = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True)
+50480         Else
+50490          .Author = isf.FirstUserName
+50500        End If
+50510        If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50520          tStr = PSHeader.CreationDate.Comment
+50530         Else
+50540          tStr = CStr(tDate)
+50550        End If
+50560        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50570        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+50580        .Keywords = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50590        'tStr = CStr(tDate)
+50600        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
+50610        .Subject = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50620        If Len(Options.StandardTitle) > 0 Then
+50630          .Title = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50640         Else
+50650          .Title = GetSubstFilename(spoolFile.FullFileName, Options.SaveFilename, , , True)
+50660        End If
+50670       End With
+50680
+50690       PDFDocInfoFile = CreatePDFDocInfoFile(spoolFile.FullFileName, PDFDocInfo)
+50700       StampFile = CreateStampFile(spoolFile.FullFileName)
+50710
+50720       If Options.RunProgramBeforeSaving = 1 Then
+50730        RunProgramBeforeSaving Me.hwnd, spoolFile.FullFileName, _
         Options.RunProgramBeforeSavingProgramParameters, _
         Options.RunProgramBeforeSavingWindowstyle
-50740       End If
-50750       CallGScript tFile(1), OutputFilename, Options, Options.AutosaveFormat, PDFDocInfoFile, StampFile
-50760
-50770       If FileExists(OutputFilename) = True Then
-50780         IsConverted = True
-50790         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
-50800         IfLoggingWriteLogfile tStr
-50810         WriteToSpecialLogfile tStr
-50820         If Options.RunProgramAfterSaving = 1 Then
-50830          RunProgramAfterSaving Me.hwnd, OutputFilename, _
+50760       End If
+50770       CallGScript spoolFile.FullFileName, OutputFilename, Options, Options.AutosaveFormat, PDFDocInfoFile, StampFile
+50780
+50790       If FileExists(OutputFilename) = True Then
+50800         IsConverted = True
+50810         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
+50820         IfLoggingWriteLogfile tStr
+50830         WriteToSpecialLogfile tStr
+50840         If Options.RunProgramAfterSaving = 1 Then
+50850          RunProgramAfterSaving Me.hwnd, OutputFilename, _
          Options.RunProgramAfterSavingProgramParameters, _
-         Options.RunProgramAfterSavingWindowstyle, tFile(1)
-50860         End If
-50870         If Options.SendEmailAfterAutoSaving = 1 Then
-50880          Set mail = New clsPDFCreatorMail
-50890          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
-50900           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
-50910          End If
-50920          Set mail = Nothing
-50930         End If
-50940         Options.Counter = Options.Counter + 1
-50950         If Options.AutosaveStartStandardProgram = 1 Then
-50960          If Options.OneFilePerPage = 1 Then
-50970            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
-50980           Else
-50990            OpenDocument OutputFilename
-51000          End If
-51010         End If
-51020        Else
-51030         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-51040         IfLoggingWriteLogfile tStr
-51050         WriteToSpecialLogfile tStr
-51060       End If
-51070      Else
-51080       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted! > " & OutputFilename
-51090     End If
-51100     CheckForPrintingAfterSaving tFile(1), Options
-51110
-51120     KillInfoSpoolFiles tFile(1)
+         Options.RunProgramAfterSavingWindowstyle, spoolFile.FullFileName
+50880         End If
+50890         If Options.SendEmailAfterAutoSaving = 1 Then
+50900          Set mail = New clsPDFCreatorMail
+50910          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
+50920           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+50930          End If
+50940          Set mail = Nothing
+50950         End If
+50960         Options.Counter = Options.Counter + 1
+50970         If Options.AutosaveStartStandardProgram = 1 Then
+50980          If Options.OneFilePerPage = 1 Then
+50990            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
+51000           Else
+51010            OpenDocument OutputFilename
+51020          End If
+51030         End If
+51040        Else
+51050         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+51060         IfLoggingWriteLogfile tStr
+51070         WriteToSpecialLogfile tStr
+51080       End If
+51090      Else
+51100       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted! > " & OutputFilename
+51110     End If
+51120     CheckForPrintingAfterSaving spoolFile.FullFileName, Options
 51130
-51140     ConvertedOutputFilename = OutputFilename
-51150     ReadyConverting = True
-51160    End If
-51170   Next i
-51180   Set tColl = GetFiles(GetPDFCreatorTempfolder, "PDF*.tmp", SortedByDate)
-51190  Loop
-51200  InAutoSave = False
+51140     KillInfoSpoolFiles spoolFile.FullFileName
+51150
+51160     ConvertedOutputFilename = OutputFilename
+51170     ReadyConverting = True
+51180    End If
+51190   Next i
+51200   DoEvents
+51210 '  FindFiles2 GetPDFCreatorSpoolDirectory, tColl, "*.inf", , False, True
+51220 ' Loop
+51230  InAutoSave = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
