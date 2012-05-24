@@ -10,28 +10,28 @@ On Error GoTo ErrPtnr_OnError
 50010
 50020  Const vbErr_PathNotFound = 76, INVALID_VALUE = -1
 50030  Dim FileAttr As Long, filename As String, hFind As Long, WFD As WIN32_FIND_DATA
-50040
-50050  Path = CompletePath(Path)
-50060
-50070  If files Is Nothing Then
-50080   Set files = New Collection
-50090  End If
-50100  Pattern = LCase$(Pattern)
-50110
-50120  hFind = FindFirstFileA(Path & "*", WFD)
-50130  If hFind = INVALID_VALUE Then
-50140   Exit Function
-50150 '  Err.Raise vbErr_PathNotFound
-50160  End If
-50170
-50180  Do
-50190   filename = LeftB$(WFD.cFileName, InStrB(WFD.cFileName, vbNullChar))
-50200   FileAttr = GetFileAttributesA(Path & filename)
-50210   If FileAttr And vbDirectory Then
-50220     If Recursive Then
-50230      If FileAttr <> INVALID_VALUE And filename <> "." And _
-      filename <> ".." Then
-50250        FindFiles = FindFiles + FindFiles(Path & filename, files, Pattern, Attributes)
+50040  Dim spoolFile As clsSpoolFile
+50050
+50060  Path = CompletePath(Path)
+50070
+50080  If files Is Nothing Then
+50090   Set files = New Collection
+50100  End If
+50110  Pattern = LCase$(Pattern)
+50120
+50130  hFind = FindFirstFileA(Path & "*", WFD)
+50140  If hFind = INVALID_VALUE Then
+50150   Exit Function
+50160 '  Err.Raise vbErr_PathNotFound
+50170  End If
+50180
+50190  Do
+50200   filename = LeftB$(WFD.cFileName, InStrB(WFD.cFileName, vbNullChar))
+50210   FileAttr = GetFileAttributesA(Path & filename)
+50220   If FileAttr And vbDirectory Then
+50230     If Recursive Then
+50240      If FileAttr <> INVALID_VALUE And filename <> "." And filename <> ".." Then
+50250       FindFiles = FindFiles + FindFiles(Path & filename, files, Pattern, Attributes)
 50260      End If
 50270     End If
 50280    Else
@@ -39,17 +39,27 @@ On Error GoTo ErrPtnr_OnError
 50300      If LCase$(filename) Like Pattern Then
 50310       FindFiles = FindFiles + 1
 50320       If OnlyNotInUse = False Then
-50330         files.Add Path & "|" & Path & filename & "|" & FileLen(Path & filename) & "|" & FileDateTime(Path & filename)
-50340        Else
-50350         If FileInUse(Path & filename) = False Then
-50360          files.Add Path & "|" & Path & filename & "|" & FileLen(Path & filename) & "|" & FileDateTime(Path & filename)
-50370         End If
-50380       End If
-50390      End If
-50400     End If
-50410   End If
-50420  Loop While FindNextFileA(hFind, WFD)
-50430  FindClose hFind
+50330         Set spoolFile = New clsSpoolFile
+50340         spoolFile.Path = Path
+50350         spoolFile.FullFileName = Path & filename
+50360         spoolFile.FileLen = FileLen(Path & filename)
+50370         spoolFile.FileDateTime = FileDateTime(Path & filename)
+50380         files.Add spoolFile, spoolFile.FullFileName
+50390        Else
+50400         If FileInUse(Path & filename) = False Then
+50410          Set spoolFile = New clsSpoolFile
+50420          spoolFile.Path = Path
+50430          spoolFile.FullFileName = Path & filename
+50440          spoolFile.FileLen = FileLen(Path & filename)
+50450          spoolFile.FileDateTime = FileDateTime(Path & filename)
+50460          files.Add spoolFile, spoolFile.FullFileName
+50470         End If
+50480       End If
+50490      End If
+50500     End If
+50510   End If
+50520  Loop While FindNextFileA(hFind, WFD)
+50530  FindClose hFind
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

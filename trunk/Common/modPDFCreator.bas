@@ -327,51 +327,35 @@ End Function
 
 Public Sub ClearCache()
  On Error Resume Next
- Dim cFiles As Collection, tStr As String, i As Long, tStrf() As String
+ Dim cFiles As Collection, tStr As String, i As Long, tStrf() As String, spoolFile As clsSpoolFile
  tStr = GetPDFCreatorSpoolDirectory
  If DirExists(tStr) = True Then
   Call FindFiles(tStr, cFiles, "*.inf", , True, True)
   For i = 1 To cFiles.Count
-   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
-    tStrf = Split(cFiles(i), "|")
-    If UBound(tStrf) >= 1 Then
-     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
-      Kill tStrf(1)
-     End If
-    End If
+   Set spoolFile = cFiles(i)
+   If FileExists(spoolFile.FullFileName) And Not FileInUse(spoolFile.FullFileName) Then
+    Kill spoolFile.FullFileName
    End If
   Next i
   Call FindFiles(tStr, cFiles, "*.ps", , True, True)
   For i = 1 To cFiles.Count
-   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
-    tStrf = Split(cFiles(i), "|")
-    If UBound(tStrf) >= 1 Then
-     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
-      Kill tStrf(1)
-     End If
-    End If
+   Set spoolFile = cFiles(i)
+   If FileExists(spoolFile.FullFileName) And Not FileInUse(spoolFile.FullFileName) Then
+    Kill spoolFile.FullFileName
    End If
   Next i
   Call FindFiles(tStr, cFiles, "*.mtd", , True, True)
   For i = 1 To cFiles.Count
-   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
-    tStrf = Split(cFiles(i), "|")
-    If UBound(tStrf) >= 1 Then
-     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
-      Kill tStrf(1)
-     End If
-    End If
+   Set spoolFile = cFiles(i)
+   If FileExists(spoolFile.FullFileName) And Not FileInUse(spoolFile.FullFileName) Then
+    Kill spoolFile.FullFileName
    End If
   Next i
   Call FindFiles(tStr, cFiles, "*.stm", , True, True)
   For i = 1 To cFiles.Count
-   If InStr(1, cFiles(i), "|", vbTextCompare) > 0 Then
-    tStrf = Split(cFiles(i), "|")
-    If UBound(tStrf) >= 1 Then
-     If FileExists(tStrf(1)) And Not FileInUse(tStrf(1)) Then
-      Kill tStrf(1)
-     End If
-    End If
+   Set spoolFile = cFiles(i)
+   If FileExists(spoolFile.FullFileName) And Not FileInUse(spoolFile.FullFileName) Then
+    Kill spoolFile.FullFileName
    End If
   Next i
  End If
