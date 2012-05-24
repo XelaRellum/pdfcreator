@@ -240,10 +240,10 @@ On Error GoTo ErrPtnr_OnError
 50130   PathToExe = cReg.GetRegistryValue("PathToExe", "")
 50140   If FileExists(PathToExe) Then
 50150    If LenB(EmailAddress) > 0 Then
-50160     tbParam = "to='" & EmailAddress & "'"
+50160     tbParam = "to=""" & EmailAddress & """"
 50170    End If
 50180    If LenB(Subject) > 0 Then
-50190     subjectParam = "subject='" & Subject & "'"
+50190     subjectParam = "subject=""" & Subject & """"
 50200     If LenB(tbParam) > 0 Then
 50210       tbParam = tbParam & "," & subjectParam
 50220      Else
@@ -252,7 +252,7 @@ On Error GoTo ErrPtnr_OnError
 50250    End If
 50260    If LenB(filename) > 0 Then
 50270     If FileExists(filename) Then
-50280      attachmentParam = "attachment='" & filename & "'"
+50280      attachmentParam = "attachment=""" & filename & """"
 50290      If LenB(tbParam) > 0 Then
 50300        tbParam = tbParam & "," & attachmentParam
 50310       Else
