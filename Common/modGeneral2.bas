@@ -486,3 +486,33 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+Public Function CollectionItemExists(ByVal key As Variant, ByRef col As Collection) As Boolean
+ 'Returns True if item with key exists in collection
+ On Error Resume Next
+ Const ERR_OBJECT_TYPE As Long = 438
+ Dim Item As Variant
+
+ 'Try reach item by key
+ Item = col.Item(key)
+
+ 'If no error occurred, key exists
+ If Err.Number = 0 Then
+   CollectionItemExists = True
+
+ 'In cases where error 438 is thrown, it is likely that
+ 'the item does exist, but is an object that cannot be Let
+  ElseIf Err.Number = ERR_OBJECT_TYPE Then
+
+    'Try reach object by key
+    Set Item = col.Item(key)
+
+    'If an object was found, the key exists
+    If Not Item Is Nothing Then
+     CollectionItemExists = True
+    End If
+ End If
+ Err.Clear
+End Function
+
+

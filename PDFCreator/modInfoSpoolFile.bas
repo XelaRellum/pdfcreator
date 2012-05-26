@@ -1,6 +1,8 @@
 Attribute VB_Name = "modInfoSpoolFile"
 Option Explicit
 
+Public colInfoSpoolFiles As New Collection
+
 ' SpoolFileName = Postscript data file
 Public Function CreateInfoSpoolFile(SpoolFileName As String, Optional InfoSpoolFileName, Optional ClientComputer, Optional DocumentTitle, _
  Optional JobID, Optional PrinterName, Optional SessionID, Optional UserName, Optional WinStation)
@@ -92,6 +94,48 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modInfoSpoolFile", "KillInfoSpoolFiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Function GetInfoSpoolFileObject(filename As String) As clsInfoSpoolFile
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim isf As clsInfoSpoolFile
+50020  If CollectionItemExists(filename, colInfoSpoolFiles) = False Then
+50030    Set isf = New clsInfoSpoolFile
+50040    isf.ReadInfoFile filename
+50050    colInfoSpoolFiles.Add isf, filename
+50060    Set GetInfoSpoolFileObject = isf
+50070   Else
+50080    Set GetInfoSpoolFileObject = colInfoSpoolFiles(filename)
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modInfoSpoolFile", "GetInfoSpoolFileObject")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Sub RemoveInfoSpoolFileObject(filename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  colInfoSpoolFiles.Remove filename
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modInfoSpoolFile", "RemoveInfoSpoolFileObject")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

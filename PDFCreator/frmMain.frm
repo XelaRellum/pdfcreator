@@ -491,8 +491,6 @@ Public InTimer1 As Boolean
 Public InAutoSave As Boolean
 Public OldPrinter As String
 
-Private colInfoSpoolFiles As Collection
-
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1522,76 +1520,6 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function CollectionItemExists(ByVal key As Variant, ByRef col As Collection) As Boolean
- 'Returns True if item with key exists in collection
- On Error Resume Next
- Const ERR_OBJECT_TYPE As Long = 438
- Dim Item As Variant
-
- 'Try reach item by key
- Item = col.Item(key)
-
- 'If no error occurred, key exists
- If Err.Number = 0 Then
-   CollectionItemExists = True
-
- 'In cases where error 438 is thrown, it is likely that
- 'the item does exist, but is an object that cannot be Let
-  ElseIf Err.Number = ERR_OBJECT_TYPE Then
-
-    'Try reach object by key
-    Set Item = col.Item(key)
-
-    'If an object was found, the key exists
-    If Not Item Is Nothing Then
-     CollectionItemExists = True
-    End If
- End If
- Err.Clear
-End Function
-
-Private Function GetInfoSpoolFileObject(filename As String) As clsInfoSpoolFile
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim isf As clsInfoSpoolFile
-50020  If CollectionItemExists(filename, colInfoSpoolFiles) = False Then
-50030    Set isf = New clsInfoSpoolFile
-50040    isf.ReadInfoFile filename
-50050    colInfoSpoolFiles.Add isf, filename
-50060    Set GetInfoSpoolFileObject = isf
-50070   Else
-50080    Set GetInfoSpoolFileObject = colInfoSpoolFiles(filename)
-50090  End If
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "GetInfoSpoolFileObject")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Function
-
-Private Sub RemoveInfoSpoolFileObject(filename As String)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  colInfoSpoolFiles.Remove filename
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Sub
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("frmMain", "RemoveInfoSpoolFileObject")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Sub
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-End Sub
-
 Private Sub CheckForPrinting()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -2049,7 +1977,7 @@ On Error GoTo ErrPtnr_OnError
 51120     CheckForPrintingAfterSaving spoolFile.FullFileName, Options
 51130
 51140     KillInfoSpoolFiles spoolFile.FullFileName
-51150
+51150     RemoveInfoSpoolFileObject spoolFile.FullFileName
 51160     ConvertedOutputFilename = OutputFilename
 51170     ReadyConverting = True
 51180    End If
