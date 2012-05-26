@@ -366,7 +366,8 @@ On Error GoTo ErrPtnr_OnError
 50020   Exit Sub
 50030  End If
 50040  KillInfoSpoolFiles CurrentInfoSpoolFile
-50050  Unload Me
+50050  RemoveInfoSpoolFileObject CurrentInfoSpoolFile
+50060  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -412,11 +413,12 @@ On Error GoTo ErrPtnr_OnError
 50270  End If
 50280
 50290  KillInfoSpoolFiles CurrentInfoSpoolFile
-50300
-50310  Options.Counter = Options.Counter + 1
-50320
-50330  Me.Visible = False
-50340  Unload Me
+50300  RemoveInfoSpoolFileObject CurrentInfoSpoolFile
+50310
+50320  Options.Counter = Options.Counter + 1
+50330
+50340  Me.Visible = False
+50350  Unload Me
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1019,7 +1021,8 @@ On Error GoTo ErrPtnr_OnError
 50510   End If
 50520   IsConverted = True
 50530   KillInfoSpoolFiles CurrentInfoSpoolFile
-50540  End If
+50540   RemoveInfoSpoolFileObject CurrentInfoSpoolFile
+50550  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
