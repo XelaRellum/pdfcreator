@@ -390,7 +390,7 @@ On Error GoTo ErrPtnr_OnError
 50230   Exit Function
 50240  End If
 50250  For i = 0 To 2
-50260   If IsNumeric(updRelease(i)) = False Or IsNumeric(ProgRelease(0)) = False Then
+50260   If IsNumeric(updRelease(i)) = False Or IsNumeric(ProgRelease(i)) = False Then
 50270    Exit Function
 50280   End If
 50290  Next i

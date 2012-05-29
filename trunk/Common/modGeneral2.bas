@@ -466,15 +466,60 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Function GetStandalonePDFArchitectPath() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, appPath As String
+50020  Set reg = New clsRegistry
+50030  reg.hkey = HKEY_LOCAL_MACHINE
+50040  reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{00070886-D6C6-423C-B5A7-3298ABF20E11}"
+50050  If reg.KeyExists = True Then
+50060   appPath = reg.GetRegistryValue("Inno Setup: App Path")
+50070   If LenB(appPath) > 0 Then
+50080    If FileExists(CompletePath(appPath) & "PDFArchitect.exe") Then
+50090      appPath = CompletePath(appPath) & "PDFArchitect.exe"
+50100     Else
+50110      appPath = ""
+50120    End If
+50130   End If
+50140  End If
+50150  Set reg = Nothing
+50160  GetStandalonePDFArchitectPath = appPath
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral2", "GetStandalonePDFArchitectPath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 Public Function IsPDFArchitectInstalled() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  If FileExists(PDFCreatorApplicationPath & "PDFArchitect\PDFArchitect.exe") Then
-50020    IsPDFArchitectInstalled = True
-50030   Else
-50040    IsPDFArchitectInstalled = False
-50050  End If
+50010  Dim reg As clsRegistry, appPath As String
+50020  IsPDFArchitectInstalled = False
+50030  If FileExists(PDFCreatorApplicationPath & "PDFArchitect\PDFArchitect.exe") Then
+50040    IsPDFArchitectInstalled = True
+50050   Else
+50060    Set reg = New clsRegistry
+50070    reg.hkey = HKEY_LOCAL_MACHINE
+50080    reg.KeyRoot = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{00070886-D6C6-423C-B5A7-3298ABF20E11}"
+50090    If reg.KeyExists = True Then
+50100     appPath = reg.GetRegistryValue("Inno Setup: App Path")
+50110     If LenB(appPath) > 0 Then
+50120      If FileExists(CompletePath(appPath) & "PDFArchitect.exe") Then
+50130       IsPDFArchitectInstalled = True
+50140      End If
+50150     End If
+50160    End If
+50170    Set reg = Nothing
+50180  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
