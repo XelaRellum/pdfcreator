@@ -618,7 +618,7 @@ Private Function CheckType(TypeStr As String) As Boolean
 End Function
 
 Private Sub cmdIncFile_Click(Index As Integer)
- Dim fn As Long, GSViewPath As String
+ Dim fn As Long, GSViewPath As String, itdTextAuthor As String, itdTextStrings As String
  
  On Error GoTo ErrorHandler
  Select Case Index
@@ -653,11 +653,18 @@ Private Sub cmdIncFile_Click(Index As Integer)
     .InitDir = App.Path & "\..\PDFCreator\Languages"
     .ShowOpen
     txtIncFile.Text = GetKeysAndValuesFromInifile("Setup", .filename)
-    If Len(txtIncFile.Text) > 0 Then
-     cmdIncFile(1).Enabled = True
-    End If
+    itdTextAuthor = GetKeysAndValuesFromInifile("itDownload_Author", .filename)
+    itdTextStrings = GetKeysAndValuesFromInifile("itDownload_Strings", .filename)
    End With
    SaveFile App.Path & "\..\..\Setup\Language includes\" & LastIncFile & ".inc", txtIncFile.Text
+   'itd
+   SaveFile App.Path & "\..\..\Setup\ITD\languages\itd_" & LastIncFile & ".ini", "[Author]"
+   SaveFile App.Path & "\..\..\Setup\ITD\languages\itd_" & LastIncFile & ".ini", Replace$(itdTextAuthor, LastIncFile & ".", ""), True
+   SaveFile App.Path & "\..\..\Setup\ITD\languages\itd_" & LastIncFile & ".ini", "[Strings]", True
+   SaveFile App.Path & "\..\..\Setup\ITD\languages\itd_" & LastIncFile & ".ini", Replace$(itdTextStrings, LastIncFile & ".", ""), True
+   If Len(txtIncFile.Text) > 0 Then
+    cmdIncFile(1).Enabled = True
+   End If
  End Select
  Exit Sub
 ErrorHandler:
@@ -2732,10 +2739,14 @@ Private Sub SaveOptions(filename As String)
  Close fn
 End Sub
 
-Private Sub SaveFile(filename As String, txtStr As String)
+Private Sub SaveFile(filename As String, txtStr As String, Optional Append As Boolean = False)
  Dim fn As Long
  fn = FreeFile
- Open filename For Output As #fn
+ If Append Then
+   Open filename For Append As #fn
+  Else
+   Open filename For Output As #fn
+ End If
  Print #fn, txtStr
  Close #fn
 End Sub

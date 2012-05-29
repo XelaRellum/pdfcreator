@@ -344,36 +344,38 @@ On Error GoTo ErrPtnr_OnError
 50040   End If
 50050   OldProfile = cmbProfile.ListIndex
 50060   If cmbProfile.ListIndex = 0 Then
-50070     optGhostscript.ControlsEnabled = True
-50080     optLanguages.ControlsEnabled = True
-50090     optFonts.ControlsEnabled = True
-50100     cmdProfileRename.Enabled = False
-50110     cmdProfileDelete.Enabled = False
-50120     cmdProfileSave.Enabled = True
-50130     cmdReset.Enabled = True
-50140     SetSubOption LastNodeKey, True
-50150    Else
-50160     If HKLMProfileExists(cmbProfile.List(cmbProfile.ListIndex)) And InstalledAsServer = False Then
-50170       cmdProfileRename.Enabled = False
-50180       cmdProfileDelete.Enabled = False
-50190       cmdProfileSave.Enabled = False
-50200       cmdReset.Enabled = False
-50210       SetSubOption LastNodeKey, False
-50220      Else
-50230       cmdProfileRename.Enabled = True
-50240       cmdProfileDelete.Enabled = True
-50250       cmdProfileSave.Enabled = True
-50260       cmdReset.Enabled = True
-50270       SetSubOption LastNodeKey, True
-50280     End If
-50290     optGhostscript.ControlsEnabled = False
-50300     optLanguages.ControlsEnabled = False
-50310     optFonts.ControlsEnabled = False
-50320   End If
-50330   Options1 = ProfileOptions(cmbProfile.ListIndex)
-50340   Options1.Language = CurrentLanguage
-50350   SetOptions
-50360  End If
+50070     optGeneral.ControlsEnabled = True
+50080     optGhostscript.ControlsEnabled = True
+50090     optLanguages.ControlsEnabled = True
+50100     optFonts.ControlsEnabled = True
+50110     cmdProfileRename.Enabled = False
+50120     cmdProfileDelete.Enabled = False
+50130     cmdProfileSave.Enabled = True
+50140     cmdReset.Enabled = True
+50150     SetSubOption LastNodeKey, True
+50160    Else
+50170     If HKLMProfileExists(cmbProfile.List(cmbProfile.ListIndex)) And InstalledAsServer = False Then
+50180       cmdProfileRename.Enabled = False
+50190       cmdProfileDelete.Enabled = False
+50200       cmdProfileSave.Enabled = False
+50210       cmdReset.Enabled = False
+50220       SetSubOption LastNodeKey, False
+50230      Else
+50240       cmdProfileRename.Enabled = True
+50250       cmdProfileDelete.Enabled = True
+50260       cmdProfileSave.Enabled = True
+50270       cmdReset.Enabled = True
+50280       SetSubOption LastNodeKey, True
+50290     End If
+50300     optGeneral.ControlsEnabled = False
+50310     optGhostscript.ControlsEnabled = False
+50320     optLanguages.ControlsEnabled = False
+50330     optFonts.ControlsEnabled = False
+50340   End If
+50350   Options1 = ProfileOptions(cmbProfile.ListIndex)
+50360   Options1.Language = CurrentLanguage
+50370   SetOptions
+50380  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -578,7 +580,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim FilterIndex As Long, files As Collection, dummyOptions As tOptions, tempOptions As tOptions
 50020  FilterIndex = OpenFileDialog(files, cmbProfile.List(cmbProfile.ListIndex), _
    "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", GetMyFiles, _
-   App.ProductName, OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, Me.hWnd)
+   App.ProductName, OFN_ALLOWMULTISELECT + OFN_EXPLORER + OFN_FILEMUSTEXIST + OFN_LONGNAMES + OFN_NODEREFERENCELINKS, Me.hwnd)
 50050  If FilterIndex > 0 Then
 50060   tempOptions = ReadOptionsINI(dummyOptions, files(1), True)
 50070   ProfileOptions(cmbProfile.ListIndex) = tempOptions
@@ -634,7 +636,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim FName As String, res As Long, tempOptions As tOptions
 50020  res = SaveFileDialog(FName, cmbProfile.List(cmbProfile.ListIndex), "PDFCreator options files (*.ini)|*.ini|All files (*.*)|*.*", "*.ini", _
-  GetMyFiles, App.ProductName, OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + OFN_OVERWRITEPROMPT, Me.hWnd)
+  GetMyFiles, App.ProductName, OFN_EXPLORER + OFN_PATHMUSTEXIST + OFN_LONGNAMES + OFN_HIDEREADONLY + OFN_OVERWRITEPROMPT, Me.hwnd)
 50040  If res > 0 Then
 50050   tempOptions = GetOptionsFromUserControls(ProfileOptions(cmbProfile.ListIndex))   ' Get the current settings settings
 50060   SaveOptionsINI tempOptions, FName
@@ -1540,10 +1542,11 @@ On Error GoTo ErrPtnr_OnError
 50090    SetSubOption Node.key, True
 50100  End If
 50110  If cmbProfile.ListIndex > 0 Then
-50120   optGhostscript.ControlsEnabled = False
-50130   optFonts.ControlsEnabled = False
-50140   optLanguages.ControlsEnabled = False
-50150  End If
+50120   optGeneral.ControlsEnabled = False
+50130   optGhostscript.ControlsEnabled = False
+50140   optFonts.ControlsEnabled = False
+50150   optLanguages.ControlsEnabled = False
+50160  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

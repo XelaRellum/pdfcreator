@@ -49,6 +49,18 @@ Begin VB.UserControl ctlOptGeneral
          Top             =   600
          Width           =   3870
       End
+      Begin VB.Label lblEnableNotice 
+         AutoSize        =   -1  'True
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   195
+         Index           =   2
+         Left            =   0
+         TabIndex        =   27
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   3645
+      End
       Begin VB.Label lblUpdateInterval 
          AutoSize        =   -1  'True
          Caption         =   "Update interval"
@@ -100,6 +112,18 @@ Begin VB.UserControl ctlOptGeneral
          TabIndex        =   20
          Top             =   420
          Width           =   2910
+      End
+      Begin VB.Label lblEnableNotice 
+         AutoSize        =   -1  'True
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   195
+         Index           =   3
+         Left            =   0
+         TabIndex        =   28
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   3645
       End
    End
    Begin PDFCreator.dmFrame dmFraProgGeneral2 
@@ -167,6 +191,18 @@ Begin VB.UserControl ctlOptGeneral
          3DHighlight     =   -2147483628
          3DShadow        =   -2147483632
          DrawStyle       =   0
+      End
+      Begin VB.Label lblEnableNotice 
+         AutoSize        =   -1  'True
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   195
+         Index           =   1
+         Left            =   0
+         TabIndex        =   26
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   3645
       End
       Begin VB.Label lblOptionsDesign 
          AutoSize        =   -1  'True
@@ -296,6 +332,18 @@ Begin VB.UserControl ctlOptGeneral
          3DShadow        =   -2147483632
          DrawStyle       =   0
       End
+      Begin VB.Label lblEnableNotice 
+         AutoSize        =   -1  'True
+         Caption         =   "You can set these options in the default profile only."
+         Enabled         =   0   'False
+         Height          =   195
+         Index           =   0
+         Left            =   0
+         TabIndex        =   25
+         Top             =   0
+         Visible         =   0   'False
+         Width           =   3645
+      End
       Begin VB.Label lblSendMailMethod 
          AutoSize        =   -1  'True
          Caption         =   "Methode to send an email"
@@ -340,41 +388,112 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-Private ControlsEnabled As Boolean
+Private mEnabled As Boolean
+Private mControlsEnabled As Boolean
+
+Public Property Let ControlsEnabled(value As Boolean)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long
+50020  mEnabled = value
+50030
+50040  chkNoConfirmMessageSwitchingDefaultprinter.Enabled = mEnabled
+50050  chkNoConfirmMessageSwitchingDefaultprinter.Visible = mEnabled
+50060  chkNoProcessingAtStartup.Enabled = mEnabled
+50070  chkNoProcessingAtStartup.Visible = mEnabled
+50080  cmbOptionsDesign.Enabled = mEnabled
+50090  cmbOptionsDesign.Visible = mEnabled
+50100  sldProcessPriority.Enabled = mEnabled
+50110  sldProcessPriority.Visible = mEnabled
+50120  cmbSendMailMethod.Enabled = mEnabled
+50130  cmbSendMailMethod.Visible = mEnabled
+50140  chkShowAnimation.Enabled = mEnabled
+50150  chkShowAnimation.Visible = mEnabled
+50160  cmbUpdateInterval.Enabled = mEnabled
+50170  cmbUpdateInterval.Visible = mEnabled
+50180
+50190  cmdTestpage.Enabled = mEnabled
+50200  cmdTestpage.Visible = mEnabled
+50210  lblProcessPriority.Enabled = mEnabled
+50220  lblProcessPriority.Visible = mEnabled
+50230  lblSendMailMethod.Enabled = mEnabled
+50240  lblSendMailMethod.Visible = mEnabled
+50250  cmdShellintegration(0).Enabled = mEnabled
+50260  cmdShellintegration(0).Visible = mEnabled
+50270  cmdShellintegration(1).Enabled = mEnabled
+50280  cmdShellintegration(1).Visible = mEnabled
+50290  cmdAsso.Enabled = mEnabled
+50300  cmdAsso.Visible = mEnabled
+50310  lblOptionsDesign.Enabled = mEnabled
+50320  lblOptionsDesign.Visible = mEnabled
+50330  lblUpdateInterval.Enabled = mEnabled
+50340  lblUpdateInterval.Visible = mEnabled
+50350  cmdCheckNow.Enabled = mEnabled
+50360  cmdCheckNow.Visible = mEnabled
+50370
+50380  If mEnabled = True Then
+50390    SetProgramOptions
+50400    tbstrProgGeneral_Click
+50410   Else
+50420    'dmFraProgGeneral1.Enabled = False
+50430    'dmFraProgGeneral2.Enabled = False
+50440    dmFraShellIntegration.Enabled = False
+50450    dmFraCheckUpdate.Enabled = False
+50460  End If
+50470
+50480  For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50490   lblEnableNotice(i).Visible = Not mEnabled
+50500  Next i
+50510  If mControlsEnabled Then
+50520    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50530     lblEnableNotice(i).Enabled = Not mEnabled
+50540    Next i
+50550   Else
+50560    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50570     lblEnableNotice(i).Enabled = False
+50580    Next i
+50590  End If
+50600
+50610  For i = Line3D1.LBound To Line3D1.UBound
+50620   Line3D1(i).Visible = mEnabled
+50630  Next i
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGeneral", "ControlsEnabled [LET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
+
+Public Property Get ControlEnabled() As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ControlEnabled = mEnabled
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Property
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptGeneral", "ControlEnabled [GET]")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Property
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Property
 
 Public Sub SetControlsEnabled(value As Boolean)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  ControlsEnabled = value
-50020
-50030  chkNoConfirmMessageSwitchingDefaultprinter.Enabled = value
-50040  chkNoProcessingAtStartup.Enabled = value
-50050  cmbOptionsDesign.Enabled = value
-50060  sldProcessPriority.Enabled = value
-50070  cmbSendMailMethod.Enabled = value
-50080  chkShowAnimation.Enabled = value
-50090  cmbUpdateInterval.Enabled = value
-50100
-50110  cmdTestpage.Enabled = value
-50120  lblProcessPriority.Enabled = value
-50130  lblSendMailMethod.Enabled = value
-50140  cmdShellintegration(0).Enabled = value
-50150  cmdShellintegration(1).Enabled = value
-50160  cmdAsso.Enabled = value
-50170  lblOptionsDesign.Enabled = value
-50180  lblUpdateInterval.Enabled = value
-50190  cmdCheckNow.Enabled = value
-50200
-50210  If value = True Then
-50220    SetProgramOptions
-50230    tbstrProgGeneral_Click
-50240   Else
-50250    dmFraProgGeneral1.Enabled = False
-50260    dmFraProgGeneral2.Enabled = False
-50270    dmFraShellIntegration.Enabled = False
-50280    dmFraCheckUpdate.Enabled = False
-50290  End If
+50010  mControlsEnabled = value
+50020  ControlsEnabled = value
+50030  dmFraProgGeneral1.Enabled = value
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -476,11 +595,17 @@ On Error GoTo ErrPtnr_OnError
 50630    sldProcessPriority.Enabled = False
 50640  End If
 50650  SetFrames Options.OptionsDesign
-50660  ControlsEnabled = True
-50670
-50680  SetProgramOptions
-50690
-50700  SetFont
+50660
+50670  For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50680   lblEnableNotice(i).Top = 480
+50690   lblEnableNotice(i).Left = 120
+50700  Next i
+50710
+50720  mControlsEnabled = True
+50730
+50740  SetProgramOptions
+50750
+50760  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -572,38 +697,42 @@ Public Sub SetLanguageStrings()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  With LanguageStrings
-50020   dmFraProgGeneral1.Visible = True
-50030
-50040   dmFraProgGeneral1.Caption = .OptionsProgramGeneralDescription1
-50050   dmFraProgGeneral2.Caption = .OptionsProgramGeneralDescription2
-50060   tbstrProgGeneral.Tabs(1).Caption = LanguageStrings.OptionsProgramGeneralDescription1
-50070   tbstrProgGeneral.Tabs(2).Caption = LanguageStrings.OptionsProgramGeneralDescription2
-50080
-50090   dmFraShellIntegration.Caption = .OptionsShellIntegration
-50100   cmdShellintegration(0).Caption = .OptionsShellIntegrationAdd
-50110   cmdShellintegration(1).Caption = .OptionsShellIntegrationRemove
-50120   lblSendMailMethod.Caption = .OptionsSendMailMethod
-50130   cmbSendMailMethod.List(0) = .OptionsSendMailMethodAutomatic
-50140   cmbSendMailMethod.List(1) = .OptionsSendMailMethodMapi
-50150   cmbSendMailMethod.List(2) = .OptionsSendMailMethodSendmailDLL
-50160   chkNoConfirmMessageSwitchingDefaultprinter.Caption = .OptionsProgramSwitchingDefaultprinter
-50170   chkNoProcessingAtStartup.Caption = .OptionsProgramNoProcessingAtStartup
-50180   lblOptionsDesign.Caption = .OptionsProgramOptionsDesign
-50190   cmbOptionsDesign.List(0) = .OptionsProgramOptionsDesignGradient
-50200   cmbOptionsDesign.List(1) = .OptionsProgramOptionsDesignSimple
-50210   chkShowAnimation.Caption = .OptionsProgramShowAnimation
-50220   cmdTestpage.Caption = .OptionsPrintTestpage
-50230   lblProcessPriority.Caption = .OptionsProcesspriority
-50240   cmdAsso.Caption = .OptionsAssociatePSFiles
-50250   dmFraCheckUpdate.Caption = .OptionsCheckUpdateDescription
-50260   lblUpdateInterval.Caption = .OptionsCheckUpdateInterval
-50270   cmbUpdateInterval.List(0) = .OptionsCheckUpdateInterval01
-50280   cmbUpdateInterval.List(1) = .OptionsCheckUpdateInterval02
-50290   cmbUpdateInterval.List(2) = .OptionsCheckUpdateInterval03
-50300   cmbUpdateInterval.List(3) = .OptionsCheckUpdateInterval04
-50310   cmdCheckNow.Caption = .OptionsCheckUpdateNow
-50320  End With
+50010  Dim i As Long
+50020  With LanguageStrings
+50030   dmFraProgGeneral1.Visible = True
+50040
+50050   dmFraProgGeneral1.Caption = .OptionsProgramGeneralDescription1
+50060   dmFraProgGeneral2.Caption = .OptionsProgramGeneralDescription2
+50070   tbstrProgGeneral.Tabs(1).Caption = LanguageStrings.OptionsProgramGeneralDescription1
+50080   tbstrProgGeneral.Tabs(2).Caption = LanguageStrings.OptionsProgramGeneralDescription2
+50090
+50100   dmFraShellIntegration.Caption = .OptionsShellIntegration
+50110   cmdShellintegration(0).Caption = .OptionsShellIntegrationAdd
+50120   cmdShellintegration(1).Caption = .OptionsShellIntegrationRemove
+50130   lblSendMailMethod.Caption = .OptionsSendMailMethod
+50140   cmbSendMailMethod.List(0) = .OptionsSendMailMethodAutomatic
+50150   cmbSendMailMethod.List(1) = .OptionsSendMailMethodMapi
+50160   cmbSendMailMethod.List(2) = .OptionsSendMailMethodSendmailDLL
+50170   chkNoConfirmMessageSwitchingDefaultprinter.Caption = .OptionsProgramSwitchingDefaultprinter
+50180   chkNoProcessingAtStartup.Caption = .OptionsProgramNoProcessingAtStartup
+50190   lblOptionsDesign.Caption = .OptionsProgramOptionsDesign
+50200   cmbOptionsDesign.List(0) = .OptionsProgramOptionsDesignGradient
+50210   cmbOptionsDesign.List(1) = .OptionsProgramOptionsDesignSimple
+50220   chkShowAnimation.Caption = .OptionsProgramShowAnimation
+50230   cmdTestpage.Caption = .OptionsPrintTestpage
+50240   lblProcessPriority.Caption = .OptionsProcesspriority
+50250   cmdAsso.Caption = .OptionsAssociatePSFiles
+50260   dmFraCheckUpdate.Caption = .OptionsCheckUpdateDescription
+50270   lblUpdateInterval.Caption = .OptionsCheckUpdateInterval
+50280   cmbUpdateInterval.List(0) = .OptionsCheckUpdateInterval01
+50290   cmbUpdateInterval.List(1) = .OptionsCheckUpdateInterval02
+50300   cmbUpdateInterval.List(2) = .OptionsCheckUpdateInterval03
+50310   cmbUpdateInterval.List(3) = .OptionsCheckUpdateInterval04
+50320   cmdCheckNow.Caption = .OptionsCheckUpdateNow
+50330   For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50340    lblEnableNotice(i).Caption = .OptionsEnableNotice
+50350   Next i
+50360  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -712,7 +841,7 @@ On Error GoTo ErrPtnr_OnError
 50070    dmFraCheckUpdate.Enabled = False
 50080    dmFraCheckUpdate.Visible = False
 50090    dmFraProgGeneral1.Visible = True
-50100    If ControlsEnabled Then
+50100    If mControlsEnabled Then
 50110     dmFraProgGeneral1.Enabled = True
 50120    End If
 50130   Case 2
@@ -721,7 +850,7 @@ On Error GoTo ErrPtnr_OnError
 50160    dmFraProgGeneral2.Visible = True
 50170    dmFraShellIntegration.Visible = True
 50180    dmFraCheckUpdate.Visible = True
-50190    If ControlsEnabled Then
+50190    If mControlsEnabled Then
 50200     dmFraProgGeneral2.Enabled = True
 50210     dmFraShellIntegration.Enabled = True
 50220     dmFraCheckUpdate.Enabled = True

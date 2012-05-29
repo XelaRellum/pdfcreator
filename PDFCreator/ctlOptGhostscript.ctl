@@ -155,7 +155,7 @@ Begin VB.UserControl ctlOptGhostscript
          Caption         =   "You can set these options in the default profile only."
          Enabled         =   0   'False
          Height          =   255
-         Left            =   120
+         Left            =   105
          TabIndex        =   20
          Top             =   6000
          Visible         =   0   'False

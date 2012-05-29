@@ -2372,9 +2372,41 @@ Public Sub OpenPDFFileWithPDFArchitect(sFilename As String)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim handle As Long
-50020  handle = GetDesktopWindow()
-50030  Call ShellExecute(handle, vbNullString, PDFCreatorApplicationPath & "PDFArchitect\PDFArchitect.exe", _
-  """" & sFilename & """", PDFCreatorApplicationPath & "PDFArchitect\", vbNormalFocus)
+50020  Dim PDFArchitectPath As String, PDFCreatorPDFArchitect As String, _
+  StandalonePDFArchitect As String, WorkingPath As String
+50040  Dim PDFCreatorPDFArchitectVersion As String, StandalonePDFArchitectVersion As String
+50050  Dim tColl As Collection, res As Long
+50060
+50070  handle = GetDesktopWindow()
+50080  PDFCreatorPDFArchitect = PDFCreatorApplicationPath & "PDFArchitect\PDFArchitect.exe"
+50090  StandalonePDFArchitect = GetStandalonePDFArchitectPath
+50100  If FileExists(PDFCreatorPDFArchitect) = False And LenB(StandalonePDFArchitect) = 0 Then
+50110   Exit Sub
+50120  End If
+50130  If FileExists(PDFCreatorPDFArchitect) = True And LenB(StandalonePDFArchitect) = 0 Then
+50140   PDFArchitectPath = PDFCreatorPDFArchitect
+50150  End If
+50160  If FileExists(PDFCreatorPDFArchitect) = False And LenB(StandalonePDFArchitect) > 0 Then
+50170   PDFArchitectPath = StandalonePDFArchitect
+50180  End If
+50190  If FileExists(PDFCreatorPDFArchitect) = True And LenB(StandalonePDFArchitect) > 0 Then
+50200   Set tColl = GetFileVersion(PDFCreatorPDFArchitect)
+50210   PDFCreatorPDFArchitectVersion = tColl(3)
+50220   Set tColl = GetFileVersion(StandalonePDFArchitect)
+50230   StandalonePDFArchitectVersion = tColl(3)
+50240   res = CompareProgramVersions(PDFCreatorPDFArchitectVersion, StandalonePDFArchitectVersion)
+50250   If res = -1 Or res = 0 Then
+50260    PDFArchitectPath = PDFCreatorPDFArchitect
+50270   End If
+50280   If res = 1 Then
+50290    PDFArchitectPath = StandalonePDFArchitect
+50300   End If
+50310  End If
+50320
+50330  If LenB(PDFArchitectPath) > 0 Then
+50340   SplitPath PDFArchitectPath, , WorkingPath
+50350   Call ShellExecute(handle, vbNullString, PDFArchitectPath, """" & sFilename & """", WorkingPath, vbNormalFocus)
+50360  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -2386,6 +2418,98 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
+
+Public Function CompareProgramVersions(ProgramVersion1 As String, ProgramVersion2 As String) As Long ' -1: ProgramVersion1 > ProgramVersion2; 0: ProgramVersion1 = ProgramVersion2; 1: ProgramVersion1 < ProgramVersion2
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  ' return 1 if there is a new version, otherwise 0
+50020  Dim tProgramVersion1() As String, tProgramVersion2() As String, i As Byte
+50030
+50040  If LenB(ProgramVersion1) = 0 Then
+50050   CompareProgramVersions = -100
+50060   Exit Function
+50070  End If
+50080  If InStr(1, ProgramVersion1, ".") = 0 Then
+50090   CompareProgramVersions = -101
+50100   Exit Function
+50110  End If
+50120  If LenB(ProgramVersion2) = 0 Then
+50130   CompareProgramVersions = -200
+50140   Exit Function
+50150  End If
+50160  If InStr(1, ProgramVersion2, ".") = 0 Then
+50170   CompareProgramVersions = -201
+50180   Exit Function
+50190  End If
+50200
+50210  tProgramVersion1 = Split(ProgramVersion1, ".")
+50220  tProgramVersion2 = Split(ProgramVersion2, ".")
+50230  If UBound(tProgramVersion1) <> 3 Then
+50240   CompareProgramVersions = -102
+50250   Exit Function
+50260  End If
+50270  If UBound(tProgramVersion2) <> 3 Then
+50280   CompareProgramVersions = -202
+50290   Exit Function
+50300  End If
+50310  For i = 0 To 2
+50320   If IsNumeric(tProgramVersion1(i)) = False Then
+50330    CompareProgramVersions = -103
+50340    Exit Function
+50350   End If
+50360   If IsNumeric(tProgramVersion2(i)) = False Then
+50370    CompareProgramVersions = -203
+50380    Exit Function
+50390   End If
+50400  Next i
+50410
+50420  If CLng(tProgramVersion1(0)) > CLng(tProgramVersion2(0)) Then
+50430   CompareProgramVersions = -1
+50440   Exit Function
+50450  End If
+50460  If CLng(tProgramVersion1(0)) < CLng(tProgramVersion2(0)) Then
+50470   CompareProgramVersions = 1
+50480   Exit Function
+50490  End If
+50500  If CLng(tProgramVersion1(1)) > CLng(tProgramVersion2(1)) Then
+50510   CompareProgramVersions = -1
+50520   Exit Function
+50530  End If
+50540  If CLng(tProgramVersion1(1)) < CLng(tProgramVersion2(1)) Then
+50550   CompareProgramVersions = 1
+50560   Exit Function
+50570  End If
+50580  If CLng(tProgramVersion1(2)) > CLng(tProgramVersion2(2)) Then
+50590   CompareProgramVersions = -1
+50600   Exit Function
+50610  End If
+50620  If CLng(tProgramVersion1(2)) < CLng(tProgramVersion2(2)) Then
+50630   CompareProgramVersions = 1
+50640   Exit Function
+50650  End If
+50660  If CLng(tProgramVersion1(3)) > CLng(tProgramVersion2(3)) Then
+50670   CompareProgramVersions = -1
+50680   Exit Function
+50690  End If
+50700  If CLng(tProgramVersion1(3)) < CLng(tProgramVersion2(3)) Then
+50710   CompareProgramVersions = 1
+50720   Exit Function
+50730  End If
+50740
+50750  CompareProgramVersions = 0
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "CompareProgramVersions")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 
 Public Function IsWin64() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---

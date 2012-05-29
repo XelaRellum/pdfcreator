@@ -1036,27 +1036,30 @@ End Select
 End Function
 
 Private Function Create_eDoc() As String
- On Error GoTo ErrorHandler
- Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  On Error GoTo ErrorHandler
+50020  Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
   tErrNumber As Long, FilterIndex As Long, Cancel As Boolean, _
   PDFDocInfo As tPDFDocInfo, files As Collection, Extf(12) As String
- Dim PDFDocInfoFile As String, StampFile As String
-
- Extf(0) = "*.pdf"
- Extf(1) = "*.png"
- Extf(2) = "*.jpg"
- Extf(3) = "*.bmp"
- Extf(4) = "*.pcx"
- Extf(5) = "*.tif"
- Extf(6) = "*.ps"
- Extf(7) = "*.eps"
- Extf(8) = "*.txt"
- Extf(9) = "*.psd"
- Extf(10) = "*.pcl"
- Extf(11) = "*.raw"
- Extf(12) = "*.svg"
- With LanguageStrings
-  Filter = .ListPDFFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
+50050  Dim PDFDocInfoFile As String, StampFile As String
+50060
+50070  Extf(0) = "*.pdf"
+50080  Extf(1) = "*.png"
+50090  Extf(2) = "*.jpg"
+50100  Extf(3) = "*.bmp"
+50110  Extf(4) = "*.pcx"
+50120  Extf(5) = "*.tif"
+50130  Extf(6) = "*.ps"
+50140  Extf(7) = "*.eps"
+50150  Extf(8) = "*.txt"
+50160  Extf(9) = "*.psd"
+50170  Extf(10) = "*.pcl"
+50180  Extf(11) = "*.raw"
+50190  Extf(12) = "*.svg"
+50200  With LanguageStrings
+50210   Filter = .ListPDFFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPDFAFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPDFXFiles & " (" & Extf(0) & ")|" & Extf(0) & "|" & _
    .PrintingPNGFiles & " (" & Extf(1) & ")|" & Extf(1) & "|" & _
@@ -1071,141 +1074,151 @@ Private Function Create_eDoc() As String
    .PrintingPCLFiles & " (" & Extf(10) & ")|" & Extf(10) & "|" & _
    .PrintingRAWFiles & " (" & Extf(11) & ")|" & Extf(11) & "|" & _
    .PrintingSVGFiles & " (" & Extf(12) & ")|" & Extf(12)
- End With
-
- FilterIndex = Options.StandardSaveformat + 1
- With LanguageStrings
-  If Len(txtTitle.Text) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
-    SaveFilename = ReplaceForbiddenChars(RemoveAllKnownFileExtensions(txtTitle.Text))
-   Else
-    SaveFilename = ReplaceForbiddenChars(txtTitle.Text)
-  End If
-  If SaveFilename = "." Or SaveFilename = ".." Then
-   SaveFilename = ""
-  End If
-  Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
-  If SaveOpenCancel = True Then
-   Exit Function
-  End If
-  If files.Count <> 1 Then
-   Exit Function
-  End If
-  SaveFilterIndex = FilterIndex
-  SaveFilename = files.Item(1)
-  If FileExists(files.Item(1)) = True Then
-   If FileInUse(files.Item(1)) = True Then
-    MsgBox LanguageStrings.MessagesMsg34
-    Exit Function
-   End If
-  End If
- End With
-
- Screen.MousePointer = vbHourglass
- DoEvents
-
- Options.OpenOutputFile = chkOpenOutputFile.value
- OutputFile = Trim$(SaveFilename)
- SplitPath OutputFile, , Path
- Options.LastSaveDirectory = Path
- If cmbProfile.ListIndex = 0 Then
-   SaveOption Options, "LastSaveDirectory"
-  Else
-   SaveOption Options, "LastSaveDirectory", cmbProfile.List(cmbProfile.ListIndex)
- End If
- frmMain.SetSystrayIcon 3
- If Options.ShowAnimation = 1 Then
-   ShowAnimation True
-  Else
-   Me.Visible = False
- End If
- DoEvents
-
- PSHeader.CreateFor.Comment = txtCreateFor.Text
- PSHeader.CreationDate.Comment = txtCreationDate.Text
- PSHeader.Creator.Comment = App.EXEName & _
+50360  End With
+50370
+50380  FilterIndex = Options.StandardSaveformat + 1
+50390  With LanguageStrings
+50400   If Len(txtTitle.Text) > 0 And Options.RemoveAllKnownFileExtensions = 1 Then
+50410     SaveFilename = ReplaceForbiddenChars(RemoveAllKnownFileExtensions(txtTitle.Text))
+50420    Else
+50430     SaveFilename = ReplaceForbiddenChars(txtTitle.Text)
+50440   End If
+50450   If SaveFilename = "." Or SaveFilename = ".." Then
+50460    SaveFilename = ""
+50470   End If
+50480   Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
+50490   If SaveOpenCancel = True Then
+50500    Exit Function
+50510   End If
+50520   If files.Count <> 1 Then
+50530    Exit Function
+50540   End If
+50550   SaveFilterIndex = FilterIndex
+50560   SaveFilename = files.Item(1)
+50570   If FileExists(files.Item(1)) = True Then
+50580    If FileInUse(files.Item(1)) = True Then
+50590     MsgBox LanguageStrings.MessagesMsg34
+50600     Exit Function
+50610    End If
+50620   End If
+50630  End With
+50640
+50650  Screen.MousePointer = vbHourglass
+50660  DoEvents
+50670
+50680  Options.OpenOutputFile = chkOpenOutputFile.value
+50690  OutputFile = Trim$(SaveFilename)
+50700  SplitPath OutputFile, , Path
+50710  Options.LastSaveDirectory = Path
+50720  If cmbProfile.ListIndex = 0 Then
+50730    SaveOption Options, "LastSaveDirectory"
+50740   Else
+50750    SaveOption Options, "LastSaveDirectory", cmbProfile.List(cmbProfile.ListIndex)
+50760  End If
+50770  frmMain.SetSystrayIcon 3
+50780  If Options.ShowAnimation = 1 Then
+50790    ShowAnimation True
+50800   Else
+50810    Me.Visible = False
+50820  End If
+50830  DoEvents
+50840
+50850  PSHeader.CreateFor.Comment = txtCreateFor.Text
+50860  PSHeader.CreationDate.Comment = txtCreationDate.Text
+50870  PSHeader.Creator.Comment = App.EXEName & _
   " Version " & App.Major & "." & App.Minor & "." & App.Revision
- PSHeader.Title.Comment = txtTitle.Text
-
- With PDFDocInfo
-  .Author = txtCreateFor.Text
-  .CreationDate = txtCreationDate.Text
-  .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-  .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , False)
-  .ModifyDate = txtModifyDate.Text
-  .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , False)
-  .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , False)
- End With
-
- PDFDocInfoFile = CreatePDFDocInfoFile(CurrentInfoSpoolFile, PDFDocInfo)
-
- StampFile = CreateStampFile(CurrentInfoSpoolFile)
- 
- If Options.RunProgramBeforeSaving = 1 Then
-  RunProgramBeforeSaving Me.hwnd, CurrentInfoSpoolFile, _
+50890  PSHeader.Title.Comment = txtTitle.Text
+50900
+50910  With PDFDocInfo
+50920   .Author = txtCreateFor.Text
+50930   .CreationDate = txtCreationDate.Text
+50940   .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+50950   .Keywords = GetSubstFilename(PDFSpoolfile, txtKeywords.Text, , , False)
+50960   .ModifyDate = txtModifyDate.Text
+50970   .Subject = GetSubstFilename(PDFSpoolfile, txtSubject.Text, , , False)
+50980   .Title = GetSubstFilename(PDFSpoolfile, txtTitle.Text, , , False)
+50990  End With
+51000
+51010  PDFDocInfoFile = CreatePDFDocInfoFile(CurrentInfoSpoolFile, PDFDocInfo)
+51020
+51030  StampFile = CreateStampFile(CurrentInfoSpoolFile)
+51040
+51050  If Options.RunProgramBeforeSaving = 1 Then
+51060   RunProgramBeforeSaving Me.hwnd, CurrentInfoSpoolFile, _
   Options.RunProgramBeforeSavingProgramParameters, _
   Options.RunProgramBeforeSavingWindowstyle
- End If
- Select Case SaveFilterIndex
-  Case 1:
-   'CallGScript PDFSpoolfile, OutputFile, Options, PDFWriter
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFWriter, PDFDocInfoFile, StampFile
-   OutputFileIsPDFFile = True
-  Case 2:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFAWriter, PDFDocInfoFile, StampFile
-   OutputFileIsPDFFile = True
-  Case 3:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFXWriter, PDFDocInfoFile, StampFile
-   OutputFileIsPDFFile = True
-  Case 4:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PNGWriter, PDFDocInfoFile, StampFile
-  Case 5:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, JPEGWriter, PDFDocInfoFile, StampFile
-  Case 6:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, BMPWriter, PDFDocInfoFile, StampFile
-  Case 7:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCXWriter, PDFDocInfoFile, StampFile
-  Case 8:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TIFFWriter, PDFDocInfoFile, StampFile
-  Case 9:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSWriter, PDFDocInfoFile, StampFile
-  Case 10:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, EPSWriter, PDFDocInfoFile, StampFile
-  Case 11:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TXTWriter, PDFDocInfoFile, StampFile
-  Case 12:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSDWriter, PDFDocInfoFile, StampFile
-  Case 13:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCLWriter, PDFDocInfoFile, StampFile
-  Case 14:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, RAWWriter, PDFDocInfoFile, StampFile
-  Case 15:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, SVGWriter, PDFDocInfoFile, StampFile
- End Select
- Create_eDoc = OutputFile
- CheckForPrintingAfterSaving CurrentInfoSpoolFile, Options
- Screen.MousePointer = vbNormal
- Me.Visible = False
- If Options.ShowAnimation = 1 Then
-  ShowAnimation False
- End If
- ConvertedOutputFilename = OutputFile
-
- ReadyConverting = True
- frmMain.SetSystrayIcon 2
- Exit Function
+51090  End If
+51101  Select Case SaveFilterIndex
+        Case 1:
+51120    'CallGScript PDFSpoolfile, OutputFile, Options, PDFWriter
+51130    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFWriter, PDFDocInfoFile, StampFile
+51140    OutputFileIsPDFFile = True
+51150   Case 2:
+51160    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFAWriter, PDFDocInfoFile, StampFile
+51170    OutputFileIsPDFFile = True
+51180   Case 3:
+51190    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFXWriter, PDFDocInfoFile, StampFile
+51200    OutputFileIsPDFFile = True
+51210   Case 4:
+51220    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PNGWriter, PDFDocInfoFile, StampFile
+51230   Case 5:
+51240    CallGScript CurrentInfoSpoolFile, OutputFile, Options, JPEGWriter, PDFDocInfoFile, StampFile
+51250   Case 6:
+51260    CallGScript CurrentInfoSpoolFile, OutputFile, Options, BMPWriter, PDFDocInfoFile, StampFile
+51270   Case 7:
+51280    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCXWriter, PDFDocInfoFile, StampFile
+51290   Case 8:
+51300    CallGScript CurrentInfoSpoolFile, OutputFile, Options, TIFFWriter, PDFDocInfoFile, StampFile
+51310   Case 9:
+51320    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSWriter, PDFDocInfoFile, StampFile
+51330   Case 10:
+51340    CallGScript CurrentInfoSpoolFile, OutputFile, Options, EPSWriter, PDFDocInfoFile, StampFile
+51350   Case 11:
+51360    CallGScript CurrentInfoSpoolFile, OutputFile, Options, TXTWriter, PDFDocInfoFile, StampFile
+51370   Case 12:
+51380    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSDWriter, PDFDocInfoFile, StampFile
+51390   Case 13:
+51400    CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCLWriter, PDFDocInfoFile, StampFile
+51410   Case 14:
+51420    CallGScript CurrentInfoSpoolFile, OutputFile, Options, RAWWriter, PDFDocInfoFile, StampFile
+51430   Case 15:
+51440    CallGScript CurrentInfoSpoolFile, OutputFile, Options, SVGWriter, PDFDocInfoFile, StampFile
+51450  End Select
+51460  Create_eDoc = OutputFile
+51470  CheckForPrintingAfterSaving CurrentInfoSpoolFile, Options
+51480  Screen.MousePointer = vbNormal
+51490  Me.Visible = False
+51500  If Options.ShowAnimation = 1 Then
+51510   ShowAnimation False
+51520  End If
+51530  ConvertedOutputFilename = OutputFile
+51540
+51550  ReadyConverting = True
+51560  frmMain.SetSystrayIcon 2
+51570  Exit Function
 ErrorHandler:
- Screen.MousePointer = vbNormal
- tErrNumber = Err.Number
- tStr = "Methode ""Create_eDoc"": " & Err.Number & ", " & Err.Description
- On Error GoTo 0
- On Error Resume Next
- Me.Hide
- If tErrNumber <> 32755 Then
-  KillFile PDFSpoolfile
-  IfLoggingWriteLogfile "Error: " & tStr
-  IfLoggingShowLogfile frmLog, frmMain
- End If
- Unload Me
+51590  Screen.MousePointer = vbNormal
+51600  tErrNumber = Err.Number
+51610  tStr = "Methode ""Create_eDoc"": " & Err.Number & ", " & Err.Description
+51620  On Error GoTo ErrPtnr_OnError
+51630  On Error Resume Next
+51640  Me.Hide
+51650  If tErrNumber <> 32755 Then
+51660   KillFile PDFSpoolfile
+51670   IfLoggingWriteLogfile "Error: " & tStr
+51680   IfLoggingShowLogfile frmLog, frmMain
+51690  End If
+51700  Unload Me
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("frmPrinting", "Create_eDoc")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
 Private Sub ShowAnimation(Show As Boolean)
