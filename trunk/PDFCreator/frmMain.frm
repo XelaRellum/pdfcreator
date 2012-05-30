@@ -1657,7 +1657,7 @@ On Error GoTo ErrPtnr_OnError
 50490 ' --- Add new files to listview
 50500  If files.Count > 0 Then
 50510   tB = True
-50520   If FormISLoaded("frmOptions") = False And Me.Visible = True Then
+50520   If FormISLoaded("frmOptions") = False And FormISLoaded("frmPrinters") = False And Me.Visible = True Then
 50530    Me.Show
 50540   End If
 50550  End If
@@ -2933,7 +2933,17 @@ Public Sub ShowPrinters()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  frmPrinters.Show vbModal, Me
+50010  Dim pStop As Boolean
+50020  pStop = PrinterStop
+50030  If pStop = False Then
+50040   SetMenuPrinterStop
+50050  End If
+50060
+50070  frmPrinters.Show vbModal, Me
+50080
+50090  If pStop = False Then
+50100   SetMenuPrinterStop
+50110  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
