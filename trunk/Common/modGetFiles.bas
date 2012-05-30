@@ -4,71 +4,61 @@ Option Explicit
 Public Function FindFiles(ByVal Path As String, ByRef files As Collection, _
  Optional ByVal Pattern As String = "*.*", Optional ByVal Attributes As VbFileAttribute = vbNormal, _
  Optional ByVal Recursive As Boolean = True, Optional OnlyNotInUse As Boolean = False) As Long
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010
-50020  Const vbErr_PathNotFound = 76, INVALID_VALUE = -1
-50030  Dim FileAttr As Long, filename As String, hFind As Long, WFD As WIN32_FIND_DATA
-50040  Dim spoolFile As clsSpoolFile
-50050
-50060  Path = CompletePath(Path)
-50070
-50080  If files Is Nothing Then
-50090   Set files = New Collection
-50100  End If
-50110  Pattern = LCase$(Pattern)
-50120
-50130  hFind = FindFirstFileA(Path & "*", WFD)
-50140  If hFind = INVALID_VALUE Then
-50150   Exit Function
-50160 '  Err.Raise vbErr_PathNotFound
-50170  End If
-50180
-50190  Do
-50200   filename = LeftB$(WFD.cFileName, InStrB(WFD.cFileName, vbNullChar))
-50210   FileAttr = GetFileAttributesA(Path & filename)
-50220   If FileAttr And vbDirectory Then
-50230     If Recursive Then
-50240      If FileAttr <> INVALID_VALUE And filename <> "." And filename <> ".." Then
-50250       FindFiles = FindFiles + FindFiles(Path & filename, files, Pattern, Attributes)
-50260      End If
-50270     End If
-50280    Else
-50290     If (FileAttr And Attributes) = Attributes Then
-50300      If LCase$(filename) Like Pattern Then
-50310       FindFiles = FindFiles + 1
-50320       If OnlyNotInUse = False Then
-50330         Set spoolFile = New clsSpoolFile
-50340         spoolFile.Path = Path
-50350         spoolFile.FullFileName = Path & filename
-50360         spoolFile.FileLen = FileLen(Path & filename)
-50370         spoolFile.FileDateTime = FileDateTime(Path & filename)
-50380         files.Add spoolFile, spoolFile.FullFileName
-50390        Else
-50400         If FileInUse(Path & filename) = False Then
-50410          Set spoolFile = New clsSpoolFile
-50420          spoolFile.Path = Path
-50430          spoolFile.FullFileName = Path & filename
-50440          spoolFile.FileLen = FileLen(Path & filename)
-50450          spoolFile.FileDateTime = FileDateTime(Path & filename)
-50460          files.Add spoolFile, spoolFile.FullFileName
-50470         End If
-50480       End If
-50490      End If
-50500     End If
-50510   End If
-50520  Loop While FindNextFileA(hFind, WFD)
-50530  FindClose hFind
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGetFiles", "FindFiles")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+
+ Const vbErr_PathNotFound = 76, INVALID_VALUE = -1
+ Dim FileAttr As Long, fileName As String, hFind As Long, WFD As WIN32_FIND_DATA
+
+ Path = CompletePath(Path)
+
+ If files Is Nothing Then
+  Set files = New Collection
+ End If
+ Pattern = LCase$(Pattern)
+
+ hFind = FindFirstFileA(Path & "*", WFD)
+ If hFind = INVALID_VALUE Then
+  Exit Function
+'  Err.Raise vbErr_PathNotFound
+ End If
+
+ Do
+  fileName = LeftB$(WFD.cFileName, InStrB(WFD.cFileName, vbNullChar))
+  FileAttr = GetFileAttributesA(Path & fileName)
+  If FileAttr And vbDirectory Then
+    If Recursive Then
+     If FileAttr <> INVALID_VALUE And fileName <> "." And fileName <> ".." Then
+      FindFiles = FindFiles + FindFiles(Path & fileName, files, Pattern, Attributes)
+     End If
+    End If
+   Else
+    If (FileAttr And Attributes) = Attributes Then
+     If LCase$(fileName) Like Pattern Then
+      FindFiles = FindFiles + 1
+      If OnlyNotInUse = False Then
+        AddFile files, Path, fileName
+       Else
+        If FileInUse(Path & fileName) = False Then
+         AddFile files, Path, fileName
+        End If
+      End If
+     End If
+    End If
+  End If
+ Loop While FindNextFileA(hFind, WFD)
+ FindClose hFind
 End Function
 
+Private Sub AddFile(ByRef files As Collection, Path As String, fileName As String)
+ Dim spoolFile As clsSpoolFile
+ Set spoolFile = New clsSpoolFile
+ spoolFile.Path = Path
+ spoolFile.FullFileName = Path & fileName
+ spoolFile.FileLen = FileLen(Path & fileName)
+ spoolFile.FileDateTime = FileDateTime(Path & fileName)
+ spoolFile.FileDateTimeKey = GetFileDateTimeString(FileDateTime(Path & fileName))
+ files.Add spoolFile, spoolFile.FullFileName
+End Sub
+
+Private Function GetFileDateTimeString(value As Date) As String
+ GetFileDateTimeString = Format$(value, "yyyymmddhhMMss")
+End Function

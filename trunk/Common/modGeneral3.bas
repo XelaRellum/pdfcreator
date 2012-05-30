@@ -64,3 +64,28 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
+Public Sub QuickSortSpoolFiles(ByRef vSort() As clsSpoolFile, Optional ByVal lngStart As Variant, Optional ByVal lngEnd As Variant)
+ Dim i As Long, j As Long, h As clsSpoolFile, x As String
+ 
+ If IsMissing(lngStart) Then lngStart = LBound(vSort)
+ If IsMissing(lngEnd) Then lngEnd = UBound(vSort)
+ 
+ i = lngStart: j = lngEnd
+ x = vSort((lngStart + lngEnd) / 2).FileDateTimeKey
+ 
+ Do
+  While (StrComp(vSort(i).FileDateTimeKey, x) < 0): i = i + 1: Wend
+  While (StrComp(vSort(j).FileDateTimeKey, x) > 0): j = j - 1: Wend
+ 
+  If (i <= j) Then
+   Set h = vSort(i)
+   Set vSort(i) = vSort(j)
+   Set vSort(j) = h
+   i = i + 1: j = j - 1
+  End If
+ Loop Until (i > j)
+ 
+ If (lngStart < j) Then QuickSortSpoolFiles vSort, lngStart, j
+ If (i < lngEnd) Then QuickSortSpoolFiles vSort, i, lngEnd
+End Sub
+
