@@ -280,6 +280,10 @@
 				<param name="Local" value="html\what-is-the-export-control-classification-number-eccn-of-pdfcreator.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Wo sind meine Drucker ? (Win 7)">
+				<param name="Local" value="html\where-are-my-printers-win-7.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Word-Dokumente mit benutzerdef. Seiteneinstellungen werden immer in das A4 Format konvertiert.">
 				<param name="Local" value="html\word-documents-with-custom-page-size-are-converted-in-default-size.html">
 				</OBJECT>
