@@ -17,4 +17,4 @@ Public Path As String
 Public FullFileName As String
 Public FileLen As Long
 Public FileDateTime As String
-Public FileDateTimeKey As String
+Public FileDateTimeJobIdKey As String

@@ -71,11 +71,11 @@ Public Sub QuickSortSpoolFiles(ByRef vSort() As clsSpoolFile, Optional ByVal lng
  If IsMissing(lngEnd) Then lngEnd = UBound(vSort)
  
  i = lngStart: j = lngEnd
- x = vSort((lngStart + lngEnd) / 2).FileDateTimeKey
+ x = vSort((lngStart + lngEnd) / 2).FileDateTimeJobIdKey
  
  Do
-  While (StrComp(vSort(i).FileDateTimeKey, x) < 0): i = i + 1: Wend
-  While (StrComp(vSort(j).FileDateTimeKey, x) > 0): j = j - 1: Wend
+  While (StrComp(vSort(i).FileDateTimeJobIdKey, x) < 0): i = i + 1: Wend
+  While (StrComp(vSort(j).FileDateTimeJobIdKey, x) > 0): j = j - 1: Wend
  
   If (i <= j) Then
    Set h = vSort(i)
