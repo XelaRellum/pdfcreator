@@ -14,13 +14,13 @@ Public Const Sourceforge = "http://www.sourceforge.net/projects/pdfcreator"
 Public Const UpdateURL = "http://update.pdfforge.org/pdfcreator/update.txt"
 Public Const PDFCreatorLogfile = "PDFCreator.log"
 Public Const PDFCreatorSpoolDirectory = "Spool"
-Public Const PDFCreatorRestartExe = "PDFCreatorRestart.exe"
 Public Const CompatibleLanguageVersion = "1.3.0"
 
 Public CancelPrintfiles As Boolean
 Public ChangeDefaultprinter As Boolean
 Public CheckInstance As Boolean
 Public ConvertedOutputFilename As String
+Public DelayedStart As Long
 Public enableSpecialLogging As Boolean
 Public HelpFile As String
 Public IFIsPS As Boolean

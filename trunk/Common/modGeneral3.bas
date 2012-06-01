@@ -65,27 +65,40 @@ End Select
 End Function
 
 Public Sub QuickSortSpoolFiles(ByRef vSort() As clsSpoolFile, Optional ByVal lngStart As Variant, Optional ByVal lngEnd As Variant)
- Dim i As Long, j As Long, h As clsSpoolFile, x As String
- 
- If IsMissing(lngStart) Then lngStart = LBound(vSort)
- If IsMissing(lngEnd) Then lngEnd = UBound(vSort)
- 
- i = lngStart: j = lngEnd
- x = vSort((lngStart + lngEnd) / 2).FileDateTimeJobIdKey
- 
- Do
-  While (StrComp(vSort(i).FileDateTimeJobIdKey, x) < 0): i = i + 1: Wend
-  While (StrComp(vSort(j).FileDateTimeJobIdKey, x) > 0): j = j - 1: Wend
- 
-  If (i <= j) Then
-   Set h = vSort(i)
-   Set vSort(i) = vSort(j)
-   Set vSort(j) = h
-   i = i + 1: j = j - 1
-  End If
- Loop Until (i > j)
- 
- If (lngStart < j) Then QuickSortSpoolFiles vSort, lngStart, j
- If (i < lngEnd) Then QuickSortSpoolFiles vSort, i, lngEnd
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, j As Long, h As clsSpoolFile, x As String
+50020
+50030  If IsMissing(lngStart) Then lngStart = LBound(vSort)
+50040  If IsMissing(lngEnd) Then lngEnd = UBound(vSort)
+50050
+50060  i = lngStart: j = lngEnd
+50070  x = vSort((lngStart + lngEnd) / 2).FileDateTimeJobIdKey
+50080
+50090  Do
+50100   While (StrComp(vSort(i).FileDateTimeJobIdKey, x) < 0): i = i + 1: Wend
+50110   While (StrComp(vSort(j).FileDateTimeJobIdKey, x) > 0): j = j - 1: Wend
+50120
+50130   If (i <= j) Then
+50140    Set h = vSort(i)
+50150    Set vSort(i) = vSort(j)
+50160    Set vSort(j) = h
+50170    i = i + 1: j = j - 1
+50180   End If
+50190  Loop Until (i > j)
+50200
+50210  If (lngStart < j) Then QuickSortSpoolFiles vSort, lngStart, j
+50220  If (i < lngEnd) Then QuickSortSpoolFiles vSort, i, lngEnd
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral3", "QuickSortSpoolFiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
