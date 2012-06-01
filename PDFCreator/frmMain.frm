@@ -720,7 +720,7 @@ Private Sub TerminateProgram()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim PDFCreatorRestartPath As String, files As Collection, i As Long, tStrf() As String
+50010  Dim files As Collection, i As Long, tStrf() As String
 50020
 50030  ShutDown = True
 50040
@@ -738,18 +738,17 @@ On Error GoTo ErrPtnr_OnError
 50160   InstanceCounter = InstanceCounter - 1
 50170  End If
 50180
-50190  PDFCreatorRestartPath = CompletePath(PDFCreatorApplicationPath) & PDFCreatorRestartExe
-50200  If Restart = True And FileExists(PDFCreatorRestartPath) = True Then
-50210   ShellExecute 0, vbNullString, """" & PDFCreatorRestartPath & """", "-SL200 -STTRUE", PDFCreatorApplicationPath, 1
-50220  End If
-50230
-50240  If Not mutexLocal Is Nothing Then
-50250   mutexLocal.CloseMutex
-50260  End If
-50270
-50280  If Not mutexGlobal Is Nothing Then
-50290   mutexGlobal.CloseMutex
-50300  End If
+50190  If Restart = True Then
+50200   ShellExecute 0, vbNullString, """" & PDFCreatorApplicationPath & "PDFCreator.exe" & """", "-DELAYEDSTART=300", PDFCreatorApplicationPath, 1
+50210  End If
+50220
+50230  If Not mutexLocal Is Nothing Then
+50240   mutexLocal.CloseMutex
+50250  End If
+50260
+50270  If Not mutexGlobal Is Nothing Then
+50280   mutexGlobal.CloseMutex
+50290  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
