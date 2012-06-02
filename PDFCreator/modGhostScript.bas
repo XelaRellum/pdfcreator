@@ -1818,7 +1818,7 @@ On Error GoTo ErrPtnr_OnError
 50580     End If
 50590     If DotNet20Installed And pdfforgeDllInstalled Then
 50600      If .PDFSigningSignPDF = 1 Then
-50610       SignPDF GSOutputFile, currentOwnerPassword
+50610       SignPDF GSOutputFile, currentOwnerPassword, encPDF.UserPass
 50620      End If
 50630     End If
 50640    End With
