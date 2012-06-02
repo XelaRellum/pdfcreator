@@ -517,7 +517,7 @@ Private Sub cmdLanguageRefresh_Click()
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim strLanguages() As String, strFile() As String, i As Long
-50020  Const strDownloadURL = "http://www.pdfforge.org/products/pdfcreator/translations/list"
+50020  Const strDownloadURL = "http://update.pdfforge.org/pdfcreator/languages.txt"
 50030  MousePointer = vbHourglass
 50040  Set dl = New clsDownload
 50050  strLanguages = Split(dl.DownloadString(strDownloadURL), vbLf)
