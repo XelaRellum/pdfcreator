@@ -1157,13 +1157,9 @@ On Error GoTo ErrPtnr_OnError
 50060   Case 4:
 50070    frmOptions.Show , Me
 50080   Case 6:
-50090    If mnPrinter(Index).Checked = False Then
-50100      SetLogging True
-50110      mnPrinter(Index).Checked = True
-50120     Else
-50130      SetLogging False
-50140      mnPrinter(Index).Checked = False
-50150    End If
+50090     Logging = Not Logging
+50100     SetLogging Logging
+50110     mnPrinter(Index).Checked = Logging
 50160    If Not m_frmSysTray Is Nothing Then
 50170     If mnPrinter(Index).Checked = True Then
 50180       m_frmSysTray.mnuSysTray(6).Checked = True
