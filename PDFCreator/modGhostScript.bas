@@ -355,7 +355,7 @@ On Error GoTo ErrPtnr_OnError
 50640      AddParams "-sUserPassword=" & encPDF.UserPass
 50650     End If
 50660     AddParams "-dPermissions=" & CalculatePermissions(encPDF)
-50670     If GS_COMPATIBILITY = "1.4" Or GS_COMPATIBILITY = "1.5" Then
+50670     If (GS_COMPATIBILITY = "1.4" Or GS_COMPATIBILITY = "1.5") And encPDF.EncryptionLevel <> encLow Then
 50680       AddParams "-dEncryptionR=3"
 50690       AddParams "-dKeyLength=128"
 50700      Else
