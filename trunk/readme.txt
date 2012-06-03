@@ -1,6 +1,6 @@
-Title: PDFCreator Version 1.3.2
+Title: PDFCreator Version 1.4.0
 Authors: Philip Chinery, Frank Heindörfer
-Releasedate: March 26th,  2012
+Releasedate: June 4,  2012
 
 Look at the readme.txt-Files in 'Setup', 'Printer'.
 
