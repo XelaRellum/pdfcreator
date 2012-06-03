@@ -612,3 +612,6 @@ Public Const MAX_PREFERRED_LENGTH As Long = -1
 Public Const LOCALE_USER_DEFAULT  As Long = &H400
 Public Const LOCALE_ICALENDARTYPE As Long = &H1009  'type of calendar specifier
 
+Public Const FILE_SHARE_READ = &H1
+Public Const FILE_SHARE_WRITE = &H2
+
