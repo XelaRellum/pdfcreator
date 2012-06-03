@@ -2128,20 +2128,26 @@ Private Sub DrawToolbars()
  End If
  If (Options.Toolbars And 1) = 1 Then
    tlb(0).Visible = True
+   tlb(0).Enabled = True
    mnViewToolbars(0).Checked = True
   Else
    tlb(0).Visible = False
+   tlb(0).Enabled = False
    mnViewToolbars(0).Checked = False
  End If
  If (Options.Toolbars And 2) = 2 Then
    tlb(1).Visible = True
+   tlb(1).Enabled = True
    txtEmailAddress.Visible = True
+   txtEmailAddress.Enabled = True
    mnViewToolbars(1).Checked = True
    mnDocument(16).Visible = True
    mnDocument(17).Visible = True
   Else
    tlb(1).Visible = False
+   tlb(1).Enabled = False
    txtEmailAddress.Visible = False
+   txtEmailAddress.Enabled = False
    mnViewToolbars(1).Checked = False
  End If
 End Sub

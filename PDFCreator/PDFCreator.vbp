@@ -108,6 +108,7 @@ UserControl=ctlOptGeneral.ctl
 UserControl=ctlOptSave.ctl
 UserControl=ctlOptPrint.ctl
 Class=clsSpoolFile; clsSpoolFile.cls
+Module=modFileTimes; modFileTimes.bas
 ResFile32="PDFCreator.RES"
 IconForm="frmAbout"
 Startup="Sub Main"
