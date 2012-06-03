@@ -17,7 +17,7 @@ On Error GoTo ErrPtnr_OnError
 50100   IfLoggingWriteLogfile tStr
 50110   WriteToSpecialLogfile tStr
 50120   SplitPath Program, , WorkingFolder
-50130   Parameters = GetSubstFilename2(Parameters, False, , InfoSpoolFileName)
+50130   Parameters = GetSubstFilename2(Parameters, False, , InfoSpoolFileName, False)
 50140   Parameters = Replace$(Parameters, "<OutputFilename>", Docname, , , vbTextCompare)
 50150   If Options.RunProgramAfterSavingWaitUntilReady = 1 Then
 50160     ShellAndWait hwnd, "open", Program, Parameters, CompletePath(WorkingFolder), Windowstyle, WCTermination
