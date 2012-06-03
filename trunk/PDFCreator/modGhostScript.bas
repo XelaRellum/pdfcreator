@@ -1890,93 +1890,106 @@ End Select
 End Function
 
 Private Sub SignPDF(filename As String, Optional ownerPasswd As String = "", Optional userPasswd As String = "")
- Dim pdf As Object, pxs As Object
- Dim res As Long, files As Collection, Tempfile As String
-
- Set pxs = CreateObject("pdfforge.PDF.PDF.X509.Signing")
-
- With Options
-  If LenB(.PDFSigningPFXFile) = 0 Then
-    res = OpenFileDialog(files, "", _
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim pdf As Object, pxs As Object
+50020  Dim res As Long, files As Collection, Tempfile As String
+50030
+50040  Set pxs = CreateObject("pdfforge.PDF.PDF.X509.Signing")
+50050
+50060  With Options
+50070   If LenB(.PDFSigningPFXFile) = 0 Then
+50080     res = OpenFileDialog(files, "", _
      LanguageStrings.OptionsPDFSigningPfxP12Files & " (*.pfx,*.p12)|*.pfx;*.p12|" & _
      LanguageStrings.OptionsPDFSigningPfxFiles & " (*.pfx)|*pfx|" & _
      LanguageStrings.OptionsPDFSigningP12Files & " (*.p12|*.p12", _
      "*.pfx;*.p12", GetMyFiles, LanguageStrings.OptionsPDFSigningChooseCertifcateFile, _
      OFN_FILEMUSTEXIST Or OFN_EXPLORER Or OFN_LONGNAMES Or OFN_PATHMUSTEXIST, 0, 1)
-    If res > 0 Then
-     pxs.certficateFilename = files(1)
-    End If
-   Else
-    pxs.certficateFilename = .PDFSigningPFXFile
-  End If
-  If LenB(.PDFSigningPFXFilePassword) > 0 Then
-    PFXPassword = .PDFSigningPFXFilePassword
-   Else
-    'Ask for the password
-    frmCertificatePassword.certFilename = pxs.certficateFilename
-    frmCertificatePassword.Show vbModal
-  End If
-  If LenB(PFXPassword) = 0 Then
-   MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
-   Exit Sub
-  End If
-  pxs.certifcatePassword = PFXPassword
-  Tempfile = GetTempFile(GetTempPathApi, "~MP")
-  KillFile Tempfile
-  If .PDFSigningSignatureVisible = 0 Then
-    pxs.signatureVisible = False
-   Else
-    pxs.signatureVisible = True
-  End If
-  If .PDFSigningMultiSignature = 0 Then
-    pxs.multiSignatures = False
-   Else
-    pxs.multiSignatures = True
-  End If
-  If ownerPasswd = vbNullString Then
-   ownerPasswd = ""
-  End If
-  If userPasswd = vbNullString Then
-   userPasswd = ""
-  End If
-
-  Set pdf = CreateObject("pdfforge.PDF.PDF")
-  If pdf.IsEncrypted(filename) Then
-    Set pxs.PDFEncryptor = CreateObject("pdfforge.pdf.PDFEncryptor")
-    res = pdf.GetEncryptionSettings(filename, ownerPasswd, pxs.PDFEncryptor)
-    pxs.PDFEncryptor.OwnerPassword = ownerPasswd
-    pxs.PDFEncryptor.UserPassword = userPasswd
-   Else
-    Set pxs.PDFEncryptor = Nothing
-  End If
-  pxs.SignatureContact = .PDFSigningSignatureContact
-  pxs.SignatureLocation = .PDFSigningSignatureLocation
-  pxs.SignatureOnPage = .PDFSigningSignatureOnPage
-  pxs.SignaturePositionLowerLeftX = .PDFSigningSignatureLeftX
-  pxs.SignaturePositionLowerLeftY = .PDFSigningSignatureLeftY
-  pxs.SignaturePositionUpperRightX = .PDFSigningSignatureRightX
-  pxs.SignaturePositionUpperRightY = .PDFSigningSignatureRightY
-  pxs.SignatureReason = .PDFSigningSignatureReason
-  pxs.TimeServerURL = .PDFSigningTimeServerUrl
-  pxs.HashAlgorithm = "SHA512" ' MD2, MD5, SHA1, SHA256, SHA384, SHA512, RIPEMD160
-
-  On Error Resume Next
-  Call pxs.SignPDFFile_2(filename, ownerPasswd, Tempfile)
-  If Err.Number <> 0 Then
-    MsgBox LanguageStrings.MessagesMsg45 & vbCrLf & vbCrLf & Err.Number & ": " & Err.Description, vbExclamation
-    Err.Clear
-    On Error GoTo 0
-    If FileExists(Tempfile) Then
-     KillFile Tempfile
-    End If
-   Else
-    If FileExists(Tempfile) Then
-     If KillFile(filename) Then
-      Name Tempfile As filename
-     End If
-    End If
-  End If
- End With
+50140     If res > 0 Then
+50150      pxs.certficateFilename = files(1)
+50160     End If
+50170    Else
+50180     pxs.certficateFilename = .PDFSigningPFXFile
+50190   End If
+50200   If LenB(.PDFSigningPFXFilePassword) > 0 Then
+50210     PFXPassword = .PDFSigningPFXFilePassword
+50220    Else
+50230     'Ask for the password
+50240     frmCertificatePassword.certFilename = pxs.certficateFilename
+50250     frmCertificatePassword.Show vbModal
+50260   End If
+50270   If LenB(PFXPassword) = 0 Then
+50280    MsgBox LanguageStrings.OptionsPDFSigningCertificateEmptyPassword, vbCritical + vbOKOnly
+50290    Exit Sub
+50300   End If
+50310   pxs.certifcatePassword = PFXPassword
+50320   Tempfile = GetTempFile(GetTempPathApi, "~MP")
+50330   KillFile Tempfile
+50340   If .PDFSigningSignatureVisible = 0 Then
+50350     pxs.signatureVisible = False
+50360    Else
+50370     pxs.signatureVisible = True
+50380   End If
+50390   If .PDFSigningMultiSignature = 0 Then
+50400     pxs.multiSignatures = False
+50410    Else
+50420     pxs.multiSignatures = True
+50430   End If
+50440   If ownerPasswd = vbNullString Then
+50450    ownerPasswd = ""
+50460   End If
+50470   If userPasswd = vbNullString Then
+50480    userPasswd = ""
+50490   End If
+50500
+50510   Set pdf = CreateObject("pdfforge.PDF.PDF")
+50520   If pdf.IsEncrypted(filename) Then
+50530     Set pxs.PDFEncryptor = CreateObject("pdfforge.pdf.PDFEncryptor")
+50540     res = pdf.GetEncryptionSettings(filename, ownerPasswd, pxs.PDFEncryptor)
+50550     pxs.PDFEncryptor.OwnerPassword = ownerPasswd
+50560     pxs.PDFEncryptor.UserPassword = userPasswd
+50570    Else
+50580     Set pxs.PDFEncryptor = Nothing
+50590   End If
+50600   pxs.SignatureContact = .PDFSigningSignatureContact
+50610   pxs.SignatureLocation = .PDFSigningSignatureLocation
+50620   pxs.SignatureOnPage = .PDFSigningSignatureOnPage
+50630   pxs.SignaturePositionLowerLeftX = .PDFSigningSignatureLeftX
+50640   pxs.SignaturePositionLowerLeftY = .PDFSigningSignatureLeftY
+50650   pxs.SignaturePositionUpperRightX = .PDFSigningSignatureRightX
+50660   pxs.SignaturePositionUpperRightY = .PDFSigningSignatureRightY
+50670   pxs.SignatureReason = .PDFSigningSignatureReason
+50680   pxs.TimeServerURL = .PDFSigningTimeServerUrl
+50690   pxs.HashAlgorithm = "SHA512" ' MD2, MD5, SHA1, SHA256, SHA384, SHA512, RIPEMD160
+50700
+50710   On Error Resume Next
+50720   Call pxs.SignPDFFile_2(filename, ownerPasswd, Tempfile)
+50730   If Err.Number <> 0 Then
+50740     MsgBox LanguageStrings.MessagesMsg45 & vbCrLf & vbCrLf & Err.Number & ": " & Err.Description, vbExclamation
+50750     Err.Clear
+50760     On Error GoTo ErrPtnr_OnError
+50770     If FileExists(Tempfile) Then
+50780      KillFile Tempfile
+50790     End If
+50800    Else
+50810     If FileExists(Tempfile) Then
+50820      If KillFile(filename) Then
+50830       Name Tempfile As filename
+50840      End If
+50850     End If
+50860   End If
+50870  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGhostScript", "SignPDF")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
 Public Function OptimizePDF(PDFInputFilename As String, PDFOutputFilename As String) As Boolean
@@ -3018,134 +3031,168 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String, Tempfile As String, ivgf As Boolean, inFile As String, Path As String, File As String, psFileName As String
 50020  Dim InfoSpoolFileName As String, PDFDocInfoFile As String, StampFile As String, PDFDocInfo As tPDFDocInfo, tDate As Date
-50030  Dim PSHeader As tPSHeader, tStr As String, strGUID As String
-50040
-50050  IFIsPS = False
-50060  If LenB(InputFilename) = 0 Then
-50070   Exit Sub
-50080  End If
-50090  If FileExists(InputFilename) = False Then
-50100   If LenB(InputFilename) > 0 Then
-50110    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
+50030  Dim PSHeader As tPSHeader, dateStr As String, strGUID As String
+50040  Dim dateCreated As Date, dateAccessed As Date, dateWritten As Date
+50050  Dim isf As clsInfoSpoolFile
+50060
+50070  IFIsPS = False
+50080  If LenB(InputFilename) = 0 Then
+50090   Exit Sub
+50100  End If
+50110  If FileExists(InputFilename) = False Then
+50120   If LenB(InputFilename) > 0 Then
+50130    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
     "InputFile -IF" & vbCrLf & ">" & InputFilename & "<", vbExclamation + vbOKOnly
-50130   End If
-50140   Exit Sub
-50150  End If
-50160  ivgf = IsValidGraphicFile(InputFilename)
-50170  If LenB(OutputFilename) > 0 Then
-50180    If IsPostscriptFile(InputFilename) = True Or ivgf Or IsPDFFile(InputFilename) Then
-50190     If GsDllLoaded = 0 Then
-50200      Exit Sub
-50210     End If
-50220     GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
-50230     If GsDllLoaded = 0 Then
-50240      MsgBox LanguageStrings.MessagesMsg08
-50250     End If
-50260     inFile = InputFilename
-50270     strGUID = GetGUID
-50280     File = GetPDFCreatorSpoolDirectory & strGUID
-50290     If ivgf Then
-50300      psFileName = File & ".ps"
-50310      If Image2PS(InputFilename, psFileName) Then
-50320        inFile = psFileName
-50330       Else
-50340        IfLoggingWriteLogfile "ConvertFile: There is a problem converting '" & InputFilename & "'!"
-50350        Exit Sub
-50360      End If
-50370     End If
-50380
-50390     InfoSpoolFileName = CreateInfoSpoolFile(inFile, File & ".inf")
-50400     SplitPath OutputFilename, , , , , Ext
-50410
-50420     With PDFDocInfo
-50430      If Len(Trim$(Options.StandardTitle)) > 0 Then
-50440        .Author = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
-50450       Else
-50460        .Author = GetSubstFilename(InfoSpoolFileName, Options.SaveFilename, , , True)
-50470      End If
-50480      If Options.UseStandardAuthor = 1 Then
-50490        .Creator = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
-50500       Else
-50510        .Creator = GetDocUsernameFromPostScriptFile(inFile, False)
+50150   End If
+50160   Exit Sub
+50170  End If
+50180  ivgf = IsValidGraphicFile(InputFilename)
+50190  If LenB(OutputFilename) > 0 Then
+50200    tDate = Now
+50210    dateStr = CStr(tDate)
+50220    If IsPostscriptFile(InputFilename) = True Or ivgf Or IsPDFFile(InputFilename) Then
+50230      If GsDllLoaded = 0 Then
+50240       Exit Sub
+50250      End If
+50260      GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+50270      If GsDllLoaded = 0 Then
+50280       MsgBox LanguageStrings.MessagesMsg08
+50290      End If
+50300      inFile = InputFilename
+50310      strGUID = GetGUID
+50320      File = GetPDFCreatorSpoolDirectory & strGUID
+50330      If ivgf Then
+50340       psFileName = File & ".ps"
+50350       If Image2PS(InputFilename, psFileName) Then
+50360         inFile = psFileName
+50370        Else
+50380         IfLoggingWriteLogfile "ConvertFile: There is a problem converting '" & InputFilename & "'!"
+50390         Exit Sub
+50400       End If
+50410      End If
+50420      InfoSpoolFileName = CreateInfoSpoolFile(inFile, File & ".inf")
+50430      If IsPostscriptFile(inFile) = True Then
+50440        PSHeader = GetPSHeader(inFile)
+50450        If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50460         dateStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50470        End If
+50480       Else
+50490        If GetFileTimes(inFile, dateCreated, dateAccessed, dateWritten, True) Then
+50500         dateStr = CStr(dateCreated)
+50510        End If
 50520      End If
-50530      If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50540       .Keywords = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
-50550      End If
-50560      If Len(Trim$(Options.StandardSubject)) > 0 Then
-50570       .Subject = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
-50580      End If
-50590      tDate = Now
-50600      PSHeader = GetPSHeader(inFile)
-50610
-50620      If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50630        tStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
-50640       Else
-50650        tStr = CStr(tDate)
-50660      End If
-50670      .CreationDate = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, tStr)
-50680      .ModifyDate = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, tStr)
-50690      .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50700     End With
-50710
-50720     PDFDocInfoFile = CreatePDFDocInfoFile(inFile, PDFDocInfo)
-50730     StampFile = CreateStampFile(inFile)
-50740
-50751     Select Case UCase$(Ext)
-           Case "PDF"
-50771       Select Case UCase(SubFormat)
-             Case "PDF/A-1B"
-50790         CallGScript InfoSpoolFileName, OutputFilename, Options, PDFAWriter, PDFDocInfoFile, StampFile
-50800        Case "PDF/X"
-50810         CallGScript InfoSpoolFileName, OutputFilename, Options, PDFXWriter, PDFDocInfoFile, StampFile
-50820        Case Else
-50830         CallGScript InfoSpoolFileName, OutputFilename, Options, PDFWriter, PDFDocInfoFile, StampFile
-50840       End Select
-50850      Case "PNG"
-50860       CallGScript InfoSpoolFileName, OutputFilename, Options, PNGWriter, PDFDocInfoFile, StampFile
-50870      Case "JPG"
-50880       CallGScript InfoSpoolFileName, OutputFilename, Options, JPEGWriter, PDFDocInfoFile, StampFile
-50890      Case "BMP"
-50900       CallGScript InfoSpoolFileName, OutputFilename, Options, BMPWriter, PDFDocInfoFile, StampFile
-50910      Case "PCX"
-50920       CallGScript InfoSpoolFileName, OutputFilename, Options, PCXWriter, PDFDocInfoFile, StampFile
-50930      Case "TIF"
-50940       CallGScript InfoSpoolFileName, OutputFilename, Options, TIFFWriter, PDFDocInfoFile, StampFile
-50950      Case "PS"
-50960       CallGScript InfoSpoolFileName, OutputFilename, Options, PSWriter, PDFDocInfoFile, StampFile
-50970      Case "EPS"
-50980       CallGScript InfoSpoolFileName, OutputFilename, Options, EPSWriter, PDFDocInfoFile, StampFile
-50990      Case "TXT"
-51000       CallGScript InfoSpoolFileName, OutputFilename, Options, TXTWriter, PDFDocInfoFile, StampFile
-51010      Case "PCL"
-51020       CallGScript InfoSpoolFileName, OutputFilename, Options, PCLWriter, PDFDocInfoFile, StampFile
-51030      Case "PSD"
-51040       CallGScript InfoSpoolFileName, OutputFilename, Options, PSDWriter, PDFDocInfoFile, StampFile
-51050      Case "RAW"
-51060       CallGScript InfoSpoolFileName, OutputFilename, Options, RAWWriter, PDFDocInfoFile, StampFile
-51070      Case "SVG"
-51080       CallGScript InfoSpoolFileName, OutputFilename, Options, SVGWriter, PDFDocInfoFile, StampFile
-51090     End Select
-51100
-51110     KillFile InfoSpoolFileName
-51120     KillFile PDFDocInfoFile
-51130     KillFile StampFile
-51140    End If
-51150 '   If GsDllLoaded <> 0 Then
-51160 '    UnloadDLLComplete GsDllLoaded
-51170 '   End If
-51180    ConvertedOutputFilename = OutputFilename
-51190    ReadyConverting = True
-51200    Exit Sub
-51210   Else
-51220    If FileExists(InputFilename) = True Then
-51230     If IsPostscriptFile(InputFilename) = True Then
-51240       IFIsPS = True
-51250      Else
-51260       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
-51270     End If
-51280    End If
-51290  End If
-51300  DoEvents
+50530     Else
+50540      InfoSpoolFileName = InputFilename
+50550      inFile = InputFilename
+50560      If LenB(InfoSpoolFileName) > 0 Then
+50570       Set isf = New clsInfoSpoolFile
+50580       isf.ReadInfoFile InfoSpoolFileName
+50590       If LenB(isf.FirstSpoolFileName) > 0 Then
+50600        If IsPostscriptFile(isf.FirstSpoolFileName) = True Then
+50610          PSHeader = GetPSHeader(isf.FirstSpoolFileName)
+50620          If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50630            dateStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50640           Else
+50650            If GetFileTimes(isf.FirstSpoolFileName, dateCreated, dateAccessed, dateWritten, True) Then
+50660             dateStr = CStr(dateCreated)
+50670            End If
+50680          End If
+50690         Else
+50700          If GetFileTimes(isf.FirstSpoolFileName, dateCreated, dateAccessed, dateWritten, True) Then
+50710           dateStr = CStr(dateCreated)
+50720          End If
+50730        End If
+50740       End If
+50750      End If
+50760    End If
+50770
+50780    SplitPath OutputFilename, , , , , Ext
+50790
+50800    Set isf = New clsInfoSpoolFile
+50810    isf.ReadInfoFile InfoSpoolFileName
+50820    With PDFDocInfo
+50830     If Len(Trim$(Options.StandardTitle)) > 0 Then
+50840       .Author = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50850      Else
+50860       .Author = GetSubstFilename(InfoSpoolFileName, Options.SaveFilename, , , True)
+50870     End If
+50880     If Options.UseStandardAuthor = 1 Then
+50890       .Creator = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50900      Else
+50910       If IsPostscriptFile(isf.FirstSpoolFileName) Then
+50920         .Creator = GetDocUsernameFromPostScriptFile(isf.FirstSpoolFileName, False)
+50930        Else
+50940         .Creator = isf.FirstUserName
+50950       End If
+50960     End If
+50970     If Len(Trim$(Options.StandardKeywords)) > 0 Then
+50980      .Keywords = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50990     End If
+51000     If Len(Trim$(Options.StandardSubject)) > 0 Then
+51010      .Subject = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+51020     End If
+51030
+51040     .CreationDate = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, dateStr)
+51050     .ModifyDate = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, dateStr)
+51060     .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+51070    End With
+51080
+51090    PDFDocInfoFile = CreatePDFDocInfoFile(InfoSpoolFileName, PDFDocInfo)
+51100    StampFile = CreateStampFile(InfoSpoolFileName)
+51110
+51121    Select Case UCase$(Ext)
+          Case "PDF"
+51141      Select Case UCase(SubFormat)
+            Case "PDF/A-1B"
+51160        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFAWriter, PDFDocInfoFile, StampFile
+51170       Case "PDF/X"
+51180        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFXWriter, PDFDocInfoFile, StampFile
+51190       Case Else
+51200        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFWriter, PDFDocInfoFile, StampFile
+51210      End Select
+51220     Case "PNG"
+51230      CallGScript InfoSpoolFileName, OutputFilename, Options, PNGWriter, PDFDocInfoFile, StampFile
+51240     Case "JPG"
+51250      CallGScript InfoSpoolFileName, OutputFilename, Options, JPEGWriter, PDFDocInfoFile, StampFile
+51260     Case "BMP"
+51270      CallGScript InfoSpoolFileName, OutputFilename, Options, BMPWriter, PDFDocInfoFile, StampFile
+51280     Case "PCX"
+51290      CallGScript InfoSpoolFileName, OutputFilename, Options, PCXWriter, PDFDocInfoFile, StampFile
+51300     Case "TIF"
+51310      CallGScript InfoSpoolFileName, OutputFilename, Options, TIFFWriter, PDFDocInfoFile, StampFile
+51320     Case "PS"
+51330      CallGScript InfoSpoolFileName, OutputFilename, Options, PSWriter, PDFDocInfoFile, StampFile
+51340     Case "EPS"
+51350      CallGScript InfoSpoolFileName, OutputFilename, Options, EPSWriter, PDFDocInfoFile, StampFile
+51360     Case "TXT"
+51370      CallGScript InfoSpoolFileName, OutputFilename, Options, TXTWriter, PDFDocInfoFile, StampFile
+51380     Case "PCL"
+51390      CallGScript InfoSpoolFileName, OutputFilename, Options, PCLWriter, PDFDocInfoFile, StampFile
+51400     Case "PSD"
+51410      CallGScript InfoSpoolFileName, OutputFilename, Options, PSDWriter, PDFDocInfoFile, StampFile
+51420     Case "RAW"
+51430      CallGScript InfoSpoolFileName, OutputFilename, Options, RAWWriter, PDFDocInfoFile, StampFile
+51440     Case "SVG"
+51450      CallGScript InfoSpoolFileName, OutputFilename, Options, SVGWriter, PDFDocInfoFile, StampFile
+51460    End Select
+51470
+51480    KillFile InfoSpoolFileName
+51490    KillFile PDFDocInfoFile
+51500    KillFile StampFile
+51510
+51520    ConvertedOutputFilename = OutputFilename
+51530    ReadyConverting = True
+51540    Exit Sub
+51550   Else
+51560    If FileExists(InputFilename) = True Then
+51570     If IsPostscriptFile(InputFilename) = True Then
+51580       IFIsPS = True
+51590      Else
+51600       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
+51610     End If
+51620    End If
+51630  End If
+51640  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
