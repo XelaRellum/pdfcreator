@@ -224,10 +224,6 @@
 				<param name="Local" value="html\after-installing-pdfcreator-i-get-an-error-exception-einouterror-in-module-isxxxxxexe-at-0000631c-file-not-found.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Blank page with Unicode characters in the Filename">
-				<param name="Local" value="html\blank-page-with-unicode-characters-in-the-filename.html">
-				</OBJECT>
-			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Comment puis-je traduire PDFCreator dans la langue de mon pays ?">
 				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
 				</OBJECT>
@@ -246,6 +242,10 @@
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Mon antivirus me dit que PDFCreator contient un virus. Vous ne v&eacute;rifiez pas vos fichiers ?">
 				<param name="Local" value="html\my-antivirus-program-says-that-pdfcreator-contains-a-virus-dont-you-check-your-files.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Page vide avec des caract&egrave;res Unicode dans le nom de fichier">
+				<param name="Local" value="html\blank-page-with-unicode-characters-in-the-filename.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Pourquoi PDFCreator n'utilise pas le nom d'origine de mon fichier ?">
