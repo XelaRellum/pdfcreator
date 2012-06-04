@@ -1932,14 +1932,14 @@ On Error GoTo ErrPtnr_OnError
 50550        End If
 50560        .CreationDate = GetDocDate(Trim$(Options.StandardCreationdate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
 50570        .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-50580        .Keywords = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+50580        .Keywords = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , False)
 50590        'tStr = CStr(tDate)
 50600        .ModifyDate = GetDocDate(Trim$(Options.StandardModifydate), Options.StandardDateformat, FormatPrintDocumentDate(tStr))
-50610        .Subject = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+50610        .Subject = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , False)
 50620        If Len(Options.StandardTitle) > 0 Then
-50630          .Title = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50630          .Title = GetSubstFilename(spoolFile.FullFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , False)
 50640         Else
-50650          .Title = GetSubstFilename(spoolFile.FullFileName, Options.SaveFilename, , , True)
+50650          .Title = GetSubstFilename(spoolFile.FullFileName, Options.SaveFilename, , , False)
 50660        End If
 50670       End With
 50680
