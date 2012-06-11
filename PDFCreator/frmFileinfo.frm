@@ -61,7 +61,7 @@ On Error GoTo ErrPtnr_OnError
 50110   For i = 1 To isf.InfoFiles.Count
 50120    Set isfi = isf.InfoFiles(i)
 50130    If FileExists(isfi.SpoolFileName) Then
-50140     sumFileSizes = sumFileSizes + FileLen(isfi.SpoolFileName)
+50140     sumFileSizes = sumFileSizes + GetFileLength(isfi.SpoolFileName)
 50150    End If
 50160   Next i
 50170   strInfo = "Count of Jobs: " & CStr(isf.InfoFiles.Count)
@@ -81,7 +81,7 @@ On Error GoTo ErrPtnr_OnError
 50310   strInfo = strInfo & vbCrLf & "SessionID: " & isfi.SessionID
 50320   strInfo = strInfo & vbCrLf & "Spool-filename: " & isfi.SpoolFileName
 50330   If FileExists(isfi.SpoolFileName) Then
-50340     strInfo = strInfo & vbCrLf & "Spool-file size: " & Format$(FileLen(isfi.SpoolFileName), "#,##0") & " bytes"
+50340     strInfo = strInfo & vbCrLf & "Spool-file size: " & Format$(GetFileLength(isfi.SpoolFileName), "#,##0") & " bytes"
 50350    Else
 50360     strInfo = strInfo & vbCrLf & "Spool-file size: File doesn't exist anymore!"
 50370   End If

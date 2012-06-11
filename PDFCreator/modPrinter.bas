@@ -562,7 +562,7 @@ On Error GoTo ErrPtnr_OnError
      "PDFCreator-Revision: " & GetProgramReleaseStr & vbCrLf
 50080    Else
 50090     Open LogFile For Append As fn
-50100     If FileLen(LogFile) = 0 Then
+50100     If GetFileLength(LogFile) = 0 Then
 50110      Print #fn, "Windowsversion: " & GetWinVersionStr & vbCrLf & _
       "PDFCreator-Revision: " & GetProgramReleaseStr & vbCrLf
 50130     End If

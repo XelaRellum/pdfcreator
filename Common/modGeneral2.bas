@@ -20,7 +20,7 @@ On Error GoTo ErrPtnr_OnError
 50120  fnDest = FreeFile
 50130  aLen = 0: tLen = 0
 50140  For i = 1 To files.Count
-50150   aLen = aLen + FileLen(files.Item(i))
+50150   aLen = aLen + GetFileLength(files.Item(i))
 50160  Next i
 50170  Open filename For Binary As #fnDest
 50180  For i = 1 To files.Count
@@ -28,7 +28,7 @@ On Error GoTo ErrPtnr_OnError
 50200   If FileExists(files.Item(i)) = False Then
 50210    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & files.Item(i)
 50220   End If
-50230   If FileLen(files.Item(i)) > 0 Then
+50230   If GetFileLength(files.Item(i)) > 0 Then
 50240    fnSource = FreeFile
 50250    Open files.Item(i) For Binary Access Read As #fnSource
 50260    If bsize > LOF(fnSource) Then
@@ -96,12 +96,12 @@ On Error GoTo ErrPtnr_OnError
 50140  fnDest = FreeFile
 50150  aLen = 0
 50160  For i = 1 To files.Count
-50170   aLen = aLen + FileLen(files.Item(i))
+50170   aLen = aLen + GetFileLength(files.Item(i))
 50180  Next i
 50190  Open filename For Binary As #fnDest
 50200  For i = 1 To files.Count
 50210   DoEvents
-50220   If FileLen(files.Item(i)) > 0 Then
+50220   If GetFileLength(files.Item(i)) > 0 Then
 50230    fnSource = FreeFile
 50240    Open files.Item(i) For Binary Access Read As #fnSource
 50250    sBuffer = String(LOF(fnSource), Chr$(0))
@@ -109,7 +109,7 @@ On Error GoTo ErrPtnr_OnError
 50270    Put #fnDest, , sBuffer
 50280    Close #fnSource
 50290   End If
-50300   tLen = tLen + FileLen(files.Item(i))
+50300   tLen = tLen + GetFileLength(files.Item(i))
 50310   stb.Panels("Percent").Text = Format$(tLen / aLen, "0.0%")
 50320   KillFile files.Item(i)
 50330   DoEvents
@@ -234,7 +234,7 @@ On Error GoTo ErrPtnr_OnError
 50150  tStr = PDFCreatorApplicationPath & "PDFCreator.exe"
 50160  If FileExists(tStr) = True Then
 50170    Set c = GetFileVersion(tStr)
-50180    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50180    tStr = "Version: " & c(2) & "; Size: " & Format(GetFileLength(tStr), "###,###,###,### Bytes")
 50190   Else
 50200    tStr = ""
 50210  End If
@@ -261,7 +261,7 @@ On Error GoTo ErrPtnr_OnError
 50420
 50430 ' If FileExists(tStr) = True Then
 50440 '   Set c = GetFileVersion(tStr)
-50450 '   tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50450 '   tStr = "Version: " & c(2) & "; Size: " & Format(GetFileLength(tStr), "###,###,###,### Bytes")
 50460 '  Else
 50470 '   tStr = ""
 50480 ' End If
@@ -271,7 +271,7 @@ On Error GoTo ErrPtnr_OnError
 50520  tStr = PDFCreatorApplicationPath & "Languages\Transtool.exe"
 50530  If FileExists(tStr) = True Then
 50540    Set c = GetFileVersion(tStr)
-50550    tStr = "Version: " & c(2) & "; Size: " & Format(FileLen(tStr), "###,###,###,### Bytes")
+50550    tStr = "Version: " & c(2) & "; Size: " & Format(GetFileLength(tStr), "###,###,###,### Bytes")
 50560   Else
 50570    tStr = ""
 50580  End If

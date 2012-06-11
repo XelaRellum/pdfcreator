@@ -21,7 +21,7 @@ Public FirstJobID As String
 Public FirstSessionID As String
 Public FirstUserName As String
 
-Public sumFileSizes As Long
+Public sumFileSizes As Currency
 Public InfoFiles As Collection
 
 Private Sub Class_Initialize()
@@ -83,7 +83,7 @@ On Error GoTo ErrPtnr_OnError
 50190   isfi.JobID = ini.GetKeyFromSection("JobId", sections(i))
 50200   isfi.DocumentTitle = ini.GetKeyFromSection("DocumentTitle", sections(i))
 50210   If FileExists(isfi.SpoolFileName) Then
-50220    sumFileSizes = sumFileSizes + FileLen(isfi.SpoolFileName)
+50220    sumFileSizes = sumFileSizes + GetFileLength(isfi.SpoolFileName)
 50230    InfoFiles.Add isfi
 50240    If InfoFiles.Count = 1 Then
 50250     FirstDocumentTitle = isfi.DocumentTitle
