@@ -258,29 +258,36 @@ On Error GoTo ErrPtnr_OnError
 50290     If WithComments = True Then
 50300       If InStr(nItems(i), "=") > 0 Then
 50310         nItem = Split(nItems(i), "=")
-50320         ts(0) = nItem(0): ts(1) = nItem(1)
-50330         tColl.Add ts
-50340        Else
-50350         ts(0) = nItems(i): ts(1) = vbNullString
-50360         tColl.Add ts
-50370       End If
-50380      Else
-50390       If InStr(Trim$(nItems(i)), ";") <> 1 Then
-50400        If InStr(nItems(i), "=") > 0 Then
-50410          nItem = Split(nItems(i), "=")
-50420          ts(0) = nItem(0): ts(1) = nItem(1)
-50430          tColl.Add ts
-50440         Else
-50450          ts(0) = nItems(i): ts(1) = vbNullString
-50460          tColl.Add ts
-50470        End If
-50480       End If
-50490     End If
-50500
-50510    End If
-50520   Next i
-50530   Set GetAllKeysFromSection = tColl
-50540  End If
+50320         ts(0) = nItem(0)
+50330         ts(1) = nItem(1)
+50340         For j = 2 To UBound(nItem)
+50350          ts(1) = ts(1) & "=" & nItem(j)
+50360         Next j
+50370         tColl.Add ts
+50380        Else
+50390         ts(0) = nItems(i): ts(1) = vbNullString
+50400         tColl.Add ts
+50410       End If
+50420      Else
+50430       If InStr(Trim$(nItems(i)), ";") <> 1 Then
+50440        If InStr(nItems(i), "=") > 0 Then
+50450          nItem = Split(nItems(i), "=")
+50460          ts(0) = nItem(0)
+50470          ts(1) = nItem(1)
+50480          For j = 2 To UBound(nItem)
+50490           ts(1) = ts(1) & "=" & nItem(j)
+50500          Next j
+50510          tColl.Add ts
+50520         Else
+50530          ts(0) = nItems(i): ts(1) = vbNullString
+50540          tColl.Add ts
+50550        End If
+50560       End If
+50570     End If
+50580    End If
+50590   Next i
+50600   Set GetAllKeysFromSection = tColl
+50610  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
