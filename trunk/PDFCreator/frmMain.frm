@@ -993,7 +993,7 @@ Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Butt
     SetDefaultprinterInProg GetPDFCreatorPrintername
     aLen = 0
     For i = 1 To Data.files.Count
-     aLen = aLen + FileLen(Data.files.Item(i))
+     aLen = aLen + GetFileLength(Data.files.Item(i))
     Next i
     spoolDirectory = GetPDFCreatorSpoolDirectory
     For i = 1 To Data.files.Count
@@ -1014,7 +1014,7 @@ Private Sub lsv_OLEDragDrop(Data As MSComctlLib.DataObject, Effect As Long, Butt
        ShellAndWait Me.hwnd, "print", Data.files.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
        DoEvents
      End If
-     tLen = tLen + FileLen(Data.files.Item(i))
+     tLen = tLen + GetFileLength(Data.files.Item(i))
      stb.Panels("Percent").Text = Format$(tLen / aLen, " 0.0%")
      DoEvents
     Next i
@@ -1686,12 +1686,12 @@ On Error GoTo ErrPtnr_OnError
 50830    lItem.SubItems(1) = LanguageStrings.ListWaiting
 50840    lItem.SubItems(2) = spoolFile.FileDateTime
 50850
-50860    If spoolFile.FileLen > GB Then
+50860    If isf.sumFileSizes > GB Then
 50870      lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / GB, "#,##0.00 " & LanguageStrings.ListGBytes)
-50880     ElseIf spoolFile.FileLen > MB Then
+50880     ElseIf isf.sumFileSizes > MB Then
 50890      lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / MB, "#,##0.00 " & LanguageStrings.ListMBytes)
 50900     Else
-50910      If spoolFile.FileLen > kB Then
+50910      If isf.sumFileSizes > kB Then
 50920        lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes) / kB, "#,##0.00 " & LanguageStrings.ListKBytes)
 50930       Else
 50940        lItem.SubItems(3) = Format$(CDbl(isf.sumFileSizes), "#,##0 " & LanguageStrings.ListBytes)
@@ -2222,7 +2222,7 @@ On Error GoTo ErrPtnr_OnError
 50120  End If
 50130  aLen = 0
 50140  For i = 1 To cFiles.Count
-50150   aLen = aLen + FileLen(cFiles.Item(i))
+50150   aLen = aLen + GetFileLength(cFiles.Item(i))
 50160  Next i
 50170  OnlyPsFiles = True
 50180  For i = 1 To cFiles.Count
@@ -2248,7 +2248,7 @@ On Error GoTo ErrPtnr_OnError
 50380  SetDefaultprinterInProg GetPDFCreatorPrintername
 50390  aLen = 0
 50400  For i = 1 To cFiles.Count
-50410   aLen = aLen + FileLen(cFiles.Item(i))
+50410   aLen = aLen + GetFileLength(cFiles.Item(i))
 50420  Next i
 50430  For i = 1 To cFiles.Count
 50440   SplitPath cFiles.Item(i), , , , , Ext
@@ -2264,7 +2264,7 @@ On Error GoTo ErrPtnr_OnError
 50540     ShellAndWait Me.hwnd, "print", cFiles.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
 50550   End If
 50560   DoEvents
-50570   tLen = tLen + FileLen(cFiles.Item(i))
+50570   tLen = tLen + GetFileLength(cFiles.Item(i))
 50580   stb.Panels("Percent").Text = Format$(tLen / aLen, " 0.0%")
 50590   DoEvents
 50600  Next i

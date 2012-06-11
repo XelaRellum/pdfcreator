@@ -15,7 +15,7 @@ Public Const GENERIC_WRITE                   As Long = &H40000000
 Public Const GENERIC_READ                    As Long = &H80000000
 Public Const INVALID_HANDLE_VALUE            As Long = -1
 Public Const OPEN_EXISTING                   As Long = &H3
-
+Public Const OPEN_ALWAYS                     As Long = 4
 
 Public Const FORMAT_MESSAGE_FROM_SYSTEM      As Long = &H1000
 Public Const FORMAT_MESSAGE_IGNORE_INSERTS   As Long = &H200
@@ -311,6 +311,7 @@ Public Const FILE_ATTRIBUTE_HIDDEN           As Long = &H2
 Public Const FILE_ATTRIBUTE_NORMAL           As Long = &H80
 Public Const FILE_ATTRIBUTE_READONLY         As Long = &H1
 Public Const FILE_ATTRIBUTE_SYSTEM           As Long = &H4
+Public Const FILE_FLAG_SEQUENTIAL_SCAN       As Long = &H8000000
 
 Public Const WAIT_TIMEOUT                    As Long = &H102
 

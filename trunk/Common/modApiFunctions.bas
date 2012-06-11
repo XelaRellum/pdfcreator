@@ -62,85 +62,86 @@ Public Declare Function HtmlHelp Lib "hhctrl.ocx" Alias "HtmlHelpA" (ByVal hwndC
 Public Declare Function HtmlHelpTopic Lib "hhctrl.ocx" Alias "HtmlHelpA" (ByVal hwnd As Long, ByVal lpHelpFile As String, ByVal wCommand As Long, ByVal dwData As String) As Long
 
 ' kernel32.dll
-Public Declare Function CloseHandle Lib "KERNEL32.DLL" (ByVal hObject As Long) As Long
-Public Declare Function CreateFile Lib "KERNEL32.DLL" Alias "CreateFileA" (ByVal lpFileName As String, ByVal dwDesiredAccess As Long, ByVal dwShareMode As Long, ByVal lpSecurityAttributes As Long, ByVal dwCreationDisposition As Long, ByVal dwFlagsAndAttributes As Long, ByVal hTemplateFile As Long) As Long
-Public Declare Function CreateMutexA Lib "KERNEL32.DLL" (ByVal lpMutexAttributes As Long, ByVal bInitialOwner As Long, ByVal lpName As String) As Long
-Public Declare Function CreateProcessA Lib "KERNEL32.DLL" (ByVal lpApplicationName As Long, ByVal lpCommandLine As String, ByVal lpProcessAttributes As Long, ByVal lpThreadAttributes As Long, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, ByVal lpEnvironment As Long, ByVal lpCurrentDirectory As Long, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long
-Public Declare Function CreateToolhelpSnapshot Lib "KERNEL32.DLL" Alias "CreateToolhelp32Snapshot" (ByVal lFlgas As Long, ByVal lProcessID As Long) As Long
-Public Declare Function ExpandEnvironmentStrings Lib "KERNEL32.DLL" Alias "ExpandEnvironmentStringsA" (ByVal lpSrc As String, ByVal lpDst As String, ByVal nSize As Long) As Long
+Public Declare Function CloseHandle Lib "kernel32.dll" (ByVal hObject As Long) As Long
+Public Declare Function CreateFile Lib "kernel32.dll" Alias "CreateFileA" (ByVal lpFileName As String, ByVal dwDesiredAccess As Long, ByVal dwShareMode As Long, ByVal lpSecurityAttributes As Long, ByVal dwCreationDisposition As Long, ByVal dwFlagsAndAttributes As Long, ByVal hTemplateFile As Long) As Long
+Public Declare Function CreateMutexA Lib "kernel32.dll" (ByVal lpMutexAttributes As Long, ByVal bInitialOwner As Long, ByVal lpName As String) As Long
+Public Declare Function CreateProcessA Lib "kernel32.dll" (ByVal lpApplicationName As Long, ByVal lpCommandLine As String, ByVal lpProcessAttributes As Long, ByVal lpThreadAttributes As Long, ByVal bInheritHandles As Long, ByVal dwCreationFlags As Long, ByVal lpEnvironment As Long, ByVal lpCurrentDirectory As Long, lpStartupInfo As STARTUPINFO, lpProcessInformation As PROCESS_INFORMATION) As Long
+Public Declare Function CreateToolhelpSnapshot Lib "kernel32.dll" Alias "CreateToolhelp32Snapshot" (ByVal lFlgas As Long, ByVal lProcessID As Long) As Long
+Public Declare Function ExpandEnvironmentStrings Lib "kernel32.dll" Alias "ExpandEnvironmentStringsA" (ByVal lpSrc As String, ByVal lpDst As String, ByVal nSize As Long) As Long
 Public Declare Function FileTimeToLocalFileTime Lib "kernel32" (lpFileTime As FILETIME, lpLocalFileTime As FILETIME) As Long
-Public Declare Sub FindClose Lib "KERNEL32.DLL" (ByVal hFindFile As Long)
-Public Declare Function FindFirstFileA Lib "KERNEL32.DLL" (ByVal lpFileName As String, lpFindFileData As WIN32_FIND_DATA) As Long
-Public Declare Function FindNextFileA Lib "KERNEL32.DLL" (ByVal hFindFile As Long, lpFindFileData As WIN32_FIND_DATA) As Long
-Public Declare Function FormatMessage Lib "KERNEL32.DLL" Alias "FormatMessageA" (ByVal dwFlags As Long, ByVal lpSource As Long, ByVal dwMessageId As Long, ByVal dwLanguageId As Long, ByVal lpBuffer As String, nSize As Long, Arguments As Long) As Long
-Public Declare Function FreeLibrary Lib "KERNEL32.DLL" (ByVal hLibModule As Long) As Long
-Public Declare Function GetComputerNameA Lib "KERNEL32.DLL" (ByVal lpBuffer As String, nSize As Long) As Long
-Public Declare Function GetCurrentProcess Lib "KERNEL32.DLL" () As Long
-Public Declare Function GetCurrentThread Lib "KERNEL32.DLL" () As Long
-Public Declare Function GetExitCodeProcess Lib "KERNEL32.DLL" (ByVal hProcess As Long, lpExitCode As Long) As Long
-Public Declare Function GetFileAttributesA Lib "KERNEL32.DLL" (ByVal lpFileName As String) As Long
+Public Declare Sub FindClose Lib "kernel32.dll" (ByVal hFindFile As Long)
+Public Declare Function FindFirstFileA Lib "kernel32.dll" (ByVal lpFileName As String, lpFindFileData As WIN32_FIND_DATA) As Long
+Public Declare Function FindNextFileA Lib "kernel32.dll" (ByVal hFindFile As Long, lpFindFileData As WIN32_FIND_DATA) As Long
+Public Declare Function FormatMessage Lib "kernel32.dll" Alias "FormatMessageA" (ByVal dwFlags As Long, ByVal lpSource As Long, ByVal dwMessageId As Long, ByVal dwLanguageId As Long, ByVal lpBuffer As String, nSize As Long, Arguments As Long) As Long
+Public Declare Function FreeLibrary Lib "kernel32.dll" (ByVal hLibModule As Long) As Long
+Public Declare Function GetComputerNameA Lib "kernel32.dll" (ByVal lpBuffer As String, nSize As Long) As Long
+Public Declare Function GetCurrentProcess Lib "kernel32.dll" () As Long
+Public Declare Function GetCurrentThread Lib "kernel32.dll" () As Long
+Public Declare Function GetExitCodeProcess Lib "kernel32.dll" (ByVal hProcess As Long, lpExitCode As Long) As Long
+Public Declare Function GetFileAttributesA Lib "kernel32.dll" (ByVal lpFileName As String) As Long
+Public Declare Function GetFileSize Lib "kernel32.dll" (ByVal hFile As Long, lpFileSizeHigh As Long) As Long
 Public Declare Function GetFileTime Lib "kernel32" (ByVal hFile As Long, lpCreationTime As FILETIME, lpLastAccessTime As FILETIME, lpLastWriteTime As FILETIME) As Long
-Public Declare Function GetLocaleInfo Lib "KERNEL32.DLL" Alias "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
-Public Declare Function GetLogicalDriveStrings Lib "KERNEL32.DLL" Alias "GetLogicalDriveStringsA" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
-Public Declare Function GetModuleHandle Lib "KERNEL32.DLL" Alias "GetModuleHandleA" (ByVal lpModuleName As String) As Long
-Public Declare Function GetPriorityClass Lib "KERNEL32.DLL" (ByVal hProcess As Long) As Long
-Public Declare Function GetPrivateProfileSection Lib "KERNEL32.DLL" Alias "GetPrivateProfileSectionA" (ByVal Section As String, ByVal buffer As String, ByVal Size As Long, ByVal filename As String) As Long
-Public Declare Function GetPrivateProfileSectionNames Lib "KERNEL32.DLL" Alias "GetPrivateProfileSectionNamesA" (ByVal lpszReturnBuffer As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
+Public Declare Function GetLocaleInfo Lib "kernel32.dll" Alias "GetLocaleInfoA" (ByVal Locale As Long, ByVal LCType As Long, ByVal lpLCData As String, ByVal cchData As Long) As Long
+Public Declare Function GetLogicalDriveStrings Lib "kernel32.dll" Alias "GetLogicalDriveStringsA" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
+Public Declare Function GetModuleHandle Lib "kernel32.dll" Alias "GetModuleHandleA" (ByVal lpModuleName As String) As Long
+Public Declare Function GetPriorityClass Lib "kernel32.dll" (ByVal hProcess As Long) As Long
+Public Declare Function GetPrivateProfileSection Lib "kernel32.dll" Alias "GetPrivateProfileSectionA" (ByVal Section As String, ByVal buffer As String, ByVal Size As Long, ByVal filename As String) As Long
+Public Declare Function GetPrivateProfileSectionNames Lib "kernel32.dll" Alias "GetPrivateProfileSectionNamesA" (ByVal lpszReturnBuffer As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
 'Public Declare Function GetPrivateProfileString Lib "kernel32.dll" Alias "GetPrivateProfileStringA" (ByVal lpSectionName As String, ByVal lpKeyName As Any, ByVal lpDefault As String, ByVal lpbuffurnedString As String, ByVal nBuffSize As Long, ByVal lpFileName As String) As Long
-Public Declare Function GetPrivateProfileString Lib "KERNEL32.DLL" Alias "GetPrivateProfileStringA" (ByVal Section As String, ByVal key As String, ByVal Default As String, ByVal buffer As String, ByVal Size As Long, ByVal filename As String) As Long
-Public Declare Function GetProcAddress Lib "KERNEL32.DLL" (ByVal hModule As Long, ByVal lpProcName As String) As Long
-Public Declare Function GetProductInfo Lib "KERNEL32.DLL" (ByVal dwOSMajorVersion As Long, ByVal dwOSMinorVersion As Long, ByVal dwSpMajorVersion As Long, ByVal dwSpMinorVersion As Long, pdwReturnedProductType As Long) As Long
-Public Declare Function GetProfileString Lib "KERNEL32.DLL" Alias "GetProfileStringA" (ByVal lpAppName As String, ByVal lpKeyName As Any, ByVal lpDefault As String, ByVal lpReturnedString As String, ByVal nSize As Long) As Long
-Public Declare Function GetShortPathName Lib "KERNEL32.DLL" Alias "GetShortPathNameA" (ByVal lpszLongPath As String, ByVal lpszShortPath As String, ByVal cchBuffer As Long) As Long
-Public Declare Function GetStdHandle Lib "KERNEL32.DLL" (ByVal nStdHandle As Long) As Long
-Public Declare Function GetSystemDirectoryA Lib "KERNEL32.DLL" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
-Public Declare Sub GetSystemTime Lib "KERNEL32.DLL" (lpSystemTime As SYSTEMTIME)
-Public Declare Function GetTempFileNameA Lib "KERNEL32.DLL" (ByVal lpszPath As String, ByVal lpPrefixString As String, ByVal wUnique As Long, ByVal lpTempFileName As String) As Long
-Public Declare Function GetTempPathA Lib "KERNEL32.DLL" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
-Public Declare Function GetThreadPriority Lib "KERNEL32.DLL" (ByVal hThread As Long) As Long
-Public Declare Function GetTickCount Lib "KERNEL32.DLL" () As Long
-Public Declare Function GetTimeZoneInformation Lib "KERNEL32.DLL" (lpTimeZoneInformation As TIME_ZONE_INFORMATION) As Long
-Public Declare Function GetVersion Lib "KERNEL32.DLL" () As Long
-Public Declare Function GetVersionEx Lib "KERNEL32.DLL" Alias "GetVersionExA" (lpVersionInformation As Any) As Long
-Public Declare Function GetWindowsDirectoryA Lib "KERNEL32.DLL" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
-Public Declare Function GlobalAlloc Lib "KERNEL32.DLL" (ByVal wFlags As Long, ByVal dwBytes As Long) As Long
-Public Declare Function GlobalFree Lib "KERNEL32.DLL" (ByVal hMem As Long) As Long
-Public Declare Function GlobalLock Lib "KERNEL32.DLL" (ByVal hMem As Long) As Long
-Public Declare Function GlobalUnlock Lib "KERNEL32.DLL" (ByVal hMem As Long) As Long
-Public Declare Function InStrNullChar Lib "KERNEL32.DLL" Alias "lstrlenA" (ByVal lpString As Any) As Long
-Public Declare Function IsWow64Process Lib "KERNEL32.DLL" (ByVal hProc As Long, bWow64Process As Boolean) As Long
-Public Declare Function LoadLibrary Lib "KERNEL32.DLL" Alias "LoadLibraryA" (ByVal lpLibFileName As String) As Long
-Public Declare Function lstrcat Lib "KERNEL32.DLL" Alias "lstrcatA" (ByVal lpString1 As String, ByVal lpString2 As String) As Long
-Public Declare Function lstrcpy Lib "KERNEL32.DLL" Alias "lstrcpyA" (lpString1 As Any, lpString2 As Any) As Long
-Public Declare Function lstrlen Lib "KERNEL32.DLL" Alias "lstrlenA" (lpString As Any) As Long
-Public Declare Function lstrlenW Lib "KERNEL32.DLL" (lpString As Any) As Long
-Public Declare Sub MoveMemory Lib "KERNEL32.DLL" Alias "RtlMoveMemory" (pDest As Any, pSource As Any, ByVal dwLength As Long)
-Public Declare Sub MoveMemory2 Lib "KERNEL32.DLL" Alias "RtlMoveMemory" (Dest As Any, ByVal Source As Long, ByVal Length As Long)
-Public Declare Sub MoveMemoryLong Lib "KERNEL32.DLL" Alias "RtlMoveMemory" (ByVal pDest As Long, ByVal pSource As Long, ByVal dwLength As Long)
-Public Declare Sub MoveMemoryLongToByte Lib "KERNEL32.DLL" Alias "RtlMoveMemory" (ByRef Destination As Byte, ByRef Source As Long, ByVal Length As Long)
-Public Declare Function OpenMutex Lib "KERNEL32.DLL" Alias "OpenMutexA" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Boolean, ByVal lpName As String) As Long
-Public Declare Function OpenProcess Lib "KERNEL32.DLL" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
+Public Declare Function GetPrivateProfileString Lib "kernel32.dll" Alias "GetPrivateProfileStringA" (ByVal Section As String, ByVal key As String, ByVal Default As String, ByVal buffer As String, ByVal Size As Long, ByVal filename As String) As Long
+Public Declare Function GetProcAddress Lib "kernel32.dll" (ByVal hModule As Long, ByVal lpProcName As String) As Long
+Public Declare Function GetProductInfo Lib "kernel32.dll" (ByVal dwOSMajorVersion As Long, ByVal dwOSMinorVersion As Long, ByVal dwSpMajorVersion As Long, ByVal dwSpMinorVersion As Long, pdwReturnedProductType As Long) As Long
+Public Declare Function GetProfileString Lib "kernel32.dll" Alias "GetProfileStringA" (ByVal lpAppName As String, ByVal lpKeyName As Any, ByVal lpDefault As String, ByVal lpReturnedString As String, ByVal nSize As Long) As Long
+Public Declare Function GetShortPathName Lib "kernel32.dll" Alias "GetShortPathNameA" (ByVal lpszLongPath As String, ByVal lpszShortPath As String, ByVal cchBuffer As Long) As Long
+Public Declare Function GetStdHandle Lib "kernel32.dll" (ByVal nStdHandle As Long) As Long
+Public Declare Function GetSystemDirectoryA Lib "kernel32.dll" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
+Public Declare Sub GetSystemTime Lib "kernel32.dll" (lpSystemTime As SYSTEMTIME)
+Public Declare Function GetTempFileNameA Lib "kernel32.dll" (ByVal lpszPath As String, ByVal lpPrefixString As String, ByVal wUnique As Long, ByVal lpTempFileName As String) As Long
+Public Declare Function GetTempPathA Lib "kernel32.dll" (ByVal nBufferLength As Long, ByVal lpBuffer As String) As Long
+Public Declare Function GetThreadPriority Lib "kernel32.dll" (ByVal hThread As Long) As Long
+Public Declare Function GetTickCount Lib "kernel32.dll" () As Long
+Public Declare Function GetTimeZoneInformation Lib "kernel32.dll" (lpTimeZoneInformation As TIME_ZONE_INFORMATION) As Long
+Public Declare Function GetVersion Lib "kernel32.dll" () As Long
+Public Declare Function GetVersionEx Lib "kernel32.dll" Alias "GetVersionExA" (lpVersionInformation As Any) As Long
+Public Declare Function GetWindowsDirectoryA Lib "kernel32.dll" (ByVal lpBuffer As String, ByVal nSize As Long) As Long
+Public Declare Function GlobalAlloc Lib "kernel32.dll" (ByVal wFlags As Long, ByVal dwBytes As Long) As Long
+Public Declare Function GlobalFree Lib "kernel32.dll" (ByVal hMem As Long) As Long
+Public Declare Function GlobalLock Lib "kernel32.dll" (ByVal hMem As Long) As Long
+Public Declare Function GlobalUnlock Lib "kernel32.dll" (ByVal hMem As Long) As Long
+Public Declare Function InStrNullChar Lib "kernel32.dll" Alias "lstrlenA" (ByVal lpString As Any) As Long
+Public Declare Function IsWow64Process Lib "kernel32.dll" (ByVal hProc As Long, bWow64Process As Boolean) As Long
+Public Declare Function LoadLibrary Lib "kernel32.dll" Alias "LoadLibraryA" (ByVal lpLibFileName As String) As Long
+Public Declare Function lstrcat Lib "kernel32.dll" Alias "lstrcatA" (ByVal lpString1 As String, ByVal lpString2 As String) As Long
+Public Declare Function lstrcpy Lib "kernel32.dll" Alias "lstrcpyA" (lpString1 As Any, lpString2 As Any) As Long
+Public Declare Function lstrlen Lib "kernel32.dll" Alias "lstrlenA" (lpString As Any) As Long
+Public Declare Function lstrlenW Lib "kernel32.dll" (lpString As Any) As Long
+Public Declare Sub MoveMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (pDest As Any, pSource As Any, ByVal dwLength As Long)
+Public Declare Sub MoveMemory2 Lib "kernel32.dll" Alias "RtlMoveMemory" (Dest As Any, ByVal Source As Long, ByVal Length As Long)
+Public Declare Sub MoveMemoryLong Lib "kernel32.dll" Alias "RtlMoveMemory" (ByVal pDest As Long, ByVal pSource As Long, ByVal dwLength As Long)
+Public Declare Sub MoveMemoryLongToByte Lib "kernel32.dll" Alias "RtlMoveMemory" (ByRef Destination As Byte, ByRef Source As Long, ByVal Length As Long)
+Public Declare Function OpenMutex Lib "kernel32.dll" Alias "OpenMutexA" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Boolean, ByVal lpName As String) As Long
+Public Declare Function OpenProcess Lib "kernel32.dll" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
 Public Declare Function OpenProcessToken Lib "advapi32.dll" (ByVal ProcessHandle As Long, ByVal DesiredAccess As Long, TokenHandle As Long) As Long
-Public Declare Function ProcessFirst Lib "KERNEL32.DLL" Alias "Process32First" (ByVal hSnapshot As Long, uProcess As PROCESSENTRY32) As Long
-Public Declare Function ProcessNext Lib "KERNEL32.DLL" Alias "Process32Next" (ByVal hSnapshot As Long, uProcess As PROCESSENTRY32) As Long
-Public Declare Function QueryPerformanceFrequency Lib "KERNEL32.DLL" (ByRef Frequency As Currency) As Long
-Public Declare Function QueryPerformanceCounter Lib "KERNEL32.DLL" (ByRef TimerValue As Currency) As Long
-Public Declare Function ReadFile Lib "KERNEL32.DLL" (ByVal hFile As Long, lpBuffer As Any, ByVal nNumberOfBytesToRead As Long, lpNumberOfBytesRead As Long, lpOverlapped As Any) As Long
-Public Declare Function ReleaseMutex Lib "KERNEL32.DLL" (ByVal hMutex As Long) As Long
-Public Declare Function SetProcessWorkingSetSize Lib "KERNEL32.DLL" (ByVal hProcess As Long, ByVal dwMin As Long, ByVal dwMax As Long) As Long
-Public Declare Function SetPriorityClass Lib "KERNEL32.DLL" (ByVal hProcess As Long, ByVal dwPriorityClass As Long) As Long
-Public Declare Function SetThreadPriority Lib "KERNEL32.DLL" (ByVal hThread As Long, ByVal nPriority As Long) As Long
-Public Declare Sub Sleep Lib "KERNEL32.DLL" (ByVal dwMilliseconds As Long)
-Public Declare Function TerminateProcess Lib "KERNEL32.DLL" (ByVal hProcess As Long, ByVal uExitCode As Long) As Long
-Public Declare Function WaitForSingleObject Lib "KERNEL32.DLL" (ByVal hHandle As Long, ByVal dwMilliseconds As Long) As Long
-Public Declare Function WideCharToMultiByte Lib "KERNEL32.DLL" (ByVal CodePage As Long, ByVal dwFlags As Long, lpWideCharStr As Any, ByVal cchWideChar As Long, lpMultiByteStr As Any, ByVal cchMultiByte As Long, ByVal lpDefaultChar As String, ByVal lpUsedDefaultChar As Long) As Long
-Public Declare Function WriteFile Lib "KERNEL32.DLL" (ByVal hFile As Long, ByVal lpBuffer As String, ByVal nNumberOfBytesToWrite As Long, lpNumberOfBytesWritten As Long, lpOverlapped As Any) As Long
-Public Declare Function WritePrivateProfileSection Lib "KERNEL32.DLL" Alias "WritePrivateProfileSectionA" (ByVal Section As String, ByVal key As String, ByVal filename As String) As Long
+Public Declare Function ProcessFirst Lib "kernel32.dll" Alias "Process32First" (ByVal hSnapshot As Long, uProcess As PROCESSENTRY32) As Long
+Public Declare Function ProcessNext Lib "kernel32.dll" Alias "Process32Next" (ByVal hSnapshot As Long, uProcess As PROCESSENTRY32) As Long
+Public Declare Function QueryPerformanceFrequency Lib "kernel32.dll" (ByRef Frequency As Currency) As Long
+Public Declare Function QueryPerformanceCounter Lib "kernel32.dll" (ByRef TimerValue As Currency) As Long
+Public Declare Function ReadFile Lib "kernel32.dll" (ByVal hFile As Long, lpBuffer As Any, ByVal nNumberOfBytesToRead As Long, lpNumberOfBytesRead As Long, lpOverlapped As Any) As Long
+Public Declare Function ReleaseMutex Lib "kernel32.dll" (ByVal hMutex As Long) As Long
+Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (ByVal hProcess As Long, ByVal dwMin As Long, ByVal dwMax As Long) As Long
+Public Declare Function SetPriorityClass Lib "kernel32.dll" (ByVal hProcess As Long, ByVal dwPriorityClass As Long) As Long
+Public Declare Function SetThreadPriority Lib "kernel32.dll" (ByVal hThread As Long, ByVal nPriority As Long) As Long
+Public Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
+Public Declare Function TerminateProcess Lib "kernel32.dll" (ByVal hProcess As Long, ByVal uExitCode As Long) As Long
+Public Declare Function WaitForSingleObject Lib "kernel32.dll" (ByVal hHandle As Long, ByVal dwMilliseconds As Long) As Long
+Public Declare Function WideCharToMultiByte Lib "kernel32.dll" (ByVal CodePage As Long, ByVal dwFlags As Long, lpWideCharStr As Any, ByVal cchWideChar As Long, lpMultiByteStr As Any, ByVal cchMultiByte As Long, ByVal lpDefaultChar As String, ByVal lpUsedDefaultChar As Long) As Long
+Public Declare Function WriteFile Lib "kernel32.dll" (ByVal hFile As Long, ByVal lpBuffer As String, ByVal nNumberOfBytesToWrite As Long, lpNumberOfBytesWritten As Long, lpOverlapped As Any) As Long
+Public Declare Function WritePrivateProfileSection Lib "kernel32.dll" Alias "WritePrivateProfileSectionA" (ByVal Section As String, ByVal key As String, ByVal filename As String) As Long
 'Public Declare Function WritePrivateProfileString Lib "kernel32.dll" Alias "WritePrivateProfileStringA" (ByVal lpSectionName As String, ByVal lpKeyName As Any, ByVal lpString As Any, ByVal lpFileName As String) As Long
-Public Declare Function WritePrivateProfileString Lib "KERNEL32.DLL" Alias "WritePrivateProfileStringA" (ByVal Section As String, ByVal key As String, ByVal Setting As String, ByVal filename As String) As Long
-Public Declare Function WriteProfileString Lib "KERNEL32.DLL" Alias "WriteProfileStringA" (ByVal lpszSection As String, ByVal lpszKeyName As String, ByVal lpszString As String) As Long
-Public Declare Function Wow64DisableWow64FsRedirection Lib "KERNEL32.DLL" (ByRef pRestore As Long) As Long
-Public Declare Function Wow64RevertWow64FsRedirection Lib "KERNEL32.DLL" (ByRef pRestore As Long) As Long
+Public Declare Function WritePrivateProfileString Lib "kernel32.dll" Alias "WritePrivateProfileStringA" (ByVal Section As String, ByVal key As String, ByVal Setting As String, ByVal filename As String) As Long
+Public Declare Function WriteProfileString Lib "kernel32.dll" Alias "WriteProfileStringA" (ByVal lpszSection As String, ByVal lpszKeyName As String, ByVal lpszString As String) As Long
+Public Declare Function Wow64DisableWow64FsRedirection Lib "kernel32.dll" (ByRef pRestore As Long) As Long
+Public Declare Function Wow64RevertWow64FsRedirection Lib "kernel32.dll" (ByRef pRestore As Long) As Long
 
 ' ole32.dll
 Public Declare Sub CoTaskMemFree Lib "OLE32.DLL" (ByVal hMem As Long)

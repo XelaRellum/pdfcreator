@@ -93,7 +93,7 @@ On Error GoTo ErrPtnr_OnError
 50380  sHeader = sHeader + vbCrLf + "showpage"
 50390  sHeader = sHeader + vbCrLf + "restore"
 50400  sHeader = sHeader + vbCrLf + "} exec "
-50410  fLen = FileLen(sourceFileName)
+50410  fLen = GetFileLength(sourceFileName)
 50420  tStr1 = String(CharsPerLine, "0")
 50430  ReDim buffer(CharsPerLine \ 2 - 1)
 50440  fn = FreeFile
@@ -160,7 +160,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function ConvertStandardImageFromPicture(pic As IPictureDisp, destinationFileName As String, title As String) As Boolean
+Public Function ConvertStandardImageFromPicture(pic As IPictureDisp, destinationFileName As String, Title As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -200,7 +200,7 @@ On Error GoTo ErrPtnr_OnError
 50340  sHeader = "%!PS-Adobe-1.0"
 50350  sHeader = sHeader & vbCrLf & "%%Creator: PDFCreator"
 50360  sHeader = sHeader & vbCrLf & "%%For: PDFCreator"
-50370  sHeader = sHeader & vbCrLf & "%%Title:" & title
+50370  sHeader = sHeader & vbCrLf & "%%Title:" & Title
 50380  sHeader = sHeader & vbCrLf & "%%DocumentMedia: CustomSize " & b.bmWidth & " " & b.bmHeight & " 0 () ()"
 50390  sHeader = sHeader & vbCrLf & "%%EndComments"
 50400  sHeader = sHeader + vbCrLf + vbCrLf & "/setpagedevice where { pop 1 dict dup /PageSize [" & b.bmWidth & " " & b.bmHeight & "] put setpagedevice } if"

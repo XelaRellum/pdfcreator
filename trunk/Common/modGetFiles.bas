@@ -69,7 +69,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Set spoolFile = New clsSpoolFile
 50030  spoolFile.Path = Path
 50040  spoolFile.FullFileName = Path & filename
-50050  spoolFile.FileLen = FileLen(Path & filename)
+50050  spoolFile.FileLen = GetFileLength(Path & filename)
 50060  spoolFile.FileDateTime = FileDateTime(Path & filename)
 50070  spoolFile.FileDateTimeJobIdKey = GetFileDateTimeString(FileDateTime(Path & filename))
 50080  files.Add spoolFile, spoolFile.FullFileName

@@ -371,7 +371,7 @@ On Error GoTo ErrPtnr_OnError
 50340   tStrf = Split(tColl1(i), "|")
 50350   SplitPath tStrf(1), , Path, tFilename
 50360   Path = CompletePath(Path)
-50370   tColl2.Add Path & "|" & Path & tFilename & "|" & FileLen(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
+50370   tColl2.Add Path & "|" & Path & tFilename & "|" & GetFileLength(Path & tFilename) & "|" & FileDateTime(Path & tFilename)
 50380  Next i
 50390  Set GetFiles = tColl2
 50400 ' Set tColl = Nothing
@@ -2282,7 +2282,7 @@ Function ReadCompleteFile(ByRef filename As String) As String
  Dim fn As Long
 
  On Error Resume Next
- If FileLen(filename) = 0 Then Exit Function
+ If GetFileLength(filename) = 0 Then Exit Function
  On Error GoTo 0
 
  fn = FreeFile

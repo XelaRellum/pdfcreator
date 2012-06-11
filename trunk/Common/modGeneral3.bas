@@ -1,6 +1,6 @@
 Attribute VB_Name = "modGeneral3"
 Option Explicit
-
+                    
 Public Function CompletePath(Path As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -102,3 +102,28 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Function GetFileLength(filename As String) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim hFile As Long, Lng() As Long
+50020  ReDim Lng(3)
+50030  hFile = CreateFile(filename, GENERIC_WRITE Or GENERIC_READ, 0, 0, OPEN_ALWAYS, _
+                    FILE_ATTRIBUTE_NORMAL Or FILE_FLAG_SEQUENTIAL_SCAN, 0)
+50050  Lng(0) = 14
+50060  Lng(1) = 0
+50070  Lng(2) = GetFileSize(hFile, Lng(3))
+50080  CloseHandle hFile
+50090
+50100  MoveMemory GetFileLength, Lng(0), 16
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral3", "GetFileLength")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function

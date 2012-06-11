@@ -90,42 +90,43 @@ Public Function GetPSHeader(filename As String, Optional FileNameIsPSString = Fa
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim fn As Long, bufStr As String, PSHeader As tPSHeader, buffer As Long
+50010  Dim fn As Long, bufStr As String, PSHeader As tPSHeader, buffer As Long, FileSize As Currency
 50020
 50030   If FileNameIsPSString = False Then
 50040     If FileExists(filename) Then
 50050      If FileInUse(filename) = False Then
 50060       DoEvents
 50070       fn = FreeFile
-50080       If FileLen(filename) = 0 Then
-50090        Exit Function
-50100       End If
-50110       buffer = 5000
-50120       If FileLen(filename) < buffer Then
-50130        buffer = FileLen(filename)
-50140       End If
-50150
-50160       Open filename For Binary Access Read As fn
-50170       bufStr = Space$(buffer)
-50180       Get #fn, 1, bufStr
-50190       Close #fn
-50200       DoEvents
-50210      End If
-50220     End If
-50230    Else
-50240     bufStr = filename
-50250   End If
-50260
-50270  With PSHeader
-50280   .StartComment = GetPSComment(bufStr, "%!")
-50290   .CreateFor = GetPSComment(bufStr, "%%For:")
-50300   .CreationDate = GetPSComment(bufStr, "%%CreationDate:")
-50310   .Creator = GetPSComment(bufStr, "%%Creator:")
-50320   .Pages = GetPSComment(bufStr, "%%Pages:")
-50330   .Title = GetPSComment(bufStr, "%%Title:")
-50340   .EndComment = GetPSComment(bufStr, "%%EndComments")
-50350  End With
-50360  GetPSHeader = PSHeader
+50080       FileSize = GetFileLength(filename)
+50090       If FileSize = 0 Then
+50100        Exit Function
+50110       End If
+50120       buffer = 5000
+50130       If FileSize > 0 And FileSize < buffer Then
+50140        buffer = FileSize
+50150       End If
+50160
+50170       Open filename For Binary Access Read As fn
+50180       bufStr = Space$(buffer)
+50190       Get #fn, 1, bufStr
+50200       Close #fn
+50210       DoEvents
+50220      End If
+50230     End If
+50240    Else
+50250     bufStr = filename
+50260   End If
+50270
+50280  With PSHeader
+50290   .StartComment = GetPSComment(bufStr, "%!")
+50300   .CreateFor = GetPSComment(bufStr, "%%For:")
+50310   .CreationDate = GetPSComment(bufStr, "%%CreationDate:")
+50320   .Creator = GetPSComment(bufStr, "%%Creator:")
+50330   .Pages = GetPSComment(bufStr, "%%Pages:")
+50340   .Title = GetPSComment(bufStr, "%%Title:")
+50350   .EndComment = GetPSComment(bufStr, "%%EndComments")
+50360  End With
+50370  GetPSHeader = PSHeader
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -458,7 +459,7 @@ On Error GoTo ErrPtnr_OnError
 50010  Dim fn As Long, bufStr As String
 50020  IsPDFFile = False
 50030  If FileExists(filename) Then
-50040   If FileLen(filename) > 3 Then
+50040   If GetFileLength(filename) > 3 Then
 50050    fn = FreeFile
 50060    Open filename For Binary Access Read As fn
 50070    bufStr = Space$(4)
