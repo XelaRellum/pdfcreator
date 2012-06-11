@@ -268,8 +268,8 @@
 				<param name="Local" value="html\what-is-the-export-control-classification-number-eccn-of-pdfcreator.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Where are my printers? (Win 7)">
-				<param name="Local" value="html\where-are-my-printers-win-7.html">
+				<param name="Name" value="Where are my printers?/Multiple printers not shown (Win 7)">
+				<param name="Local" value="html\where-are-my-printersmultiple-printers-not-shown-win-7.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Why can't some scripts be executed under Vista (64 bit) / Windows 7 (64 bit)?">
