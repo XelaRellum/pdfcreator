@@ -513,7 +513,7 @@ On Error GoTo ErrPtnr_OnError
 50220          reg.SetRegistryValue "", LanguageStrings.OptionsShellIntegrationCaption, REG_SZ
 50230          reg.CreateKey "command"
 50240          reg.KeyRoot = sKey & "\shell\" & Uninstall_GUID & "\command"
-50250          reg.SetRegistryValue "", Path & "pdfcreator.exe -NOSTART -PF""%1""", REG_SZ
+50250          reg.SetRegistryValue "", """" + Path & "pdfcreator.exe"" -NOSTART -PF""%1""", REG_SZ
 50260         End If
 50270        End If
 50280       End If

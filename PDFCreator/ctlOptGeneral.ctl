@@ -105,7 +105,7 @@ Begin VB.UserControl ctlOptGeneral
          Width           =   2910
       End
       Begin VB.CommandButton cmdShellintegration 
-         Caption         =   "Integrate PDFCreator into shell"
+         Caption         =   "Remove shell Integration"
          Height          =   495
          Index           =   1
          Left            =   3150
