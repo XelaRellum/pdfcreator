@@ -1204,8 +1204,10 @@ Private Sub CreateModOptions()
  Print #fn, "   WriteToSpecialLogfile ""Reg-Read options: HKEY_LOCAL_MACHINE"""
  Print #fn, "   If LenB(ProfileName) > 0 Then"
  Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator\Profiles\"" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg)"
+ Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator\Profiles\"" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg)"
  Print #fn, "    Else"
  Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg)"
+ Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg)"
  Print #fn, "   End If"
  Print #fn, "  Else"
  Print #fn, "   If Not IsWin9xMe Then"
@@ -1221,15 +1223,19 @@ Private Sub CreateModOptions()
  Print #fn, "     WriteToSpecialLogfile ""Reg-Read options: HKEY_CURRENT_USER ["" & hProfile & ""]"""
  Print #fn, "     If LenB(ProfileName) > 0 Then"
  Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator\Profiles\"" & ProfileName, hProfile, NoMsg)"
+ Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator\Profiles\"" & ProfileName, hProfile, NoMsg)"
  Print #fn, "      Else"
  Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", hProfile, NoMsg)"
+ Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator"", hProfile, NoMsg)"
  Print #fn, "     End If"
  Print #fn, "   End If"
  Print #fn, "   WriteToSpecialLogfile ""Reg-Read options: HKEY_LOCAL_MACHINE"""
  Print #fn, "   If LenB(ProfileName) > 0 Then"
  Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator\Profiles\"" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg, False)"
+ Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator\Profiles\"" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg, False)"
  Print #fn, "    Else"
  Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg, False)"
+ Print #fn, "     myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator"", HKEY_LOCAL_MACHINE, NoMsg, False)"
  Print #fn, "   End If"
  Print #fn, " End If"
  Print #fn, " Str1 = ""7777772E706466666F7267652E6F7267"""
@@ -2005,10 +2011,12 @@ Private Sub CreateModOptions()
  Print #fn, "   If Not IsWin9xMe Then"
  Print #fn, "     sLanguage = ReadLanguageFromOptionsReg(sLanguage, "".DEFAULT\Software\PDFCreator"", HKEY_USERS)"
  Print #fn, "     sLanguage = ReadLanguageFromOptionsReg(sLanguage, ""Software\PDFCreator"", hProfile, False)"
+ Print #fn, "     sLanguage = ReadLanguageFromOptionsReg(sLanguage, ""Software\Policies\PDFCreator"", hProfile, False)"
  Print #fn, "    Else"
  Print #fn, "     sLanguage = ReadLanguageFromOptionsReg(sLanguage, ""Software\PDFCreator"", hProfile)"
  Print #fn, "   End If"
  Print #fn, "   sLanguage = ReadLanguageFromOptionsReg(sLanguage, ""Software\PDFCreator"", HKEY_LOCAL_MACHINE, False)"
+ Print #fn, "   sLanguage = ReadLanguageFromOptionsReg(sLanguage, ""Software\Policies\PDFCreator"", HKEY_LOCAL_MACHINE, False)"
  Print #fn, " End If"
  Print #fn, " SplitPath sLanguage, , , , lang"
  Print #fn, " Options.Language = sLanguage"
@@ -2468,7 +2476,7 @@ Private Sub LoadFileInTextbox(filename As String, txt As TextBox)
  Dim fn As Long
  fn = FreeFile
  Open filename For Input As #fn
- Call SendMessage(txt.hWnd, WM_SETTEXT, 0&, ByVal CStr(Input(LOF(fn), #fn)))
+ Call SendMessage(txt.hwnd, WM_SETTEXT, 0&, ByVal CStr(Input(LOF(fn), #fn)))
  Close #fn
 End Sub
 
