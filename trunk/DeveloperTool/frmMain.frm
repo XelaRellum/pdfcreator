@@ -1216,8 +1216,10 @@ Private Sub CreateModOptions()
  Print #fn, "     WriteToSpecialLogfile ""Reg-Read options: HKEY_CURRENT_USER ["" & hProfile & ""]"""
  Print #fn, "     If LenB(ProfileName) > 0 Then"
  Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator\Profiles\"" & ProfileName, hProfile, NoMsg, False)"
+ Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator\Profiles\"" & ProfileName, hProfile, NoMsg, False)"
  Print #fn, "      Else"
  Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\PDFCreator"", hProfile, NoMsg, False)"
+ Print #fn, "       myOptions = ReadOptionsReg(myOptions, ""Software\Policies\PDFCreator"", hProfile, NoMsg, False)"
  Print #fn, "     End If"
  Print #fn, "    Else"
  Print #fn, "     WriteToSpecialLogfile ""Reg-Read options: HKEY_CURRENT_USER ["" & hProfile & ""]"""
@@ -2497,7 +2499,7 @@ Private Sub lsvOptions_DblClick()
  ShowOption
 End Sub
 
-Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
  With lsvOptions
   If .FullRowSelect Then
    .Refresh
