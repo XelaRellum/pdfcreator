@@ -53,7 +53,7 @@ On Error GoTo ErrPtnr_OnError
 50100   IfLoggingWriteLogfile tStr
 50110   WriteToSpecialLogfile tStr
 50120   SplitPath Program, , WorkingFolder
-50130   Parameters = GetSubstFilename2(Parameters, False, , Docname)
+50130   Parameters = GetSubstFilename2(Parameters, False, , Docname, False)
 50140   Parameters = Replace$(Parameters, "<TempFilename>", Docname, , , vbTextCompare)
 50150   ShellAndWait hwnd, "open", Program, Parameters, WorkingFolder, Windowstyle, WCTermination
 50160  End If
