@@ -1083,7 +1083,7 @@ Private Function Create_eDoc() As String
   If SaveFilename = "." Or SaveFilename = ".." Then
    SaveFilename = ""
   End If
-  Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory), FilterIndex, Filter, SaveFile, Cancel, Me)
+  Set files = GetFilename(SaveFilename, GetSubstFilename2(Options.LastSaveDirectory, False, , , False), FilterIndex, Filter, SaveFile, Cancel, Me)
   If SaveOpenCancel = True Then
    Exit Function
   End If
