@@ -423,10 +423,10 @@ On Error GoTo ErrPtnr_OnError
 50090    WriteToSpecialLogfile "Reg-Read options: HKEY_LOCAL_MACHINE"
 50100    If LenB(ProfileName) > 0 Then
 50110      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg)
-50120      myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator\Profiles\" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg)
+50120      myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator\Profiles\" & ProfileName, HKEY_LOCAL_MACHINE, NoMsg, False)
 50130     Else
 50140      myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", HKEY_LOCAL_MACHINE, NoMsg)
-50150      myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator", HKEY_LOCAL_MACHINE, NoMsg)
+50150      myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator", HKEY_LOCAL_MACHINE, NoMsg, False)
 50160    End If
 50170   Else
 50180    If Not IsWin9xMe Then
@@ -444,10 +444,10 @@ On Error GoTo ErrPtnr_OnError
 50300      WriteToSpecialLogfile "Reg-Read options: HKEY_CURRENT_USER [" & hProfile & "]"
 50310      If LenB(ProfileName) > 0 Then
 50320        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator\Profiles\" & ProfileName, hProfile, NoMsg)
-50330        myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator\Profiles\" & ProfileName, hProfile, NoMsg)
+50330        myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator\Profiles\" & ProfileName, hProfile, NoMsg, False)
 50340       Else
 50350        myOptions = ReadOptionsReg(myOptions, "Software\PDFCreator", hProfile, NoMsg)
-50360        myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator", hProfile, NoMsg)
+50360        myOptions = ReadOptionsReg(myOptions, "Software\Policies\PDFCreator", hProfile, NoMsg, False)
 50370      End If
 50380    End If
 50390    WriteToSpecialLogfile "Reg-Read options: HKEY_LOCAL_MACHINE"
