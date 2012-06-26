@@ -15,6 +15,6 @@ Option Explicit
 
 Public Path As String
 Public FullFileName As String
-Public FileLen As Long
+Public FileLen As Currency
 Public FileDateTime As String
 Public FileDateTimeJobIdKey As String
