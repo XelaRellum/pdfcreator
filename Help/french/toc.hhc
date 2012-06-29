@@ -228,6 +228,10 @@
 				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="I have selected letter (8,5"*11") as paperformat in Word/Excel, but the generated PDFs are in A4">
+				<param name="Local" value="html\i-have-selected-letter-8511-as-paperformat-in-wordexcel-but-the-generated-pdfs-are-in-a4.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Installation on a Terminal Server">
 				<param name="Local" value="html\installation-on-a-terminal-server.html">
 				</OBJECT>
