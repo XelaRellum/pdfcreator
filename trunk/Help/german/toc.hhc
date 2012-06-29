@@ -220,6 +220,10 @@
 				<param name="Local" value="html\i-have-net-3x-installed-but-there-is-no-pdfforgedll.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Ich habe in Word\Excel als Papierformat Letter bzw. 8,5"*11"  gew&auml;hlt. Die erstellten PDF-Dokumente sind jedoch im A4 Format.">
+				<param name="Local" value="html\i-have-selected-letter-8511-as-paperformat-in-wordexcel-but-the-generated-pdfs-are-in-a4.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Installation auf einem Terminal Server">
 				<param name="Local" value="html\installation-on-a-terminal-server.html">
 				</OBJECT>
