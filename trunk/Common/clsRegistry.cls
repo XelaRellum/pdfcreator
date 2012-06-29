@@ -543,28 +543,32 @@ On Error GoTo ErrPtnr_OnError
 50390                     CopyMemory ByVal resString, resBinary(0), Length - 1
 50400                     expStr = ""
 50410                     Length = ExpandEnvironmentStrings(resString, expStr, 0)
-50420                     expStr = String$(Length - 1, 0)
-50430                     Length = ExpandEnvironmentStrings(resString, expStr, Length)
-50440                     GetRegistryValue = expStr
-50450                 End If
-50460
-50470             Case REG_BINARY
-50480                 If Length <> UBound(resBinary) + 1 Then
-50490                     ReDim Preserve resBinary(0 To Length - 1) As Byte
-50500                 End If
-50510                 GetRegistryValue = resBinary()
-50520
-50530             Case REG_MULTI_SZ
-50540                 resString = Space$(Length - 2)
-50550                 CopyMemory ByVal resString, resBinary(0), Length - 2
-50560                 TestString = resString
-50570                 If Len(TrimNull(TestString)) > 0 Then GetRegistryValue = resString
-50580
-50590             Case Else
-50600         End Select
-50610
-50620      RegCloseKey (handle)
-50630
+50420                     expStr = Space$(Length + Len(vbNullChar))
+50430                     Length = ExpandEnvironmentStrings(resString, expStr, Len(expStr))
+50440                     Length = InStr(1&, expStr, vbNullChar)
+50450                     If Length <> 0& Then
+50460                      expStr = Left$(expStr, Length - 1&)
+50470                     End If
+50480                     GetRegistryValue = expStr
+50490                 End If
+50500
+50510             Case REG_BINARY
+50520                 If Length <> UBound(resBinary) + 1 Then
+50530                     ReDim Preserve resBinary(0 To Length - 1) As Byte
+50540                 End If
+50550                 GetRegistryValue = resBinary()
+50560
+50570             Case REG_MULTI_SZ
+50580                 resString = Space$(Length - 2)
+50590                 CopyMemory ByVal resString, resBinary(0), Length - 2
+50600                 TestString = resString
+50610                 If Len(TrimNull(TestString)) > 0 Then GetRegistryValue = resString
+50620
+50630             Case Else
+50640         End Select
+50650
+50660      RegCloseKey (handle)
+50670
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
