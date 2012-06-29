@@ -2536,35 +2536,29 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function IsWow64FsRedirection() As Boolean
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-On Error GoTo ErrPtnr_OnError
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010   IsWow64FsRedirection = (pRestore = 0)
-'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
-Exit Function
-ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral", "IsWow64FsRedirection")
-Case 0: Resume
-Case 1: Resume Next
-Case 2: Exit Function
-Case 3: End
-End Select
-'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+Public Function GetSystemTempPath() As String
+ Dim reg As clsRegistry, tStr As String
+ 
+ ' Default
+ GetSystemTempPath = CompletePath(GetWindowsDirectory) & "Temp\"
+ 
+ Set reg = New clsRegistry
+ reg.hkey = HKEY_LOCAL_MACHINE
+ reg.KeyRoot = "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
+ If reg.KeyExists = False Then
+  Set reg = Nothing
+  Exit Function
+ End If
+ tStr = reg.GetRegistryValue("TMP")
+ If LenB(tStr) > 0 Then
+  GetSystemTempPath = CompletePath(Trim(tStr))
+  Set reg = Nothing
+  Exit Function
+ End If
+ tStr = reg.GetRegistryValue("TEMP")
+ If LenB(tStr) > 0 Then
+  GetSystemTempPath = CompletePath(tStr)
+ End If
+ Set reg = Nothing
 End Function
 
-Public Sub Wow64FsRedirection(ByVal newValue As Boolean)
-  If pRestore Then
-    If newValue Then
-      Wow64RevertWow64FsRedirection pRestore
-      pRestore = 0
-    End If
-  Else
-    If newValue = False Then
-      On Error Resume Next
-        Wow64DisableWow64FsRedirection pRestore
-        If pRestore = 0 Then Wow64DisableWow64FsRedirection pRestore
-      On Error GoTo 0
-    End If
-  End If
-End Sub
