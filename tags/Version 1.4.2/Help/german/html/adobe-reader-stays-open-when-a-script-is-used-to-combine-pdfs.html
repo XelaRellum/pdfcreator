@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Beim Zusammenf&uuml;hren von PDFs &ouml;ffnet sich ungewollt Adobe Reader</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="../media/helpstyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="title">PDFCreator Hilfe</td>
+  </tr>
+  <tr>
+    <td background="../media/grad.gif" height="6" style="font-size: 1px;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td class="main"><p class="header">Beim Zusammenf&uuml;hren von PDFs &ouml;ffnet sich ungewollt Adobe Reader</p>
+<p>Wenn PDF-Dateien über den Acrobat Reader gedruckt werden, um diese im PDFCreator verarbeiten zu können, schließt sich der Acrobat Reader anschließend nicht wieder. Auf dieses Verhalten kann man leider keinen Einfluss nehmen.</p> <p>Um dieses Problem zu umgehen gibt es zwei Möglichkeiten:</p> <ol>     <li>&nbsp;Ein anderes Programm zum Drucken der PDF-Datei verwenden, beispielsweise den Foxit Reader</li>     <li>Viele Funktionen, wie beispielsweise das verbinden von zwei PDF-Dateien, ist auch in der pdfforge.dll implementiert. Diese befindet sich im Plugins-Ordner unterhalb des Installationspfades und kann über .Net sowie eine COM-Klasse angesprochen werden.</li> </ol> <p>Hier ein Beispiel in C#, wie mit der Funktion MergePDFFiles zwei Dateien zusammengeführt werden können:</p> <p><code>PDF pdf = new pdfforge.PDF.PDF();<br /> string[] TestPDFFiles = new string[2];<br /> TestPDFFiles[0] = Path.Combine(TempPath, &quot;TestPDFFile1.pdf&quot;);<br /> TestPDFFiles[1] = Path.Combine(TempPath, &quot;TestPDFFile2.pdf&quot;);<br /> pdf.MergePDFFiles(ref files, &quot;MergedFile.pdf&quot;, false);<br /> </code></p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
