@@ -560,4 +560,92 @@ Public Function CollectionItemExists(ByVal key As Variant, ByRef col As Collecti
  Err.Clear
 End Function
 
+Public Sub QuickSortSpoolFiles(ByRef vSort() As clsSpoolFile, Optional ByVal lngStart As Variant, Optional ByVal lngEnd As Variant)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, j As Long, h As clsSpoolFile, x As String
+50020
+50030  If IsMissing(lngStart) Then lngStart = LBound(vSort)
+50040  If IsMissing(lngEnd) Then lngEnd = UBound(vSort)
+50050
+50060  i = lngStart: j = lngEnd
+50070  x = vSort((lngStart + lngEnd) / 2).FileDateTimeJobIdKey
+50080
+50090  Do
+50100   While (StrComp(vSort(i).FileDateTimeJobIdKey, x) < 0): i = i + 1: Wend
+50110   While (StrComp(vSort(j).FileDateTimeJobIdKey, x) > 0): j = j - 1: Wend
+50120
+50130   If (i <= j) Then
+50140    Set h = vSort(i)
+50150    Set vSort(i) = vSort(j)
+50160    Set vSort(j) = h
+50170    i = i + 1: j = j - 1
+50180   End If
+50190  Loop Until (i > j)
+50200
+50210  If (lngStart < j) Then QuickSortSpoolFiles vSort, lngStart, j
+50220  If (i < lngEnd) Then QuickSortSpoolFiles vSort, i, lngEnd
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral2", "QuickSortSpoolFiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
 
+Public Sub OpenPDFFileWithPDFArchitect(sFilename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim handle As Long
+50020  Dim PDFArchitectPath As String, PDFCreatorPDFArchitect As String, _
+  StandalonePDFArchitect As String, WorkingPath As String
+50040  Dim PDFCreatorPDFArchitectVersion As String, StandalonePDFArchitectVersion As String
+50050  Dim tColl As Collection, res As Long
+50060
+50070  handle = GetDesktopWindow()
+50080  PDFCreatorPDFArchitect = PDFCreatorApplicationPath & "PDFArchitect\PDFArchitect.exe"
+50090  StandalonePDFArchitect = GetStandalonePDFArchitectPath
+50100  If FileExists(PDFCreatorPDFArchitect) = False And LenB(StandalonePDFArchitect) = 0 Then
+50110   Exit Sub
+50120  End If
+50130  If FileExists(PDFCreatorPDFArchitect) = True And LenB(StandalonePDFArchitect) = 0 Then
+50140   PDFArchitectPath = PDFCreatorPDFArchitect
+50150  End If
+50160  If FileExists(PDFCreatorPDFArchitect) = False And LenB(StandalonePDFArchitect) > 0 Then
+50170   PDFArchitectPath = StandalonePDFArchitect
+50180  End If
+50190  If FileExists(PDFCreatorPDFArchitect) = True And LenB(StandalonePDFArchitect) > 0 Then
+50200   Set tColl = GetFileVersion(PDFCreatorPDFArchitect)
+50210   PDFCreatorPDFArchitectVersion = tColl(3)
+50220   Set tColl = GetFileVersion(StandalonePDFArchitect)
+50230   StandalonePDFArchitectVersion = tColl(3)
+50240   res = CompareProgramVersions(PDFCreatorPDFArchitectVersion, StandalonePDFArchitectVersion)
+50250   If res = -1 Or res = 0 Then
+50260    PDFArchitectPath = PDFCreatorPDFArchitect
+50270   End If
+50280   If res = 1 Then
+50290    PDFArchitectPath = StandalonePDFArchitect
+50300   End If
+50310  End If
+50320
+50330  If LenB(PDFArchitectPath) > 0 Then
+50340   SplitPath PDFArchitectPath, , WorkingPath
+50350   Call ShellExecute(handle, vbNullString, PDFArchitectPath, """" & sFilename & """", WorkingPath, vbNormalFocus)
+50360  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral2", "OpenPDFFileWithPDFArchitect")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
