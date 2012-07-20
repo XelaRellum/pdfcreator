@@ -625,16 +625,16 @@ Public Function GetTempFile(Optional ByVal Path As String, Optional PreFix As St
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim res As Long, Tempfile As String, tPath As String
-50020  Tempfile = Space$(MAX_PATH)
+50010  Dim res As Long, tempFile As String, tPath As String
+50020  tempFile = Space$(MAX_PATH)
 50030  tPath = LTrim$(Path)
 50040  If DirExists(tPath) = False Then
 50050   MakePath tPath
 50060  End If
 50070
-50080  res = GetTempFileNameA(tPath, PreFix, 0, Tempfile)
+50080  res = GetTempFileNameA(tPath, PreFix, 0, tempFile)
 50090  If res <> 0 Then
-50100    GetTempFile = Left$(Tempfile, InStr(Tempfile, Chr$(0)) - 1)
+50100    GetTempFile = Left$(tempFile, InStr(tempFile, Chr$(0)) - 1)
 50110   Else
 50120    GetTempFile = "~.tmp"
 50130  End If
@@ -2515,6 +2515,30 @@ On Error GoTo ErrPtnr_OnError
 Exit Function
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("modGeneral", "GetSystemTempPath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function CheckFolderWriteAccess(folder As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim tempFile As String
+50020  tempFile = GetTempFile(folder)
+50030  If FileExists(tempFile) Then
+50040    KillFile tempFile
+50050    CheckFolderWriteAccess = True
+50060   Else
+50070    CheckFolderWriteAccess = False
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "CheckFolderWriteAccess")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
