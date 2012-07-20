@@ -69,7 +69,7 @@ On Error GoTo ErrPtnr_OnError
 50240    IfLoggingWriteLogfile "InstalledAsServer: False"
 50250  End If
 50260  IfLoggingWriteLogfile "MyAppData: " & GetMyAppData
-50270
+50270  IfLoggingWriteLogfile "PDFCreator temp folder: " & GetPDFCreatorTempfolder
 50280  If UnLoadFile Then
 50290   CreateUnloadFile
 50300   InstanceCounter = InstanceCounter - 1
