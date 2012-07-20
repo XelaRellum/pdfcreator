@@ -30,7 +30,7 @@ DirectoryGhostscriptResource|txtGSResource.Text|String|||
 
 ' <Program>
 DisableEmail||Boolean|0||
-DisableUpdateCheckNow||Boolean|0||
+DisableUpdateCheck||Boolean|0||
 DontUseDocumentSettings||Boolean|0||
 EditWithPDFArchitect|chkEditWithPDFArchitect.Value|Boolean|1||
 

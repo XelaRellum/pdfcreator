@@ -25,7 +25,7 @@ Public Type tOptions
  DirectoryGhostscriptLibraries As String
  DirectoryGhostscriptResource As String
  DisableEmail As Long
- DisableUpdateCheckNow As Long
+ DisableUpdateCheck As Long
  DontUseDocumentSettings As Long
  EditWithPDFArchitect As Long
  EPSLanguageLevel As Long
@@ -224,7 +224,7 @@ On Error GoTo ErrPtnr_OnError
 50240   .DirectoryGhostscriptLibraries = vbNullString
 50250   .DirectoryGhostscriptResource = vbNullString
 50260   .DisableEmail = "0"
-50270   .DisableUpdateCheckNow = "0"
+50270   .DisableUpdateCheck = "0"
 50280   .DontUseDocumentSettings = "0"
 50290   .EditWithPDFArchitect = "1"
 50300   .EPSLanguageLevel = "2"
@@ -718,18 +718,18 @@ On Error GoTo ErrPtnr_OnError
 52360      .DisableEmail = 0
 52370     End If
 52380   End If
-52390   tStr = hOpt.Retrieve("DisableUpdateCheckNow")
+52390   tStr = hOpt.Retrieve("DisableUpdateCheck")
 52400   If IsNumeric(tStr) Then
 52410     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-52420       .DisableUpdateCheckNow = CLng(tStr)
+52420       .DisableUpdateCheck = CLng(tStr)
 52430      Else
 52440       If UseStandard Then
-52450        .DisableUpdateCheckNow = 0
+52450        .DisableUpdateCheck = 0
 52460       End If
 52470     End If
 52480    Else
 52490     If UseStandard Then
-52500      .DisableUpdateCheckNow = 0
+52500      .DisableUpdateCheck = 0
 52510     End If
 52520   End If
 52530   tStr = hOpt.Retrieve("DontUseDocumentSettings")
@@ -3007,7 +3007,7 @@ On Error GoTo ErrPtnr_OnError
 50260   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": ini.SaveKey CStr(.DirectoryGhostscriptLibraries), "DirectoryGhostscriptLibraries"
 50270   Case "DIRECTORYGHOSTSCRIPTRESOURCE": ini.SaveKey CStr(.DirectoryGhostscriptResource), "DirectoryGhostscriptResource"
 50280   Case "DISABLEEMAIL": ini.SaveKey CStr(Abs(.DisableEmail)), "DisableEmail"
-50290   Case "DISABLEUPDATECHECKNOW": ini.SaveKey CStr(Abs(.DisableUpdateCheckNow)), "DisableUpdateCheckNow"
+50290   Case "DISABLEUPDATECHECK": ini.SaveKey CStr(Abs(.DisableUpdateCheck)), "DisableUpdateCheck"
 50300   Case "DONTUSEDOCUMENTSETTINGS": ini.SaveKey CStr(Abs(.DontUseDocumentSettings)), "DontUseDocumentSettings"
 50310   Case "EDITWITHPDFARCHITECT": ini.SaveKey CStr(Abs(.EditWithPDFArchitect)), "EditWithPDFArchitect"
 50320   Case "EPSLANGUAGELEVEL": ini.SaveKey CStr(.EPSLanguageLevel), "EPSLanguageLevel"
@@ -3218,7 +3218,7 @@ On Error GoTo ErrPtnr_OnError
 50250   ini.SaveKey CStr(.DirectoryGhostscriptLibraries), "DirectoryGhostscriptLibraries"
 50260   ini.SaveKey CStr(.DirectoryGhostscriptResource), "DirectoryGhostscriptResource"
 50270   ini.SaveKey CStr(Abs(.DisableEmail)), "DisableEmail"
-50280   ini.SaveKey CStr(Abs(.DisableUpdateCheckNow)), "DisableUpdateCheckNow"
+50280   ini.SaveKey CStr(Abs(.DisableUpdateCheck)), "DisableUpdateCheck"
 50290   ini.SaveKey CStr(Abs(.DontUseDocumentSettings)), "DontUseDocumentSettings"
 50300   ini.SaveKey CStr(Abs(.EditWithPDFArchitect)), "EditWithPDFArchitect"
 50310   ini.SaveKey CStr(.EPSLanguageLevel), "EPSLanguageLevel"
@@ -5112,18 +5112,18 @@ On Error GoTo ErrPtnr_OnError
 67090      .DisableEmail = 0
 67100     End If
 67110   End If
-67120   tStr = reg.GetRegistryValue("DisableUpdateCheckNow")
+67120   tStr = reg.GetRegistryValue("DisableUpdateCheck")
 67130   If IsNumeric(tStr) Then
 67140     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67150       .DisableUpdateCheckNow = CLng(tStr)
+67150       .DisableUpdateCheck = CLng(tStr)
 67160      Else
 67170       If UseStandard Then
-67180        .DisableUpdateCheckNow = 0
+67180        .DisableUpdateCheck = 0
 67190       End If
 67200     End If
 67210    Else
 67220     If UseStandard Then
-67230      .DisableUpdateCheckNow = 0
+67230      .DisableUpdateCheck = 0
 67240     End If
 67250   End If
 67260   tStr = reg.GetRegistryValue("DontUseDocumentSettings")
@@ -6871,11 +6871,11 @@ On Error GoTo ErrPtnr_OnError
 60860    Set reg = Nothing
 60870    Exit Sub
 60880   End If
-60890   If UCase$(OptionName) = "DISABLEUPDATECHECKNOW" Then
+60890   If UCase$(OptionName) = "DISABLEUPDATECHECK" Then
 60900    If Not reg.KeyExists Then
 60910     reg.CreateKey
 60920    End If
-60930    reg.SetRegistryValue "DisableUpdateCheckNow", CStr(Abs(.DisableUpdateCheckNow)), REG_SZ
+60930    reg.SetRegistryValue "DisableUpdateCheck", CStr(Abs(.DisableUpdateCheck)), REG_SZ
 60940    Set reg = Nothing
 60950    Exit Sub
 60960   End If
@@ -7490,7 +7490,7 @@ On Error GoTo ErrPtnr_OnError
 51910   reg.SetRegistryValue "AutosaveStartStandardProgram", CStr(Abs(.AutosaveStartStandardProgram)), REG_SZ
 51920   reg.SetRegistryValue "ClientComputerResolveIPAddress", CStr(Abs(.ClientComputerResolveIPAddress)), REG_SZ
 51930   reg.SetRegistryValue "DisableEmail", CStr(Abs(.DisableEmail)), REG_SZ
-51940   reg.SetRegistryValue "DisableUpdateCheckNow", CStr(Abs(.DisableUpdateCheckNow)), REG_SZ
+51940   reg.SetRegistryValue "DisableUpdateCheck", CStr(Abs(.DisableUpdateCheck)), REG_SZ
 51950   reg.SetRegistryValue "DontUseDocumentSettings", CStr(Abs(.DontUseDocumentSettings)), REG_SZ
 51960   reg.SetRegistryValue "EditWithPDFArchitect", CStr(Abs(.EditWithPDFArchitect)), REG_SZ
 51970   reg.SetRegistryValue "FilenameSubstitutions", CStr(.FilenameSubstitutions), REG_SZ

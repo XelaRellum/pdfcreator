@@ -410,58 +410,60 @@ On Error GoTo ErrPtnr_OnError
 50130  cmbSendMailMethod.Visible = mEnabled
 50140  chkShowAnimation.Enabled = mEnabled
 50150  chkShowAnimation.Visible = mEnabled
-50160  cmbUpdateInterval.Enabled = mEnabled
-50170  cmbUpdateInterval.Visible = mEnabled
-50180
-50190  cmdTestpage.Enabled = mEnabled
-50200  cmdTestpage.Visible = mEnabled
-50210  lblProcessPriority.Enabled = mEnabled
-50220  lblProcessPriority.Visible = mEnabled
-50230  lblSendMailMethod.Enabled = mEnabled
-50240  lblSendMailMethod.Visible = mEnabled
-50250  cmdShellintegration(0).Enabled = mEnabled
-50260  cmdShellintegration(0).Visible = mEnabled
-50270  cmdShellintegration(1).Enabled = mEnabled
-50280  cmdShellintegration(1).Visible = mEnabled
-50290  cmdAsso.Enabled = mEnabled
-50300  cmdAsso.Visible = mEnabled
-50310  lblOptionsDesign.Enabled = mEnabled
-50320  lblOptionsDesign.Visible = mEnabled
-50330  lblUpdateInterval.Enabled = mEnabled
-50340  lblUpdateInterval.Visible = mEnabled
-50350  cmdCheckNow.Visible = mEnabled
-50360  If Options.DisableUpdateCheckNow = 1 Then
+50160
+50170  cmdTestpage.Enabled = mEnabled
+50180  cmdTestpage.Visible = mEnabled
+50190  lblProcessPriority.Enabled = mEnabled
+50200  lblProcessPriority.Visible = mEnabled
+50210  lblSendMailMethod.Enabled = mEnabled
+50220  lblSendMailMethod.Visible = mEnabled
+50230  cmdShellintegration(0).Enabled = mEnabled
+50240  cmdShellintegration(0).Visible = mEnabled
+50250  cmdShellintegration(1).Enabled = mEnabled
+50260  cmdShellintegration(1).Visible = mEnabled
+50270  cmdAsso.Enabled = mEnabled
+50280  cmdAsso.Visible = mEnabled
+50290  lblOptionsDesign.Enabled = mEnabled
+50300  lblOptionsDesign.Visible = mEnabled
+50310  lblUpdateInterval.Visible = mEnabled
+50320  cmbUpdateInterval.Visible = mEnabled
+50330  cmdCheckNow.Visible = mEnabled
+50340  If Options.DisableUpdateCheck = 1 Then
+50350    lblUpdateInterval.Enabled = False
+50360    cmbUpdateInterval.Enabled = False
 50370    cmdCheckNow.Enabled = False
 50380   Else
-50390    cmdCheckNow.Enabled = mEnabled
-50400  End If
-50410
-50420  If mEnabled = True Then
-50430    SetProgramOptions
-50440    tbstrProgGeneral_Click
-50450   Else
-50460    'dmFraProgGeneral1.Enabled = False
-50470    'dmFraProgGeneral2.Enabled = False
-50480    dmFraShellIntegration.Enabled = False
-50490    dmFraCheckUpdate.Enabled = False
-50500  End If
-50510
-50520  For i = lblEnableNotice.LBound To lblEnableNotice.UBound
-50530   lblEnableNotice(i).Visible = Not mEnabled
-50540  Next i
-50550  If mControlsEnabled Then
-50560    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
-50570     lblEnableNotice(i).Enabled = Not mEnabled
-50580    Next i
-50590   Else
-50600    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
-50610     lblEnableNotice(i).Enabled = False
-50620    Next i
-50630  End If
-50640
-50650  For i = Line3D1.LBound To Line3D1.UBound
-50660   Line3D1(i).Visible = mEnabled
-50670  Next i
+50390    lblUpdateInterval.Enabled = mEnabled
+50400    cmbUpdateInterval.Enabled = mEnabled
+50410    cmdCheckNow.Enabled = mEnabled
+50420  End If
+50430
+50440  If mEnabled = True Then
+50450    SetProgramOptions
+50460    tbstrProgGeneral_Click
+50470   Else
+50480    'dmFraProgGeneral1.Enabled = False
+50490    'dmFraProgGeneral2.Enabled = False
+50500    dmFraShellIntegration.Enabled = False
+50510    dmFraCheckUpdate.Enabled = False
+50520  End If
+50530
+50540  For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50550   lblEnableNotice(i).Visible = Not mEnabled
+50560  Next i
+50570  If mControlsEnabled Then
+50580    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50590     lblEnableNotice(i).Enabled = Not mEnabled
+50600    Next i
+50610   Else
+50620    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50630     lblEnableNotice(i).Enabled = False
+50640    Next i
+50650  End If
+50660
+50670  For i = Line3D1.LBound To Line3D1.UBound
+50680   Line3D1(i).Visible = mEnabled
+50690  Next i
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:

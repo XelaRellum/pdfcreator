@@ -571,7 +571,7 @@ On Error GoTo ErrPtnr_OnError
 50190   .Add "DirectoryGhostscriptLibraries"
 50200   .Add "DirectoryGhostscriptResource"
 50210   .Add "DisableEmail"
-50220   .Add "DisableUpdateCheckNow"
+50220   .Add "DisableUpdateCheck"
 50230   .Add "DontUseDocumentSettings"
 50240   .Add "EditWithPDFArchitect"
 50250   .Add "EPSLanguageLevel"
@@ -2523,7 +2523,7 @@ On Error GoTo ErrPtnr_OnError
 50180   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": cGetOptionFromOptions = Options.DirectoryGhostscriptLibraries
 50190   Case "DIRECTORYGHOSTSCRIPTRESOURCE": cGetOptionFromOptions = Options.DirectoryGhostscriptResource
 50200   Case "DISABLEEMAIL": cGetOptionFromOptions = Options.DisableEmail
-50210   Case "DISABLEUPDATECHECKNOW": cGetOptionFromOptions = Options.DisableUpdateCheckNow
+50210   Case "DISABLEUPDATECHECK": cGetOptionFromOptions = Options.DisableUpdateCheck
 50220   Case "DONTUSEDOCUMENTSETTINGS": cGetOptionFromOptions = Options.DontUseDocumentSettings
 50230   Case "EDITWITHPDFARCHITECT": cGetOptionFromOptions = Options.EditWithPDFArchitect
 50240   Case "EPSLANGUAGELEVEL": cGetOptionFromOptions = Options.EPSLanguageLevel
@@ -2726,7 +2726,7 @@ On Error GoTo ErrPtnr_OnError
 50190   .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
 50200   .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
 50210   .DisableEmail = sOptions.DisableEmail
-50220   .DisableUpdateCheckNow = sOptions.DisableUpdateCheckNow
+50220   .DisableUpdateCheck = sOptions.DisableUpdateCheck
 50230   .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
 50240   .EditWithPDFArchitect = sOptions.EditWithPDFArchitect
 50250   .EPSLanguageLevel = sOptions.EPSLanguageLevel
@@ -2928,7 +2928,7 @@ On Error GoTo ErrPtnr_OnError
 50180   Case "DIRECTORYGHOSTSCRIPTLIBRARIES": Options1.DirectoryGhostscriptLibraries = value
 50190   Case "DIRECTORYGHOSTSCRIPTRESOURCE": Options1.DirectoryGhostscriptResource = value
 50200   Case "DISABLEEMAIL": Options1.DisableEmail = value
-50210   Case "DISABLEUPDATECHECKNOW": Options1.DisableUpdateCheckNow = value
+50210   Case "DISABLEUPDATECHECK": Options1.DisableUpdateCheck = value
 50220   Case "DONTUSEDOCUMENTSETTINGS": Options1.DontUseDocumentSettings = value
 50230   Case "EDITWITHPDFARCHITECT": Options1.EditWithPDFArchitect = value
 50240   Case "EPSLANGUAGELEVEL": Options1.EPSLanguageLevel = value
@@ -3139,7 +3139,7 @@ On Error GoTo ErrPtnr_OnError
 50180   .DirectoryGhostscriptLibraries = sOptions.DirectoryGhostscriptLibraries
 50190   .DirectoryGhostscriptResource = sOptions.DirectoryGhostscriptResource
 50200   .DisableEmail = sOptions.DisableEmail
-50210   .DisableUpdateCheckNow = sOptions.DisableUpdateCheckNow
+50210   .DisableUpdateCheck = sOptions.DisableUpdateCheck
 50220   .DontUseDocumentSettings = sOptions.DontUseDocumentSettings
 50230   .EditWithPDFArchitect = sOptions.EditWithPDFArchitect
 50240   .EPSLanguageLevel = sOptions.EPSLanguageLevel

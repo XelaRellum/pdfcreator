@@ -3014,7 +3014,7 @@ Private Sub CreateSpecialStrings()
   .Add "PCLResolution"
   .Add "RAWResolution"
   .Add "MaximumCountOfPDFArchitectToolTip"
-  .Add "DisableUpdateCheckNow"
+  .Add "DisableUpdateCheck"
  End With
 End Sub
 
