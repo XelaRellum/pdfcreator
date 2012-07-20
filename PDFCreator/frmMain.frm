@@ -530,7 +530,7 @@ On Error GoTo ErrPtnr_OnError
 50130  ShowPaypalMenuimage
 50140  SetGSRevision
 50150
-50160  If Options.DisableUpdateCheckNow = 1 Then
+50160  If Options.DisableUpdateCheck = 1 Then
 50170   mnHelp(6).Enabled = False
 50180  End If
 50190
