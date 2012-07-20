@@ -429,35 +429,39 @@ On Error GoTo ErrPtnr_OnError
 50320  lblOptionsDesign.Visible = mEnabled
 50330  lblUpdateInterval.Enabled = mEnabled
 50340  lblUpdateInterval.Visible = mEnabled
-50350  cmdCheckNow.Enabled = mEnabled
-50360  cmdCheckNow.Visible = mEnabled
-50370
-50380  If mEnabled = True Then
-50390    SetProgramOptions
-50400    tbstrProgGeneral_Click
-50410   Else
-50420    'dmFraProgGeneral1.Enabled = False
-50430    'dmFraProgGeneral2.Enabled = False
-50440    dmFraShellIntegration.Enabled = False
-50450    dmFraCheckUpdate.Enabled = False
-50460  End If
-50470
-50480  For i = lblEnableNotice.LBound To lblEnableNotice.UBound
-50490   lblEnableNotice(i).Visible = Not mEnabled
-50500  Next i
-50510  If mControlsEnabled Then
-50520    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
-50530     lblEnableNotice(i).Enabled = Not mEnabled
-50540    Next i
-50550   Else
+50350  cmdCheckNow.Visible = mEnabled
+50360  If Options.DisableUpdateCheckNow = 1 Then
+50370    cmdCheckNow.Enabled = False
+50380   Else
+50390    cmdCheckNow.Enabled = mEnabled
+50400  End If
+50410
+50420  If mEnabled = True Then
+50430    SetProgramOptions
+50440    tbstrProgGeneral_Click
+50450   Else
+50460    'dmFraProgGeneral1.Enabled = False
+50470    'dmFraProgGeneral2.Enabled = False
+50480    dmFraShellIntegration.Enabled = False
+50490    dmFraCheckUpdate.Enabled = False
+50500  End If
+50510
+50520  For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50530   lblEnableNotice(i).Visible = Not mEnabled
+50540  Next i
+50550  If mControlsEnabled Then
 50560    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
-50570     lblEnableNotice(i).Enabled = False
+50570     lblEnableNotice(i).Enabled = Not mEnabled
 50580    Next i
-50590  End If
-50600
-50610  For i = Line3D1.LBound To Line3D1.UBound
-50620   Line3D1(i).Visible = mEnabled
-50630  Next i
+50590   Else
+50600    For i = lblEnableNotice.LBound To lblEnableNotice.UBound
+50610     lblEnableNotice(i).Enabled = False
+50620    Next i
+50630  End If
+50640
+50650  For i = Line3D1.LBound To Line3D1.UBound
+50660   Line3D1(i).Visible = mEnabled
+50670  Next i
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:

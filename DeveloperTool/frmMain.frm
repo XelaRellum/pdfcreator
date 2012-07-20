@@ -1548,7 +1548,6 @@ Private Sub CreateModOptions()
  Print #fn, ""
  Print #fn, "Public Sub CorrectOptionsBeforeSaving()"
  Print #fn, " Options.AutosaveDirectory = Trim$(Options.AutosaveDirectory)"
- Print #fn, " Options.PrinterTemppath = Trim$(Options.PrinterTemppath)"
  Print #fn, " If LenB(Options.AutosaveDirectory) = 0 Then"
  Print #fn, "  Options.AutosaveDirectory = ""<MyFiles>\"""
  Print #fn, " End If"
@@ -2499,7 +2498,7 @@ Private Sub lsvOptions_DblClick()
  ShowOption
 End Sub
 
-Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, x As Single, Y As Single)
+Private Sub lsvOptions_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
  With lsvOptions
   If .FullRowSelect Then
    .Refresh
@@ -3015,6 +3014,7 @@ Private Sub CreateSpecialStrings()
   .Add "PCLResolution"
   .Add "RAWResolution"
   .Add "MaximumCountOfPDFArchitectToolTip"
+  .Add "DisableUpdateCheckNow"
  End With
 End Sub
 
