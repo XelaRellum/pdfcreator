@@ -530,52 +530,56 @@ On Error GoTo ErrPtnr_OnError
 50130  ShowPaypalMenuimage
 50140  SetGSRevision
 50150
-50160  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
-50170   SetMenuPrinterStop
+50160  If Options.DisableUpdateCheckNow = 1 Then
+50170   mnHelp(6).Enabled = False
 50180  End If
-50190  If PrinterStop = True Then
-50200   mnPrinter(2).Checked = True
-50210  End If
-50220  If Options.OptionsEnabled = 0 Then
-50230   mnPrinter(4).Enabled = False
-50240   tlb(0).Buttons(2).Enabled = False
+50190
+50200  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
+50210   SetMenuPrinterStop
+50220  End If
+50230  If PrinterStop = True Then
+50240   mnPrinter(2).Checked = True
 50250  End If
-50260  If Options.OptionsVisible = 0 Then
-50270   tlb(0).Buttons(2).Visible = False
-50280   mnPrinter(4).Visible = False
-50290   mnPrinter(5).Visible = False
-50300  End If
-50310
-50320  CheckPrintJobs
-50330  Call SetDocMenuAndToolbar
-50340  If (Options.Toolbars And 1) = 1 Then
-50350    tlb(0).Visible = True
-50360   Else
-50370    tlb(0).Visible = False
-50380  End If
-50390  If (Options.Toolbars And 2) = 2 Then
-50400    tlb(1).Visible = True
-50410    txtEmailAddress.Visible = True
-50420   Else
-50430    tlb(1).Visible = False
-50440    txtEmailAddress.Visible = False
-50450  End If
-50460  If PDFCreatorPrinter = False Or NoProcessing = True Or _
+50260  If Options.OptionsEnabled = 0 Then
+50270   mnPrinter(4).Enabled = False
+50280   tlb(0).Buttons(2).Enabled = False
+50290  End If
+50300  If Options.OptionsVisible = 0 Then
+50310   tlb(0).Buttons(2).Visible = False
+50320   mnPrinter(4).Visible = False
+50330   mnPrinter(5).Visible = False
+50340  End If
+50350
+50360  CheckPrintJobs
+50370  Call SetDocMenuAndToolbar
+50380  If (Options.Toolbars And 1) = 1 Then
+50390    tlb(0).Visible = True
+50400   Else
+50410    tlb(0).Visible = False
+50420  End If
+50430  If (Options.Toolbars And 2) = 2 Then
+50440    tlb(1).Visible = True
+50450    txtEmailAddress.Visible = True
+50460   Else
+50470    tlb(1).Visible = False
+50480    txtEmailAddress.Visible = False
+50490  End If
+50500  If PDFCreatorPrinter = False Or NoProcessing = True Or _
   Options.NoProcessingAtStartup = 1 Or (PDFCreatorPrinter = True And lsv.ListItems.Count > 1) Then
-50480   If ProgramIsVisible Then
-50490    Visible = True
-50500    SetTopMost frmMain, True, True
-50510    SetTopMost frmMain, False, True
-50520    SetActiveWindow frmMain.hwnd
-50530   End If
-50540  End If
-50550
-50560  InTimer1 = False
-50570  Timer1.Interval = TimerIntervall '500
-50580  Timer1.Enabled = True
+50520   If ProgramIsVisible Then
+50530    Visible = True
+50540    SetTopMost frmMain, True, True
+50550    SetTopMost frmMain, False, True
+50560    SetActiveWindow frmMain.hwnd
+50570   End If
+50580  End If
 50590
-50600  InAutoSave = False
-50610  ProgramIsStarted = True
+50600  InTimer1 = False
+50610  Timer1.Interval = TimerIntervall '500
+50620  Timer1.Enabled = True
+50630
+50640  InAutoSave = False
+50650  ProgramIsStarted = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1160,18 +1164,18 @@ On Error GoTo ErrPtnr_OnError
 50090     Logging = Not Logging
 50100     SetLogging Logging
 50110     mnPrinter(Index).Checked = Logging
-50160    If Not m_frmSysTray Is Nothing Then
-50170     If mnPrinter(Index).Checked = True Then
-50180       m_frmSysTray.mnuSysTray(6).Checked = True
-50190      Else
-50200       m_frmSysTray.mnuSysTray(6).Checked = False
-50210     End If
-50220    End If
-50230   Case 7:
-50240    frmLog.Show , Me
-50250   Case 9:
-50260    Unload Me
-50270  End Select
+50120    If Not m_frmSysTray Is Nothing Then
+50130     If mnPrinter(Index).Checked = True Then
+50140       m_frmSysTray.mnuSysTray(6).Checked = True
+50150      Else
+50160       m_frmSysTray.mnuSysTray(6).Checked = False
+50170     End If
+50180    End If
+50190   Case 7:
+50200    frmLog.Show , Me
+50210   Case 9:
+50220    Unload Me
+50230  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

@@ -34,6 +34,7 @@ Public DirectoryGhostscriptFonts As String
 Public DirectoryGhostscriptLibraries As String
 Public DirectoryGhostscriptResource As String
 Public DisableEmail As Long
+Public DisableUpdateCheckNow As Long
 Public DontUseDocumentSettings As Long
 Public EditWithPDFArchitect As Long
 Public EPSLanguageLevel As Long

@@ -2485,28 +2485,41 @@ End Select
 End Function
 
 Public Function GetSystemTempPath() As String
- Dim reg As clsRegistry, tStr As String
- 
- ' Default
- GetSystemTempPath = CompletePath(GetWindowsDirectory) & "Temp\"
- 
- Set reg = New clsRegistry
- reg.hkey = HKEY_LOCAL_MACHINE
- reg.KeyRoot = "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
- If reg.KeyExists = False Then
-  Set reg = Nothing
-  Exit Function
- End If
- tStr = reg.GetRegistryValue("TMP")
- If LenB(tStr) > 0 Then
-  GetSystemTempPath = CompletePath(Trim(tStr))
-  Set reg = Nothing
-  Exit Function
- End If
- tStr = reg.GetRegistryValue("TEMP")
- If LenB(tStr) > 0 Then
-  GetSystemTempPath = CompletePath(tStr)
- End If
- Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, tStr As String
+50020
+50030  ' Default
+50040  GetSystemTempPath = CompletePath(GetWindowsDirectory) & "Temp\"
+50050
+50060  Set reg = New clsRegistry
+50070  reg.hkey = HKEY_LOCAL_MACHINE
+50080  reg.KeyRoot = "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
+50090  If reg.KeyExists = False Then
+50100   Set reg = Nothing
+50110   Exit Function
+50120  End If
+50130  tStr = reg.GetRegistryValue("TMP")
+50140  If LenB(tStr) > 0 Then
+50150   GetSystemTempPath = CompletePath(Trim(tStr))
+50160   Set reg = Nothing
+50170   Exit Function
+50180  End If
+50190  tStr = reg.GetRegistryValue("TEMP")
+50200  If LenB(tStr) > 0 Then
+50210   GetSystemTempPath = CompletePath(tStr)
+50220  End If
+50230  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetSystemTempPath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
