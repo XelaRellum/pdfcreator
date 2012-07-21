@@ -625,16 +625,16 @@ Public Function GetTempFile(Optional ByVal Path As String, Optional PreFix As St
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim res As Long, tempFile As String, tPath As String
-50020  tempFile = Space$(MAX_PATH)
+50010  Dim res As Long, Tempfile As String, tPath As String
+50020  Tempfile = Space$(MAX_PATH)
 50030  tPath = LTrim$(Path)
 50040  If DirExists(tPath) = False Then
 50050   MakePath tPath
 50060  End If
 50070
-50080  res = GetTempFileNameA(tPath, PreFix, 0, tempFile)
+50080  res = GetTempFileNameA(tPath, PreFix, 0, Tempfile)
 50090  If res <> 0 Then
-50100    GetTempFile = Left$(tempFile, InStr(tempFile, Chr$(0)) - 1)
+50100    GetTempFile = Left$(Tempfile, InStr(Tempfile, Chr$(0)) - 1)
 50110   Else
 50120    GetTempFile = "~.tmp"
 50130  End If
@@ -938,7 +938,7 @@ On Error GoTo ErrPtnr_OnError
 50040  If Len(Path) <= 3 Then
 50050   Exit Function
 50060  End If
-50070  Path = Replace$(Path, "/", "\", , , vbTextCompare)
+50070  Path = replace$(Path, "/", "\", , , vbTextCompare)
 50080  If InStr(1, Path, "\", vbTextCompare) = 0 Then
 50090   Exit Function
 50100  End If
@@ -1069,7 +1069,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Forbiddenchars = "\/:*?<>|""" & AdditionalForbiddenChars
 50030  tStr = chkStr
 50040  For i = 1 To Len(Forbiddenchars)
-50050   tStr = Replace$(tStr, Mid$(Forbiddenchars, i, 1), ReplaceChar)
+50050   tStr = replace$(tStr, Mid$(Forbiddenchars, i, 1), ReplaceChar)
 50060  Next i
 50070  ReplaceForbiddenChars = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1827,7 +1827,7 @@ On Error GoTo ErrPtnr_OnError
 50040   envStr = Environ$(i)
 50050   If InStr(1, envStr, "=") > 1 Then
 50060    tStr = UCase$(Mid(envStr, 1, InStr(1, envStr, "=") - 1))
-50070    Str1 = Replace$(Str1, "%" & tStr & "%", Mid(envStr, InStr(1, envStr, "=") + 1), , , vbTextCompare)
+50070    Str1 = replace$(Str1, "%" & tStr & "%", Mid(envStr, InStr(1, envStr, "=") + 1), , , vbTextCompare)
 50080   End If
 50090   DoEvents
 50100   i = i + 1
@@ -2527,10 +2527,10 @@ Public Function CheckFolderWriteAccess(folder As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tempFile As String
-50020  tempFile = GetTempFile(folder)
-50030  If FileExists(tempFile) Then
-50040    KillFile tempFile
+50010  Dim Tempfile As String
+50020  Tempfile = GetTempFile(folder)
+50030  If FileExists(Tempfile) Then
+50040    KillFile Tempfile
 50050    CheckFolderWriteAccess = True
 50060   Else
 50070    CheckFolderWriteAccess = False
