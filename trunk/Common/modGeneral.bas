@@ -180,16 +180,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function IsFilePrintable(filename As String) As Boolean
+Public Function IsFilePrintable(Filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String, reg As clsRegistry
 50020  IsFilePrintable = False
-50030  If Len(filename) = 0 Then
+50030  If Len(Filename) = 0 Then
 50040   Exit Function
 50050  End If
-50060  SplitPath filename, , , , , Ext
+50060  SplitPath Filename, , , , , Ext
 50070  If Len(Ext) = 0 Then
 50080   Exit Function
 50090  End If
@@ -303,12 +303,12 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function GetFileAttributesStr(filename As String) As String
+Public Function GetFileAttributesStr(Filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim hFind As Long, WFD As WIN32_FIND_DATA, attr As Long, AA As String
-50020  hFind = FindFirstFileA(filename, WFD)
+50020  hFind = FindFirstFileA(Filename, WFD)
 50030  attr = WFD.dwFileAttributes
 50040  If attr And FILE_ATTRIBUTE_ARCHIVE Then AA = AA & "A"
 50050  If attr And FILE_ATTRIBUTE_COMPRESSED Then AA = AA & "C"
@@ -865,13 +865,13 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function KillFile(filename As String) As Boolean
+Public Function KillFile(Filename As String) As Boolean
  On Error Resume Next
  KillFile = False
- If FileExists(filename) = True Then
-  If FileInUse(filename) = False Then
-   Kill filename
-   If FileExists(filename) = False Then
+ If FileExists(Filename) = True Then
+  If FileInUse(Filename) = False Then
+   Kill Filename
+   If FileExists(Filename) = False Then
     KillFile = True
    End If
   End If
@@ -938,7 +938,7 @@ On Error GoTo ErrPtnr_OnError
 50040  If Len(Path) <= 3 Then
 50050   Exit Function
 50060  End If
-50070  Path = replace$(Path, "/", "\", , , vbTextCompare)
+50070  Path = Replace$(Path, "/", "\", , , vbTextCompare)
 50080  If InStr(1, Path, "\", vbTextCompare) = 0 Then
 50090   Exit Function
 50100  End If
@@ -1069,7 +1069,7 @@ On Error GoTo ErrPtnr_OnError
 50020  Forbiddenchars = "\/:*?<>|""" & AdditionalForbiddenChars
 50030  tStr = chkStr
 50040  For i = 1 To Len(Forbiddenchars)
-50050   tStr = replace$(tStr, Mid$(Forbiddenchars, i, 1), ReplaceChar)
+50050   tStr = Replace$(tStr, Mid$(Forbiddenchars, i, 1), ReplaceChar)
 50060  Next i
 50070  ReplaceForbiddenChars = tStr
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
@@ -1122,7 +1122,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional filename As String, Optional File As String, Optional Extension As String)
+Public Sub SplitPath(FullPath As String, Optional Drive As String, Optional Path As String, Optional Filename As String, Optional File As String, Optional Extension As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1131,41 +1131,41 @@ On Error GoTo ErrPtnr_OnError
 50030  If nPos > 0 Then
 50040    If Left$(FullPath, 2) = "\\" Then
 50050     If nPos = 2 Then
-50060      Drive = FullPath: Path = vbNullString: filename = vbNullString: File = vbNullString
+50060      Drive = FullPath: Path = vbNullString: Filename = vbNullString: File = vbNullString
 50070      Extension = vbNullString
 50080      Exit Sub
 50090     End If
 50100    End If
 50110    Path = Left$(FullPath, nPos - 1)
-50120    filename = Mid$(FullPath, nPos + 1)
-50130    nPos = InStrRev(filename, ".")
+50120    Filename = Mid$(FullPath, nPos + 1)
+50130    nPos = InStrRev(Filename, ".")
 50140    If nPos > 0 Then
-50150      File = Left$(filename, nPos - 1)
-50160      Extension = Mid$(filename, nPos + 1)
+50150      File = Left$(Filename, nPos - 1)
+50160      Extension = Mid$(Filename, nPos + 1)
 50170     Else
-50180      File = filename
+50180      File = Filename
 50190      Extension = vbNullString
 50200    End If
 50210   Else
 50220    nPos = InStrRev(FullPath, ":")
 50230    If nPos > 0 Then
-50240      Path = Mid(FullPath, 1, nPos - 1): filename = Mid(FullPath, nPos + 1)
-50250      nPos = InStrRev(filename, ".")
+50240      Path = Mid(FullPath, 1, nPos - 1): Filename = Mid(FullPath, nPos + 1)
+50250      nPos = InStrRev(Filename, ".")
 50260      If nPos > 0 Then
-50270        File = Left$(filename, nPos - 1)
-50280        Extension = Mid$(filename, nPos + 1)
+50270        File = Left$(Filename, nPos - 1)
+50280        Extension = Mid$(Filename, nPos + 1)
 50290       Else
-50300        File = filename
+50300        File = Filename
 50310        Extension = vbNullString
 50320      End If
 50330     Else
-50340      Path = vbNullString: filename = FullPath
-50350      nPos = InStrRev(filename, ".")
+50340      Path = vbNullString: Filename = FullPath
+50350      nPos = InStrRev(Filename, ".")
 50360      If nPos > 0 Then
-50370        File = Left$(filename, nPos - 1)
-50380        Extension = Mid$(filename, nPos + 1)
+50370        File = Left$(Filename, nPos - 1)
+50380        Extension = Mid$(Filename, nPos + 1)
 50390       Else
-50400        File = filename
+50400        File = Filename
 50410        Extension = vbNullString
 50420      End If
 50430    End If
@@ -1616,20 +1616,20 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function RemoveAllKnownFileExtensions(filename As String) As String
+Public Function RemoveAllKnownFileExtensions(Filename As String) As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim tColl As Collection, Ext As String, File As String, OldFilename As String, reg As clsRegistry
-50020  RemoveAllKnownFileExtensions = filename
-50030  SplitPath filename, , , , File, Ext
+50010  Dim tColl As Collection, Ext As String, File As String, oldFileName As String, reg As clsRegistry
+50020  RemoveAllKnownFileExtensions = Filename
+50030  SplitPath Filename, , , , File, Ext
 50040  If LenB(Ext) > 0 Then
 50050   Set reg = New clsRegistry
 50060   reg.hkey = HKEY_CLASSES_ROOT
 50070   reg.KeyRoot = "." & Ext
 50080   Do Until reg.KeyExists = False
-50090    SplitPath filename, , , , File, Ext
-50100    filename = File
+50090    SplitPath Filename, , , , File, Ext
+50100    Filename = File
 50110    reg.KeyRoot = "." & Ext
 50120    DoEvents
 50130   Loop
@@ -1827,7 +1827,7 @@ On Error GoTo ErrPtnr_OnError
 50040   envStr = Environ$(i)
 50050   If InStr(1, envStr, "=") > 1 Then
 50060    tStr = UCase$(Mid(envStr, 1, InStr(1, envStr, "=") - 1))
-50070    Str1 = replace$(Str1, "%" & tStr & "%", Mid(envStr, InStr(1, envStr, "=") + 1), , , vbTextCompare)
+50070    Str1 = Replace$(Str1, "%" & tStr & "%", Mid(envStr, InStr(1, envStr, "=") + 1), , , vbTextCompare)
 50080   End If
 50090   DoEvents
 50100   i = i + 1
@@ -2019,16 +2019,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Sub CreateTextFile(filename As String, Str1 As String, Optional OpenmodeAppend As Boolean = False)
+Public Sub CreateTextFile(Filename As String, Str1 As String, Optional OpenmodeAppend As Boolean = False)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim fn As Long
 50020  fn = FreeFile
 50030  If OpenmodeAppend Then
-50040    Open filename For Append As #fn
+50040    Open Filename For Append As #fn
 50050   Else
-50060    Open filename For Output As #fn
+50060    Open Filename For Output As #fn
 50070  End If
 50080  Print #fn, Str1
 50090  Close #fn
@@ -2079,16 +2079,16 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Function IsFileEditable(filename As String) As Boolean
+Public Function IsFileEditable(Filename As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String, reg As clsRegistry
 50020  IsFileEditable = False
-50030  If Len(filename) = 0 Then
+50030  If Len(Filename) = 0 Then
 50040   Exit Function
 50050  End If
-50060  SplitPath filename, , , , , Ext
+50060  SplitPath Filename, , , , , Ext
 50070  If Len(Ext) = 0 Then
 50080   Exit Function
 50090  End If
@@ -2278,15 +2278,15 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Function ReadCompleteFile(ByRef filename As String) As String
+Function ReadCompleteFile(ByRef Filename As String) As String
  Dim fn As Long
 
  On Error Resume Next
- If GetFileLength(filename) = 0 Then Exit Function
+ If GetFileLength(Filename) = 0 Then Exit Function
  On Error GoTo 0
 
  fn = FreeFile
- Open filename For Binary As fn
+ Open Filename For Binary As fn
  ReadCompleteFile = Space$(LOF(fn))
  Get #fn, , ReadCompleteFile
  Close fn
@@ -2546,4 +2546,95 @@ Case 3: End
 End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
+
+                    
+Public Function CompletePath(Path As String) As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  If Len(Path) = 0 Then
+50020   Exit Function
+50030  End If
+50040  Path = Trim$(Path)
+50050  If Right$(Path, 1) = "\" Then
+50060    CompletePath = Path
+50070   Else
+50080    CompletePath = Path & "\"
+50090  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "CompletePath")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function InCollection(colTest As Collection, sKey As String) As Boolean
+'
+' Check to see if item [sKey] is in collection [colTest].
+' Return True if it is, false if not
+'
+ On Error GoTo ErrorHandler
+ If VarType(colTest.Item(sKey)) = vbObject Then
+  '
+  ' This test will indicate if the item actually exists in the
+  ' collection. No further checking is needed.
+  '
+ End If
+ InCollection = True
+Exit Function
+ErrorHandler:
+   InCollection = False
+End Function
+
+Public Function ProgramIsRunning(GUIDStr As String) As Boolean
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim mutex As clsMutex
+50020  Set mutex = New clsMutex
+50030  ProgramIsRunning = mutex.CheckMutex(GUIDStr)
+50040  Set mutex = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "ProgramIsRunning")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetFileLength(Filename As String) As Variant
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim hFile As Long, Lng() As Long
+50020  ReDim Lng(3)
+50030  hFile = CreateFile(Filename, GENERIC_WRITE Or GENERIC_READ, 0, 0, OPEN_ALWAYS, _
+                    FILE_ATTRIBUTE_NORMAL Or FILE_FLAG_SEQUENTIAL_SCAN, 0)
+50050  Lng(0) = 14
+50060  Lng(1) = 0
+50070  Lng(2) = GetFileSize(hFile, Lng(3))
+50080  CloseHandle hFile
+50090
+50100  MoveMemory GetFileLength, Lng(0), 16
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral", "GetFileLength")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
 
