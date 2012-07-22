@@ -1,6 +1,16 @@
 Attribute VB_Name = "modCDlg"
 Option Explicit
 
+Public Type tFont
+ Bold As Boolean
+ Color As OLE_COLOR
+ Italic As Boolean
+ Name As String
+ Size As Double
+ Strikethrough As Boolean
+ Underline As Boolean
+End Type
+
 Public Function OpenFileDialog(files As Collection, Optional InitFilename As String = "", _
  Optional Filter As String, Optional DefaultFileExtension As String = "*.*", _
  Optional InitDir As String = "", Optional DialogTitle As String = "", _

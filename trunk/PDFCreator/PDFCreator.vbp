@@ -50,7 +50,6 @@ Module=modFileTimes; modFileTimes.bas
 Module=modFileversion; ..\Common\modFileversion.bas
 Module=modGeneral; ..\Common\modGeneral.bas
 Module=modGeneral2; ..\Common\modGeneral2.bas
-Module=modGeneral3; ..\Common\modGeneral3.bas
 Module=modGetFilename; ..\Common\modGetFilename.bas
 Module=modGetFiles; ..\Common\modGetFiles.bas
 Module=modGhostScript; modGhostScript.bas
