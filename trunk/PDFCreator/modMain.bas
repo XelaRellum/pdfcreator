@@ -567,73 +567,76 @@ On Error GoTo ErrPtnr_OnError
   files As Collection, i As Long, tStrf() As String, tFilename As String, _
   kB As Long, MB As Long, GB As Long, tStr As String
 50050  kB = 1024: MB = kB * 1024: GB = MB * 1024
-50060  If Len(filename) > 0 Then
-50070    If UCase$(Printer.DeviceName) <> UCase$(GetPDFCreatorPrintername) Then
-50080     If Options.NoConfirmMessageSwitchingDefaultprinter = 0 Then
-50090      If ChangeDefaultprinter = False Then
-50100       frmSwitchDefaultprinter.Show vbModal
-50110       If ChangeDefaultprinter = False Then
-50120        Exit Sub
-50130       End If
-50140      End If
-50150     End If
-50160     PDFCreatorPrintername = GetPDFCreatorPrintername
-50170     If LenB(PDFCreatorPrintername) = 0 Then
-50180      MsgBox LanguageStrings.MessagesMsg26 & " [1]"
-50190      Exit Sub
-50200     End If
-50210     DefaultPrintername = Printer.DeviceName
-50220     SetDefaultprinterInProg PDFCreatorPrintername
-50230    End If
-50240    Set files = GetFiles(filename, "", SortedByName)
-50250    If files.Count > 0 Then
-50260      DoEvents
-50270      If Not frm Is Nothing Then
-50280       SetTopMost frm, True, True
-50290      End If
-50300      For i = 1 To files.Count
-50310       tStrf = Split(files(i), "|")
-50320       SplitPath tStrf(1), , , tFilename
-50330       If Not lblFilename Is Nothing Then
-50340        lblFilename.Caption = LanguageStrings.ListFilename & ": " & tFilename
-50350       End If
-50360       If Not lblSize Is Nothing Then
-50370        If CLng(tStrf(2)) > GB Then
-50380          tStr = Format$(CDbl(tStrf(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
-50390         Else
-50400          If CLng(tStrf(2)) > MB Then
-50410            tStr = Format$(CDbl(tStrf(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
-50420           Else
-50430            If CLng(tStrf(2)) > kB Then
-50440              tStr = Format$(CDbl(tStrf(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
-50450             Else
-50460              tStr = Format$(tStrf(2), "0 " & LanguageStrings.ListBytes)
-50470          End If
-50480         End If
-50490        End If
-50500        lblSize.Caption = LanguageStrings.ListSize & ": " & tStr
-50510       End If
-50520       If Not xpPgb Is Nothing Then
-50530        xpPgb.value = i
-50540       End If
-50550       If Not lblCount Is Nothing Then
-50560        lblCount.Caption = CStr(i) & " (" & CStr(files.Count) & ")"
-50570        lblCount.Left = (frm.Width - lblCount.Width) / 2
-50580       End If
-50590       If CancelPrintfiles = True Then
-50600        Exit For
-50610       End If
-50620       DoEvents
-50630       ShellAndWait 0, "print", tStrf(1), "", tStrf(0), wHidden, WCTermination, 0, True
-50640       DoEvents
-50650      Next i
-50660     Else
-50670      MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & filename
-50680    End If
-50690    If DefaultPrintername <> vbNullString Then
-50700     SetDefaultprinterInProg DefaultPrintername
-50710    End If
-50720   End If
+50060  If LenB(filename) = 0 Then
+50070   MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & "PrintFile: Empty filename!", vbExclamation
+50080   Exit Sub
+50090  End If
+50100  If IsPDFCreatorPrinter(Printer.DeviceName) = False Then
+50110   If Options.NoConfirmMessageSwitchingDefaultprinter = 0 Then
+50120    If ChangeDefaultprinter = False Then
+50130     frmSwitchDefaultprinter.Show vbModal
+50140     If ChangeDefaultprinter = False Then
+50150      Exit Sub
+50160     End If
+50170    End If
+50180   End If
+50190   If UCase$(Printer.DeviceName) <> UCase$(GetPDFCreatorPrintername) Then
+50200    PDFCreatorPrintername = GetPDFCreatorPrintername
+50210    If LenB(PDFCreatorPrintername) = 0 Then
+50220     MsgBox LanguageStrings.MessagesMsg26 & " [1]"
+50230     Exit Sub
+50240    End If
+50250    DefaultPrintername = Printer.DeviceName
+50260    SetDefaultprinterInProg PDFCreatorPrintername
+50270   End If
+50280  End If
+50290
+50300  Set files = GetFiles(filename, "", SortedByName)
+50310  If files.Count > 0 Then
+50320    DoEvents
+50330    If Not frm Is Nothing Then
+50340     SetTopMost frm, True, True
+50350    End If
+50360    For i = 1 To files.Count
+50370     tStrf = Split(files(i), "|")
+50380     SplitPath tStrf(1), , , tFilename
+50390     If Not lblFilename Is Nothing Then
+50400      lblFilename.Caption = LanguageStrings.ListFilename & ": " & tFilename
+50410     End If
+50420     If Not lblSize Is Nothing Then
+50430      If CLng(tStrf(2)) > GB Then
+50440        tStr = Format$(CDbl(tStrf(2)) / GB, "0.00 " & LanguageStrings.ListGBytes)
+50450       Else
+50460        If CLng(tStrf(2)) > MB Then
+50470          tStr = Format$(CDbl(tStrf(2)) / MB, "0.00 " & LanguageStrings.ListMBytes)
+50480         Else
+50490          If CLng(tStrf(2)) > kB Then
+50500            tStr = Format$(CDbl(tStrf(2)) / kB, "0.00 " & LanguageStrings.ListKBytes)
+50510           Else
+50520            tStr = Format$(tStrf(2), "0 " & LanguageStrings.ListBytes)
+50530          End If
+50540        End If
+50550      End If
+50560      lblSize.Caption = LanguageStrings.ListSize & ": " & tStr
+50570     End If
+50580     If Not xpPgb Is Nothing Then
+50590      xpPgb.value = i
+50600     End If
+50610     If Not lblCount Is Nothing Then
+50620      lblCount.Caption = CStr(i) & " (" & CStr(files.Count) & ")"
+50630      lblCount.Left = (frm.Width - lblCount.Width) / 2
+50640     End If
+50650     If CancelPrintfiles = True Then
+50660      Exit For
+50670     End If
+50680     DoEvents
+50690     ShellAndWait 0, "print", tStrf(1), "", tStrf(0), wHidden, WCTermination, 0, True
+50700     DoEvents
+50710    Next i
+50720  End If
+50730  If DefaultPrintername <> vbNullString Then
+50740   SetDefaultprinterInProg DefaultPrintername
+50750  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

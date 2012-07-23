@@ -746,6 +746,21 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Public Function IsPDFCreatorPrinter(PrinterName As String) As Boolean
+ Dim PDFCreatorPrinters As Collection, i As Long
+ IsPDFCreatorPrinter = False
+ Set PDFCreatorPrinters = GetPDFCreatorPrinters()
+ If PDFCreatorPrinters.Count = 0 Then
+  Exit Function
+ End If
+ For i = 1 To PDFCreatorPrinters.Count
+  If StrComp(PrinterName, PDFCreatorPrinters(i), vbTextCompare) Then
+   IsPDFCreatorPrinter = True
+   Exit Function
+  End If
+ Next i
+End Function
+
 Public Function GetPDFCreatorPrintername() As String
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
