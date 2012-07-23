@@ -23,7 +23,7 @@ Begin VB.Form frmAbout
       Top             =   4080
       Width           =   1455
    End
-   Begin VB.Label Label7 
+   Begin VB.Label lblDonate 
       BackColor       =   &H00FFFFFF&
       Caption         =   "Please donate to support us"
       BeginProperty Font 
@@ -56,8 +56,8 @@ Begin VB.Form frmAbout
       Height          =   255
       Left            =   2640
       TabIndex        =   11
-      Top             =   1920
-      Width           =   5535
+      Top             =   1800
+      Width           =   5610
    End
    Begin VB.Image imgDonate 
       Height          =   465
@@ -83,7 +83,7 @@ Begin VB.Form frmAbout
       Index           =   1
       Left            =   2640
       TabIndex        =   10
-      Top             =   3000
+      Top             =   2880
       Width           =   3015
    End
    Begin VB.Label lblLink 
@@ -102,7 +102,7 @@ Begin VB.Form frmAbout
       Index           =   2
       Left            =   2640
       TabIndex        =   9
-      Top             =   3240
+      Top             =   3120
       Width           =   3015
    End
    Begin VB.Label lblLink 
@@ -121,7 +121,7 @@ Begin VB.Form frmAbout
       Index           =   3
       Left            =   2640
       TabIndex        =   8
-      Top             =   3480
+      Top             =   3360
       Width           =   3015
    End
    Begin VB.Label lblLink 
@@ -140,26 +140,8 @@ Begin VB.Form frmAbout
       Index           =   4
       Left            =   2640
       TabIndex        =   7
-      Top             =   3720
+      Top             =   3600
       Width           =   3015
-   End
-   Begin VB.Line Line3 
-      X1              =   2640
-      X2              =   5760
-      Y1              =   2640
-      Y2              =   2640
-   End
-   Begin VB.Line Line2 
-      X1              =   2640
-      X2              =   5040
-      Y1              =   1320
-      Y2              =   1320
-   End
-   Begin VB.Line Line1 
-      X1              =   2640
-      X2              =   3720
-      Y1              =   480
-      Y2              =   480
    End
    Begin VB.Label lblLink 
       BackColor       =   &H00FFFFFF&
@@ -177,10 +159,10 @@ Begin VB.Form frmAbout
       Index           =   0
       Left            =   2640
       TabIndex        =   6
-      Top             =   2760
+      Top             =   2640
       Width           =   3015
    End
-   Begin VB.Label Label6 
+   Begin VB.Label lblLinks 
       BackColor       =   &H00FFFFFF&
       Caption         =   "For Tutorials and Help"
       BeginProperty Font 
@@ -188,7 +170,7 @@ Begin VB.Form frmAbout
          Size            =   14.25
          Charset         =   0
          Weight          =   400
-         Underline       =   0   'False
+         Underline       =   -1  'True
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
@@ -198,7 +180,7 @@ Begin VB.Form frmAbout
       Top             =   2280
       Width           =   3255
    End
-   Begin VB.Label Label5 
+   Begin VB.Label lblThankTranslators 
       BackColor       =   &H00FFFFFF&
       Caption         =   "All translators, who help you to understand PDFCreator"
       BeginProperty Font 
@@ -213,10 +195,10 @@ Begin VB.Form frmAbout
       Height          =   255
       Left            =   2640
       TabIndex        =   4
-      Top             =   1680
+      Top             =   1560
       Width           =   5535
    End
-   Begin VB.Label Label4 
+   Begin VB.Label lblThankTesters 
       BackColor       =   &H00FFFFFF&
       Caption         =   "The testers, who help us to find and solve bugs"
       BeginProperty Font 
@@ -231,10 +213,10 @@ Begin VB.Form frmAbout
       Height          =   255
       Left            =   2640
       TabIndex        =   3
-      Top             =   1440
+      Top             =   1320
       Width           =   5535
    End
-   Begin VB.Label Label3 
+   Begin VB.Label lblAuthors 
       BackColor       =   &H00FFFFFF&
       Caption         =   "Authors"
       BeginProperty Font 
@@ -242,7 +224,7 @@ Begin VB.Form frmAbout
          Size            =   14.25
          Charset         =   0
          Weight          =   400
-         Underline       =   0   'False
+         Underline       =   -1  'True
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
@@ -250,9 +232,9 @@ Begin VB.Form frmAbout
       Left            =   2640
       TabIndex        =   2
       Top             =   120
-      Width           =   2535
+      Width           =   5535
    End
-   Begin VB.Label Label2 
+   Begin VB.Label lblSpecialThanks 
       BackColor       =   &H00FFFFFF&
       Caption         =   "Special Thanks to"
       BeginProperty Font 
@@ -260,7 +242,7 @@ Begin VB.Form frmAbout
          Size            =   14.25
          Charset         =   0
          Weight          =   400
-         Underline       =   0   'False
+         Underline       =   -1  'True
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
@@ -285,7 +267,7 @@ Begin VB.Form frmAbout
       Height          =   255
       Left            =   2640
       TabIndex        =   0
-      Top             =   600
+      Top             =   480
       Width           =   5535
    End
    Begin VB.Image Image1 
@@ -343,11 +325,7 @@ On Error GoTo ErrPtnr_OnError
 50170   lblLink(i).MouseIcon = LoadResPicture(1000, vbResCursor)
 50180  Next i
 50190
-50200  With Options
-50210   SetFontControls Me.Controls, .ProgramFont, .ProgramFontCharset, .ProgramFontSize
-50220  End With
-50230
-50240  ShowAcceleratorsInForm Me, True
+50200  ShowAcceleratorsInForm Me, True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -417,7 +395,8 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  With LanguageStrings
 50020   Me.Caption = .DialogInfoTitle & " PDFCreator " & App.Major & "." & App.Minor & "." & App.Revision
-50030  End With
+50030   lblAuthors.Caption = "Authors of PDFCreator " & App.Major & "." & App.Minor & "." & App.Revision
+50040  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
