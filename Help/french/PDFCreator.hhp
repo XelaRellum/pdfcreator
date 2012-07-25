@@ -35,7 +35,6 @@ html\general-settings.html
 html\ghostscript-settings.html
 html\document-properties.html
 html\save-settings.html
-html\autosave-mode.html
 html\actions.html
 html\print.html
 html\font-settings.html
@@ -59,7 +58,6 @@ html\psd.html
 html\pcl.html
 html\raw.html
 html\svg.html
-html\hidden-settings.html
 html\frequently-asked-questions-faq.html
 html\i-have-net-3x-installed-but-there-is-no-pdfforgedll.html
 html\adobe-reader-stays-open-when-a-script-is-used-to-combine-pdfs.html
@@ -96,5 +94,7 @@ html\gnu-general-public-license.html
 html\fairplay-license.html
 html\support-pdfcreator.html
 html\acknowledgements.html
+html\autosave-mode.html
+html\hidden-settings.html
 
 [INFOTYPES]

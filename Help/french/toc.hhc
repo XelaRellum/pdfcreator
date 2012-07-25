@@ -93,10 +93,6 @@
 					<param name="Local" value="html\save-settings.html">
 					</OBJECT>
 				<LI> <OBJECT type="text/sitemap">
-					<param name="Name" value="Enregistrement automatique">
-					<param name="Local" value="html\autosave-mode.html">
-					</OBJECT>
-				<LI> <OBJECT type="text/sitemap">
 					<param name="Name" value="Actions">
 					<param name="Local" value="html\actions.html">
 					</OBJECT>
@@ -193,10 +189,6 @@
 					<param name="Local" value="html\svg.html">
 					</OBJECT>
 			</UL>
-			<LI> <OBJECT type="text/sitemap">
-				<param name="Name" value="Options cach&eacute;es">
-				<param name="Local" value="html\hidden-settings.html">
-				</OBJECT>
 		</UL>
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Foire aux questions (FAQ)">
@@ -349,6 +341,14 @@
 		<LI> <OBJECT type="text/sitemap">
 			<param name="Name" value="Remerciements">
 			<param name="Local" value="html\acknowledgements.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Enregistrement automatique">
+			<param name="Local" value="html\autosave-mode.html">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Options cach&eacute;es">
+			<param name="Local" value="html\hidden-settings.html">
 			</OBJECT>
 	</UL>
 </UL>
