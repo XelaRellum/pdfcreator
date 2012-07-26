@@ -19,48 +19,48 @@
   <tr>
     <td class="main"><p class="header">Nouveaut&eacute;s</p>
 <p><strong>Version 1.4.3 (27 Julliet, 2012)</strong></p>
-<ul><strong><em>Improvements:</em></strong>
-    <li>Auto-Save:&nbsp;DateTime-Token now supports a custom format via parameter, i.e. use &lt;DateTime:yyyy&gt; to get just the year. The counter token allows to specify the number of digits that will be displayed.</li>
-    <li>PDFCreator checks if the spool folder is writeable.</li>
-    <li>The update check can be completely disabled.</li>
-    <li>Updated PDFCreator languages.</li>
-</ul>
-<ul><em><strong>Bug Fixes:<br />
-    </strong></em>
-    <li>The function PrintFile was not aware of different PDFCreator printers and their associated profiles.</li>
-</ul>
-<ul><strong><em>Known issues:</em></strong>
-    <li>No  hyperlinks possible (Hyperlinks for MS Word are possible  with the  combination of <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a>   and PDFCreator.)</li>
-</ul>
-<p><strong>Version 1.4.2 (6 Julliet, 2012)</strong></p>
-<ul><strong><em>Improvements:</em></strong>
-    <li>Images2PDF now supports JPEG images in CMYK.</li>
-    <li>Updated PDFCreator languages.</li>
-</ul>
-<ul><em><strong>Bug Fixes:<br />
-    </strong></em>
-    <li>pdfcmon.dll was not updated when installing PDFCreator as an update.</li>
-    <li>pdfcmon.dll crashed when the document title had more than 255 characters.</li>
-    <li>The System TEMP&nbsp;path was not determined correctly in server mode.</li>
-</ul>
-<ul><strong><em>Known issues:</em></strong>
-    <li>No  hyperlinks possible (Hyperlinks for MS Word are possible  with the  combination of <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a>   and PDFCreator.)</li>
-</ul>
-<p><strong>Version 1.4.1 (18 June, 2012)</strong></p>
 <ul><strong><em>Améliorations:</em></strong>
-    <li>Support for large print jobs (&gt; 4GB)</li>
-    <li>Very basic support for managed group policies. PDFCreator settings can now be set through group policies. Note: The settings user interface will show the policy values and will not deactivate the respective UI elements. If the users saves the settings, the policy values will be saved to the user's registry.</li>
-    <li>Improved PDFCreator Windows explorer integration</li>
-    <li>Improved setup:&nbsp;There could have been problems replacing the pdfcmon.dll during the setup</li>
-    <li>Includes Images2PDF 0.9.1</li>
-    <li>Updated PDFArchitect languages</li>
+    <li>Enregistrement automatique: on peut désormais affecter un format personnalisé au suffixe DateTime via un paramètre, par ex. &lt;DateTime:yyyy&gt; pour n'afficher que l'année. Le suffixe &lt;counter&gt; peut être affiché avec un nombre de chiffres déterminé.</li>
+    <li>PDFCreator vérifie que le dossier du moniteur d'impression à des droits en écriture.</li>
+    <li>La vérification des mises à jour peut être totalement désactivée.</li>
+    <li>Mise à jour des langues de PDFCreator.</li>
 </ul>
 <ul><em><strong>Correction de bugs:<br />
     </strong></em>
-    <li>There was a problem where some users could not print to PDFCreator at all with the version 1.3.0 to 1.4.0. We finally have found the reason and have fixed this</li>
-    <li>Fixed a problem with special chars in metadata using auto-save mode</li>
-    <li>Fixed some other minor bugs</li>
-    <li>Set Minimum Windows Version to WinXP SP2</li>
+    <li>La fonction PrintFile ne prenait pas en compte les différentes imprimantes PDFCreator et leurs profils associés.</li>
+</ul>
+<ul><strong><em>Problèmes connus:</em></strong>
+    <li>Impossible de créer des liens hypertextes (Créer des liens hypertextes pour MS Word est possible par la combinaison de <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a> et PDFCreator).</li>
+</ul>
+<p><strong>Version 1.4.2 (6 Julliet, 2012)</strong></p>
+<ul><strong><em>Améliorations:</em></strong>
+    <li>Images2PDF supporte désormais les images JPEG au format&nbsp; CMJN.</li>
+    <li>Mise à jour des langues PDFCreator.</li>
+</ul>
+<ul><em><strong>Correction de bugs:<br />
+    </strong></em>
+    <li>pdfcmon.dll n'était pas mis à jour lors de l'installation de PDFCreator en tant que mise à jour.</li>
+    <li>pdfcmon.dll plantait lorsque le titre du document comportait plus de 255 caractères.</li>
+    <li>Le chemin TEMP du système n'était pas déterminé correctement en mode serveur.</li>
+</ul>
+<ul><strong><em>Problèmes connus:</em></strong>
+    <li>Impossible de créer des liens hypertextes (Créer des liens hypertextes pour MS Word est possible par la combinaison de <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a> et PDFCreator).</li>
+</ul>
+<p><strong>Version 1.4.1 (18 June, 2012)</strong></p>
+<ul><strong><em>Améliorations:</em></strong>
+    <li>Support des travaux d'impression importants (&gt; 4GB)</li>
+    <li>Gestion très basique des règles collectives. Les paramètres de PDFCreator peuvent désormais être réglés au travers de règles collectives. Note: L'interface de paramètres utilisateurs affichera les règles collectives et ne désactivera pas les paramètres correspondants de l'interface utilisateur. Si l'utilisateur sauvegarde les paramètres, les valeurs définies par les règles collectives seront enregistrées dans la base de registre utilisateur.</li>
+    <li>Amélioration de l'intégration de PDFCreator dans l'explorateur Windows</li>
+    <li>Amélioration de l'installation : des problèmes pouvaient subvenir lors du remplacement de pdfcmon.dll durant l'installation</li>
+    <li>Intégration de Images2PDF 0.9.1</li>
+    <li>Mise à jour des langues de PDFArchitect</li>
+</ul>
+<ul><em><strong>Correction de bugs:<br />
+    </strong></em>
+    <li>Certains utilisateurs ne pouvaient plus imprimer du tout avec les versions de 1.3.0 à 1.4.0. Nous avons finalement trouvé et résolu le problème</li>
+    <li>Résolution d'un problème avec les caractères spéciaux dans les metadonnées lors de l'enregistrement automatique</li>
+    <li>Correction de quelques bugs mineurs</li>
+    <li>Ajustement de la version Widows minimale à WinXP SP2</li>
 </ul>
 <ul><strong><em>Problèmes connus:</em></strong>
     <li>Impossible de créer des liens hypertextes (Créer des liens hypertextes pour MS Word est possible par la combinaison de <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a> et PDFCreator).</li>
