@@ -231,8 +231,8 @@ On Error GoTo ErrPtnr_OnError
 51860  ' Create a mutex
 51870    mutexLocal.CreateMutex PDFCreator_GUID
 51880    ' Check for a global running instance
-51890    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID) = False Then
-51900     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+51890    If mutexGlobal.CheckMutex("Global\" & PDFCreator_GUID & "_Global") = False Then
+51900     mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID & "_Global"
 51910    End If
 51920  End If
 51930
