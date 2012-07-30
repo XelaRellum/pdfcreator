@@ -1312,7 +1312,7 @@ On Error GoTo ErrPtnr_OnError
 50100  End If
 50110  If mutexGlobal.MutexHandle = 0 Then
 50120  ' Create a global mutex
-50130    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID
+50130    mutexGlobal.CreateMutex "Global\" & PDFCreator_GUID & "_Global"
 50140  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub

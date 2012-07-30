@@ -2581,6 +2581,7 @@ ErrorHandler:
    InCollection = False
 End Function
 
+'Is PDFCreator running in the user session (local). Don't check wether PDFCreator is running global!
 Public Function ProgramIsRunning(GUIDStr As String) As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError

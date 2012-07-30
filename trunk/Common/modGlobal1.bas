@@ -104,7 +104,7 @@ On Error GoTo ErrPtnr_OnError
 50040  If m.CheckMutex(MutexName) = True Then
 50050   tStr = "Local"
 50060  End If
-50070  If mutexGlobal.CheckMutex("Global\" & MutexName) = True Then
+50070  If mutexGlobal.CheckMutex("Global\" & MutexName & "_Global") = True Then
 50080   If LenB(tStr) > 0 Then
 50090     tStr = tStr & ", Global"
 50100    Else
