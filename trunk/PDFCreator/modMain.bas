@@ -901,7 +901,7 @@ On Error GoTo ErrPtnr_OnError
 50040   If files.Count > 0 Then
 50050     Load frmPrintfiles
 50060    Else
-50070     MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & "C: " & PrintFilename
+50070     MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & PrintFilename
 50080   End If
 50090   Set files = Nothing
 50100  End If
