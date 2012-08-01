@@ -8,9 +8,9 @@ BEGIN
 END
 Attribute VB_Name = "clsTools"
 Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = True
+Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = True
+Attribute VB_Exposed = False
 Option Explicit
 
 Public Function cOpenFileDialog(ByRef files As Variant, Optional ByVal InitFilename As String = "", _
