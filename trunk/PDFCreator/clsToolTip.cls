@@ -8,9 +8,9 @@ BEGIN
 END
 Attribute VB_Name = "clsToolTip"
 Attribute VB_GlobalNameSpace = False
-Attribute VB_Creatable = True
+Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = True
+Attribute VB_Exposed = False
 ' http://www.codeproject.com/Articles/7945/How-to-implement-Windows-XP-style-balloon-tooltip
 Option Explicit
 
@@ -22,7 +22,7 @@ Private Declare Function CreateWindowEx Lib "user32.dll" Alias "CreateWindowExA"
         ByVal lpClassName As String, _
         ByVal lpWindowName As String, _
         ByVal dwStyle As Long, _
-        ByVal X As Long, _
+        ByVal x As Long, _
         ByVal Y As Long, _
         ByVal nWidth As Long, _
         ByVal nHeight As Long, _
@@ -32,22 +32,22 @@ Private Declare Function CreateWindowEx Lib "user32.dll" Alias "CreateWindowExA"
         ByRef lpParam As Any) As Long
 
 Private Declare Function SendMessage Lib "user32.dll" Alias "SendMessageA" ( _
-        ByVal hWnd As Long, _
+        ByVal hwnd As Long, _
         ByVal wMsg As Long, _
         ByVal wParam As Long, _
         ByRef lParam As Any) As Long
 
 Private Declare Function SendMessageLong Lib "user32" Alias "SendMessageA" ( _
-        ByVal hWnd As Long, _
+        ByVal hwnd As Long, _
         ByVal wMsg As Long, _
         ByVal wParam As Long, _
         ByVal lParam As Long) As Long
 
 Private Declare Function DestroyWindow Lib "user32" ( _
-        ByVal hWnd As Long) As Long
+        ByVal hwnd As Long) As Long
 
 Private Declare Function ClientToScreen Lib "user32" ( _
-        ByVal hWnd As Long, _
+        ByVal hwnd As Long, _
         lpPoint As POINTAPI) As Long
 
 ''Windows API Constants
@@ -55,7 +55,7 @@ Private Const WM_USER = &H400
 Private Const CW_USEDEFAULT = &H80000000
 
 ''Windows API Types
-Private Type RECT
+Private Type Rect
     Left As Long
     Top As Long
     Right As Long
@@ -63,7 +63,7 @@ Private Type RECT
 End Type
 
 Private Type POINTAPI
-    X As Long
+    x As Long
     Y As Long
 End Type
 
@@ -96,9 +96,9 @@ Private Const TOOLTIPS_CLASSA = "tooltips_class32"
 Private Type TOOLINFO
     lSize As Long
     lFlags As Long
-    hWnd As Long
+    hwnd As Long
     lId As Long
-    lpRect As RECT
+    lpRect As Rect
     hInstance As Long
     lpStr As String
     lParam As Long
@@ -519,7 +519,7 @@ End Select
 End Property
 
 'X and Y are in Pixel so dont send vbTwips value
-Public Sub Show(hWnd As Long, Optional X As Long = 0, Optional Y As Long = 0)
+Public Sub Show(hwnd As Long, Optional x As Long = 0, Optional Y As Long = 0)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -529,7 +529,7 @@ On Error GoTo ErrPtnr_OnError
 50040     Dim ret As Long
 50050
 50060     With pt
-50070         .X = X
+50070         .x = x
 50080         .Y = Y
 50090     End With
 50100
@@ -563,10 +563,10 @@ On Error GoTo ErrPtnr_OnError
 50380 '    SendMessage m_lTTHwnd, TTM_ADDTOOLA, 0&, ti
 50390
 50400
-50410     ret = ClientToScreen(hWnd, pt)
+50410     ret = ClientToScreen(hwnd, pt)
 50420
 50430     ptTip = pt.Y * &H10000
-50440     ptTip = ptTip + pt.X
+50440     ptTip = ptTip + pt.x
 50450
 50460     ' These two messages will set the position of the tooltip:
 50470     ret = SendMessage(m_lTTHwnd, TTM_TRACKPOSITION, 0, ByVal ptTip)
@@ -628,7 +628,7 @@ On Error GoTo ErrPtnr_OnError
 50390         End If
 50400
 50410         'set the hwnd prop to our parent control's hwnd
-50420         .hWnd = m_lParentHwnd
+50420         .hwnd = m_lParentHwnd
 50430         .lId = m_lParentHwnd                               '0
 50440         .hInstance = App.hInstance
 50450         '.lpstr = ALREADY SET
