@@ -1040,12 +1040,46 @@ Begin VB.UserControl ctlOptFormatPDF
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Begin VB.ComboBox cmbPDFDefaultSettings 
+      Begin VB.TextBox txtStartPage 
+         Alignment       =   1  'Rechts
+         Appearance      =   0  '2D
+         Height          =   285
+         Left            =   120
+         TabIndex        =   105
+         Text            =   "1"
+         Top             =   4155
+         Width           =   615
+      End
+      Begin VB.ComboBox cmbPageMode 
          Appearance      =   0  '2D
          Height          =   315
          ItemData        =   "ctlOptFormatPDF.ctx":032E
          Left            =   120
          List            =   "ctlOptFormatPDF.ctx":0330
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   104
+         Tag             =   "None|All|PageByPage"
+         Top             =   3480
+         Width           =   5775
+      End
+      Begin VB.ComboBox cmbPageLayout 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "ctlOptFormatPDF.ctx":0332
+         Left            =   120
+         List            =   "ctlOptFormatPDF.ctx":0334
+         Style           =   2  'Dropdown-Liste
+         TabIndex        =   102
+         Tag             =   "None|All|PageByPage"
+         Top             =   2760
+         Width           =   5775
+      End
+      Begin VB.ComboBox cmbPDFDefaultSettings 
+         Appearance      =   0  '2D
+         Height          =   315
+         ItemData        =   "ctlOptFormatPDF.ctx":0336
+         Left            =   120
+         List            =   "ctlOptFormatPDF.ctx":0338
          Style           =   2  'Dropdown-Liste
          TabIndex        =   68
          Top             =   555
@@ -1054,9 +1088,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFRotate 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":0332
+         ItemData        =   "ctlOptFormatPDF.ctx":033A
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0334
+         List            =   "ctlOptFormatPDF.ctx":033C
          Style           =   2  'Dropdown-Liste
          TabIndex        =   5
          Tag             =   "None|All|PageByPage"
@@ -1066,9 +1100,9 @@ Begin VB.UserControl ctlOptFormatPDF
       Begin VB.ComboBox cmbPDFCompat 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":0336
+         ItemData        =   "ctlOptFormatPDF.ctx":033E
          Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":0338
+         List            =   "ctlOptFormatPDF.ctx":0340
          Style           =   2  'Dropdown-Liste
          TabIndex        =   3
          Top             =   1215
@@ -1078,21 +1112,21 @@ Begin VB.UserControl ctlOptFormatPDF
          Alignment       =   1  'Rechts
          Appearance      =   0  '2D
          Height          =   285
-         Left            =   120
+         Left            =   3120
          TabIndex        =   7
          Text            =   "600"
-         Top             =   2685
+         Top             =   555
          Width           =   615
       End
       Begin VB.ComboBox cmbPDFOverprint 
          Appearance      =   0  '2D
          Height          =   315
-         ItemData        =   "ctlOptFormatPDF.ctx":033A
-         Left            =   120
-         List            =   "ctlOptFormatPDF.ctx":033C
+         ItemData        =   "ctlOptFormatPDF.ctx":0342
+         Left            =   3120
+         List            =   "ctlOptFormatPDF.ctx":0344
          Style           =   2  'Dropdown-Liste
          TabIndex        =   10
-         Top             =   3420
+         Top             =   1215
          Width           =   2655
       End
       Begin VB.CheckBox chkPDFASCII85 
@@ -1100,10 +1134,10 @@ Begin VB.UserControl ctlOptFormatPDF
          Caption         =   "Convert binary data to ASCII85"
          ForeColor       =   &H80000008&
          Height          =   255
-         Left            =   120
+         Left            =   3120
          TabIndex        =   11
-         Top             =   3930
-         Width           =   5880
+         Top             =   1980
+         Width           =   3000
       End
       Begin VB.CheckBox chkPDFOptimize 
          Appearance      =   0  '2D
@@ -1112,8 +1146,36 @@ Begin VB.UserControl ctlOptFormatPDF
          Height          =   255
          Left            =   120
          TabIndex        =   12
-         Top             =   4350
+         Top             =   4560
          Width           =   5880
+      End
+      Begin VB.Label lblStartPage 
+         AutoSize        =   -1  'True
+         BackStyle       =   0  'Transparent
+         Caption         =   "Start page:"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   106
+         Top             =   3960
+         Width           =   780
+      End
+      Begin VB.Label lblPageMode 
+         AutoSize        =   -1  'True
+         Caption         =   "Page mode"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   103
+         Top             =   3240
+         Width           =   810
+      End
+      Begin VB.Label lblPageLayout 
+         AutoSize        =   -1  'True
+         Caption         =   "Page layout"
+         Height          =   195
+         Left            =   120
+         TabIndex        =   101
+         Top             =   2520
+         Width           =   840
       End
       Begin VB.Label lblPDFDefaultSettings 
          AutoSize        =   -1  'True
@@ -1150,18 +1212,18 @@ Begin VB.UserControl ctlOptFormatPDF
          BackStyle       =   0  'Transparent
          Caption         =   "Resolution:"
          Height          =   195
-         Left            =   120
+         Left            =   3120
          TabIndex        =   6
-         Top             =   2475
+         Top             =   360
          Width           =   795
       End
       Begin VB.Label lblPDFOverprint 
          AutoSize        =   -1  'True
          Caption         =   "Overprint:"
          Height          =   195
-         Left            =   120
+         Left            =   3120
          TabIndex        =   9
-         Top             =   3210
+         Top             =   1020
          Width           =   690
       End
       Begin VB.Label lblPDFDPI 
@@ -1169,9 +1231,9 @@ Begin VB.UserControl ctlOptFormatPDF
          BackStyle       =   0  'Transparent
          Caption         =   "dpi"
          Height          =   195
-         Left            =   795
+         Left            =   3795
          TabIndex        =   8
-         Top             =   2730
+         Top             =   600
          Width           =   210
       End
    End
@@ -1220,34 +1282,40 @@ On Error GoTo ErrPtnr_OnError
 50130  cmbPDFOverprint.Enabled = value
 50140  chkPDFASCII85.Enabled = value
 50150  chkPDFOptimize.Enabled = value
-50160  dmFraPDFGeneral.Enabled = value
-50170
-50180  chkPDFTextComp.Enabled = value
-50190  chkPDFColorComp.Enabled = value
-50200  dmFraPDFColor.Enabled = value
-50210  chkPDFGreyComp.Enabled = value
-50220  dmFraPDFGrey.Enabled = value
-50230  chkPDFMonoComp.Enabled = value
-50240  dmFraPDFMono.Enabled = value
-50250  dmfraPDFCompress.Enabled = value
-50260
-50270  chkPDFEmbedAll.Enabled = value
-50280  chkPDFSubSetFonts.Enabled = value
-50290  dmFraPDFFonts.Enabled = value
-50300
-50310  cmbPDFColorModel.Enabled = value
-50320  chkPDFCMYKtoRGB.Enabled = value
-50330  dmFraPDFColors.Enabled = value
-50340  chkPDFPreserveOverprint.Enabled = value
-50350  chkPDFPreserveTransfer.Enabled = value
-50360  chkPDFPreserveHalftone.Enabled = value
-50370  dmFraPDFColorOptions.Enabled = value
-50380
-50390  chkUseSecurity.Enabled = value
-50400  dmFraPDFSecurity.Enabled = value
-50410
-50420  chkSignPDF.Enabled = value
-50430  dmFraPDFSigning.Enabled = value
+50160  lblPageLayout.Enabled = value
+50170  cmbPageLayout.Enabled = value
+50180  lblPageMode.Enabled = value
+50190  cmbPageMode.Enabled = value
+50200  lblStartPage.Enabled = value
+50210  txtStartPage.Enabled = value
+50220  dmFraPDFGeneral.Enabled = value
+50230
+50240  chkPDFTextComp.Enabled = value
+50250  chkPDFColorComp.Enabled = value
+50260  dmFraPDFColor.Enabled = value
+50270  chkPDFGreyComp.Enabled = value
+50280  dmFraPDFGrey.Enabled = value
+50290  chkPDFMonoComp.Enabled = value
+50300  dmFraPDFMono.Enabled = value
+50310  dmfraPDFCompress.Enabled = value
+50320
+50330  chkPDFEmbedAll.Enabled = value
+50340  chkPDFSubSetFonts.Enabled = value
+50350  dmFraPDFFonts.Enabled = value
+50360
+50370  cmbPDFColorModel.Enabled = value
+50380  chkPDFCMYKtoRGB.Enabled = value
+50390  dmFraPDFColors.Enabled = value
+50400  chkPDFPreserveOverprint.Enabled = value
+50410  chkPDFPreserveTransfer.Enabled = value
+50420  chkPDFPreserveHalftone.Enabled = value
+50430  dmFraPDFColorOptions.Enabled = value
+50440
+50450  chkUseSecurity.Enabled = value
+50460  dmFraPDFSecurity.Enabled = value
+50470
+50480  chkSignPDF.Enabled = value
+50490  dmFraPDFSigning.Enabled = value
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1275,6 +1343,58 @@ On Error GoTo ErrPtnr_OnError
 Exit Sub
 ErrPtnr_OnError:
 Select Case ErrPtnr.OnError("ctlOptFormatPDF", "chkPDFSubSetFonts_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbPageLayout_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With LanguageStrings
+50021   Select Case cmbPageLayout.ListIndex
+         Case 0: cmbPageLayout.ToolTipText = .OptionsPDFGeneralPageLayout01
+50040    Case 1: cmbPageLayout.ToolTipText = .OptionsPDFGeneralPageLayout02
+50050    Case 2: cmbPageLayout.ToolTipText = .OptionsPDFGeneralPageLayout03
+50060    Case 3: cmbPageLayout.ToolTipText = .OptionsPDFGeneralPageLayout04
+50070    Case 4: cmbPageLayout.ToolTipText = .OptionsPDFGeneralPageLayout05
+50080    Case 5: cmbPageLayout.ToolTipText = .OptionsPDFGeneralPageLayout06
+50090   End Select
+50100  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "cmbPageLayout_Click")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Private Sub cmbPageMode_Click()
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  With LanguageStrings
+50021   Select Case cmbPageMode.ListIndex
+         Case 0: cmbPageMode.ToolTipText = .OptionsPDFGeneralPageMode01
+50040    Case 1: cmbPageMode.ToolTipText = .OptionsPDFGeneralPageMode02
+50050    Case 2: cmbPageMode.ToolTipText = .OptionsPDFGeneralPageMode03
+50060    Case 3: cmbPageMode.ToolTipText = .OptionsPDFGeneralPageMode04
+50070    Case 4: cmbPageMode.ToolTipText = .OptionsPDFGeneralPageMode05
+50080    Case 5: cmbPageMode.ToolTipText = .OptionsPDFGeneralPageMode06
+50090   End Select
+50100  End With
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "cmbPageMode_Click")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub
@@ -1354,6 +1474,23 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub txtStartPage_KeyPress(KeyAscii As Integer)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  KeyAscii = AllowedKeypressChars(KeyAscii, ".,")
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("ctlOptFormatPDF", "txtStartPage_KeyPress")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Private Sub UserControl_Initialize()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
@@ -1399,119 +1536,134 @@ On Error GoTo ErrPtnr_OnError
 50390    .AddItem ""
 50400   Next i
 50410  End With
-50420  With cmbPDFColorComp
+50420  With cmbPageLayout
 50430   .Clear
-50440   For i = 1 To 8
+50440   For i = 1 To 6
 50450    .AddItem ""
 50460   Next i
 50470  End With
-50480  With cmbPDFColorResample
+50480  With cmbPageMode
 50490   .Clear
-50500   For i = 1 To 2
+50500   For i = 1 To 6
 50510    .AddItem ""
 50520   Next i
 50530  End With
-50540  With cmbPDFGreyComp
+50540  With cmbPDFColorComp
 50550   .Clear
 50560   For i = 1 To 8
 50570    .AddItem ""
 50580   Next i
 50590  End With
-50600  With cmbPDFGreyResample
+50600  With cmbPDFColorResample
 50610   .Clear
 50620   For i = 1 To 2
 50630    .AddItem ""
 50640   Next i
 50650  End With
-50660  With cmbPDFMonoComp
+50660  With cmbPDFGreyComp
 50670   .Clear
-50680   For i = 1 To 3
+50680   For i = 1 To 8
 50690    .AddItem ""
 50700   Next i
 50710  End With
-50720  With cmbPDFMonoResample
+50720  With cmbPDFGreyResample
 50730   .Clear
 50740   For i = 1 To 2
 50750    .AddItem ""
 50760   Next i
 50770  End With
-50780  With cmbPDFColorModel
+50780  With cmbPDFMonoComp
 50790   .Clear
 50800   For i = 1 To 3
 50810    .AddItem ""
 50820   Next i
 50830  End With
-50840  txtPDFRes.Text = 600
-50850  cmbPDFCompat.ListIndex = 1
-50860  cmbPDFRotate.ListIndex = 0
-50870  cmbPDFOverprint.ListIndex = 0
-50880  chkPDFASCII85.value = 0
-50890
-50900  chkPDFTextComp.value = 1
-50910
-50920  chkPDFColorComp.value = 1
-50930  chkPDFColorResample.value = 0
-50940  cmbPDFColorComp.ListIndex = 0
-50950  cmbPDFColorResample.ListIndex = 0
-50960  txtPDFColorRes.Text = 300
-50970
-50980  chkPDFGreyComp.value = 1
-50990  chkPDFGreyResample.value = 0
-51000  cmbPDFGreyComp.ListIndex = 0
-51010  cmbPDFGreyResample.ListIndex = 0
-51020  txtPDFGreyRes.Text = 300
-51030
-51040  chkPDFMonoComp.value = 1
-51050  chkPDFMonoResample.value = 0
-51060  cmbPDFMonoComp.ListIndex = 0
-51070  cmbPDFMonoResample.ListIndex = 0
-51080  txtPDFMonoRes.Text = 1200
-51090
-51100  chkPDFEmbedAll.value = 1
-51110  chkPDFSubSetFonts.value = 1
-51120  txtPDFSubSetPerc.Text = 100
-51130
-51140  cmbPDFColorModel.ListIndex = 1
-51150  chkPDFCMYKtoRGB.value = 1
-51160  chkPDFPreserveOverprint.value = 1
-51170  chkPDFPreserveTransfer.value = 1
-51180  chkPDFPreserveHalftone.value = 0
-51190
-51200   If GhostScriptSecurity = False Then
-51210    chkUseSecurity.value = 0
-51220    chkUseSecurity.Enabled = False
-51230    SecurityIsPossible = False
-51240   End If
-51250
-51260  If Options.PDFAes128Encryption <> 0 Then
-51270    optEncAes128.value = True
-51280   ElseIf Options.PDFHighEncryption <> 0 Then
-51290    optEncHigh.value = True
-51300   Else
-51310    optEncLow.value = True
-51320  End If
-51330
-51340  With tbstrPDFOptions
-51350   .Top = 50
-51360   .Left = 0
-51370  End With
-51380
-51390  dmFraPDFGrey.Left = dmFraPDFColor.Left
-51400  dmFraPDFGrey.Top = dmFraPDFColor.Top
-51410  dmFraPDFMono.Left = dmFraPDFColor.Left
-51420  dmFraPDFMono.Top = dmFraPDFColor.Top
-51430  tbstrPDFImageCompression.Tabs(1).Selected = True
-51440  dmFraPDFGrey.Visible = False
-51450  dmFraPDFMono.Visible = False
-51460
-51470  UpdateSecurityFields
+50840  With cmbPDFMonoResample
+50850   .Clear
+50860   For i = 1 To 2
+50870    .AddItem ""
+50880   Next i
+50890  End With
+50900  With cmbPDFColorModel
+50910   .Clear
+50920   For i = 1 To 3
+50930    .AddItem ""
+50940   Next i
+50950  End With
+50960  txtPDFRes.Text = 600
+50970  txtStartPage.Text = 1
+50980  cmbPDFCompat.ListIndex = 1
+50990  cmbPDFRotate.ListIndex = 0
+51000  cmbPDFOverprint.ListIndex = 0
+51010  chkPDFASCII85.value = 0
+51020  cmbPageLayout.ListIndex = 0
+51030  cmbPageMode.ListIndex = 0
+51040
+51050  chkPDFTextComp.value = 1
+51060
+51070  chkPDFColorComp.value = 1
+51080  chkPDFColorResample.value = 0
+51090  cmbPDFColorComp.ListIndex = 0
+51100  cmbPDFColorResample.ListIndex = 0
+51110  txtPDFColorRes.Text = 300
+51120
+51130  chkPDFGreyComp.value = 1
+51140  chkPDFGreyResample.value = 0
+51150  cmbPDFGreyComp.ListIndex = 0
+51160  cmbPDFGreyResample.ListIndex = 0
+51170  txtPDFGreyRes.Text = 300
+51180
+51190  chkPDFMonoComp.value = 1
+51200  chkPDFMonoResample.value = 0
+51210  cmbPDFMonoComp.ListIndex = 0
+51220  cmbPDFMonoResample.ListIndex = 0
+51230  txtPDFMonoRes.Text = 1200
+51240
+51250  chkPDFEmbedAll.value = 1
+51260  chkPDFSubSetFonts.value = 1
+51270  txtPDFSubSetPerc.Text = 100
+51280
+51290  cmbPDFColorModel.ListIndex = 1
+51300  chkPDFCMYKtoRGB.value = 1
+51310  chkPDFPreserveOverprint.value = 1
+51320  chkPDFPreserveTransfer.value = 1
+51330  chkPDFPreserveHalftone.value = 0
+51340
+51350  If GhostScriptSecurity = False Then
+51360   chkUseSecurity.value = 0
+51370   chkUseSecurity.Enabled = False
+51380   SecurityIsPossible = False
+51390  End If
+51400
+51410  If Options.PDFAes128Encryption <> 0 Then
+51420    optEncAes128.value = True
+51430   ElseIf Options.PDFHighEncryption <> 0 Then
+51440    optEncHigh.value = True
+51450   Else
+51460    optEncLow.value = True
+51470  End If
 51480
-51490  tbstrPDFOptions.ZOrder 1
-51500  tbstrPDFOptions_Click
-51510
-51520  SetFrames Options.OptionsDesign
+51490  With tbstrPDFOptions
+51500   .Top = 50
+51510   .Left = 0
+51520  End With
 51530
-51540  SetFont
+51540  dmFraPDFGrey.Left = dmFraPDFColor.Left
+51550  dmFraPDFGrey.Top = dmFraPDFColor.Top
+51560  dmFraPDFMono.Left = dmFraPDFColor.Left
+51570  dmFraPDFMono.Top = dmFraPDFColor.Top
+51580  tbstrPDFImageCompression.Tabs(1).Selected = True
+51590  dmFraPDFGrey.Visible = False
+51600  dmFraPDFMono.Visible = False
+51610
+51620  UpdateSecurityFields
+51630
+51640  tbstrPDFOptions.ZOrder 1
+51650  tbstrPDFOptions_Click
+51660
+51670  SetFrames Options.OptionsDesign
+51680
+51690  SetFont
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1627,117 +1779,132 @@ On Error GoTo ErrPtnr_OnError
 50230   cmbPDFOverprint.List(0) = .OptionsPDFGeneralOverprint01
 50240   cmbPDFOverprint.List(1) = .OptionsPDFGeneralOverprint02
 50250
-50260   cmbPDFColorComp.List(0) = .OptionsPDFCompressionColorComp01
-50270   cmbPDFColorComp.List(1) = .OptionsPDFCompressionColorComp02
-50280   cmbPDFColorComp.List(2) = .OptionsPDFCompressionColorComp03
-50290   cmbPDFColorComp.List(3) = .OptionsPDFCompressionColorComp04
-50300   cmbPDFColorComp.List(4) = .OptionsPDFCompressionColorComp05
-50310   cmbPDFColorComp.List(5) = .OptionsPDFCompressionColorComp06
-50320   cmbPDFColorComp.List(6) = .OptionsPDFCompressionColorComp09
-50330   cmbPDFColorComp.List(7) = .OptionsPDFCompressionColorComp07
-50340
-50350   cmbPDFColorResample.List(0) = .OptionsPDFCompressionColorResample01
-50360   cmbPDFColorResample.List(1) = .OptionsPDFCompressionColorResample02
-50370
-50380   cmbPDFGreyComp.List(0) = .OptionsPDFCompressionGreyComp01
-50390   cmbPDFGreyComp.List(1) = .OptionsPDFCompressionGreyComp02
-50400   cmbPDFGreyComp.List(2) = .OptionsPDFCompressionGreyComp03
-50410   cmbPDFGreyComp.List(3) = .OptionsPDFCompressionGreyComp04
-50420   cmbPDFGreyComp.List(4) = .OptionsPDFCompressionGreyComp05
-50430   cmbPDFGreyComp.List(5) = .OptionsPDFCompressionGreyComp06
-50440   cmbPDFGreyComp.List(6) = .OptionsPDFCompressionGreyComp09
-50450   cmbPDFGreyComp.List(7) = .OptionsPDFCompressionGreyComp07
-50460
-50470   cmbPDFGreyResample.List(0) = .OptionsPDFCompressionGreyResample01
-50480   cmbPDFGreyResample.List(1) = .OptionsPDFCompressionGreyResample02
-50490
-50500   cmbPDFMonoComp.List(0) = .OptionsPDFCompressionMonoComp01
-50510   cmbPDFMonoComp.List(1) = .OptionsPDFCompressionMonoComp02
-50520   cmbPDFMonoComp.List(2) = .OptionsPDFCompressionMonoComp03
-50530
-50540   cmbPDFMonoResample.List(0) = .OptionsPDFCompressionMonoResample01
-50550   cmbPDFMonoResample.List(1) = .OptionsPDFCompressionMonoResample02
-50560
-50570   cmbPDFColorModel.List(0) = .OptionsPDFColorsColorModel01
-50580   cmbPDFColorModel.List(1) = .OptionsPDFColorsColorModel02
-50590   cmbPDFColorModel.List(2) = .OptionsPDFColorsColorModel03
+50260   cmbPageLayout.List(0) = .OptionsPDFGeneralPageLayout01
+50270   cmbPageLayout.List(1) = .OptionsPDFGeneralPageLayout02
+50280   cmbPageLayout.List(2) = .OptionsPDFGeneralPageLayout03
+50290   cmbPageLayout.List(3) = .OptionsPDFGeneralPageLayout04
+50300   cmbPageLayout.List(4) = .OptionsPDFGeneralPageLayout05
+50310   cmbPageLayout.List(5) = .OptionsPDFGeneralPageLayout06
+50320
+50330   cmbPageMode.List(0) = .OptionsPDFGeneralPageMode01
+50340   cmbPageMode.List(1) = .OptionsPDFGeneralPageMode02
+50350   cmbPageMode.List(2) = .OptionsPDFGeneralPageMode03
+50360   cmbPageMode.List(3) = .OptionsPDFGeneralPageMode04
+50370   cmbPageMode.List(4) = .OptionsPDFGeneralPageMode05
+50380   cmbPageMode.List(5) = .OptionsPDFGeneralPageMode06
+50390
+50400   cmbPDFColorComp.List(0) = .OptionsPDFCompressionColorComp01
+50410   cmbPDFColorComp.List(1) = .OptionsPDFCompressionColorComp02
+50420   cmbPDFColorComp.List(2) = .OptionsPDFCompressionColorComp03
+50430   cmbPDFColorComp.List(3) = .OptionsPDFCompressionColorComp04
+50440   cmbPDFColorComp.List(4) = .OptionsPDFCompressionColorComp05
+50450   cmbPDFColorComp.List(5) = .OptionsPDFCompressionColorComp06
+50460   cmbPDFColorComp.List(6) = .OptionsPDFCompressionColorComp09
+50470   cmbPDFColorComp.List(7) = .OptionsPDFCompressionColorComp07
+50480
+50490   cmbPDFColorResample.List(0) = .OptionsPDFCompressionColorResample01
+50500   cmbPDFColorResample.List(1) = .OptionsPDFCompressionColorResample02
+50510
+50520   cmbPDFGreyComp.List(0) = .OptionsPDFCompressionGreyComp01
+50530   cmbPDFGreyComp.List(1) = .OptionsPDFCompressionGreyComp02
+50540   cmbPDFGreyComp.List(2) = .OptionsPDFCompressionGreyComp03
+50550   cmbPDFGreyComp.List(3) = .OptionsPDFCompressionGreyComp04
+50560   cmbPDFGreyComp.List(4) = .OptionsPDFCompressionGreyComp05
+50570   cmbPDFGreyComp.List(5) = .OptionsPDFCompressionGreyComp06
+50580   cmbPDFGreyComp.List(6) = .OptionsPDFCompressionGreyComp09
+50590   cmbPDFGreyComp.List(7) = .OptionsPDFCompressionGreyComp07
 50600
-50610   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
-50620   chkPDFOptimize.Caption = .OptionsPDFOptimize
-50630   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
-50640   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
-50650   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
-50660   lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
-50670   chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
-50680
-50690   tbstrPDFImageCompression.Tabs(1).Caption = .OptionsPDFCompressionColor
-50700   tbstrPDFImageCompression.Tabs(2).Caption = .OptionsPDFCompressionGrey
-50710   tbstrPDFImageCompression.Tabs(3).Caption = .OptionsPDFCompressionMono
-50720
-50730   dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
-50740   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
-50750   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
-50760   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
-50770         lblPDFColorCompFac.Caption = .OptionsPDFCompressionColorCompFac
-50780   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
-50790   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
-50800   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
-50810   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
-50820   lblPDFGreyCompFac.Caption = .OptionsPDFCompressionGreyCompFac
-50830   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
-50840   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
-50850   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
-50860   chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
-50870   chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
-50880   lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
-50890
-50900   dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
-50910   chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
-50920   chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
-50930
-50940   dmFraPDFColors.Caption = .OptionsPDFColorsCaption
-50950   chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
-50960   dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
-50970   chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
-50980   chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
-50990   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
-51000
-51010   dmFraPDFSigning.Caption = .OptionsPDFSigningCaption
-51020   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
-51030   chkUseSecurity.Caption = .OptionsPDFUseSecurity
-51040   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
-51050   optEncAes128.Caption = .OptionsPDFEncryptionAes128
-51060   optEncHigh.Caption = .OptionsPDFEncryptionHigh
-51070   optEncLow.Caption = .OptionsPDFEncryptionLow
-51080   dmFraSecurityPass.Caption = .OptionsPDFPasswords
-51090   chkUserPass.Caption = .OptionsPDFUserPass
-51100   chkOwnerPass.Caption = .OptionsPDFOwnerPass
-51110   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
-51120   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
-51130   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
-51140   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
-51150   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
-51160   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
-51170   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
-51180   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
-51190   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
-51200   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
-51210
-51220   chkSignPDF.Caption = .OptionsPDFSigningSignPdfFile
-51230   lblPFXFile.Caption = .OptionsPDFSigningCertificateFile
-51240   lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
-51250   lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
-51260   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
-51270   lblTimeServerUrl.Caption = .OptionsPDFSigningTimeServerUrl
-51280   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
-51290   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
-51300   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
-51310   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
-51320   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
-51330   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
-51340   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
-51350   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
-51360  End With
+50610   cmbPDFGreyResample.List(0) = .OptionsPDFCompressionGreyResample01
+50620   cmbPDFGreyResample.List(1) = .OptionsPDFCompressionGreyResample02
+50630
+50640   cmbPDFMonoComp.List(0) = .OptionsPDFCompressionMonoComp01
+50650   cmbPDFMonoComp.List(1) = .OptionsPDFCompressionMonoComp02
+50660   cmbPDFMonoComp.List(2) = .OptionsPDFCompressionMonoComp03
+50670
+50680   cmbPDFMonoResample.List(0) = .OptionsPDFCompressionMonoResample01
+50690   cmbPDFMonoResample.List(1) = .OptionsPDFCompressionMonoResample02
+50700
+50710   cmbPDFColorModel.List(0) = .OptionsPDFColorsColorModel01
+50720   cmbPDFColorModel.List(1) = .OptionsPDFColorsColorModel02
+50730   cmbPDFColorModel.List(2) = .OptionsPDFColorsColorModel03
+50740
+50750   dmFraPDFGeneral.Caption = .OptionsPDFGeneralCaption
+50760   chkPDFOptimize.Caption = .OptionsPDFOptimize
+50770   lblPDFCompat.Caption = .OptionsPDFGeneralCompatibility
+50780   lblPDFAutoRotate.Caption = .OptionsPDFGeneralAutorotate
+50790   lblPDFResolution.Caption = .OptionsPDFGeneralResolution
+50800   lblPDFOverprint.Caption = .OptionsPDFGeneralOverprint
+50810   chkPDFASCII85.Caption = .OptionsPDFGeneralASCII85
+50820   lblStartPage.Caption = .OptionsPDFGeneralStartPage
+50830
+50840   tbstrPDFImageCompression.Tabs(1).Caption = .OptionsPDFCompressionColor
+50850   tbstrPDFImageCompression.Tabs(2).Caption = .OptionsPDFCompressionGrey
+50860   tbstrPDFImageCompression.Tabs(3).Caption = .OptionsPDFCompressionMono
+50870
+50880   dmfraPDFCompress.Caption = .OptionsPDFCompressionCaption
+50890   chkPDFTextComp.Caption = .OptionsPDFCompressionTextComp
+50900   dmFraPDFColor.Caption = .OptionsPDFCompressionColor
+50910   chkPDFColorComp.Caption = .OptionsPDFCompressionColorComp
+50920   lblPDFColorCompFac.Caption = .OptionsPDFCompressionColorCompFac
+50930   chkPDFColorResample.Caption = .OptionsPDFCompressionColorResample
+50940   lblPDFColorRes.Caption = .OptionsPDFCompressionColorRes
+50950   dmFraPDFGrey.Caption = .OptionsPDFCompressionGrey
+50960   chkPDFGreyComp.Caption = .OptionsPDFCompressionGreyComp
+50970   lblPDFGreyCompFac.Caption = .OptionsPDFCompressionGreyCompFac
+50980   chkPDFGreyResample.Caption = .OptionsPDFCompressionGreyResample
+50990   lblPDFGreyRes.Caption = .OptionsPDFCompressionGreyRes
+51000   dmFraPDFMono.Caption = .OptionsPDFCompressionMono
+51010   chkPDFMonoComp.Caption = .OptionsPDFCompressionMonoComp
+51020   chkPDFMonoResample.Caption = .OptionsPDFCompressionMonoResample
+51030   lblPDFMonoRes.Caption = .OptionsPDFCompressionMonoRes
+51040
+51050   dmFraPDFFonts.Caption = .OptionsPDFFontsCaption
+51060   chkPDFEmbedAll.Caption = .OptionsPDFFontsEmbedAll
+51070   chkPDFSubSetFonts.Caption = .OptionsPDFFontsSubSetFonts
+51080
+51090   dmFraPDFColors.Caption = .OptionsPDFColorsCaption
+51100   chkPDFCMYKtoRGB.Caption = .OptionsPDFColorsCMYKtoRGB
+51110   dmFraPDFColorOptions.Caption = .OptionsPDFColorsColorOptions
+51120   chkPDFPreserveOverprint.Caption = .OptionsPDFColorsPreserveOverprint
+51130   chkPDFPreserveTransfer.Caption = .OptionsPDFColorsPreserveTransfer
+51140   chkPDFPreserveHalftone.Caption = .OptionsPDFColorsPreserveHalftone
+51150
+51160   dmFraPDFSigning.Caption = .OptionsPDFSigningCaption
+51170   dmFraPDFSecurity.Caption = .OptionsPDFSecurityCaption
+51180   chkUseSecurity.Caption = .OptionsPDFUseSecurity
+51190   dmFraPDFEncLevel.Caption = .OptionsPDFEncryptionLevel
+51200   optEncAes128.Caption = .OptionsPDFEncryptionAes128
+51210   optEncHigh.Caption = .OptionsPDFEncryptionHigh
+51220   optEncLow.Caption = .OptionsPDFEncryptionLow
+51230   dmFraSecurityPass.Caption = .OptionsPDFPasswords
+51240   chkUserPass.Caption = .OptionsPDFUserPass
+51250   chkOwnerPass.Caption = .OptionsPDFOwnerPass
+51260   dmFraPDFPermissions.Caption = .OptionsPDFDisallowUser
+51270   dmFraPDFHighPermissions.Caption = .OptionsPDFEnhancedPermissions
+51280   chkAllowPrinting.Caption = .OptionsPDFDisallowPrint
+51290   chkAllowModifyContents.Caption = .OptionsPDFDisallowModify
+51300   chkAllowCopy.Caption = .OptionsPDFDisallowCopy
+51310   chkAllowModifyAnnotations.Caption = .OptionsPDFDisallowModifyComments
+51320   chkAllowDegradedPrinting.Caption = .OptionsPDFAllowDegradedPrinting
+51330   chkAllowFillIn.Caption = .OptionsPDFAllowFillIn
+51340   chkAllowAssembly.Caption = .OptionsPDFAllowAssembly
+51350   chkAllowScreenReaders.Caption = .OptionsPDFAllowScreenReaders
+51360
+51370   chkSignPDF.Caption = .OptionsPDFSigningSignPdfFile
+51380   lblPFXFile.Caption = .OptionsPDFSigningCertificateFile
+51390   lblSignatureReason.Caption = .OptionsPDFSigningSignatureReason
+51400   lblSignatureContact.Caption = .OptionsPDFSigningSignatureContact
+51410   lblSignatureLocation.Caption = .OptionsPDFSigningSignatureLocation
+51420   lblTimeServerUrl.Caption = .OptionsPDFSigningTimeServerUrl
+51430   dmFraSignaturePosition.Caption = .OptionsPDFSigningSignaturePosition
+51440   chkSignatureVisible.Caption = .OptionsPDFSigningSignatureVisible
+51450   lblSignatureOnPage.Caption = .OptionsPDFSigningSignatureOnPage
+51460   lblLeftX.Caption = .OptionsPDFSigningSignaturePositionLeftX
+51470   lblLeftY.Caption = .OptionsPDFSigningSignaturePositionLeftY
+51480   lblRightX.Caption = .OptionsPDFSigningSignaturePositionRightX
+51490   lblRightY.Caption = .OptionsPDFSigningSignaturePositionRightY
+51500   chkMultiSignature.Caption = .OptionsPDFSigningSignatureMultiSignature
+51510  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1759,87 +1926,90 @@ On Error GoTo ErrPtnr_OnError
 50030   chkAllowDegradedPrinting.value = .PDFAllowDegradedPrinting
 50040   chkAllowFillIn.value = .PDFAllowFillIn
 50050   chkAllowScreenReaders.value = .PDFAllowScreenReaders
-50060   chkPDFCMYKtoRGB.value = .PDFColorsCMYKToRGB
-50070   cmbPDFColorModel.ListIndex = .PDFColorsColorModel
-50080   chkPDFPreserveHalftone.value = .PDFColorsPreserveHalftone
-50090   chkPDFPreserveOverprint.value = .PDFColorsPreserveOverprint
-50100   chkPDFPreserveTransfer.value = .PDFColorsPreserveTransfer
-50110   chkPDFColorComp.value = .PDFCompressionColorCompression
-50120   cmbPDFColorComp.ListIndex = .PDFCompressionColorCompressionChoice
-50130   chkPDFColorResample.value = .PDFCompressionColorResample
-50140   cmbPDFColorResample.ListIndex = .PDFCompressionColorResampleChoice
-50150   txtPDFColorRes.Text = .PDFCompressionColorResolution
-50160   chkPDFGreyComp.value = .PDFCompressionGreyCompression
-50170   cmbPDFGreyComp.ListIndex = .PDFCompressionGreyCompressionChoice
-50180   chkPDFGreyResample.value = .PDFCompressionGreyResample
-50190   cmbPDFGreyResample.ListIndex = .PDFCompressionGreyResampleChoice
-50200   txtPDFGreyRes.Text = .PDFCompressionGreyResolution
-50210   chkPDFMonoComp.value = .PDFCompressionMonoCompression
-50220   cmbPDFMonoComp.ListIndex = .PDFCompressionMonoCompressionChoice
-50230   chkPDFMonoResample.value = .PDFCompressionMonoResample
-50240   cmbPDFMonoResample.ListIndex = .PDFCompressionMonoResampleChoice
-50250   txtPDFMonoRes.Text = .PDFCompressionMonoResolution
-50260   chkPDFTextComp.value = .PDFCompressionTextCompression
-50270   chkAllowCopy.value = .PDFDisallowCopy
-50280   chkAllowModifyAnnotations.value = .PDFDisallowModifyAnnotations
-50290   chkAllowModifyContents.value = .PDFDisallowModifyContents
-50300   chkAllowPrinting.value = .PDFDisallowPrinting
-50310   chkPDFEmbedAll.value = .PDFFontsEmbedAll
-50320   chkPDFSubSetFonts.value = .PDFFontsSubSetFonts
-50330   chkPDFSubSetFonts_Click
-50340   txtPDFSubSetPerc.Text = .PDFFontsSubSetFontsPercent
-50350   chkPDFASCII85.value = .PDFGeneralASCII85
-50360   cmbPDFRotate.ListIndex = .PDFGeneralAutorotate
-50370   cmbPDFCompat.ListIndex = .PDFGeneralCompatibility
-50380   cmbPDFDefaultSettings.ListIndex = .PDFGeneralDefault
-50390   cmbPDFOverprint.ListIndex = .PDFGeneralOverprint
-50400   txtPDFRes.Text = .PDFGeneralResolution
-50410
-50420   chkPDFOptimize.value = .PDFOptimize
-50430   chkOwnerPass.value = .PDFOwnerPass
-50440   chkUserPass.value = .PDFUserPass
-50450   chkUseSecurity.value = .PDFUseSecurity
-50460
-50470   chkSignPDF.value = .PDFSigningSignPDF
-50480   txtPFXfile.Text = .PDFSigningPFXFile
-50490   txtSignatureReason.Text = .PDFSigningSignatureReason
-50500   txtSignatureContact.Text = .PDFSigningSignatureContact
-50510   txtSignatureLocation.Text = .PDFSigningSignatureLocation
-50520   txtTimeServerUrl.Text = .PDFSigningTimeServerUrl
-50530
-50540   chkSignatureVisible.value = .PDFSigningSignatureVisible
-50550   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
-50560   txtLeftX.Text = .PDFSigningSignatureLeftX
-50570   txtLeftY.Text = .PDFSigningSignatureLeftY
-50580   txtRightX.Text = .PDFSigningSignatureRightX
-50590   txtRightY.Text = .PDFSigningSignatureRightY
-50600   chkMultiSignature.value = .PDFSigningMultiSignature
-50610
-50620   If pdfforgeDllInstalled Then
-50630    optEncAes128.Enabled = True
-50640    If .PDFAes128Encryption = 1 Then
-50650     optEncAes128.value = True
-50660    ElseIf .PDFHighEncryption = 1 Then
-50670     optEncHigh.value = True
-50680    Else
-50690     optEncLow.value = True
-50700    End If
-50710   Else
-50720    optEncAes128.Enabled = False
-50730    If .PDFAes128Encryption = 1 Or .PDFHighEncryption = 1 Then
-50740     optEncHigh.value = True
-50750    Else
-50760     optEncLow.value = True
-50770    End If
-50780   End If
-50790  End With
-50800
-50810  If chkSignPDF.value = 1 Then
-50820    EnableControls True
-50830   Else
-50840    EnableControls False
-50850  End If
-50860  UpdateSecurityFields
+50060   cmbPageLayout.ListIndex = .PDFPageLayout
+50070   cmbPageMode.ListIndex = .PDFPageMode
+50080   txtStartPage.Text = .PDFStartPage
+50090   chkPDFCMYKtoRGB.value = .PDFColorsCMYKToRGB
+50100   cmbPDFColorModel.ListIndex = .PDFColorsColorModel
+50110   chkPDFPreserveHalftone.value = .PDFColorsPreserveHalftone
+50120   chkPDFPreserveOverprint.value = .PDFColorsPreserveOverprint
+50130   chkPDFPreserveTransfer.value = .PDFColorsPreserveTransfer
+50140   chkPDFColorComp.value = .PDFCompressionColorCompression
+50150   cmbPDFColorComp.ListIndex = .PDFCompressionColorCompressionChoice
+50160   chkPDFColorResample.value = .PDFCompressionColorResample
+50170   cmbPDFColorResample.ListIndex = .PDFCompressionColorResampleChoice
+50180   txtPDFColorRes.Text = .PDFCompressionColorResolution
+50190   chkPDFGreyComp.value = .PDFCompressionGreyCompression
+50200   cmbPDFGreyComp.ListIndex = .PDFCompressionGreyCompressionChoice
+50210   chkPDFGreyResample.value = .PDFCompressionGreyResample
+50220   cmbPDFGreyResample.ListIndex = .PDFCompressionGreyResampleChoice
+50230   txtPDFGreyRes.Text = .PDFCompressionGreyResolution
+50240   chkPDFMonoComp.value = .PDFCompressionMonoCompression
+50250   cmbPDFMonoComp.ListIndex = .PDFCompressionMonoCompressionChoice
+50260   chkPDFMonoResample.value = .PDFCompressionMonoResample
+50270   cmbPDFMonoResample.ListIndex = .PDFCompressionMonoResampleChoice
+50280   txtPDFMonoRes.Text = .PDFCompressionMonoResolution
+50290   chkPDFTextComp.value = .PDFCompressionTextCompression
+50300   chkAllowCopy.value = .PDFDisallowCopy
+50310   chkAllowModifyAnnotations.value = .PDFDisallowModifyAnnotations
+50320   chkAllowModifyContents.value = .PDFDisallowModifyContents
+50330   chkAllowPrinting.value = .PDFDisallowPrinting
+50340   chkPDFEmbedAll.value = .PDFFontsEmbedAll
+50350   chkPDFSubSetFonts.value = .PDFFontsSubSetFonts
+50360   chkPDFSubSetFonts_Click
+50370   txtPDFSubSetPerc.Text = .PDFFontsSubSetFontsPercent
+50380   chkPDFASCII85.value = .PDFGeneralASCII85
+50390   cmbPDFRotate.ListIndex = .PDFGeneralAutorotate
+50400   cmbPDFCompat.ListIndex = .PDFGeneralCompatibility
+50410   cmbPDFDefaultSettings.ListIndex = .PDFGeneralDefault
+50420   cmbPDFOverprint.ListIndex = .PDFGeneralOverprint
+50430   txtPDFRes.Text = .PDFGeneralResolution
+50440
+50450   chkPDFOptimize.value = .PDFOptimize
+50460   chkOwnerPass.value = .PDFOwnerPass
+50470   chkUserPass.value = .PDFUserPass
+50480   chkUseSecurity.value = .PDFUseSecurity
+50490
+50500   chkSignPDF.value = .PDFSigningSignPDF
+50510   txtPFXfile.Text = .PDFSigningPFXFile
+50520   txtSignatureReason.Text = .PDFSigningSignatureReason
+50530   txtSignatureContact.Text = .PDFSigningSignatureContact
+50540   txtSignatureLocation.Text = .PDFSigningSignatureLocation
+50550   txtTimeServerUrl.Text = .PDFSigningTimeServerUrl
+50560
+50570   chkSignatureVisible.value = .PDFSigningSignatureVisible
+50580   txtSignatureOnPage.Text = .PDFSigningSignatureOnPage
+50590   txtLeftX.Text = .PDFSigningSignatureLeftX
+50600   txtLeftY.Text = .PDFSigningSignatureLeftY
+50610   txtRightX.Text = .PDFSigningSignatureRightX
+50620   txtRightY.Text = .PDFSigningSignatureRightY
+50630   chkMultiSignature.value = .PDFSigningMultiSignature
+50640
+50650   If pdfforgeDllInstalled Then
+50660    optEncAes128.Enabled = True
+50670    If .PDFAes128Encryption = 1 Then
+50680     optEncAes128.value = True
+50690    ElseIf .PDFHighEncryption = 1 Then
+50700     optEncHigh.value = True
+50710    Else
+50720     optEncLow.value = True
+50730    End If
+50740   Else
+50750    optEncAes128.Enabled = False
+50760    If .PDFAes128Encryption = 1 Or .PDFHighEncryption = 1 Then
+50770     optEncHigh.value = True
+50780    Else
+50790     optEncLow.value = True
+50800    End If
+50810   End If
+50820  End With
+50830
+50840  If chkSignPDF.value = 1 Then
+50850    EnableControls True
+50860   Else
+50870    EnableControls False
+50880  End If
+50890  UpdateSecurityFields
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1861,116 +2031,125 @@ On Error GoTo ErrPtnr_OnError
 50030   .PDFAllowDegradedPrinting = Abs(chkAllowDegradedPrinting.value)
 50040   .PDFAllowFillIn = Abs(chkAllowFillIn.value)
 50050   .PDFAllowScreenReaders = Abs(chkAllowScreenReaders.value)
-50060   .PDFColorsCMYKToRGB = Abs(chkPDFCMYKtoRGB.value)
-50070   If LenB(CStr(cmbPDFColorModel.ListIndex)) > 0 Then
-50080    .PDFColorsColorModel = cmbPDFColorModel.ListIndex
-50090   End If
-50100   .PDFColorsPreserveHalftone = Abs(chkPDFPreserveHalftone.value)
-50110   .PDFColorsPreserveOverprint = Abs(chkPDFPreserveOverprint.value)
-50120   .PDFColorsPreserveTransfer = Abs(chkPDFPreserveTransfer.value)
-50130   .PDFCompressionColorCompression = Abs(chkPDFColorComp.value)
-50140   If LenB(CStr(cmbPDFColorComp.ListIndex)) > 0 Then
-50150    .PDFCompressionColorCompressionChoice = cmbPDFColorComp.ListIndex
-50160    If cmbPDFColorComp.ListIndex = 6 Then
-50170     If IsNumeric(txtColorCompressionFactor.Text) Then
-50180      .PDFCompressionColorCompressionJPEGManualFactor = CStr(CDbl(txtColorCompressionFactor.Text))
-50190     End If
-50200    End If
-50210   End If
-50220   .PDFCompressionColorResample = Abs(chkPDFColorResample.value)
-50230   If LenB(CStr(cmbPDFColorResample.ListIndex)) > 0 Then
-50240    .PDFCompressionColorResampleChoice = cmbPDFColorResample.ListIndex
-50250   End If
-50260   If LenB(txtPDFColorRes.Text) > 0 Then
-50270    .PDFCompressionColorResolution = txtPDFColorRes.Text
-50280   End If
-50290   .PDFCompressionGreyCompression = Abs(chkPDFGreyComp.value)
-50300   If LenB(CStr(cmbPDFGreyComp.ListIndex)) > 0 Then
-50310    .PDFCompressionGreyCompressionChoice = cmbPDFGreyComp.ListIndex
-50320    If cmbPDFGreyComp.ListIndex = 6 Then
-50330     If IsNumeric(txtGreyCompressionFactor.Text) Then
-50340      .PDFCompressionGreyCompressionJPEGManualFactor = CStr(CDbl(txtGreyCompressionFactor.Text))
-50350     End If
-50360    End If
+50060   If LenB(CStr(cmbPageLayout.ListIndex)) > 0 Then
+50070    .PDFPageLayout = cmbPageLayout.ListIndex
+50080   End If
+50090   If LenB(CStr(cmbPageMode.ListIndex)) > 0 Then
+50100    .PDFPageMode = cmbPageMode.ListIndex
+50110   End If
+50120   If LenB(txtStartPage.Text) > 0 Then
+50130    .PDFStartPage = txtStartPage.Text
+50140   End If
+50150   .PDFColorsCMYKToRGB = Abs(chkPDFCMYKtoRGB.value)
+50160   If LenB(CStr(cmbPDFColorModel.ListIndex)) > 0 Then
+50170    .PDFColorsColorModel = cmbPDFColorModel.ListIndex
+50180   End If
+50190   .PDFColorsPreserveHalftone = Abs(chkPDFPreserveHalftone.value)
+50200   .PDFColorsPreserveOverprint = Abs(chkPDFPreserveOverprint.value)
+50210   .PDFColorsPreserveTransfer = Abs(chkPDFPreserveTransfer.value)
+50220   .PDFCompressionColorCompression = Abs(chkPDFColorComp.value)
+50230   If LenB(CStr(cmbPDFColorComp.ListIndex)) > 0 Then
+50240    .PDFCompressionColorCompressionChoice = cmbPDFColorComp.ListIndex
+50250    If cmbPDFColorComp.ListIndex = 6 Then
+50260     If IsNumeric(txtColorCompressionFactor.Text) Then
+50270      .PDFCompressionColorCompressionJPEGManualFactor = CStr(CDbl(txtColorCompressionFactor.Text))
+50280     End If
+50290    End If
+50300   End If
+50310   .PDFCompressionColorResample = Abs(chkPDFColorResample.value)
+50320   If LenB(CStr(cmbPDFColorResample.ListIndex)) > 0 Then
+50330    .PDFCompressionColorResampleChoice = cmbPDFColorResample.ListIndex
+50340   End If
+50350   If LenB(txtPDFColorRes.Text) > 0 Then
+50360    .PDFCompressionColorResolution = txtPDFColorRes.Text
 50370   End If
-50380   .PDFCompressionGreyResample = Abs(chkPDFGreyResample.value)
-50390   If LenB(CStr(cmbPDFGreyResample.ListIndex)) > 0 Then
-50400    .PDFCompressionGreyResampleChoice = cmbPDFGreyResample.ListIndex
-50410   End If
-50420   If LenB(txtPDFGreyRes.Text) > 0 Then
-50430    .PDFCompressionGreyResolution = txtPDFGreyRes.Text
-50440   End If
-50450   .PDFCompressionMonoCompression = Abs(chkPDFMonoComp.value)
-50460   If LenB(CStr(cmbPDFMonoComp.ListIndex)) > 0 Then
-50470    .PDFCompressionMonoCompressionChoice = cmbPDFMonoComp.ListIndex
-50480   End If
-50490   .PDFCompressionMonoResample = Abs(chkPDFMonoResample.value)
-50500   If LenB(CStr(cmbPDFMonoResample.ListIndex)) > 0 Then
-50510    .PDFCompressionMonoResampleChoice = cmbPDFMonoResample.ListIndex
-50520   End If
-50530   If LenB(txtPDFMonoRes.Text) > 0 Then
-50540    .PDFCompressionMonoResolution = txtPDFMonoRes.Text
-50550   End If
-50560   .PDFCompressionTextCompression = Abs(chkPDFTextComp.value)
-50570   .PDFDisallowCopy = Abs(chkAllowCopy.value)
-50580   .PDFDisallowModifyAnnotations = Abs(chkAllowModifyAnnotations.value)
-50590   .PDFDisallowModifyContents = Abs(chkAllowModifyContents.value)
-50600   .PDFDisallowPrinting = Abs(chkAllowPrinting.value)
-50610   .PDFFontsEmbedAll = Abs(chkPDFEmbedAll.value)
-50620   .PDFFontsSubSetFonts = Abs(chkPDFSubSetFonts.value)
-50630   If LenB(txtPDFSubSetPerc.Text) > 0 Then
-50640    .PDFFontsSubSetFontsPercent = txtPDFSubSetPerc.Text
-50650   End If
-50660   .PDFGeneralASCII85 = Abs(chkPDFASCII85.value)
-50670   If LenB(CStr(cmbPDFRotate.ListIndex)) > 0 Then
-50680    .PDFGeneralAutorotate = cmbPDFRotate.ListIndex
-50690   End If
-50700   If LenB(CStr(cmbPDFCompat.ListIndex)) > 0 Then
-50710    .PDFGeneralCompatibility = cmbPDFCompat.ListIndex
-50720   End If
-50730   If LenB(CStr(cmbPDFDefaultSettings.ListIndex)) > 0 Then
-50740    .PDFGeneralDefault = cmbPDFDefaultSettings.ListIndex
-50750   End If
-50760   If LenB(CStr(cmbPDFOverprint.ListIndex)) > 0 Then
-50770    .PDFGeneralOverprint = cmbPDFOverprint.ListIndex
+50380   .PDFCompressionGreyCompression = Abs(chkPDFGreyComp.value)
+50390   If LenB(CStr(cmbPDFGreyComp.ListIndex)) > 0 Then
+50400    .PDFCompressionGreyCompressionChoice = cmbPDFGreyComp.ListIndex
+50410    If cmbPDFGreyComp.ListIndex = 6 Then
+50420     If IsNumeric(txtGreyCompressionFactor.Text) Then
+50430      .PDFCompressionGreyCompressionJPEGManualFactor = CStr(CDbl(txtGreyCompressionFactor.Text))
+50440     End If
+50450    End If
+50460   End If
+50470   .PDFCompressionGreyResample = Abs(chkPDFGreyResample.value)
+50480   If LenB(CStr(cmbPDFGreyResample.ListIndex)) > 0 Then
+50490    .PDFCompressionGreyResampleChoice = cmbPDFGreyResample.ListIndex
+50500   End If
+50510   If LenB(txtPDFGreyRes.Text) > 0 Then
+50520    .PDFCompressionGreyResolution = txtPDFGreyRes.Text
+50530   End If
+50540   .PDFCompressionMonoCompression = Abs(chkPDFMonoComp.value)
+50550   If LenB(CStr(cmbPDFMonoComp.ListIndex)) > 0 Then
+50560    .PDFCompressionMonoCompressionChoice = cmbPDFMonoComp.ListIndex
+50570   End If
+50580   .PDFCompressionMonoResample = Abs(chkPDFMonoResample.value)
+50590   If LenB(CStr(cmbPDFMonoResample.ListIndex)) > 0 Then
+50600    .PDFCompressionMonoResampleChoice = cmbPDFMonoResample.ListIndex
+50610   End If
+50620   If LenB(txtPDFMonoRes.Text) > 0 Then
+50630    .PDFCompressionMonoResolution = txtPDFMonoRes.Text
+50640   End If
+50650   .PDFCompressionTextCompression = Abs(chkPDFTextComp.value)
+50660   .PDFDisallowCopy = Abs(chkAllowCopy.value)
+50670   .PDFDisallowModifyAnnotations = Abs(chkAllowModifyAnnotations.value)
+50680   .PDFDisallowModifyContents = Abs(chkAllowModifyContents.value)
+50690   .PDFDisallowPrinting = Abs(chkAllowPrinting.value)
+50700   .PDFFontsEmbedAll = Abs(chkPDFEmbedAll.value)
+50710   .PDFFontsSubSetFonts = Abs(chkPDFSubSetFonts.value)
+50720   If LenB(txtPDFSubSetPerc.Text) > 0 Then
+50730    .PDFFontsSubSetFontsPercent = txtPDFSubSetPerc.Text
+50740   End If
+50750   .PDFGeneralASCII85 = Abs(chkPDFASCII85.value)
+50760   If LenB(CStr(cmbPDFRotate.ListIndex)) > 0 Then
+50770    .PDFGeneralAutorotate = cmbPDFRotate.ListIndex
 50780   End If
-50790   If LenB(txtPDFRes.Text) > 0 Then
-50800    .PDFGeneralResolution = txtPDFRes.Text
+50790   If LenB(CStr(cmbPDFCompat.ListIndex)) > 0 Then
+50800    .PDFGeneralCompatibility = cmbPDFCompat.ListIndex
 50810   End If
-50820   .PDFHighEncryption = Abs(optEncHigh.value)
-50830   .PDFLowEncryption = Abs(optEncLow.value)
-50840   .PDFAes128Encryption = Abs(optEncAes128.value)
-50850
-50860   .PDFOptimize = Abs(chkPDFOptimize.value)
-50870   .PDFOwnerPass = Abs(chkOwnerPass.value)
-50880   .PDFUserPass = Abs(chkUserPass.value)
-50890   .PDFUseSecurity = Abs(chkUseSecurity.value)
-50900
-50910   .PDFSigningSignPDF = Abs(chkSignPDF.value)
-50920   .PDFSigningPFXFile = txtPFXfile.Text
-50930   .PDFSigningSignatureReason = txtSignatureReason.Text
-50940   .PDFSigningSignatureContact = txtSignatureContact.Text
-50950   .PDFSigningSignatureLocation = txtSignatureLocation.Text
-50960   .PDFSigningTimeServerUrl = txtTimeServerUrl.Text
-50970
-50980   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
-50990   If LenB(txtSignatureOnPage.Text) > 0 Then
-51000    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
-51010   End If
-51020   If LenB(txtLeftX.Text) > 0 Then
-51030    .PDFSigningSignatureLeftX = txtLeftX.Text
-51040   End If
-51050   If LenB(txtLeftY.Text) > 0 Then
-51060    .PDFSigningSignatureLeftY = txtLeftY.Text
-51070   End If
-51080   If LenB(txtRightX.Text) > 0 Then
-51090    .PDFSigningSignatureRightX = txtRightX.Text
+50820   If LenB(CStr(cmbPDFDefaultSettings.ListIndex)) > 0 Then
+50830    .PDFGeneralDefault = cmbPDFDefaultSettings.ListIndex
+50840   End If
+50850   If LenB(CStr(cmbPDFOverprint.ListIndex)) > 0 Then
+50860    .PDFGeneralOverprint = cmbPDFOverprint.ListIndex
+50870   End If
+50880   If LenB(txtPDFRes.Text) > 0 Then
+50890    .PDFGeneralResolution = txtPDFRes.Text
+50900   End If
+50910   .PDFHighEncryption = Abs(optEncHigh.value)
+50920   .PDFLowEncryption = Abs(optEncLow.value)
+50930   .PDFAes128Encryption = Abs(optEncAes128.value)
+50940
+50950   .PDFOptimize = Abs(chkPDFOptimize.value)
+50960   .PDFOwnerPass = Abs(chkOwnerPass.value)
+50970   .PDFUserPass = Abs(chkUserPass.value)
+50980   .PDFUseSecurity = Abs(chkUseSecurity.value)
+50990
+51000   .PDFSigningSignPDF = Abs(chkSignPDF.value)
+51010   .PDFSigningPFXFile = txtPFXfile.Text
+51020   .PDFSigningSignatureReason = txtSignatureReason.Text
+51030   .PDFSigningSignatureContact = txtSignatureContact.Text
+51040   .PDFSigningSignatureLocation = txtSignatureLocation.Text
+51050   .PDFSigningTimeServerUrl = txtTimeServerUrl.Text
+51060
+51070   .PDFSigningSignatureVisible = Abs(chkSignatureVisible.value)
+51080   If LenB(txtSignatureOnPage.Text) > 0 Then
+51090    .PDFSigningSignatureOnPage = txtSignatureOnPage.Text
 51100   End If
-51110   If LenB(txtRightY.Text) > 0 Then
-51120    .PDFSigningSignatureRightY = txtRightY.Text
+51110   If LenB(txtLeftX.Text) > 0 Then
+51120    .PDFSigningSignatureLeftX = txtLeftX.Text
 51130   End If
-51140   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
-51150  End With
+51140   If LenB(txtLeftY.Text) > 0 Then
+51150    .PDFSigningSignatureLeftY = txtLeftY.Text
+51160   End If
+51170   If LenB(txtRightX.Text) > 0 Then
+51180    .PDFSigningSignatureRightX = txtRightX.Text
+51190   End If
+51200   If LenB(txtRightY.Text) > 0 Then
+51210    .PDFSigningSignatureRightY = txtRightY.Text
+51220   End If
+51230   .PDFSigningMultiSignature = Abs(chkMultiSignature.value)
+51240  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

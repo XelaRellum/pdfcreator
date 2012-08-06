@@ -656,87 +656,90 @@ On Error GoTo ErrPtnr_OnError
 51040   .Add "PDFOptimize"
 51050   .Add "PDFOwnerPass"
 51060   .Add "PDFOwnerPasswordString"
-51070   .Add "PDFSigningMultiSignature"
-51080   .Add "PDFSigningPFXFile"
-51090   .Add "PDFSigningPFXFilePassword"
-51100   .Add "PDFSigningSignatureContact"
-51110   .Add "PDFSigningSignatureLeftX"
-51120   .Add "PDFSigningSignatureLeftY"
-51130   .Add "PDFSigningSignatureLocation"
-51140   .Add "PDFSigningSignatureOnPage"
-51150   .Add "PDFSigningSignatureReason"
-51160   .Add "PDFSigningSignatureRightX"
-51170   .Add "PDFSigningSignatureRightY"
-51180   .Add "PDFSigningSignatureVisible"
-51190   .Add "PDFSigningSignPDF"
-51200   .Add "PDFSigningTimeServerUrl"
-51210   .Add "PDFUpdateMetadata"
-51220   .Add "PDFUserPass"
-51230   .Add "PDFUserPasswordString"
-51240   .Add "PDFUseSecurity"
-51250   .Add "PNGColorscount"
-51260   .Add "PNGResolution"
-51270   .Add "PrintAfterSaving"
-51280   .Add "PrintAfterSavingBitsPerPixel"
-51290   .Add "PrintAfterSavingDuplex"
-51300   .Add "PrintAfterSavingMaxResolution"
-51310   .Add "PrintAfterSavingMaxResolutionEnabled"
-51320   .Add "PrintAfterSavingNoCancel"
-51330   .Add "PrintAfterSavingPrinter"
-51340   .Add "PrintAfterSavingQueryUser"
-51350   .Add "PrintAfterSavingTumble"
-51360   .Add "PrinterStop"
-51370   .Add "ProcessPriority"
-51380   .Add "ProgramFont"
-51390   .Add "ProgramFontCharset"
-51400   .Add "ProgramFontSize"
-51410   .Add "PSDColorsCount"
-51420   .Add "PSDResolution"
-51430   .Add "PSLanguageLevel"
-51440   .Add "RAWColorsCount"
-51450   .Add "RAWResolution"
-51460   .Add "RemoveAllKnownFileExtensions"
-51470   .Add "RemoveSpaces"
-51480   .Add "RunProgramAfterSaving"
-51490   .Add "RunProgramAfterSavingProgramname"
-51500   .Add "RunProgramAfterSavingProgramParameters"
-51510   .Add "RunProgramAfterSavingWaitUntilReady"
-51520   .Add "RunProgramAfterSavingWindowstyle"
-51530   .Add "RunProgramBeforeSaving"
-51540   .Add "RunProgramBeforeSavingProgramname"
-51550   .Add "RunProgramBeforeSavingProgramParameters"
-51560   .Add "RunProgramBeforeSavingWindowstyle"
-51570   .Add "SaveFilename"
-51580   .Add "SendEmailAfterAutoSaving"
-51590   .Add "SendMailMethod"
-51600   .Add "ShowAnimation"
-51610   .Add "StampFontColor"
-51620   .Add "StampFontname"
-51630   .Add "StampFontsize"
-51640   .Add "StampOutlineFontthickness"
-51650   .Add "StampString"
-51660   .Add "StampUseOutlineFont"
-51670   .Add "StandardAuthor"
-51680   .Add "StandardCreationdate"
-51690   .Add "StandardDateformat"
-51700   .Add "StandardKeywords"
-51710   .Add "StandardMailDomain"
-51720   .Add "StandardModifydate"
-51730   .Add "StandardSaveformat"
-51740   .Add "StandardSubject"
-51750   .Add "StandardTitle"
-51760   .Add "SVGResolution"
-51770   .Add "TIFFColorscount"
-51780   .Add "TIFFResolution"
-51790   .Add "Toolbars"
-51800   .Add "UpdateInterval"
-51810   .Add "UseAutosave"
-51820   .Add "UseAutosaveDirectory"
-51830   .Add "UseCreationDateNow"
-51840   .Add "UseCustomPaperSize"
-51850   .Add "UseFixPapersize"
-51860   .Add "UseStandardAuthor"
-51870  End With
+51070   .Add "PDFPageLayout"
+51080   .Add "PDFPageMode"
+51090   .Add "PDFSigningMultiSignature"
+51100   .Add "PDFSigningPFXFile"
+51110   .Add "PDFSigningPFXFilePassword"
+51120   .Add "PDFSigningSignatureContact"
+51130   .Add "PDFSigningSignatureLeftX"
+51140   .Add "PDFSigningSignatureLeftY"
+51150   .Add "PDFSigningSignatureLocation"
+51160   .Add "PDFSigningSignatureOnPage"
+51170   .Add "PDFSigningSignatureReason"
+51180   .Add "PDFSigningSignatureRightX"
+51190   .Add "PDFSigningSignatureRightY"
+51200   .Add "PDFSigningSignatureVisible"
+51210   .Add "PDFSigningSignPDF"
+51220   .Add "PDFSigningTimeServerUrl"
+51230   .Add "PDFStartPage"
+51240   .Add "PDFUpdateMetadata"
+51250   .Add "PDFUserPass"
+51260   .Add "PDFUserPasswordString"
+51270   .Add "PDFUseSecurity"
+51280   .Add "PNGColorscount"
+51290   .Add "PNGResolution"
+51300   .Add "PrintAfterSaving"
+51310   .Add "PrintAfterSavingBitsPerPixel"
+51320   .Add "PrintAfterSavingDuplex"
+51330   .Add "PrintAfterSavingMaxResolution"
+51340   .Add "PrintAfterSavingMaxResolutionEnabled"
+51350   .Add "PrintAfterSavingNoCancel"
+51360   .Add "PrintAfterSavingPrinter"
+51370   .Add "PrintAfterSavingQueryUser"
+51380   .Add "PrintAfterSavingTumble"
+51390   .Add "PrinterStop"
+51400   .Add "ProcessPriority"
+51410   .Add "ProgramFont"
+51420   .Add "ProgramFontCharset"
+51430   .Add "ProgramFontSize"
+51440   .Add "PSDColorsCount"
+51450   .Add "PSDResolution"
+51460   .Add "PSLanguageLevel"
+51470   .Add "RAWColorsCount"
+51480   .Add "RAWResolution"
+51490   .Add "RemoveAllKnownFileExtensions"
+51500   .Add "RemoveSpaces"
+51510   .Add "RunProgramAfterSaving"
+51520   .Add "RunProgramAfterSavingProgramname"
+51530   .Add "RunProgramAfterSavingProgramParameters"
+51540   .Add "RunProgramAfterSavingWaitUntilReady"
+51550   .Add "RunProgramAfterSavingWindowstyle"
+51560   .Add "RunProgramBeforeSaving"
+51570   .Add "RunProgramBeforeSavingProgramname"
+51580   .Add "RunProgramBeforeSavingProgramParameters"
+51590   .Add "RunProgramBeforeSavingWindowstyle"
+51600   .Add "SaveFilename"
+51610   .Add "SendEmailAfterAutoSaving"
+51620   .Add "SendMailMethod"
+51630   .Add "ShowAnimation"
+51640   .Add "StampFontColor"
+51650   .Add "StampFontname"
+51660   .Add "StampFontsize"
+51670   .Add "StampOutlineFontthickness"
+51680   .Add "StampString"
+51690   .Add "StampUseOutlineFont"
+51700   .Add "StandardAuthor"
+51710   .Add "StandardCreationdate"
+51720   .Add "StandardDateformat"
+51730   .Add "StandardKeywords"
+51740   .Add "StandardMailDomain"
+51750   .Add "StandardModifydate"
+51760   .Add "StandardSaveformat"
+51770   .Add "StandardSubject"
+51780   .Add "StandardTitle"
+51790   .Add "SVGResolution"
+51800   .Add "TIFFColorscount"
+51810   .Add "TIFFResolution"
+51820   .Add "Toolbars"
+51830   .Add "UpdateInterval"
+51840   .Add "UseAutosave"
+51850   .Add "UseAutosaveDirectory"
+51860   .Add "UseCreationDateNow"
+51870   .Add "UseCustomPaperSize"
+51880   .Add "UseFixPapersize"
+51890   .Add "UseStandardAuthor"
+51900  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Property
 ErrPtnr_OnError:
@@ -2608,87 +2611,90 @@ On Error GoTo ErrPtnr_OnError
 51030   Case "PDFOPTIMIZE": cGetOptionFromOptions = Options.PDFOptimize
 51040   Case "PDFOWNERPASS": cGetOptionFromOptions = Options.PDFOwnerPass
 51050   Case "PDFOWNERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFOwnerPasswordString
-51060   Case "PDFSIGNINGMULTISIGNATURE": cGetOptionFromOptions = Options.PDFSigningMultiSignature
-51070   Case "PDFSIGNINGPFXFILE": cGetOptionFromOptions = Options.PDFSigningPFXFile
-51080   Case "PDFSIGNINGPFXFILEPASSWORD": cGetOptionFromOptions = Options.PDFSigningPFXFilePassword
-51090   Case "PDFSIGNINGSIGNATURECONTACT": cGetOptionFromOptions = Options.PDFSigningSignatureContact
-51100   Case "PDFSIGNINGSIGNATURELEFTX": cGetOptionFromOptions = Options.PDFSigningSignatureLeftX
-51110   Case "PDFSIGNINGSIGNATURELEFTY": cGetOptionFromOptions = Options.PDFSigningSignatureLeftY
-51120   Case "PDFSIGNINGSIGNATURELOCATION": cGetOptionFromOptions = Options.PDFSigningSignatureLocation
-51130   Case "PDFSIGNINGSIGNATUREONPAGE": cGetOptionFromOptions = Options.PDFSigningSignatureOnPage
-51140   Case "PDFSIGNINGSIGNATUREREASON": cGetOptionFromOptions = Options.PDFSigningSignatureReason
-51150   Case "PDFSIGNINGSIGNATURERIGHTX": cGetOptionFromOptions = Options.PDFSigningSignatureRightX
-51160   Case "PDFSIGNINGSIGNATURERIGHTY": cGetOptionFromOptions = Options.PDFSigningSignatureRightY
-51170   Case "PDFSIGNINGSIGNATUREVISIBLE": cGetOptionFromOptions = Options.PDFSigningSignatureVisible
-51180   Case "PDFSIGNINGSIGNPDF": cGetOptionFromOptions = Options.PDFSigningSignPDF
-51190   Case "PDFSIGNINGTIMESERVERURL": cGetOptionFromOptions = Options.PDFSigningTimeServerUrl
-51200   Case "PDFUPDATEMETADATA": cGetOptionFromOptions = Options.PDFUpdateMetadata
-51210   Case "PDFUSERPASS": cGetOptionFromOptions = Options.PDFUserPass
-51220   Case "PDFUSERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFUserPasswordString
-51230   Case "PDFUSESECURITY": cGetOptionFromOptions = Options.PDFUseSecurity
-51240   Case "PNGCOLORSCOUNT": cGetOptionFromOptions = Options.PNGColorscount
-51250   Case "PNGRESOLUTION": cGetOptionFromOptions = Options.PNGResolution
-51260   Case "PRINTAFTERSAVING": cGetOptionFromOptions = Options.PrintAfterSaving
-51270   Case "PRINTAFTERSAVINGBITSPERPIXEL": cGetOptionFromOptions = Options.PrintAfterSavingBitsPerPixel
-51280   Case "PRINTAFTERSAVINGDUPLEX": cGetOptionFromOptions = Options.PrintAfterSavingDuplex
-51290   Case "PRINTAFTERSAVINGMAXRESOLUTION": cGetOptionFromOptions = Options.PrintAfterSavingMaxResolution
-51300   Case "PRINTAFTERSAVINGMAXRESOLUTIONENABLED": cGetOptionFromOptions = Options.PrintAfterSavingMaxResolutionEnabled
-51310   Case "PRINTAFTERSAVINGNOCANCEL": cGetOptionFromOptions = Options.PrintAfterSavingNoCancel
-51320   Case "PRINTAFTERSAVINGPRINTER": cGetOptionFromOptions = Options.PrintAfterSavingPrinter
-51330   Case "PRINTAFTERSAVINGQUERYUSER": cGetOptionFromOptions = Options.PrintAfterSavingQueryUser
-51340   Case "PRINTAFTERSAVINGTUMBLE": cGetOptionFromOptions = Options.PrintAfterSavingTumble
-51350   Case "PRINTERSTOP": cGetOptionFromOptions = Options.PrinterStop
-51360   Case "PROCESSPRIORITY": cGetOptionFromOptions = Options.ProcessPriority
-51370   Case "PROGRAMFONT": cGetOptionFromOptions = Options.ProgramFont
-51380   Case "PROGRAMFONTCHARSET": cGetOptionFromOptions = Options.ProgramFontCharset
-51390   Case "PROGRAMFONTSIZE": cGetOptionFromOptions = Options.ProgramFontSize
-51400   Case "PSDCOLORSCOUNT": cGetOptionFromOptions = Options.PSDColorsCount
-51410   Case "PSDRESOLUTION": cGetOptionFromOptions = Options.PSDResolution
-51420   Case "PSLANGUAGELEVEL": cGetOptionFromOptions = Options.PSLanguageLevel
-51430   Case "RAWCOLORSCOUNT": cGetOptionFromOptions = Options.RAWColorsCount
-51440   Case "RAWRESOLUTION": cGetOptionFromOptions = Options.RAWResolution
-51450   Case "REMOVEALLKNOWNFILEEXTENSIONS": cGetOptionFromOptions = Options.RemoveAllKnownFileExtensions
-51460   Case "REMOVESPACES": cGetOptionFromOptions = Options.RemoveSpaces
-51470   Case "RUNPROGRAMAFTERSAVING": cGetOptionFromOptions = Options.RunProgramAfterSaving
-51480   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramname
-51490   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramParameters
-51500   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": cGetOptionFromOptions = Options.RunProgramAfterSavingWaitUntilReady
-51510   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramAfterSavingWindowstyle
-51520   Case "RUNPROGRAMBEFORESAVING": cGetOptionFromOptions = Options.RunProgramBeforeSaving
-51530   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramname
-51540   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramParameters
-51550   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramBeforeSavingWindowstyle
-51560   Case "SAVEFILENAME": cGetOptionFromOptions = Options.SaveFilename
-51570   Case "SENDEMAILAFTERAUTOSAVING": cGetOptionFromOptions = Options.SendEmailAfterAutoSaving
-51580   Case "SENDMAILMETHOD": cGetOptionFromOptions = Options.SendMailMethod
-51590   Case "SHOWANIMATION": cGetOptionFromOptions = Options.ShowAnimation
-51600   Case "STAMPFONTCOLOR": cGetOptionFromOptions = Options.StampFontColor
-51610   Case "STAMPFONTNAME": cGetOptionFromOptions = Options.StampFontname
-51620   Case "STAMPFONTSIZE": cGetOptionFromOptions = Options.StampFontsize
-51630   Case "STAMPOUTLINEFONTTHICKNESS": cGetOptionFromOptions = Options.StampOutlineFontthickness
-51640   Case "STAMPSTRING": cGetOptionFromOptions = Options.StampString
-51650   Case "STAMPUSEOUTLINEFONT": cGetOptionFromOptions = Options.StampUseOutlineFont
-51660   Case "STANDARDAUTHOR": cGetOptionFromOptions = Options.StandardAuthor
-51670   Case "STANDARDCREATIONDATE": cGetOptionFromOptions = Options.StandardCreationdate
-51680   Case "STANDARDDATEFORMAT": cGetOptionFromOptions = Options.StandardDateformat
-51690   Case "STANDARDKEYWORDS": cGetOptionFromOptions = Options.StandardKeywords
-51700   Case "STANDARDMAILDOMAIN": cGetOptionFromOptions = Options.StandardMailDomain
-51710   Case "STANDARDMODIFYDATE": cGetOptionFromOptions = Options.StandardModifydate
-51720   Case "STANDARDSAVEFORMAT": cGetOptionFromOptions = Options.StandardSaveformat
-51730   Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
-51740   Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
-51750   Case "SVGRESOLUTION": cGetOptionFromOptions = Options.SVGResolution
-51760   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
-51770   Case "TIFFRESOLUTION": cGetOptionFromOptions = Options.TIFFResolution
-51780   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
-51790   Case "UPDATEINTERVAL": cGetOptionFromOptions = Options.UpdateInterval
-51800   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
-51810   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
-51820   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
-51830   Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
-51840   Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
-51850   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
-51860  End Select
+51060   Case "PDFPAGELAYOUT": cGetOptionFromOptions = Options.PDFPageLayout
+51070   Case "PDFPAGEMODE": cGetOptionFromOptions = Options.PDFPageMode
+51080   Case "PDFSIGNINGMULTISIGNATURE": cGetOptionFromOptions = Options.PDFSigningMultiSignature
+51090   Case "PDFSIGNINGPFXFILE": cGetOptionFromOptions = Options.PDFSigningPFXFile
+51100   Case "PDFSIGNINGPFXFILEPASSWORD": cGetOptionFromOptions = Options.PDFSigningPFXFilePassword
+51110   Case "PDFSIGNINGSIGNATURECONTACT": cGetOptionFromOptions = Options.PDFSigningSignatureContact
+51120   Case "PDFSIGNINGSIGNATURELEFTX": cGetOptionFromOptions = Options.PDFSigningSignatureLeftX
+51130   Case "PDFSIGNINGSIGNATURELEFTY": cGetOptionFromOptions = Options.PDFSigningSignatureLeftY
+51140   Case "PDFSIGNINGSIGNATURELOCATION": cGetOptionFromOptions = Options.PDFSigningSignatureLocation
+51150   Case "PDFSIGNINGSIGNATUREONPAGE": cGetOptionFromOptions = Options.PDFSigningSignatureOnPage
+51160   Case "PDFSIGNINGSIGNATUREREASON": cGetOptionFromOptions = Options.PDFSigningSignatureReason
+51170   Case "PDFSIGNINGSIGNATURERIGHTX": cGetOptionFromOptions = Options.PDFSigningSignatureRightX
+51180   Case "PDFSIGNINGSIGNATURERIGHTY": cGetOptionFromOptions = Options.PDFSigningSignatureRightY
+51190   Case "PDFSIGNINGSIGNATUREVISIBLE": cGetOptionFromOptions = Options.PDFSigningSignatureVisible
+51200   Case "PDFSIGNINGSIGNPDF": cGetOptionFromOptions = Options.PDFSigningSignPDF
+51210   Case "PDFSIGNINGTIMESERVERURL": cGetOptionFromOptions = Options.PDFSigningTimeServerUrl
+51220   Case "PDFSTARTPAGE": cGetOptionFromOptions = Options.PDFStartPage
+51230   Case "PDFUPDATEMETADATA": cGetOptionFromOptions = Options.PDFUpdateMetadata
+51240   Case "PDFUSERPASS": cGetOptionFromOptions = Options.PDFUserPass
+51250   Case "PDFUSERPASSWORDSTRING": cGetOptionFromOptions = Options.PDFUserPasswordString
+51260   Case "PDFUSESECURITY": cGetOptionFromOptions = Options.PDFUseSecurity
+51270   Case "PNGCOLORSCOUNT": cGetOptionFromOptions = Options.PNGColorscount
+51280   Case "PNGRESOLUTION": cGetOptionFromOptions = Options.PNGResolution
+51290   Case "PRINTAFTERSAVING": cGetOptionFromOptions = Options.PrintAfterSaving
+51300   Case "PRINTAFTERSAVINGBITSPERPIXEL": cGetOptionFromOptions = Options.PrintAfterSavingBitsPerPixel
+51310   Case "PRINTAFTERSAVINGDUPLEX": cGetOptionFromOptions = Options.PrintAfterSavingDuplex
+51320   Case "PRINTAFTERSAVINGMAXRESOLUTION": cGetOptionFromOptions = Options.PrintAfterSavingMaxResolution
+51330   Case "PRINTAFTERSAVINGMAXRESOLUTIONENABLED": cGetOptionFromOptions = Options.PrintAfterSavingMaxResolutionEnabled
+51340   Case "PRINTAFTERSAVINGNOCANCEL": cGetOptionFromOptions = Options.PrintAfterSavingNoCancel
+51350   Case "PRINTAFTERSAVINGPRINTER": cGetOptionFromOptions = Options.PrintAfterSavingPrinter
+51360   Case "PRINTAFTERSAVINGQUERYUSER": cGetOptionFromOptions = Options.PrintAfterSavingQueryUser
+51370   Case "PRINTAFTERSAVINGTUMBLE": cGetOptionFromOptions = Options.PrintAfterSavingTumble
+51380   Case "PRINTERSTOP": cGetOptionFromOptions = Options.PrinterStop
+51390   Case "PROCESSPRIORITY": cGetOptionFromOptions = Options.ProcessPriority
+51400   Case "PROGRAMFONT": cGetOptionFromOptions = Options.ProgramFont
+51410   Case "PROGRAMFONTCHARSET": cGetOptionFromOptions = Options.ProgramFontCharset
+51420   Case "PROGRAMFONTSIZE": cGetOptionFromOptions = Options.ProgramFontSize
+51430   Case "PSDCOLORSCOUNT": cGetOptionFromOptions = Options.PSDColorsCount
+51440   Case "PSDRESOLUTION": cGetOptionFromOptions = Options.PSDResolution
+51450   Case "PSLANGUAGELEVEL": cGetOptionFromOptions = Options.PSLanguageLevel
+51460   Case "RAWCOLORSCOUNT": cGetOptionFromOptions = Options.RAWColorsCount
+51470   Case "RAWRESOLUTION": cGetOptionFromOptions = Options.RAWResolution
+51480   Case "REMOVEALLKNOWNFILEEXTENSIONS": cGetOptionFromOptions = Options.RemoveAllKnownFileExtensions
+51490   Case "REMOVESPACES": cGetOptionFromOptions = Options.RemoveSpaces
+51500   Case "RUNPROGRAMAFTERSAVING": cGetOptionFromOptions = Options.RunProgramAfterSaving
+51510   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramname
+51520   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramAfterSavingProgramParameters
+51530   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": cGetOptionFromOptions = Options.RunProgramAfterSavingWaitUntilReady
+51540   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramAfterSavingWindowstyle
+51550   Case "RUNPROGRAMBEFORESAVING": cGetOptionFromOptions = Options.RunProgramBeforeSaving
+51560   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramname
+51570   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": cGetOptionFromOptions = Options.RunProgramBeforeSavingProgramParameters
+51580   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": cGetOptionFromOptions = Options.RunProgramBeforeSavingWindowstyle
+51590   Case "SAVEFILENAME": cGetOptionFromOptions = Options.SaveFilename
+51600   Case "SENDEMAILAFTERAUTOSAVING": cGetOptionFromOptions = Options.SendEmailAfterAutoSaving
+51610   Case "SENDMAILMETHOD": cGetOptionFromOptions = Options.SendMailMethod
+51620   Case "SHOWANIMATION": cGetOptionFromOptions = Options.ShowAnimation
+51630   Case "STAMPFONTCOLOR": cGetOptionFromOptions = Options.StampFontColor
+51640   Case "STAMPFONTNAME": cGetOptionFromOptions = Options.StampFontname
+51650   Case "STAMPFONTSIZE": cGetOptionFromOptions = Options.StampFontsize
+51660   Case "STAMPOUTLINEFONTTHICKNESS": cGetOptionFromOptions = Options.StampOutlineFontthickness
+51670   Case "STAMPSTRING": cGetOptionFromOptions = Options.StampString
+51680   Case "STAMPUSEOUTLINEFONT": cGetOptionFromOptions = Options.StampUseOutlineFont
+51690   Case "STANDARDAUTHOR": cGetOptionFromOptions = Options.StandardAuthor
+51700   Case "STANDARDCREATIONDATE": cGetOptionFromOptions = Options.StandardCreationdate
+51710   Case "STANDARDDATEFORMAT": cGetOptionFromOptions = Options.StandardDateformat
+51720   Case "STANDARDKEYWORDS": cGetOptionFromOptions = Options.StandardKeywords
+51730   Case "STANDARDMAILDOMAIN": cGetOptionFromOptions = Options.StandardMailDomain
+51740   Case "STANDARDMODIFYDATE": cGetOptionFromOptions = Options.StandardModifydate
+51750   Case "STANDARDSAVEFORMAT": cGetOptionFromOptions = Options.StandardSaveformat
+51760   Case "STANDARDSUBJECT": cGetOptionFromOptions = Options.StandardSubject
+51770   Case "STANDARDTITLE": cGetOptionFromOptions = Options.StandardTitle
+51780   Case "SVGRESOLUTION": cGetOptionFromOptions = Options.SVGResolution
+51790   Case "TIFFCOLORSCOUNT": cGetOptionFromOptions = Options.TIFFColorscount
+51800   Case "TIFFRESOLUTION": cGetOptionFromOptions = Options.TIFFResolution
+51810   Case "TOOLBARS": cGetOptionFromOptions = Options.Toolbars
+51820   Case "UPDATEINTERVAL": cGetOptionFromOptions = Options.UpdateInterval
+51830   Case "USEAUTOSAVE": cGetOptionFromOptions = Options.UseAutosave
+51840   Case "USEAUTOSAVEDIRECTORY": cGetOptionFromOptions = Options.UseAutosaveDirectory
+51850   Case "USECREATIONDATENOW": cGetOptionFromOptions = Options.UseCreationDateNow
+51860   Case "USECUSTOMPAPERSIZE": cGetOptionFromOptions = Options.UseCustomPaperSize
+51870   Case "USEFIXPAPERSIZE": cGetOptionFromOptions = Options.UseFixPapersize
+51880   Case "USESTANDARDAUTHOR": cGetOptionFromOptions = Options.UseStandardAuthor
+51890  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -2811,87 +2817,90 @@ On Error GoTo ErrPtnr_OnError
 51040   .PDFOptimize = sOptions.PDFOptimize
 51050   .PDFOwnerPass = sOptions.PDFOwnerPass
 51060   .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
-51070   .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
-51080   .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
-51090   .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
-51100   .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
-51110   .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
-51120   .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
-51130   .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
-51140   .PDFSigningSignatureOnPage = sOptions.PDFSigningSignatureOnPage
-51150   .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
-51160   .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
-51170   .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
-51180   .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
-51190   .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
-51200   .PDFSigningTimeServerUrl = sOptions.PDFSigningTimeServerUrl
-51210   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
-51220   .PDFUserPass = sOptions.PDFUserPass
-51230   .PDFUserPasswordString = sOptions.PDFUserPasswordString
-51240   .PDFUseSecurity = sOptions.PDFUseSecurity
-51250   .PNGColorscount = sOptions.PNGColorscount
-51260   .PNGResolution = sOptions.PNGResolution
-51270   .PrintAfterSaving = sOptions.PrintAfterSaving
-51280   .PrintAfterSavingBitsPerPixel = sOptions.PrintAfterSavingBitsPerPixel
-51290   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
-51300   .PrintAfterSavingMaxResolution = sOptions.PrintAfterSavingMaxResolution
-51310   .PrintAfterSavingMaxResolutionEnabled = sOptions.PrintAfterSavingMaxResolutionEnabled
-51320   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
-51330   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
-51340   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
-51350   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
-51360   .PrinterStop = sOptions.PrinterStop
-51370   .ProcessPriority = sOptions.ProcessPriority
-51380   .ProgramFont = sOptions.ProgramFont
-51390   .ProgramFontCharset = sOptions.ProgramFontCharset
-51400   .ProgramFontSize = sOptions.ProgramFontSize
-51410   .PSDColorsCount = sOptions.PSDColorsCount
-51420   .PSDResolution = sOptions.PSDResolution
-51430   .PSLanguageLevel = sOptions.PSLanguageLevel
-51440   .RAWColorsCount = sOptions.RAWColorsCount
-51450   .RAWResolution = sOptions.RAWResolution
-51460   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
-51470   .RemoveSpaces = sOptions.RemoveSpaces
-51480   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
-51490   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
-51500   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
-51510   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
-51520   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
-51530   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
-51540   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
-51550   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
-51560   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
-51570   .SaveFilename = sOptions.SaveFilename
-51580   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
-51590   .SendMailMethod = sOptions.SendMailMethod
-51600   .ShowAnimation = sOptions.ShowAnimation
-51610   .StampFontColor = sOptions.StampFontColor
-51620   .StampFontname = sOptions.StampFontname
-51630   .StampFontsize = sOptions.StampFontsize
-51640   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
-51650   .StampString = sOptions.StampString
-51660   .StampUseOutlineFont = sOptions.StampUseOutlineFont
-51670   .StandardAuthor = sOptions.StandardAuthor
-51680   .StandardCreationdate = sOptions.StandardCreationdate
-51690   .StandardDateformat = sOptions.StandardDateformat
-51700   .StandardKeywords = sOptions.StandardKeywords
-51710   .StandardMailDomain = sOptions.StandardMailDomain
-51720   .StandardModifydate = sOptions.StandardModifydate
-51730   .StandardSaveformat = sOptions.StandardSaveformat
-51740   .StandardSubject = sOptions.StandardSubject
-51750   .StandardTitle = sOptions.StandardTitle
-51760   .SVGResolution = sOptions.SVGResolution
-51770   .TIFFColorscount = sOptions.TIFFColorscount
-51780   .TIFFResolution = sOptions.TIFFResolution
-51790   .Toolbars = sOptions.Toolbars
-51800   .UpdateInterval = sOptions.UpdateInterval
-51810   .UseAutosave = sOptions.UseAutosave
-51820   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51830   .UseCreationDateNow = sOptions.UseCreationDateNow
-51840   .UseCustomPaperSize = sOptions.UseCustomPaperSize
-51850   .UseFixPapersize = sOptions.UseFixPapersize
-51860   .UseStandardAuthor = sOptions.UseStandardAuthor
-51870  End With
+51070   .PDFPageLayout = sOptions.PDFPageLayout
+51080   .PDFPageMode = sOptions.PDFPageMode
+51090   .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
+51100   .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
+51110   .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
+51120   .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
+51130   .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
+51140   .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
+51150   .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
+51160   .PDFSigningSignatureOnPage = sOptions.PDFSigningSignatureOnPage
+51170   .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
+51180   .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
+51190   .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
+51200   .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
+51210   .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
+51220   .PDFSigningTimeServerUrl = sOptions.PDFSigningTimeServerUrl
+51230   .PDFStartPage = sOptions.PDFStartPage
+51240   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
+51250   .PDFUserPass = sOptions.PDFUserPass
+51260   .PDFUserPasswordString = sOptions.PDFUserPasswordString
+51270   .PDFUseSecurity = sOptions.PDFUseSecurity
+51280   .PNGColorscount = sOptions.PNGColorscount
+51290   .PNGResolution = sOptions.PNGResolution
+51300   .PrintAfterSaving = sOptions.PrintAfterSaving
+51310   .PrintAfterSavingBitsPerPixel = sOptions.PrintAfterSavingBitsPerPixel
+51320   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
+51330   .PrintAfterSavingMaxResolution = sOptions.PrintAfterSavingMaxResolution
+51340   .PrintAfterSavingMaxResolutionEnabled = sOptions.PrintAfterSavingMaxResolutionEnabled
+51350   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
+51360   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
+51370   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
+51380   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
+51390   .PrinterStop = sOptions.PrinterStop
+51400   .ProcessPriority = sOptions.ProcessPriority
+51410   .ProgramFont = sOptions.ProgramFont
+51420   .ProgramFontCharset = sOptions.ProgramFontCharset
+51430   .ProgramFontSize = sOptions.ProgramFontSize
+51440   .PSDColorsCount = sOptions.PSDColorsCount
+51450   .PSDResolution = sOptions.PSDResolution
+51460   .PSLanguageLevel = sOptions.PSLanguageLevel
+51470   .RAWColorsCount = sOptions.RAWColorsCount
+51480   .RAWResolution = sOptions.RAWResolution
+51490   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
+51500   .RemoveSpaces = sOptions.RemoveSpaces
+51510   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
+51520   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
+51530   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
+51540   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
+51550   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
+51560   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
+51570   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
+51580   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
+51590   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
+51600   .SaveFilename = sOptions.SaveFilename
+51610   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+51620   .SendMailMethod = sOptions.SendMailMethod
+51630   .ShowAnimation = sOptions.ShowAnimation
+51640   .StampFontColor = sOptions.StampFontColor
+51650   .StampFontname = sOptions.StampFontname
+51660   .StampFontsize = sOptions.StampFontsize
+51670   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+51680   .StampString = sOptions.StampString
+51690   .StampUseOutlineFont = sOptions.StampUseOutlineFont
+51700   .StandardAuthor = sOptions.StandardAuthor
+51710   .StandardCreationdate = sOptions.StandardCreationdate
+51720   .StandardDateformat = sOptions.StandardDateformat
+51730   .StandardKeywords = sOptions.StandardKeywords
+51740   .StandardMailDomain = sOptions.StandardMailDomain
+51750   .StandardModifydate = sOptions.StandardModifydate
+51760   .StandardSaveformat = sOptions.StandardSaveformat
+51770   .StandardSubject = sOptions.StandardSubject
+51780   .StandardTitle = sOptions.StandardTitle
+51790   .SVGResolution = sOptions.SVGResolution
+51800   .TIFFColorscount = sOptions.TIFFColorscount
+51810   .TIFFResolution = sOptions.TIFFResolution
+51820   .Toolbars = sOptions.Toolbars
+51830   .UpdateInterval = sOptions.UpdateInterval
+51840   .UseAutosave = sOptions.UseAutosave
+51850   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51860   .UseCreationDateNow = sOptions.UseCreationDateNow
+51870   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51880   .UseFixPapersize = sOptions.UseFixPapersize
+51890   .UseStandardAuthor = sOptions.UseStandardAuthor
+51900  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -3013,96 +3022,99 @@ On Error GoTo ErrPtnr_OnError
 51030   Case "PDFOPTIMIZE": Options1.PDFOptimize = value
 51040   Case "PDFOWNERPASS": Options1.PDFOwnerPass = value
 51050   Case "PDFOWNERPASSWORDSTRING": Options1.PDFOwnerPasswordString = value
-51060   Case "PDFSIGNINGMULTISIGNATURE": Options1.PDFSigningMultiSignature = value
-51070   Case "PDFSIGNINGPFXFILE": Options1.PDFSigningPFXFile = value
-51080   Case "PDFSIGNINGPFXFILEPASSWORD": Options1.PDFSigningPFXFilePassword = value
-51090   Case "PDFSIGNINGSIGNATURECONTACT": Options1.PDFSigningSignatureContact = value
-51100   Case "PDFSIGNINGSIGNATURELEFTX": Options1.PDFSigningSignatureLeftX = value
-51110   Case "PDFSIGNINGSIGNATURELEFTY": Options1.PDFSigningSignatureLeftY = value
-51120   Case "PDFSIGNINGSIGNATURELOCATION": Options1.PDFSigningSignatureLocation = value
-51130   Case "PDFSIGNINGSIGNATUREONPAGE": Options1.PDFSigningSignatureOnPage = value
-51140   Case "PDFSIGNINGSIGNATUREREASON": Options1.PDFSigningSignatureReason = value
-51150   Case "PDFSIGNINGSIGNATURERIGHTX": Options1.PDFSigningSignatureRightX = value
-51160   Case "PDFSIGNINGSIGNATURERIGHTY": Options1.PDFSigningSignatureRightY = value
-51170   Case "PDFSIGNINGSIGNATUREVISIBLE": Options1.PDFSigningSignatureVisible = value
-51180   Case "PDFSIGNINGSIGNPDF": Options1.PDFSigningSignPDF = value
-51190   Case "PDFSIGNINGTIMESERVERURL": Options1.PDFSigningTimeServerUrl = value
-51200   Case "PDFUPDATEMETADATA": Options1.PDFUpdateMetadata = value
-51210   Case "PDFUSERPASS": Options1.PDFUserPass = value
-51220   Case "PDFUSERPASSWORDSTRING": Options1.PDFUserPasswordString = value
-51230   Case "PDFUSESECURITY": Options1.PDFUseSecurity = value
-51240   Case "PNGCOLORSCOUNT": Options1.PNGColorscount = value
-51250   Case "PNGRESOLUTION": Options1.PNGResolution = value
-51260   Case "PRINTAFTERSAVING": Options1.PrintAfterSaving = value
-51270   Case "PRINTAFTERSAVINGBITSPERPIXEL": Options1.PrintAfterSavingBitsPerPixel = value
-51280   Case "PRINTAFTERSAVINGDUPLEX": Options1.PrintAfterSavingDuplex = value
-51290   Case "PRINTAFTERSAVINGMAXRESOLUTION": Options1.PrintAfterSavingMaxResolution = value
-51300   Case "PRINTAFTERSAVINGMAXRESOLUTIONENABLED": Options1.PrintAfterSavingMaxResolutionEnabled = value
-51310   Case "PRINTAFTERSAVINGNOCANCEL": Options1.PrintAfterSavingNoCancel = value
-51320   Case "PRINTAFTERSAVINGPRINTER": Options1.PrintAfterSavingPrinter = value
-51330   Case "PRINTAFTERSAVINGQUERYUSER": Options1.PrintAfterSavingQueryUser = value
-51340   Case "PRINTAFTERSAVINGTUMBLE": Options1.PrintAfterSavingTumble = value
-51350   Case "PRINTERSTOP": Options1.PrinterStop = value
-51360   Case "PROCESSPRIORITY": Options1.ProcessPriority = value
-51370   Case "PROGRAMFONT": Options1.ProgramFont = value
-51380   Case "PROGRAMFONTCHARSET": Options1.ProgramFontCharset = value
-51390   Case "PROGRAMFONTSIZE": Options1.ProgramFontSize = value
-51400   Case "PSDCOLORSCOUNT": Options1.PSDColorsCount = value
-51410   Case "PSDRESOLUTION": Options1.PSDResolution = value
-51420   Case "PSLANGUAGELEVEL": Options1.PSLanguageLevel = value
-51430   Case "RAWCOLORSCOUNT": Options1.RAWColorsCount = value
-51440   Case "RAWRESOLUTION": Options1.RAWResolution = value
-51450   Case "REMOVEALLKNOWNFILEEXTENSIONS": Options1.RemoveAllKnownFileExtensions = value
-51460   Case "REMOVESPACES": Options1.RemoveSpaces = value
-51470   Case "RUNPROGRAMAFTERSAVING": Options1.RunProgramAfterSaving = value
-51480   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": Options1.RunProgramAfterSavingProgramname = value
-51490   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": Options1.RunProgramAfterSavingProgramParameters = value
-51500   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": Options1.RunProgramAfterSavingWaitUntilReady = value
-51510   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": Options1.RunProgramAfterSavingWindowstyle = value
-51520   Case "RUNPROGRAMBEFORESAVING": Options1.RunProgramBeforeSaving = value
-51530   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": Options1.RunProgramBeforeSavingProgramname = value
-51540   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options1.RunProgramBeforeSavingProgramParameters = value
-51550   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options1.RunProgramBeforeSavingWindowstyle = value
-51560   Case "SAVEFILENAME": Options1.SaveFilename = value
-51570   Case "SENDEMAILAFTERAUTOSAVING": Options1.SendEmailAfterAutoSaving = value
-51580   Case "SENDMAILMETHOD": Options1.SendMailMethod = value
-51590   Case "SHOWANIMATION": Options1.ShowAnimation = value
-51600   Case "STAMPFONTCOLOR": Options1.StampFontColor = value
-51610   Case "STAMPFONTNAME": Options1.StampFontname = value
-51620   Case "STAMPFONTSIZE": Options1.StampFontsize = value
-51630   Case "STAMPOUTLINEFONTTHICKNESS": Options1.StampOutlineFontthickness = value
-51640   Case "STAMPSTRING": Options1.StampString = value
-51650   Case "STAMPUSEOUTLINEFONT": Options1.StampUseOutlineFont = value
-51660   Case "STANDARDAUTHOR": Options1.StandardAuthor = value
-51670   Case "STANDARDCREATIONDATE": Options1.StandardCreationdate = value
-51680   Case "STANDARDDATEFORMAT": Options1.StandardDateformat = value
-51690   Case "STANDARDKEYWORDS": Options1.StandardKeywords = value
-51700   Case "STANDARDMAILDOMAIN": Options1.StandardMailDomain = value
-51710   Case "STANDARDMODIFYDATE": Options1.StandardModifydate = value
-51720   Case "STANDARDSAVEFORMAT": Options1.StandardSaveformat = value
-51730   Case "STANDARDSUBJECT": Options1.StandardSubject = value
-51740   Case "STANDARDTITLE": Options1.StandardTitle = value
-51750   Case "SVGRESOLUTION": Options1.SVGResolution = value
-51760   Case "TIFFCOLORSCOUNT": Options1.TIFFColorscount = value
-51770   Case "TIFFRESOLUTION": Options1.TIFFResolution = value
-51780   Case "TOOLBARS": Options1.Toolbars = value
-51790   Case "UPDATEINTERVAL": Options1.UpdateInterval = value
-51800   Case "USEAUTOSAVE": Options1.UseAutosave = value
-51810   Case "USEAUTOSAVEDIRECTORY": Options1.UseAutosaveDirectory = value
-51820   Case "USECREATIONDATENOW": Options1.UseCreationDateNow = value
-51830   Case "USECUSTOMPAPERSIZE": Options1.UseCustomPaperSize = value
-51840   Case "USEFIXPAPERSIZE": Options1.UseFixPapersize = value
-51850   Case "USESTANDARDAUTHOR": Options1.UseStandardAuthor = value
-51860   Case Else:
-51870    mError.Number = 3
-51880    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
-51890    RaiseEvent eError
-51900  End Select
-51910  If ProfileName = "" Then
-51920    Options = Options1
-51930   Else
-51940    SaveOptions Options1, ProfileName
-51950  End If
+51060   Case "PDFPAGELAYOUT": Options1.PDFPageLayout = value
+51070   Case "PDFPAGEMODE": Options1.PDFPageMode = value
+51080   Case "PDFSIGNINGMULTISIGNATURE": Options1.PDFSigningMultiSignature = value
+51090   Case "PDFSIGNINGPFXFILE": Options1.PDFSigningPFXFile = value
+51100   Case "PDFSIGNINGPFXFILEPASSWORD": Options1.PDFSigningPFXFilePassword = value
+51110   Case "PDFSIGNINGSIGNATURECONTACT": Options1.PDFSigningSignatureContact = value
+51120   Case "PDFSIGNINGSIGNATURELEFTX": Options1.PDFSigningSignatureLeftX = value
+51130   Case "PDFSIGNINGSIGNATURELEFTY": Options1.PDFSigningSignatureLeftY = value
+51140   Case "PDFSIGNINGSIGNATURELOCATION": Options1.PDFSigningSignatureLocation = value
+51150   Case "PDFSIGNINGSIGNATUREONPAGE": Options1.PDFSigningSignatureOnPage = value
+51160   Case "PDFSIGNINGSIGNATUREREASON": Options1.PDFSigningSignatureReason = value
+51170   Case "PDFSIGNINGSIGNATURERIGHTX": Options1.PDFSigningSignatureRightX = value
+51180   Case "PDFSIGNINGSIGNATURERIGHTY": Options1.PDFSigningSignatureRightY = value
+51190   Case "PDFSIGNINGSIGNATUREVISIBLE": Options1.PDFSigningSignatureVisible = value
+51200   Case "PDFSIGNINGSIGNPDF": Options1.PDFSigningSignPDF = value
+51210   Case "PDFSIGNINGTIMESERVERURL": Options1.PDFSigningTimeServerUrl = value
+51220   Case "PDFSTARTPAGE": Options1.PDFStartPage = value
+51230   Case "PDFUPDATEMETADATA": Options1.PDFUpdateMetadata = value
+51240   Case "PDFUSERPASS": Options1.PDFUserPass = value
+51250   Case "PDFUSERPASSWORDSTRING": Options1.PDFUserPasswordString = value
+51260   Case "PDFUSESECURITY": Options1.PDFUseSecurity = value
+51270   Case "PNGCOLORSCOUNT": Options1.PNGColorscount = value
+51280   Case "PNGRESOLUTION": Options1.PNGResolution = value
+51290   Case "PRINTAFTERSAVING": Options1.PrintAfterSaving = value
+51300   Case "PRINTAFTERSAVINGBITSPERPIXEL": Options1.PrintAfterSavingBitsPerPixel = value
+51310   Case "PRINTAFTERSAVINGDUPLEX": Options1.PrintAfterSavingDuplex = value
+51320   Case "PRINTAFTERSAVINGMAXRESOLUTION": Options1.PrintAfterSavingMaxResolution = value
+51330   Case "PRINTAFTERSAVINGMAXRESOLUTIONENABLED": Options1.PrintAfterSavingMaxResolutionEnabled = value
+51340   Case "PRINTAFTERSAVINGNOCANCEL": Options1.PrintAfterSavingNoCancel = value
+51350   Case "PRINTAFTERSAVINGPRINTER": Options1.PrintAfterSavingPrinter = value
+51360   Case "PRINTAFTERSAVINGQUERYUSER": Options1.PrintAfterSavingQueryUser = value
+51370   Case "PRINTAFTERSAVINGTUMBLE": Options1.PrintAfterSavingTumble = value
+51380   Case "PRINTERSTOP": Options1.PrinterStop = value
+51390   Case "PROCESSPRIORITY": Options1.ProcessPriority = value
+51400   Case "PROGRAMFONT": Options1.ProgramFont = value
+51410   Case "PROGRAMFONTCHARSET": Options1.ProgramFontCharset = value
+51420   Case "PROGRAMFONTSIZE": Options1.ProgramFontSize = value
+51430   Case "PSDCOLORSCOUNT": Options1.PSDColorsCount = value
+51440   Case "PSDRESOLUTION": Options1.PSDResolution = value
+51450   Case "PSLANGUAGELEVEL": Options1.PSLanguageLevel = value
+51460   Case "RAWCOLORSCOUNT": Options1.RAWColorsCount = value
+51470   Case "RAWRESOLUTION": Options1.RAWResolution = value
+51480   Case "REMOVEALLKNOWNFILEEXTENSIONS": Options1.RemoveAllKnownFileExtensions = value
+51490   Case "REMOVESPACES": Options1.RemoveSpaces = value
+51500   Case "RUNPROGRAMAFTERSAVING": Options1.RunProgramAfterSaving = value
+51510   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": Options1.RunProgramAfterSavingProgramname = value
+51520   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": Options1.RunProgramAfterSavingProgramParameters = value
+51530   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": Options1.RunProgramAfterSavingWaitUntilReady = value
+51540   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": Options1.RunProgramAfterSavingWindowstyle = value
+51550   Case "RUNPROGRAMBEFORESAVING": Options1.RunProgramBeforeSaving = value
+51560   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": Options1.RunProgramBeforeSavingProgramname = value
+51570   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": Options1.RunProgramBeforeSavingProgramParameters = value
+51580   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": Options1.RunProgramBeforeSavingWindowstyle = value
+51590   Case "SAVEFILENAME": Options1.SaveFilename = value
+51600   Case "SENDEMAILAFTERAUTOSAVING": Options1.SendEmailAfterAutoSaving = value
+51610   Case "SENDMAILMETHOD": Options1.SendMailMethod = value
+51620   Case "SHOWANIMATION": Options1.ShowAnimation = value
+51630   Case "STAMPFONTCOLOR": Options1.StampFontColor = value
+51640   Case "STAMPFONTNAME": Options1.StampFontname = value
+51650   Case "STAMPFONTSIZE": Options1.StampFontsize = value
+51660   Case "STAMPOUTLINEFONTTHICKNESS": Options1.StampOutlineFontthickness = value
+51670   Case "STAMPSTRING": Options1.StampString = value
+51680   Case "STAMPUSEOUTLINEFONT": Options1.StampUseOutlineFont = value
+51690   Case "STANDARDAUTHOR": Options1.StandardAuthor = value
+51700   Case "STANDARDCREATIONDATE": Options1.StandardCreationdate = value
+51710   Case "STANDARDDATEFORMAT": Options1.StandardDateformat = value
+51720   Case "STANDARDKEYWORDS": Options1.StandardKeywords = value
+51730   Case "STANDARDMAILDOMAIN": Options1.StandardMailDomain = value
+51740   Case "STANDARDMODIFYDATE": Options1.StandardModifydate = value
+51750   Case "STANDARDSAVEFORMAT": Options1.StandardSaveformat = value
+51760   Case "STANDARDSUBJECT": Options1.StandardSubject = value
+51770   Case "STANDARDTITLE": Options1.StandardTitle = value
+51780   Case "SVGRESOLUTION": Options1.SVGResolution = value
+51790   Case "TIFFCOLORSCOUNT": Options1.TIFFColorscount = value
+51800   Case "TIFFRESOLUTION": Options1.TIFFResolution = value
+51810   Case "TOOLBARS": Options1.Toolbars = value
+51820   Case "UPDATEINTERVAL": Options1.UpdateInterval = value
+51830   Case "USEAUTOSAVE": Options1.UseAutosave = value
+51840   Case "USEAUTOSAVEDIRECTORY": Options1.UseAutosaveDirectory = value
+51850   Case "USECREATIONDATENOW": Options1.UseCreationDateNow = value
+51860   Case "USECUSTOMPAPERSIZE": Options1.UseCustomPaperSize = value
+51870   Case "USEFIXPAPERSIZE": Options1.UseFixPapersize = value
+51880   Case "USESTANDARDAUTHOR": Options1.UseStandardAuthor = value
+51890   Case Else:
+51900    mError.Number = 3
+51910    mError.Description = Replace$(Replace$(ErrDescr3, "%1", PropertyName), "%2", "in cLetOption")
+51920    RaiseEvent eError
+51930  End Select
+51940  If ProfileName = "" Then
+51950    Options = Options1
+51960   Else
+51970    SaveOptions Options1, ProfileName
+51980  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -3224,87 +3236,90 @@ On Error GoTo ErrPtnr_OnError
 51030   .PDFOptimize = sOptions.PDFOptimize
 51040   .PDFOwnerPass = sOptions.PDFOwnerPass
 51050   .PDFOwnerPasswordString = sOptions.PDFOwnerPasswordString
-51060   .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
-51070   .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
-51080   .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
-51090   .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
-51100   .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
-51110   .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
-51120   .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
-51130   .PDFSigningSignatureOnPage = sOptions.PDFSigningSignatureOnPage
-51140   .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
-51150   .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
-51160   .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
-51170   .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
-51180   .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
-51190   .PDFSigningTimeServerUrl = sOptions.PDFSigningTimeServerUrl
-51200   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
-51210   .PDFUserPass = sOptions.PDFUserPass
-51220   .PDFUserPasswordString = sOptions.PDFUserPasswordString
-51230   .PDFUseSecurity = sOptions.PDFUseSecurity
-51240   .PNGColorscount = sOptions.PNGColorscount
-51250   .PNGResolution = sOptions.PNGResolution
-51260   .PrintAfterSaving = sOptions.PrintAfterSaving
-51270   .PrintAfterSavingBitsPerPixel = sOptions.PrintAfterSavingBitsPerPixel
-51280   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
-51290   .PrintAfterSavingMaxResolution = sOptions.PrintAfterSavingMaxResolution
-51300   .PrintAfterSavingMaxResolutionEnabled = sOptions.PrintAfterSavingMaxResolutionEnabled
-51310   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
-51320   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
-51330   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
-51340   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
-51350   .PrinterStop = sOptions.PrinterStop
-51360   .ProcessPriority = sOptions.ProcessPriority
-51370   .ProgramFont = sOptions.ProgramFont
-51380   .ProgramFontCharset = sOptions.ProgramFontCharset
-51390   .ProgramFontSize = sOptions.ProgramFontSize
-51400   .PSDColorsCount = sOptions.PSDColorsCount
-51410   .PSDResolution = sOptions.PSDResolution
-51420   .PSLanguageLevel = sOptions.PSLanguageLevel
-51430   .RAWColorsCount = sOptions.RAWColorsCount
-51440   .RAWResolution = sOptions.RAWResolution
-51450   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
-51460   .RemoveSpaces = sOptions.RemoveSpaces
-51470   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
-51480   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
-51490   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
-51500   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
-51510   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
-51520   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
-51530   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
-51540   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
-51550   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
-51560   .SaveFilename = sOptions.SaveFilename
-51570   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
-51580   .SendMailMethod = sOptions.SendMailMethod
-51590   .ShowAnimation = sOptions.ShowAnimation
-51600   .StampFontColor = sOptions.StampFontColor
-51610   .StampFontname = sOptions.StampFontname
-51620   .StampFontsize = sOptions.StampFontsize
-51630   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
-51640   .StampString = sOptions.StampString
-51650   .StampUseOutlineFont = sOptions.StampUseOutlineFont
-51660   .StandardAuthor = sOptions.StandardAuthor
-51670   .StandardCreationdate = sOptions.StandardCreationdate
-51680   .StandardDateformat = sOptions.StandardDateformat
-51690   .StandardKeywords = sOptions.StandardKeywords
-51700   .StandardMailDomain = sOptions.StandardMailDomain
-51710   .StandardModifydate = sOptions.StandardModifydate
-51720   .StandardSaveformat = sOptions.StandardSaveformat
-51730   .StandardSubject = sOptions.StandardSubject
-51740   .StandardTitle = sOptions.StandardTitle
-51750   .SVGResolution = sOptions.SVGResolution
-51760   .TIFFColorscount = sOptions.TIFFColorscount
-51770   .TIFFResolution = sOptions.TIFFResolution
-51780   .Toolbars = sOptions.Toolbars
-51790   .UpdateInterval = sOptions.UpdateInterval
-51800   .UseAutosave = sOptions.UseAutosave
-51810   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
-51820   .UseCreationDateNow = sOptions.UseCreationDateNow
-51830   .UseCustomPaperSize = sOptions.UseCustomPaperSize
-51840   .UseFixPapersize = sOptions.UseFixPapersize
-51850   .UseStandardAuthor = sOptions.UseStandardAuthor
-51860  End With
+51060   .PDFPageLayout = sOptions.PDFPageLayout
+51070   .PDFPageMode = sOptions.PDFPageMode
+51080   .PDFSigningMultiSignature = sOptions.PDFSigningMultiSignature
+51090   .PDFSigningPFXFile = sOptions.PDFSigningPFXFile
+51100   .PDFSigningPFXFilePassword = sOptions.PDFSigningPFXFilePassword
+51110   .PDFSigningSignatureContact = sOptions.PDFSigningSignatureContact
+51120   .PDFSigningSignatureLeftX = sOptions.PDFSigningSignatureLeftX
+51130   .PDFSigningSignatureLeftY = sOptions.PDFSigningSignatureLeftY
+51140   .PDFSigningSignatureLocation = sOptions.PDFSigningSignatureLocation
+51150   .PDFSigningSignatureOnPage = sOptions.PDFSigningSignatureOnPage
+51160   .PDFSigningSignatureReason = sOptions.PDFSigningSignatureReason
+51170   .PDFSigningSignatureRightX = sOptions.PDFSigningSignatureRightX
+51180   .PDFSigningSignatureRightY = sOptions.PDFSigningSignatureRightY
+51190   .PDFSigningSignatureVisible = sOptions.PDFSigningSignatureVisible
+51200   .PDFSigningSignPDF = sOptions.PDFSigningSignPDF
+51210   .PDFSigningTimeServerUrl = sOptions.PDFSigningTimeServerUrl
+51220   .PDFStartPage = sOptions.PDFStartPage
+51230   .PDFUpdateMetadata = sOptions.PDFUpdateMetadata
+51240   .PDFUserPass = sOptions.PDFUserPass
+51250   .PDFUserPasswordString = sOptions.PDFUserPasswordString
+51260   .PDFUseSecurity = sOptions.PDFUseSecurity
+51270   .PNGColorscount = sOptions.PNGColorscount
+51280   .PNGResolution = sOptions.PNGResolution
+51290   .PrintAfterSaving = sOptions.PrintAfterSaving
+51300   .PrintAfterSavingBitsPerPixel = sOptions.PrintAfterSavingBitsPerPixel
+51310   .PrintAfterSavingDuplex = sOptions.PrintAfterSavingDuplex
+51320   .PrintAfterSavingMaxResolution = sOptions.PrintAfterSavingMaxResolution
+51330   .PrintAfterSavingMaxResolutionEnabled = sOptions.PrintAfterSavingMaxResolutionEnabled
+51340   .PrintAfterSavingNoCancel = sOptions.PrintAfterSavingNoCancel
+51350   .PrintAfterSavingPrinter = sOptions.PrintAfterSavingPrinter
+51360   .PrintAfterSavingQueryUser = sOptions.PrintAfterSavingQueryUser
+51370   .PrintAfterSavingTumble = sOptions.PrintAfterSavingTumble
+51380   .PrinterStop = sOptions.PrinterStop
+51390   .ProcessPriority = sOptions.ProcessPriority
+51400   .ProgramFont = sOptions.ProgramFont
+51410   .ProgramFontCharset = sOptions.ProgramFontCharset
+51420   .ProgramFontSize = sOptions.ProgramFontSize
+51430   .PSDColorsCount = sOptions.PSDColorsCount
+51440   .PSDResolution = sOptions.PSDResolution
+51450   .PSLanguageLevel = sOptions.PSLanguageLevel
+51460   .RAWColorsCount = sOptions.RAWColorsCount
+51470   .RAWResolution = sOptions.RAWResolution
+51480   .RemoveAllKnownFileExtensions = sOptions.RemoveAllKnownFileExtensions
+51490   .RemoveSpaces = sOptions.RemoveSpaces
+51500   .RunProgramAfterSaving = sOptions.RunProgramAfterSaving
+51510   .RunProgramAfterSavingProgramname = sOptions.RunProgramAfterSavingProgramname
+51520   .RunProgramAfterSavingProgramParameters = sOptions.RunProgramAfterSavingProgramParameters
+51530   .RunProgramAfterSavingWaitUntilReady = sOptions.RunProgramAfterSavingWaitUntilReady
+51540   .RunProgramAfterSavingWindowstyle = sOptions.RunProgramAfterSavingWindowstyle
+51550   .RunProgramBeforeSaving = sOptions.RunProgramBeforeSaving
+51560   .RunProgramBeforeSavingProgramname = sOptions.RunProgramBeforeSavingProgramname
+51570   .RunProgramBeforeSavingProgramParameters = sOptions.RunProgramBeforeSavingProgramParameters
+51580   .RunProgramBeforeSavingWindowstyle = sOptions.RunProgramBeforeSavingWindowstyle
+51590   .SaveFilename = sOptions.SaveFilename
+51600   .SendEmailAfterAutoSaving = sOptions.SendEmailAfterAutoSaving
+51610   .SendMailMethod = sOptions.SendMailMethod
+51620   .ShowAnimation = sOptions.ShowAnimation
+51630   .StampFontColor = sOptions.StampFontColor
+51640   .StampFontname = sOptions.StampFontname
+51650   .StampFontsize = sOptions.StampFontsize
+51660   .StampOutlineFontthickness = sOptions.StampOutlineFontthickness
+51670   .StampString = sOptions.StampString
+51680   .StampUseOutlineFont = sOptions.StampUseOutlineFont
+51690   .StandardAuthor = sOptions.StandardAuthor
+51700   .StandardCreationdate = sOptions.StandardCreationdate
+51710   .StandardDateformat = sOptions.StandardDateformat
+51720   .StandardKeywords = sOptions.StandardKeywords
+51730   .StandardMailDomain = sOptions.StandardMailDomain
+51740   .StandardModifydate = sOptions.StandardModifydate
+51750   .StandardSaveformat = sOptions.StandardSaveformat
+51760   .StandardSubject = sOptions.StandardSubject
+51770   .StandardTitle = sOptions.StandardTitle
+51780   .SVGResolution = sOptions.SVGResolution
+51790   .TIFFColorscount = sOptions.TIFFColorscount
+51800   .TIFFResolution = sOptions.TIFFResolution
+51810   .Toolbars = sOptions.Toolbars
+51820   .UpdateInterval = sOptions.UpdateInterval
+51830   .UseAutosave = sOptions.UseAutosave
+51840   .UseAutosaveDirectory = sOptions.UseAutosaveDirectory
+51850   .UseCreationDateNow = sOptions.UseCreationDateNow
+51860   .UseCustomPaperSize = sOptions.UseCustomPaperSize
+51870   .UseFixPapersize = sOptions.UseFixPapersize
+51880   .UseStandardAuthor = sOptions.UseStandardAuthor
+51890  End With
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:

@@ -1040,7 +1040,7 @@ Private Function Create_eDoc() As String
  Dim OutputFile As String, Path As String, tStr As String, Filter As String, _
   tErrNumber As Long, FilterIndex As Long, Cancel As Boolean, _
   PDFDocInfo As tPDFDocInfo, files As Collection, Extf(12) As String
- Dim PDFDocInfoFile As String, StampFile As String
+ Dim PDFDocInfoFile As String, PDFDocViewFile As String, StampFile As String
 
  Extf(0) = "*.pdf"
  Extf(1) = "*.png"
@@ -1137,9 +1137,11 @@ Private Function Create_eDoc() As String
  End With
 
  PDFDocInfoFile = CreatePDFDocInfoFile(CurrentInfoSpoolFile, PDFDocInfo)
-
  StampFile = CreateStampFile(CurrentInfoSpoolFile)
-
+ If Options.PDFPageLayout > 0 Or Options.PDFPageMode > 0 Or Options.PDFStartPage > 1 Then
+  PDFDocViewFile = CreatePDFDocViewFile(CurrentInfoSpoolFile, Options.PDFPageLayout, Options.PDFPageMode, Options.PDFStartPage)
+ End If
+ 
  If Options.RunProgramBeforeSaving = 1 Then
   RunProgramBeforeSaving Me.hwnd, CurrentInfoSpoolFile, _
   Options.RunProgramBeforeSavingProgramParameters, _
@@ -1148,38 +1150,38 @@ Private Function Create_eDoc() As String
  Select Case SaveFilterIndex
   Case 1:
    'CallGScript PDFSpoolfile, OutputFile, Options, PDFWriter
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
    OutputFileIsPDFFile = True
   Case 2:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFAWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFAWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
    OutputFileIsPDFFile = True
   Case 3:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFXWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PDFXWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
    OutputFileIsPDFFile = True
   Case 4:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PNGWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PNGWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 5:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, JPEGWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, JPEGWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 6:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, BMPWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, BMPWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 7:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCXWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCXWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 8:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TIFFWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TIFFWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 9:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 10:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, EPSWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, EPSWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 11:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TXTWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, TXTWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 12:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSDWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PSDWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 13:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCLWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, PCLWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 14:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, RAWWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, RAWWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
   Case 15:
-   CallGScript CurrentInfoSpoolFile, OutputFile, Options, SVGWriter, PDFDocInfoFile, StampFile
+   CallGScript CurrentInfoSpoolFile, OutputFile, Options, SVGWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
  End Select
  Create_eDoc = OutputFile
  CheckForPrintingAfterSaving CurrentInfoSpoolFile, Options

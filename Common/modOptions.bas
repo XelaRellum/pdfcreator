@@ -110,6 +110,8 @@ Public Type tOptions
  PDFOptimize As Long
  PDFOwnerPass As Long
  PDFOwnerPasswordString As String
+ PDFPageLayout As Long
+ PDFPageMode As Long
  PDFSigningMultiSignature As Long
  PDFSigningPFXFile As String
  PDFSigningPFXFilePassword As String
@@ -124,6 +126,7 @@ Public Type tOptions
  PDFSigningSignatureVisible As Long
  PDFSigningSignPDF As Long
  PDFSigningTimeServerUrl As String
+ PDFStartPage As Long
  PDFUpdateMetadata As Long
  PDFUserPass As Long
  PDFUserPasswordString As String
@@ -313,91 +316,94 @@ On Error GoTo ErrPtnr_OnError
 51130   .PDFOptimize = "0"
 51140   .PDFOwnerPass = "0"
 51150   .PDFOwnerPasswordString = vbNullString
-51160   .PDFSigningMultiSignature = "0"
-51170   .PDFSigningPFXFile = vbNullString
-51180   .PDFSigningPFXFilePassword = vbNullString
-51190   .PDFSigningSignatureContact = vbNullString
-51200   .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
-51210   .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
-51220   .PDFSigningSignatureLocation = vbNullString
-51230   .PDFSigningSignatureOnPage = "1"
-51240   .PDFSigningSignatureReason = vbNullString
-51250   .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
-51260   .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
-51270   .PDFSigningSignatureVisible = "0"
-51280   .PDFSigningSignPDF = "0"
-51290   .PDFSigningTimeServerUrl = "http://timestamp.globalsign.com/scripts/timstamp.dll"
-51300   .PDFUpdateMetadata = "1"
-51310   .PDFUserPass = "0"
-51320   .PDFUserPasswordString = vbNullString
-51330   .PDFUseSecurity = "0"
-51340   .PNGColorscount = "0"
-51350   .PNGResolution = "150"
-51360   .PrintAfterSaving = "0"
-51370   .PrintAfterSavingBitsPerPixel = "2"
-51380   .PrintAfterSavingDuplex = "0"
-51390   .PrintAfterSavingMaxResolution = "600"
-51400   .PrintAfterSavingMaxResolutionEnabled = "0"
-51410   .PrintAfterSavingNoCancel = "0"
-51420   .PrintAfterSavingPrinter = vbNullString
-51430   .PrintAfterSavingQueryUser = "0"
-51440   .PrintAfterSavingTumble = "0"
-51450   .PrinterStop = "0"
-51460   .ProcessPriority = "1"
-51470   .ProgramFont = "MS Sans Serif"
-51480   .ProgramFontCharset = "0"
-51490   .ProgramFontSize = "8"
-51500   .PSDColorsCount = "0"
-51510   .PSDResolution = "150"
-51520   .PSLanguageLevel = "2"
-51530   .RAWColorsCount = "0"
-51540   .RAWResolution = "150"
-51550   .RemoveAllKnownFileExtensions = "1"
-51560   .RemoveSpaces = "1"
-51570   .RunProgramAfterSaving = "0"
-51580   .RunProgramAfterSavingProgramname = vbNullString
-51590   .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
-51600   .RunProgramAfterSavingWaitUntilReady = "1"
-51610   .RunProgramAfterSavingWindowstyle = "1"
-51620   .RunProgramBeforeSaving = "0"
-51630   .RunProgramBeforeSavingProgramname = vbNullString
-51640   .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
-51650   .RunProgramBeforeSavingWindowstyle = "1"
-51660   .SaveFilename = "<Title>"
-51670   .SendEmailAfterAutoSaving = "0"
-51680   .SendMailMethod = "0"
-51690   .ShowAnimation = "1"
-51700   .StampFontColor = "#FF0000"
-51710   .StampFontname = "Arial"
-51720   .StampFontsize = "48"
-51730   .StampOutlineFontthickness = "0"
-51740   .StampString = vbNullString
-51750   .StampUseOutlineFont = "1"
-51760   .StandardAuthor = vbNullString
-51770   .StandardCreationdate = vbNullString
-51780   .StandardDateformat = "YYYYMMDDHHNNSS"
-51790   .StandardKeywords = vbNullString
-51800   .StandardMailDomain = vbNullString
-51810   .StandardModifydate = vbNullString
-51820   .StandardSaveformat = "0"
-51830   .StandardSubject = vbNullString
-51840   .StandardTitle = vbNullString
-51850   .SVGResolution = "72"
-51860   .TIFFColorscount = "0"
-51870   .TIFFResolution = "150"
-51880   .Toolbars = "1"
-51890   .UpdateInterval = "2"
-51900   .UseAutosave = "0"
-51910   .UseAutosaveDirectory = "1"
-51920   .UseCreationDateNow = "0"
-51930   .UseCustomPaperSize = "0"
-51940   .UseFixPapersize = "0"
-51950   .UseStandardAuthor = "0"
-51960  End With
-51970  If Not IsWin9xMe Then
-51980   myOptions = ReadOptionsReg(myOptions, ".DEFAULT\Software\PDFCreator", HKEY_USERS, False, False)
-51990  End If
-52000  StandardOptions = myOptions
+51160   .PDFPageLayout = "0"
+51170   .PDFPageMode = "0"
+51180   .PDFSigningMultiSignature = "0"
+51190   .PDFSigningPFXFile = vbNullString
+51200   .PDFSigningPFXFilePassword = vbNullString
+51210   .PDFSigningSignatureContact = vbNullString
+51220   .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
+51230   .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
+51240   .PDFSigningSignatureLocation = vbNullString
+51250   .PDFSigningSignatureOnPage = "1"
+51260   .PDFSigningSignatureReason = vbNullString
+51270   .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
+51280   .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
+51290   .PDFSigningSignatureVisible = "0"
+51300   .PDFSigningSignPDF = "0"
+51310   .PDFSigningTimeServerUrl = "http://timestamp.globalsign.com/scripts/timstamp.dll"
+51320   .PDFStartPage = "1"
+51330   .PDFUpdateMetadata = "1"
+51340   .PDFUserPass = "0"
+51350   .PDFUserPasswordString = vbNullString
+51360   .PDFUseSecurity = "0"
+51370   .PNGColorscount = "0"
+51380   .PNGResolution = "150"
+51390   .PrintAfterSaving = "0"
+51400   .PrintAfterSavingBitsPerPixel = "2"
+51410   .PrintAfterSavingDuplex = "0"
+51420   .PrintAfterSavingMaxResolution = "600"
+51430   .PrintAfterSavingMaxResolutionEnabled = "0"
+51440   .PrintAfterSavingNoCancel = "0"
+51450   .PrintAfterSavingPrinter = vbNullString
+51460   .PrintAfterSavingQueryUser = "0"
+51470   .PrintAfterSavingTumble = "0"
+51480   .PrinterStop = "0"
+51490   .ProcessPriority = "1"
+51500   .ProgramFont = "MS Sans Serif"
+51510   .ProgramFontCharset = "0"
+51520   .ProgramFontSize = "8"
+51530   .PSDColorsCount = "0"
+51540   .PSDResolution = "150"
+51550   .PSLanguageLevel = "2"
+51560   .RAWColorsCount = "0"
+51570   .RAWResolution = "150"
+51580   .RemoveAllKnownFileExtensions = "1"
+51590   .RemoveSpaces = "1"
+51600   .RunProgramAfterSaving = "0"
+51610   .RunProgramAfterSavingProgramname = vbNullString
+51620   .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
+51630   .RunProgramAfterSavingWaitUntilReady = "1"
+51640   .RunProgramAfterSavingWindowstyle = "1"
+51650   .RunProgramBeforeSaving = "0"
+51660   .RunProgramBeforeSavingProgramname = vbNullString
+51670   .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
+51680   .RunProgramBeforeSavingWindowstyle = "1"
+51690   .SaveFilename = "<Title>"
+51700   .SendEmailAfterAutoSaving = "0"
+51710   .SendMailMethod = "0"
+51720   .ShowAnimation = "1"
+51730   .StampFontColor = "#FF0000"
+51740   .StampFontname = "Arial"
+51750   .StampFontsize = "48"
+51760   .StampOutlineFontthickness = "0"
+51770   .StampString = vbNullString
+51780   .StampUseOutlineFont = "1"
+51790   .StandardAuthor = vbNullString
+51800   .StandardCreationdate = vbNullString
+51810   .StandardDateformat = "YYYYMMDDHHNNSS"
+51820   .StandardKeywords = vbNullString
+51830   .StandardMailDomain = vbNullString
+51840   .StandardModifydate = vbNullString
+51850   .StandardSaveformat = "0"
+51860   .StandardSubject = vbNullString
+51870   .StandardTitle = vbNullString
+51880   .SVGResolution = "72"
+51890   .TIFFColorscount = "0"
+51900   .TIFFResolution = "150"
+51910   .Toolbars = "1"
+51920   .UpdateInterval = "2"
+51930   .UseAutosave = "0"
+51940   .UseAutosaveDirectory = "1"
+51950   .UseCreationDateNow = "0"
+51960   .UseCustomPaperSize = "0"
+51970   .UseFixPapersize = "0"
+51980   .UseStandardAuthor = "0"
+51990  End With
+52000  If Not IsWin9xMe Then
+52010   myOptions = ReadOptionsReg(myOptions, ".DEFAULT\Software\PDFCreator", HKEY_USERS, False, False)
+52020  End If
+52030  StandardOptions = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1876,973 +1882,1015 @@ On Error GoTo ErrPtnr_OnError
 63940      .PDFOwnerPasswordString = tStr
 63950     End If
 63960   End If
-63970   tStr = hOpt.Retrieve("PDFSigningMultiSignature")
+63970   tStr = hOpt.Retrieve("PDFPageLayout")
 63980   If IsNumeric(tStr) Then
-63990     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-64000       .PDFSigningMultiSignature = CLng(tStr)
+63990     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+64000       .PDFPageLayout = CLng(tStr)
 64010      Else
 64020       If UseStandard Then
-64030        .PDFSigningMultiSignature = 0
+64030        .PDFPageLayout = 0
 64040       End If
 64050     End If
 64060    Else
 64070     If UseStandard Then
-64080      .PDFSigningMultiSignature = 0
+64080      .PDFPageLayout = 0
 64090     End If
 64100   End If
-64110   tStr = hOpt.Retrieve("PDFSigningPFXFile")
-64120   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64130     .PDFSigningPFXFile = ""
-64140    Else
-64150     If LenB(tStr) > 0 Then
-64160      .PDFSigningPFXFile = tStr
-64170     End If
-64180   End If
-64190   tStr = hOpt.Retrieve("PDFSigningPFXFilePassword")
-64200   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64210     .PDFSigningPFXFilePassword = ""
-64220    Else
-64230     If LenB(tStr) > 0 Then
-64240      .PDFSigningPFXFilePassword = tStr
-64250     End If
-64260   End If
-64270   tStr = hOpt.Retrieve("PDFSigningSignatureContact")
-64280   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64290     .PDFSigningSignatureContact = ""
-64300    Else
-64310     If LenB(tStr) > 0 Then
-64320      .PDFSigningSignatureContact = tStr
+64110   tStr = hOpt.Retrieve("PDFPageMode")
+64120   If IsNumeric(tStr) Then
+64130     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+64140       .PDFPageMode = CLng(tStr)
+64150      Else
+64160       If UseStandard Then
+64170        .PDFPageMode = 0
+64180       End If
+64190     End If
+64200    Else
+64210     If UseStandard Then
+64220      .PDFPageMode = 0
+64230     End If
+64240   End If
+64250   tStr = hOpt.Retrieve("PDFSigningMultiSignature")
+64260   If IsNumeric(tStr) Then
+64270     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64280       .PDFSigningMultiSignature = CLng(tStr)
+64290      Else
+64300       If UseStandard Then
+64310        .PDFSigningMultiSignature = 0
+64320       End If
 64330     End If
-64340   End If
-64350   tStr = hOpt.Retrieve("PDFSigningSignatureLeftX")
-64360   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-64370     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-64380       .PDFSigningSignatureLeftX = CDbl(Replace$(tStr, ".", GetDecimalChar))
-64390      Else
-64400       If UseStandard Then
-64410        .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
-64420       End If
-64430     End If
-64440    Else
-64450     If UseStandard Then
-64460      .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
-64470     End If
-64480   End If
-64490   tStr = hOpt.Retrieve("PDFSigningSignatureLeftY")
-64500   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-64510     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-64520       .PDFSigningSignatureLeftY = CDbl(Replace$(tStr, ".", GetDecimalChar))
-64530      Else
-64540       If UseStandard Then
-64550        .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
-64560       End If
-64570     End If
+64340    Else
+64350     If UseStandard Then
+64360      .PDFSigningMultiSignature = 0
+64370     End If
+64380   End If
+64390   tStr = hOpt.Retrieve("PDFSigningPFXFile")
+64400   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64410     .PDFSigningPFXFile = ""
+64420    Else
+64430     If LenB(tStr) > 0 Then
+64440      .PDFSigningPFXFile = tStr
+64450     End If
+64460   End If
+64470   tStr = hOpt.Retrieve("PDFSigningPFXFilePassword")
+64480   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64490     .PDFSigningPFXFilePassword = ""
+64500    Else
+64510     If LenB(tStr) > 0 Then
+64520      .PDFSigningPFXFilePassword = tStr
+64530     End If
+64540   End If
+64550   tStr = hOpt.Retrieve("PDFSigningSignatureContact")
+64560   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64570     .PDFSigningSignatureContact = ""
 64580    Else
-64590     If UseStandard Then
-64600      .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
+64590     If LenB(tStr) > 0 Then
+64600      .PDFSigningSignatureContact = tStr
 64610     End If
 64620   End If
-64630   tStr = hOpt.Retrieve("PDFSigningSignatureLocation")
-64640   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64650     .PDFSigningSignatureLocation = ""
-64660    Else
-64670     If LenB(tStr) > 0 Then
-64680      .PDFSigningSignatureLocation = tStr
-64690     End If
-64700   End If
-64710   tStr = hOpt.Retrieve("PDFSigningSignatureOnPage")
-64720   If IsNumeric(tStr) Then
-64730     If CLng(tStr) >= 0 Then
-64740       .PDFSigningSignatureOnPage = CLng(tStr)
-64750      Else
-64760       If UseStandard Then
-64770        .PDFSigningSignatureOnPage = 1
-64780       End If
-64790     End If
-64800    Else
-64810     If UseStandard Then
-64820      .PDFSigningSignatureOnPage = 1
-64830     End If
-64840   End If
-64850   tStr = hOpt.Retrieve("PDFSigningSignatureReason")
-64860   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64870     .PDFSigningSignatureReason = ""
-64880    Else
-64890     If LenB(tStr) > 0 Then
-64900      .PDFSigningSignatureReason = tStr
-64910     End If
-64920   End If
-64930   tStr = hOpt.Retrieve("PDFSigningSignatureRightX")
-64940   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-64950     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-64960       .PDFSigningSignatureRightX = CDbl(Replace$(tStr, ".", GetDecimalChar))
-64970      Else
-64980       If UseStandard Then
-64990        .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
-65000       End If
-65010     End If
-65020    Else
-65030     If UseStandard Then
-65040      .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
-65050     End If
-65060   End If
-65070   tStr = hOpt.Retrieve("PDFSigningSignatureRightY")
-65080   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-65090     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-65100       .PDFSigningSignatureRightY = CDbl(Replace$(tStr, ".", GetDecimalChar))
-65110      Else
-65120       If UseStandard Then
-65130        .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
-65140       End If
-65150     End If
+64630   tStr = hOpt.Retrieve("PDFSigningSignatureLeftX")
+64640   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+64650     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+64660       .PDFSigningSignatureLeftX = CDbl(Replace$(tStr, ".", GetDecimalChar))
+64670      Else
+64680       If UseStandard Then
+64690        .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
+64700       End If
+64710     End If
+64720    Else
+64730     If UseStandard Then
+64740      .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
+64750     End If
+64760   End If
+64770   tStr = hOpt.Retrieve("PDFSigningSignatureLeftY")
+64780   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+64790     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+64800       .PDFSigningSignatureLeftY = CDbl(Replace$(tStr, ".", GetDecimalChar))
+64810      Else
+64820       If UseStandard Then
+64830        .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
+64840       End If
+64850     End If
+64860    Else
+64870     If UseStandard Then
+64880      .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
+64890     End If
+64900   End If
+64910   tStr = hOpt.Retrieve("PDFSigningSignatureLocation")
+64920   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64930     .PDFSigningSignatureLocation = ""
+64940    Else
+64950     If LenB(tStr) > 0 Then
+64960      .PDFSigningSignatureLocation = tStr
+64970     End If
+64980   End If
+64990   tStr = hOpt.Retrieve("PDFSigningSignatureOnPage")
+65000   If IsNumeric(tStr) Then
+65010     If CLng(tStr) >= 0 Then
+65020       .PDFSigningSignatureOnPage = CLng(tStr)
+65030      Else
+65040       If UseStandard Then
+65050        .PDFSigningSignatureOnPage = 1
+65060       End If
+65070     End If
+65080    Else
+65090     If UseStandard Then
+65100      .PDFSigningSignatureOnPage = 1
+65110     End If
+65120   End If
+65130   tStr = hOpt.Retrieve("PDFSigningSignatureReason")
+65140   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+65150     .PDFSigningSignatureReason = ""
 65160    Else
-65170     If UseStandard Then
-65180      .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
+65170     If LenB(tStr) > 0 Then
+65180      .PDFSigningSignatureReason = tStr
 65190     End If
 65200   End If
-65210   tStr = hOpt.Retrieve("PDFSigningSignatureVisible")
-65220   If IsNumeric(tStr) Then
-65230     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-65240       .PDFSigningSignatureVisible = CLng(tStr)
+65210   tStr = hOpt.Retrieve("PDFSigningSignatureRightX")
+65220   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+65230     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+65240       .PDFSigningSignatureRightX = CDbl(Replace$(tStr, ".", GetDecimalChar))
 65250      Else
 65260       If UseStandard Then
-65270        .PDFSigningSignatureVisible = 0
+65270        .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
 65280       End If
 65290     End If
 65300    Else
 65310     If UseStandard Then
-65320      .PDFSigningSignatureVisible = 0
+65320      .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
 65330     End If
 65340   End If
-65350   tStr = hOpt.Retrieve("PDFSigningSignPDF")
-65360   If IsNumeric(tStr) Then
-65370     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-65380       .PDFSigningSignPDF = CLng(tStr)
+65350   tStr = hOpt.Retrieve("PDFSigningSignatureRightY")
+65360   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+65370     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+65380       .PDFSigningSignatureRightY = CDbl(Replace$(tStr, ".", GetDecimalChar))
 65390      Else
 65400       If UseStandard Then
-65410        .PDFSigningSignPDF = 0
+65410        .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
 65420       End If
 65430     End If
 65440    Else
 65450     If UseStandard Then
-65460      .PDFSigningSignPDF = 0
+65460      .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
 65470     End If
 65480   End If
-65490   tStr = hOpt.Retrieve("PDFSigningTimeServerUrl")
-65500   If LenB(tStr) = 0 And LenB("http://timestamp.globalsign.com/scripts/timstamp.dll") > 0 And UseStandard Then
-65510     .PDFSigningTimeServerUrl = "http://timestamp.globalsign.com/scripts/timstamp.dll"
-65520    Else
-65530     If LenB(tStr) > 0 Then
-65540      .PDFSigningTimeServerUrl = tStr
-65550     End If
-65560   End If
-65570   tStr = hOpt.Retrieve("PDFUpdateMetadata")
-65580   If IsNumeric(tStr) Then
-65590     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-65600       .PDFUpdateMetadata = CLng(tStr)
-65610      Else
-65620       If UseStandard Then
-65630        .PDFUpdateMetadata = 1
-65640       End If
-65650     End If
-65660    Else
-65670     If UseStandard Then
-65680      .PDFUpdateMetadata = 1
-65690     End If
-65700   End If
-65710   tStr = hOpt.Retrieve("PDFUserPass")
-65720   If IsNumeric(tStr) Then
-65730     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-65740       .PDFUserPass = CLng(tStr)
-65750      Else
-65760       If UseStandard Then
-65770        .PDFUserPass = 0
-65780       End If
-65790     End If
+65490   tStr = hOpt.Retrieve("PDFSigningSignatureVisible")
+65500   If IsNumeric(tStr) Then
+65510     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65520       .PDFSigningSignatureVisible = CLng(tStr)
+65530      Else
+65540       If UseStandard Then
+65550        .PDFSigningSignatureVisible = 0
+65560       End If
+65570     End If
+65580    Else
+65590     If UseStandard Then
+65600      .PDFSigningSignatureVisible = 0
+65610     End If
+65620   End If
+65630   tStr = hOpt.Retrieve("PDFSigningSignPDF")
+65640   If IsNumeric(tStr) Then
+65650     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65660       .PDFSigningSignPDF = CLng(tStr)
+65670      Else
+65680       If UseStandard Then
+65690        .PDFSigningSignPDF = 0
+65700       End If
+65710     End If
+65720    Else
+65730     If UseStandard Then
+65740      .PDFSigningSignPDF = 0
+65750     End If
+65760   End If
+65770   tStr = hOpt.Retrieve("PDFSigningTimeServerUrl")
+65780   If LenB(tStr) = 0 And LenB("http://timestamp.globalsign.com/scripts/timstamp.dll") > 0 And UseStandard Then
+65790     .PDFSigningTimeServerUrl = "http://timestamp.globalsign.com/scripts/timstamp.dll"
 65800    Else
-65810     If UseStandard Then
-65820      .PDFUserPass = 0
+65810     If LenB(tStr) > 0 Then
+65820      .PDFSigningTimeServerUrl = tStr
 65830     End If
 65840   End If
-65850   tStr = hOpt.Retrieve("PDFUserPasswordString")
-65860   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-65870     .PDFUserPasswordString = ""
-65880    Else
-65890     If LenB(tStr) > 0 Then
-65900      .PDFUserPasswordString = tStr
-65910     End If
-65920   End If
-65930   tStr = hOpt.Retrieve("PDFUseSecurity")
-65940   If IsNumeric(tStr) Then
-65950     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-65960       .PDFUseSecurity = CLng(tStr)
-65970      Else
-65980       If UseStandard Then
-65990        .PDFUseSecurity = 0
-66000       End If
-66010     End If
-66020    Else
-66030     If UseStandard Then
-66040      .PDFUseSecurity = 0
-66050     End If
-66060   End If
-66070   tStr = hOpt.Retrieve("PNGColorscount")
-66080   If IsNumeric(tStr) Then
-66090     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
-66100       .PNGColorscount = CLng(tStr)
-66110      Else
-66120       If UseStandard Then
-66130        .PNGColorscount = 0
-66140       End If
-66150     End If
-66160    Else
-66170     If UseStandard Then
-66180      .PNGColorscount = 0
-66190     End If
-66200   End If
-66210   tStr = hOpt.Retrieve("PNGResolution")
-66220   If IsNumeric(tStr) Then
-66230     If CLng(tStr) >= 1 Then
-66240       .PNGResolution = CLng(tStr)
-66250      Else
-66260       If UseStandard Then
-66270        .PNGResolution = 150
-66280       End If
-66290     End If
+65850   tStr = hOpt.Retrieve("PDFStartPage")
+65860   If IsNumeric(tStr) Then
+65870     If CLng(tStr) >= 1 Then
+65880       .PDFStartPage = CLng(tStr)
+65890      Else
+65900       If UseStandard Then
+65910        .PDFStartPage = 1
+65920       End If
+65930     End If
+65940    Else
+65950     If UseStandard Then
+65960      .PDFStartPage = 1
+65970     End If
+65980   End If
+65990   tStr = hOpt.Retrieve("PDFUpdateMetadata")
+66000   If IsNumeric(tStr) Then
+66010     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+66020       .PDFUpdateMetadata = CLng(tStr)
+66030      Else
+66040       If UseStandard Then
+66050        .PDFUpdateMetadata = 1
+66060       End If
+66070     End If
+66080    Else
+66090     If UseStandard Then
+66100      .PDFUpdateMetadata = 1
+66110     End If
+66120   End If
+66130   tStr = hOpt.Retrieve("PDFUserPass")
+66140   If IsNumeric(tStr) Then
+66150     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66160       .PDFUserPass = CLng(tStr)
+66170      Else
+66180       If UseStandard Then
+66190        .PDFUserPass = 0
+66200       End If
+66210     End If
+66220    Else
+66230     If UseStandard Then
+66240      .PDFUserPass = 0
+66250     End If
+66260   End If
+66270   tStr = hOpt.Retrieve("PDFUserPasswordString")
+66280   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66290     .PDFUserPasswordString = ""
 66300    Else
-66310     If UseStandard Then
-66320      .PNGResolution = 150
+66310     If LenB(tStr) > 0 Then
+66320      .PDFUserPasswordString = tStr
 66330     End If
 66340   End If
-66350   tStr = hOpt.Retrieve("PrintAfterSaving")
+66350   tStr = hOpt.Retrieve("PDFUseSecurity")
 66360   If IsNumeric(tStr) Then
 66370     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66380       .PrintAfterSaving = CLng(tStr)
+66380       .PDFUseSecurity = CLng(tStr)
 66390      Else
 66400       If UseStandard Then
-66410        .PrintAfterSaving = 0
+66410        .PDFUseSecurity = 0
 66420       End If
 66430     End If
 66440    Else
 66450     If UseStandard Then
-66460      .PrintAfterSaving = 0
+66460      .PDFUseSecurity = 0
 66470     End If
 66480   End If
-66490   tStr = hOpt.Retrieve("PrintAfterSavingBitsPerPixel")
+66490   tStr = hOpt.Retrieve("PNGColorscount")
 66500   If IsNumeric(tStr) Then
-66510     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-66520       .PrintAfterSavingBitsPerPixel = CLng(tStr)
+66510     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+66520       .PNGColorscount = CLng(tStr)
 66530      Else
 66540       If UseStandard Then
-66550        .PrintAfterSavingBitsPerPixel = 2
+66550        .PNGColorscount = 0
 66560       End If
 66570     End If
 66580    Else
 66590     If UseStandard Then
-66600      .PrintAfterSavingBitsPerPixel = 2
+66600      .PNGColorscount = 0
 66610     End If
 66620   End If
-66630   tStr = hOpt.Retrieve("PrintAfterSavingDuplex")
+66630   tStr = hOpt.Retrieve("PNGResolution")
 66640   If IsNumeric(tStr) Then
-66650     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66660       .PrintAfterSavingDuplex = CLng(tStr)
+66650     If CLng(tStr) >= 1 Then
+66660       .PNGResolution = CLng(tStr)
 66670      Else
 66680       If UseStandard Then
-66690        .PrintAfterSavingDuplex = 0
+66690        .PNGResolution = 150
 66700       End If
 66710     End If
 66720    Else
 66730     If UseStandard Then
-66740      .PrintAfterSavingDuplex = 0
+66740      .PNGResolution = 150
 66750     End If
 66760   End If
-66770   tStr = hOpt.Retrieve("PrintAfterSavingMaxResolution")
+66770   tStr = hOpt.Retrieve("PrintAfterSaving")
 66780   If IsNumeric(tStr) Then
-66790     If CLng(tStr) >= 72 Then
-66800       .PrintAfterSavingMaxResolution = CLng(tStr)
+66790     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66800       .PrintAfterSaving = CLng(tStr)
 66810      Else
 66820       If UseStandard Then
-66830        .PrintAfterSavingMaxResolution = 600
+66830        .PrintAfterSaving = 0
 66840       End If
 66850     End If
 66860    Else
 66870     If UseStandard Then
-66880      .PrintAfterSavingMaxResolution = 600
+66880      .PrintAfterSaving = 0
 66890     End If
 66900   End If
-66910   tStr = hOpt.Retrieve("PrintAfterSavingMaxResolutionEnabled")
+66910   tStr = hOpt.Retrieve("PrintAfterSavingBitsPerPixel")
 66920   If IsNumeric(tStr) Then
-66930     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66940       .PrintAfterSavingMaxResolutionEnabled = CLng(tStr)
+66930     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+66940       .PrintAfterSavingBitsPerPixel = CLng(tStr)
 66950      Else
 66960       If UseStandard Then
-66970        .PrintAfterSavingMaxResolutionEnabled = 0
+66970        .PrintAfterSavingBitsPerPixel = 2
 66980       End If
 66990     End If
 67000    Else
 67010     If UseStandard Then
-67020      .PrintAfterSavingMaxResolutionEnabled = 0
+67020      .PrintAfterSavingBitsPerPixel = 2
 67030     End If
 67040   End If
-67050   tStr = hOpt.Retrieve("PrintAfterSavingNoCancel")
+67050   tStr = hOpt.Retrieve("PrintAfterSavingDuplex")
 67060   If IsNumeric(tStr) Then
 67070     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67080       .PrintAfterSavingNoCancel = CLng(tStr)
+67080       .PrintAfterSavingDuplex = CLng(tStr)
 67090      Else
 67100       If UseStandard Then
-67110        .PrintAfterSavingNoCancel = 0
+67110        .PrintAfterSavingDuplex = 0
 67120       End If
 67130     End If
 67140    Else
 67150     If UseStandard Then
-67160      .PrintAfterSavingNoCancel = 0
+67160      .PrintAfterSavingDuplex = 0
 67170     End If
 67180   End If
-67190   tStr = hOpt.Retrieve("PrintAfterSavingPrinter")
-67200   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-67210     .PrintAfterSavingPrinter = ""
-67220    Else
-67230     If LenB(tStr) > 0 Then
-67240      .PrintAfterSavingPrinter = tStr
-67250     End If
-67260   End If
-67270   tStr = hOpt.Retrieve("PrintAfterSavingQueryUser")
-67280   If IsNumeric(tStr) Then
-67290     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-67300       .PrintAfterSavingQueryUser = CLng(tStr)
-67310      Else
-67320       If UseStandard Then
-67330        .PrintAfterSavingQueryUser = 0
-67340       End If
-67350     End If
-67360    Else
-67370     If UseStandard Then
-67380      .PrintAfterSavingQueryUser = 0
-67390     End If
-67400   End If
-67410   tStr = hOpt.Retrieve("PrintAfterSavingTumble")
-67420   If IsNumeric(tStr) Then
-67430     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-67440       .PrintAfterSavingTumble = CLng(tStr)
-67450      Else
-67460       If UseStandard Then
-67470        .PrintAfterSavingTumble = 0
-67480       End If
-67490     End If
-67500    Else
-67510     If UseStandard Then
-67520      .PrintAfterSavingTumble = 0
-67530     End If
-67540   End If
-67550   tStr = hOpt.Retrieve("PrinterStop")
-67560   If IsNumeric(tStr) Then
-67570     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67580       .PrinterStop = CLng(tStr)
-67590      Else
-67600       If UseStandard Then
-67610        .PrinterStop = 0
-67620       End If
-67630     End If
+67190   tStr = hOpt.Retrieve("PrintAfterSavingMaxResolution")
+67200   If IsNumeric(tStr) Then
+67210     If CLng(tStr) >= 72 Then
+67220       .PrintAfterSavingMaxResolution = CLng(tStr)
+67230      Else
+67240       If UseStandard Then
+67250        .PrintAfterSavingMaxResolution = 600
+67260       End If
+67270     End If
+67280    Else
+67290     If UseStandard Then
+67300      .PrintAfterSavingMaxResolution = 600
+67310     End If
+67320   End If
+67330   tStr = hOpt.Retrieve("PrintAfterSavingMaxResolutionEnabled")
+67340   If IsNumeric(tStr) Then
+67350     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67360       .PrintAfterSavingMaxResolutionEnabled = CLng(tStr)
+67370      Else
+67380       If UseStandard Then
+67390        .PrintAfterSavingMaxResolutionEnabled = 0
+67400       End If
+67410     End If
+67420    Else
+67430     If UseStandard Then
+67440      .PrintAfterSavingMaxResolutionEnabled = 0
+67450     End If
+67460   End If
+67470   tStr = hOpt.Retrieve("PrintAfterSavingNoCancel")
+67480   If IsNumeric(tStr) Then
+67490     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67500       .PrintAfterSavingNoCancel = CLng(tStr)
+67510      Else
+67520       If UseStandard Then
+67530        .PrintAfterSavingNoCancel = 0
+67540       End If
+67550     End If
+67560    Else
+67570     If UseStandard Then
+67580      .PrintAfterSavingNoCancel = 0
+67590     End If
+67600   End If
+67610   tStr = hOpt.Retrieve("PrintAfterSavingPrinter")
+67620   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+67630     .PrintAfterSavingPrinter = ""
 67640    Else
-67650     If UseStandard Then
-67660      .PrinterStop = 0
+67650     If LenB(tStr) > 0 Then
+67660      .PrintAfterSavingPrinter = tStr
 67670     End If
 67680   End If
-67690   tStr = hOpt.Retrieve("ProcessPriority")
+67690   tStr = hOpt.Retrieve("PrintAfterSavingQueryUser")
 67700   If IsNumeric(tStr) Then
 67710     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-67720       .ProcessPriority = CLng(tStr)
+67720       .PrintAfterSavingQueryUser = CLng(tStr)
 67730      Else
 67740       If UseStandard Then
-67750        .ProcessPriority = 1
+67750        .PrintAfterSavingQueryUser = 0
 67760       End If
 67770     End If
 67780    Else
 67790     If UseStandard Then
-67800      .ProcessPriority = 1
+67800      .PrintAfterSavingQueryUser = 0
 67810     End If
 67820   End If
-67830   tStr = hOpt.Retrieve("ProgramFont")
-67840   If LenB(tStr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
-67850     .ProgramFont = "MS Sans Serif"
-67860    Else
-67870     If LenB(tStr) > 0 Then
-67880      .ProgramFont = tStr
-67890     End If
-67900   End If
-67910   tStr = hOpt.Retrieve("ProgramFontCharset")
-67920   If IsNumeric(tStr) Then
-67930     If CLng(tStr) >= 0 Then
-67940       .ProgramFontCharset = CLng(tStr)
-67950      Else
-67960       If UseStandard Then
-67970        .ProgramFontCharset = 0
-67980       End If
-67990     End If
-68000    Else
-68010     If UseStandard Then
-68020      .ProgramFontCharset = 0
-68030     End If
-68040   End If
-68050   tStr = hOpt.Retrieve("ProgramFontSize")
-68060   If IsNumeric(tStr) Then
-68070     If CLng(tStr) >= 6 And CLng(tStr) <= 72 Then
-68080       .ProgramFontSize = CLng(tStr)
-68090      Else
-68100       If UseStandard Then
-68110        .ProgramFontSize = 8
-68120       End If
-68130     End If
-68140    Else
-68150     If UseStandard Then
-68160      .ProgramFontSize = 8
-68170     End If
-68180   End If
-68190   tStr = hOpt.Retrieve("PSDColorsCount")
-68200   If IsNumeric(tStr) Then
-68210     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-68220       .PSDColorsCount = CLng(tStr)
-68230      Else
-68240       If UseStandard Then
-68250        .PSDColorsCount = 0
-68260       End If
-68270     End If
+67830   tStr = hOpt.Retrieve("PrintAfterSavingTumble")
+67840   If IsNumeric(tStr) Then
+67850     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+67860       .PrintAfterSavingTumble = CLng(tStr)
+67870      Else
+67880       If UseStandard Then
+67890        .PrintAfterSavingTumble = 0
+67900       End If
+67910     End If
+67920    Else
+67930     If UseStandard Then
+67940      .PrintAfterSavingTumble = 0
+67950     End If
+67960   End If
+67970   tStr = hOpt.Retrieve("PrinterStop")
+67980   If IsNumeric(tStr) Then
+67990     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+68000       .PrinterStop = CLng(tStr)
+68010      Else
+68020       If UseStandard Then
+68030        .PrinterStop = 0
+68040       End If
+68050     End If
+68060    Else
+68070     If UseStandard Then
+68080      .PrinterStop = 0
+68090     End If
+68100   End If
+68110   tStr = hOpt.Retrieve("ProcessPriority")
+68120   If IsNumeric(tStr) Then
+68130     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+68140       .ProcessPriority = CLng(tStr)
+68150      Else
+68160       If UseStandard Then
+68170        .ProcessPriority = 1
+68180       End If
+68190     End If
+68200    Else
+68210     If UseStandard Then
+68220      .ProcessPriority = 1
+68230     End If
+68240   End If
+68250   tStr = hOpt.Retrieve("ProgramFont")
+68260   If LenB(tStr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
+68270     .ProgramFont = "MS Sans Serif"
 68280    Else
-68290     If UseStandard Then
-68300      .PSDColorsCount = 0
+68290     If LenB(tStr) > 0 Then
+68300      .ProgramFont = tStr
 68310     End If
 68320   End If
-68330   tStr = hOpt.Retrieve("PSDResolution")
+68330   tStr = hOpt.Retrieve("ProgramFontCharset")
 68340   If IsNumeric(tStr) Then
-68350     If CLng(tStr) >= 1 Then
-68360       .PSDResolution = CLng(tStr)
+68350     If CLng(tStr) >= 0 Then
+68360       .ProgramFontCharset = CLng(tStr)
 68370      Else
 68380       If UseStandard Then
-68390        .PSDResolution = 150
+68390        .ProgramFontCharset = 0
 68400       End If
 68410     End If
 68420    Else
 68430     If UseStandard Then
-68440      .PSDResolution = 150
+68440      .ProgramFontCharset = 0
 68450     End If
 68460   End If
-68470   tStr = hOpt.Retrieve("PSLanguageLevel")
+68470   tStr = hOpt.Retrieve("ProgramFontSize")
 68480   If IsNumeric(tStr) Then
-68490     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-68500       .PSLanguageLevel = CLng(tStr)
+68490     If CLng(tStr) >= 6 And CLng(tStr) <= 72 Then
+68500       .ProgramFontSize = CLng(tStr)
 68510      Else
 68520       If UseStandard Then
-68530        .PSLanguageLevel = 2
+68530        .ProgramFontSize = 8
 68540       End If
 68550     End If
 68560    Else
 68570     If UseStandard Then
-68580      .PSLanguageLevel = 2
+68580      .ProgramFontSize = 8
 68590     End If
 68600   End If
-68610   tStr = hOpt.Retrieve("RAWColorsCount")
+68610   tStr = hOpt.Retrieve("PSDColorsCount")
 68620   If IsNumeric(tStr) Then
-68630     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-68640       .RAWColorsCount = CLng(tStr)
+68630     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+68640       .PSDColorsCount = CLng(tStr)
 68650      Else
 68660       If UseStandard Then
-68670        .RAWColorsCount = 0
+68670        .PSDColorsCount = 0
 68680       End If
 68690     End If
 68700    Else
 68710     If UseStandard Then
-68720      .RAWColorsCount = 0
+68720      .PSDColorsCount = 0
 68730     End If
 68740   End If
-68750   tStr = hOpt.Retrieve("RAWResolution")
+68750   tStr = hOpt.Retrieve("PSDResolution")
 68760   If IsNumeric(tStr) Then
 68770     If CLng(tStr) >= 1 Then
-68780       .RAWResolution = CLng(tStr)
+68780       .PSDResolution = CLng(tStr)
 68790      Else
 68800       If UseStandard Then
-68810        .RAWResolution = 150
+68810        .PSDResolution = 150
 68820       End If
 68830     End If
 68840    Else
 68850     If UseStandard Then
-68860      .RAWResolution = 150
+68860      .PSDResolution = 150
 68870     End If
 68880   End If
-68890   tStr = hOpt.Retrieve("RemoveAllKnownFileExtensions")
+68890   tStr = hOpt.Retrieve("PSLanguageLevel")
 68900   If IsNumeric(tStr) Then
-68910     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-68920       .RemoveAllKnownFileExtensions = CLng(tStr)
+68910     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+68920       .PSLanguageLevel = CLng(tStr)
 68930      Else
 68940       If UseStandard Then
-68950        .RemoveAllKnownFileExtensions = 1
+68950        .PSLanguageLevel = 2
 68960       End If
 68970     End If
 68980    Else
 68990     If UseStandard Then
-69000      .RemoveAllKnownFileExtensions = 1
+69000      .PSLanguageLevel = 2
 69010     End If
 69020   End If
-69030   tStr = hOpt.Retrieve("RemoveSpaces")
+69030   tStr = hOpt.Retrieve("RAWColorsCount")
 69040   If IsNumeric(tStr) Then
-69050     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69060       .RemoveSpaces = CLng(tStr)
+69050     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+69060       .RAWColorsCount = CLng(tStr)
 69070      Else
 69080       If UseStandard Then
-69090        .RemoveSpaces = 1
+69090        .RAWColorsCount = 0
 69100       End If
 69110     End If
 69120    Else
 69130     If UseStandard Then
-69140      .RemoveSpaces = 1
+69140      .RAWColorsCount = 0
 69150     End If
 69160   End If
-69170   tStr = hOpt.Retrieve("RunProgramAfterSaving")
+69170   tStr = hOpt.Retrieve("RAWResolution")
 69180   If IsNumeric(tStr) Then
-69190     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69200       .RunProgramAfterSaving = CLng(tStr)
+69190     If CLng(tStr) >= 1 Then
+69200       .RAWResolution = CLng(tStr)
 69210      Else
 69220       If UseStandard Then
-69230        .RunProgramAfterSaving = 0
+69230        .RAWResolution = 150
 69240       End If
 69250     End If
 69260    Else
 69270     If UseStandard Then
-69280      .RunProgramAfterSaving = 0
+69280      .RAWResolution = 150
 69290     End If
 69300   End If
-69310   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramname")
-69320   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-69330     .RunProgramAfterSavingProgramname = ""
-69340    Else
-69350     If LenB(tStr) > 0 Then
-69360      .RunProgramAfterSavingProgramname = tStr
-69370     End If
-69380   End If
-69390   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramParameters")
-69400   If LenB(tStr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
-69410     .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
-69420    Else
-69430     If LenB(tStr) > 0 Then
-69440      .RunProgramAfterSavingProgramParameters = tStr
-69450     End If
-69460   End If
-69470   tStr = hOpt.Retrieve("RunProgramAfterSavingWaitUntilReady")
-69480   If IsNumeric(tStr) Then
-69490     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69500       .RunProgramAfterSavingWaitUntilReady = CLng(tStr)
-69510      Else
-69520       If UseStandard Then
-69530        .RunProgramAfterSavingWaitUntilReady = 1
-69540       End If
-69550     End If
-69560    Else
-69570     If UseStandard Then
-69580      .RunProgramAfterSavingWaitUntilReady = 1
-69590     End If
-69600   End If
-69610   tStr = hOpt.Retrieve("RunProgramAfterSavingWindowstyle")
-69620   If IsNumeric(tStr) Then
-69630     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
-69640       .RunProgramAfterSavingWindowstyle = CLng(tStr)
-69650      Else
-69660       If UseStandard Then
-69670        .RunProgramAfterSavingWindowstyle = 1
-69680       End If
-69690     End If
-69700    Else
-69710     If UseStandard Then
-69720      .RunProgramAfterSavingWindowstyle = 1
-69730     End If
-69740   End If
-69750   tStr = hOpt.Retrieve("RunProgramBeforeSaving")
-69760   If IsNumeric(tStr) Then
-69770     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69780       .RunProgramBeforeSaving = CLng(tStr)
-69790      Else
-69800       If UseStandard Then
-69810        .RunProgramBeforeSaving = 0
-69820       End If
-69830     End If
+69310   tStr = hOpt.Retrieve("RemoveAllKnownFileExtensions")
+69320   If IsNumeric(tStr) Then
+69330     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+69340       .RemoveAllKnownFileExtensions = CLng(tStr)
+69350      Else
+69360       If UseStandard Then
+69370        .RemoveAllKnownFileExtensions = 1
+69380       End If
+69390     End If
+69400    Else
+69410     If UseStandard Then
+69420      .RemoveAllKnownFileExtensions = 1
+69430     End If
+69440   End If
+69450   tStr = hOpt.Retrieve("RemoveSpaces")
+69460   If IsNumeric(tStr) Then
+69470     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+69480       .RemoveSpaces = CLng(tStr)
+69490      Else
+69500       If UseStandard Then
+69510        .RemoveSpaces = 1
+69520       End If
+69530     End If
+69540    Else
+69550     If UseStandard Then
+69560      .RemoveSpaces = 1
+69570     End If
+69580   End If
+69590   tStr = hOpt.Retrieve("RunProgramAfterSaving")
+69600   If IsNumeric(tStr) Then
+69610     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+69620       .RunProgramAfterSaving = CLng(tStr)
+69630      Else
+69640       If UseStandard Then
+69650        .RunProgramAfterSaving = 0
+69660       End If
+69670     End If
+69680    Else
+69690     If UseStandard Then
+69700      .RunProgramAfterSaving = 0
+69710     End If
+69720   End If
+69730   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramname")
+69740   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+69750     .RunProgramAfterSavingProgramname = ""
+69760    Else
+69770     If LenB(tStr) > 0 Then
+69780      .RunProgramAfterSavingProgramname = tStr
+69790     End If
+69800   End If
+69810   tStr = hOpt.Retrieve("RunProgramAfterSavingProgramParameters")
+69820   If LenB(tStr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
+69830     .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
 69840    Else
-69850     If UseStandard Then
-69860      .RunProgramBeforeSaving = 0
+69850     If LenB(tStr) > 0 Then
+69860      .RunProgramAfterSavingProgramParameters = tStr
 69870     End If
 69880   End If
-69890   tStr = hOpt.Retrieve("RunProgramBeforeSavingProgramname")
-69900   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-69910     .RunProgramBeforeSavingProgramname = ""
-69920    Else
-69930     If LenB(tStr) > 0 Then
-69940      .RunProgramBeforeSavingProgramname = tStr
-69950     End If
-69960   End If
-69970   tStr = hOpt.Retrieve("RunProgramBeforeSavingProgramParameters")
-69980   If LenB(tStr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
-69990     .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
-70000    Else
-70010     If LenB(tStr) > 0 Then
-70020      .RunProgramBeforeSavingProgramParameters = tStr
-70030     End If
-70040   End If
-70050   tStr = hOpt.Retrieve("RunProgramBeforeSavingWindowstyle")
-70060   If IsNumeric(tStr) Then
-70070     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
-70080       .RunProgramBeforeSavingWindowstyle = CLng(tStr)
-70090      Else
-70100       If UseStandard Then
-70110        .RunProgramBeforeSavingWindowstyle = 1
-70120       End If
-70130     End If
-70140    Else
-70150     If UseStandard Then
-70160      .RunProgramBeforeSavingWindowstyle = 1
-70170     End If
-70180   End If
-70190   tStr = hOpt.Retrieve("SaveFilename")
-70200   If LenB(tStr) = 0 And LenB("<Title>") > 0 And UseStandard Then
-70210     .SaveFilename = "<Title>"
-70220    Else
-70230     If LenB(tStr) > 0 Then
-70240      .SaveFilename = tStr
+69890   tStr = hOpt.Retrieve("RunProgramAfterSavingWaitUntilReady")
+69900   If IsNumeric(tStr) Then
+69910     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+69920       .RunProgramAfterSavingWaitUntilReady = CLng(tStr)
+69930      Else
+69940       If UseStandard Then
+69950        .RunProgramAfterSavingWaitUntilReady = 1
+69960       End If
+69970     End If
+69980    Else
+69990     If UseStandard Then
+70000      .RunProgramAfterSavingWaitUntilReady = 1
+70010     End If
+70020   End If
+70030   tStr = hOpt.Retrieve("RunProgramAfterSavingWindowstyle")
+70040   If IsNumeric(tStr) Then
+70050     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+70060       .RunProgramAfterSavingWindowstyle = CLng(tStr)
+70070      Else
+70080       If UseStandard Then
+70090        .RunProgramAfterSavingWindowstyle = 1
+70100       End If
+70110     End If
+70120    Else
+70130     If UseStandard Then
+70140      .RunProgramAfterSavingWindowstyle = 1
+70150     End If
+70160   End If
+70170   tStr = hOpt.Retrieve("RunProgramBeforeSaving")
+70180   If IsNumeric(tStr) Then
+70190     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+70200       .RunProgramBeforeSaving = CLng(tStr)
+70210      Else
+70220       If UseStandard Then
+70230        .RunProgramBeforeSaving = 0
+70240       End If
 70250     End If
-70260   End If
-70270   tStr = hOpt.Retrieve("SendEmailAfterAutoSaving")
-70280   If IsNumeric(tStr) Then
-70290     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-70300       .SendEmailAfterAutoSaving = CLng(tStr)
-70310      Else
-70320       If UseStandard Then
-70330        .SendEmailAfterAutoSaving = 0
-70340       End If
-70350     End If
-70360    Else
-70370     If UseStandard Then
-70380      .SendEmailAfterAutoSaving = 0
-70390     End If
-70400   End If
-70410   tStr = hOpt.Retrieve("SendMailMethod")
-70420   If IsNumeric(tStr) Then
-70430     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-70440       .SendMailMethod = CLng(tStr)
-70450      Else
-70460       If UseStandard Then
-70470        .SendMailMethod = 0
-70480       End If
-70490     End If
-70500    Else
-70510     If UseStandard Then
-70520      .SendMailMethod = 0
-70530     End If
-70540   End If
-70550   tStr = hOpt.Retrieve("ShowAnimation")
-70560   If IsNumeric(tStr) Then
-70570     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-70580       .ShowAnimation = CLng(tStr)
-70590      Else
-70600       If UseStandard Then
-70610        .ShowAnimation = 1
-70620       End If
-70630     End If
+70260    Else
+70270     If UseStandard Then
+70280      .RunProgramBeforeSaving = 0
+70290     End If
+70300   End If
+70310   tStr = hOpt.Retrieve("RunProgramBeforeSavingProgramname")
+70320   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+70330     .RunProgramBeforeSavingProgramname = ""
+70340    Else
+70350     If LenB(tStr) > 0 Then
+70360      .RunProgramBeforeSavingProgramname = tStr
+70370     End If
+70380   End If
+70390   tStr = hOpt.Retrieve("RunProgramBeforeSavingProgramParameters")
+70400   If LenB(tStr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
+70410     .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
+70420    Else
+70430     If LenB(tStr) > 0 Then
+70440      .RunProgramBeforeSavingProgramParameters = tStr
+70450     End If
+70460   End If
+70470   tStr = hOpt.Retrieve("RunProgramBeforeSavingWindowstyle")
+70480   If IsNumeric(tStr) Then
+70490     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+70500       .RunProgramBeforeSavingWindowstyle = CLng(tStr)
+70510      Else
+70520       If UseStandard Then
+70530        .RunProgramBeforeSavingWindowstyle = 1
+70540       End If
+70550     End If
+70560    Else
+70570     If UseStandard Then
+70580      .RunProgramBeforeSavingWindowstyle = 1
+70590     End If
+70600   End If
+70610   tStr = hOpt.Retrieve("SaveFilename")
+70620   If LenB(tStr) = 0 And LenB("<Title>") > 0 And UseStandard Then
+70630     .SaveFilename = "<Title>"
 70640    Else
-70650     If UseStandard Then
-70660      .ShowAnimation = 1
+70650     If LenB(tStr) > 0 Then
+70660      .SaveFilename = tStr
 70670     End If
 70680   End If
-70690   tStr = hOpt.Retrieve("StampFontColor")
-70700   If LenB(tStr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
-70710     .StampFontColor = "#FF0000"
-70720    Else
-70730     If LenB(tStr) > 0 Then
-70740      .StampFontColor = tStr
-70750     End If
-70760   End If
-70770   tStr = hOpt.Retrieve("StampFontname")
-70780   If LenB(tStr) = 0 And LenB("Arial") > 0 And UseStandard Then
-70790     .StampFontname = "Arial"
-70800    Else
-70810     If LenB(tStr) > 0 Then
-70820      .StampFontname = tStr
-70830     End If
-70840   End If
-70850   tStr = hOpt.Retrieve("StampFontsize")
-70860   If IsNumeric(tStr) Then
-70870     If CLng(tStr) >= 1 Then
-70880       .StampFontsize = CLng(tStr)
-70890      Else
-70900       If UseStandard Then
-70910        .StampFontsize = 48
-70920       End If
-70930     End If
-70940    Else
-70950     If UseStandard Then
-70960      .StampFontsize = 48
-70970     End If
-70980   End If
-70990   tStr = hOpt.Retrieve("StampOutlineFontthickness")
-71000   If IsNumeric(tStr) Then
-71010     If CLng(tStr) >= 0 Then
-71020       .StampOutlineFontthickness = CLng(tStr)
-71030      Else
-71040       If UseStandard Then
-71050        .StampOutlineFontthickness = 0
-71060       End If
-71070     End If
-71080    Else
-71090     If UseStandard Then
-71100      .StampOutlineFontthickness = 0
-71110     End If
-71120   End If
-71130   tStr = hOpt.Retrieve("StampString")
-71140   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71150     .StampString = ""
-71160    Else
-71170     If LenB(tStr) > 0 Then
-71180      .StampString = tStr
-71190     End If
-71200   End If
-71210   tStr = hOpt.Retrieve("StampUseOutlineFont")
-71220   If IsNumeric(tStr) Then
-71230     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-71240       .StampUseOutlineFont = CLng(tStr)
-71250      Else
-71260       If UseStandard Then
-71270        .StampUseOutlineFont = 1
-71280       End If
-71290     End If
-71300    Else
-71310     If UseStandard Then
-71320      .StampUseOutlineFont = 1
-71330     End If
-71340   End If
-71350   tStr = hOpt.Retrieve("StandardAuthor")
-71360   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71370     .StandardAuthor = ""
-71380    Else
-71390     If LenB(tStr) > 0 Then
-71400      .StandardAuthor = tStr
-71410     End If
-71420   End If
-71430   tStr = hOpt.Retrieve("StandardCreationdate")
-71440   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71450     .StandardCreationdate = ""
-71460    Else
-71470     If LenB(tStr) > 0 Then
-71480      .StandardCreationdate = tStr
+70690   tStr = hOpt.Retrieve("SendEmailAfterAutoSaving")
+70700   If IsNumeric(tStr) Then
+70710     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+70720       .SendEmailAfterAutoSaving = CLng(tStr)
+70730      Else
+70740       If UseStandard Then
+70750        .SendEmailAfterAutoSaving = 0
+70760       End If
+70770     End If
+70780    Else
+70790     If UseStandard Then
+70800      .SendEmailAfterAutoSaving = 0
+70810     End If
+70820   End If
+70830   tStr = hOpt.Retrieve("SendMailMethod")
+70840   If IsNumeric(tStr) Then
+70850     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+70860       .SendMailMethod = CLng(tStr)
+70870      Else
+70880       If UseStandard Then
+70890        .SendMailMethod = 0
+70900       End If
+70910     End If
+70920    Else
+70930     If UseStandard Then
+70940      .SendMailMethod = 0
+70950     End If
+70960   End If
+70970   tStr = hOpt.Retrieve("ShowAnimation")
+70980   If IsNumeric(tStr) Then
+70990     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+71000       .ShowAnimation = CLng(tStr)
+71010      Else
+71020       If UseStandard Then
+71030        .ShowAnimation = 1
+71040       End If
+71050     End If
+71060    Else
+71070     If UseStandard Then
+71080      .ShowAnimation = 1
+71090     End If
+71100   End If
+71110   tStr = hOpt.Retrieve("StampFontColor")
+71120   If LenB(tStr) = 0 And LenB("#FF0000") > 0 And UseStandard Then
+71130     .StampFontColor = "#FF0000"
+71140    Else
+71150     If LenB(tStr) > 0 Then
+71160      .StampFontColor = tStr
+71170     End If
+71180   End If
+71190   tStr = hOpt.Retrieve("StampFontname")
+71200   If LenB(tStr) = 0 And LenB("Arial") > 0 And UseStandard Then
+71210     .StampFontname = "Arial"
+71220    Else
+71230     If LenB(tStr) > 0 Then
+71240      .StampFontname = tStr
+71250     End If
+71260   End If
+71270   tStr = hOpt.Retrieve("StampFontsize")
+71280   If IsNumeric(tStr) Then
+71290     If CLng(tStr) >= 1 Then
+71300       .StampFontsize = CLng(tStr)
+71310      Else
+71320       If UseStandard Then
+71330        .StampFontsize = 48
+71340       End If
+71350     End If
+71360    Else
+71370     If UseStandard Then
+71380      .StampFontsize = 48
+71390     End If
+71400   End If
+71410   tStr = hOpt.Retrieve("StampOutlineFontthickness")
+71420   If IsNumeric(tStr) Then
+71430     If CLng(tStr) >= 0 Then
+71440       .StampOutlineFontthickness = CLng(tStr)
+71450      Else
+71460       If UseStandard Then
+71470        .StampOutlineFontthickness = 0
+71480       End If
 71490     End If
-71500   End If
-71510   tStr = hOpt.Retrieve("StandardDateformat")
-71520   If LenB(tStr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
-71530     .StandardDateformat = "YYYYMMDDHHNNSS"
-71540    Else
-71550     If LenB(tStr) > 0 Then
-71560      .StandardDateformat = tStr
-71570     End If
-71580   End If
-71590   tStr = hOpt.Retrieve("StandardKeywords")
-71600   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71610     .StandardKeywords = ""
-71620    Else
-71630     If LenB(tStr) > 0 Then
-71640      .StandardKeywords = tStr
-71650     End If
-71660   End If
-71670   tStr = hOpt.Retrieve("StandardMailDomain")
-71680   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71690     .StandardMailDomain = ""
-71700    Else
-71710     If LenB(tStr) > 0 Then
-71720      .StandardMailDomain = tStr
-71730     End If
-71740   End If
-71750   tStr = hOpt.Retrieve("StandardModifydate")
-71760   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71770     .StandardModifydate = ""
-71780    Else
-71790     If LenB(tStr) > 0 Then
-71800      .StandardModifydate = tStr
-71810     End If
-71820   End If
-71830   tStr = hOpt.Retrieve("StandardSaveformat")
-71840   If IsNumeric(tStr) Then
-71850     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
-71860       .StandardSaveformat = CLng(tStr)
-71870      Else
-71880       If UseStandard Then
-71890        .StandardSaveformat = 0
-71900       End If
+71500    Else
+71510     If UseStandard Then
+71520      .StampOutlineFontthickness = 0
+71530     End If
+71540   End If
+71550   tStr = hOpt.Retrieve("StampString")
+71560   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+71570     .StampString = ""
+71580    Else
+71590     If LenB(tStr) > 0 Then
+71600      .StampString = tStr
+71610     End If
+71620   End If
+71630   tStr = hOpt.Retrieve("StampUseOutlineFont")
+71640   If IsNumeric(tStr) Then
+71650     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+71660       .StampUseOutlineFont = CLng(tStr)
+71670      Else
+71680       If UseStandard Then
+71690        .StampUseOutlineFont = 1
+71700       End If
+71710     End If
+71720    Else
+71730     If UseStandard Then
+71740      .StampUseOutlineFont = 1
+71750     End If
+71760   End If
+71770   tStr = hOpt.Retrieve("StandardAuthor")
+71780   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+71790     .StandardAuthor = ""
+71800    Else
+71810     If LenB(tStr) > 0 Then
+71820      .StandardAuthor = tStr
+71830     End If
+71840   End If
+71850   tStr = hOpt.Retrieve("StandardCreationdate")
+71860   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+71870     .StandardCreationdate = ""
+71880    Else
+71890     If LenB(tStr) > 0 Then
+71900      .StandardCreationdate = tStr
 71910     End If
-71920    Else
-71930     If UseStandard Then
-71940      .StandardSaveformat = 0
-71950     End If
-71960   End If
-71970   tStr = hOpt.Retrieve("StandardSubject")
-71980   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71990     .StandardSubject = ""
-72000    Else
-72010     If LenB(tStr) > 0 Then
-72020      .StandardSubject = tStr
-72030     End If
-72040   End If
-72050   tStr = hOpt.Retrieve("StandardTitle")
-72060   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-72070     .StandardTitle = ""
-72080    Else
-72090     If LenB(tStr) > 0 Then
-72100      .StandardTitle = tStr
-72110     End If
-72120   End If
-72130   tStr = hOpt.Retrieve("SVGResolution")
-72140   If IsNumeric(tStr) Then
-72150     If CLng(tStr) >= 1 Then
-72160       .SVGResolution = CLng(tStr)
-72170      Else
-72180       If UseStandard Then
-72190        .SVGResolution = 72
-72200       End If
-72210     End If
-72220    Else
-72230     If UseStandard Then
-72240      .SVGResolution = 72
-72250     End If
-72260   End If
-72270   tStr = hOpt.Retrieve("TIFFColorscount")
-72280   If IsNumeric(tStr) Then
-72290     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
-72300       .TIFFColorscount = CLng(tStr)
-72310      Else
-72320       If UseStandard Then
-72330        .TIFFColorscount = 0
-72340       End If
-72350     End If
-72360    Else
-72370     If UseStandard Then
-72380      .TIFFColorscount = 0
-72390     End If
-72400   End If
-72410   tStr = hOpt.Retrieve("TIFFResolution")
-72420   If IsNumeric(tStr) Then
-72430     If CLng(tStr) >= 1 Then
-72440       .TIFFResolution = CLng(tStr)
-72450      Else
-72460       If UseStandard Then
-72470        .TIFFResolution = 150
-72480       End If
-72490     End If
+71920   End If
+71930   tStr = hOpt.Retrieve("StandardDateformat")
+71940   If LenB(tStr) = 0 And LenB("YYYYMMDDHHNNSS") > 0 And UseStandard Then
+71950     .StandardDateformat = "YYYYMMDDHHNNSS"
+71960    Else
+71970     If LenB(tStr) > 0 Then
+71980      .StandardDateformat = tStr
+71990     End If
+72000   End If
+72010   tStr = hOpt.Retrieve("StandardKeywords")
+72020   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+72030     .StandardKeywords = ""
+72040    Else
+72050     If LenB(tStr) > 0 Then
+72060      .StandardKeywords = tStr
+72070     End If
+72080   End If
+72090   tStr = hOpt.Retrieve("StandardMailDomain")
+72100   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+72110     .StandardMailDomain = ""
+72120    Else
+72130     If LenB(tStr) > 0 Then
+72140      .StandardMailDomain = tStr
+72150     End If
+72160   End If
+72170   tStr = hOpt.Retrieve("StandardModifydate")
+72180   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+72190     .StandardModifydate = ""
+72200    Else
+72210     If LenB(tStr) > 0 Then
+72220      .StandardModifydate = tStr
+72230     End If
+72240   End If
+72250   tStr = hOpt.Retrieve("StandardSaveformat")
+72260   If IsNumeric(tStr) Then
+72270     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+72280       .StandardSaveformat = CLng(tStr)
+72290      Else
+72300       If UseStandard Then
+72310        .StandardSaveformat = 0
+72320       End If
+72330     End If
+72340    Else
+72350     If UseStandard Then
+72360      .StandardSaveformat = 0
+72370     End If
+72380   End If
+72390   tStr = hOpt.Retrieve("StandardSubject")
+72400   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+72410     .StandardSubject = ""
+72420    Else
+72430     If LenB(tStr) > 0 Then
+72440      .StandardSubject = tStr
+72450     End If
+72460   End If
+72470   tStr = hOpt.Retrieve("StandardTitle")
+72480   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+72490     .StandardTitle = ""
 72500    Else
-72510     If UseStandard Then
-72520      .TIFFResolution = 150
+72510     If LenB(tStr) > 0 Then
+72520      .StandardTitle = tStr
 72530     End If
 72540   End If
-72550   tStr = hOpt.Retrieve("Toolbars")
+72550   tStr = hOpt.Retrieve("SVGResolution")
 72560   If IsNumeric(tStr) Then
-72570     If CLng(tStr) >= 0 Then
-72580       .Toolbars = CLng(tStr)
+72570     If CLng(tStr) >= 1 Then
+72580       .SVGResolution = CLng(tStr)
 72590      Else
 72600       If UseStandard Then
-72610        .Toolbars = 1
+72610        .SVGResolution = 72
 72620       End If
 72630     End If
 72640    Else
 72650     If UseStandard Then
-72660      .Toolbars = 1
+72660      .SVGResolution = 72
 72670     End If
 72680   End If
-72690   tStr = hOpt.Retrieve("UpdateInterval")
+72690   tStr = hOpt.Retrieve("TIFFColorscount")
 72700   If IsNumeric(tStr) Then
-72710     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-72720       .UpdateInterval = CLng(tStr)
+72710     If CLng(tStr) >= 0 And CLng(tStr) <= 7 Then
+72720       .TIFFColorscount = CLng(tStr)
 72730      Else
 72740       If UseStandard Then
-72750        .UpdateInterval = 2
+72750        .TIFFColorscount = 0
 72760       End If
 72770     End If
 72780    Else
 72790     If UseStandard Then
-72800      .UpdateInterval = 2
+72800      .TIFFColorscount = 0
 72810     End If
 72820   End If
-72830   tStr = hOpt.Retrieve("UseAutosave")
+72830   tStr = hOpt.Retrieve("TIFFResolution")
 72840   If IsNumeric(tStr) Then
-72850     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-72860       .UseAutosave = CLng(tStr)
+72850     If CLng(tStr) >= 1 Then
+72860       .TIFFResolution = CLng(tStr)
 72870      Else
 72880       If UseStandard Then
-72890        .UseAutosave = 0
+72890        .TIFFResolution = 150
 72900       End If
 72910     End If
 72920    Else
 72930     If UseStandard Then
-72940      .UseAutosave = 0
+72940      .TIFFResolution = 150
 72950     End If
 72960   End If
-72970   tStr = hOpt.Retrieve("UseAutosaveDirectory")
+72970   tStr = hOpt.Retrieve("Toolbars")
 72980   If IsNumeric(tStr) Then
-72990     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-73000       .UseAutosaveDirectory = CLng(tStr)
+72990     If CLng(tStr) >= 0 Then
+73000       .Toolbars = CLng(tStr)
 73010      Else
 73020       If UseStandard Then
-73030        .UseAutosaveDirectory = 1
+73030        .Toolbars = 1
 73040       End If
 73050     End If
 73060    Else
 73070     If UseStandard Then
-73080      .UseAutosaveDirectory = 1
+73080      .Toolbars = 1
 73090     End If
 73100   End If
-73110   tStr = hOpt.Retrieve("UseCreationDateNow")
+73110   tStr = hOpt.Retrieve("UpdateInterval")
 73120   If IsNumeric(tStr) Then
-73130     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-73140       .UseCreationDateNow = CLng(tStr)
+73130     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+73140       .UpdateInterval = CLng(tStr)
 73150      Else
 73160       If UseStandard Then
-73170        .UseCreationDateNow = 0
+73170        .UpdateInterval = 2
 73180       End If
 73190     End If
 73200    Else
 73210     If UseStandard Then
-73220      .UseCreationDateNow = 0
+73220      .UpdateInterval = 2
 73230     End If
 73240   End If
-73250   tStr = hOpt.Retrieve("UseCustomPaperSize")
-73260   If LenB(tStr) = 0 And LenB("0") > 0 And UseStandard Then
-73270     .UseCustomPaperSize = "0"
-73280    Else
-73290     If LenB(tStr) > 0 Then
-73300      .UseCustomPaperSize = tStr
-73310     End If
-73320   End If
-73330   tStr = hOpt.Retrieve("UseFixPapersize")
-73340   If IsNumeric(tStr) Then
-73350     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-73360       .UseFixPapersize = CLng(tStr)
-73370      Else
-73380       If UseStandard Then
-73390        .UseFixPapersize = 0
-73400       End If
-73410     End If
-73420    Else
-73430     If UseStandard Then
-73440      .UseFixPapersize = 0
-73450     End If
-73460   End If
-73470   tStr = hOpt.Retrieve("UseStandardAuthor")
-73480   If IsNumeric(tStr) Then
-73490     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-73500       .UseStandardAuthor = CLng(tStr)
-73510      Else
-73520       If UseStandard Then
-73530        .UseStandardAuthor = 0
-73540       End If
-73550     End If
-73560    Else
-73570     If UseStandard Then
-73580      .UseStandardAuthor = 0
-73590     End If
-73600   End If
-73610  End With
-73620  Set ini = Nothing
-73630  ReadOptionsINI = myOptions
+73250   tStr = hOpt.Retrieve("UseAutosave")
+73260   If IsNumeric(tStr) Then
+73270     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73280       .UseAutosave = CLng(tStr)
+73290      Else
+73300       If UseStandard Then
+73310        .UseAutosave = 0
+73320       End If
+73330     End If
+73340    Else
+73350     If UseStandard Then
+73360      .UseAutosave = 0
+73370     End If
+73380   End If
+73390   tStr = hOpt.Retrieve("UseAutosaveDirectory")
+73400   If IsNumeric(tStr) Then
+73410     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73420       .UseAutosaveDirectory = CLng(tStr)
+73430      Else
+73440       If UseStandard Then
+73450        .UseAutosaveDirectory = 1
+73460       End If
+73470     End If
+73480    Else
+73490     If UseStandard Then
+73500      .UseAutosaveDirectory = 1
+73510     End If
+73520   End If
+73530   tStr = hOpt.Retrieve("UseCreationDateNow")
+73540   If IsNumeric(tStr) Then
+73550     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73560       .UseCreationDateNow = CLng(tStr)
+73570      Else
+73580       If UseStandard Then
+73590        .UseCreationDateNow = 0
+73600       End If
+73610     End If
+73620    Else
+73630     If UseStandard Then
+73640      .UseCreationDateNow = 0
+73650     End If
+73660   End If
+73670   tStr = hOpt.Retrieve("UseCustomPaperSize")
+73680   If LenB(tStr) = 0 And LenB("0") > 0 And UseStandard Then
+73690     .UseCustomPaperSize = "0"
+73700    Else
+73710     If LenB(tStr) > 0 Then
+73720      .UseCustomPaperSize = tStr
+73730     End If
+73740   End If
+73750   tStr = hOpt.Retrieve("UseFixPapersize")
+73760   If IsNumeric(tStr) Then
+73770     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73780       .UseFixPapersize = CLng(tStr)
+73790      Else
+73800       If UseStandard Then
+73810        .UseFixPapersize = 0
+73820       End If
+73830     End If
+73840    Else
+73850     If UseStandard Then
+73860      .UseFixPapersize = 0
+73870     End If
+73880   End If
+73890   tStr = hOpt.Retrieve("UseStandardAuthor")
+73900   If IsNumeric(tStr) Then
+73910     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73920       .UseStandardAuthor = CLng(tStr)
+73930      Else
+73940       If UseStandard Then
+73950        .UseStandardAuthor = 0
+73960       End If
+73970     End If
+73980    Else
+73990     If UseStandard Then
+74000      .UseStandardAuthor = 0
+74010     End If
+74020   End If
+74030  End With
+74040  Set ini = Nothing
+74050  ReadOptionsINI = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -3092,89 +3140,92 @@ On Error GoTo ErrPtnr_OnError
 51110   Case "PDFOPTIMIZE": ini.SaveKey CStr(Abs(.PDFOptimize)), "PDFOptimize"
 51120   Case "PDFOWNERPASS": ini.SaveKey CStr(Abs(.PDFOwnerPass)), "PDFOwnerPass"
 51130   Case "PDFOWNERPASSWORDSTRING": ini.SaveKey CStr(.PDFOwnerPasswordString), "PDFOwnerPasswordString"
-51140   Case "PDFSIGNINGMULTISIGNATURE": ini.SaveKey CStr(Abs(.PDFSigningMultiSignature)), "PDFSigningMultiSignature"
-51150   Case "PDFSIGNINGPFXFILE": ini.SaveKey CStr(.PDFSigningPFXFile), "PDFSigningPFXFile"
-51160   Case "PDFSIGNINGPFXFILEPASSWORD": ini.SaveKey CStr(.PDFSigningPFXFilePassword), "PDFSigningPFXFilePassword"
-51170   Case "PDFSIGNINGSIGNATURECONTACT": ini.SaveKey CStr(.PDFSigningSignatureContact), "PDFSigningSignatureContact"
-51180   Case "PDFSIGNINGSIGNATURELEFTX": ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), "PDFSigningSignatureLeftX"
-51190   Case "PDFSIGNINGSIGNATURELEFTY": ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), "PDFSigningSignatureLeftY"
-51200   Case "PDFSIGNINGSIGNATURELOCATION": ini.SaveKey CStr(.PDFSigningSignatureLocation), "PDFSigningSignatureLocation"
-51210   Case "PDFSIGNINGSIGNATUREONPAGE": ini.SaveKey CStr(.PDFSigningSignatureOnPage), "PDFSigningSignatureOnPage"
-51220   Case "PDFSIGNINGSIGNATUREREASON": ini.SaveKey CStr(.PDFSigningSignatureReason), "PDFSigningSignatureReason"
-51230   Case "PDFSIGNINGSIGNATURERIGHTX": ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), "PDFSigningSignatureRightX"
-51240   Case "PDFSIGNINGSIGNATURERIGHTY": ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), "PDFSigningSignatureRightY"
-51250   Case "PDFSIGNINGSIGNATUREVISIBLE": ini.SaveKey CStr(Abs(.PDFSigningSignatureVisible)), "PDFSigningSignatureVisible"
-51260   Case "PDFSIGNINGSIGNPDF": ini.SaveKey CStr(Abs(.PDFSigningSignPDF)), "PDFSigningSignPDF"
-51270   Case "PDFSIGNINGTIMESERVERURL": ini.SaveKey CStr(.PDFSigningTimeServerUrl), "PDFSigningTimeServerUrl"
-51280   Case "PDFUPDATEMETADATA": ini.SaveKey CStr(.PDFUpdateMetadata), "PDFUpdateMetadata"
-51290   Case "PDFUSERPASS": ini.SaveKey CStr(Abs(.PDFUserPass)), "PDFUserPass"
-51300   Case "PDFUSERPASSWORDSTRING": ini.SaveKey CStr(.PDFUserPasswordString), "PDFUserPasswordString"
-51310   Case "PDFUSESECURITY": ini.SaveKey CStr(Abs(.PDFUseSecurity)), "PDFUseSecurity"
-51320   Case "PNGCOLORSCOUNT": ini.SaveKey CStr(.PNGColorscount), "PNGColorscount"
-51330   Case "PNGRESOLUTION": ini.SaveKey CStr(.PNGResolution), "PNGResolution"
-51340   Case "PRINTAFTERSAVING": ini.SaveKey CStr(Abs(.PrintAfterSaving)), "PrintAfterSaving"
-51350   Case "PRINTAFTERSAVINGBITSPERPIXEL": ini.SaveKey CStr(.PrintAfterSavingBitsPerPixel), "PrintAfterSavingBitsPerPixel"
-51360   Case "PRINTAFTERSAVINGDUPLEX": ini.SaveKey CStr(Abs(.PrintAfterSavingDuplex)), "PrintAfterSavingDuplex"
-51370   Case "PRINTAFTERSAVINGMAXRESOLUTION": ini.SaveKey CStr(.PrintAfterSavingMaxResolution), "PrintAfterSavingMaxResolution"
-51380   Case "PRINTAFTERSAVINGMAXRESOLUTIONENABLED": ini.SaveKey CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), "PrintAfterSavingMaxResolutionEnabled"
-51390   Case "PRINTAFTERSAVINGNOCANCEL": ini.SaveKey CStr(Abs(.PrintAfterSavingNoCancel)), "PrintAfterSavingNoCancel"
-51400   Case "PRINTAFTERSAVINGPRINTER": ini.SaveKey CStr(.PrintAfterSavingPrinter), "PrintAfterSavingPrinter"
-51410   Case "PRINTAFTERSAVINGQUERYUSER": ini.SaveKey CStr(.PrintAfterSavingQueryUser), "PrintAfterSavingQueryUser"
-51420   Case "PRINTAFTERSAVINGTUMBLE": ini.SaveKey CStr(.PrintAfterSavingTumble), "PrintAfterSavingTumble"
-51430   Case "PRINTERSTOP": ini.SaveKey CStr(Abs(.PrinterStop)), "PrinterStop"
-51440   Case "PROCESSPRIORITY": ini.SaveKey CStr(.ProcessPriority), "ProcessPriority"
-51450   Case "PROGRAMFONT": ini.SaveKey CStr(.ProgramFont), "ProgramFont"
-51460   Case "PROGRAMFONTCHARSET": ini.SaveKey CStr(.ProgramFontCharset), "ProgramFontCharset"
-51470   Case "PROGRAMFONTSIZE": ini.SaveKey CStr(.ProgramFontSize), "ProgramFontSize"
-51480   Case "PSDCOLORSCOUNT": ini.SaveKey CStr(.PSDColorsCount), "PSDColorsCount"
-51490   Case "PSDRESOLUTION": ini.SaveKey CStr(.PSDResolution), "PSDResolution"
-51500   Case "PSLANGUAGELEVEL": ini.SaveKey CStr(.PSLanguageLevel), "PSLanguageLevel"
-51510   Case "RAWCOLORSCOUNT": ini.SaveKey CStr(.RAWColorsCount), "RAWColorsCount"
-51520   Case "RAWRESOLUTION": ini.SaveKey CStr(.RAWResolution), "RAWResolution"
-51530   Case "REMOVEALLKNOWNFILEEXTENSIONS": ini.SaveKey CStr(Abs(.RemoveAllKnownFileExtensions)), "RemoveAllKnownFileExtensions"
-51540   Case "REMOVESPACES": ini.SaveKey CStr(Abs(.RemoveSpaces)), "RemoveSpaces"
-51550   Case "RUNPROGRAMAFTERSAVING": ini.SaveKey CStr(Abs(.RunProgramAfterSaving)), "RunProgramAfterSaving"
-51560   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": ini.SaveKey CStr(.RunProgramAfterSavingProgramname), "RunProgramAfterSavingProgramname"
-51570   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": ini.SaveKey CStr(.RunProgramAfterSavingProgramParameters), "RunProgramAfterSavingProgramParameters"
-51580   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": ini.SaveKey CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), "RunProgramAfterSavingWaitUntilReady"
-51590   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": ini.SaveKey CStr(.RunProgramAfterSavingWindowstyle), "RunProgramAfterSavingWindowstyle"
-51600   Case "RUNPROGRAMBEFORESAVING": ini.SaveKey CStr(Abs(.RunProgramBeforeSaving)), "RunProgramBeforeSaving"
-51610   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": ini.SaveKey CStr(.RunProgramBeforeSavingProgramname), "RunProgramBeforeSavingProgramname"
-51620   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": ini.SaveKey CStr(.RunProgramBeforeSavingProgramParameters), "RunProgramBeforeSavingProgramParameters"
-51630   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": ini.SaveKey CStr(.RunProgramBeforeSavingWindowstyle), "RunProgramBeforeSavingWindowstyle"
-51640   Case "SAVEFILENAME": ini.SaveKey CStr(.SaveFilename), "SaveFilename"
-51650   Case "SENDEMAILAFTERAUTOSAVING": ini.SaveKey CStr(Abs(.SendEmailAfterAutoSaving)), "SendEmailAfterAutoSaving"
-51660   Case "SENDMAILMETHOD": ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
-51670   Case "SHOWANIMATION": ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
-51680   Case "STAMPFONTCOLOR": ini.SaveKey CStr(.StampFontColor), "StampFontColor"
-51690   Case "STAMPFONTNAME": ini.SaveKey CStr(.StampFontname), "StampFontname"
-51700   Case "STAMPFONTSIZE": ini.SaveKey CStr(.StampFontsize), "StampFontsize"
-51710   Case "STAMPOUTLINEFONTTHICKNESS": ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
-51720   Case "STAMPSTRING": ini.SaveKey CStr(.StampString), "StampString"
-51730   Case "STAMPUSEOUTLINEFONT": ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
-51740   Case "STANDARDAUTHOR": ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
-51750   Case "STANDARDCREATIONDATE": ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
-51760   Case "STANDARDDATEFORMAT": ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
-51770   Case "STANDARDKEYWORDS": ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
-51780   Case "STANDARDMAILDOMAIN": ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
-51790   Case "STANDARDMODIFYDATE": ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
-51800   Case "STANDARDSAVEFORMAT": ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
-51810   Case "STANDARDSUBJECT": ini.SaveKey CStr(.StandardSubject), "StandardSubject"
-51820   Case "STANDARDTITLE": ini.SaveKey CStr(.StandardTitle), "StandardTitle"
-51830   Case "SVGRESOLUTION": ini.SaveKey CStr(.SVGResolution), "SVGResolution"
-51840   Case "TIFFCOLORSCOUNT": ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
-51850   Case "TIFFRESOLUTION": ini.SaveKey CStr(.TIFFResolution), "TIFFResolution"
-51860   Case "TOOLBARS": ini.SaveKey CStr(.Toolbars), "Toolbars"
-51870   Case "UPDATEINTERVAL": ini.SaveKey CStr(.UpdateInterval), "UpdateInterval"
-51880   Case "USEAUTOSAVE": ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
-51890   Case "USEAUTOSAVEDIRECTORY": ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
-51900   Case "USECREATIONDATENOW": ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
-51910   Case "USECUSTOMPAPERSIZE": ini.SaveKey CStr(.UseCustomPaperSize), "UseCustomPaperSize"
-51920   Case "USEFIXPAPERSIZE": ini.SaveKey CStr(Abs(.UseFixPapersize)), "UseFixPapersize"
-51930   Case "USESTANDARDAUTHOR": ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
-51940   End Select
-51950  End With
-51960  Set ini = Nothing
+51140   Case "PDFPAGELAYOUT": ini.SaveKey CStr(.PDFPageLayout), "PDFPageLayout"
+51150   Case "PDFPAGEMODE": ini.SaveKey CStr(.PDFPageMode), "PDFPageMode"
+51160   Case "PDFSIGNINGMULTISIGNATURE": ini.SaveKey CStr(Abs(.PDFSigningMultiSignature)), "PDFSigningMultiSignature"
+51170   Case "PDFSIGNINGPFXFILE": ini.SaveKey CStr(.PDFSigningPFXFile), "PDFSigningPFXFile"
+51180   Case "PDFSIGNINGPFXFILEPASSWORD": ini.SaveKey CStr(.PDFSigningPFXFilePassword), "PDFSigningPFXFilePassword"
+51190   Case "PDFSIGNINGSIGNATURECONTACT": ini.SaveKey CStr(.PDFSigningSignatureContact), "PDFSigningSignatureContact"
+51200   Case "PDFSIGNINGSIGNATURELEFTX": ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), "PDFSigningSignatureLeftX"
+51210   Case "PDFSIGNINGSIGNATURELEFTY": ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), "PDFSigningSignatureLeftY"
+51220   Case "PDFSIGNINGSIGNATURELOCATION": ini.SaveKey CStr(.PDFSigningSignatureLocation), "PDFSigningSignatureLocation"
+51230   Case "PDFSIGNINGSIGNATUREONPAGE": ini.SaveKey CStr(.PDFSigningSignatureOnPage), "PDFSigningSignatureOnPage"
+51240   Case "PDFSIGNINGSIGNATUREREASON": ini.SaveKey CStr(.PDFSigningSignatureReason), "PDFSigningSignatureReason"
+51250   Case "PDFSIGNINGSIGNATURERIGHTX": ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), "PDFSigningSignatureRightX"
+51260   Case "PDFSIGNINGSIGNATURERIGHTY": ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), "PDFSigningSignatureRightY"
+51270   Case "PDFSIGNINGSIGNATUREVISIBLE": ini.SaveKey CStr(Abs(.PDFSigningSignatureVisible)), "PDFSigningSignatureVisible"
+51280   Case "PDFSIGNINGSIGNPDF": ini.SaveKey CStr(Abs(.PDFSigningSignPDF)), "PDFSigningSignPDF"
+51290   Case "PDFSIGNINGTIMESERVERURL": ini.SaveKey CStr(.PDFSigningTimeServerUrl), "PDFSigningTimeServerUrl"
+51300   Case "PDFSTARTPAGE": ini.SaveKey CStr(.PDFStartPage), "PDFStartPage"
+51310   Case "PDFUPDATEMETADATA": ini.SaveKey CStr(.PDFUpdateMetadata), "PDFUpdateMetadata"
+51320   Case "PDFUSERPASS": ini.SaveKey CStr(Abs(.PDFUserPass)), "PDFUserPass"
+51330   Case "PDFUSERPASSWORDSTRING": ini.SaveKey CStr(.PDFUserPasswordString), "PDFUserPasswordString"
+51340   Case "PDFUSESECURITY": ini.SaveKey CStr(Abs(.PDFUseSecurity)), "PDFUseSecurity"
+51350   Case "PNGCOLORSCOUNT": ini.SaveKey CStr(.PNGColorscount), "PNGColorscount"
+51360   Case "PNGRESOLUTION": ini.SaveKey CStr(.PNGResolution), "PNGResolution"
+51370   Case "PRINTAFTERSAVING": ini.SaveKey CStr(Abs(.PrintAfterSaving)), "PrintAfterSaving"
+51380   Case "PRINTAFTERSAVINGBITSPERPIXEL": ini.SaveKey CStr(.PrintAfterSavingBitsPerPixel), "PrintAfterSavingBitsPerPixel"
+51390   Case "PRINTAFTERSAVINGDUPLEX": ini.SaveKey CStr(Abs(.PrintAfterSavingDuplex)), "PrintAfterSavingDuplex"
+51400   Case "PRINTAFTERSAVINGMAXRESOLUTION": ini.SaveKey CStr(.PrintAfterSavingMaxResolution), "PrintAfterSavingMaxResolution"
+51410   Case "PRINTAFTERSAVINGMAXRESOLUTIONENABLED": ini.SaveKey CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), "PrintAfterSavingMaxResolutionEnabled"
+51420   Case "PRINTAFTERSAVINGNOCANCEL": ini.SaveKey CStr(Abs(.PrintAfterSavingNoCancel)), "PrintAfterSavingNoCancel"
+51430   Case "PRINTAFTERSAVINGPRINTER": ini.SaveKey CStr(.PrintAfterSavingPrinter), "PrintAfterSavingPrinter"
+51440   Case "PRINTAFTERSAVINGQUERYUSER": ini.SaveKey CStr(.PrintAfterSavingQueryUser), "PrintAfterSavingQueryUser"
+51450   Case "PRINTAFTERSAVINGTUMBLE": ini.SaveKey CStr(.PrintAfterSavingTumble), "PrintAfterSavingTumble"
+51460   Case "PRINTERSTOP": ini.SaveKey CStr(Abs(.PrinterStop)), "PrinterStop"
+51470   Case "PROCESSPRIORITY": ini.SaveKey CStr(.ProcessPriority), "ProcessPriority"
+51480   Case "PROGRAMFONT": ini.SaveKey CStr(.ProgramFont), "ProgramFont"
+51490   Case "PROGRAMFONTCHARSET": ini.SaveKey CStr(.ProgramFontCharset), "ProgramFontCharset"
+51500   Case "PROGRAMFONTSIZE": ini.SaveKey CStr(.ProgramFontSize), "ProgramFontSize"
+51510   Case "PSDCOLORSCOUNT": ini.SaveKey CStr(.PSDColorsCount), "PSDColorsCount"
+51520   Case "PSDRESOLUTION": ini.SaveKey CStr(.PSDResolution), "PSDResolution"
+51530   Case "PSLANGUAGELEVEL": ini.SaveKey CStr(.PSLanguageLevel), "PSLanguageLevel"
+51540   Case "RAWCOLORSCOUNT": ini.SaveKey CStr(.RAWColorsCount), "RAWColorsCount"
+51550   Case "RAWRESOLUTION": ini.SaveKey CStr(.RAWResolution), "RAWResolution"
+51560   Case "REMOVEALLKNOWNFILEEXTENSIONS": ini.SaveKey CStr(Abs(.RemoveAllKnownFileExtensions)), "RemoveAllKnownFileExtensions"
+51570   Case "REMOVESPACES": ini.SaveKey CStr(Abs(.RemoveSpaces)), "RemoveSpaces"
+51580   Case "RUNPROGRAMAFTERSAVING": ini.SaveKey CStr(Abs(.RunProgramAfterSaving)), "RunProgramAfterSaving"
+51590   Case "RUNPROGRAMAFTERSAVINGPROGRAMNAME": ini.SaveKey CStr(.RunProgramAfterSavingProgramname), "RunProgramAfterSavingProgramname"
+51600   Case "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS": ini.SaveKey CStr(.RunProgramAfterSavingProgramParameters), "RunProgramAfterSavingProgramParameters"
+51610   Case "RUNPROGRAMAFTERSAVINGWAITUNTILREADY": ini.SaveKey CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), "RunProgramAfterSavingWaitUntilReady"
+51620   Case "RUNPROGRAMAFTERSAVINGWINDOWSTYLE": ini.SaveKey CStr(.RunProgramAfterSavingWindowstyle), "RunProgramAfterSavingWindowstyle"
+51630   Case "RUNPROGRAMBEFORESAVING": ini.SaveKey CStr(Abs(.RunProgramBeforeSaving)), "RunProgramBeforeSaving"
+51640   Case "RUNPROGRAMBEFORESAVINGPROGRAMNAME": ini.SaveKey CStr(.RunProgramBeforeSavingProgramname), "RunProgramBeforeSavingProgramname"
+51650   Case "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS": ini.SaveKey CStr(.RunProgramBeforeSavingProgramParameters), "RunProgramBeforeSavingProgramParameters"
+51660   Case "RUNPROGRAMBEFORESAVINGWINDOWSTYLE": ini.SaveKey CStr(.RunProgramBeforeSavingWindowstyle), "RunProgramBeforeSavingWindowstyle"
+51670   Case "SAVEFILENAME": ini.SaveKey CStr(.SaveFilename), "SaveFilename"
+51680   Case "SENDEMAILAFTERAUTOSAVING": ini.SaveKey CStr(Abs(.SendEmailAfterAutoSaving)), "SendEmailAfterAutoSaving"
+51690   Case "SENDMAILMETHOD": ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
+51700   Case "SHOWANIMATION": ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
+51710   Case "STAMPFONTCOLOR": ini.SaveKey CStr(.StampFontColor), "StampFontColor"
+51720   Case "STAMPFONTNAME": ini.SaveKey CStr(.StampFontname), "StampFontname"
+51730   Case "STAMPFONTSIZE": ini.SaveKey CStr(.StampFontsize), "StampFontsize"
+51740   Case "STAMPOUTLINEFONTTHICKNESS": ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
+51750   Case "STAMPSTRING": ini.SaveKey CStr(.StampString), "StampString"
+51760   Case "STAMPUSEOUTLINEFONT": ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
+51770   Case "STANDARDAUTHOR": ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
+51780   Case "STANDARDCREATIONDATE": ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
+51790   Case "STANDARDDATEFORMAT": ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
+51800   Case "STANDARDKEYWORDS": ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
+51810   Case "STANDARDMAILDOMAIN": ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
+51820   Case "STANDARDMODIFYDATE": ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
+51830   Case "STANDARDSAVEFORMAT": ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
+51840   Case "STANDARDSUBJECT": ini.SaveKey CStr(.StandardSubject), "StandardSubject"
+51850   Case "STANDARDTITLE": ini.SaveKey CStr(.StandardTitle), "StandardTitle"
+51860   Case "SVGRESOLUTION": ini.SaveKey CStr(.SVGResolution), "SVGResolution"
+51870   Case "TIFFCOLORSCOUNT": ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
+51880   Case "TIFFRESOLUTION": ini.SaveKey CStr(.TIFFResolution), "TIFFResolution"
+51890   Case "TOOLBARS": ini.SaveKey CStr(.Toolbars), "Toolbars"
+51900   Case "UPDATEINTERVAL": ini.SaveKey CStr(.UpdateInterval), "UpdateInterval"
+51910   Case "USEAUTOSAVE": ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
+51920   Case "USEAUTOSAVEDIRECTORY": ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
+51930   Case "USECREATIONDATENOW": ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
+51940   Case "USECUSTOMPAPERSIZE": ini.SaveKey CStr(.UseCustomPaperSize), "UseCustomPaperSize"
+51950   Case "USEFIXPAPERSIZE": ini.SaveKey CStr(Abs(.UseFixPapersize)), "UseFixPapersize"
+51960   Case "USESTANDARDAUTHOR": ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
+51970   End Select
+51980  End With
+51990  Set ini = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -3303,88 +3354,91 @@ On Error GoTo ErrPtnr_OnError
 51100   ini.SaveKey CStr(Abs(.PDFOptimize)), "PDFOptimize"
 51110   ini.SaveKey CStr(Abs(.PDFOwnerPass)), "PDFOwnerPass"
 51120   ini.SaveKey CStr(.PDFOwnerPasswordString), "PDFOwnerPasswordString"
-51130   ini.SaveKey CStr(Abs(.PDFSigningMultiSignature)), "PDFSigningMultiSignature"
-51140   ini.SaveKey CStr(.PDFSigningPFXFile), "PDFSigningPFXFile"
-51150   ini.SaveKey CStr(.PDFSigningPFXFilePassword), "PDFSigningPFXFilePassword"
-51160   ini.SaveKey CStr(.PDFSigningSignatureContact), "PDFSigningSignatureContact"
-51170   ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), "PDFSigningSignatureLeftX"
-51180   ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), "PDFSigningSignatureLeftY"
-51190   ini.SaveKey CStr(.PDFSigningSignatureLocation), "PDFSigningSignatureLocation"
-51200   ini.SaveKey CStr(.PDFSigningSignatureOnPage), "PDFSigningSignatureOnPage"
-51210   ini.SaveKey CStr(.PDFSigningSignatureReason), "PDFSigningSignatureReason"
-51220   ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), "PDFSigningSignatureRightX"
-51230   ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), "PDFSigningSignatureRightY"
-51240   ini.SaveKey CStr(Abs(.PDFSigningSignatureVisible)), "PDFSigningSignatureVisible"
-51250   ini.SaveKey CStr(Abs(.PDFSigningSignPDF)), "PDFSigningSignPDF"
-51260   ini.SaveKey CStr(.PDFSigningTimeServerUrl), "PDFSigningTimeServerUrl"
-51270   ini.SaveKey CStr(.PDFUpdateMetadata), "PDFUpdateMetadata"
-51280   ini.SaveKey CStr(Abs(.PDFUserPass)), "PDFUserPass"
-51290   ini.SaveKey CStr(.PDFUserPasswordString), "PDFUserPasswordString"
-51300   ini.SaveKey CStr(Abs(.PDFUseSecurity)), "PDFUseSecurity"
-51310   ini.SaveKey CStr(.PNGColorscount), "PNGColorscount"
-51320   ini.SaveKey CStr(.PNGResolution), "PNGResolution"
-51330   ini.SaveKey CStr(Abs(.PrintAfterSaving)), "PrintAfterSaving"
-51340   ini.SaveKey CStr(.PrintAfterSavingBitsPerPixel), "PrintAfterSavingBitsPerPixel"
-51350   ini.SaveKey CStr(Abs(.PrintAfterSavingDuplex)), "PrintAfterSavingDuplex"
-51360   ini.SaveKey CStr(.PrintAfterSavingMaxResolution), "PrintAfterSavingMaxResolution"
-51370   ini.SaveKey CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), "PrintAfterSavingMaxResolutionEnabled"
-51380   ini.SaveKey CStr(Abs(.PrintAfterSavingNoCancel)), "PrintAfterSavingNoCancel"
-51390   ini.SaveKey CStr(.PrintAfterSavingPrinter), "PrintAfterSavingPrinter"
-51400   ini.SaveKey CStr(.PrintAfterSavingQueryUser), "PrintAfterSavingQueryUser"
-51410   ini.SaveKey CStr(.PrintAfterSavingTumble), "PrintAfterSavingTumble"
-51420   ini.SaveKey CStr(Abs(.PrinterStop)), "PrinterStop"
-51430   ini.SaveKey CStr(.ProcessPriority), "ProcessPriority"
-51440   ini.SaveKey CStr(.ProgramFont), "ProgramFont"
-51450   ini.SaveKey CStr(.ProgramFontCharset), "ProgramFontCharset"
-51460   ini.SaveKey CStr(.ProgramFontSize), "ProgramFontSize"
-51470   ini.SaveKey CStr(.PSDColorsCount), "PSDColorsCount"
-51480   ini.SaveKey CStr(.PSDResolution), "PSDResolution"
-51490   ini.SaveKey CStr(.PSLanguageLevel), "PSLanguageLevel"
-51500   ini.SaveKey CStr(.RAWColorsCount), "RAWColorsCount"
-51510   ini.SaveKey CStr(.RAWResolution), "RAWResolution"
-51520   ini.SaveKey CStr(Abs(.RemoveAllKnownFileExtensions)), "RemoveAllKnownFileExtensions"
-51530   ini.SaveKey CStr(Abs(.RemoveSpaces)), "RemoveSpaces"
-51540   ini.SaveKey CStr(Abs(.RunProgramAfterSaving)), "RunProgramAfterSaving"
-51550   ini.SaveKey CStr(.RunProgramAfterSavingProgramname), "RunProgramAfterSavingProgramname"
-51560   ini.SaveKey CStr(.RunProgramAfterSavingProgramParameters), "RunProgramAfterSavingProgramParameters"
-51570   ini.SaveKey CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), "RunProgramAfterSavingWaitUntilReady"
-51580   ini.SaveKey CStr(.RunProgramAfterSavingWindowstyle), "RunProgramAfterSavingWindowstyle"
-51590   ini.SaveKey CStr(Abs(.RunProgramBeforeSaving)), "RunProgramBeforeSaving"
-51600   ini.SaveKey CStr(.RunProgramBeforeSavingProgramname), "RunProgramBeforeSavingProgramname"
-51610   ini.SaveKey CStr(.RunProgramBeforeSavingProgramParameters), "RunProgramBeforeSavingProgramParameters"
-51620   ini.SaveKey CStr(.RunProgramBeforeSavingWindowstyle), "RunProgramBeforeSavingWindowstyle"
-51630   ini.SaveKey CStr(.SaveFilename), "SaveFilename"
-51640   ini.SaveKey CStr(Abs(.SendEmailAfterAutoSaving)), "SendEmailAfterAutoSaving"
-51650   ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
-51660   ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
-51670   ini.SaveKey CStr(.StampFontColor), "StampFontColor"
-51680   ini.SaveKey CStr(.StampFontname), "StampFontname"
-51690   ini.SaveKey CStr(.StampFontsize), "StampFontsize"
-51700   ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
-51710   ini.SaveKey CStr(.StampString), "StampString"
-51720   ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
-51730   ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
-51740   ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
-51750   ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
-51760   ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
-51770   ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
-51780   ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
-51790   ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
-51800   ini.SaveKey CStr(.StandardSubject), "StandardSubject"
-51810   ini.SaveKey CStr(.StandardTitle), "StandardTitle"
-51820   ini.SaveKey CStr(.SVGResolution), "SVGResolution"
-51830   ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
-51840   ini.SaveKey CStr(.TIFFResolution), "TIFFResolution"
-51850   ini.SaveKey CStr(.Toolbars), "Toolbars"
-51860   ini.SaveKey CStr(.UpdateInterval), "UpdateInterval"
-51870   ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
-51880   ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
-51890   ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
-51900   ini.SaveKey CStr(.UseCustomPaperSize), "UseCustomPaperSize"
-51910   ini.SaveKey CStr(Abs(.UseFixPapersize)), "UseFixPapersize"
-51920   ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
-51930  End With
-51940  Set ini = Nothing
+51130   ini.SaveKey CStr(.PDFPageLayout), "PDFPageLayout"
+51140   ini.SaveKey CStr(.PDFPageMode), "PDFPageMode"
+51150   ini.SaveKey CStr(Abs(.PDFSigningMultiSignature)), "PDFSigningMultiSignature"
+51160   ini.SaveKey CStr(.PDFSigningPFXFile), "PDFSigningPFXFile"
+51170   ini.SaveKey CStr(.PDFSigningPFXFilePassword), "PDFSigningPFXFilePassword"
+51180   ini.SaveKey CStr(.PDFSigningSignatureContact), "PDFSigningSignatureContact"
+51190   ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), "PDFSigningSignatureLeftX"
+51200   ini.SaveKey Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), "PDFSigningSignatureLeftY"
+51210   ini.SaveKey CStr(.PDFSigningSignatureLocation), "PDFSigningSignatureLocation"
+51220   ini.SaveKey CStr(.PDFSigningSignatureOnPage), "PDFSigningSignatureOnPage"
+51230   ini.SaveKey CStr(.PDFSigningSignatureReason), "PDFSigningSignatureReason"
+51240   ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), "PDFSigningSignatureRightX"
+51250   ini.SaveKey Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), "PDFSigningSignatureRightY"
+51260   ini.SaveKey CStr(Abs(.PDFSigningSignatureVisible)), "PDFSigningSignatureVisible"
+51270   ini.SaveKey CStr(Abs(.PDFSigningSignPDF)), "PDFSigningSignPDF"
+51280   ini.SaveKey CStr(.PDFSigningTimeServerUrl), "PDFSigningTimeServerUrl"
+51290   ini.SaveKey CStr(.PDFStartPage), "PDFStartPage"
+51300   ini.SaveKey CStr(.PDFUpdateMetadata), "PDFUpdateMetadata"
+51310   ini.SaveKey CStr(Abs(.PDFUserPass)), "PDFUserPass"
+51320   ini.SaveKey CStr(.PDFUserPasswordString), "PDFUserPasswordString"
+51330   ini.SaveKey CStr(Abs(.PDFUseSecurity)), "PDFUseSecurity"
+51340   ini.SaveKey CStr(.PNGColorscount), "PNGColorscount"
+51350   ini.SaveKey CStr(.PNGResolution), "PNGResolution"
+51360   ini.SaveKey CStr(Abs(.PrintAfterSaving)), "PrintAfterSaving"
+51370   ini.SaveKey CStr(.PrintAfterSavingBitsPerPixel), "PrintAfterSavingBitsPerPixel"
+51380   ini.SaveKey CStr(Abs(.PrintAfterSavingDuplex)), "PrintAfterSavingDuplex"
+51390   ini.SaveKey CStr(.PrintAfterSavingMaxResolution), "PrintAfterSavingMaxResolution"
+51400   ini.SaveKey CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), "PrintAfterSavingMaxResolutionEnabled"
+51410   ini.SaveKey CStr(Abs(.PrintAfterSavingNoCancel)), "PrintAfterSavingNoCancel"
+51420   ini.SaveKey CStr(.PrintAfterSavingPrinter), "PrintAfterSavingPrinter"
+51430   ini.SaveKey CStr(.PrintAfterSavingQueryUser), "PrintAfterSavingQueryUser"
+51440   ini.SaveKey CStr(.PrintAfterSavingTumble), "PrintAfterSavingTumble"
+51450   ini.SaveKey CStr(Abs(.PrinterStop)), "PrinterStop"
+51460   ini.SaveKey CStr(.ProcessPriority), "ProcessPriority"
+51470   ini.SaveKey CStr(.ProgramFont), "ProgramFont"
+51480   ini.SaveKey CStr(.ProgramFontCharset), "ProgramFontCharset"
+51490   ini.SaveKey CStr(.ProgramFontSize), "ProgramFontSize"
+51500   ini.SaveKey CStr(.PSDColorsCount), "PSDColorsCount"
+51510   ini.SaveKey CStr(.PSDResolution), "PSDResolution"
+51520   ini.SaveKey CStr(.PSLanguageLevel), "PSLanguageLevel"
+51530   ini.SaveKey CStr(.RAWColorsCount), "RAWColorsCount"
+51540   ini.SaveKey CStr(.RAWResolution), "RAWResolution"
+51550   ini.SaveKey CStr(Abs(.RemoveAllKnownFileExtensions)), "RemoveAllKnownFileExtensions"
+51560   ini.SaveKey CStr(Abs(.RemoveSpaces)), "RemoveSpaces"
+51570   ini.SaveKey CStr(Abs(.RunProgramAfterSaving)), "RunProgramAfterSaving"
+51580   ini.SaveKey CStr(.RunProgramAfterSavingProgramname), "RunProgramAfterSavingProgramname"
+51590   ini.SaveKey CStr(.RunProgramAfterSavingProgramParameters), "RunProgramAfterSavingProgramParameters"
+51600   ini.SaveKey CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), "RunProgramAfterSavingWaitUntilReady"
+51610   ini.SaveKey CStr(.RunProgramAfterSavingWindowstyle), "RunProgramAfterSavingWindowstyle"
+51620   ini.SaveKey CStr(Abs(.RunProgramBeforeSaving)), "RunProgramBeforeSaving"
+51630   ini.SaveKey CStr(.RunProgramBeforeSavingProgramname), "RunProgramBeforeSavingProgramname"
+51640   ini.SaveKey CStr(.RunProgramBeforeSavingProgramParameters), "RunProgramBeforeSavingProgramParameters"
+51650   ini.SaveKey CStr(.RunProgramBeforeSavingWindowstyle), "RunProgramBeforeSavingWindowstyle"
+51660   ini.SaveKey CStr(.SaveFilename), "SaveFilename"
+51670   ini.SaveKey CStr(Abs(.SendEmailAfterAutoSaving)), "SendEmailAfterAutoSaving"
+51680   ini.SaveKey CStr(.SendMailMethod), "SendMailMethod"
+51690   ini.SaveKey CStr(Abs(.ShowAnimation)), "ShowAnimation"
+51700   ini.SaveKey CStr(.StampFontColor), "StampFontColor"
+51710   ini.SaveKey CStr(.StampFontname), "StampFontname"
+51720   ini.SaveKey CStr(.StampFontsize), "StampFontsize"
+51730   ini.SaveKey CStr(.StampOutlineFontthickness), "StampOutlineFontthickness"
+51740   ini.SaveKey CStr(.StampString), "StampString"
+51750   ini.SaveKey CStr(Abs(.StampUseOutlineFont)), "StampUseOutlineFont"
+51760   ini.SaveKey CStr(.StandardAuthor), "StandardAuthor"
+51770   ini.SaveKey CStr(.StandardCreationdate), "StandardCreationdate"
+51780   ini.SaveKey CStr(.StandardDateformat), "StandardDateformat"
+51790   ini.SaveKey CStr(.StandardKeywords), "StandardKeywords"
+51800   ini.SaveKey CStr(.StandardMailDomain), "StandardMailDomain"
+51810   ini.SaveKey CStr(.StandardModifydate), "StandardModifydate"
+51820   ini.SaveKey CStr(.StandardSaveformat), "StandardSaveformat"
+51830   ini.SaveKey CStr(.StandardSubject), "StandardSubject"
+51840   ini.SaveKey CStr(.StandardTitle), "StandardTitle"
+51850   ini.SaveKey CStr(.SVGResolution), "SVGResolution"
+51860   ini.SaveKey CStr(.TIFFColorscount), "TIFFColorscount"
+51870   ini.SaveKey CStr(.TIFFResolution), "TIFFResolution"
+51880   ini.SaveKey CStr(.Toolbars), "Toolbars"
+51890   ini.SaveKey CStr(.UpdateInterval), "UpdateInterval"
+51900   ini.SaveKey CStr(Abs(.UseAutosave)), "UseAutosave"
+51910   ini.SaveKey CStr(Abs(.UseAutosaveDirectory)), "UseAutosaveDirectory"
+51920   ini.SaveKey CStr(Abs(.UseCreationDateNow)), "UseCreationDateNow"
+51930   ini.SaveKey CStr(.UseCustomPaperSize), "UseCustomPaperSize"
+51940   ini.SaveKey CStr(Abs(.UseFixPapersize)), "UseFixPapersize"
+51950   ini.SaveKey CStr(Abs(.UseStandardAuthor)), "UseStandardAuthor"
+51960  End With
+51970  Set ini = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -4560,1213 +4614,1255 @@ On Error GoTo ErrPtnr_OnError
 61570      .PDFOptimize = 0
 61580     End If
 61590   End If
-61600   tStr = reg.GetRegistryValue("PDFUpdateMetadata")
+61600   tStr = reg.GetRegistryValue("PDFPageLayout")
 61610   If IsNumeric(tStr) Then
-61620     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-61630       .PDFUpdateMetadata = CLng(tStr)
+61620     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+61630       .PDFPageLayout = CLng(tStr)
 61640      Else
 61650       If UseStandard Then
-61660        .PDFUpdateMetadata = 1
+61660        .PDFPageLayout = 0
 61670       End If
 61680     End If
 61690    Else
 61700     If UseStandard Then
-61710      .PDFUpdateMetadata = 1
+61710      .PDFPageLayout = 0
 61720     End If
 61730   End If
-61740   reg.SubKey = "Printing\Formats\PDF\Security"
-61750   tStr = reg.GetRegistryValue("PDFAes128Encryption")
-61760   If IsNumeric(tStr) Then
-61770     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-61780       .PDFAes128Encryption = CLng(tStr)
-61790      Else
-61800       If UseStandard Then
-61810        .PDFAes128Encryption = 0
-61820       End If
-61830     End If
-61840    Else
-61850     If UseStandard Then
-61860      .PDFAes128Encryption = 0
-61870     End If
-61880   End If
-61890   tStr = reg.GetRegistryValue("PDFAllowAssembly")
-61900   If IsNumeric(tStr) Then
-61910     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-61920       .PDFAllowAssembly = CLng(tStr)
-61930      Else
-61940       If UseStandard Then
-61950        .PDFAllowAssembly = 0
-61960       End If
-61970     End If
-61980    Else
-61990     If UseStandard Then
-62000      .PDFAllowAssembly = 0
-62010     End If
-62020   End If
-62030   tStr = reg.GetRegistryValue("PDFAllowDegradedPrinting")
-62040   If IsNumeric(tStr) Then
-62050     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-62060       .PDFAllowDegradedPrinting = CLng(tStr)
-62070      Else
-62080       If UseStandard Then
-62090        .PDFAllowDegradedPrinting = 0
-62100       End If
-62110     End If
-62120    Else
-62130     If UseStandard Then
-62140      .PDFAllowDegradedPrinting = 0
-62150     End If
-62160   End If
-62170   tStr = reg.GetRegistryValue("PDFAllowFillIn")
+61740   tStr = reg.GetRegistryValue("PDFPageMode")
+61750   If IsNumeric(tStr) Then
+61760     If CLng(tStr) >= 0 And CLng(tStr) <= 5 Then
+61770       .PDFPageMode = CLng(tStr)
+61780      Else
+61790       If UseStandard Then
+61800        .PDFPageMode = 0
+61810       End If
+61820     End If
+61830    Else
+61840     If UseStandard Then
+61850      .PDFPageMode = 0
+61860     End If
+61870   End If
+61880   tStr = reg.GetRegistryValue("PDFStartPage")
+61890   If IsNumeric(tStr) Then
+61900     If CLng(tStr) >= 1 Then
+61910       .PDFStartPage = CLng(tStr)
+61920      Else
+61930       If UseStandard Then
+61940        .PDFStartPage = 1
+61950       End If
+61960     End If
+61970    Else
+61980     If UseStandard Then
+61990      .PDFStartPage = 1
+62000     End If
+62010   End If
+62020   tStr = reg.GetRegistryValue("PDFUpdateMetadata")
+62030   If IsNumeric(tStr) Then
+62040     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+62050       .PDFUpdateMetadata = CLng(tStr)
+62060      Else
+62070       If UseStandard Then
+62080        .PDFUpdateMetadata = 1
+62090       End If
+62100     End If
+62110    Else
+62120     If UseStandard Then
+62130      .PDFUpdateMetadata = 1
+62140     End If
+62150   End If
+62160   reg.SubKey = "Printing\Formats\PDF\Security"
+62170   tStr = reg.GetRegistryValue("PDFAes128Encryption")
 62180   If IsNumeric(tStr) Then
 62190     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-62200       .PDFAllowFillIn = CLng(tStr)
+62200       .PDFAes128Encryption = CLng(tStr)
 62210      Else
 62220       If UseStandard Then
-62230        .PDFAllowFillIn = 0
+62230        .PDFAes128Encryption = 0
 62240       End If
 62250     End If
 62260    Else
 62270     If UseStandard Then
-62280      .PDFAllowFillIn = 0
+62280      .PDFAes128Encryption = 0
 62290     End If
 62300   End If
-62310   tStr = reg.GetRegistryValue("PDFAllowScreenReaders")
+62310   tStr = reg.GetRegistryValue("PDFAllowAssembly")
 62320   If IsNumeric(tStr) Then
 62330     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-62340       .PDFAllowScreenReaders = CLng(tStr)
+62340       .PDFAllowAssembly = CLng(tStr)
 62350      Else
 62360       If UseStandard Then
-62370        .PDFAllowScreenReaders = 0
+62370        .PDFAllowAssembly = 0
 62380       End If
 62390     End If
 62400    Else
 62410     If UseStandard Then
-62420      .PDFAllowScreenReaders = 0
+62420      .PDFAllowAssembly = 0
 62430     End If
 62440   End If
-62450   tStr = reg.GetRegistryValue("PDFDisallowCopy")
+62450   tStr = reg.GetRegistryValue("PDFAllowDegradedPrinting")
 62460   If IsNumeric(tStr) Then
 62470     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-62480       .PDFDisallowCopy = CLng(tStr)
+62480       .PDFAllowDegradedPrinting = CLng(tStr)
 62490      Else
 62500       If UseStandard Then
-62510        .PDFDisallowCopy = 1
+62510        .PDFAllowDegradedPrinting = 0
 62520       End If
 62530     End If
 62540    Else
 62550     If UseStandard Then
-62560      .PDFDisallowCopy = 1
+62560      .PDFAllowDegradedPrinting = 0
 62570     End If
 62580   End If
-62590   tStr = reg.GetRegistryValue("PDFDisallowModifyAnnotations")
+62590   tStr = reg.GetRegistryValue("PDFAllowFillIn")
 62600   If IsNumeric(tStr) Then
 62610     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-62620       .PDFDisallowModifyAnnotations = CLng(tStr)
+62620       .PDFAllowFillIn = CLng(tStr)
 62630      Else
 62640       If UseStandard Then
-62650        .PDFDisallowModifyAnnotations = 0
+62650        .PDFAllowFillIn = 0
 62660       End If
 62670     End If
 62680    Else
 62690     If UseStandard Then
-62700      .PDFDisallowModifyAnnotations = 0
+62700      .PDFAllowFillIn = 0
 62710     End If
 62720   End If
-62730   tStr = reg.GetRegistryValue("PDFDisallowModifyContents")
+62730   tStr = reg.GetRegistryValue("PDFAllowScreenReaders")
 62740   If IsNumeric(tStr) Then
 62750     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-62760       .PDFDisallowModifyContents = CLng(tStr)
+62760       .PDFAllowScreenReaders = CLng(tStr)
 62770      Else
 62780       If UseStandard Then
-62790        .PDFDisallowModifyContents = 0
+62790        .PDFAllowScreenReaders = 0
 62800       End If
 62810     End If
 62820    Else
 62830     If UseStandard Then
-62840      .PDFDisallowModifyContents = 0
+62840      .PDFAllowScreenReaders = 0
 62850     End If
 62860   End If
-62870   tStr = reg.GetRegistryValue("PDFDisallowPrinting")
+62870   tStr = reg.GetRegistryValue("PDFDisallowCopy")
 62880   If IsNumeric(tStr) Then
 62890     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-62900       .PDFDisallowPrinting = CLng(tStr)
+62900       .PDFDisallowCopy = CLng(tStr)
 62910      Else
 62920       If UseStandard Then
-62930        .PDFDisallowPrinting = 0
+62930        .PDFDisallowCopy = 1
 62940       End If
 62950     End If
 62960    Else
 62970     If UseStandard Then
-62980      .PDFDisallowPrinting = 0
+62980      .PDFDisallowCopy = 1
 62990     End If
 63000   End If
-63010   tStr = reg.GetRegistryValue("PDFEncryptor")
+63010   tStr = reg.GetRegistryValue("PDFDisallowModifyAnnotations")
 63020   If IsNumeric(tStr) Then
-63030     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-63040       .PDFEncryptor = CLng(tStr)
+63030     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63040       .PDFDisallowModifyAnnotations = CLng(tStr)
 63050      Else
 63060       If UseStandard Then
-63070        .PDFEncryptor = 0
+63070        .PDFDisallowModifyAnnotations = 0
 63080       End If
 63090     End If
 63100    Else
 63110     If UseStandard Then
-63120      .PDFEncryptor = 0
+63120      .PDFDisallowModifyAnnotations = 0
 63130     End If
 63140   End If
-63150   tStr = reg.GetRegistryValue("PDFHighEncryption")
+63150   tStr = reg.GetRegistryValue("PDFDisallowModifyContents")
 63160   If IsNumeric(tStr) Then
 63170     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-63180       .PDFHighEncryption = CLng(tStr)
+63180       .PDFDisallowModifyContents = CLng(tStr)
 63190      Else
 63200       If UseStandard Then
-63210        .PDFHighEncryption = 0
+63210        .PDFDisallowModifyContents = 0
 63220       End If
 63230     End If
 63240    Else
 63250     If UseStandard Then
-63260      .PDFHighEncryption = 0
+63260      .PDFDisallowModifyContents = 0
 63270     End If
 63280   End If
-63290   tStr = reg.GetRegistryValue("PDFLowEncryption")
+63290   tStr = reg.GetRegistryValue("PDFDisallowPrinting")
 63300   If IsNumeric(tStr) Then
 63310     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-63320       .PDFLowEncryption = CLng(tStr)
+63320       .PDFDisallowPrinting = CLng(tStr)
 63330      Else
 63340       If UseStandard Then
-63350        .PDFLowEncryption = 1
+63350        .PDFDisallowPrinting = 0
 63360       End If
 63370     End If
 63380    Else
 63390     If UseStandard Then
-63400      .PDFLowEncryption = 1
+63400      .PDFDisallowPrinting = 0
 63410     End If
 63420   End If
-63430   tStr = reg.GetRegistryValue("PDFOwnerPass")
+63430   tStr = reg.GetRegistryValue("PDFEncryptor")
 63440   If IsNumeric(tStr) Then
-63450     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-63460       .PDFOwnerPass = CLng(tStr)
+63450     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+63460       .PDFEncryptor = CLng(tStr)
 63470      Else
 63480       If UseStandard Then
-63490        .PDFOwnerPass = 0
+63490        .PDFEncryptor = 0
 63500       End If
 63510     End If
 63520    Else
 63530     If UseStandard Then
-63540      .PDFOwnerPass = 0
+63540      .PDFEncryptor = 0
 63550     End If
 63560   End If
-63570   tStr = reg.GetRegistryValue("PDFOwnerPasswordString")
-63580   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-63590     .PDFOwnerPasswordString = ""
-63600    Else
-63610     If LenB(tStr) > 0 Then
-63620      .PDFOwnerPasswordString = tStr
-63630     End If
-63640   End If
-63650   tStr = reg.GetRegistryValue("PDFUserPass")
-63660   If IsNumeric(tStr) Then
-63670     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-63680       .PDFUserPass = CLng(tStr)
-63690      Else
-63700       If UseStandard Then
-63710        .PDFUserPass = 0
-63720       End If
-63730     End If
-63740    Else
-63750     If UseStandard Then
-63760      .PDFUserPass = 0
-63770     End If
-63780   End If
-63790   tStr = reg.GetRegistryValue("PDFUserPasswordString")
-63800   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-63810     .PDFUserPasswordString = ""
-63820    Else
-63830     If LenB(tStr) > 0 Then
-63840      .PDFUserPasswordString = tStr
-63850     End If
-63860   End If
-63870   tStr = reg.GetRegistryValue("PDFUseSecurity")
-63880   If IsNumeric(tStr) Then
-63890     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-63900       .PDFUseSecurity = CLng(tStr)
-63910      Else
-63920       If UseStandard Then
-63930        .PDFUseSecurity = 0
-63940       End If
-63950     End If
-63960    Else
-63970     If UseStandard Then
-63980      .PDFUseSecurity = 0
-63990     End If
-64000   End If
-64010   reg.SubKey = "Printing\Formats\PDF\Signing"
-64020   tStr = reg.GetRegistryValue("PDFSigningMultiSignature")
-64030   If IsNumeric(tStr) Then
-64040     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-64050       .PDFSigningMultiSignature = CLng(tStr)
-64060      Else
-64070       If UseStandard Then
-64080        .PDFSigningMultiSignature = 0
-64090       End If
-64100     End If
-64110    Else
-64120     If UseStandard Then
-64130      .PDFSigningMultiSignature = 0
-64140     End If
-64150   End If
-64160   tStr = reg.GetRegistryValue("PDFSigningPFXFile")
-64170   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64180     .PDFSigningPFXFile = ""
-64190    Else
-64200     If LenB(tStr) > 0 Then
-64210      .PDFSigningPFXFile = tStr
-64220     End If
-64230   End If
-64240   tStr = reg.GetRegistryValue("PDFSigningPFXFilePassword")
-64250   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64260     .PDFSigningPFXFilePassword = ""
-64270    Else
-64280     If LenB(tStr) > 0 Then
-64290      .PDFSigningPFXFilePassword = tStr
-64300     End If
-64310   End If
-64320   tStr = reg.GetRegistryValue("PDFSigningSignatureContact")
-64330   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64340     .PDFSigningSignatureContact = ""
-64350    Else
-64360     If LenB(tStr) > 0 Then
-64370      .PDFSigningSignatureContact = tStr
-64380     End If
-64390   End If
-64400   tStr = reg.GetRegistryValue("PDFSigningSignatureLeftX")
-64410   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-64420     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-64430       .PDFSigningSignatureLeftX = CDbl(Replace$(tStr, ".", GetDecimalChar))
-64440      Else
-64450       If UseStandard Then
-64460        .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
-64470       End If
-64480     End If
-64490    Else
-64500     If UseStandard Then
-64510      .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
+63570   tStr = reg.GetRegistryValue("PDFHighEncryption")
+63580   If IsNumeric(tStr) Then
+63590     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63600       .PDFHighEncryption = CLng(tStr)
+63610      Else
+63620       If UseStandard Then
+63630        .PDFHighEncryption = 0
+63640       End If
+63650     End If
+63660    Else
+63670     If UseStandard Then
+63680      .PDFHighEncryption = 0
+63690     End If
+63700   End If
+63710   tStr = reg.GetRegistryValue("PDFLowEncryption")
+63720   If IsNumeric(tStr) Then
+63730     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63740       .PDFLowEncryption = CLng(tStr)
+63750      Else
+63760       If UseStandard Then
+63770        .PDFLowEncryption = 1
+63780       End If
+63790     End If
+63800    Else
+63810     If UseStandard Then
+63820      .PDFLowEncryption = 1
+63830     End If
+63840   End If
+63850   tStr = reg.GetRegistryValue("PDFOwnerPass")
+63860   If IsNumeric(tStr) Then
+63870     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+63880       .PDFOwnerPass = CLng(tStr)
+63890      Else
+63900       If UseStandard Then
+63910        .PDFOwnerPass = 0
+63920       End If
+63930     End If
+63940    Else
+63950     If UseStandard Then
+63960      .PDFOwnerPass = 0
+63970     End If
+63980   End If
+63990   tStr = reg.GetRegistryValue("PDFOwnerPasswordString")
+64000   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64010     .PDFOwnerPasswordString = ""
+64020    Else
+64030     If LenB(tStr) > 0 Then
+64040      .PDFOwnerPasswordString = tStr
+64050     End If
+64060   End If
+64070   tStr = reg.GetRegistryValue("PDFUserPass")
+64080   If IsNumeric(tStr) Then
+64090     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64100       .PDFUserPass = CLng(tStr)
+64110      Else
+64120       If UseStandard Then
+64130        .PDFUserPass = 0
+64140       End If
+64150     End If
+64160    Else
+64170     If UseStandard Then
+64180      .PDFUserPass = 0
+64190     End If
+64200   End If
+64210   tStr = reg.GetRegistryValue("PDFUserPasswordString")
+64220   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64230     .PDFUserPasswordString = ""
+64240    Else
+64250     If LenB(tStr) > 0 Then
+64260      .PDFUserPasswordString = tStr
+64270     End If
+64280   End If
+64290   tStr = reg.GetRegistryValue("PDFUseSecurity")
+64300   If IsNumeric(tStr) Then
+64310     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64320       .PDFUseSecurity = CLng(tStr)
+64330      Else
+64340       If UseStandard Then
+64350        .PDFUseSecurity = 0
+64360       End If
+64370     End If
+64380    Else
+64390     If UseStandard Then
+64400      .PDFUseSecurity = 0
+64410     End If
+64420   End If
+64430   reg.SubKey = "Printing\Formats\PDF\Signing"
+64440   tStr = reg.GetRegistryValue("PDFSigningMultiSignature")
+64450   If IsNumeric(tStr) Then
+64460     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+64470       .PDFSigningMultiSignature = CLng(tStr)
+64480      Else
+64490       If UseStandard Then
+64500        .PDFSigningMultiSignature = 0
+64510       End If
 64520     End If
-64530   End If
-64540   tStr = reg.GetRegistryValue("PDFSigningSignatureLeftY")
-64550   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-64560     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-64570       .PDFSigningSignatureLeftY = CDbl(Replace$(tStr, ".", GetDecimalChar))
-64580      Else
-64590       If UseStandard Then
-64600        .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
-64610       End If
-64620     End If
-64630    Else
-64640     If UseStandard Then
-64650      .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
-64660     End If
-64670   End If
-64680   tStr = reg.GetRegistryValue("PDFSigningSignatureLocation")
-64690   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64700     .PDFSigningSignatureLocation = ""
-64710    Else
-64720     If LenB(tStr) > 0 Then
-64730      .PDFSigningSignatureLocation = tStr
-64740     End If
-64750   End If
-64760   tStr = reg.GetRegistryValue("PDFSigningSignatureOnPage")
-64770   If IsNumeric(tStr) Then
-64780     If CLng(tStr) >= 0 Then
-64790       .PDFSigningSignatureOnPage = CLng(tStr)
-64800      Else
-64810       If UseStandard Then
-64820        .PDFSigningSignatureOnPage = 1
-64830       End If
-64840     End If
-64850    Else
-64860     If UseStandard Then
-64870      .PDFSigningSignatureOnPage = 1
-64880     End If
-64890   End If
-64900   tStr = reg.GetRegistryValue("PDFSigningSignatureReason")
-64910   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-64920     .PDFSigningSignatureReason = ""
-64930    Else
-64940     If LenB(tStr) > 0 Then
-64950      .PDFSigningSignatureReason = tStr
-64960     End If
-64970   End If
-64980   tStr = reg.GetRegistryValue("PDFSigningSignatureRightX")
-64990   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-65000     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-65010       .PDFSigningSignatureRightX = CDbl(Replace$(tStr, ".", GetDecimalChar))
-65020      Else
-65030       If UseStandard Then
-65040        .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
-65050       End If
-65060     End If
-65070    Else
-65080     If UseStandard Then
-65090      .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
-65100     End If
-65110   End If
-65120   tStr = reg.GetRegistryValue("PDFSigningSignatureRightY")
-65130   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
-65140     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
-65150       .PDFSigningSignatureRightY = CDbl(Replace$(tStr, ".", GetDecimalChar))
-65160      Else
-65170       If UseStandard Then
-65180        .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
-65190       End If
-65200     End If
-65210    Else
-65220     If UseStandard Then
-65230      .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
-65240     End If
-65250   End If
-65260   tStr = reg.GetRegistryValue("PDFSigningSignatureVisible")
-65270   If IsNumeric(tStr) Then
-65280     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-65290       .PDFSigningSignatureVisible = CLng(tStr)
-65300      Else
-65310       If UseStandard Then
-65320        .PDFSigningSignatureVisible = 0
-65330       End If
-65340     End If
+64530    Else
+64540     If UseStandard Then
+64550      .PDFSigningMultiSignature = 0
+64560     End If
+64570   End If
+64580   tStr = reg.GetRegistryValue("PDFSigningPFXFile")
+64590   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64600     .PDFSigningPFXFile = ""
+64610    Else
+64620     If LenB(tStr) > 0 Then
+64630      .PDFSigningPFXFile = tStr
+64640     End If
+64650   End If
+64660   tStr = reg.GetRegistryValue("PDFSigningPFXFilePassword")
+64670   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64680     .PDFSigningPFXFilePassword = ""
+64690    Else
+64700     If LenB(tStr) > 0 Then
+64710      .PDFSigningPFXFilePassword = tStr
+64720     End If
+64730   End If
+64740   tStr = reg.GetRegistryValue("PDFSigningSignatureContact")
+64750   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+64760     .PDFSigningSignatureContact = ""
+64770    Else
+64780     If LenB(tStr) > 0 Then
+64790      .PDFSigningSignatureContact = tStr
+64800     End If
+64810   End If
+64820   tStr = reg.GetRegistryValue("PDFSigningSignatureLeftX")
+64830   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+64840     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+64850       .PDFSigningSignatureLeftX = CDbl(Replace$(tStr, ".", GetDecimalChar))
+64860      Else
+64870       If UseStandard Then
+64880        .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
+64890       End If
+64900     End If
+64910    Else
+64920     If UseStandard Then
+64930      .PDFSigningSignatureLeftX = Replace$("100", ".", GetDecimalChar)
+64940     End If
+64950   End If
+64960   tStr = reg.GetRegistryValue("PDFSigningSignatureLeftY")
+64970   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+64980     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+64990       .PDFSigningSignatureLeftY = CDbl(Replace$(tStr, ".", GetDecimalChar))
+65000      Else
+65010       If UseStandard Then
+65020        .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
+65030       End If
+65040     End If
+65050    Else
+65060     If UseStandard Then
+65070      .PDFSigningSignatureLeftY = Replace$("100", ".", GetDecimalChar)
+65080     End If
+65090   End If
+65100   tStr = reg.GetRegistryValue("PDFSigningSignatureLocation")
+65110   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+65120     .PDFSigningSignatureLocation = ""
+65130    Else
+65140     If LenB(tStr) > 0 Then
+65150      .PDFSigningSignatureLocation = tStr
+65160     End If
+65170   End If
+65180   tStr = reg.GetRegistryValue("PDFSigningSignatureOnPage")
+65190   If IsNumeric(tStr) Then
+65200     If CLng(tStr) >= 0 Then
+65210       .PDFSigningSignatureOnPage = CLng(tStr)
+65220      Else
+65230       If UseStandard Then
+65240        .PDFSigningSignatureOnPage = 1
+65250       End If
+65260     End If
+65270    Else
+65280     If UseStandard Then
+65290      .PDFSigningSignatureOnPage = 1
+65300     End If
+65310   End If
+65320   tStr = reg.GetRegistryValue("PDFSigningSignatureReason")
+65330   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+65340     .PDFSigningSignatureReason = ""
 65350    Else
-65360     If UseStandard Then
-65370      .PDFSigningSignatureVisible = 0
+65360     If LenB(tStr) > 0 Then
+65370      .PDFSigningSignatureReason = tStr
 65380     End If
 65390   End If
-65400   tStr = reg.GetRegistryValue("PDFSigningSignPDF")
-65410   If IsNumeric(tStr) Then
-65420     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-65430       .PDFSigningSignPDF = CLng(tStr)
+65400   tStr = reg.GetRegistryValue("PDFSigningSignatureRightX")
+65410   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+65420     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+65430       .PDFSigningSignatureRightX = CDbl(Replace$(tStr, ".", GetDecimalChar))
 65440      Else
 65450       If UseStandard Then
-65460        .PDFSigningSignPDF = 0
+65460        .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
 65470       End If
 65480     End If
 65490    Else
 65500     If UseStandard Then
-65510      .PDFSigningSignPDF = 0
+65510      .PDFSigningSignatureRightX = Replace$("200", ".", GetDecimalChar)
 65520     End If
 65530   End If
-65540   tStr = reg.GetRegistryValue("PDFSigningTimeServerUrl")
-65550   If LenB(tStr) = 0 And LenB("http://timestamp.globalsign.com/scripts/timstamp.dll") > 0 And UseStandard Then
-65560     .PDFSigningTimeServerUrl = "http://timestamp.globalsign.com/scripts/timstamp.dll"
-65570    Else
-65580     If LenB(tStr) > 0 Then
-65590      .PDFSigningTimeServerUrl = tStr
-65600     End If
-65610   End If
-65620   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
-65630   tStr = reg.GetRegistryValue("EPSLanguageLevel")
-65640   If IsNumeric(tStr) Then
-65650     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-65660       .EPSLanguageLevel = CLng(tStr)
-65670      Else
-65680       If UseStandard Then
-65690        .EPSLanguageLevel = 2
-65700       End If
-65710     End If
-65720    Else
-65730     If UseStandard Then
-65740      .EPSLanguageLevel = 2
-65750     End If
-65760   End If
-65770   tStr = reg.GetRegistryValue("PSLanguageLevel")
-65780   If IsNumeric(tStr) Then
-65790     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-65800       .PSLanguageLevel = CLng(tStr)
-65810      Else
-65820       If UseStandard Then
-65830        .PSLanguageLevel = 2
-65840       End If
-65850     End If
-65860    Else
-65870     If UseStandard Then
-65880      .PSLanguageLevel = 2
-65890     End If
-65900   End If
-65910   reg.SubKey = "Program"
-65920   tStr = reg.GetRegistryValue("AdditionalGhostscriptParameters")
-65930   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-65940     .AdditionalGhostscriptParameters = ""
-65950    Else
-65960     If LenB(tStr) > 0 Then
-65970      .AdditionalGhostscriptParameters = tStr
-65980     End If
-65990   End If
-66000   tStr = reg.GetRegistryValue("AdditionalGhostscriptSearchpath")
-66010   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-66020     .AdditionalGhostscriptSearchpath = ""
-66030    Else
-66040     If LenB(tStr) > 0 Then
-66050      .AdditionalGhostscriptSearchpath = tStr
-66060     End If
-66070   End If
-66080   tStr = reg.GetRegistryValue("AddWindowsFontpath")
-66090   If IsNumeric(tStr) Then
-66100     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66110       .AddWindowsFontpath = CLng(tStr)
-66120      Else
-66130       If UseStandard Then
-66140        .AddWindowsFontpath = 1
-66150       End If
-66160     End If
-66170    Else
-66180     If UseStandard Then
-66190      .AddWindowsFontpath = 1
-66200     End If
-66210   End If
-66220   tStr = reg.GetRegistryValue("AllowSpecialGSCharsInFilenames")
-66230   If IsNumeric(tStr) Then
-66240     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66250       .AllowSpecialGSCharsInFilenames = CLng(tStr)
-66260      Else
-66270       If UseStandard Then
-66280        .AllowSpecialGSCharsInFilenames = 1
-66290       End If
-66300     End If
-66310    Else
-66320     If UseStandard Then
-66330      .AllowSpecialGSCharsInFilenames = 1
-66340     End If
-66350   End If
-66360   tStr = reg.GetRegistryValue("AutosaveDirectory")
-66370   If LenB(Trim$(tStr)) > 0 Then
-66380     .AutosaveDirectory = CompletePath(tStr)
-66390    Else
-66400     If UseStandard Then
-66410      If InstalledAsServer Then
-66420        .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
-66430       Else
-66440        .AutosaveDirectory = "<MyFiles>"
-66450      End If
-66460     End If
-66470   End If
-66480   tStr = reg.GetRegistryValue("AutosaveFilename")
-66490   If LenB(tStr) = 0 And LenB("<DateTime>") > 0 And UseStandard Then
-66500     .AutosaveFilename = "<DateTime>"
-66510    Else
-66520     If LenB(tStr) > 0 Then
-66530      .AutosaveFilename = tStr
-66540     End If
-66550   End If
-66560   tStr = reg.GetRegistryValue("AutosaveFormat")
-66570   If IsNumeric(tStr) Then
-66580     If CLng(tStr) >= 0 And CLng(tStr) <= 14 Then
-66590       .AutosaveFormat = CLng(tStr)
-66600      Else
-66610       If UseStandard Then
-66620        .AutosaveFormat = 0
-66630       End If
-66640     End If
-66650    Else
-66660     If UseStandard Then
-66670      .AutosaveFormat = 0
-66680     End If
-66690   End If
-66700   tStr = reg.GetRegistryValue("AutosaveStartStandardProgram")
-66710   If IsNumeric(tStr) Then
-66720     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66730       .AutosaveStartStandardProgram = CLng(tStr)
-66740      Else
-66750       If UseStandard Then
-66760        .AutosaveStartStandardProgram = 0
-66770       End If
-66780     End If
-66790    Else
-66800     If UseStandard Then
-66810      .AutosaveStartStandardProgram = 0
-66820     End If
-66830   End If
-66840   tStr = reg.GetRegistryValue("ClientComputerResolveIPAddress")
-66850   If IsNumeric(tStr) Then
-66860     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-66870       .ClientComputerResolveIPAddress = CLng(tStr)
-66880      Else
-66890       If UseStandard Then
-66900        .ClientComputerResolveIPAddress = 0
-66910       End If
-66920     End If
+65540   tStr = reg.GetRegistryValue("PDFSigningSignatureRightY")
+65550   If IsNumeric(Replace$(tStr, ".", GetDecimalChar)) Then
+65560     If CDbl(Replace$(tStr, ".", GetDecimalChar)) >= 0 Then
+65570       .PDFSigningSignatureRightY = CDbl(Replace$(tStr, ".", GetDecimalChar))
+65580      Else
+65590       If UseStandard Then
+65600        .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
+65610       End If
+65620     End If
+65630    Else
+65640     If UseStandard Then
+65650      .PDFSigningSignatureRightY = Replace$("200", ".", GetDecimalChar)
+65660     End If
+65670   End If
+65680   tStr = reg.GetRegistryValue("PDFSigningSignatureVisible")
+65690   If IsNumeric(tStr) Then
+65700     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65710       .PDFSigningSignatureVisible = CLng(tStr)
+65720      Else
+65730       If UseStandard Then
+65740        .PDFSigningSignatureVisible = 0
+65750       End If
+65760     End If
+65770    Else
+65780     If UseStandard Then
+65790      .PDFSigningSignatureVisible = 0
+65800     End If
+65810   End If
+65820   tStr = reg.GetRegistryValue("PDFSigningSignPDF")
+65830   If IsNumeric(tStr) Then
+65840     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+65850       .PDFSigningSignPDF = CLng(tStr)
+65860      Else
+65870       If UseStandard Then
+65880        .PDFSigningSignPDF = 0
+65890       End If
+65900     End If
+65910    Else
+65920     If UseStandard Then
+65930      .PDFSigningSignPDF = 0
+65940     End If
+65950   End If
+65960   tStr = reg.GetRegistryValue("PDFSigningTimeServerUrl")
+65970   If LenB(tStr) = 0 And LenB("http://timestamp.globalsign.com/scripts/timstamp.dll") > 0 And UseStandard Then
+65980     .PDFSigningTimeServerUrl = "http://timestamp.globalsign.com/scripts/timstamp.dll"
+65990    Else
+66000     If LenB(tStr) > 0 Then
+66010      .PDFSigningTimeServerUrl = tStr
+66020     End If
+66030   End If
+66040   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
+66050   tStr = reg.GetRegistryValue("EPSLanguageLevel")
+66060   If IsNumeric(tStr) Then
+66070     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+66080       .EPSLanguageLevel = CLng(tStr)
+66090      Else
+66100       If UseStandard Then
+66110        .EPSLanguageLevel = 2
+66120       End If
+66130     End If
+66140    Else
+66150     If UseStandard Then
+66160      .EPSLanguageLevel = 2
+66170     End If
+66180   End If
+66190   tStr = reg.GetRegistryValue("PSLanguageLevel")
+66200   If IsNumeric(tStr) Then
+66210     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+66220       .PSLanguageLevel = CLng(tStr)
+66230      Else
+66240       If UseStandard Then
+66250        .PSLanguageLevel = 2
+66260       End If
+66270     End If
+66280    Else
+66290     If UseStandard Then
+66300      .PSLanguageLevel = 2
+66310     End If
+66320   End If
+66330   reg.SubKey = "Program"
+66340   tStr = reg.GetRegistryValue("AdditionalGhostscriptParameters")
+66350   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66360     .AdditionalGhostscriptParameters = ""
+66370    Else
+66380     If LenB(tStr) > 0 Then
+66390      .AdditionalGhostscriptParameters = tStr
+66400     End If
+66410   End If
+66420   tStr = reg.GetRegistryValue("AdditionalGhostscriptSearchpath")
+66430   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+66440     .AdditionalGhostscriptSearchpath = ""
+66450    Else
+66460     If LenB(tStr) > 0 Then
+66470      .AdditionalGhostscriptSearchpath = tStr
+66480     End If
+66490   End If
+66500   tStr = reg.GetRegistryValue("AddWindowsFontpath")
+66510   If IsNumeric(tStr) Then
+66520     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66530       .AddWindowsFontpath = CLng(tStr)
+66540      Else
+66550       If UseStandard Then
+66560        .AddWindowsFontpath = 1
+66570       End If
+66580     End If
+66590    Else
+66600     If UseStandard Then
+66610      .AddWindowsFontpath = 1
+66620     End If
+66630   End If
+66640   tStr = reg.GetRegistryValue("AllowSpecialGSCharsInFilenames")
+66650   If IsNumeric(tStr) Then
+66660     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+66670       .AllowSpecialGSCharsInFilenames = CLng(tStr)
+66680      Else
+66690       If UseStandard Then
+66700        .AllowSpecialGSCharsInFilenames = 1
+66710       End If
+66720     End If
+66730    Else
+66740     If UseStandard Then
+66750      .AllowSpecialGSCharsInFilenames = 1
+66760     End If
+66770   End If
+66780   tStr = reg.GetRegistryValue("AutosaveDirectory")
+66790   If LenB(Trim$(tStr)) > 0 Then
+66800     .AutosaveDirectory = CompletePath(tStr)
+66810    Else
+66820     If UseStandard Then
+66830      If InstalledAsServer Then
+66840        .AutosaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
+66850       Else
+66860        .AutosaveDirectory = "<MyFiles>"
+66870      End If
+66880     End If
+66890   End If
+66900   tStr = reg.GetRegistryValue("AutosaveFilename")
+66910   If LenB(tStr) = 0 And LenB("<DateTime>") > 0 And UseStandard Then
+66920     .AutosaveFilename = "<DateTime>"
 66930    Else
-66940     If UseStandard Then
-66950      .ClientComputerResolveIPAddress = 0
+66940     If LenB(tStr) > 0 Then
+66950      .AutosaveFilename = tStr
 66960     End If
 66970   End If
-66980   tStr = reg.GetRegistryValue("DisableEmail")
+66980   tStr = reg.GetRegistryValue("AutosaveFormat")
 66990   If IsNumeric(tStr) Then
-67000     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67010       .DisableEmail = CLng(tStr)
+67000     If CLng(tStr) >= 0 And CLng(tStr) <= 14 Then
+67010       .AutosaveFormat = CLng(tStr)
 67020      Else
 67030       If UseStandard Then
-67040        .DisableEmail = 0
+67040        .AutosaveFormat = 0
 67050       End If
 67060     End If
 67070    Else
 67080     If UseStandard Then
-67090      .DisableEmail = 0
+67090      .AutosaveFormat = 0
 67100     End If
 67110   End If
-67120   tStr = reg.GetRegistryValue("DisableUpdateCheck")
+67120   tStr = reg.GetRegistryValue("AutosaveStartStandardProgram")
 67130   If IsNumeric(tStr) Then
 67140     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67150       .DisableUpdateCheck = CLng(tStr)
+67150       .AutosaveStartStandardProgram = CLng(tStr)
 67160      Else
 67170       If UseStandard Then
-67180        .DisableUpdateCheck = 0
+67180        .AutosaveStartStandardProgram = 0
 67190       End If
 67200     End If
 67210    Else
 67220     If UseStandard Then
-67230      .DisableUpdateCheck = 0
+67230      .AutosaveStartStandardProgram = 0
 67240     End If
 67250   End If
-67260   tStr = reg.GetRegistryValue("DontUseDocumentSettings")
+67260   tStr = reg.GetRegistryValue("ClientComputerResolveIPAddress")
 67270   If IsNumeric(tStr) Then
 67280     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67290       .DontUseDocumentSettings = CLng(tStr)
+67290       .ClientComputerResolveIPAddress = CLng(tStr)
 67300      Else
 67310       If UseStandard Then
-67320        .DontUseDocumentSettings = 0
+67320        .ClientComputerResolveIPAddress = 0
 67330       End If
 67340     End If
 67350    Else
 67360     If UseStandard Then
-67370      .DontUseDocumentSettings = 0
+67370      .ClientComputerResolveIPAddress = 0
 67380     End If
 67390   End If
-67400   tStr = reg.GetRegistryValue("EditWithPDFArchitect")
+67400   tStr = reg.GetRegistryValue("DisableEmail")
 67410   If IsNumeric(tStr) Then
 67420     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67430       .EditWithPDFArchitect = CLng(tStr)
+67430       .DisableEmail = CLng(tStr)
 67440      Else
 67450       If UseStandard Then
-67460        .EditWithPDFArchitect = 1
+67460        .DisableEmail = 0
 67470       End If
 67480     End If
 67490    Else
 67500     If UseStandard Then
-67510      .EditWithPDFArchitect = 1
+67510      .DisableEmail = 0
 67520     End If
 67530   End If
-67540   tStr = reg.GetRegistryValue("FilenameSubstitutions")
-67550   If LenB(tStr) = 0 And LenB("Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt") > 0 And UseStandard Then
-67560     .FilenameSubstitutions = "Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt"
-67570    Else
-67580     If LenB(tStr) > 0 Then
-67590      .FilenameSubstitutions = tStr
-67600     End If
-67610   End If
-67620   tStr = reg.GetRegistryValue("FilenameSubstitutionsOnlyInTitle")
-67630   If IsNumeric(tStr) Then
-67640     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-67650       .FilenameSubstitutionsOnlyInTitle = CLng(tStr)
-67660      Else
-67670       If UseStandard Then
-67680        .FilenameSubstitutionsOnlyInTitle = 1
-67690       End If
-67700     End If
-67710    Else
-67720     If UseStandard Then
-67730      .FilenameSubstitutionsOnlyInTitle = 1
-67740     End If
-67750   End If
-67760   tStr = reg.GetRegistryValue("Language")
-67770   If LenB(tStr) = 0 And LenB("english") > 0 And UseStandard Then
-67780     .Language = "english"
-67790    Else
-67800     If LenB(tStr) > 0 Then
-67810      .Language = tStr
-67820     End If
-67830   End If
-67840   tStr = reg.GetRegistryValue("LastSaveDirectory")
-67850   If LenB(Trim$(tStr)) > 0 Then
-67860     .LastSaveDirectory = CompletePath(tStr)
-67870    Else
-67880     If UseStandard Then
-67890      If InstalledAsServer Then
-67900        .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
-67910       Else
-67920        .LastSaveDirectory = "<MyFiles>"
-67930      End If
+67540   tStr = reg.GetRegistryValue("DisableUpdateCheck")
+67550   If IsNumeric(tStr) Then
+67560     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67570       .DisableUpdateCheck = CLng(tStr)
+67580      Else
+67590       If UseStandard Then
+67600        .DisableUpdateCheck = 0
+67610       End If
+67620     End If
+67630    Else
+67640     If UseStandard Then
+67650      .DisableUpdateCheck = 0
+67660     End If
+67670   End If
+67680   tStr = reg.GetRegistryValue("DontUseDocumentSettings")
+67690   If IsNumeric(tStr) Then
+67700     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67710       .DontUseDocumentSettings = CLng(tStr)
+67720      Else
+67730       If UseStandard Then
+67740        .DontUseDocumentSettings = 0
+67750       End If
+67760     End If
+67770    Else
+67780     If UseStandard Then
+67790      .DontUseDocumentSettings = 0
+67800     End If
+67810   End If
+67820   tStr = reg.GetRegistryValue("EditWithPDFArchitect")
+67830   If IsNumeric(tStr) Then
+67840     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+67850       .EditWithPDFArchitect = CLng(tStr)
+67860      Else
+67870       If UseStandard Then
+67880        .EditWithPDFArchitect = 1
+67890       End If
+67900     End If
+67910    Else
+67920     If UseStandard Then
+67930      .EditWithPDFArchitect = 1
 67940     End If
 67950   End If
-67960   tStr = reg.GetRegistryValue("LastUpdateCheck")
-67970   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-67980     .LastUpdateCheck = ""
+67960   tStr = reg.GetRegistryValue("FilenameSubstitutions")
+67970   If LenB(tStr) = 0 And LenB("Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt") > 0 And UseStandard Then
+67980     .FilenameSubstitutions = "Microsoft Word - \.docx\.doc\Microsoft Excel - \.xlsx\.xls\Microsoft PowerPoint - \.pptx\.ppt"
 67990    Else
 68000     If LenB(tStr) > 0 Then
-68010      .LastUpdateCheck = tStr
+68010      .FilenameSubstitutions = tStr
 68020     End If
 68030   End If
-68040   tStr = reg.GetRegistryValue("Logging")
+68040   tStr = reg.GetRegistryValue("FilenameSubstitutionsOnlyInTitle")
 68050   If IsNumeric(tStr) Then
 68060     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-68070       .Logging = CLng(tStr)
+68070       .FilenameSubstitutionsOnlyInTitle = CLng(tStr)
 68080      Else
 68090       If UseStandard Then
-68100        .Logging = 0
+68100        .FilenameSubstitutionsOnlyInTitle = 1
 68110       End If
 68120     End If
 68130    Else
 68140     If UseStandard Then
-68150      .Logging = 0
+68150      .FilenameSubstitutionsOnlyInTitle = 1
 68160     End If
 68170   End If
-68180   tStr = reg.GetRegistryValue("LogLines")
-68190   If IsNumeric(tStr) Then
-68200     If CLng(tStr) >= 100 And CLng(tStr) <= 1000 Then
-68210       .LogLines = CLng(tStr)
-68220      Else
-68230       If UseStandard Then
-68240        .LogLines = 100
-68250       End If
-68260     End If
-68270    Else
-68280     If UseStandard Then
-68290      .LogLines = 100
-68300     End If
-68310   End If
-68320   tStr = reg.GetRegistryValue("MaximumCountOfPDFArchitectToolTip")
-68330   If IsNumeric(tStr) Then
-68340     If CLng(tStr) >= 0 Then
-68350       .MaximumCountOfPDFArchitectToolTip = CLng(tStr)
-68360      Else
-68370       If UseStandard Then
-68380        .MaximumCountOfPDFArchitectToolTip = 5
-68390       End If
-68400     End If
+68180   tStr = reg.GetRegistryValue("Language")
+68190   If LenB(tStr) = 0 And LenB("english") > 0 And UseStandard Then
+68200     .Language = "english"
+68210    Else
+68220     If LenB(tStr) > 0 Then
+68230      .Language = tStr
+68240     End If
+68250   End If
+68260   tStr = reg.GetRegistryValue("LastSaveDirectory")
+68270   If LenB(Trim$(tStr)) > 0 Then
+68280     .LastSaveDirectory = CompletePath(tStr)
+68290    Else
+68300     If UseStandard Then
+68310      If InstalledAsServer Then
+68320        .LastSaveDirectory = "C:\PDFs\<ClientComputer>\<UserName>"
+68330       Else
+68340        .LastSaveDirectory = "<MyFiles>"
+68350      End If
+68360     End If
+68370   End If
+68380   tStr = reg.GetRegistryValue("LastUpdateCheck")
+68390   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+68400     .LastUpdateCheck = ""
 68410    Else
-68420     If UseStandard Then
-68430      .MaximumCountOfPDFArchitectToolTip = 5
+68420     If LenB(tStr) > 0 Then
+68430      .LastUpdateCheck = tStr
 68440     End If
 68450   End If
-68460   tStr = reg.GetRegistryValue("NoConfirmMessageSwitchingDefaultprinter")
+68460   tStr = reg.GetRegistryValue("Logging")
 68470   If IsNumeric(tStr) Then
 68480     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-68490       .NoConfirmMessageSwitchingDefaultprinter = CLng(tStr)
+68490       .Logging = CLng(tStr)
 68500      Else
 68510       If UseStandard Then
-68520        .NoConfirmMessageSwitchingDefaultprinter = 0
+68520        .Logging = 0
 68530       End If
 68540     End If
 68550    Else
 68560     If UseStandard Then
-68570      .NoConfirmMessageSwitchingDefaultprinter = 0
+68570      .Logging = 0
 68580     End If
 68590   End If
-68600   tStr = reg.GetRegistryValue("NoProcessingAtStartup")
+68600   tStr = reg.GetRegistryValue("LogLines")
 68610   If IsNumeric(tStr) Then
-68620     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-68630       .NoProcessingAtStartup = CLng(tStr)
+68620     If CLng(tStr) >= 100 And CLng(tStr) <= 1000 Then
+68630       .LogLines = CLng(tStr)
 68640      Else
 68650       If UseStandard Then
-68660        .NoProcessingAtStartup = 0
+68660        .LogLines = 100
 68670       End If
 68680     End If
 68690    Else
 68700     If UseStandard Then
-68710      .NoProcessingAtStartup = 0
+68710      .LogLines = 100
 68720     End If
 68730   End If
-68740   tStr = reg.GetRegistryValue("NoPSCheck")
+68740   tStr = reg.GetRegistryValue("MaximumCountOfPDFArchitectToolTip")
 68750   If IsNumeric(tStr) Then
-68760     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-68770       .NoPSCheck = CLng(tStr)
+68760     If CLng(tStr) >= 0 Then
+68770       .MaximumCountOfPDFArchitectToolTip = CLng(tStr)
 68780      Else
 68790       If UseStandard Then
-68800        .NoPSCheck = 0
+68800        .MaximumCountOfPDFArchitectToolTip = 5
 68810       End If
 68820     End If
 68830    Else
 68840     If UseStandard Then
-68850      .NoPSCheck = 0
+68850      .MaximumCountOfPDFArchitectToolTip = 5
 68860     End If
 68870   End If
-68880   tStr = reg.GetRegistryValue("OpenOutputFile")
+68880   tStr = reg.GetRegistryValue("NoConfirmMessageSwitchingDefaultprinter")
 68890   If IsNumeric(tStr) Then
 68900     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-68910       .OpenOutputFile = CLng(tStr)
+68910       .NoConfirmMessageSwitchingDefaultprinter = CLng(tStr)
 68920      Else
 68930       If UseStandard Then
-68940        .OpenOutputFile = 1
+68940        .NoConfirmMessageSwitchingDefaultprinter = 0
 68950       End If
 68960     End If
 68970    Else
 68980     If UseStandard Then
-68990      .OpenOutputFile = 1
+68990      .NoConfirmMessageSwitchingDefaultprinter = 0
 69000     End If
 69010   End If
-69020   tStr = reg.GetRegistryValue("OptionsDesign")
+69020   tStr = reg.GetRegistryValue("NoProcessingAtStartup")
 69030   If IsNumeric(tStr) Then
-69040     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-69050       .OptionsDesign = CLng(tStr)
+69040     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+69050       .NoProcessingAtStartup = CLng(tStr)
 69060      Else
 69070       If UseStandard Then
-69080        .OptionsDesign = 0
+69080        .NoProcessingAtStartup = 0
 69090       End If
 69100     End If
 69110    Else
 69120     If UseStandard Then
-69130      .OptionsDesign = 0
+69130      .NoProcessingAtStartup = 0
 69140     End If
 69150   End If
-69160   tStr = reg.GetRegistryValue("OptionsEnabled")
+69160   tStr = reg.GetRegistryValue("NoPSCheck")
 69170   If IsNumeric(tStr) Then
 69180     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69190       .OptionsEnabled = CLng(tStr)
+69190       .NoPSCheck = CLng(tStr)
 69200      Else
 69210       If UseStandard Then
-69220        .OptionsEnabled = 1
+69220        .NoPSCheck = 0
 69230       End If
 69240     End If
 69250    Else
 69260     If UseStandard Then
-69270      .OptionsEnabled = 1
+69270      .NoPSCheck = 0
 69280     End If
 69290   End If
-69300   tStr = reg.GetRegistryValue("OptionsVisible")
+69300   tStr = reg.GetRegistryValue("OpenOutputFile")
 69310   If IsNumeric(tStr) Then
 69320     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69330       .OptionsVisible = CLng(tStr)
+69330       .OpenOutputFile = CLng(tStr)
 69340      Else
 69350       If UseStandard Then
-69360        .OptionsVisible = 1
+69360        .OpenOutputFile = 1
 69370       End If
 69380     End If
 69390    Else
 69400     If UseStandard Then
-69410      .OptionsVisible = 1
+69410      .OpenOutputFile = 1
 69420     End If
 69430   End If
-69440   tStr = reg.GetRegistryValue("PrintAfterSaving")
+69440   tStr = reg.GetRegistryValue("OptionsDesign")
 69450   If IsNumeric(tStr) Then
-69460     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69470       .PrintAfterSaving = CLng(tStr)
+69460     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+69470       .OptionsDesign = CLng(tStr)
 69480      Else
 69490       If UseStandard Then
-69500        .PrintAfterSaving = 0
+69500        .OptionsDesign = 0
 69510       End If
 69520     End If
 69530    Else
 69540     If UseStandard Then
-69550      .PrintAfterSaving = 0
+69550      .OptionsDesign = 0
 69560     End If
 69570   End If
-69580   tStr = reg.GetRegistryValue("PrintAfterSavingBitsPerPixel")
+69580   tStr = reg.GetRegistryValue("OptionsEnabled")
 69590   If IsNumeric(tStr) Then
-69600     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-69610       .PrintAfterSavingBitsPerPixel = CLng(tStr)
+69600     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+69610       .OptionsEnabled = CLng(tStr)
 69620      Else
 69630       If UseStandard Then
-69640        .PrintAfterSavingBitsPerPixel = 2
+69640        .OptionsEnabled = 1
 69650       End If
 69660     End If
 69670    Else
 69680     If UseStandard Then
-69690      .PrintAfterSavingBitsPerPixel = 2
+69690      .OptionsEnabled = 1
 69700     End If
 69710   End If
-69720   tStr = reg.GetRegistryValue("PrintAfterSavingDuplex")
+69720   tStr = reg.GetRegistryValue("OptionsVisible")
 69730   If IsNumeric(tStr) Then
 69740     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-69750       .PrintAfterSavingDuplex = CLng(tStr)
+69750       .OptionsVisible = CLng(tStr)
 69760      Else
 69770       If UseStandard Then
-69780        .PrintAfterSavingDuplex = 0
+69780        .OptionsVisible = 1
 69790       End If
 69800     End If
 69810    Else
 69820     If UseStandard Then
-69830      .PrintAfterSavingDuplex = 0
+69830      .OptionsVisible = 1
 69840     End If
 69850   End If
-69860   tStr = reg.GetRegistryValue("PrintAfterSavingMaxResolution")
+69860   tStr = reg.GetRegistryValue("PrintAfterSaving")
 69870   If IsNumeric(tStr) Then
-69880     If CLng(tStr) >= 72 Then
-69890       .PrintAfterSavingMaxResolution = CLng(tStr)
+69880     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+69890       .PrintAfterSaving = CLng(tStr)
 69900      Else
 69910       If UseStandard Then
-69920        .PrintAfterSavingMaxResolution = 600
+69920        .PrintAfterSaving = 0
 69930       End If
 69940     End If
 69950    Else
 69960     If UseStandard Then
-69970      .PrintAfterSavingMaxResolution = 600
+69970      .PrintAfterSaving = 0
 69980     End If
 69990   End If
-70000   tStr = reg.GetRegistryValue("PrintAfterSavingMaxResolutionEnabled")
+70000   tStr = reg.GetRegistryValue("PrintAfterSavingBitsPerPixel")
 70010   If IsNumeric(tStr) Then
-70020     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-70030       .PrintAfterSavingMaxResolutionEnabled = CLng(tStr)
+70020     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+70030       .PrintAfterSavingBitsPerPixel = CLng(tStr)
 70040      Else
 70050       If UseStandard Then
-70060        .PrintAfterSavingMaxResolutionEnabled = 0
+70060        .PrintAfterSavingBitsPerPixel = 2
 70070       End If
 70080     End If
 70090    Else
 70100     If UseStandard Then
-70110      .PrintAfterSavingMaxResolutionEnabled = 0
+70110      .PrintAfterSavingBitsPerPixel = 2
 70120     End If
 70130   End If
-70140   tStr = reg.GetRegistryValue("PrintAfterSavingNoCancel")
+70140   tStr = reg.GetRegistryValue("PrintAfterSavingDuplex")
 70150   If IsNumeric(tStr) Then
 70160     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-70170       .PrintAfterSavingNoCancel = CLng(tStr)
+70170       .PrintAfterSavingDuplex = CLng(tStr)
 70180      Else
 70190       If UseStandard Then
-70200        .PrintAfterSavingNoCancel = 0
+70200        .PrintAfterSavingDuplex = 0
 70210       End If
 70220     End If
 70230    Else
 70240     If UseStandard Then
-70250      .PrintAfterSavingNoCancel = 0
+70250      .PrintAfterSavingDuplex = 0
 70260     End If
 70270   End If
-70280   tStr = reg.GetRegistryValue("PrintAfterSavingPrinter")
-70290   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-70300     .PrintAfterSavingPrinter = ""
-70310    Else
-70320     If LenB(tStr) > 0 Then
-70330      .PrintAfterSavingPrinter = tStr
-70340     End If
-70350   End If
-70360   tStr = reg.GetRegistryValue("PrintAfterSavingQueryUser")
-70370   If IsNumeric(tStr) Then
-70380     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-70390       .PrintAfterSavingQueryUser = CLng(tStr)
-70400      Else
-70410       If UseStandard Then
-70420        .PrintAfterSavingQueryUser = 0
-70430       End If
-70440     End If
-70450    Else
-70460     If UseStandard Then
-70470      .PrintAfterSavingQueryUser = 0
-70480     End If
-70490   End If
-70500   tStr = reg.GetRegistryValue("PrintAfterSavingTumble")
-70510   If IsNumeric(tStr) Then
-70520     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
-70530       .PrintAfterSavingTumble = CLng(tStr)
-70540      Else
-70550       If UseStandard Then
-70560        .PrintAfterSavingTumble = 0
-70570       End If
-70580     End If
-70590    Else
-70600     If UseStandard Then
-70610      .PrintAfterSavingTumble = 0
-70620     End If
-70630   End If
-70640   tStr = reg.GetRegistryValue("PrinterStop")
-70650   If IsNumeric(tStr) Then
-70660     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-70670       .PrinterStop = CLng(tStr)
-70680      Else
-70690       If UseStandard Then
-70700        .PrinterStop = 0
-70710       End If
-70720     End If
+70280   tStr = reg.GetRegistryValue("PrintAfterSavingMaxResolution")
+70290   If IsNumeric(tStr) Then
+70300     If CLng(tStr) >= 72 Then
+70310       .PrintAfterSavingMaxResolution = CLng(tStr)
+70320      Else
+70330       If UseStandard Then
+70340        .PrintAfterSavingMaxResolution = 600
+70350       End If
+70360     End If
+70370    Else
+70380     If UseStandard Then
+70390      .PrintAfterSavingMaxResolution = 600
+70400     End If
+70410   End If
+70420   tStr = reg.GetRegistryValue("PrintAfterSavingMaxResolutionEnabled")
+70430   If IsNumeric(tStr) Then
+70440     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+70450       .PrintAfterSavingMaxResolutionEnabled = CLng(tStr)
+70460      Else
+70470       If UseStandard Then
+70480        .PrintAfterSavingMaxResolutionEnabled = 0
+70490       End If
+70500     End If
+70510    Else
+70520     If UseStandard Then
+70530      .PrintAfterSavingMaxResolutionEnabled = 0
+70540     End If
+70550   End If
+70560   tStr = reg.GetRegistryValue("PrintAfterSavingNoCancel")
+70570   If IsNumeric(tStr) Then
+70580     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+70590       .PrintAfterSavingNoCancel = CLng(tStr)
+70600      Else
+70610       If UseStandard Then
+70620        .PrintAfterSavingNoCancel = 0
+70630       End If
+70640     End If
+70650    Else
+70660     If UseStandard Then
+70670      .PrintAfterSavingNoCancel = 0
+70680     End If
+70690   End If
+70700   tStr = reg.GetRegistryValue("PrintAfterSavingPrinter")
+70710   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+70720     .PrintAfterSavingPrinter = ""
 70730    Else
-70740     If UseStandard Then
-70750      .PrinterStop = 0
+70740     If LenB(tStr) > 0 Then
+70750      .PrintAfterSavingPrinter = tStr
 70760     End If
 70770   End If
-70780   tStr = reg.GetRegistryValue("ProcessPriority")
+70780   tStr = reg.GetRegistryValue("PrintAfterSavingQueryUser")
 70790   If IsNumeric(tStr) Then
 70800     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-70810       .ProcessPriority = CLng(tStr)
+70810       .PrintAfterSavingQueryUser = CLng(tStr)
 70820      Else
 70830       If UseStandard Then
-70840        .ProcessPriority = 1
+70840        .PrintAfterSavingQueryUser = 0
 70850       End If
 70860     End If
 70870    Else
 70880     If UseStandard Then
-70890      .ProcessPriority = 1
+70890      .PrintAfterSavingQueryUser = 0
 70900     End If
 70910   End If
-70920   tStr = reg.GetRegistryValue("ProgramFont")
-70930   If LenB(tStr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
-70940     .ProgramFont = "MS Sans Serif"
-70950    Else
-70960     If LenB(tStr) > 0 Then
-70970      .ProgramFont = tStr
-70980     End If
-70990   End If
-71000   tStr = reg.GetRegistryValue("ProgramFontCharset")
-71010   If IsNumeric(tStr) Then
-71020     If CLng(tStr) >= 0 Then
-71030       .ProgramFontCharset = CLng(tStr)
-71040      Else
-71050       If UseStandard Then
-71060        .ProgramFontCharset = 0
-71070       End If
-71080     End If
-71090    Else
-71100     If UseStandard Then
-71110      .ProgramFontCharset = 0
-71120     End If
-71130   End If
-71140   tStr = reg.GetRegistryValue("ProgramFontSize")
-71150   If IsNumeric(tStr) Then
-71160     If CLng(tStr) >= 6 And CLng(tStr) <= 72 Then
-71170       .ProgramFontSize = CLng(tStr)
-71180      Else
-71190       If UseStandard Then
-71200        .ProgramFontSize = 8
-71210       End If
-71220     End If
-71230    Else
-71240     If UseStandard Then
-71250      .ProgramFontSize = 8
-71260     End If
-71270   End If
-71280   tStr = reg.GetRegistryValue("RemoveAllKnownFileExtensions")
-71290   If IsNumeric(tStr) Then
-71300     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-71310       .RemoveAllKnownFileExtensions = CLng(tStr)
-71320      Else
-71330       If UseStandard Then
-71340        .RemoveAllKnownFileExtensions = 1
-71350       End If
-71360     End If
+70920   tStr = reg.GetRegistryValue("PrintAfterSavingTumble")
+70930   If IsNumeric(tStr) Then
+70940     If CLng(tStr) >= 0 And CLng(tStr) <= 1 Then
+70950       .PrintAfterSavingTumble = CLng(tStr)
+70960      Else
+70970       If UseStandard Then
+70980        .PrintAfterSavingTumble = 0
+70990       End If
+71000     End If
+71010    Else
+71020     If UseStandard Then
+71030      .PrintAfterSavingTumble = 0
+71040     End If
+71050   End If
+71060   tStr = reg.GetRegistryValue("PrinterStop")
+71070   If IsNumeric(tStr) Then
+71080     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+71090       .PrinterStop = CLng(tStr)
+71100      Else
+71110       If UseStandard Then
+71120        .PrinterStop = 0
+71130       End If
+71140     End If
+71150    Else
+71160     If UseStandard Then
+71170      .PrinterStop = 0
+71180     End If
+71190   End If
+71200   tStr = reg.GetRegistryValue("ProcessPriority")
+71210   If IsNumeric(tStr) Then
+71220     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+71230       .ProcessPriority = CLng(tStr)
+71240      Else
+71250       If UseStandard Then
+71260        .ProcessPriority = 1
+71270       End If
+71280     End If
+71290    Else
+71300     If UseStandard Then
+71310      .ProcessPriority = 1
+71320     End If
+71330   End If
+71340   tStr = reg.GetRegistryValue("ProgramFont")
+71350   If LenB(tStr) = 0 And LenB("MS Sans Serif") > 0 And UseStandard Then
+71360     .ProgramFont = "MS Sans Serif"
 71370    Else
-71380     If UseStandard Then
-71390      .RemoveAllKnownFileExtensions = 1
+71380     If LenB(tStr) > 0 Then
+71390      .ProgramFont = tStr
 71400     End If
 71410   End If
-71420   tStr = reg.GetRegistryValue("RemoveSpaces")
+71420   tStr = reg.GetRegistryValue("ProgramFontCharset")
 71430   If IsNumeric(tStr) Then
-71440     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-71450       .RemoveSpaces = CLng(tStr)
+71440     If CLng(tStr) >= 0 Then
+71450       .ProgramFontCharset = CLng(tStr)
 71460      Else
 71470       If UseStandard Then
-71480        .RemoveSpaces = 1
+71480        .ProgramFontCharset = 0
 71490       End If
 71500     End If
 71510    Else
 71520     If UseStandard Then
-71530      .RemoveSpaces = 1
+71530      .ProgramFontCharset = 0
 71540     End If
 71550   End If
-71560   tStr = reg.GetRegistryValue("RunProgramAfterSaving")
+71560   tStr = reg.GetRegistryValue("ProgramFontSize")
 71570   If IsNumeric(tStr) Then
-71580     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-71590       .RunProgramAfterSaving = CLng(tStr)
+71580     If CLng(tStr) >= 6 And CLng(tStr) <= 72 Then
+71590       .ProgramFontSize = CLng(tStr)
 71600      Else
 71610       If UseStandard Then
-71620        .RunProgramAfterSaving = 0
+71620        .ProgramFontSize = 8
 71630       End If
 71640     End If
 71650    Else
 71660     If UseStandard Then
-71670      .RunProgramAfterSaving = 0
+71670      .ProgramFontSize = 8
 71680     End If
 71690   End If
-71700   tStr = reg.GetRegistryValue("RunProgramAfterSavingProgramname")
-71710   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-71720     .RunProgramAfterSavingProgramname = ""
-71730    Else
-71740     If LenB(tStr) > 0 Then
-71750      .RunProgramAfterSavingProgramname = tStr
-71760     End If
-71770   End If
-71780   tStr = reg.GetRegistryValue("RunProgramAfterSavingProgramParameters")
-71790   If LenB(tStr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
-71800     .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
-71810    Else
-71820     If LenB(tStr) > 0 Then
-71830      .RunProgramAfterSavingProgramParameters = tStr
-71840     End If
-71850   End If
-71860   tStr = reg.GetRegistryValue("RunProgramAfterSavingWaitUntilReady")
-71870   If IsNumeric(tStr) Then
-71880     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-71890       .RunProgramAfterSavingWaitUntilReady = CLng(tStr)
-71900      Else
-71910       If UseStandard Then
-71920        .RunProgramAfterSavingWaitUntilReady = 1
-71930       End If
-71940     End If
-71950    Else
-71960     If UseStandard Then
-71970      .RunProgramAfterSavingWaitUntilReady = 1
-71980     End If
-71990   End If
-72000   tStr = reg.GetRegistryValue("RunProgramAfterSavingWindowstyle")
-72010   If IsNumeric(tStr) Then
-72020     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
-72030       .RunProgramAfterSavingWindowstyle = CLng(tStr)
-72040      Else
-72050       If UseStandard Then
-72060        .RunProgramAfterSavingWindowstyle = 1
-72070       End If
-72080     End If
-72090    Else
-72100     If UseStandard Then
-72110      .RunProgramAfterSavingWindowstyle = 1
-72120     End If
-72130   End If
-72140   tStr = reg.GetRegistryValue("RunProgramBeforeSaving")
-72150   If IsNumeric(tStr) Then
-72160     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-72170       .RunProgramBeforeSaving = CLng(tStr)
-72180      Else
-72190       If UseStandard Then
-72200        .RunProgramBeforeSaving = 0
-72210       End If
-72220     End If
+71700   tStr = reg.GetRegistryValue("RemoveAllKnownFileExtensions")
+71710   If IsNumeric(tStr) Then
+71720     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+71730       .RemoveAllKnownFileExtensions = CLng(tStr)
+71740      Else
+71750       If UseStandard Then
+71760        .RemoveAllKnownFileExtensions = 1
+71770       End If
+71780     End If
+71790    Else
+71800     If UseStandard Then
+71810      .RemoveAllKnownFileExtensions = 1
+71820     End If
+71830   End If
+71840   tStr = reg.GetRegistryValue("RemoveSpaces")
+71850   If IsNumeric(tStr) Then
+71860     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+71870       .RemoveSpaces = CLng(tStr)
+71880      Else
+71890       If UseStandard Then
+71900        .RemoveSpaces = 1
+71910       End If
+71920     End If
+71930    Else
+71940     If UseStandard Then
+71950      .RemoveSpaces = 1
+71960     End If
+71970   End If
+71980   tStr = reg.GetRegistryValue("RunProgramAfterSaving")
+71990   If IsNumeric(tStr) Then
+72000     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+72010       .RunProgramAfterSaving = CLng(tStr)
+72020      Else
+72030       If UseStandard Then
+72040        .RunProgramAfterSaving = 0
+72050       End If
+72060     End If
+72070    Else
+72080     If UseStandard Then
+72090      .RunProgramAfterSaving = 0
+72100     End If
+72110   End If
+72120   tStr = reg.GetRegistryValue("RunProgramAfterSavingProgramname")
+72130   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+72140     .RunProgramAfterSavingProgramname = ""
+72150    Else
+72160     If LenB(tStr) > 0 Then
+72170      .RunProgramAfterSavingProgramname = tStr
+72180     End If
+72190   End If
+72200   tStr = reg.GetRegistryValue("RunProgramAfterSavingProgramParameters")
+72210   If LenB(tStr) = 0 And LenB("""<OutputFilename>""") > 0 And UseStandard Then
+72220     .RunProgramAfterSavingProgramParameters = """<OutputFilename>"""
 72230    Else
-72240     If UseStandard Then
-72250      .RunProgramBeforeSaving = 0
+72240     If LenB(tStr) > 0 Then
+72250      .RunProgramAfterSavingProgramParameters = tStr
 72260     End If
 72270   End If
-72280   tStr = reg.GetRegistryValue("RunProgramBeforeSavingProgramname")
-72290   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
-72300     .RunProgramBeforeSavingProgramname = ""
-72310    Else
-72320     If LenB(tStr) > 0 Then
-72330      .RunProgramBeforeSavingProgramname = tStr
-72340     End If
-72350   End If
-72360   tStr = reg.GetRegistryValue("RunProgramBeforeSavingProgramParameters")
-72370   If LenB(tStr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
-72380     .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
-72390    Else
-72400     If LenB(tStr) > 0 Then
-72410      .RunProgramBeforeSavingProgramParameters = tStr
-72420     End If
-72430   End If
-72440   tStr = reg.GetRegistryValue("RunProgramBeforeSavingWindowstyle")
-72450   If IsNumeric(tStr) Then
-72460     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
-72470       .RunProgramBeforeSavingWindowstyle = CLng(tStr)
-72480      Else
-72490       If UseStandard Then
-72500        .RunProgramBeforeSavingWindowstyle = 1
-72510       End If
-72520     End If
-72530    Else
-72540     If UseStandard Then
-72550      .RunProgramBeforeSavingWindowstyle = 1
-72560     End If
-72570   End If
-72580   tStr = reg.GetRegistryValue("SaveFilename")
-72590   If LenB(tStr) = 0 And LenB("<Title>") > 0 And UseStandard Then
-72600     .SaveFilename = "<Title>"
-72610    Else
-72620     If LenB(tStr) > 0 Then
-72630      .SaveFilename = tStr
+72280   tStr = reg.GetRegistryValue("RunProgramAfterSavingWaitUntilReady")
+72290   If IsNumeric(tStr) Then
+72300     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+72310       .RunProgramAfterSavingWaitUntilReady = CLng(tStr)
+72320      Else
+72330       If UseStandard Then
+72340        .RunProgramAfterSavingWaitUntilReady = 1
+72350       End If
+72360     End If
+72370    Else
+72380     If UseStandard Then
+72390      .RunProgramAfterSavingWaitUntilReady = 1
+72400     End If
+72410   End If
+72420   tStr = reg.GetRegistryValue("RunProgramAfterSavingWindowstyle")
+72430   If IsNumeric(tStr) Then
+72440     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+72450       .RunProgramAfterSavingWindowstyle = CLng(tStr)
+72460      Else
+72470       If UseStandard Then
+72480        .RunProgramAfterSavingWindowstyle = 1
+72490       End If
+72500     End If
+72510    Else
+72520     If UseStandard Then
+72530      .RunProgramAfterSavingWindowstyle = 1
+72540     End If
+72550   End If
+72560   tStr = reg.GetRegistryValue("RunProgramBeforeSaving")
+72570   If IsNumeric(tStr) Then
+72580     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+72590       .RunProgramBeforeSaving = CLng(tStr)
+72600      Else
+72610       If UseStandard Then
+72620        .RunProgramBeforeSaving = 0
+72630       End If
 72640     End If
-72650   End If
-72660   tStr = reg.GetRegistryValue("SendEmailAfterAutoSaving")
-72670   If IsNumeric(tStr) Then
-72680     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-72690       .SendEmailAfterAutoSaving = CLng(tStr)
-72700      Else
-72710       If UseStandard Then
-72720        .SendEmailAfterAutoSaving = 0
-72730       End If
-72740     End If
-72750    Else
-72760     If UseStandard Then
-72770      .SendEmailAfterAutoSaving = 0
-72780     End If
-72790   End If
-72800   tStr = reg.GetRegistryValue("SendMailMethod")
-72810   If IsNumeric(tStr) Then
-72820     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
-72830       .SendMailMethod = CLng(tStr)
-72840      Else
-72850       If UseStandard Then
-72860        .SendMailMethod = 0
-72870       End If
-72880     End If
-72890    Else
-72900     If UseStandard Then
-72910      .SendMailMethod = 0
-72920     End If
-72930   End If
-72940   tStr = reg.GetRegistryValue("ShowAnimation")
-72950   If IsNumeric(tStr) Then
-72960     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-72970       .ShowAnimation = CLng(tStr)
-72980      Else
-72990       If UseStandard Then
-73000        .ShowAnimation = 1
-73010       End If
-73020     End If
+72650    Else
+72660     If UseStandard Then
+72670      .RunProgramBeforeSaving = 0
+72680     End If
+72690   End If
+72700   tStr = reg.GetRegistryValue("RunProgramBeforeSavingProgramname")
+72710   If LenB(tStr) = 0 And LenB("") > 0 And UseStandard Then
+72720     .RunProgramBeforeSavingProgramname = ""
+72730    Else
+72740     If LenB(tStr) > 0 Then
+72750      .RunProgramBeforeSavingProgramname = tStr
+72760     End If
+72770   End If
+72780   tStr = reg.GetRegistryValue("RunProgramBeforeSavingProgramParameters")
+72790   If LenB(tStr) = 0 And LenB("""<TempFilename>""") > 0 And UseStandard Then
+72800     .RunProgramBeforeSavingProgramParameters = """<TempFilename>"""
+72810    Else
+72820     If LenB(tStr) > 0 Then
+72830      .RunProgramBeforeSavingProgramParameters = tStr
+72840     End If
+72850   End If
+72860   tStr = reg.GetRegistryValue("RunProgramBeforeSavingWindowstyle")
+72870   If IsNumeric(tStr) Then
+72880     If CLng(tStr) >= 0 And CLng(tStr) <= 6 Then
+72890       .RunProgramBeforeSavingWindowstyle = CLng(tStr)
+72900      Else
+72910       If UseStandard Then
+72920        .RunProgramBeforeSavingWindowstyle = 1
+72930       End If
+72940     End If
+72950    Else
+72960     If UseStandard Then
+72970      .RunProgramBeforeSavingWindowstyle = 1
+72980     End If
+72990   End If
+73000   tStr = reg.GetRegistryValue("SaveFilename")
+73010   If LenB(tStr) = 0 And LenB("<Title>") > 0 And UseStandard Then
+73020     .SaveFilename = "<Title>"
 73030    Else
-73040     If UseStandard Then
-73050      .ShowAnimation = 1
+73040     If LenB(tStr) > 0 Then
+73050      .SaveFilename = tStr
 73060     End If
 73070   End If
-73080   tStr = reg.GetRegistryValue("Toolbars")
+73080   tStr = reg.GetRegistryValue("SendEmailAfterAutoSaving")
 73090   If IsNumeric(tStr) Then
-73100     If CLng(tStr) >= 0 Then
-73110       .Toolbars = CLng(tStr)
+73100     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73110       .SendEmailAfterAutoSaving = CLng(tStr)
 73120      Else
 73130       If UseStandard Then
-73140        .Toolbars = 1
+73140        .SendEmailAfterAutoSaving = 0
 73150       End If
 73160     End If
 73170    Else
 73180     If UseStandard Then
-73190      .Toolbars = 1
+73190      .SendEmailAfterAutoSaving = 0
 73200     End If
 73210   End If
-73220   tStr = reg.GetRegistryValue("UpdateInterval")
+73220   tStr = reg.GetRegistryValue("SendMailMethod")
 73230   If IsNumeric(tStr) Then
-73240     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
-73250       .UpdateInterval = CLng(tStr)
+73240     If CLng(tStr) >= 0 And CLng(tStr) <= 2 Then
+73250       .SendMailMethod = CLng(tStr)
 73260      Else
 73270       If UseStandard Then
-73280        .UpdateInterval = 2
+73280        .SendMailMethod = 0
 73290       End If
 73300     End If
 73310    Else
 73320     If UseStandard Then
-73330      .UpdateInterval = 2
+73330      .SendMailMethod = 0
 73340     End If
 73350   End If
-73360   tStr = reg.GetRegistryValue("UseAutosave")
+73360   tStr = reg.GetRegistryValue("ShowAnimation")
 73370   If IsNumeric(tStr) Then
 73380     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-73390       .UseAutosave = CLng(tStr)
+73390       .ShowAnimation = CLng(tStr)
 73400      Else
 73410       If UseStandard Then
-73420        .UseAutosave = 0
+73420        .ShowAnimation = 1
 73430       End If
 73440     End If
 73450    Else
 73460     If UseStandard Then
-73470      .UseAutosave = 0
+73470      .ShowAnimation = 1
 73480     End If
 73490   End If
-73500   tStr = reg.GetRegistryValue("UseAutosaveDirectory")
+73500   tStr = reg.GetRegistryValue("Toolbars")
 73510   If IsNumeric(tStr) Then
-73520     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
-73530       .UseAutosaveDirectory = CLng(tStr)
+73520     If CLng(tStr) >= 0 Then
+73530       .Toolbars = CLng(tStr)
 73540      Else
 73550       If UseStandard Then
-73560        .UseAutosaveDirectory = 1
+73560        .Toolbars = 1
 73570       End If
 73580     End If
 73590    Else
 73600     If UseStandard Then
-73610      .UseAutosaveDirectory = 1
+73610      .Toolbars = 1
 73620     End If
 73630   End If
-73640  End With
-73650  Set reg = Nothing
-73660  ReadOptionsReg = myOptions
+73640   tStr = reg.GetRegistryValue("UpdateInterval")
+73650   If IsNumeric(tStr) Then
+73660     If CLng(tStr) >= 0 And CLng(tStr) <= 3 Then
+73670       .UpdateInterval = CLng(tStr)
+73680      Else
+73690       If UseStandard Then
+73700        .UpdateInterval = 2
+73710       End If
+73720     End If
+73730    Else
+73740     If UseStandard Then
+73750      .UpdateInterval = 2
+73760     End If
+73770   End If
+73780   tStr = reg.GetRegistryValue("UseAutosave")
+73790   If IsNumeric(tStr) Then
+73800     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73810       .UseAutosave = CLng(tStr)
+73820      Else
+73830       If UseStandard Then
+73840        .UseAutosave = 0
+73850       End If
+73860     End If
+73870    Else
+73880     If UseStandard Then
+73890      .UseAutosave = 0
+73900     End If
+73910   End If
+73920   tStr = reg.GetRegistryValue("UseAutosaveDirectory")
+73930   If IsNumeric(tStr) Then
+73940     If CLng(tStr) = 0 Or CLng(tStr) = 1 Then
+73950       .UseAutosaveDirectory = CLng(tStr)
+73960      Else
+73970       If UseStandard Then
+73980        .UseAutosaveDirectory = 1
+73990       End If
+74000     End If
+74010    Else
+74020     If UseStandard Then
+74030      .UseAutosaveDirectory = 1
+74040     End If
+74050   End If
+74060  End With
+74070  Set reg = Nothing
+74080  ReadOptionsReg = myOptions
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -6515,772 +6611,796 @@ On Error GoTo ErrPtnr_OnError
 57300    Set reg = Nothing
 57310    Exit Sub
 57320   End If
-57330   If UCase$(OptionName) = "PDFUPDATEMETADATA" Then
+57330   If UCase$(OptionName) = "PDFPAGELAYOUT" Then
 57340    If Not reg.KeyExists Then
 57350     reg.CreateKey
 57360    End If
-57370    reg.SetRegistryValue "PDFUpdateMetadata", CStr(.PDFUpdateMetadata), REG_SZ
+57370    reg.SetRegistryValue "PDFPageLayout", CStr(.PDFPageLayout), REG_SZ
 57380    Set reg = Nothing
 57390    Exit Sub
 57400   End If
-57410   reg.SubKey = "Printing\Formats\PDF\Security"
-57420   If UCase$(OptionName) = "PDFAES128ENCRYPTION" Then
-57430    If Not reg.KeyExists Then
-57440     reg.CreateKey
-57450    End If
-57460    reg.SetRegistryValue "PDFAes128Encryption", CStr(Abs(.PDFAes128Encryption)), REG_SZ
-57470    Set reg = Nothing
-57480    Exit Sub
-57490   End If
-57500   If UCase$(OptionName) = "PDFALLOWASSEMBLY" Then
-57510    If Not reg.KeyExists Then
-57520     reg.CreateKey
-57530    End If
-57540    reg.SetRegistryValue "PDFAllowAssembly", CStr(Abs(.PDFAllowAssembly)), REG_SZ
-57550    Set reg = Nothing
-57560    Exit Sub
-57570   End If
-57580   If UCase$(OptionName) = "PDFALLOWDEGRADEDPRINTING" Then
-57590    If Not reg.KeyExists Then
-57600     reg.CreateKey
-57610    End If
-57620    reg.SetRegistryValue "PDFAllowDegradedPrinting", CStr(Abs(.PDFAllowDegradedPrinting)), REG_SZ
-57630    Set reg = Nothing
-57640    Exit Sub
-57650   End If
-57660   If UCase$(OptionName) = "PDFALLOWFILLIN" Then
+57410   If UCase$(OptionName) = "PDFPAGEMODE" Then
+57420    If Not reg.KeyExists Then
+57430     reg.CreateKey
+57440    End If
+57450    reg.SetRegistryValue "PDFPageMode", CStr(.PDFPageMode), REG_SZ
+57460    Set reg = Nothing
+57470    Exit Sub
+57480   End If
+57490   If UCase$(OptionName) = "PDFSTARTPAGE" Then
+57500    If Not reg.KeyExists Then
+57510     reg.CreateKey
+57520    End If
+57530    reg.SetRegistryValue "PDFStartPage", CStr(.PDFStartPage), REG_SZ
+57540    Set reg = Nothing
+57550    Exit Sub
+57560   End If
+57570   If UCase$(OptionName) = "PDFUPDATEMETADATA" Then
+57580    If Not reg.KeyExists Then
+57590     reg.CreateKey
+57600    End If
+57610    reg.SetRegistryValue "PDFUpdateMetadata", CStr(.PDFUpdateMetadata), REG_SZ
+57620    Set reg = Nothing
+57630    Exit Sub
+57640   End If
+57650   reg.SubKey = "Printing\Formats\PDF\Security"
+57660   If UCase$(OptionName) = "PDFAES128ENCRYPTION" Then
 57670    If Not reg.KeyExists Then
 57680     reg.CreateKey
 57690    End If
-57700    reg.SetRegistryValue "PDFAllowFillIn", CStr(Abs(.PDFAllowFillIn)), REG_SZ
+57700    reg.SetRegistryValue "PDFAes128Encryption", CStr(Abs(.PDFAes128Encryption)), REG_SZ
 57710    Set reg = Nothing
 57720    Exit Sub
 57730   End If
-57740   If UCase$(OptionName) = "PDFALLOWSCREENREADERS" Then
+57740   If UCase$(OptionName) = "PDFALLOWASSEMBLY" Then
 57750    If Not reg.KeyExists Then
 57760     reg.CreateKey
 57770    End If
-57780    reg.SetRegistryValue "PDFAllowScreenReaders", CStr(Abs(.PDFAllowScreenReaders)), REG_SZ
+57780    reg.SetRegistryValue "PDFAllowAssembly", CStr(Abs(.PDFAllowAssembly)), REG_SZ
 57790    Set reg = Nothing
 57800    Exit Sub
 57810   End If
-57820   If UCase$(OptionName) = "PDFDISALLOWCOPY" Then
+57820   If UCase$(OptionName) = "PDFALLOWDEGRADEDPRINTING" Then
 57830    If Not reg.KeyExists Then
 57840     reg.CreateKey
 57850    End If
-57860    reg.SetRegistryValue "PDFDisallowCopy", CStr(Abs(.PDFDisallowCopy)), REG_SZ
+57860    reg.SetRegistryValue "PDFAllowDegradedPrinting", CStr(Abs(.PDFAllowDegradedPrinting)), REG_SZ
 57870    Set reg = Nothing
 57880    Exit Sub
 57890   End If
-57900   If UCase$(OptionName) = "PDFDISALLOWMODIFYANNOTATIONS" Then
+57900   If UCase$(OptionName) = "PDFALLOWFILLIN" Then
 57910    If Not reg.KeyExists Then
 57920     reg.CreateKey
 57930    End If
-57940    reg.SetRegistryValue "PDFDisallowModifyAnnotations", CStr(Abs(.PDFDisallowModifyAnnotations)), REG_SZ
+57940    reg.SetRegistryValue "PDFAllowFillIn", CStr(Abs(.PDFAllowFillIn)), REG_SZ
 57950    Set reg = Nothing
 57960    Exit Sub
 57970   End If
-57980   If UCase$(OptionName) = "PDFDISALLOWMODIFYCONTENTS" Then
+57980   If UCase$(OptionName) = "PDFALLOWSCREENREADERS" Then
 57990    If Not reg.KeyExists Then
 58000     reg.CreateKey
 58010    End If
-58020    reg.SetRegistryValue "PDFDisallowModifyContents", CStr(Abs(.PDFDisallowModifyContents)), REG_SZ
+58020    reg.SetRegistryValue "PDFAllowScreenReaders", CStr(Abs(.PDFAllowScreenReaders)), REG_SZ
 58030    Set reg = Nothing
 58040    Exit Sub
 58050   End If
-58060   If UCase$(OptionName) = "PDFDISALLOWPRINTING" Then
+58060   If UCase$(OptionName) = "PDFDISALLOWCOPY" Then
 58070    If Not reg.KeyExists Then
 58080     reg.CreateKey
 58090    End If
-58100    reg.SetRegistryValue "PDFDisallowPrinting", CStr(Abs(.PDFDisallowPrinting)), REG_SZ
+58100    reg.SetRegistryValue "PDFDisallowCopy", CStr(Abs(.PDFDisallowCopy)), REG_SZ
 58110    Set reg = Nothing
 58120    Exit Sub
 58130   End If
-58140   If UCase$(OptionName) = "PDFENCRYPTOR" Then
+58140   If UCase$(OptionName) = "PDFDISALLOWMODIFYANNOTATIONS" Then
 58150    If Not reg.KeyExists Then
 58160     reg.CreateKey
 58170    End If
-58180    reg.SetRegistryValue "PDFEncryptor", CStr(.PDFEncryptor), REG_SZ
+58180    reg.SetRegistryValue "PDFDisallowModifyAnnotations", CStr(Abs(.PDFDisallowModifyAnnotations)), REG_SZ
 58190    Set reg = Nothing
 58200    Exit Sub
 58210   End If
-58220   If UCase$(OptionName) = "PDFHIGHENCRYPTION" Then
+58220   If UCase$(OptionName) = "PDFDISALLOWMODIFYCONTENTS" Then
 58230    If Not reg.KeyExists Then
 58240     reg.CreateKey
 58250    End If
-58260    reg.SetRegistryValue "PDFHighEncryption", CStr(Abs(.PDFHighEncryption)), REG_SZ
+58260    reg.SetRegistryValue "PDFDisallowModifyContents", CStr(Abs(.PDFDisallowModifyContents)), REG_SZ
 58270    Set reg = Nothing
 58280    Exit Sub
 58290   End If
-58300   If UCase$(OptionName) = "PDFLOWENCRYPTION" Then
+58300   If UCase$(OptionName) = "PDFDISALLOWPRINTING" Then
 58310    If Not reg.KeyExists Then
 58320     reg.CreateKey
 58330    End If
-58340    reg.SetRegistryValue "PDFLowEncryption", CStr(Abs(.PDFLowEncryption)), REG_SZ
+58340    reg.SetRegistryValue "PDFDisallowPrinting", CStr(Abs(.PDFDisallowPrinting)), REG_SZ
 58350    Set reg = Nothing
 58360    Exit Sub
 58370   End If
-58380   If UCase$(OptionName) = "PDFOWNERPASS" Then
+58380   If UCase$(OptionName) = "PDFENCRYPTOR" Then
 58390    If Not reg.KeyExists Then
 58400     reg.CreateKey
 58410    End If
-58420    reg.SetRegistryValue "PDFOwnerPass", CStr(Abs(.PDFOwnerPass)), REG_SZ
+58420    reg.SetRegistryValue "PDFEncryptor", CStr(.PDFEncryptor), REG_SZ
 58430    Set reg = Nothing
 58440    Exit Sub
 58450   End If
-58460   If UCase$(OptionName) = "PDFOWNERPASSWORDSTRING" Then
+58460   If UCase$(OptionName) = "PDFHIGHENCRYPTION" Then
 58470    If Not reg.KeyExists Then
 58480     reg.CreateKey
 58490    End If
-58500    reg.SetRegistryValue "PDFOwnerPasswordString", CStr(.PDFOwnerPasswordString), REG_SZ
+58500    reg.SetRegistryValue "PDFHighEncryption", CStr(Abs(.PDFHighEncryption)), REG_SZ
 58510    Set reg = Nothing
 58520    Exit Sub
 58530   End If
-58540   If UCase$(OptionName) = "PDFUSERPASS" Then
+58540   If UCase$(OptionName) = "PDFLOWENCRYPTION" Then
 58550    If Not reg.KeyExists Then
 58560     reg.CreateKey
 58570    End If
-58580    reg.SetRegistryValue "PDFUserPass", CStr(Abs(.PDFUserPass)), REG_SZ
+58580    reg.SetRegistryValue "PDFLowEncryption", CStr(Abs(.PDFLowEncryption)), REG_SZ
 58590    Set reg = Nothing
 58600    Exit Sub
 58610   End If
-58620   If UCase$(OptionName) = "PDFUSERPASSWORDSTRING" Then
+58620   If UCase$(OptionName) = "PDFOWNERPASS" Then
 58630    If Not reg.KeyExists Then
 58640     reg.CreateKey
 58650    End If
-58660    reg.SetRegistryValue "PDFUserPasswordString", CStr(.PDFUserPasswordString), REG_SZ
+58660    reg.SetRegistryValue "PDFOwnerPass", CStr(Abs(.PDFOwnerPass)), REG_SZ
 58670    Set reg = Nothing
 58680    Exit Sub
 58690   End If
-58700   If UCase$(OptionName) = "PDFUSESECURITY" Then
+58700   If UCase$(OptionName) = "PDFOWNERPASSWORDSTRING" Then
 58710    If Not reg.KeyExists Then
 58720     reg.CreateKey
 58730    End If
-58740    reg.SetRegistryValue "PDFUseSecurity", CStr(Abs(.PDFUseSecurity)), REG_SZ
+58740    reg.SetRegistryValue "PDFOwnerPasswordString", CStr(.PDFOwnerPasswordString), REG_SZ
 58750    Set reg = Nothing
 58760    Exit Sub
 58770   End If
-58780   reg.SubKey = "Printing\Formats\PDF\Signing"
-58790   If UCase$(OptionName) = "PDFSIGNINGMULTISIGNATURE" Then
-58800    If Not reg.KeyExists Then
-58810     reg.CreateKey
-58820    End If
-58830    reg.SetRegistryValue "PDFSigningMultiSignature", CStr(Abs(.PDFSigningMultiSignature)), REG_SZ
-58840    Set reg = Nothing
-58850    Exit Sub
-58860   End If
-58870   If UCase$(OptionName) = "PDFSIGNINGPFXFILE" Then
-58880    If Not reg.KeyExists Then
-58890     reg.CreateKey
-58900    End If
-58910    reg.SetRegistryValue "PDFSigningPFXFile", CStr(.PDFSigningPFXFile), REG_SZ
-58920    Set reg = Nothing
-58930    Exit Sub
-58940   End If
-58950   If UCase$(OptionName) = "PDFSIGNINGPFXFILEPASSWORD" Then
-58960    If Not reg.KeyExists Then
-58970     reg.CreateKey
-58980    End If
-58990    reg.SetRegistryValue "PDFSigningPFXFilePassword", CStr(.PDFSigningPFXFilePassword), REG_SZ
-59000    Set reg = Nothing
-59010    Exit Sub
-59020   End If
-59030   If UCase$(OptionName) = "PDFSIGNINGSIGNATURECONTACT" Then
+58780   If UCase$(OptionName) = "PDFUSERPASS" Then
+58790    If Not reg.KeyExists Then
+58800     reg.CreateKey
+58810    End If
+58820    reg.SetRegistryValue "PDFUserPass", CStr(Abs(.PDFUserPass)), REG_SZ
+58830    Set reg = Nothing
+58840    Exit Sub
+58850   End If
+58860   If UCase$(OptionName) = "PDFUSERPASSWORDSTRING" Then
+58870    If Not reg.KeyExists Then
+58880     reg.CreateKey
+58890    End If
+58900    reg.SetRegistryValue "PDFUserPasswordString", CStr(.PDFUserPasswordString), REG_SZ
+58910    Set reg = Nothing
+58920    Exit Sub
+58930   End If
+58940   If UCase$(OptionName) = "PDFUSESECURITY" Then
+58950    If Not reg.KeyExists Then
+58960     reg.CreateKey
+58970    End If
+58980    reg.SetRegistryValue "PDFUseSecurity", CStr(Abs(.PDFUseSecurity)), REG_SZ
+58990    Set reg = Nothing
+59000    Exit Sub
+59010   End If
+59020   reg.SubKey = "Printing\Formats\PDF\Signing"
+59030   If UCase$(OptionName) = "PDFSIGNINGMULTISIGNATURE" Then
 59040    If Not reg.KeyExists Then
 59050     reg.CreateKey
 59060    End If
-59070    reg.SetRegistryValue "PDFSigningSignatureContact", CStr(.PDFSigningSignatureContact), REG_SZ
+59070    reg.SetRegistryValue "PDFSigningMultiSignature", CStr(Abs(.PDFSigningMultiSignature)), REG_SZ
 59080    Set reg = Nothing
 59090    Exit Sub
 59100   End If
-59110   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTX" Then
+59110   If UCase$(OptionName) = "PDFSIGNINGPFXFILE" Then
 59120    If Not reg.KeyExists Then
 59130     reg.CreateKey
 59140    End If
-59150   reg.SetRegistryValue "PDFSigningSignatureLeftX", Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), REG_SZ
+59150    reg.SetRegistryValue "PDFSigningPFXFile", CStr(.PDFSigningPFXFile), REG_SZ
 59160    Set reg = Nothing
 59170    Exit Sub
 59180   End If
-59190   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTY" Then
+59190   If UCase$(OptionName) = "PDFSIGNINGPFXFILEPASSWORD" Then
 59200    If Not reg.KeyExists Then
 59210     reg.CreateKey
 59220    End If
-59230   reg.SetRegistryValue "PDFSigningSignatureLeftY", Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), REG_SZ
+59230    reg.SetRegistryValue "PDFSigningPFXFilePassword", CStr(.PDFSigningPFXFilePassword), REG_SZ
 59240    Set reg = Nothing
 59250    Exit Sub
 59260   End If
-59270   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELOCATION" Then
+59270   If UCase$(OptionName) = "PDFSIGNINGSIGNATURECONTACT" Then
 59280    If Not reg.KeyExists Then
 59290     reg.CreateKey
 59300    End If
-59310    reg.SetRegistryValue "PDFSigningSignatureLocation", CStr(.PDFSigningSignatureLocation), REG_SZ
+59310    reg.SetRegistryValue "PDFSigningSignatureContact", CStr(.PDFSigningSignatureContact), REG_SZ
 59320    Set reg = Nothing
 59330    Exit Sub
 59340   End If
-59350   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREONPAGE" Then
+59350   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTX" Then
 59360    If Not reg.KeyExists Then
 59370     reg.CreateKey
 59380    End If
-59390    reg.SetRegistryValue "PDFSigningSignatureOnPage", CStr(.PDFSigningSignatureOnPage), REG_SZ
+59390   reg.SetRegistryValue "PDFSigningSignatureLeftX", Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), REG_SZ
 59400    Set reg = Nothing
 59410    Exit Sub
 59420   End If
-59430   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREREASON" Then
+59430   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELEFTY" Then
 59440    If Not reg.KeyExists Then
 59450     reg.CreateKey
 59460    End If
-59470    reg.SetRegistryValue "PDFSigningSignatureReason", CStr(.PDFSigningSignatureReason), REG_SZ
+59470   reg.SetRegistryValue "PDFSigningSignatureLeftY", Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), REG_SZ
 59480    Set reg = Nothing
 59490    Exit Sub
 59500   End If
-59510   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTX" Then
+59510   If UCase$(OptionName) = "PDFSIGNINGSIGNATURELOCATION" Then
 59520    If Not reg.KeyExists Then
 59530     reg.CreateKey
 59540    End If
-59550   reg.SetRegistryValue "PDFSigningSignatureRightX", Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), REG_SZ
+59550    reg.SetRegistryValue "PDFSigningSignatureLocation", CStr(.PDFSigningSignatureLocation), REG_SZ
 59560    Set reg = Nothing
 59570    Exit Sub
 59580   End If
-59590   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTY" Then
+59590   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREONPAGE" Then
 59600    If Not reg.KeyExists Then
 59610     reg.CreateKey
 59620    End If
-59630   reg.SetRegistryValue "PDFSigningSignatureRightY", Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), REG_SZ
+59630    reg.SetRegistryValue "PDFSigningSignatureOnPage", CStr(.PDFSigningSignatureOnPage), REG_SZ
 59640    Set reg = Nothing
 59650    Exit Sub
 59660   End If
-59670   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREVISIBLE" Then
+59670   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREREASON" Then
 59680    If Not reg.KeyExists Then
 59690     reg.CreateKey
 59700    End If
-59710    reg.SetRegistryValue "PDFSigningSignatureVisible", CStr(Abs(.PDFSigningSignatureVisible)), REG_SZ
+59710    reg.SetRegistryValue "PDFSigningSignatureReason", CStr(.PDFSigningSignatureReason), REG_SZ
 59720    Set reg = Nothing
 59730    Exit Sub
 59740   End If
-59750   If UCase$(OptionName) = "PDFSIGNINGSIGNPDF" Then
+59750   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTX" Then
 59760    If Not reg.KeyExists Then
 59770     reg.CreateKey
 59780    End If
-59790    reg.SetRegistryValue "PDFSigningSignPDF", CStr(Abs(.PDFSigningSignPDF)), REG_SZ
+59790   reg.SetRegistryValue "PDFSigningSignatureRightX", Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), REG_SZ
 59800    Set reg = Nothing
 59810    Exit Sub
 59820   End If
-59830   If UCase$(OptionName) = "PDFSIGNINGTIMESERVERURL" Then
+59830   If UCase$(OptionName) = "PDFSIGNINGSIGNATURERIGHTY" Then
 59840    If Not reg.KeyExists Then
 59850     reg.CreateKey
 59860    End If
-59870    reg.SetRegistryValue "PDFSigningTimeServerUrl", CStr(.PDFSigningTimeServerUrl), REG_SZ
+59870   reg.SetRegistryValue "PDFSigningSignatureRightY", Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), REG_SZ
 59880    Set reg = Nothing
 59890    Exit Sub
 59900   End If
-59910   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
-59920   If UCase$(OptionName) = "EPSLANGUAGELEVEL" Then
-59930    If Not reg.KeyExists Then
-59940     reg.CreateKey
-59950    End If
-59960    reg.SetRegistryValue "EPSLanguageLevel", CStr(.EPSLanguageLevel), REG_SZ
-59970    Set reg = Nothing
-59980    Exit Sub
-59990   End If
-60000   If UCase$(OptionName) = "PSLANGUAGELEVEL" Then
-60010    If Not reg.KeyExists Then
-60020     reg.CreateKey
-60030    End If
-60040    reg.SetRegistryValue "PSLanguageLevel", CStr(.PSLanguageLevel), REG_SZ
-60050    Set reg = Nothing
-60060    Exit Sub
-60070   End If
-60080   reg.SubKey = "Program"
-60090   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTPARAMETERS" Then
-60100    If Not reg.KeyExists Then
-60110     reg.CreateKey
-60120    End If
-60130    reg.SetRegistryValue "AdditionalGhostscriptParameters", CStr(.AdditionalGhostscriptParameters), REG_SZ
-60140    Set reg = Nothing
-60150    Exit Sub
-60160   End If
-60170   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTSEARCHPATH" Then
-60180    If Not reg.KeyExists Then
-60190     reg.CreateKey
-60200    End If
-60210    reg.SetRegistryValue "AdditionalGhostscriptSearchpath", CStr(.AdditionalGhostscriptSearchpath), REG_SZ
-60220    Set reg = Nothing
-60230    Exit Sub
-60240   End If
-60250   If UCase$(OptionName) = "ADDWINDOWSFONTPATH" Then
-60260    If Not reg.KeyExists Then
-60270     reg.CreateKey
-60280    End If
-60290    reg.SetRegistryValue "AddWindowsFontpath", CStr(Abs(.AddWindowsFontpath)), REG_SZ
-60300    Set reg = Nothing
-60310    Exit Sub
-60320   End If
-60330   If UCase$(OptionName) = "ALLOWSPECIALGSCHARSINFILENAMES" Then
+59910   If UCase$(OptionName) = "PDFSIGNINGSIGNATUREVISIBLE" Then
+59920    If Not reg.KeyExists Then
+59930     reg.CreateKey
+59940    End If
+59950    reg.SetRegistryValue "PDFSigningSignatureVisible", CStr(Abs(.PDFSigningSignatureVisible)), REG_SZ
+59960    Set reg = Nothing
+59970    Exit Sub
+59980   End If
+59990   If UCase$(OptionName) = "PDFSIGNINGSIGNPDF" Then
+60000    If Not reg.KeyExists Then
+60010     reg.CreateKey
+60020    End If
+60030    reg.SetRegistryValue "PDFSigningSignPDF", CStr(Abs(.PDFSigningSignPDF)), REG_SZ
+60040    Set reg = Nothing
+60050    Exit Sub
+60060   End If
+60070   If UCase$(OptionName) = "PDFSIGNINGTIMESERVERURL" Then
+60080    If Not reg.KeyExists Then
+60090     reg.CreateKey
+60100    End If
+60110    reg.SetRegistryValue "PDFSigningTimeServerUrl", CStr(.PDFSigningTimeServerUrl), REG_SZ
+60120    Set reg = Nothing
+60130    Exit Sub
+60140   End If
+60150   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
+60160   If UCase$(OptionName) = "EPSLANGUAGELEVEL" Then
+60170    If Not reg.KeyExists Then
+60180     reg.CreateKey
+60190    End If
+60200    reg.SetRegistryValue "EPSLanguageLevel", CStr(.EPSLanguageLevel), REG_SZ
+60210    Set reg = Nothing
+60220    Exit Sub
+60230   End If
+60240   If UCase$(OptionName) = "PSLANGUAGELEVEL" Then
+60250    If Not reg.KeyExists Then
+60260     reg.CreateKey
+60270    End If
+60280    reg.SetRegistryValue "PSLanguageLevel", CStr(.PSLanguageLevel), REG_SZ
+60290    Set reg = Nothing
+60300    Exit Sub
+60310   End If
+60320   reg.SubKey = "Program"
+60330   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTPARAMETERS" Then
 60340    If Not reg.KeyExists Then
 60350     reg.CreateKey
 60360    End If
-60370    reg.SetRegistryValue "AllowSpecialGSCharsInFilenames", CStr(Abs(.AllowSpecialGSCharsInFilenames)), REG_SZ
+60370    reg.SetRegistryValue "AdditionalGhostscriptParameters", CStr(.AdditionalGhostscriptParameters), REG_SZ
 60380    Set reg = Nothing
 60390    Exit Sub
 60400   End If
-60410   If UCase$(OptionName) = "AUTOSAVEDIRECTORY" Then
+60410   If UCase$(OptionName) = "ADDITIONALGHOSTSCRIPTSEARCHPATH" Then
 60420    If Not reg.KeyExists Then
 60430     reg.CreateKey
 60440    End If
-60450    reg.SetRegistryValue "AutosaveDirectory", CStr(.AutosaveDirectory), REG_SZ
+60450    reg.SetRegistryValue "AdditionalGhostscriptSearchpath", CStr(.AdditionalGhostscriptSearchpath), REG_SZ
 60460    Set reg = Nothing
 60470    Exit Sub
 60480   End If
-60490   If UCase$(OptionName) = "AUTOSAVEFILENAME" Then
+60490   If UCase$(OptionName) = "ADDWINDOWSFONTPATH" Then
 60500    If Not reg.KeyExists Then
 60510     reg.CreateKey
 60520    End If
-60530    reg.SetRegistryValue "AutosaveFilename", CStr(.AutosaveFilename), REG_SZ
+60530    reg.SetRegistryValue "AddWindowsFontpath", CStr(Abs(.AddWindowsFontpath)), REG_SZ
 60540    Set reg = Nothing
 60550    Exit Sub
 60560   End If
-60570   If UCase$(OptionName) = "AUTOSAVEFORMAT" Then
+60570   If UCase$(OptionName) = "ALLOWSPECIALGSCHARSINFILENAMES" Then
 60580    If Not reg.KeyExists Then
 60590     reg.CreateKey
 60600    End If
-60610    reg.SetRegistryValue "AutosaveFormat", CStr(.AutosaveFormat), REG_SZ
+60610    reg.SetRegistryValue "AllowSpecialGSCharsInFilenames", CStr(Abs(.AllowSpecialGSCharsInFilenames)), REG_SZ
 60620    Set reg = Nothing
 60630    Exit Sub
 60640   End If
-60650   If UCase$(OptionName) = "AUTOSAVESTARTSTANDARDPROGRAM" Then
+60650   If UCase$(OptionName) = "AUTOSAVEDIRECTORY" Then
 60660    If Not reg.KeyExists Then
 60670     reg.CreateKey
 60680    End If
-60690    reg.SetRegistryValue "AutosaveStartStandardProgram", CStr(Abs(.AutosaveStartStandardProgram)), REG_SZ
+60690    reg.SetRegistryValue "AutosaveDirectory", CStr(.AutosaveDirectory), REG_SZ
 60700    Set reg = Nothing
 60710    Exit Sub
 60720   End If
-60730   If UCase$(OptionName) = "CLIENTCOMPUTERRESOLVEIPADDRESS" Then
+60730   If UCase$(OptionName) = "AUTOSAVEFILENAME" Then
 60740    If Not reg.KeyExists Then
 60750     reg.CreateKey
 60760    End If
-60770    reg.SetRegistryValue "ClientComputerResolveIPAddress", CStr(Abs(.ClientComputerResolveIPAddress)), REG_SZ
+60770    reg.SetRegistryValue "AutosaveFilename", CStr(.AutosaveFilename), REG_SZ
 60780    Set reg = Nothing
 60790    Exit Sub
 60800   End If
-60810   If UCase$(OptionName) = "DISABLEEMAIL" Then
+60810   If UCase$(OptionName) = "AUTOSAVEFORMAT" Then
 60820    If Not reg.KeyExists Then
 60830     reg.CreateKey
 60840    End If
-60850    reg.SetRegistryValue "DisableEmail", CStr(Abs(.DisableEmail)), REG_SZ
+60850    reg.SetRegistryValue "AutosaveFormat", CStr(.AutosaveFormat), REG_SZ
 60860    Set reg = Nothing
 60870    Exit Sub
 60880   End If
-60890   If UCase$(OptionName) = "DISABLEUPDATECHECK" Then
+60890   If UCase$(OptionName) = "AUTOSAVESTARTSTANDARDPROGRAM" Then
 60900    If Not reg.KeyExists Then
 60910     reg.CreateKey
 60920    End If
-60930    reg.SetRegistryValue "DisableUpdateCheck", CStr(Abs(.DisableUpdateCheck)), REG_SZ
+60930    reg.SetRegistryValue "AutosaveStartStandardProgram", CStr(Abs(.AutosaveStartStandardProgram)), REG_SZ
 60940    Set reg = Nothing
 60950    Exit Sub
 60960   End If
-60970   If UCase$(OptionName) = "DONTUSEDOCUMENTSETTINGS" Then
+60970   If UCase$(OptionName) = "CLIENTCOMPUTERRESOLVEIPADDRESS" Then
 60980    If Not reg.KeyExists Then
 60990     reg.CreateKey
 61000    End If
-61010    reg.SetRegistryValue "DontUseDocumentSettings", CStr(Abs(.DontUseDocumentSettings)), REG_SZ
+61010    reg.SetRegistryValue "ClientComputerResolveIPAddress", CStr(Abs(.ClientComputerResolveIPAddress)), REG_SZ
 61020    Set reg = Nothing
 61030    Exit Sub
 61040   End If
-61050   If UCase$(OptionName) = "EDITWITHPDFARCHITECT" Then
+61050   If UCase$(OptionName) = "DISABLEEMAIL" Then
 61060    If Not reg.KeyExists Then
 61070     reg.CreateKey
 61080    End If
-61090    reg.SetRegistryValue "EditWithPDFArchitect", CStr(Abs(.EditWithPDFArchitect)), REG_SZ
+61090    reg.SetRegistryValue "DisableEmail", CStr(Abs(.DisableEmail)), REG_SZ
 61100    Set reg = Nothing
 61110    Exit Sub
 61120   End If
-61130   If UCase$(OptionName) = "FILENAMESUBSTITUTIONS" Then
+61130   If UCase$(OptionName) = "DISABLEUPDATECHECK" Then
 61140    If Not reg.KeyExists Then
 61150     reg.CreateKey
 61160    End If
-61170    reg.SetRegistryValue "FilenameSubstitutions", CStr(.FilenameSubstitutions), REG_SZ
+61170    reg.SetRegistryValue "DisableUpdateCheck", CStr(Abs(.DisableUpdateCheck)), REG_SZ
 61180    Set reg = Nothing
 61190    Exit Sub
 61200   End If
-61210   If UCase$(OptionName) = "FILENAMESUBSTITUTIONSONLYINTITLE" Then
+61210   If UCase$(OptionName) = "DONTUSEDOCUMENTSETTINGS" Then
 61220    If Not reg.KeyExists Then
 61230     reg.CreateKey
 61240    End If
-61250    reg.SetRegistryValue "FilenameSubstitutionsOnlyInTitle", CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), REG_SZ
+61250    reg.SetRegistryValue "DontUseDocumentSettings", CStr(Abs(.DontUseDocumentSettings)), REG_SZ
 61260    Set reg = Nothing
 61270    Exit Sub
 61280   End If
-61290   If UCase$(OptionName) = "LANGUAGE" Then
+61290   If UCase$(OptionName) = "EDITWITHPDFARCHITECT" Then
 61300    If Not reg.KeyExists Then
 61310     reg.CreateKey
 61320    End If
-61330    reg.SetRegistryValue "Language", CStr(.Language), REG_SZ
+61330    reg.SetRegistryValue "EditWithPDFArchitect", CStr(Abs(.EditWithPDFArchitect)), REG_SZ
 61340    Set reg = Nothing
 61350    Exit Sub
 61360   End If
-61370   If UCase$(OptionName) = "LASTSAVEDIRECTORY" Then
+61370   If UCase$(OptionName) = "FILENAMESUBSTITUTIONS" Then
 61380    If Not reg.KeyExists Then
 61390     reg.CreateKey
 61400    End If
-61410    reg.SetRegistryValue "LastSaveDirectory", CStr(.LastSaveDirectory), REG_SZ
+61410    reg.SetRegistryValue "FilenameSubstitutions", CStr(.FilenameSubstitutions), REG_SZ
 61420    Set reg = Nothing
 61430    Exit Sub
 61440   End If
-61450   If UCase$(OptionName) = "LASTUPDATECHECK" Then
+61450   If UCase$(OptionName) = "FILENAMESUBSTITUTIONSONLYINTITLE" Then
 61460    If Not reg.KeyExists Then
 61470     reg.CreateKey
 61480    End If
-61490    reg.SetRegistryValue "LastUpdateCheck", CStr(.LastUpdateCheck), REG_SZ
+61490    reg.SetRegistryValue "FilenameSubstitutionsOnlyInTitle", CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), REG_SZ
 61500    Set reg = Nothing
 61510    Exit Sub
 61520   End If
-61530   If UCase$(OptionName) = "LOGGING" Then
+61530   If UCase$(OptionName) = "LANGUAGE" Then
 61540    If Not reg.KeyExists Then
 61550     reg.CreateKey
 61560    End If
-61570    reg.SetRegistryValue "Logging", CStr(Abs(.Logging)), REG_SZ
+61570    reg.SetRegistryValue "Language", CStr(.Language), REG_SZ
 61580    Set reg = Nothing
 61590    Exit Sub
 61600   End If
-61610   If UCase$(OptionName) = "LOGLINES" Then
+61610   If UCase$(OptionName) = "LASTSAVEDIRECTORY" Then
 61620    If Not reg.KeyExists Then
 61630     reg.CreateKey
 61640    End If
-61650    reg.SetRegistryValue "LogLines", CStr(.LogLines), REG_SZ
+61650    reg.SetRegistryValue "LastSaveDirectory", CStr(.LastSaveDirectory), REG_SZ
 61660    Set reg = Nothing
 61670    Exit Sub
 61680   End If
-61690   If UCase$(OptionName) = "MAXIMUMCOUNTOFPDFARCHITECTTOOLTIP" Then
+61690   If UCase$(OptionName) = "LASTUPDATECHECK" Then
 61700    If Not reg.KeyExists Then
 61710     reg.CreateKey
 61720    End If
-61730    reg.SetRegistryValue "MaximumCountOfPDFArchitectToolTip", CStr(.MaximumCountOfPDFArchitectToolTip), REG_SZ
+61730    reg.SetRegistryValue "LastUpdateCheck", CStr(.LastUpdateCheck), REG_SZ
 61740    Set reg = Nothing
 61750    Exit Sub
 61760   End If
-61770   If UCase$(OptionName) = "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER" Then
+61770   If UCase$(OptionName) = "LOGGING" Then
 61780    If Not reg.KeyExists Then
 61790     reg.CreateKey
 61800    End If
-61810    reg.SetRegistryValue "NoConfirmMessageSwitchingDefaultprinter", CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), REG_SZ
+61810    reg.SetRegistryValue "Logging", CStr(Abs(.Logging)), REG_SZ
 61820    Set reg = Nothing
 61830    Exit Sub
 61840   End If
-61850   If UCase$(OptionName) = "NOPROCESSINGATSTARTUP" Then
+61850   If UCase$(OptionName) = "LOGLINES" Then
 61860    If Not reg.KeyExists Then
 61870     reg.CreateKey
 61880    End If
-61890    reg.SetRegistryValue "NoProcessingAtStartup", CStr(Abs(.NoProcessingAtStartup)), REG_SZ
+61890    reg.SetRegistryValue "LogLines", CStr(.LogLines), REG_SZ
 61900    Set reg = Nothing
 61910    Exit Sub
 61920   End If
-61930   If UCase$(OptionName) = "NOPSCHECK" Then
+61930   If UCase$(OptionName) = "MAXIMUMCOUNTOFPDFARCHITECTTOOLTIP" Then
 61940    If Not reg.KeyExists Then
 61950     reg.CreateKey
 61960    End If
-61970    reg.SetRegistryValue "NoPSCheck", CStr(Abs(.NoPSCheck)), REG_SZ
+61970    reg.SetRegistryValue "MaximumCountOfPDFArchitectToolTip", CStr(.MaximumCountOfPDFArchitectToolTip), REG_SZ
 61980    Set reg = Nothing
 61990    Exit Sub
 62000   End If
-62010   If UCase$(OptionName) = "OPENOUTPUTFILE" Then
+62010   If UCase$(OptionName) = "NOCONFIRMMESSAGESWITCHINGDEFAULTPRINTER" Then
 62020    If Not reg.KeyExists Then
 62030     reg.CreateKey
 62040    End If
-62050    reg.SetRegistryValue "OpenOutputFile", CStr(Abs(.OpenOutputFile)), REG_SZ
+62050    reg.SetRegistryValue "NoConfirmMessageSwitchingDefaultprinter", CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), REG_SZ
 62060    Set reg = Nothing
 62070    Exit Sub
 62080   End If
-62090   If UCase$(OptionName) = "OPTIONSDESIGN" Then
+62090   If UCase$(OptionName) = "NOPROCESSINGATSTARTUP" Then
 62100    If Not reg.KeyExists Then
 62110     reg.CreateKey
 62120    End If
-62130    reg.SetRegistryValue "OptionsDesign", CStr(.OptionsDesign), REG_SZ
+62130    reg.SetRegistryValue "NoProcessingAtStartup", CStr(Abs(.NoProcessingAtStartup)), REG_SZ
 62140    Set reg = Nothing
 62150    Exit Sub
 62160   End If
-62170   If UCase$(OptionName) = "OPTIONSENABLED" Then
+62170   If UCase$(OptionName) = "NOPSCHECK" Then
 62180    If Not reg.KeyExists Then
 62190     reg.CreateKey
 62200    End If
-62210    reg.SetRegistryValue "OptionsEnabled", CStr(Abs(.OptionsEnabled)), REG_SZ
+62210    reg.SetRegistryValue "NoPSCheck", CStr(Abs(.NoPSCheck)), REG_SZ
 62220    Set reg = Nothing
 62230    Exit Sub
 62240   End If
-62250   If UCase$(OptionName) = "OPTIONSVISIBLE" Then
+62250   If UCase$(OptionName) = "OPENOUTPUTFILE" Then
 62260    If Not reg.KeyExists Then
 62270     reg.CreateKey
 62280    End If
-62290    reg.SetRegistryValue "OptionsVisible", CStr(Abs(.OptionsVisible)), REG_SZ
+62290    reg.SetRegistryValue "OpenOutputFile", CStr(Abs(.OpenOutputFile)), REG_SZ
 62300    Set reg = Nothing
 62310    Exit Sub
 62320   End If
-62330   If UCase$(OptionName) = "PRINTAFTERSAVING" Then
+62330   If UCase$(OptionName) = "OPTIONSDESIGN" Then
 62340    If Not reg.KeyExists Then
 62350     reg.CreateKey
 62360    End If
-62370    reg.SetRegistryValue "PrintAfterSaving", CStr(Abs(.PrintAfterSaving)), REG_SZ
+62370    reg.SetRegistryValue "OptionsDesign", CStr(.OptionsDesign), REG_SZ
 62380    Set reg = Nothing
 62390    Exit Sub
 62400   End If
-62410   If UCase$(OptionName) = "PRINTAFTERSAVINGBITSPERPIXEL" Then
+62410   If UCase$(OptionName) = "OPTIONSENABLED" Then
 62420    If Not reg.KeyExists Then
 62430     reg.CreateKey
 62440    End If
-62450    reg.SetRegistryValue "PrintAfterSavingBitsPerPixel", CStr(.PrintAfterSavingBitsPerPixel), REG_SZ
+62450    reg.SetRegistryValue "OptionsEnabled", CStr(Abs(.OptionsEnabled)), REG_SZ
 62460    Set reg = Nothing
 62470    Exit Sub
 62480   End If
-62490   If UCase$(OptionName) = "PRINTAFTERSAVINGDUPLEX" Then
+62490   If UCase$(OptionName) = "OPTIONSVISIBLE" Then
 62500    If Not reg.KeyExists Then
 62510     reg.CreateKey
 62520    End If
-62530    reg.SetRegistryValue "PrintAfterSavingDuplex", CStr(Abs(.PrintAfterSavingDuplex)), REG_SZ
+62530    reg.SetRegistryValue "OptionsVisible", CStr(Abs(.OptionsVisible)), REG_SZ
 62540    Set reg = Nothing
 62550    Exit Sub
 62560   End If
-62570   If UCase$(OptionName) = "PRINTAFTERSAVINGMAXRESOLUTION" Then
+62570   If UCase$(OptionName) = "PRINTAFTERSAVING" Then
 62580    If Not reg.KeyExists Then
 62590     reg.CreateKey
 62600    End If
-62610    reg.SetRegistryValue "PrintAfterSavingMaxResolution", CStr(.PrintAfterSavingMaxResolution), REG_SZ
+62610    reg.SetRegistryValue "PrintAfterSaving", CStr(Abs(.PrintAfterSaving)), REG_SZ
 62620    Set reg = Nothing
 62630    Exit Sub
 62640   End If
-62650   If UCase$(OptionName) = "PRINTAFTERSAVINGMAXRESOLUTIONENABLED" Then
+62650   If UCase$(OptionName) = "PRINTAFTERSAVINGBITSPERPIXEL" Then
 62660    If Not reg.KeyExists Then
 62670     reg.CreateKey
 62680    End If
-62690    reg.SetRegistryValue "PrintAfterSavingMaxResolutionEnabled", CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), REG_SZ
+62690    reg.SetRegistryValue "PrintAfterSavingBitsPerPixel", CStr(.PrintAfterSavingBitsPerPixel), REG_SZ
 62700    Set reg = Nothing
 62710    Exit Sub
 62720   End If
-62730   If UCase$(OptionName) = "PRINTAFTERSAVINGNOCANCEL" Then
+62730   If UCase$(OptionName) = "PRINTAFTERSAVINGDUPLEX" Then
 62740    If Not reg.KeyExists Then
 62750     reg.CreateKey
 62760    End If
-62770    reg.SetRegistryValue "PrintAfterSavingNoCancel", CStr(Abs(.PrintAfterSavingNoCancel)), REG_SZ
+62770    reg.SetRegistryValue "PrintAfterSavingDuplex", CStr(Abs(.PrintAfterSavingDuplex)), REG_SZ
 62780    Set reg = Nothing
 62790    Exit Sub
 62800   End If
-62810   If UCase$(OptionName) = "PRINTAFTERSAVINGPRINTER" Then
+62810   If UCase$(OptionName) = "PRINTAFTERSAVINGMAXRESOLUTION" Then
 62820    If Not reg.KeyExists Then
 62830     reg.CreateKey
 62840    End If
-62850    reg.SetRegistryValue "PrintAfterSavingPrinter", CStr(.PrintAfterSavingPrinter), REG_SZ
+62850    reg.SetRegistryValue "PrintAfterSavingMaxResolution", CStr(.PrintAfterSavingMaxResolution), REG_SZ
 62860    Set reg = Nothing
 62870    Exit Sub
 62880   End If
-62890   If UCase$(OptionName) = "PRINTAFTERSAVINGQUERYUSER" Then
+62890   If UCase$(OptionName) = "PRINTAFTERSAVINGMAXRESOLUTIONENABLED" Then
 62900    If Not reg.KeyExists Then
 62910     reg.CreateKey
 62920    End If
-62930    reg.SetRegistryValue "PrintAfterSavingQueryUser", CStr(.PrintAfterSavingQueryUser), REG_SZ
+62930    reg.SetRegistryValue "PrintAfterSavingMaxResolutionEnabled", CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), REG_SZ
 62940    Set reg = Nothing
 62950    Exit Sub
 62960   End If
-62970   If UCase$(OptionName) = "PRINTAFTERSAVINGTUMBLE" Then
+62970   If UCase$(OptionName) = "PRINTAFTERSAVINGNOCANCEL" Then
 62980    If Not reg.KeyExists Then
 62990     reg.CreateKey
 63000    End If
-63010    reg.SetRegistryValue "PrintAfterSavingTumble", CStr(.PrintAfterSavingTumble), REG_SZ
+63010    reg.SetRegistryValue "PrintAfterSavingNoCancel", CStr(Abs(.PrintAfterSavingNoCancel)), REG_SZ
 63020    Set reg = Nothing
 63030    Exit Sub
 63040   End If
-63050   If UCase$(OptionName) = "PRINTERSTOP" Then
+63050   If UCase$(OptionName) = "PRINTAFTERSAVINGPRINTER" Then
 63060    If Not reg.KeyExists Then
 63070     reg.CreateKey
 63080    End If
-63090    reg.SetRegistryValue "PrinterStop", CStr(Abs(.PrinterStop)), REG_SZ
+63090    reg.SetRegistryValue "PrintAfterSavingPrinter", CStr(.PrintAfterSavingPrinter), REG_SZ
 63100    Set reg = Nothing
 63110    Exit Sub
 63120   End If
-63130   If UCase$(OptionName) = "PROCESSPRIORITY" Then
+63130   If UCase$(OptionName) = "PRINTAFTERSAVINGQUERYUSER" Then
 63140    If Not reg.KeyExists Then
 63150     reg.CreateKey
 63160    End If
-63170    reg.SetRegistryValue "ProcessPriority", CStr(.ProcessPriority), REG_SZ
+63170    reg.SetRegistryValue "PrintAfterSavingQueryUser", CStr(.PrintAfterSavingQueryUser), REG_SZ
 63180    Set reg = Nothing
 63190    Exit Sub
 63200   End If
-63210   If UCase$(OptionName) = "PROGRAMFONT" Then
+63210   If UCase$(OptionName) = "PRINTAFTERSAVINGTUMBLE" Then
 63220    If Not reg.KeyExists Then
 63230     reg.CreateKey
 63240    End If
-63250    reg.SetRegistryValue "ProgramFont", CStr(.ProgramFont), REG_SZ
+63250    reg.SetRegistryValue "PrintAfterSavingTumble", CStr(.PrintAfterSavingTumble), REG_SZ
 63260    Set reg = Nothing
 63270    Exit Sub
 63280   End If
-63290   If UCase$(OptionName) = "PROGRAMFONTCHARSET" Then
+63290   If UCase$(OptionName) = "PRINTERSTOP" Then
 63300    If Not reg.KeyExists Then
 63310     reg.CreateKey
 63320    End If
-63330    reg.SetRegistryValue "ProgramFontCharset", CStr(.ProgramFontCharset), REG_SZ
+63330    reg.SetRegistryValue "PrinterStop", CStr(Abs(.PrinterStop)), REG_SZ
 63340    Set reg = Nothing
 63350    Exit Sub
 63360   End If
-63370   If UCase$(OptionName) = "PROGRAMFONTSIZE" Then
+63370   If UCase$(OptionName) = "PROCESSPRIORITY" Then
 63380    If Not reg.KeyExists Then
 63390     reg.CreateKey
 63400    End If
-63410    reg.SetRegistryValue "ProgramFontSize", CStr(.ProgramFontSize), REG_SZ
+63410    reg.SetRegistryValue "ProcessPriority", CStr(.ProcessPriority), REG_SZ
 63420    Set reg = Nothing
 63430    Exit Sub
 63440   End If
-63450   If UCase$(OptionName) = "REMOVEALLKNOWNFILEEXTENSIONS" Then
+63450   If UCase$(OptionName) = "PROGRAMFONT" Then
 63460    If Not reg.KeyExists Then
 63470     reg.CreateKey
 63480    End If
-63490    reg.SetRegistryValue "RemoveAllKnownFileExtensions", CStr(Abs(.RemoveAllKnownFileExtensions)), REG_SZ
+63490    reg.SetRegistryValue "ProgramFont", CStr(.ProgramFont), REG_SZ
 63500    Set reg = Nothing
 63510    Exit Sub
 63520   End If
-63530   If UCase$(OptionName) = "REMOVESPACES" Then
+63530   If UCase$(OptionName) = "PROGRAMFONTCHARSET" Then
 63540    If Not reg.KeyExists Then
 63550     reg.CreateKey
 63560    End If
-63570    reg.SetRegistryValue "RemoveSpaces", CStr(Abs(.RemoveSpaces)), REG_SZ
+63570    reg.SetRegistryValue "ProgramFontCharset", CStr(.ProgramFontCharset), REG_SZ
 63580    Set reg = Nothing
 63590    Exit Sub
 63600   End If
-63610   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVING" Then
+63610   If UCase$(OptionName) = "PROGRAMFONTSIZE" Then
 63620    If Not reg.KeyExists Then
 63630     reg.CreateKey
 63640    End If
-63650    reg.SetRegistryValue "RunProgramAfterSaving", CStr(Abs(.RunProgramAfterSaving)), REG_SZ
+63650    reg.SetRegistryValue "ProgramFontSize", CStr(.ProgramFontSize), REG_SZ
 63660    Set reg = Nothing
 63670    Exit Sub
 63680   End If
-63690   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMNAME" Then
+63690   If UCase$(OptionName) = "REMOVEALLKNOWNFILEEXTENSIONS" Then
 63700    If Not reg.KeyExists Then
 63710     reg.CreateKey
 63720    End If
-63730    reg.SetRegistryValue "RunProgramAfterSavingProgramname", CStr(.RunProgramAfterSavingProgramname), REG_SZ
+63730    reg.SetRegistryValue "RemoveAllKnownFileExtensions", CStr(Abs(.RemoveAllKnownFileExtensions)), REG_SZ
 63740    Set reg = Nothing
 63750    Exit Sub
 63760   End If
-63770   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS" Then
+63770   If UCase$(OptionName) = "REMOVESPACES" Then
 63780    If Not reg.KeyExists Then
 63790     reg.CreateKey
 63800    End If
-63810    reg.SetRegistryValue "RunProgramAfterSavingProgramParameters", CStr(.RunProgramAfterSavingProgramParameters), REG_SZ
+63810    reg.SetRegistryValue "RemoveSpaces", CStr(Abs(.RemoveSpaces)), REG_SZ
 63820    Set reg = Nothing
 63830    Exit Sub
 63840   End If
-63850   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWAITUNTILREADY" Then
+63850   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVING" Then
 63860    If Not reg.KeyExists Then
 63870     reg.CreateKey
 63880    End If
-63890    reg.SetRegistryValue "RunProgramAfterSavingWaitUntilReady", CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), REG_SZ
+63890    reg.SetRegistryValue "RunProgramAfterSaving", CStr(Abs(.RunProgramAfterSaving)), REG_SZ
 63900    Set reg = Nothing
 63910    Exit Sub
 63920   End If
-63930   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWINDOWSTYLE" Then
+63930   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMNAME" Then
 63940    If Not reg.KeyExists Then
 63950     reg.CreateKey
 63960    End If
-63970    reg.SetRegistryValue "RunProgramAfterSavingWindowstyle", CStr(.RunProgramAfterSavingWindowstyle), REG_SZ
+63970    reg.SetRegistryValue "RunProgramAfterSavingProgramname", CStr(.RunProgramAfterSavingProgramname), REG_SZ
 63980    Set reg = Nothing
 63990    Exit Sub
 64000   End If
-64010   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVING" Then
+64010   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGPROGRAMPARAMETERS" Then
 64020    If Not reg.KeyExists Then
 64030     reg.CreateKey
 64040    End If
-64050    reg.SetRegistryValue "RunProgramBeforeSaving", CStr(Abs(.RunProgramBeforeSaving)), REG_SZ
+64050    reg.SetRegistryValue "RunProgramAfterSavingProgramParameters", CStr(.RunProgramAfterSavingProgramParameters), REG_SZ
 64060    Set reg = Nothing
 64070    Exit Sub
 64080   End If
-64090   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMNAME" Then
+64090   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWAITUNTILREADY" Then
 64100    If Not reg.KeyExists Then
 64110     reg.CreateKey
 64120    End If
-64130    reg.SetRegistryValue "RunProgramBeforeSavingProgramname", CStr(.RunProgramBeforeSavingProgramname), REG_SZ
+64130    reg.SetRegistryValue "RunProgramAfterSavingWaitUntilReady", CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), REG_SZ
 64140    Set reg = Nothing
 64150    Exit Sub
 64160   End If
-64170   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS" Then
+64170   If UCase$(OptionName) = "RUNPROGRAMAFTERSAVINGWINDOWSTYLE" Then
 64180    If Not reg.KeyExists Then
 64190     reg.CreateKey
 64200    End If
-64210    reg.SetRegistryValue "RunProgramBeforeSavingProgramParameters", CStr(.RunProgramBeforeSavingProgramParameters), REG_SZ
+64210    reg.SetRegistryValue "RunProgramAfterSavingWindowstyle", CStr(.RunProgramAfterSavingWindowstyle), REG_SZ
 64220    Set reg = Nothing
 64230    Exit Sub
 64240   End If
-64250   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGWINDOWSTYLE" Then
+64250   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVING" Then
 64260    If Not reg.KeyExists Then
 64270     reg.CreateKey
 64280    End If
-64290    reg.SetRegistryValue "RunProgramBeforeSavingWindowstyle", CStr(.RunProgramBeforeSavingWindowstyle), REG_SZ
+64290    reg.SetRegistryValue "RunProgramBeforeSaving", CStr(Abs(.RunProgramBeforeSaving)), REG_SZ
 64300    Set reg = Nothing
 64310    Exit Sub
 64320   End If
-64330   If UCase$(OptionName) = "SAVEFILENAME" Then
+64330   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMNAME" Then
 64340    If Not reg.KeyExists Then
 64350     reg.CreateKey
 64360    End If
-64370    reg.SetRegistryValue "SaveFilename", CStr(.SaveFilename), REG_SZ
+64370    reg.SetRegistryValue "RunProgramBeforeSavingProgramname", CStr(.RunProgramBeforeSavingProgramname), REG_SZ
 64380    Set reg = Nothing
 64390    Exit Sub
 64400   End If
-64410   If UCase$(OptionName) = "SENDEMAILAFTERAUTOSAVING" Then
+64410   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGPROGRAMPARAMETERS" Then
 64420    If Not reg.KeyExists Then
 64430     reg.CreateKey
 64440    End If
-64450    reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
+64450    reg.SetRegistryValue "RunProgramBeforeSavingProgramParameters", CStr(.RunProgramBeforeSavingProgramParameters), REG_SZ
 64460    Set reg = Nothing
 64470    Exit Sub
 64480   End If
-64490   If UCase$(OptionName) = "SENDMAILMETHOD" Then
+64490   If UCase$(OptionName) = "RUNPROGRAMBEFORESAVINGWINDOWSTYLE" Then
 64500    If Not reg.KeyExists Then
 64510     reg.CreateKey
 64520    End If
-64530    reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
+64530    reg.SetRegistryValue "RunProgramBeforeSavingWindowstyle", CStr(.RunProgramBeforeSavingWindowstyle), REG_SZ
 64540    Set reg = Nothing
 64550    Exit Sub
 64560   End If
-64570   If UCase$(OptionName) = "SHOWANIMATION" Then
+64570   If UCase$(OptionName) = "SAVEFILENAME" Then
 64580    If Not reg.KeyExists Then
 64590     reg.CreateKey
 64600    End If
-64610    reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
+64610    reg.SetRegistryValue "SaveFilename", CStr(.SaveFilename), REG_SZ
 64620    Set reg = Nothing
 64630    Exit Sub
 64640   End If
-64650   If UCase$(OptionName) = "TOOLBARS" Then
+64650   If UCase$(OptionName) = "SENDEMAILAFTERAUTOSAVING" Then
 64660    If Not reg.KeyExists Then
 64670     reg.CreateKey
 64680    End If
-64690    reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
+64690    reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
 64700    Set reg = Nothing
 64710    Exit Sub
 64720   End If
-64730   If UCase$(OptionName) = "UPDATEINTERVAL" Then
+64730   If UCase$(OptionName) = "SENDMAILMETHOD" Then
 64740    If Not reg.KeyExists Then
 64750     reg.CreateKey
 64760    End If
-64770    reg.SetRegistryValue "UpdateInterval", CStr(.UpdateInterval), REG_SZ
+64770    reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
 64780    Set reg = Nothing
 64790    Exit Sub
 64800   End If
-64810   If UCase$(OptionName) = "USEAUTOSAVE" Then
+64810   If UCase$(OptionName) = "SHOWANIMATION" Then
 64820    If Not reg.KeyExists Then
 64830     reg.CreateKey
 64840    End If
-64850    reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
+64850    reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
 64860    Set reg = Nothing
 64870    Exit Sub
 64880   End If
-64890   If UCase$(OptionName) = "USEAUTOSAVEDIRECTORY" Then
+64890   If UCase$(OptionName) = "TOOLBARS" Then
 64900    If Not reg.KeyExists Then
 64910     reg.CreateKey
 64920    End If
-64930    reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+64930    reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
 64940    Set reg = Nothing
 64950    Exit Sub
 64960   End If
-64970  End With
-64980  Set reg = Nothing
+64970   If UCase$(OptionName) = "UPDATEINTERVAL" Then
+64980    If Not reg.KeyExists Then
+64990     reg.CreateKey
+65000    End If
+65010    reg.SetRegistryValue "UpdateInterval", CStr(.UpdateInterval), REG_SZ
+65020    Set reg = Nothing
+65030    Exit Sub
+65040   End If
+65050   If UCase$(OptionName) = "USEAUTOSAVE" Then
+65060    If Not reg.KeyExists Then
+65070     reg.CreateKey
+65080    End If
+65090    reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
+65100    Set reg = Nothing
+65110    Exit Sub
+65120   End If
+65130   If UCase$(OptionName) = "USEAUTOSAVEDIRECTORY" Then
+65140    If Not reg.KeyExists Then
+65150     reg.CreateKey
+65160    End If
+65170    reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+65180    Set reg = Nothing
+65190    Exit Sub
+65200   End If
+65210  End With
+65220  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -7430,119 +7550,122 @@ On Error GoTo ErrPtnr_OnError
 51310   reg.SetRegistryValue "PDFGeneralOverprint", CStr(.PDFGeneralOverprint), REG_SZ
 51320   reg.SetRegistryValue "PDFGeneralResolution", CStr(.PDFGeneralResolution), REG_SZ
 51330   reg.SetRegistryValue "PDFOptimize", CStr(Abs(.PDFOptimize)), REG_SZ
-51340   reg.SetRegistryValue "PDFUpdateMetadata", CStr(.PDFUpdateMetadata), REG_SZ
-51350   reg.SubKey = "Printing\Formats\PDF\Security"
-51360   If Not reg.KeyExists Then
-51370    reg.CreateKey
-51380   End If
-51390   reg.SetRegistryValue "PDFAes128Encryption", CStr(Abs(.PDFAes128Encryption)), REG_SZ
-51400   reg.SetRegistryValue "PDFAllowAssembly", CStr(Abs(.PDFAllowAssembly)), REG_SZ
-51410   reg.SetRegistryValue "PDFAllowDegradedPrinting", CStr(Abs(.PDFAllowDegradedPrinting)), REG_SZ
-51420   reg.SetRegistryValue "PDFAllowFillIn", CStr(Abs(.PDFAllowFillIn)), REG_SZ
-51430   reg.SetRegistryValue "PDFAllowScreenReaders", CStr(Abs(.PDFAllowScreenReaders)), REG_SZ
-51440   reg.SetRegistryValue "PDFDisallowCopy", CStr(Abs(.PDFDisallowCopy)), REG_SZ
-51450   reg.SetRegistryValue "PDFDisallowModifyAnnotations", CStr(Abs(.PDFDisallowModifyAnnotations)), REG_SZ
-51460   reg.SetRegistryValue "PDFDisallowModifyContents", CStr(Abs(.PDFDisallowModifyContents)), REG_SZ
-51470   reg.SetRegistryValue "PDFDisallowPrinting", CStr(Abs(.PDFDisallowPrinting)), REG_SZ
-51480   reg.SetRegistryValue "PDFEncryptor", CStr(.PDFEncryptor), REG_SZ
-51490   reg.SetRegistryValue "PDFHighEncryption", CStr(Abs(.PDFHighEncryption)), REG_SZ
-51500   reg.SetRegistryValue "PDFLowEncryption", CStr(Abs(.PDFLowEncryption)), REG_SZ
-51510   reg.SetRegistryValue "PDFOwnerPass", CStr(Abs(.PDFOwnerPass)), REG_SZ
-51520   reg.SetRegistryValue "PDFOwnerPasswordString", CStr(.PDFOwnerPasswordString), REG_SZ
-51530   reg.SetRegistryValue "PDFUserPass", CStr(Abs(.PDFUserPass)), REG_SZ
-51540   reg.SetRegistryValue "PDFUserPasswordString", CStr(.PDFUserPasswordString), REG_SZ
-51550   reg.SetRegistryValue "PDFUseSecurity", CStr(Abs(.PDFUseSecurity)), REG_SZ
-51560   reg.SubKey = "Printing\Formats\PDF\Signing"
-51570   If Not reg.KeyExists Then
-51580    reg.CreateKey
-51590   End If
-51600   reg.SetRegistryValue "PDFSigningMultiSignature", CStr(Abs(.PDFSigningMultiSignature)), REG_SZ
-51610   reg.SetRegistryValue "PDFSigningPFXFile", CStr(.PDFSigningPFXFile), REG_SZ
-51620   reg.SetRegistryValue "PDFSigningPFXFilePassword", CStr(.PDFSigningPFXFilePassword), REG_SZ
-51630   reg.SetRegistryValue "PDFSigningSignatureContact", CStr(.PDFSigningSignatureContact), REG_SZ
-51640   reg.SetRegistryValue "PDFSigningSignatureLeftX", Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), REG_SZ
-51650   reg.SetRegistryValue "PDFSigningSignatureLeftY", Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), REG_SZ
-51660   reg.SetRegistryValue "PDFSigningSignatureLocation", CStr(.PDFSigningSignatureLocation), REG_SZ
-51670   reg.SetRegistryValue "PDFSigningSignatureOnPage", CStr(.PDFSigningSignatureOnPage), REG_SZ
-51680   reg.SetRegistryValue "PDFSigningSignatureReason", CStr(.PDFSigningSignatureReason), REG_SZ
-51690   reg.SetRegistryValue "PDFSigningSignatureRightX", Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), REG_SZ
-51700   reg.SetRegistryValue "PDFSigningSignatureRightY", Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), REG_SZ
-51710   reg.SetRegistryValue "PDFSigningSignatureVisible", CStr(Abs(.PDFSigningSignatureVisible)), REG_SZ
-51720   reg.SetRegistryValue "PDFSigningSignPDF", CStr(Abs(.PDFSigningSignPDF)), REG_SZ
-51730   reg.SetRegistryValue "PDFSigningTimeServerUrl", CStr(.PDFSigningTimeServerUrl), REG_SZ
-51740   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
-51750   If Not reg.KeyExists Then
-51760    reg.CreateKey
-51770   End If
-51780   reg.SetRegistryValue "EPSLanguageLevel", CStr(.EPSLanguageLevel), REG_SZ
-51790   reg.SetRegistryValue "PSLanguageLevel", CStr(.PSLanguageLevel), REG_SZ
-51800   reg.SubKey = "Program"
-51810   If Not reg.KeyExists Then
-51820    reg.CreateKey
-51830   End If
-51840   reg.SetRegistryValue "AdditionalGhostscriptParameters", CStr(.AdditionalGhostscriptParameters), REG_SZ
-51850   reg.SetRegistryValue "AdditionalGhostscriptSearchpath", CStr(.AdditionalGhostscriptSearchpath), REG_SZ
-51860   reg.SetRegistryValue "AddWindowsFontpath", CStr(Abs(.AddWindowsFontpath)), REG_SZ
-51870   reg.SetRegistryValue "AllowSpecialGSCharsInFilenames", CStr(Abs(.AllowSpecialGSCharsInFilenames)), REG_SZ
-51880   reg.SetRegistryValue "AutosaveDirectory", CStr(.AutosaveDirectory), REG_SZ
-51890   reg.SetRegistryValue "AutosaveFilename", CStr(.AutosaveFilename), REG_SZ
-51900   reg.SetRegistryValue "AutosaveFormat", CStr(.AutosaveFormat), REG_SZ
-51910   reg.SetRegistryValue "AutosaveStartStandardProgram", CStr(Abs(.AutosaveStartStandardProgram)), REG_SZ
-51920   reg.SetRegistryValue "ClientComputerResolveIPAddress", CStr(Abs(.ClientComputerResolveIPAddress)), REG_SZ
-51930   reg.SetRegistryValue "DisableEmail", CStr(Abs(.DisableEmail)), REG_SZ
-51940   reg.SetRegistryValue "DisableUpdateCheck", CStr(Abs(.DisableUpdateCheck)), REG_SZ
-51950   reg.SetRegistryValue "DontUseDocumentSettings", CStr(Abs(.DontUseDocumentSettings)), REG_SZ
-51960   reg.SetRegistryValue "EditWithPDFArchitect", CStr(Abs(.EditWithPDFArchitect)), REG_SZ
-51970   reg.SetRegistryValue "FilenameSubstitutions", CStr(.FilenameSubstitutions), REG_SZ
-51980   reg.SetRegistryValue "FilenameSubstitutionsOnlyInTitle", CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), REG_SZ
-51990   reg.SetRegistryValue "Language", CStr(.Language), REG_SZ
-52000   reg.SetRegistryValue "LastSaveDirectory", CStr(.LastSaveDirectory), REG_SZ
-52010   reg.SetRegistryValue "LastUpdateCheck", CStr(.LastUpdateCheck), REG_SZ
-52020   reg.SetRegistryValue "Logging", CStr(Abs(.Logging)), REG_SZ
-52030   reg.SetRegistryValue "LogLines", CStr(.LogLines), REG_SZ
-52040   reg.SetRegistryValue "MaximumCountOfPDFArchitectToolTip", CStr(.MaximumCountOfPDFArchitectToolTip), REG_SZ
-52050   reg.SetRegistryValue "NoConfirmMessageSwitchingDefaultprinter", CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), REG_SZ
-52060   reg.SetRegistryValue "NoProcessingAtStartup", CStr(Abs(.NoProcessingAtStartup)), REG_SZ
-52070   reg.SetRegistryValue "NoPSCheck", CStr(Abs(.NoPSCheck)), REG_SZ
-52080   reg.SetRegistryValue "OpenOutputFile", CStr(Abs(.OpenOutputFile)), REG_SZ
-52090   reg.SetRegistryValue "OptionsDesign", CStr(.OptionsDesign), REG_SZ
-52100   reg.SetRegistryValue "OptionsEnabled", CStr(Abs(.OptionsEnabled)), REG_SZ
-52110   reg.SetRegistryValue "OptionsVisible", CStr(Abs(.OptionsVisible)), REG_SZ
-52120   reg.SetRegistryValue "PrintAfterSaving", CStr(Abs(.PrintAfterSaving)), REG_SZ
-52130   reg.SetRegistryValue "PrintAfterSavingBitsPerPixel", CStr(.PrintAfterSavingBitsPerPixel), REG_SZ
-52140   reg.SetRegistryValue "PrintAfterSavingDuplex", CStr(Abs(.PrintAfterSavingDuplex)), REG_SZ
-52150   reg.SetRegistryValue "PrintAfterSavingMaxResolution", CStr(.PrintAfterSavingMaxResolution), REG_SZ
-52160   reg.SetRegistryValue "PrintAfterSavingMaxResolutionEnabled", CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), REG_SZ
-52170   reg.SetRegistryValue "PrintAfterSavingNoCancel", CStr(Abs(.PrintAfterSavingNoCancel)), REG_SZ
-52180   reg.SetRegistryValue "PrintAfterSavingPrinter", CStr(.PrintAfterSavingPrinter), REG_SZ
-52190   reg.SetRegistryValue "PrintAfterSavingQueryUser", CStr(.PrintAfterSavingQueryUser), REG_SZ
-52200   reg.SetRegistryValue "PrintAfterSavingTumble", CStr(.PrintAfterSavingTumble), REG_SZ
-52210   reg.SetRegistryValue "PrinterStop", CStr(Abs(.PrinterStop)), REG_SZ
-52220   reg.SetRegistryValue "ProcessPriority", CStr(.ProcessPriority), REG_SZ
-52230   reg.SetRegistryValue "ProgramFont", CStr(.ProgramFont), REG_SZ
-52240   reg.SetRegistryValue "ProgramFontCharset", CStr(.ProgramFontCharset), REG_SZ
-52250   reg.SetRegistryValue "ProgramFontSize", CStr(.ProgramFontSize), REG_SZ
-52260   reg.SetRegistryValue "RemoveAllKnownFileExtensions", CStr(Abs(.RemoveAllKnownFileExtensions)), REG_SZ
-52270   reg.SetRegistryValue "RemoveSpaces", CStr(Abs(.RemoveSpaces)), REG_SZ
-52280   reg.SetRegistryValue "RunProgramAfterSaving", CStr(Abs(.RunProgramAfterSaving)), REG_SZ
-52290   reg.SetRegistryValue "RunProgramAfterSavingProgramname", CStr(.RunProgramAfterSavingProgramname), REG_SZ
-52300   reg.SetRegistryValue "RunProgramAfterSavingProgramParameters", CStr(.RunProgramAfterSavingProgramParameters), REG_SZ
-52310   reg.SetRegistryValue "RunProgramAfterSavingWaitUntilReady", CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), REG_SZ
-52320   reg.SetRegistryValue "RunProgramAfterSavingWindowstyle", CStr(.RunProgramAfterSavingWindowstyle), REG_SZ
-52330   reg.SetRegistryValue "RunProgramBeforeSaving", CStr(Abs(.RunProgramBeforeSaving)), REG_SZ
-52340   reg.SetRegistryValue "RunProgramBeforeSavingProgramname", CStr(.RunProgramBeforeSavingProgramname), REG_SZ
-52350   reg.SetRegistryValue "RunProgramBeforeSavingProgramParameters", CStr(.RunProgramBeforeSavingProgramParameters), REG_SZ
-52360   reg.SetRegistryValue "RunProgramBeforeSavingWindowstyle", CStr(.RunProgramBeforeSavingWindowstyle), REG_SZ
-52370   reg.SetRegistryValue "SaveFilename", CStr(.SaveFilename), REG_SZ
-52380   reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
-52390   reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
-52400   reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
-52410   reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
-52420   reg.SetRegistryValue "UpdateInterval", CStr(.UpdateInterval), REG_SZ
-52430   reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
-52440   reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
-52450  End With
-52460  Set reg = Nothing
+51340   reg.SetRegistryValue "PDFPageLayout", CStr(.PDFPageLayout), REG_SZ
+51350   reg.SetRegistryValue "PDFPageMode", CStr(.PDFPageMode), REG_SZ
+51360   reg.SetRegistryValue "PDFStartPage", CStr(.PDFStartPage), REG_SZ
+51370   reg.SetRegistryValue "PDFUpdateMetadata", CStr(.PDFUpdateMetadata), REG_SZ
+51380   reg.SubKey = "Printing\Formats\PDF\Security"
+51390   If Not reg.KeyExists Then
+51400    reg.CreateKey
+51410   End If
+51420   reg.SetRegistryValue "PDFAes128Encryption", CStr(Abs(.PDFAes128Encryption)), REG_SZ
+51430   reg.SetRegistryValue "PDFAllowAssembly", CStr(Abs(.PDFAllowAssembly)), REG_SZ
+51440   reg.SetRegistryValue "PDFAllowDegradedPrinting", CStr(Abs(.PDFAllowDegradedPrinting)), REG_SZ
+51450   reg.SetRegistryValue "PDFAllowFillIn", CStr(Abs(.PDFAllowFillIn)), REG_SZ
+51460   reg.SetRegistryValue "PDFAllowScreenReaders", CStr(Abs(.PDFAllowScreenReaders)), REG_SZ
+51470   reg.SetRegistryValue "PDFDisallowCopy", CStr(Abs(.PDFDisallowCopy)), REG_SZ
+51480   reg.SetRegistryValue "PDFDisallowModifyAnnotations", CStr(Abs(.PDFDisallowModifyAnnotations)), REG_SZ
+51490   reg.SetRegistryValue "PDFDisallowModifyContents", CStr(Abs(.PDFDisallowModifyContents)), REG_SZ
+51500   reg.SetRegistryValue "PDFDisallowPrinting", CStr(Abs(.PDFDisallowPrinting)), REG_SZ
+51510   reg.SetRegistryValue "PDFEncryptor", CStr(.PDFEncryptor), REG_SZ
+51520   reg.SetRegistryValue "PDFHighEncryption", CStr(Abs(.PDFHighEncryption)), REG_SZ
+51530   reg.SetRegistryValue "PDFLowEncryption", CStr(Abs(.PDFLowEncryption)), REG_SZ
+51540   reg.SetRegistryValue "PDFOwnerPass", CStr(Abs(.PDFOwnerPass)), REG_SZ
+51550   reg.SetRegistryValue "PDFOwnerPasswordString", CStr(.PDFOwnerPasswordString), REG_SZ
+51560   reg.SetRegistryValue "PDFUserPass", CStr(Abs(.PDFUserPass)), REG_SZ
+51570   reg.SetRegistryValue "PDFUserPasswordString", CStr(.PDFUserPasswordString), REG_SZ
+51580   reg.SetRegistryValue "PDFUseSecurity", CStr(Abs(.PDFUseSecurity)), REG_SZ
+51590   reg.SubKey = "Printing\Formats\PDF\Signing"
+51600   If Not reg.KeyExists Then
+51610    reg.CreateKey
+51620   End If
+51630   reg.SetRegistryValue "PDFSigningMultiSignature", CStr(Abs(.PDFSigningMultiSignature)), REG_SZ
+51640   reg.SetRegistryValue "PDFSigningPFXFile", CStr(.PDFSigningPFXFile), REG_SZ
+51650   reg.SetRegistryValue "PDFSigningPFXFilePassword", CStr(.PDFSigningPFXFilePassword), REG_SZ
+51660   reg.SetRegistryValue "PDFSigningSignatureContact", CStr(.PDFSigningSignatureContact), REG_SZ
+51670   reg.SetRegistryValue "PDFSigningSignatureLeftX", Replace$(CStr(.PDFSigningSignatureLeftX), GetDecimalChar, "."), REG_SZ
+51680   reg.SetRegistryValue "PDFSigningSignatureLeftY", Replace$(CStr(.PDFSigningSignatureLeftY), GetDecimalChar, "."), REG_SZ
+51690   reg.SetRegistryValue "PDFSigningSignatureLocation", CStr(.PDFSigningSignatureLocation), REG_SZ
+51700   reg.SetRegistryValue "PDFSigningSignatureOnPage", CStr(.PDFSigningSignatureOnPage), REG_SZ
+51710   reg.SetRegistryValue "PDFSigningSignatureReason", CStr(.PDFSigningSignatureReason), REG_SZ
+51720   reg.SetRegistryValue "PDFSigningSignatureRightX", Replace$(CStr(.PDFSigningSignatureRightX), GetDecimalChar, "."), REG_SZ
+51730   reg.SetRegistryValue "PDFSigningSignatureRightY", Replace$(CStr(.PDFSigningSignatureRightY), GetDecimalChar, "."), REG_SZ
+51740   reg.SetRegistryValue "PDFSigningSignatureVisible", CStr(Abs(.PDFSigningSignatureVisible)), REG_SZ
+51750   reg.SetRegistryValue "PDFSigningSignPDF", CStr(Abs(.PDFSigningSignPDF)), REG_SZ
+51760   reg.SetRegistryValue "PDFSigningTimeServerUrl", CStr(.PDFSigningTimeServerUrl), REG_SZ
+51770   reg.SubKey = "Printing\Formats\PS\LanguageLevel"
+51780   If Not reg.KeyExists Then
+51790    reg.CreateKey
+51800   End If
+51810   reg.SetRegistryValue "EPSLanguageLevel", CStr(.EPSLanguageLevel), REG_SZ
+51820   reg.SetRegistryValue "PSLanguageLevel", CStr(.PSLanguageLevel), REG_SZ
+51830   reg.SubKey = "Program"
+51840   If Not reg.KeyExists Then
+51850    reg.CreateKey
+51860   End If
+51870   reg.SetRegistryValue "AdditionalGhostscriptParameters", CStr(.AdditionalGhostscriptParameters), REG_SZ
+51880   reg.SetRegistryValue "AdditionalGhostscriptSearchpath", CStr(.AdditionalGhostscriptSearchpath), REG_SZ
+51890   reg.SetRegistryValue "AddWindowsFontpath", CStr(Abs(.AddWindowsFontpath)), REG_SZ
+51900   reg.SetRegistryValue "AllowSpecialGSCharsInFilenames", CStr(Abs(.AllowSpecialGSCharsInFilenames)), REG_SZ
+51910   reg.SetRegistryValue "AutosaveDirectory", CStr(.AutosaveDirectory), REG_SZ
+51920   reg.SetRegistryValue "AutosaveFilename", CStr(.AutosaveFilename), REG_SZ
+51930   reg.SetRegistryValue "AutosaveFormat", CStr(.AutosaveFormat), REG_SZ
+51940   reg.SetRegistryValue "AutosaveStartStandardProgram", CStr(Abs(.AutosaveStartStandardProgram)), REG_SZ
+51950   reg.SetRegistryValue "ClientComputerResolveIPAddress", CStr(Abs(.ClientComputerResolveIPAddress)), REG_SZ
+51960   reg.SetRegistryValue "DisableEmail", CStr(Abs(.DisableEmail)), REG_SZ
+51970   reg.SetRegistryValue "DisableUpdateCheck", CStr(Abs(.DisableUpdateCheck)), REG_SZ
+51980   reg.SetRegistryValue "DontUseDocumentSettings", CStr(Abs(.DontUseDocumentSettings)), REG_SZ
+51990   reg.SetRegistryValue "EditWithPDFArchitect", CStr(Abs(.EditWithPDFArchitect)), REG_SZ
+52000   reg.SetRegistryValue "FilenameSubstitutions", CStr(.FilenameSubstitutions), REG_SZ
+52010   reg.SetRegistryValue "FilenameSubstitutionsOnlyInTitle", CStr(Abs(.FilenameSubstitutionsOnlyInTitle)), REG_SZ
+52020   reg.SetRegistryValue "Language", CStr(.Language), REG_SZ
+52030   reg.SetRegistryValue "LastSaveDirectory", CStr(.LastSaveDirectory), REG_SZ
+52040   reg.SetRegistryValue "LastUpdateCheck", CStr(.LastUpdateCheck), REG_SZ
+52050   reg.SetRegistryValue "Logging", CStr(Abs(.Logging)), REG_SZ
+52060   reg.SetRegistryValue "LogLines", CStr(.LogLines), REG_SZ
+52070   reg.SetRegistryValue "MaximumCountOfPDFArchitectToolTip", CStr(.MaximumCountOfPDFArchitectToolTip), REG_SZ
+52080   reg.SetRegistryValue "NoConfirmMessageSwitchingDefaultprinter", CStr(Abs(.NoConfirmMessageSwitchingDefaultprinter)), REG_SZ
+52090   reg.SetRegistryValue "NoProcessingAtStartup", CStr(Abs(.NoProcessingAtStartup)), REG_SZ
+52100   reg.SetRegistryValue "NoPSCheck", CStr(Abs(.NoPSCheck)), REG_SZ
+52110   reg.SetRegistryValue "OpenOutputFile", CStr(Abs(.OpenOutputFile)), REG_SZ
+52120   reg.SetRegistryValue "OptionsDesign", CStr(.OptionsDesign), REG_SZ
+52130   reg.SetRegistryValue "OptionsEnabled", CStr(Abs(.OptionsEnabled)), REG_SZ
+52140   reg.SetRegistryValue "OptionsVisible", CStr(Abs(.OptionsVisible)), REG_SZ
+52150   reg.SetRegistryValue "PrintAfterSaving", CStr(Abs(.PrintAfterSaving)), REG_SZ
+52160   reg.SetRegistryValue "PrintAfterSavingBitsPerPixel", CStr(.PrintAfterSavingBitsPerPixel), REG_SZ
+52170   reg.SetRegistryValue "PrintAfterSavingDuplex", CStr(Abs(.PrintAfterSavingDuplex)), REG_SZ
+52180   reg.SetRegistryValue "PrintAfterSavingMaxResolution", CStr(.PrintAfterSavingMaxResolution), REG_SZ
+52190   reg.SetRegistryValue "PrintAfterSavingMaxResolutionEnabled", CStr(Abs(.PrintAfterSavingMaxResolutionEnabled)), REG_SZ
+52200   reg.SetRegistryValue "PrintAfterSavingNoCancel", CStr(Abs(.PrintAfterSavingNoCancel)), REG_SZ
+52210   reg.SetRegistryValue "PrintAfterSavingPrinter", CStr(.PrintAfterSavingPrinter), REG_SZ
+52220   reg.SetRegistryValue "PrintAfterSavingQueryUser", CStr(.PrintAfterSavingQueryUser), REG_SZ
+52230   reg.SetRegistryValue "PrintAfterSavingTumble", CStr(.PrintAfterSavingTumble), REG_SZ
+52240   reg.SetRegistryValue "PrinterStop", CStr(Abs(.PrinterStop)), REG_SZ
+52250   reg.SetRegistryValue "ProcessPriority", CStr(.ProcessPriority), REG_SZ
+52260   reg.SetRegistryValue "ProgramFont", CStr(.ProgramFont), REG_SZ
+52270   reg.SetRegistryValue "ProgramFontCharset", CStr(.ProgramFontCharset), REG_SZ
+52280   reg.SetRegistryValue "ProgramFontSize", CStr(.ProgramFontSize), REG_SZ
+52290   reg.SetRegistryValue "RemoveAllKnownFileExtensions", CStr(Abs(.RemoveAllKnownFileExtensions)), REG_SZ
+52300   reg.SetRegistryValue "RemoveSpaces", CStr(Abs(.RemoveSpaces)), REG_SZ
+52310   reg.SetRegistryValue "RunProgramAfterSaving", CStr(Abs(.RunProgramAfterSaving)), REG_SZ
+52320   reg.SetRegistryValue "RunProgramAfterSavingProgramname", CStr(.RunProgramAfterSavingProgramname), REG_SZ
+52330   reg.SetRegistryValue "RunProgramAfterSavingProgramParameters", CStr(.RunProgramAfterSavingProgramParameters), REG_SZ
+52340   reg.SetRegistryValue "RunProgramAfterSavingWaitUntilReady", CStr(Abs(.RunProgramAfterSavingWaitUntilReady)), REG_SZ
+52350   reg.SetRegistryValue "RunProgramAfterSavingWindowstyle", CStr(.RunProgramAfterSavingWindowstyle), REG_SZ
+52360   reg.SetRegistryValue "RunProgramBeforeSaving", CStr(Abs(.RunProgramBeforeSaving)), REG_SZ
+52370   reg.SetRegistryValue "RunProgramBeforeSavingProgramname", CStr(.RunProgramBeforeSavingProgramname), REG_SZ
+52380   reg.SetRegistryValue "RunProgramBeforeSavingProgramParameters", CStr(.RunProgramBeforeSavingProgramParameters), REG_SZ
+52390   reg.SetRegistryValue "RunProgramBeforeSavingWindowstyle", CStr(.RunProgramBeforeSavingWindowstyle), REG_SZ
+52400   reg.SetRegistryValue "SaveFilename", CStr(.SaveFilename), REG_SZ
+52410   reg.SetRegistryValue "SendEmailAfterAutoSaving", CStr(Abs(.SendEmailAfterAutoSaving)), REG_SZ
+52420   reg.SetRegistryValue "SendMailMethod", CStr(.SendMailMethod), REG_SZ
+52430   reg.SetRegistryValue "ShowAnimation", CStr(Abs(.ShowAnimation)), REG_SZ
+52440   reg.SetRegistryValue "Toolbars", CStr(.Toolbars), REG_SZ
+52450   reg.SetRegistryValue "UpdateInterval", CStr(.UpdateInterval), REG_SZ
+52460   reg.SetRegistryValue "UseAutosave", CStr(Abs(.UseAutosave)), REG_SZ
+52470   reg.SetRegistryValue "UseAutosaveDirectory", CStr(Abs(.UseAutosaveDirectory)), REG_SZ
+52480  End With
+52490  Set reg = Nothing
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

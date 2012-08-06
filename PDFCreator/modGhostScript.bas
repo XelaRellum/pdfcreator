@@ -285,7 +285,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePDF(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePDF(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -420,13 +420,18 @@ On Error GoTo ErrPtnr_OnError
 51290    AddParams PDFDocInfoFile
 51300   End If
 51310  End If
-51320
-51330  ShowParams
-51340  If tEnc = True Then
-51350    CallGhostscript "PDF with encryption"
-51360   Else
-51370    CallGhostscript "PDF without encryption"
-51380  End If
+51320  If LenB(PDFDocViewFile) > 0 Then
+51330   If FileExists(PDFDocViewFile) Then
+51340    AddParams PDFDocViewFile
+51350   End If
+51360  End If
+51370
+51380  ShowParams
+51390  If tEnc = True Then
+51400    CallGhostscript "PDF with encryption"
+51410   Else
+51420    CallGhostscript "PDF without encryption"
+51430  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -439,7 +444,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePNG(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePNG(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -531,7 +536,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateJPEG(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreateJPEG(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -623,7 +628,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateBMP(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreateBMP(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -715,7 +720,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePCX(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePCX(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -806,7 +811,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateTIFF(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreateTIFF(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -897,7 +902,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePS(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePS(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -988,7 +993,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateEPS(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreateEPS(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1079,7 +1084,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateTXT(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreateTXT(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1138,7 +1143,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePDFA(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePDFA(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1250,9 +1255,14 @@ On Error GoTo ErrPtnr_OnError
 51060    AddParams PDFDocInfoFile
 51070   End If
 51080  End If
-51090
-51100  ShowParams
-51110  CallGhostscript "PDF/A (without encryption)"
+51090  If LenB(PDFDocViewFile) > 0 Then
+51100   If FileExists(PDFDocViewFile) Then
+51110    AddParams PDFDocViewFile
+51120   End If
+51130  End If
+51140
+51150  ShowParams
+51160  CallGhostscript "PDF/A (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1265,7 +1275,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePDFX(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePDFX(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1373,9 +1383,14 @@ On Error GoTo ErrPtnr_OnError
 51020    AddParams PDFDocInfoFile
 51030   End If
 51040  End If
-51050
-51060  ShowParams
-51070  CallGhostscript "PDF/X (without encryption)"
+51050  If LenB(PDFDocViewFile) > 0 Then
+51060   If FileExists(PDFDocViewFile) Then
+51070    AddParams PDFDocViewFile
+51080   End If
+51090  End If
+51100
+51110  ShowParams
+51120  CallGhostscript "PDF/X (without encryption)"
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -1388,7 +1403,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePSD(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePSD(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1479,7 +1494,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreatePCL(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreatePCL(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1570,7 +1585,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateRAW(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreateRAW(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1661,7 +1676,7 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Private Function CreateSVG(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String)
+Private Function CreateSVG(InfoSpoolFileName As String, ByVal GSOutputFile As String, Options As tOptions, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1754,7 +1769,7 @@ End Select
 End Function
 
 Public Function CallGScript(GSInfoSpoolFile As String, GSOutputFile As String, _
- Options As tOptions, Ghostscriptdevice As tGhostscriptDevice, PDFDocInfoFile As String, StampFile As String)
+ Options As tOptions, Ghostscriptdevice As tGhostscriptDevice, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -1768,7 +1783,7 @@ On Error GoTo ErrPtnr_OnError
 50080     If .PDFOptimize = 1 And .PDFUseSecurity = 0 Then
 50090       Tempfile = GetTempFile(GetTempPathApi, "~CP")
 50100       KillFile Tempfile
-50110       CreatePDF GSInfoSpoolFile, Tempfile, Options, PDFDocInfoFile, StampFile
+50110       CreatePDF GSInfoSpoolFile, Tempfile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50120       OptimizePDF Tempfile, GSOutputFile
 50130       KillFile Tempfile
 50140      Else
@@ -1779,7 +1794,7 @@ On Error GoTo ErrPtnr_OnError
 50190            Tempfile = GetTempFile(GetTempPathApi, "~CP")
 50200            KillFile Tempfile
 50210            currentOwnerPassword = encPDF.OwnerPass
-50220            CreatePDF GSInfoSpoolFile, Tempfile, Options, PDFDocInfoFile, StampFile
+50220            CreatePDF GSInfoSpoolFile, Tempfile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50230            encPDF.InputFile = Tempfile
 50240            retEnc = EncryptPDFUsingPdfforgeDll(encPDF)
 50250            If retEnc = False Then
@@ -1793,11 +1808,11 @@ On Error GoTo ErrPtnr_OnError
 50330          Else
 50340           tL = .PDFOptimize
 50350           .PDFOptimize = 0
-50360           CreatePDF GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50360           CreatePDF GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50370           .PDFOptimize = tL
 50380         End If
 50390        Else
-50400         CreatePDF GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50400         CreatePDF GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50410       End If
 50420     End If
 50430     If pdfforgeDllInstalled Then
@@ -1823,24 +1838,24 @@ On Error GoTo ErrPtnr_OnError
 50630     End If
 50640    End With
 50650   Case 1: 'PNG
-50660    CreatePNG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50660    CreatePNG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50670   Case 2: 'JPEG
-50680    CreateJPEG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50680    CreateJPEG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50690   Case 3: 'BMP
-50700    CreateBMP GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50700    CreateBMP GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50710   Case 4: 'PCX
-50720    CreatePCX GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50720    CreatePCX GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50730   Case 5: 'TIFF
-50740    CreateTIFF GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50740    CreateTIFF GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50750   Case 6: 'PS
-50760    CreatePS GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50760    CreatePS GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50770   Case 7: 'EPS
-50780    CreateEPS GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50780    CreateEPS GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50790   Case 8: 'TXT
-50800    CreateTXT GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50800    CreateTXT GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50810    CreateTextFile GSOutputFile, GS_OutStr
 50820   Case 9: 'PDFA
-50830    CreatePDFA GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+50830    CreatePDFA GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 50840    With Options
 50850     If DotNet20Installed And pdfforgeDllInstalled Then
 50860      If .PDFUpdateMetadata > 0 Then
@@ -1860,7 +1875,7 @@ On Error GoTo ErrPtnr_OnError
 51000     End If
 51010    End With
 51020   Case 10: 'PDFX
-51030    CreatePDFX GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51030    CreatePDFX GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 51040    With Options
 51050     If DotNet20Installed And pdfforgeDllInstalled Then
 51060      If .PDFSigningSignPDF = 1 Then
@@ -1869,13 +1884,13 @@ On Error GoTo ErrPtnr_OnError
 51090     End If
 51100    End With
 51110   Case 11: 'PSD
-51120    CreatePSD GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51120    CreatePSD GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 51130   Case 12: 'PCL
-51140    CreatePCL GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51140    CreatePCL GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 51150   Case 13: 'RAW
-51160    CreateRAW GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51160    CreateRAW GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 51170   Case 14: 'SVG
-51180    CreateSVG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile
+51180    CreateSVG GSInfoSpoolFile, GSOutputFile, Options, PDFDocInfoFile, StampFile, PDFDocViewFile
 51190  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
@@ -3017,169 +3032,173 @@ Public Sub ConvertFile(InputFilename As String, OutputFilename As String, Option
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim Ext As String, Tempfile As String, ivgf As Boolean, inFile As String, Path As String, File As String, psFileName As String
-50020  Dim InfoSpoolFileName As String, PDFDocInfoFile As String, StampFile As String, PDFDocInfo As tPDFDocInfo, tDate As Date
-50030  Dim PSHeader As tPSHeader, dateStr As String, strGUID As String
-50040  Dim dateCreated As Date, dateAccessed As Date, dateWritten As Date
-50050  Dim isf As clsInfoSpoolFile
-50060
-50070  IFIsPS = False
-50080  If LenB(InputFilename) = 0 Then
-50090   Exit Sub
-50100  End If
-50110  If FileExists(InputFilename) = False Then
-50120   If LenB(InputFilename) > 0 Then
-50130    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
+50020  Dim InfoSpoolFileName As String, PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String
+50030  Dim PDFDocInfo As tPDFDocInfo, tDate As Date
+50040  Dim PSHeader As tPSHeader, dateStr As String, strGUID As String
+50050  Dim dateCreated As Date, dateAccessed As Date, dateWritten As Date
+50060  Dim isf As clsInfoSpoolFile
+50070
+50080  IFIsPS = False
+50090  If LenB(InputFilename) = 0 Then
+50100   Exit Sub
+50110  End If
+50120  If FileExists(InputFilename) = False Then
+50130   If LenB(InputFilename) > 0 Then
+50140    MsgBox LanguageStrings.MessagesMsg14 & vbCrLf & vbCrLf & _
     "InputFile -IF" & vbCrLf & ">" & InputFilename & "<", vbExclamation + vbOKOnly
-50150   End If
-50160   Exit Sub
-50170  End If
-50180  ivgf = IsValidGraphicFile(InputFilename)
-50190  If LenB(OutputFilename) > 0 Then
-50200    tDate = Now
-50210    dateStr = CStr(tDate)
-50220    If IsPostscriptFile(InputFilename) = True Or ivgf Or IsPDFFile(InputFilename) Then
-50230      If GsDllLoaded = 0 Then
-50240       Exit Sub
-50250      End If
-50260      GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
-50270      If GsDllLoaded = 0 Then
-50280       MsgBox LanguageStrings.MessagesMsg08
-50290      End If
-50300      inFile = InputFilename
-50310      strGUID = GetGUID
-50320      File = GetPDFCreatorSpoolDirectory & strGUID
-50330      If ivgf Then
-50340       psFileName = File & ".ps"
-50350       If Image2PS(InputFilename, psFileName) Then
-50360         inFile = psFileName
-50370        Else
-50380         IfLoggingWriteLogfile "ConvertFile: There is a problem converting '" & InputFilename & "'!"
-50390         Exit Sub
-50400       End If
-50410      End If
-50420      InfoSpoolFileName = CreateInfoSpoolFile(inFile, File & ".inf")
-50430      If IsPostscriptFile(inFile) = True Then
-50440        PSHeader = GetPSHeader(inFile)
-50450        If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50460         dateStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
-50470        End If
-50480       Else
-50490        If GetFileTimes(inFile, dateCreated, dateAccessed, dateWritten, True) Then
-50500         dateStr = CStr(dateCreated)
-50510        End If
-50520      End If
-50530     Else
-50540      InfoSpoolFileName = InputFilename
-50550      inFile = InputFilename
-50560      If LenB(InfoSpoolFileName) > 0 Then
-50570       Set isf = New clsInfoSpoolFile
-50580       isf.ReadInfoFile InfoSpoolFileName
-50590       If LenB(isf.FirstSpoolFileName) > 0 Then
-50600        If IsPostscriptFile(isf.FirstSpoolFileName) = True Then
-50610          PSHeader = GetPSHeader(isf.FirstSpoolFileName)
-50620          If LenB(PSHeader.CreationDate.Comment) > 0 Then
-50630            dateStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
-50640           Else
-50650            If GetFileTimes(isf.FirstSpoolFileName, dateCreated, dateAccessed, dateWritten, True) Then
-50660             dateStr = CStr(dateCreated)
-50670            End If
-50680          End If
-50690         Else
-50700          If GetFileTimes(isf.FirstSpoolFileName, dateCreated, dateAccessed, dateWritten, True) Then
-50710           dateStr = CStr(dateCreated)
-50720          End If
-50730        End If
-50740       End If
-50750      End If
-50760    End If
-50770
-50780    SplitPath OutputFilename, , , , , Ext
-50790
-50800    Set isf = New clsInfoSpoolFile
-50810    isf.ReadInfoFile InfoSpoolFileName
-50820    With PDFDocInfo
-50830     If Len(Trim$(Options.StandardTitle)) > 0 Then
-50840       .Author = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
-50850      Else
-50860       .Author = GetSubstFilename(InfoSpoolFileName, Options.SaveFilename, , , True)
-50870     End If
-50880     If Options.UseStandardAuthor = 1 Then
-50890       .Creator = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
-50900      Else
-50910       If IsPostscriptFile(isf.FirstSpoolFileName) Then
-50920         .Creator = GetDocUsernameFromPostScriptFile(isf.FirstSpoolFileName, False)
-50930        Else
-50940         .Creator = isf.FirstUserName
-50950       End If
-50960     End If
-50970     If Len(Trim$(Options.StandardKeywords)) > 0 Then
-50980      .Keywords = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
-50990     End If
-51000     If Len(Trim$(Options.StandardSubject)) > 0 Then
-51010      .Subject = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
-51020     End If
-51030
-51040     .CreationDate = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, dateStr)
-51050     .ModifyDate = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, dateStr)
-51060     .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
-51070    End With
-51080
-51090    PDFDocInfoFile = CreatePDFDocInfoFile(InfoSpoolFileName, PDFDocInfo)
-51100    StampFile = CreateStampFile(InfoSpoolFileName)
-51110
-51121    Select Case UCase$(Ext)
+50160   End If
+50170   Exit Sub
+50180  End If
+50190  ivgf = IsValidGraphicFile(InputFilename)
+50200  If LenB(OutputFilename) > 0 Then
+50210    tDate = Now
+50220    dateStr = CStr(tDate)
+50230    If IsPostscriptFile(InputFilename) = True Or ivgf Or IsPDFFile(InputFilename) Then
+50240      If GsDllLoaded = 0 Then
+50250       Exit Sub
+50260      End If
+50270      GsDllLoaded = LoadDLL(CompletePath(Options.DirectoryGhostscriptBinaries) & GsDll)
+50280      If GsDllLoaded = 0 Then
+50290       MsgBox LanguageStrings.MessagesMsg08
+50300      End If
+50310      inFile = InputFilename
+50320      strGUID = GetGUID
+50330      File = GetPDFCreatorSpoolDirectory & strGUID
+50340      If ivgf Then
+50350       psFileName = File & ".ps"
+50360       If Image2PS(InputFilename, psFileName) Then
+50370         inFile = psFileName
+50380        Else
+50390         IfLoggingWriteLogfile "ConvertFile: There is a problem converting '" & InputFilename & "'!"
+50400         Exit Sub
+50410       End If
+50420      End If
+50430      InfoSpoolFileName = CreateInfoSpoolFile(inFile, File & ".inf")
+50440      If IsPostscriptFile(inFile) = True Then
+50450        PSHeader = GetPSHeader(inFile)
+50460        If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50470         dateStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50480        End If
+50490       Else
+50500        If GetFileTimes(inFile, dateCreated, dateAccessed, dateWritten, True) Then
+50510         dateStr = CStr(dateCreated)
+50520        End If
+50530      End If
+50540     Else
+50550      InfoSpoolFileName = InputFilename
+50560      inFile = InputFilename
+50570      If LenB(InfoSpoolFileName) > 0 Then
+50580       Set isf = New clsInfoSpoolFile
+50590       isf.ReadInfoFile InfoSpoolFileName
+50600       If LenB(isf.FirstSpoolFileName) > 0 Then
+50610        If IsPostscriptFile(isf.FirstSpoolFileName) = True Then
+50620          PSHeader = GetPSHeader(isf.FirstSpoolFileName)
+50630          If LenB(PSHeader.CreationDate.Comment) > 0 Then
+50640            dateStr = FormatPrintDocumentDate(PSHeader.CreationDate.Comment)
+50650           Else
+50660            If GetFileTimes(isf.FirstSpoolFileName, dateCreated, dateAccessed, dateWritten, True) Then
+50670             dateStr = CStr(dateCreated)
+50680            End If
+50690          End If
+50700         Else
+50710          If GetFileTimes(isf.FirstSpoolFileName, dateCreated, dateAccessed, dateWritten, True) Then
+50720           dateStr = CStr(dateCreated)
+50730          End If
+50740        End If
+50750       End If
+50760      End If
+50770    End If
+50780
+50790    SplitPath OutputFilename, , , , , Ext
+50800
+50810    Set isf = New clsInfoSpoolFile
+50820    isf.ReadInfoFile InfoSpoolFileName
+50830    With PDFDocInfo
+50840     If Len(Trim$(Options.StandardTitle)) > 0 Then
+50850       .Author = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardTitle)), , , True)
+50860      Else
+50870       .Author = GetSubstFilename(InfoSpoolFileName, Options.SaveFilename, , , True)
+50880     End If
+50890     If Options.UseStandardAuthor = 1 Then
+50900       .Creator = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardAuthor)), True, , True)
+50910      Else
+50920       If IsPostscriptFile(isf.FirstSpoolFileName) Then
+50930         .Creator = GetDocUsernameFromPostScriptFile(isf.FirstSpoolFileName, False)
+50940        Else
+50950         .Creator = isf.FirstUserName
+50960       End If
+50970     End If
+50980     If Len(Trim$(Options.StandardKeywords)) > 0 Then
+50990      .Keywords = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardKeywords)), , , True)
+51000     End If
+51010     If Len(Trim$(Options.StandardSubject)) > 0 Then
+51020      .Subject = GetSubstFilename(InfoSpoolFileName, RemoveLeadingAndTrailingQuotes(Trim$(Options.StandardSubject)), , , True)
+51030     End If
+51040
+51050     .CreationDate = GetDocDate(Options.StandardCreationdate, Options.StandardDateformat, dateStr)
+51060     .ModifyDate = GetDocDate(Options.StandardModifydate, Options.StandardDateformat, dateStr)
+51070     .Creator = App.EXEName & " Version " & App.Major & "." & App.Minor & "." & App.Revision
+51080    End With
+51090
+51100    PDFDocInfoFile = CreatePDFDocInfoFile(InfoSpoolFileName, PDFDocInfo)
+51110    StampFile = CreateStampFile(InfoSpoolFileName)
+51120    If Options.PDFPageLayout > 0 Or Options.PDFPageMode > 0 Or Options.PDFStartPage > 1 Then
+51130     PDFDocViewFile = CreatePDFDocViewFile(InfoSpoolFileName, Options.PDFPageLayout, Options.PDFPageMode, Options.PDFStartPage)
+51140    End If
+51150
+51161    Select Case UCase$(Ext)
           Case "PDF"
-51141      Select Case UCase(SubFormat)
+51181      Select Case UCase(SubFormat)
             Case "PDF/A-1B"
-51160        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFAWriter, PDFDocInfoFile, StampFile
-51170       Case "PDF/X"
-51180        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFXWriter, PDFDocInfoFile, StampFile
-51190       Case Else
-51200        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFWriter, PDFDocInfoFile, StampFile
-51210      End Select
-51220     Case "PNG"
-51230      CallGScript InfoSpoolFileName, OutputFilename, Options, PNGWriter, PDFDocInfoFile, StampFile
-51240     Case "JPG"
-51250      CallGScript InfoSpoolFileName, OutputFilename, Options, JPEGWriter, PDFDocInfoFile, StampFile
-51260     Case "BMP"
-51270      CallGScript InfoSpoolFileName, OutputFilename, Options, BMPWriter, PDFDocInfoFile, StampFile
-51280     Case "PCX"
-51290      CallGScript InfoSpoolFileName, OutputFilename, Options, PCXWriter, PDFDocInfoFile, StampFile
-51300     Case "TIF"
-51310      CallGScript InfoSpoolFileName, OutputFilename, Options, TIFFWriter, PDFDocInfoFile, StampFile
-51320     Case "PS"
-51330      CallGScript InfoSpoolFileName, OutputFilename, Options, PSWriter, PDFDocInfoFile, StampFile
-51340     Case "EPS"
-51350      CallGScript InfoSpoolFileName, OutputFilename, Options, EPSWriter, PDFDocInfoFile, StampFile
-51360     Case "TXT"
-51370      CallGScript InfoSpoolFileName, OutputFilename, Options, TXTWriter, PDFDocInfoFile, StampFile
-51380     Case "PCL"
-51390      CallGScript InfoSpoolFileName, OutputFilename, Options, PCLWriter, PDFDocInfoFile, StampFile
-51400     Case "PSD"
-51410      CallGScript InfoSpoolFileName, OutputFilename, Options, PSDWriter, PDFDocInfoFile, StampFile
-51420     Case "RAW"
-51430      CallGScript InfoSpoolFileName, OutputFilename, Options, RAWWriter, PDFDocInfoFile, StampFile
-51440     Case "SVG"
-51450      CallGScript InfoSpoolFileName, OutputFilename, Options, SVGWriter, PDFDocInfoFile, StampFile
-51460    End Select
-51470
-51480    KillFile InfoSpoolFileName
-51490    KillFile PDFDocInfoFile
-51500    KillFile StampFile
+51200        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFAWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51210       Case "PDF/X"
+51220        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFXWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51230       Case Else
+51240        CallGScript InfoSpoolFileName, OutputFilename, Options, PDFWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51250      End Select
+51260     Case "PNG"
+51270      CallGScript InfoSpoolFileName, OutputFilename, Options, PNGWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51280     Case "JPG"
+51290      CallGScript InfoSpoolFileName, OutputFilename, Options, JPEGWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51300     Case "BMP"
+51310      CallGScript InfoSpoolFileName, OutputFilename, Options, BMPWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51320     Case "PCX"
+51330      CallGScript InfoSpoolFileName, OutputFilename, Options, PCXWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51340     Case "TIF"
+51350      CallGScript InfoSpoolFileName, OutputFilename, Options, TIFFWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51360     Case "PS"
+51370      CallGScript InfoSpoolFileName, OutputFilename, Options, PSWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51380     Case "EPS"
+51390      CallGScript InfoSpoolFileName, OutputFilename, Options, EPSWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51400     Case "TXT"
+51410      CallGScript InfoSpoolFileName, OutputFilename, Options, TXTWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51420     Case "PCL"
+51430      CallGScript InfoSpoolFileName, OutputFilename, Options, PCLWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51440     Case "PSD"
+51450      CallGScript InfoSpoolFileName, OutputFilename, Options, PSDWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51460     Case "RAW"
+51470      CallGScript InfoSpoolFileName, OutputFilename, Options, RAWWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51480     Case "SVG"
+51490      CallGScript InfoSpoolFileName, OutputFilename, Options, SVGWriter, PDFDocInfoFile, StampFile, PDFDocViewFile
+51500    End Select
 51510
-51520    ConvertedOutputFilename = OutputFilename
-51530    ReadyConverting = True
-51540    Exit Sub
-51550   Else
-51560    If FileExists(InputFilename) = True Then
-51570     If IsPostscriptFile(InputFilename) = True Then
-51580       IFIsPS = True
-51590      Else
-51600       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
-51610     End If
-51620    End If
-51630  End If
-51640  DoEvents
+51520    KillFile InfoSpoolFileName
+51530    KillFile PDFDocInfoFile
+51540    KillFile StampFile
+51550
+51560    ConvertedOutputFilename = OutputFilename
+51570    ReadyConverting = True
+51580    Exit Sub
+51590   Else
+51600    If FileExists(InputFilename) = True Then
+51610     If IsPostscriptFile(InputFilename) = True Then
+51620       IFIsPS = True
+51630      Else
+51640       MsgBox LanguageStrings.MessagesMsg06 & vbCrLf & vbCrLf & InputFilename
+51650     End If
+51660    End If
+51670  End If
+51680  DoEvents
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:

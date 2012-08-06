@@ -75,7 +75,7 @@ Public Sub KillInfoSpoolFiles(InfoSpoolFileName As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long, Path As String, File As String, PDFInfoFileName As String, StampFileName As String
+50010  Dim isf As clsInfoSpoolFile, isfi As clsInfoSpoolFileInfo, i As Long, Path As String, File As String, PDFInfoFileName As String, StampFileName As String, PDFDocViewFileName As String
 50020  Set isf = New clsInfoSpoolFile
 50030  isf.ReadInfoFile InfoSpoolFileName
 50040  For i = 1 To isf.InfoFiles.Count
@@ -90,6 +90,8 @@ On Error GoTo ErrPtnr_OnError
 50130  KillFile PDFInfoFileName
 50140  StampFileName = CompletePath(Path) & File & ".stm"
 50150  KillFile StampFileName
+50160  PDFDocViewFileName = CompletePath(Path) & File & ".dvw"
+50170  KillFile PDFDocViewFileName
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
