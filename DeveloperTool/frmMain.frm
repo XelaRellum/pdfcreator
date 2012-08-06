@@ -3015,6 +3015,7 @@ Private Sub CreateSpecialStrings()
   .Add "RAWResolution"
   .Add "MaximumCountOfPDFArchitectToolTip"
   .Add "DisableUpdateCheck"
+  .Add "PDFGeneralASCII85"
  End With
 End Sub
 
