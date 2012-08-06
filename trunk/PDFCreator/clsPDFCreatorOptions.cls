@@ -113,7 +113,6 @@ Public PDFGeneralAutorotate As Long
 Public PDFGeneralCompatibility As Long
 Public PDFGeneralDefault As Long
 Public PDFGeneralOverprint As Long
-Public PDFGeneralResolution As Long
 Public PDFHighEncryption As Long
 Public PDFLowEncryption As Long
 Public PDFOptimize As Long
