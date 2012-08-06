@@ -150,6 +150,10 @@ PDFOptimize|chkPDFOptimize.value|Boolean|0||
 PDFOwnerPass|chkOwnerPass.Value|Boolean|0||
 PDFOwnerPasswordString||String|||
 
+' <Printing Formats PDF General>
+PDFPageLayout|cmbPageLayout|Long|0|0|5
+PDFPageMode|cmbPDFPageMode|Long|0|0|5
+
 ' <Printing Formats PDF Signing>
 PDFSigningMultiSignature|chkMultiSignature.Value|Boolean|0||
 PDFSigningPFXFile|txtPFXFile.Text|String|||
@@ -164,9 +168,10 @@ PDFSigningSignatureRightX|txtRightX.Text|Double|200|0|<
 PDFSigningSignatureRightY|txtRightY.Text|Double|200|0|<
 PDFSigningSignatureVisible|chkSignatureVisible.Value|Boolean|0||
 PDFSigningSignPDF|chkSignPDF.Value|Boolean|0||
-PDFSigningTimeServerUrl|txtTimeServerUrl.txt|String|http://timestamp.globalsign.com/scripts/timstamp.dll||
+PDFSigningTimeServerUrl|txtTimeServerUrl.Text|String|http://timestamp.globalsign.com/scripts/timstamp.dll||
 
 ' <Printing Formats PDF General>
+PDFStartPage|txtStartPage.Text|Long|1|1|<
 PDFUpdateMetadata||Long|1|0|2
 
 ' <Printing Formats PDF Security>

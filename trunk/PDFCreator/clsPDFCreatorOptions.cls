@@ -119,6 +119,8 @@ Public PDFLowEncryption As Long
 Public PDFOptimize As Long
 Public PDFOwnerPass As Long
 Public PDFOwnerPasswordString As String
+Public PDFPageLayout As Long
+Public PDFPageMode As Long
 Public PDFSigningMultiSignature As Long
 Public PDFSigningPFXFile As String
 Public PDFSigningPFXFilePassword As String
@@ -133,6 +135,7 @@ Public PDFSigningSignatureRightY As Double
 Public PDFSigningSignatureVisible As Long
 Public PDFSigningSignPDF As Long
 Public PDFSigningTimeServerUrl As String
+Public PDFStartPage As Long
 Public PDFUpdateMetadata As Long
 Public PDFUserPass As Long
 Public PDFUserPasswordString As String

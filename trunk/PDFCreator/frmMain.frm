@@ -1883,7 +1883,7 @@ On Error GoTo ErrPtnr_OnError
   OutputFilename As String, PDFDocInfo As tPDFDocInfo, tStr As String, _
   PSHeader As tPSHeader, tDate As Date, mail As clsPDFCreatorMail
 50040  Dim PSFile As String, isf As clsInfoSpoolFile
-50050  Dim PDFDocInfoFile As String, StampFile As String, spoolFile As clsSpoolFile
+50050  Dim PDFDocInfoFile As String, StampFile As String, PDFDocViewFile As String, spoolFile As clsSpoolFile
 50060
 50070  InAutoSave = True
 50080  IsConverted = False
@@ -1950,58 +1950,62 @@ On Error GoTo ErrPtnr_OnError
 50690       PDFDocInfoFile = CreatePDFDocInfoFile(spoolFile.FullFileName, PDFDocInfo)
 50700       StampFile = CreateStampFile(spoolFile.FullFileName)
 50710
-50720       If Options.RunProgramBeforeSaving = 1 Then
-50730        RunProgramBeforeSaving Me.hwnd, spoolFile.FullFileName, _
+50720       If Options.PDFPageLayout > 0 Or Options.PDFPageMode > 0 Or Options.PDFStartPage > 1 Then
+50730        PDFDocViewFile = CreatePDFDocViewFile(spoolFile.FullFileName, Options.PDFPageLayout, Options.PDFPageMode, Options.PDFStartPage)
+50740       End If
+50750
+50760       If Options.RunProgramBeforeSaving = 1 Then
+50770        RunProgramBeforeSaving Me.hwnd, spoolFile.FullFileName, _
         Options.RunProgramBeforeSavingProgramParameters, _
         Options.RunProgramBeforeSavingWindowstyle
-50760       End If
-50770       CallGScript spoolFile.FullFileName, OutputFilename, Options, Options.AutosaveFormat, PDFDocInfoFile, StampFile
-50780
-50790       If FileExists(OutputFilename) = True Then
-50800         IsConverted = True
-50810         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
-50820         IfLoggingWriteLogfile tStr
-50830         WriteToSpecialLogfile tStr
-50840         If Options.RunProgramAfterSaving = 1 Then
-50850          RunProgramAfterSaving Me.hwnd, OutputFilename, _
+50800       End If
+50810       CallGScript spoolFile.FullFileName, OutputFilename, Options, Options.AutosaveFormat, PDFDocInfoFile, StampFile, PDFDocViewFile
+50820
+50830       If FileExists(OutputFilename) = True Then
+50840         IsConverted = True
+50850         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
+50860         IfLoggingWriteLogfile tStr
+50870         WriteToSpecialLogfile tStr
+50880         If Options.RunProgramAfterSaving = 1 Then
+50890          RunProgramAfterSaving Me.hwnd, OutputFilename, _
          Options.RunProgramAfterSavingProgramParameters, _
          Options.RunProgramAfterSavingWindowstyle, spoolFile.FullFileName
-50880         End If
-50890         If Options.SendEmailAfterAutoSaving = 1 Then
-50900          Set mail = New clsPDFCreatorMail
-50910          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
-50920           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
-50930          End If
-50940          Set mail = Nothing
-50950         End If
-50960         Options.Counter = Options.Counter + 1
-50970         If Options.AutosaveStartStandardProgram = 1 Then
-50980          If Options.OneFilePerPage = 1 Then
-50990            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
-51000           Else
-51010            OpenDocument OutputFilename
-51020          End If
-51030         End If
-51040        Else
-51050         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-51060         IfLoggingWriteLogfile tStr
-51070         WriteToSpecialLogfile tStr
-51080       End If
-51090      Else
-51100       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted! > " & OutputFilename
-51110     End If
-51120     CheckForPrintingAfterSaving spoolFile.FullFileName, Options
-51130
-51140     KillInfoSpoolFiles spoolFile.FullFileName
-51150     RemoveInfoSpoolFileObject spoolFile.FullFileName
-51160     ConvertedOutputFilename = OutputFilename
-51170     ReadyConverting = True
-51180    End If
-51190   Next i
-51200   DoEvents
-51210 '  FindFiles2 GetPDFCreatorSpoolDirectory, tColl, "*.inf", , False, True
-51220 ' Loop
-51230  InAutoSave = False
+50920         End If
+50930         If Options.SendEmailAfterAutoSaving = 1 Then
+50940          Set mail = New clsPDFCreatorMail
+50950          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
+50960           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+50970          End If
+50980          Set mail = Nothing
+50990         End If
+51000         Options.Counter = Options.Counter + 1
+51010         If Options.AutosaveStartStandardProgram = 1 Then
+51020          If Options.OneFilePerPage = 1 Then
+51030            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
+51040           Else
+51050            OpenDocument OutputFilename
+51060          End If
+51070         End If
+51080        Else
+51090         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+51100         IfLoggingWriteLogfile tStr
+51110         WriteToSpecialLogfile tStr
+51120       End If
+51130      Else
+51140       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted! > " & OutputFilename
+51150     End If
+51160     CheckForPrintingAfterSaving spoolFile.FullFileName, Options
+51170
+51180     KillInfoSpoolFiles spoolFile.FullFileName
+51190     RemoveInfoSpoolFileObject spoolFile.FullFileName
+51200     ConvertedOutputFilename = OutputFilename
+51210     ReadyConverting = True
+51220    End If
+51230   Next i
+51240   DoEvents
+51250 '  FindFiles2 GetPDFCreatorSpoolDirectory, tColl, "*.inf", , False, True
+51260 ' Loop
+51270  InAutoSave = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
