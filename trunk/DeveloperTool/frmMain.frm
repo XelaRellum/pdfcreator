@@ -1033,7 +1033,8 @@ Private Sub CreateModLanguages()
  Set Secs = ini.GetAllSectionsFromInifile(, True)
  For i = 1 To Secs.Count
   ini.Section = Secs.Item(i)
-  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" Then
+  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And _
+    UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" And UCase$(Secs(i)) <> "WEBSETUP" Then
    Set keys = ini.GetAllKeysFromSection(, , , True)
    For j = 1 To keys.Count
     Print #1, " " & Secs.Item(i) & keys.Item(j)(0) & " As String"
@@ -1051,14 +1052,16 @@ Private Sub CreateModLanguages()
  Print #fn, "Public Sub LoadLanguage(ByVal Languagefile As String)"
  Print #fn, " InitLanguagesStrings"
  For i = 1 To Secs.Count
-  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" Then
+  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And _
+    UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" And UCase$(Secs(i)) <> "WEBSETUP" Then
    Print #fn, " Load" & Secs.Item(i) & "Strings Languagefile"
   End If
  Next i
  Print #fn, "End Sub"
  Print #fn, ""
  For i = 1 To Secs.Count
-  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" Then
+  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And _
+    UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" And UCase$(Secs(i)) <> "WEBSETUP" Then
    Print #fn, "Private Sub Load" & Secs.Item(i) & "Strings(ByVal Languagefile As String)"
    Print #fn, " Dim hLang As New clsHash"
 
@@ -1082,7 +1085,8 @@ Private Sub CreateModLanguages()
  Print #fn, "Public Sub InitLanguagesStrings()"
  Print #fn, " With LanguageStrings"
  For i = 1 To Secs.Count
-  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" Then
+  If UCase$(Secs(i)) <> "SETUP" And UCase$(Secs(i)) <> "ITDOWNLOAD_AUTHOR" And _
+    UCase$(Secs(i)) <> "ITDOWNLOAD_STRINGS" And UCase$(Secs(i)) <> "WEBSETUP" Then
    ini.Section = Secs.Item(i)
    Set keys = ini.GetAllKeysFromSection(, , , True)
    For j = 1 To keys.Count
