@@ -515,71 +515,72 @@ Private Sub Form_Load()
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  IsFrmMainLoaded = True
-50020  Me.KeyPreview = True
-50030
-50040  If App.StartMode = vbSModeAutomation Then
-50050   If ProgramIsVisible = False Then
-50060    frmMain.Visible = False
-50070   End If
-50080   WindowState = ProgramWindowState
-50090  End If
-50100
-50110  InitProgram
-50120
-50130  ShowPaypalMenuimage
-50140  SetGSRevision
-50150
-50160  If Options.DisableUpdateCheck = 1 Then
-50170   mnHelp(6).Enabled = False
-50180  End If
-50190
-50200  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
-50210   SetMenuPrinterStop
-50220  End If
-50230  If PrinterStop = True Then
-50240   mnPrinter(2).Checked = True
-50250  End If
-50260  If Options.OptionsEnabled = 0 Then
-50270   mnPrinter(4).Enabled = False
-50280   tlb(0).Buttons(2).Enabled = False
-50290  End If
-50300  If Options.OptionsVisible = 0 Then
-50310   tlb(0).Buttons(2).Visible = False
-50320   mnPrinter(4).Visible = False
-50330   mnPrinter(5).Visible = False
-50340  End If
-50350
-50360  CheckPrintJobs
-50370  Call SetDocMenuAndToolbar
-50380  If (Options.Toolbars And 1) = 1 Then
-50390    tlb(0).Visible = True
-50400   Else
-50410    tlb(0).Visible = False
-50420  End If
-50430  If (Options.Toolbars And 2) = 2 Then
-50440    tlb(1).Visible = True
-50450    txtEmailAddress.Visible = True
-50460   Else
-50470    tlb(1).Visible = False
-50480    txtEmailAddress.Visible = False
-50490  End If
-50500  If PDFCreatorPrinter = False Or NoProcessing = True Or _
+50010  Options.PrinterStop = 0
+50020  IsFrmMainLoaded = True
+50030  Me.KeyPreview = True
+50040
+50050  If App.StartMode = vbSModeAutomation Then
+50060   If ProgramIsVisible = False Then
+50070    frmMain.Visible = False
+50080   End If
+50090   WindowState = ProgramWindowState
+50100  End If
+50110
+50120  InitProgram
+50130
+50140  ShowPaypalMenuimage
+50150  SetGSRevision
+50160
+50170  If Options.DisableUpdateCheck = 1 Then
+50180   mnHelp(6).Enabled = False
+50190  End If
+50200
+50210  If NoProcessing = True Or Options.NoProcessingAtStartup = 1 Or NoProcessingAtStartup = True Then
+50220   SetMenuPrinterStop
+50230  End If
+50240  If PrinterStop = True Then
+50250   mnPrinter(2).Checked = True
+50260  End If
+50270  If Options.OptionsEnabled = 0 Then
+50280   mnPrinter(4).Enabled = False
+50290   tlb(0).Buttons(2).Enabled = False
+50300  End If
+50310  If Options.OptionsVisible = 0 Then
+50320   tlb(0).Buttons(2).Visible = False
+50330   mnPrinter(4).Visible = False
+50340   mnPrinter(5).Visible = False
+50350  End If
+50360
+50370  CheckPrintJobs
+50380  Call SetDocMenuAndToolbar
+50390  If (Options.Toolbars And 1) = 1 Then
+50400    tlb(0).Visible = True
+50410   Else
+50420    tlb(0).Visible = False
+50430  End If
+50440  If (Options.Toolbars And 2) = 2 Then
+50450    tlb(1).Visible = True
+50460    txtEmailAddress.Visible = True
+50470   Else
+50480    tlb(1).Visible = False
+50490    txtEmailAddress.Visible = False
+50500  End If
+50510  If PDFCreatorPrinter = False Or NoProcessing = True Or _
   Options.NoProcessingAtStartup = 1 Or (PDFCreatorPrinter = True And lsv.ListItems.Count > 1) Then
-50520   If ProgramIsVisible Then
-50530    Visible = True
-50540    SetTopMost frmMain, True, True
-50550    SetTopMost frmMain, False, True
-50560    SetActiveWindow frmMain.hwnd
-50570   End If
-50580  End If
-50590
-50600  InTimer1 = False
-50610  Timer1.Interval = TimerIntervall '500
-50620  Timer1.Enabled = True
-50630
-50640  InAutoSave = False
-50650  ProgramIsStarted = True
+50530   If ProgramIsVisible Then
+50540    Visible = True
+50550    SetTopMost frmMain, True, True
+50560    SetTopMost frmMain, False, True
+50570    SetActiveWindow frmMain.hwnd
+50580   End If
+50590  End If
+50600
+50610  InTimer1 = False
+50620  Timer1.Interval = TimerIntervall '500
+50630  Timer1.Enabled = True
+50640
+50650  InAutoSave = False
+50660  ProgramIsStarted = True
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -1959,53 +1960,65 @@ On Error GoTo ErrPtnr_OnError
         Options.RunProgramBeforeSavingProgramParameters, _
         Options.RunProgramBeforeSavingWindowstyle
 50800       End If
-50810       CallGScript spoolFile.FullFileName, OutputFilename, Options, Options.AutosaveFormat, PDFDocInfoFile, StampFile, PDFDocViewFile
-50820
-50830       If FileExists(OutputFilename) = True Then
-50840         IsConverted = True
-50850         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
-50860         IfLoggingWriteLogfile tStr
-50870         WriteToSpecialLogfile tStr
-50880         If Options.RunProgramAfterSaving = 1 Then
-50890          RunProgramAfterSaving Me.hwnd, OutputFilename, _
+50810
+50820       If FileInUse(OutputFilename) = True Then
+50830        tStr = Replace(LanguageStrings.MessagesMsg47, "%1", OutputFilename, , , vbTextCompare)
+50840        MsgBox tStr, vbExclamation
+50850        IfLoggingWriteLogfile tStr
+50860        WriteToSpecialLogfile tStr
+50870        If Options.PrinterStop = 0 Then
+50880         SetMenuPrinterStop
+50890        End If
+50900        Exit Sub
+50910       End If
+50920
+50930       CallGScript spoolFile.FullFileName, OutputFilename, Options, Options.AutosaveFormat, PDFDocInfoFile, StampFile, PDFDocViewFile
+50940
+50950       If FileExists(OutputFilename) = True Then
+50960         IsConverted = True
+50970         tStr = "Autosavemodus: Create File '" & OutputFilename & "' success"
+50980         IfLoggingWriteLogfile tStr
+50990         WriteToSpecialLogfile tStr
+51000         If Options.RunProgramAfterSaving = 1 Then
+51010          RunProgramAfterSaving Me.hwnd, OutputFilename, _
          Options.RunProgramAfterSavingProgramParameters, _
          Options.RunProgramAfterSavingWindowstyle, spoolFile.FullFileName
-50920         End If
-50930         If Options.SendEmailAfterAutoSaving = 1 Then
-50940          Set mail = New clsPDFCreatorMail
-50950          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
-50960           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
-50970          End If
-50980          Set mail = Nothing
-50990         End If
-51000         Options.Counter = Options.Counter + 1
-51010         If Options.AutosaveStartStandardProgram = 1 Then
-51020          If Options.OneFilePerPage = 1 Then
-51030            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
-51040           Else
-51050            OpenDocument OutputFilename
-51060          End If
-51070         End If
-51080        Else
-51090         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
-51100         IfLoggingWriteLogfile tStr
-51110         WriteToSpecialLogfile tStr
-51120       End If
-51130      Else
-51140       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted! > " & OutputFilename
-51150     End If
-51160     CheckForPrintingAfterSaving spoolFile.FullFileName, Options
-51170
-51180     KillInfoSpoolFiles spoolFile.FullFileName
-51190     RemoveInfoSpoolFileObject spoolFile.FullFileName
-51200     ConvertedOutputFilename = OutputFilename
-51210     ReadyConverting = True
-51220    End If
-51230   Next i
-51240   DoEvents
-51250 '  FindFiles2 GetPDFCreatorSpoolDirectory, tColl, "*.inf", , False, True
-51260 ' Loop
-51270  InAutoSave = False
+51040         End If
+51050         If Options.SendEmailAfterAutoSaving = 1 Then
+51060          Set mail = New clsPDFCreatorMail
+51070          If mail.Send(OutputFilename, PDFDocInfo.Subject, Options.SendMailMethod) <> 0 Then
+51080           MsgBox LanguageStrings.MessagesMsg04, vbCritical, App.EXEName
+51090          End If
+51100          Set mail = Nothing
+51110         End If
+51120         Options.Counter = Options.Counter + 1
+51130         If Options.AutosaveStartStandardProgram = 1 Then
+51140          If Options.OneFilePerPage = 1 Then
+51150            OpenDocument Replace$(OutputFilename, "%d", "1", , , vbTextCompare)
+51160           Else
+51170            OpenDocument OutputFilename
+51180          End If
+51190         End If
+51200        Else
+51210         tStr = "Autosavemodus: Create File '" & OutputFilename & "' failed"
+51220         IfLoggingWriteLogfile tStr
+51230         WriteToSpecialLogfile tStr
+51240       End If
+51250      Else
+51260       IfLoggingWriteLogfile "Error: Invalid autosave pathname, spoolfile will be deleted! > " & OutputFilename
+51270     End If
+51280     CheckForPrintingAfterSaving spoolFile.FullFileName, Options
+51290
+51300     KillInfoSpoolFiles spoolFile.FullFileName
+51310     RemoveInfoSpoolFileObject spoolFile.FullFileName
+51320     ConvertedOutputFilename = OutputFilename
+51330     ReadyConverting = True
+51340    End If
+51350   Next i
+51360   DoEvents
+51370 '  FindFiles2 GetPDFCreatorSpoolDirectory, tColl, "*.inf", , False, True
+51380 ' Loop
+51390  InAutoSave = False
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
