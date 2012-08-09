@@ -34,7 +34,7 @@ On Error GoTo ErrPtnr_OnError
 50120       Else
 50130        updStr = "[" & updStrA(0) & "." & updStrA(1) & "." & updStrA(2) & " Beta " & updStrA(3) & "]"
 50140      End If
-50150      aw = MsgBox(Replace$(LanguageStrings.MessagesMsg32, "%1", updStr), vbYesNo + vbQuestion)
+50150      aw = MsgBox(Replace$(LanguageStrings.MessagesMsg46, "%1", updStr), vbYesNo + vbQuestion)
 50160      If aw = vbYes Then
 50170       OpenDocument "http://www.pdfforge.org/download"
 50180      End If
