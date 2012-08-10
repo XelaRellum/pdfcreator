@@ -3,7 +3,7 @@ Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form frmPrinters 
    BorderStyle     =   1  'Fest Einfach
    Caption         =   "Form1"
-   ClientHeight    =   5550
+   ClientHeight    =   5700
    ClientLeft      =   45
    ClientTop       =   345
    ClientWidth     =   6780
@@ -12,17 +12,17 @@ Begin VB.Form frmPrinters
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   5550
+   ScaleHeight     =   5700
    ScaleWidth      =   6780
    StartUpPosition =   3  'Windows-Standard
    Begin PDFCreator.dmFrame dmFraPrinters 
-      Height          =   4695
+      Height          =   4935
       Left            =   120
       TabIndex        =   2
       Top             =   120
       Width           =   6495
       _ExtentX        =   11456
-      _ExtentY        =   8281
+      _ExtentY        =   8705
       Caption         =   "Printers"
       BarColorFrom    =   16744576
       BarColorTo      =   4194304
@@ -40,7 +40,7 @@ Begin VB.Form frmPrinters
          Height          =   285
          Left            =   120
          TabIndex        =   7
-         Top             =   3720
+         Top             =   3840
          Width           =   2895
       End
       Begin MSComctlLib.ImageList imlPrinters 
@@ -62,6 +62,7 @@ Begin VB.Form frmPrinters
          EndProperty
       End
       Begin VB.ComboBox cmbProfile 
+         Appearance      =   0  '2D
          Height          =   315
          Left            =   360
          Style           =   2  'Dropdown-Liste
@@ -76,7 +77,7 @@ Begin VB.Form frmPrinters
          Height          =   555
          Left            =   120
          TabIndex        =   5
-         Top             =   4080
+         Top             =   4200
          Width           =   1455
       End
       Begin VB.CommandButton cmdDelPrinter 
@@ -84,7 +85,7 @@ Begin VB.Form frmPrinters
          Height          =   555
          Left            =   4920
          TabIndex        =   4
-         Top             =   4080
+         Top             =   4200
          Width           =   1455
       End
       Begin MSComctlLib.ListView lsvPrinters 
@@ -106,7 +107,7 @@ Begin VB.Form frmPrinters
          ForeColor       =   -2147483640
          BackColor       =   -2147483643
          BorderStyle     =   1
-         Appearance      =   1
+         Appearance      =   0
          NumItems        =   0
       End
       Begin VB.Label lblAdminNotice 
@@ -134,7 +135,7 @@ Begin VB.Form frmPrinters
          Height          =   195
          Left            =   120
          TabIndex        =   8
-         Top             =   3480
+         Top             =   3600
          Width           =   1245
       End
    End
@@ -143,7 +144,7 @@ Begin VB.Form frmPrinters
       Height          =   495
       Left            =   5040
       TabIndex        =   1
-      Top             =   4920
+      Top             =   5160
       Width           =   1575
    End
    Begin VB.CommandButton cmdClose 
@@ -152,7 +153,7 @@ Begin VB.Form frmPrinters
       Height          =   495
       Left            =   120
       TabIndex        =   0
-      Top             =   4920
+      Top             =   5160
       Width           =   1575
    End
 End
@@ -502,8 +503,8 @@ On Error GoTo ErrPtnr_OnError
 50020
 50030  With cmbProfile
 50040   .Width = lsvPrinters.ColumnHeaders(2).Width
-50050   .Left = lsvPrinters.ColumnHeaders(2).Left + 190
-50060   .Top = lsvPrinters.Top + Item.Top + 40
+50050   .Left = lsvPrinters.ColumnHeaders(2).Left + 160
+50060   .Top = lsvPrinters.Top + Item.Top + 20
 50070   For i = 1 To .ListCount
 50080    If UCase$(.List(i - 1)) = UCase$(Item.ListSubItems(1).Text) Then
 50090     .ListIndex = i - 1
