@@ -147,6 +147,40 @@ On Error GoTo ErrPtnr_OnError
 50130    Exit For
 50140   End If
 50150  Next i
+50160  If InstalledAsServer Then
+50170    reg.hkey = HKEY_LOCAL_MACHINE
+50180    Set PrinterProfiles = reg.EnumRegistryValues(reg.hkey, "Software\Policies\PDFCreator\Printers\")
+50190    For i = 1 To PrinterProfiles.Count
+50200     If UCase$(Trim$(PrinterProfiles(i)(0))) = UCase$(Trim$(PrinterName)) Then
+50210      GetPrinterDefaultProfile = PrinterProfiles(i)(1)
+50220      Exit For
+50230     End If
+50240    Next i
+50250   Else
+50260    reg.hkey = HKEY_CURRENT_USER
+50270    Set PrinterProfiles = reg.EnumRegistryValues(reg.hkey, "Software\Policies\PDFCreator\Printers\")
+50280    For i = 1 To PrinterProfiles.Count
+50290     If UCase$(Trim$(PrinterProfiles(i)(0))) = UCase$(Trim$(PrinterName)) Then
+50300      GetPrinterDefaultProfile = PrinterProfiles(i)(1)
+50310      Exit For
+50320     End If
+50330    Next i
+50340    reg.hkey = HKEY_LOCAL_MACHINE
+50350    Set PrinterProfiles = reg.EnumRegistryValues(reg.hkey, "Software\PDFCreator\Printers\")
+50360    For i = 1 To PrinterProfiles.Count
+50370     If UCase$(Trim$(PrinterProfiles(i)(0))) = UCase$(Trim$(PrinterName)) Then
+50380      GetPrinterDefaultProfile = PrinterProfiles(i)(1)
+50390      Exit For
+50400     End If
+50410    Next i
+50420    Set PrinterProfiles = reg.EnumRegistryValues(reg.hkey, "Software\Policies\PDFCreator\Printers\")
+50430    For i = 1 To PrinterProfiles.Count
+50440     If UCase$(Trim$(PrinterProfiles(i)(0))) = UCase$(Trim$(PrinterName)) Then
+50450      GetPrinterDefaultProfile = PrinterProfiles(i)(1)
+50460      Exit For
+50470     End If
+50480    Next i
+50490  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
@@ -167,15 +201,14 @@ On Error GoTo ErrPtnr_OnError
 50020  Set reg = New clsRegistry
 50030
 50040  ProfileName = Trim$(ProfileName)
-50050
-50060  reg.KeyRoot = "Software\PDFCreator\Profiles"
-50070
-50080  If InstalledAsServer Then
-50090    reg.hkey = HKEY_LOCAL_MACHINE
-50100   Else
-50110    reg.hkey = HKEY_CURRENT_USER
-50120  End If
-50130  reg.DeleteKeyWithSubkeys ProfileName
+50050  reg.KeyRoot = "Software\PDFCreator\Profiles"
+50060
+50070  If InstalledAsServer Then
+50080    reg.hkey = HKEY_LOCAL_MACHINE
+50090   Else
+50100    reg.hkey = HKEY_CURRENT_USER
+50110  End If
+50120  reg.DeleteKeyWithSubkeys ProfileName
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
@@ -188,17 +221,52 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
+Private Sub UpdatePrinterProfiles(ByRef PrinterProfilesMain As Collection, ByVal PrinterProfilesUpdate As Collection)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim i As Long, j As Long
+50020  For i = 1 To PrinterProfilesMain.Count
+50030   For j = PrinterProfilesUpdate.Count To 1 Step -1
+50040    If StrComp(PrinterProfilesMain(i)(0), PrinterProfilesUpdate(j)(0), vbTextCompare) = 0 Then
+50050     PrinterProfilesMain.Add PrinterProfilesUpdate(j), , , i
+50060     PrinterProfilesMain.Remove i
+50070     PrinterProfilesUpdate.Remove j
+50080     Exit For
+50090    End If
+50100   Next j
+50110  Next i
+50120  For j = 1 To PrinterProfilesUpdate.Count
+50130   PrinterProfilesMain.Add PrinterProfilesUpdate(j)
+50140  Next j
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modProfiles", "UpdatePrinterProfiles")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
 Public Function GetPrinterProfiles() As Collection
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
-50010  Dim reg As clsRegistry
+50010  Dim reg As clsRegistry, PrinterProfiles As Collection, tColl As Collection
 50020  Set reg = New clsRegistry
-50030  If InstalledAsServer Then
-50040    Set GetPrinterProfiles = reg.EnumRegistryValues(HKEY_LOCAL_MACHINE, "Software\PDFCreator\Printers")
-50050   Else
-50060    Set GetPrinterProfiles = reg.EnumRegistryValues(HKEY_CURRENT_USER, "Software\PDFCreator\Printers")
-50070  End If
+50030  Set PrinterProfiles = New Collection
+50040  If InstalledAsServer Then
+50050    Set PrinterProfiles = reg.EnumRegistryValues(HKEY_LOCAL_MACHINE, "Software\PDFCreator\Printers")
+50060   Else
+50070    Set PrinterProfiles = reg.EnumRegistryValues(HKEY_CURRENT_USER, "Software\PDFCreator\Printers")
+50080    UpdatePrinterProfiles PrinterProfiles, reg.EnumRegistryValues(HKEY_CURRENT_USER, "Software\Policies\PDFCreator\Printers")
+50090    UpdatePrinterProfiles PrinterProfiles, reg.EnumRegistryValues(HKEY_LOCAL_MACHINE, "Software\PDFCreator\Printers")
+50100  End If
+50110  UpdatePrinterProfiles PrinterProfiles, reg.EnumRegistryValues(HKEY_LOCAL_MACHINE, "Software\Policies\PDFCreator\Printers")
+50120  Set GetPrinterProfiles = PrinterProfiles
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
