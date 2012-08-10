@@ -1744,126 +1744,128 @@ On Error GoTo ErrPtnr_OnError
 50080   End If
 50090  Next c
 50100  For c = 1 To tlb(0).Buttons.Count
-50110   If c <> 15 Then ' Disable PS-Save toolbar button, because doesn't work with the new monitor dll
+50110   If c <> 15 And c <> 2 Then ' Don't touch settings button. Disable PS-Save toolbar button, because doesn't work with the new monitor dll
 50120     If tlb(0).Buttons(c).Enabled = False Then tlb(0).Buttons(c).Enabled = True
 50130    Else
-50140     If tlb(0).Buttons(c).Enabled = True Then tlb(0).Buttons(c).Enabled = False
-50150     If tlb(0).Buttons(c).Visible = True Then tlb(0).Buttons(c).Visible = False
-50160   End If
-50170  Next c
-50180  If (Options.Toolbars And 2) = 2 Then
-50190   For c = 1 To tlb(1).Buttons.Count
-50200    If tlb(1).Buttons(c).Enabled = False Then tlb(1).Buttons(c).Enabled = True
-50210   Next c
-50220  End If
-50230  If Clipboard.GetFormat(vbCFBitmap) = True Then
-50240    If mnDocument(3).Enabled = False Then mnDocument(3).Enabled = True
-50250    If tlb(0).Buttons(7).Enabled = False Then tlb(0).Buttons(7).Enabled = True
-50260   Else
-50270    If mnDocument(3).Enabled = True Then mnDocument(3).Enabled = False
-50280    If tlb(0).Buttons(7).Enabled = True Then tlb(0).Buttons(7).Enabled = False
-50290  End If
-50301  Select Case True
+50140     If c = 15 Then
+50150      If tlb(0).Buttons(c).Enabled = True Then tlb(0).Buttons(c).Enabled = False
+50160      If tlb(0).Buttons(c).Visible = True Then tlb(0).Buttons(c).Visible = False
+50170     End If
+50180   End If
+50190  Next c
+50200  If (Options.Toolbars And 2) = 2 Then
+50210   For c = 1 To tlb(1).Buttons.Count
+50220    If tlb(1).Buttons(c).Enabled = False Then tlb(1).Buttons(c).Enabled = True
+50230   Next c
+50240  End If
+50250  If Clipboard.GetFormat(vbCFBitmap) = True Then
+50260    If mnDocument(3).Enabled = False Then mnDocument(3).Enabled = True
+50270    If tlb(0).Buttons(7).Enabled = False Then tlb(0).Buttons(7).Enabled = True
+50280   Else
+50290    If mnDocument(3).Enabled = True Then mnDocument(3).Enabled = False
+50300    If tlb(0).Buttons(7).Enabled = True Then tlb(0).Buttons(7).Enabled = False
+50310  End If
+50321  Select Case True
         Case lsv.ListItems.Count = 0, LvwGetCountSelectedItems(lsv, False) = 0
-50320    With mnDocument
-50330     If .Item(0).Enabled = True Then .Item(0).Enabled = False
-50340     If .Item(4).Enabled = True Then .Item(4).Enabled = False
-50350     If .Item(6).Enabled = True Then .Item(6).Enabled = False
-50360     If .Item(7).Enabled = True Then .Item(7).Enabled = False
-50370     If .Item(8).Enabled = True Then .Item(8).Enabled = False
-50380     If .Item(9).Enabled = True Then .Item(9).Enabled = False
-50390     If .Item(11).Enabled = True Then .Item(11).Enabled = False
-50400     If .Item(12).Enabled = True Then .Item(12).Enabled = False
-50410     If .Item(14).Enabled = True Then .Item(14).Enabled = False
-50420     If (Options.Toolbars And 2) = 2 Then
-50430      If .Item(16).Enabled = True Then .Item(16).Enabled = False
-50440      If .Item(17).Enabled = True Then .Item(17).Enabled = False
-50450     End If
-50460    End With
-50470    With tlb(0)
-50480     If .Buttons(5).Enabled = True Then .Buttons(5).Enabled = False ' print
-50490     For c = 8 To 15
-50500      If .Buttons(c).Enabled = True Then .Buttons(c).Enabled = False
-50510     Next c
-50520    End With
-50530    With tlb(1)
-50540     If (Options.Toolbars And 2) = 2 Then
-50550      If .Buttons(1).Enabled = True Then .Buttons(1).Enabled = False
-50560      If .Buttons(2).Enabled = True Then .Buttons(2).Enabled = False
-50570     End If
-50580    End With
-50590    Exit Sub
-50600   Case lsv.ListItems.Count = 1
-50610    With mnDocument
-50620     If .Item(6).Enabled = True Then .Item(6).Enabled = False
-50630     If .Item(7).Enabled = True Then .Item(7).Enabled = False
-50640     If .Item(8).Enabled = True Then .Item(8).Enabled = False
-50650     If .Item(9).Enabled = True Then .Item(9).Enabled = False
-50660     If .Item(11).Enabled = True Then .Item(11).Enabled = False
-50670     If .Item(12).Enabled = True Then .Item(12).Enabled = False
-50680     If (Options.Toolbars And 2) = 2 Then
-50690      If .Item(16).Enabled = True Then .Item(16).Enabled = False
-50700      If LenB(txtEmailAddress.Text) = 0 Or Options.DisableEmail <> 0 Then
-50710       If .Item(17).Enabled = True Then .Item(17).Enabled = False
-50720      End If
-50730     End If
-50740    End With
-50750    With tlb(0)
-50760     For c = 9 To 14
-50770      If .Buttons(c).Enabled = True Then .Buttons(c).Enabled = False
-50780     Next c
-50790    End With
-50800    With tlb(1)
-50810     If (Options.Toolbars And 2) = 2 Then
-50820      If LenB(txtEmailAddress.Text) = 0 Then
-50830       If .Buttons(2).Enabled = True Then .Buttons(2).Enabled = False
-50840      End If
-50850     End If
-50860    End With
-50870   Case lsv.ListItems.Count > 1
-50880    With mnDocument
-50890     If AllSelectedListitemsAtTop Then
-50900      .Item(6).Enabled = False
-50910      .Item(7).Enabled = False
-50920     End If
-50930     If AllSelectedListitemsAtBottom Then
-50940      .Item(8).Enabled = False
-50950      .Item(9).Enabled = False
-50960     End If
-50970     If LvwGetCountSelectedItems(lsv, False) = 1 Then
-50980      .Item(11).Enabled = False
-50990     End If
-51000     If LvwGetCountSelectedItems(lsv, False) > 1 Then
-51010      .Item(14).Enabled = False
-51020     End If
-51030     If ((Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0) Or Options.DisableEmail <> 0 Then
-51040      .Item(16).Enabled = False
-51050      .Item(17).Enabled = False
-51060     End If
-51070    End With
-51080    With tlb(0)
-51090     If AllSelectedListitemsAtTop Then
-51100      If .Buttons(9).Enabled = True Then .Buttons(9).Enabled = False
-51110      If .Buttons(10).Enabled = True Then .Buttons(10).Enabled = False
-51120     End If
-51130     If AllSelectedListitemsAtBottom Then
-51140      If .Buttons(11).Enabled = True Then .Buttons(11).Enabled = False
-51150      If .Buttons(12).Enabled = True Then .Buttons(12).Enabled = False
-51160     End If
-51170     If LvwGetCountSelectedItems(lsv, False) = 1 Then
-51180      If .Buttons(13).Enabled = True Then .Buttons(13).Enabled = False
-51190     End If
-51200     If LvwGetCountSelectedItems(lsv, False) > 1 Then
-51210      If .Buttons(15).Enabled = True Then .Buttons(15).Enabled = False
-51220     End If
-51230    End With
-51240    With tlb(1)
-51250     If (Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0 Then
-51260      If .Buttons(1).Enabled = True Then .Buttons(1).Enabled = False
-51270      If .Buttons(2).Enabled = True Then .Buttons(2).Enabled = False
-51280     End If
-51290    End With
-51300  End Select
+50340    With mnDocument
+50350     If .Item(0).Enabled = True Then .Item(0).Enabled = False
+50360     If .Item(4).Enabled = True Then .Item(4).Enabled = False
+50370     If .Item(6).Enabled = True Then .Item(6).Enabled = False
+50380     If .Item(7).Enabled = True Then .Item(7).Enabled = False
+50390     If .Item(8).Enabled = True Then .Item(8).Enabled = False
+50400     If .Item(9).Enabled = True Then .Item(9).Enabled = False
+50410     If .Item(11).Enabled = True Then .Item(11).Enabled = False
+50420     If .Item(12).Enabled = True Then .Item(12).Enabled = False
+50430     If .Item(14).Enabled = True Then .Item(14).Enabled = False
+50440     If (Options.Toolbars And 2) = 2 Then
+50450      If .Item(16).Enabled = True Then .Item(16).Enabled = False
+50460      If .Item(17).Enabled = True Then .Item(17).Enabled = False
+50470     End If
+50480    End With
+50490    With tlb(0)
+50500     If .Buttons(5).Enabled = True Then .Buttons(5).Enabled = False ' print
+50510     For c = 8 To 15
+50520      If .Buttons(c).Enabled = True Then .Buttons(c).Enabled = False
+50530     Next c
+50540    End With
+50550    With tlb(1)
+50560     If (Options.Toolbars And 2) = 2 Then
+50570      If .Buttons(1).Enabled = True Then .Buttons(1).Enabled = False
+50580      If .Buttons(2).Enabled = True Then .Buttons(2).Enabled = False
+50590     End If
+50600    End With
+50610    Exit Sub
+50620   Case lsv.ListItems.Count = 1
+50630    With mnDocument
+50640     If .Item(6).Enabled = True Then .Item(6).Enabled = False
+50650     If .Item(7).Enabled = True Then .Item(7).Enabled = False
+50660     If .Item(8).Enabled = True Then .Item(8).Enabled = False
+50670     If .Item(9).Enabled = True Then .Item(9).Enabled = False
+50680     If .Item(11).Enabled = True Then .Item(11).Enabled = False
+50690     If .Item(12).Enabled = True Then .Item(12).Enabled = False
+50700     If (Options.Toolbars And 2) = 2 Then
+50710      If .Item(16).Enabled = True Then .Item(16).Enabled = False
+50720      If LenB(txtEmailAddress.Text) = 0 Or Options.DisableEmail <> 0 Then
+50730       If .Item(17).Enabled = True Then .Item(17).Enabled = False
+50740      End If
+50750     End If
+50760    End With
+50770    With tlb(0)
+50780     For c = 9 To 14
+50790      If .Buttons(c).Enabled = True Then .Buttons(c).Enabled = False
+50800     Next c
+50810    End With
+50820    With tlb(1)
+50830     If (Options.Toolbars And 2) = 2 Then
+50840      If LenB(txtEmailAddress.Text) = 0 Then
+50850       If .Buttons(2).Enabled = True Then .Buttons(2).Enabled = False
+50860      End If
+50870     End If
+50880    End With
+50890   Case lsv.ListItems.Count > 1
+50900    With mnDocument
+50910     If AllSelectedListitemsAtTop Then
+50920      .Item(6).Enabled = False
+50930      .Item(7).Enabled = False
+50940     End If
+50950     If AllSelectedListitemsAtBottom Then
+50960      .Item(8).Enabled = False
+50970      .Item(9).Enabled = False
+50980     End If
+50990     If LvwGetCountSelectedItems(lsv, False) = 1 Then
+51000      .Item(11).Enabled = False
+51010     End If
+51020     If LvwGetCountSelectedItems(lsv, False) > 1 Then
+51030      .Item(14).Enabled = False
+51040     End If
+51050     If ((Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0) Or Options.DisableEmail <> 0 Then
+51060      .Item(16).Enabled = False
+51070      .Item(17).Enabled = False
+51080     End If
+51090    End With
+51100    With tlb(0)
+51110     If AllSelectedListitemsAtTop Then
+51120      If .Buttons(9).Enabled = True Then .Buttons(9).Enabled = False
+51130      If .Buttons(10).Enabled = True Then .Buttons(10).Enabled = False
+51140     End If
+51150     If AllSelectedListitemsAtBottom Then
+51160      If .Buttons(11).Enabled = True Then .Buttons(11).Enabled = False
+51170      If .Buttons(12).Enabled = True Then .Buttons(12).Enabled = False
+51180     End If
+51190     If LvwGetCountSelectedItems(lsv, False) = 1 Then
+51200      If .Buttons(13).Enabled = True Then .Buttons(13).Enabled = False
+51210     End If
+51220     If LvwGetCountSelectedItems(lsv, False) > 1 Then
+51230      If .Buttons(15).Enabled = True Then .Buttons(15).Enabled = False
+51240     End If
+51250    End With
+51260    With tlb(1)
+51270     If (Options.Toolbars And 2) = 2 And LenB(txtEmailAddress.Text) = 0 Then
+51280      If .Buttons(1).Enabled = True Then .Buttons(1).Enabled = False
+51290      If .Buttons(2).Enabled = True Then .Buttons(2).Enabled = False
+51300     End If
+51310    End With
+51320  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
