@@ -252,6 +252,10 @@
 				<param name="Local" value="html\my-antivirus-program-says-that-pdfcreator-contains-a-virus-dont-you-check-your-files.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Problem with Adobe printing incorrectly sized pages">
+				<param name="Local" value="html\problem-with-adobe-printing-incorrectly-sized-pages.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Setup Command Line Parameters">
 				<param name="Local" value="html\setup-command-line-parameters.html">
 				</OBJECT>
@@ -266,6 +270,10 @@
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="The printer driver is not compatible with a policy enabled on your computer">
 				<param name="Local" value="html\the-printer-driver-is-not-compatible-with-a-policy-enabled-on-your-computer.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Unicode in Stamp not working">
+				<param name="Local" value="html\unicode-in-stamp-not-working.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="What is the Export Control Classification Number (ECCN) of PDFCreator?">
