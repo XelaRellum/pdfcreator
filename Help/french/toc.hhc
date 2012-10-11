@@ -216,8 +216,16 @@
 				<param name="Local" value="html\after-installing-pdfcreator-i-get-an-error-exception-einouterror-in-module-isxxxxxexe-at-0000631c-file-not-found.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Group Policies">
+				<param name="Local" value="html\group-policies.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Comment puis-je traduire PDFCreator dans la langue de mon pays ?">
 				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="How to uninstall PDFCreator">
+				<param name="Local" value="html\how-to-uninstall-pdfcreator.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="I have selected letter (8,5"*11") as paperformat in Word/Excel, but the generated PDFs are in A4">
@@ -248,6 +256,10 @@
 				<param name="Local" value="html\why-doesnt-pdfcreator-use-my-original-filename.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Problem with Adobe printing incorrectly sized pages">
+				<param name="Local" value="html\problem-with-adobe-printing-incorrectly-sized-pages.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Setup Command Line Parameters">
 				<param name="Local" value="html\setup-command-line-parameters.html">
 				</OBJECT>
@@ -256,8 +268,16 @@
 				<param name="Local" value="html\setup-error-pdfcreator-is-already-installed.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="The degree symbol overlaps the following character">
+				<param name="Local" value="html\the-degree-symbol-overlaps-the-following-character.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Le drive d'imprimante n'est pas compatible avec une r&egrave;gle en vigueur sur votre ordinateur">
 				<param name="Local" value="html\the-printer-driver-is-not-compatible-with-a-policy-enabled-on-your-computer.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Unicode in Stamp not working">
+				<param name="Local" value="html\unicode-in-stamp-not-working.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="What is the Export Control Classification Number (ECCN) of PDFCreator?">

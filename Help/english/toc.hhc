@@ -224,8 +224,16 @@
 				<param name="Local" value="html\blank-page-with-unicode-characters-in-the-filename.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Group Policies">
+				<param name="Local" value="html\group-policies.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="How can I translate PDFCreator into my language?">
 				<param name="Local" value="html\how-can-i-translate-pdfcreator-into-my-language.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="How to uninstall PDFCreator">
+				<param name="Local" value="html\how-to-uninstall-pdfcreator.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="I have .Net 3.x installed, but there is no pdfforge.dll">
@@ -266,6 +274,10 @@
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Setup Error: PDFCreator is already installed">
 				<param name="Local" value="html\setup-error-pdfcreator-is-already-installed.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="The degree symbol overlaps the following character">
+				<param name="Local" value="html\the-degree-symbol-overlaps-the-following-character.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="The printer driver is not compatible with a policy enabled on your computer">

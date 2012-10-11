@@ -64,7 +64,9 @@ html\adobe-reader-stays-open-when-a-script-is-used-to-combine-pdfs.html
 html\after-installing-pdfcreator-a-msi-installer-shows-up.html
 html\after-upgrading-to-windows-7-pdfcreator-does-not-work-anymore.html
 html\after-installing-pdfcreator-i-get-an-error-exception-einouterror-in-module-isxxxxxexe-at-0000631c-file-not-found.html
+html\group-policies.html
 html\how-can-i-translate-pdfcreator-into-my-language.html
+html\how-to-uninstall-pdfcreator.html
 html\i-have-selected-letter-8511-as-paperformat-in-wordexcel-but-the-generated-pdfs-are-in-a4.html
 html\installation-on-a-terminal-server.html
 html\is-pdfcreator-really-free.html
@@ -72,9 +74,12 @@ html\is-the-pdfcreator-toolbar-spyware.html
 html\my-antivirus-program-says-that-pdfcreator-contains-a-virus-dont-you-check-your-files.html
 html\blank-page-with-unicode-characters-in-the-filename.html
 html\why-doesnt-pdfcreator-use-my-original-filename.html
+html\problem-with-adobe-printing-incorrectly-sized-pages.html
 html\setup-command-line-parameters.html
 html\setup-error-pdfcreator-is-already-installed.html
+html\the-degree-symbol-overlaps-the-following-character.html
 html\the-printer-driver-is-not-compatible-with-a-policy-enabled-on-your-computer.html
+html\unicode-in-stamp-not-working.html
 html\what-is-the-export-control-classification-number-eccn-of-pdfcreator.html
 html\where-are-my-printersmultiple-printers-not-shown-win-7.html
 html\why-cant-some-scripts-be-executed-under-vista-64-bit--windows-7-64-bit.html

@@ -216,6 +216,14 @@
 				<param name="Local" value="html\the-printer-driver-is-not-compatible-with-a-policy-enabled-on-your-computer.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Falsche Seitengr&ouml;&#223;e bei Druck aus Adobe">
+				<param name="Local" value="html\problem-with-adobe-printing-incorrectly-sized-pages.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Gruppenrichtlinien">
+				<param name="Local" value="html\group-policies.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Ich habe .Net 3.x installiert, aber finde keine pdfforge.dll">
 				<param name="Local" value="html\i-have-net-3x-installed-but-there-is-no-pdfforgedll.html">
 				</OBJECT>
@@ -256,12 +264,20 @@
 				<param name="Local" value="html\after-upgrading-to-windows-7-pdfcreator-does-not-work-anymore.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="PDFCreator deinstallieren">
+				<param name="Local" value="html\how-to-uninstall-pdfcreator.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Setup Fehler: PDFCreator ist bereits installiert">
 				<param name="Local" value="html\setup-error-pdfcreator-is-already-installed.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Setup Kommandozeilenparameter">
 				<param name="Local" value="html\setup-command-line-parameters.html">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Unicode im Stempel nicht m&ouml;glich">
+				<param name="Local" value="html\unicode-in-stamp-not-working.html">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Warum erscheint schwarzer Text manchmal leicht grau? ">
