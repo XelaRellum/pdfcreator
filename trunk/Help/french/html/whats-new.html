@@ -18,19 +18,32 @@
   </tr>
   <tr>
     <td class="main"><p class="header">Nouveaut&eacute;s</p>
-<p><strong>Version 1.5.0 (August 30, 2012)</strong></p>
-<ul><strong><em>Improvements:</em></strong>
-    <li>Added options to set the initial appearance when opening a PDF&nbsp;file (Fullscreen, page layout, which page to show first etc)</li>
-    <li>Auto-Save mode recognizes when output files are in use and stops processing (Not for &quot;one file per page&quot; setting)</li>
-    <li>Printer profile settings support HKLM and policies settings now</li>
-    <li>pdfcmon.dll now fully supports multiple Sessions of the same user</li>
+<p><strong>Version 1.5.1 (?? Octobre, 2012)</strong></p>
+<ul><strong><em><strong><em>Améliorations</em></strong>:</em></strong>
+    <li>Fixed Handles issue:&nbsp;The number of active handles grew while PDFCreator was running in server mode</li>
+    <li>Updated pdfcmon.dll to cover some additional special cases with temp paths for multiple sessions on Windows Server</li>
 </ul>
-<ul><em><strong>Bug Fixes:<br />
+<ul><em><strong><em><strong>Correction de bugs</strong></em>:<br />
     </strong></em>
-    <li>Fixed some minor bugs</li>
+    <li>Correction de quelques bugs mineurs</li>
 </ul>
-<ul><strong><em>Known issues:</em></strong>
-    <li>No  hyperlinks possible (Hyperlinks for MS Word are possible  with the  combination of <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a>   and PDFCreator.)</li>
+<ul><strong><em><strong><em><strong><em>Problèmes connus</em></strong></em></strong>:</em></strong>
+    <li>Impossible de créer des liens hypertextes (Créer des liens hypertextes pour MS Word est possible par la combinaison de <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a> et PDFCreator).</li>
+    <li>There are problems if non-ANSI characters exist in the title. This  causes Ghostscript to not create a file at all. Avoid such characters as  a workaround.</li>
+</ul>
+<p><strong>Version 1.5.0 (30 Août 2012)</strong></p>
+<ul><strong><em><strong><em><strong><em>Améliorations</em></strong></em></strong>:</em></strong>
+    <li>Ajout d'options pour définir le mode d'affichage à l'ouverture d'un fichier PDF (Plein écran, mode pages, quelle page afficher en premier, etc.)</li>
+    <li>Le mode Enregistrement automatique repère les fichiers de sortie encours d'utilisatio et stoppe le processus (sauf dans le mode &quot;un fichier par page&quot;)</li>
+    <li>Les profils d'impression supportent HKLM et le réglages de polices</li>
+    <li>pdfcmon.dll supporte désormais les sessions multiples d'un même utilisateur</li>
+</ul>
+<ul><em><strong><em><strong>Correction de bugs</strong></em>:<br />
+    </strong></em>
+    <li>Correction de quelques bugs mineurs</li>
+</ul>
+<ul><strong><em><strong><em>Problèmes connus</em></strong>:</em></strong>
+    <li>Impossible de créer des liens hypertextes (Créer des liens hypertextes pour MS Word est possible par la combinaison de <a href="http://www.transcom.de/transcom/en/2004_pdf-t-maker.htm">PDF-T-Maker</a> et PDFCreator).</li>
 </ul>
 <p><strong>Version 1.4.3 (27 Julliet, 2012)</strong></p>
 <ul><strong><em>Améliorations:</em></strong>
