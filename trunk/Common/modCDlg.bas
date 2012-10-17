@@ -39,10 +39,10 @@ On Error GoTo ErrPtnr_OnError
 50190   .sFilter = tFil
 50200   .nFilterIndex = FilterIndex
 50210   .sFile = InitFilename & Space$(1024) & vbNullChar & vbNullChar
-50220   .nMaxFile = Len(.sFile)
+50220   .nMaxFile = LenB(StrConv(.sFile, vbFromUnicode))
 50230   .sDefFileExt = DefaultFileExtension & vbNullChar & vbNullChar
 50240   .sFileTitle = vbNullChar & Space$(512) & vbNullChar & vbNullChar
-50250   .nMaxTitle = Len(ofn.sFileTitle)
+50250   .nMaxTitle = LenB(StrConv(ofn.sFileTitle, vbFromUnicode))
 50260   If InitDir = vbNullString Then
 50270     .sInitialDir = PDFCreatorApplicationPath & vbNullChar & vbNullChar
 50280    Else
@@ -115,10 +115,10 @@ On Error GoTo ErrPtnr_OnError
 50190   .sFilter = tFil
 50200   .nFilterIndex = FilterIndex
 50210   .sFile = InitFilename & Space$(1024) & vbNullChar & vbNullChar
-50220   .nMaxFile = Len(.sFile)
+50220   .nMaxFile = LenB(StrConv(.sFile, vbFromUnicode))
 50230   .sDefFileExt = DefaultFileExtension & vbNullChar & vbNullChar
 50240   .sFileTitle = vbNullChar & Space$(512) & vbNullChar & vbNullChar
-50250   .nMaxTitle = Len(ofn.sFileTitle)
+50250   .nMaxTitle = LenB(StrConv(ofn.sFileTitle, vbFromUnicode))
 50260   If InitDir = vbNullString Then
 50270     .sInitialDir = PDFCreatorApplicationPath & vbNullChar & vbNullChar
 50280    Else
@@ -182,7 +182,7 @@ On Error GoTo ErrPtnr_OnError
 50220   .rgbColors = Font.Color
 50230  End With
 50240
-50250  MoveMemory LFnt.lfFaceName(0), ByVal Font.Name, Len(Font.Name) + 1
+50250  MoveMemory LFnt.lfFaceName(0), ByVal Font.Name, LenB(StrConv(Font.Name, vbFromUnicode)) + 1
 50260
 50270  res = CHOOSEFONT(CF_T)
 50280  If res = 0 Then
