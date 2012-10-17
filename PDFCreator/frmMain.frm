@@ -2235,7 +2235,7 @@ On Error GoTo ErrPtnr_OnError
   OnlyPsFiles As Boolean, Ext As String, DefaultPrintername As String, _
   tFilename As String, tLen As Double
 50040  Dim Path As String, psFileName As String, ini As clsINI, Title As String, strGUID As String, _
-  spoolDirectory As String
+  spoolDirectory As String, notFoundFiles As Collection, tStr As String
 50060  Set cFiles = GetFilename("", GetMyFiles, 0, _
   LanguageStrings.ListPostscriptFiles & " (*.ps)|*.ps|" & LanguageStrings.ListAllFiles & " (*.*)|*.*", _
    OpenFile, Cancel, Me)
@@ -2243,58 +2243,79 @@ On Error GoTo ErrPtnr_OnError
 50100   Screen.MousePointer = vbNormal
 50110   Exit Sub
 50120  End If
-50130  aLen = 0
-50140  For i = 1 To cFiles.Count
-50150   aLen = aLen + GetFileLength(cFiles.Item(i))
-50160  Next i
-50170  OnlyPsFiles = True
-50180  For i = 1 To cFiles.Count
-50190   SplitPath cFiles.Item(i), , , , , Ext
-50200   If UCase$(Ext) <> "PS" And UCase$(Ext) <> "EPS" Then
-50210    OnlyPsFiles = False
-50220    Exit For
-50230   End If
-50240  Next i
-50250  If UCase$(Printer.DeviceName) <> UCase$(GetPDFCreatorPrintername) And OnlyPsFiles = False Then
-50260   If Options.NoConfirmMessageSwitchingDefaultprinter = 0 Then
-50270    If ChangeDefaultprinter = False Then
-50280     frmSwitchDefaultprinter.Show vbModal, Me
-50290     If ChangeDefaultprinter = False Then
-50300      Screen.MousePointer = vbNormal
-50310      Exit Sub
-50320     End If
-50330    End If
-50340   End If
-50350  End If
-50360  ChangeDefaultprinter = True
-50370  DefaultPrintername = Printer.DeviceName
-50380  SetDefaultprinterInProg GetPDFCreatorPrintername
-50390  aLen = 0
-50400  For i = 1 To cFiles.Count
-50410   aLen = aLen + GetFileLength(cFiles.Item(i))
-50420  Next i
-50430  For i = 1 To cFiles.Count
-50440   SplitPath cFiles.Item(i), , , , , Ext
-50450   If IsPostscriptFile(cFiles.Item(i)) = True And (UCase$(Ext) = "PS" Or UCase$(Ext) = "EPS") Then
-50460     spoolDirectory = GetPDFCreatorSpoolDirectory
-50470     strGUID = GetGUID
-50480     tFilename = spoolDirectory & strGUID & ".inf"
-50490     psFileName = spoolDirectory & strGUID & ".ps"
-50500     FileCopy cFiles.Item(i), psFileName
-50510     CreateInfoSpoolFile psFileName, tFilename
-50520    Else
-50530     DoEvents
-50540     ShellAndWait Me.hwnd, "print", cFiles.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
+50130  Set notFoundFiles = New Collection
+50140  For i = cFiles.Count To 1 Step -1
+50150   If InStr(cFiles(i), "?") > 0 Then
+50160    notFoundFiles.Add cFiles(i)
+50170    cFiles.Remove i
+50180   End If
+50190  Next i
+50200  If notFoundFiles.Count > 0 Then
+50210   For i = 1 To notFoundFiles.Count
+50220    If i = 1 Then
+50230      tStr = notFoundFiles(i)
+50240     Else
+50250      tStr = tStr & vbCrLf & notFoundFiles(i)
+50260    End If
+50270   Next i
+50280   MsgBox LanguageStrings.MessagesMsg14 + vbCrLf + vbCrLf + tStr
+50290  End If
+50300
+50310  If cFiles.Count = 0 Then
+50320   Exit Sub
+50330  End If
+50340  aLen = 0
+50350  For i = 1 To cFiles.Count
+50360   aLen = aLen + GetFileLength(cFiles.Item(i))
+50370  Next i
+50380  OnlyPsFiles = True
+50390  For i = 1 To cFiles.Count
+50400   SplitPath cFiles.Item(i), , , , , Ext
+50410   If UCase$(Ext) <> "PS" And UCase$(Ext) <> "EPS" Then
+50420    OnlyPsFiles = False
+50430    Exit For
+50440   End If
+50450  Next i
+50460  If UCase$(Printer.DeviceName) <> UCase$(GetPDFCreatorPrintername) And OnlyPsFiles = False Then
+50470   If Options.NoConfirmMessageSwitchingDefaultprinter = 0 Then
+50480    If ChangeDefaultprinter = False Then
+50490     frmSwitchDefaultprinter.Show vbModal, Me
+50500     If ChangeDefaultprinter = False Then
+50510      Screen.MousePointer = vbNormal
+50520      Exit Sub
+50530     End If
+50540    End If
 50550   End If
-50560   DoEvents
-50570   tLen = tLen + GetFileLength(cFiles.Item(i))
-50580   stb.Panels("Percent").Text = Format$(tLen / aLen, " 0.0%")
-50590   DoEvents
-50600  Next i
-50610  If DefaultPrintername <> vbNullString Then
-50620   SetDefaultprinterInProg DefaultPrintername
-50630  End If
-50640  stb.Panels("Percent").Text = vbNullString
+50560  End If
+50570  ChangeDefaultprinter = True
+50580  DefaultPrintername = Printer.DeviceName
+50590  SetDefaultprinterInProg GetPDFCreatorPrintername
+50600  aLen = 0
+50610  For i = 1 To cFiles.Count
+50620   aLen = aLen + GetFileLength(cFiles.Item(i))
+50630  Next i
+50640  For i = 1 To cFiles.Count
+50650   SplitPath cFiles.Item(i), , , , , Ext
+50660   If IsPostscriptFile(cFiles.Item(i)) = True And (UCase$(Ext) = "PS" Or UCase$(Ext) = "EPS") Then
+50670     spoolDirectory = GetPDFCreatorSpoolDirectory
+50680     strGUID = GetGUID
+50690     tFilename = spoolDirectory & strGUID & ".inf"
+50700     psFileName = spoolDirectory & strGUID & ".ps"
+50710     FileCopy cFiles.Item(i), psFileName
+50720     CreateInfoSpoolFile psFileName, tFilename
+50730    Else
+50740     DoEvents
+50750     ShellAndWait Me.hwnd, "print", cFiles.Item(i), "", vbNullChar, wHidden, WCTermination, 60000, True
+50760   End If
+50770   DoEvents
+50780   tLen = tLen + GetFileLength(cFiles.Item(i))
+50790   stb.Panels("Percent").Text = Format$(tLen / aLen, " 0.0%")
+50800   DoEvents
+50810  Next i
+50820  If DefaultPrintername <> vbNullString Then
+50830   SetDefaultprinterInProg DefaultPrintername
+50840  End If
+50850  stb.Panels("Percent").Text = vbNullString
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
