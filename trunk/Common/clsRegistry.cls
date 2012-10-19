@@ -196,7 +196,7 @@ Public Function KeyExists() As Boolean
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim handle As Long, ret As Long
-50020  If RegOpenKeyEx(mvarhKeySet, GetCompleteKey(mvarKeyRoot & "\UNSINN" & mvarSubKey), 0, KEY_READ, handle) Then
+50020  If RegOpenKeyEx(mvarhKeySet, GetCompleteKey(mvarKeyRoot & mvarSubKey), 0, KEY_READ, handle) Then
 50030   If handle <> 0 Then RegCloseKey (handle)
 50040   KeyExists = False
 50050   Exit Function
