@@ -1,0 +1,38 @@
+/* PDFCreator Help CSS Style */
+
+body, table {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+	background-color: #FFFFFF;
+	color: #000000;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px 
+}
+td.title {
+	background-color: #222;
+	color: #FFFFFF;
+	font-size: 18pt;
+	font-weight: bold;
+	padding: 12px;
+	padding-left: 18px;
+}
+td.main {
+	padding-left: 18px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	vertical-align: top;
+}	
+.intro {
+	font-size: 12pt;
+	font-weight: bold;
+	color: #000000;
+	background-color: #FFFFFF
+}
+.header {
+	background-color: #FFFFFF;
+	color: #000000;
+	font-size: 14pt;
+	font-weight: bold
+}
