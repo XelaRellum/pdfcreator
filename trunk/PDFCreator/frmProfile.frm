@@ -212,17 +212,21 @@ Private Sub txtProfile_KeyPress(KeyAscii As Integer)
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50011  Select Case KeyAscii
-        Case Asc("0") To Asc("9"), Asc("a") To Asc("z"), Asc("A") To Asc("Z"), Asc(" "), 8, 13, 27
-50030    If KeyAscii = 27 Then
-50040     Unload Me
-50050    End If
-50060    If KeyAscii = 13 Then
-50070     AddRenameProfile
+        Case Asc("0") To Asc("9"), Asc("a") To Asc("z"), Asc("A") To Asc("Z"), _
+         Asc("!"), Asc("#"), Asc("$"), Asc("%"), Asc("&"), Asc("'"), Asc("("), Asc(")"), Asc("+"), _
+         Asc(","), Asc("-"), Asc("."), Asc(";"), Asc("="), Asc("@"), Asc("["), Asc("]"), Asc("^"), _
+         Asc("_"), Asc("`"), Asc("´"), Asc("~"), _
+         Asc(" "), 8, 13, 27
+50070    If KeyAscii = 27 Then
 50080     Unload Me
 50090    End If
-50100   Case Else
-50110    KeyAscii = 0
-50120  End Select
+50100    If KeyAscii = 13 Then
+50110     AddRenameProfile
+50120     Unload Me
+50130    End If
+50140   Case Else
+50150    KeyAscii = 0
+50160  End Select
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
