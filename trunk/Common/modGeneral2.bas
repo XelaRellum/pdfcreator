@@ -498,14 +498,14 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Function
 
-Public Function IsPDFArchitectInstalled() As Boolean
+Public Function IsOldPDFArchitectInstalled() As Boolean
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  Dim reg As clsRegistry, appPath As String
-50020  IsPDFArchitectInstalled = False
+50020  IsOldPDFArchitectInstalled = False
 50030  If FileExists(PDFCreatorApplicationPath & "PDFArchitect\PDFArchitect.exe") Then
-50040    IsPDFArchitectInstalled = True
+50040    IsOldPDFArchitectInstalled = True
 50050   Else
 50060    Set reg = New clsRegistry
 50070    reg.hkey = HKEY_LOCAL_MACHINE
@@ -514,7 +514,7 @@ On Error GoTo ErrPtnr_OnError
 50100     appPath = reg.GetRegistryValue("Inno Setup: App Path")
 50110     If LenB(appPath) > 0 Then
 50120      If FileExists(CompletePath(appPath) & "PDFArchitect.exe") Then
-50130       IsPDFArchitectInstalled = True
+50130       IsOldPDFArchitectInstalled = True
 50140      End If
 50150     End If
 50160    End If
@@ -523,7 +523,42 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral2", "IsPDFArchitectInstalled")
+Select Case ErrPtnr.OnError("modGeneral2", "IsOldPDFArchitectInstalled")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Function
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Function
+
+Public Function GetNewPDFArchitectExePath() As String
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim reg As clsRegistry, i As Long, UnInstallKeys As Collection, UnInstallKeyStr As String, exePath As String
+50020  UnInstallKeyStr = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
+50030  Set reg = New clsRegistry
+50040  reg.hkey = HKEY_LOCAL_MACHINE
+50050  Set UnInstallKeys = reg.EnumRegistryKeys(HKEY_LOCAL_MACHINE, UnInstallKeyStr)
+50060  For i = 1 To UnInstallKeys.Count
+50070   reg.KeyRoot = UnInstallKeyStr & "\" & UnInstallKeys(i)
+50080   If StrComp(reg.GetRegistryValue("DisplayName"), "PDF Architect", vbTextCompare) = 0 Then
+50090    If (StrComp(reg.GetRegistryValue("Publisher"), "Architect Software", vbTextCompare) = 0) Or _
+    (InStr(1, reg.GetRegistryValue("Publisher"), "pdfforge", vbTextCompare) > 0) Then
+50110     exePath = CompletePath(reg.GetRegistryValue("InstallLocation")) & "PDF Architect.exe"
+50120     If FileExists(exePath) Then
+50130      GetNewPDFArchitectExePath = exePath
+50140     End If
+50150    End If
+50160   End If
+50170  Next i
+50180  Set UnInstallKeys = Nothing
+50190  Set reg = Nothing
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Function
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral2", "GetNewPDFArchitectExePath")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Function
@@ -598,7 +633,31 @@ End Select
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 End Sub
 
-Public Sub OpenPDFFileWithPDFArchitect(sFilename As String)
+Public Sub OpenPDFFileWithNewPDFArchitect(sFilename As String)
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+On Error GoTo ErrPtnr_OnError
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+50010  Dim handle As Long, newPDFArchitectExePath As String, WorkingPath As String
+50020  newPDFArchitectExePath = GetNewPDFArchitectExePath
+50030
+50040  handle = GetDesktopWindow()
+50050  If LenB(newPDFArchitectExePath) > 0 Then
+50060   SplitPath newPDFArchitectExePath, , WorkingPath
+50070   Call ShellExecute(handle, vbNullString, GetNewPDFArchitectExePath, """" & sFilename & """", WorkingPath, vbNormalFocus)
+50080  End If
+'---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
+Exit Sub
+ErrPtnr_OnError:
+Select Case ErrPtnr.OnError("modGeneral2", "OpenPDFFileWithNewPDFArchitect")
+Case 0: Resume
+Case 1: Resume Next
+Case 2: Exit Sub
+Case 3: End
+End Select
+'---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
+End Sub
+
+Public Sub OpenPDFFileWithOldPDFArchitect(sFilename As String)
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
@@ -641,7 +700,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Sub
 ErrPtnr_OnError:
-Select Case ErrPtnr.OnError("modGeneral2", "OpenPDFFileWithPDFArchitect")
+Select Case ErrPtnr.OnError("modGeneral2", "OpenPDFFileWithOldPDFArchitect")
 Case 0: Resume
 Case 1: Resume Next
 Case 2: Exit Sub

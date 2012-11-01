@@ -303,7 +303,7 @@ On Error GoTo ErrPtnr_OnError
 '---ErrPtnr-OnError-END--- DO NOT MODIFY ! ---
 50010  If chkOpenOutputFile.value = 1 Then
 50020    Options.OpenOutputFile = 1
-50030    If IsPDFArchitectInstalled Then
+50030    If (IsOldPDFArchitectInstalled Or (LenB(GetNewPDFArchitectExePath) > 0)) Then
 50040      chkEditWithPDFArchitect.Enabled = True
 50050     Else
 50060      chkEditWithPDFArchitect.Enabled = False
@@ -680,7 +680,7 @@ On Error GoTo ErrPtnr_OnError
 50040   Else
 50050    chkEditWithPDFArchitect.value = 0
 50060  End If
-50070  If IsPDFArchitectInstalled And Options.OpenOutputFile = 1 Then
+50070  If (IsOldPDFArchitectInstalled Or (LenB(GetNewPDFArchitectExePath) > 0)) And Options.OpenOutputFile = 1 Then
 50080    chkEditWithPDFArchitect.Enabled = True
 50090   Else
 50100    chkEditWithPDFArchitect.Enabled = False
@@ -1006,23 +1006,31 @@ On Error GoTo ErrPtnr_OnError
 50360
 50370   If chkOpenOutputFile.value = 1 Then
 50380    If Options.OneFilePerPage = 1 Then
-50390      If OutputFileIsPDFFile And IsPDFArchitectInstalled And chkEditWithPDFArchitect.value = 1 Then
-50400        OpenPDFFileWithPDFArchitect Replace$(PDFFile, "%d", "1", , , vbTextCompare)
-50410       Else
-50420        OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
-50430      End If
-50440     Else
-50450      If OutputFileIsPDFFile And IsPDFArchitectInstalled And chkEditWithPDFArchitect.value = 1 Then
-50460        OpenPDFFileWithPDFArchitect PDFFile
-50470       Else
-50480        OpenDocument PDFFile
-50490      End If
-50500    End If
-50510   End If
-50520   IsConverted = True
-50530   KillInfoSpoolFiles CurrentInfoSpoolFile
-50540   RemoveInfoSpoolFileObject CurrentInfoSpoolFile
-50550  End If
+50390      If OutputFileIsPDFFile And (IsOldPDFArchitectInstalled Or (LenB(GetNewPDFArchitectExePath) > 0)) And chkEditWithPDFArchitect.value = 1 Then
+50400        If LenB(GetNewPDFArchitectExePath) > 0 Then
+50410          OpenPDFFileWithNewPDFArchitect Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50420         Else
+50430          OpenPDFFileWithOldPDFArchitect Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50440        End If
+50450       Else
+50460        OpenDocument Replace$(PDFFile, "%d", "1", , , vbTextCompare)
+50470      End If
+50480     Else
+50490      If OutputFileIsPDFFile And (IsOldPDFArchitectInstalled Or (LenB(GetNewPDFArchitectExePath) > 0)) And chkEditWithPDFArchitect.value = 1 Then
+50500        If LenB(GetNewPDFArchitectExePath) > 0 Then
+50510          OpenPDFFileWithNewPDFArchitect PDFFile
+50520         Else
+50530          OpenPDFFileWithOldPDFArchitect PDFFile
+50540        End If
+50550       Else
+50560        OpenDocument PDFFile
+50570      End If
+50580    End If
+50590   End If
+50600   IsConverted = True
+50610   KillInfoSpoolFiles CurrentInfoSpoolFile
+50620   RemoveInfoSpoolFileObject CurrentInfoSpoolFile
+50630  End If
 '---ErrPtnr-OnError-START--- DO NOT MODIFY ! ---
 Exit Function
 ErrPtnr_OnError:
