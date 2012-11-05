@@ -15,5 +15,5 @@ Systemfiles:
 	Run Win9x_CopySystemfiles.bat or WinNt_CopySystemfiles.bat from 'Additional files\Systemfiles' to copy the Systemfiles for the setup.
 
 Ghostscript Files:
-	Download GPL Ghostscript 9.05
-	Install Ghostscript in the standard directory PDFCreator\GhostScript\gs9.05
+	Download GPL Ghostscript 9.06
+	Install Ghostscript in the standard directory PDFCreator\GhostScript\gs9.06
